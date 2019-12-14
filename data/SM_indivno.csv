@@ -1,1265 +1,1262 @@
-site,abbrev,asorscoignment,flask
-sm,amealn,HC_HP_HF,T1-5
-sm,alninc,HC_HP_HF,T1-1
-sm,sorsco,HC_HP_HF,T1-11
-sm,vibedu,HC_HP_HF,T1-4
-sm,corsto,HC_HP_HF,T10-b
-sm,rubpar,HC_HP_HF,T10
-sm,symalb,HC_HP_HF,T10
-sm,spipyr,HC_HP_HF,T10-b40
-sm,betpap,HC_HP_HF,T11-A
-sm,betpap,HC_HP_HF,T11-A
-sm,poptre,HC_HP_HF,T11-B
-sm,poptre,HC_HP_HF,T11-b
-sm,shecan,HC_HP_HF,T11-12
-sm,loninv,HC_HP_HF,T12-10
-sm,menfer,HC_HP_HF,T12-12
-sm,popbal,HC_HP_HF,T12-A
-sm,poptre,HC_HP_HF,T12-8
-,,,
-sm,alninc,HC_HP_HF,T13-1
-sm,popbal,HC_HP_HF,T13-20
-sm,symalb,HC_HP_HF,T13-
-sm,sorsco,HC_HP_HF,T13-5
-,,,
-sm,acegla,HC_HP_HF,T14--11
-sm,loninv,HC_HP_HF,T14--10
-sm,menfer,HC_HP_HF,T14--#3
-sm,poptre,HC_HP_HF,T14--11
-sm,amealn,HC_HP_HF,T15--1
-sm,loninv,HC_HP_HF,T15--9
-sm,spibet,HC_HP_HF,T15--A28
-sm,sorsco,HC_HP_HF,T15-6
-sm,popbal,HC_HP_HF,T16-onionE
-sm,symalb,HC_HP_HF,T16
-sm,spibet,HC_HP_HF,T16
-Sm,shecan,HC_HP_HF,T16-A
-sm,popbal,HC_HP_HF,T17-onionE
-sm,rubpar,HC_HP_HF,T17
-sm,rubpar,HC_HP_HF,T17
-sm,vibedu,HC_HP_HF,T17-3
-sm,alninc,HC_HP_HF,T18-5
-sm,menfer,HC_HP_HF,T18-2
-sm,popbal,HC_HP_HF,T18-20
-sm,alninc,HC_HP_HF,T19-5
-sm,corsto,HC_HP_HF,T19-11
-sm,menfer,HC_HP_HF,T19-4
-sm,symalb,HC_HP_HF,T19-2
-sm,symalb,HC_HP_HF,T2
-sm,spibet,HC_HP_HF,T2
-sm,shecan,HC_HP_HF,T2-8
-sm,vibedu,HC_HP_HF,T2-D
-sm,riblac,HC_HP_HF,T20-3b
-sm,spibet,HC_HP_HF,T20
-sm,vacmem,HC_HP_HF,T20-oct21
-sm,vacmem,HC_HP_HF,T20-oct21
-sm,amealn,HC_HP_HF,T21-5
-sm,loninv,HC_HP_HF,T21-9
-sm,vacmem,HC_HP_HF,T21-oct 23
-sm,betpap,HC_HP_HF,T22-A
-sm,riblac,HC_HP_HF,T22-9
-sm,symalb,HC_HP_HF,T22
-Shecan12,,,
-sm,sorsco,HC_HP_HF,T22
-sm,betpap,HC_HP_HF,T23-A
-sm,popbal,HC_HP_HF,T23-A
-sm,spibet,HC_HP_HF,T23-A38
-sm,alnvir,HC_HP_HF,T24-6
-sm,alnvir,HC_HP_HF,T24-2
-sm,symalb,HC_HP_HF,T24-cl
-sm,vacmem,HC_HP_HF,T24-oct 21
-sm,betpap,HC_HP_HF,T25-A
-sm,corsto,HC_HP_HF,T25-13
-sm,poptre,HC_HP_HF,T25-B
-sm,rubpar,HC_HP_HF,T25-cl
-sm,menfer,HC_HP_HF,T26-12
-sm,menfer,HC_HP_HF,T26-11
-sm,rubpar,HC_HP_HF,T26
-Shecan7,,,
-sm,acegla,HC_HP_HF,T27--15
-sm,betpap,HC_HP_HF,T27--B
-sm,sorsco,HC_HP_HF,T27--6
-sm,vacmem,HC_HP_HF,T27--oct21
-sm,popbal,HC_HP_HF,T28-8
-sm,riblac,HC_HP_HF,T28-9
-sm,vibedu,HC_HP_HF,T28-3
-sm,vacmem,HC_HP_HF,T28-oct21
-shecan12,,,
-sm,alnvir,HC_HP_HF,T29-6
-sm,riblac,HC_HP_HF,T29-3
-sm,spipyr,HC_HP_HF,T29-b24
-sm,sorsco,HC_HP_HF,T29-12
-sm,alnvir,HC_HP_HF,T3
-sm,alnvir,HC_HP_HF,T3
-sm,popbal,HC_HP_HF,T3
-sm,sorsco,HC_HP_HF,T3
-sm,alninc,HC_HP_HF,T30-4
-sm,alnvir,HC_HP_HF,T30-19
-sm,corsto,HC_HP_HF,T30-11
-sm,vibedu,HC_HP_HF,T30-11
-sm,acegla,HC_HP_HF,T31--7
-sm,alninc,HC_HP_HF,T31--2
-sm,riblac,HC_HP_HF,T31--10
-sm,riblac,HC_HP_HF,T31--12
-sm,loninv,HC_HP_HF,T32-10
-sm,spipyr,HC_HP_HF,T32
-sm,sorsco,HC_HP_HF,T32
-sm,vacmem,HC_HP_HF,T32-0ct21
-sm,corsto,HC_HP_HF,T33-b
-sm,poptre,HC_HP_HF,T33-b
-sm,spibet,HC_HP_HF,T33-A39
-sm,spipyr,HC_HP_HF,T33-B39
-Shecan6,,,
-sm,amealn,HC_HP_HF,T34-7
-sm,corsto,HC_HP_HF,T34-10
-sm,rubpar,HC_HP_HF,T34-w10
-sm,vibedu,HC_HP_HF,T34-B
-sm,betpap,HC_HP_HF,T35-
-sm,loninv,HC_HP_HF,T35
-sm,rubpar,HC_HP_HF,T35
-sm,sorsco,HC_HP_HF,T35
-sm,alninc,HC_HP_HF,T36-5
-sm,loninv,HC_HP_HF,T36-5
-sm,menfer,HC_HP_HF,T36-4
-sm,spipyr,HC_HP_HF,T36-B13
-sm,acegla,HC_HP_HF,T37--11
-sm,corsto,HC_HP_HF,T37--5
-sm,rubpar,HC_HP_HF,T37--cl
-sm,sorsco,HC_HP_HF,T37--7
-sm,amealn,HC_HP_HF,T38--5
-sm,menfer,HC_HP_HF,T38-A
-sm,spipyr,HC_HP_HF,T38--b28
-Shecan10,,,
-sm,acegla,HC_HP_HF,T39--2
-sm,alnvir,HC_HP_HF,T39--19
-sm,spibet,HC_HP_HF,T39--A1
-sm,spibet,HC_HP_HF,T39--A2
-sm,amealn,HC_HP_HF,T4-5
-sm,alninc,HC_HP_HF,T4-5
-sm,sorsco,HC_HP_HF,T4-11
-sm,acegla,HC_HP_HF,T40--13
-sm,symalb,HC_HP_HF,T40--2
-sm,sorsco,HC_HP_HF,T40--11
-sm,spipyr,HC_HP_HF,T40--b9
-sm,acegla,HC_HP_HF,T5--7
-sm,alnvir,HC_HP_HF,T5--19
-sm,corsto,HC_HP_HF,T5--9
-sm,riblac,HC_HP_HF,T5--10
-sm,amealn,HC_HP_HF,T6--5
-sm,loninv,HC_HP_HF,T6--9
-sm,vibedu,HC_HP_HF,T6--C
-sm,vibedu,HC_HP_HF,T6-D
-sm,poptre,HC_HP_HF,T7-C
-sm,riblac,HC_HP_HF,T7-3
-sm,shecan,HC_HP_HF,T7-8
-sm,vacmem,HC_HP_HF,T7-oct21
-sm,amealn,HC_HP_HF,T8-6
-sm,betpap,HC_HP_HF,T8-6
-sm,poptre,HC_HP_HF,T8-8
-sm,sorsco,HC_HP_HF,T8-12
-sm,acegla,HC_HP_HF,T9--13
-sm,sorsco,HC_HP_HF,T9--11
-sm,spipyr,HC_HP_HF,T9--b10
-sm,amealn,HC_HP_LF,T1-7
-sm,corsto,HC_HP_LF,T1-10
-sm,symalb,HC_HP_LF,T1-cl
-sm,sorsco,HC_HP_LF,T1-12
-sm,amealn,HC_HP_LF,T10-7
-sm,rubpar,HC_HP_LF,T10-w10
-sm,vibedu,HC_HP_LF,T10-A
-sm,shecan,HC_HP_LF,T10-12
-sm,betpap,HC_HP_LF,T11-5
-sm,riblac,HC_HP_LF,T11-11
-sm,sorsco,HC_HP_LF,T11
-sm,vibedu,HC_HP_LF,T11
-sm,popbal,HC_HP_LF,T12-8
-sm,poptre,HC_HP_LF,T12-B
-sm,shecan,HC_HP_LF,T12-10
-sm,amealn,HC_HP_LF,T13--7
-sm,acegla,HC_HP_LF,T13--10
-sm,betpap,HC_HP_LF,T13--A
-sm,sorsco,HC_HP_LF,T13--12
-sm,amealn,HC_HP_LF,T14-CLA
-sm,amealn,HC_HP_LF,T14-6
-sm,betpap,HC_HP_LF,T14-10
-sm,poptre,HC_HP_LF,T14-8
-sm,alnvir,HC_HP_LF,T15-2
-sm,corsto,HC_HP_LF,T15-8
-sm,menfer,HC_HP_LF,T15-2
-sm,vibedu,HC_HP_LF,T15-9
-sm,alnvir,HC_HP_LF,T16-6
-sm,loninv,HC_HP_LF,T16-10
-sm,loninv,HC_HP_LF,T16-11
-sm,vacmem,HC_HP_LF,T16-oct21
-sm,acegla,HC_HP_LF,T17--2
-sm,alnvir,HC_HP_LF,T17--2
-sm,spipyr,HC_HP_LF,T17--area w/ 9
-sm,vacmem,HC_HP_LF,T17--oct21
-sm,acegla,HC_HP_LF,T18--14
-sm,corsto,HC_HP_LF,T18--4
-sm,symalb,HC_HP_LF,T18--cl
-sm,vacmem,HC_HP_LF,T18--oct21
-sm,amealn,HC_HP_LF,T19-3
-sm,spibet,HC_HP_LF,T19-A32
-sm,sorsco,HC_HP_LF,T19-1
-sm,shecan,HC_HP_LF,T19-7
-sm,acegla,HC_HP_LF,T2--7
-sm,alninc,HC_HP_LF,T2--2
-sm,alninc,HC_HP_LF,T2--3
-sm,loninv,HC_HP_LF,T2--11
-sm,acegla,HC_HP_LF,T20--14
-sm,popbal,HC_HP_LF,T20--3
-sm,popbal,HC_HP_LF,T20--8
-sm,symalb,HC_HP_LF,T20--2
-sm,acegla,HC_HP_LF,T21--11
-sm,popbal,HC_HP_LF,T21--8
-sm,spibet,HC_HP_LF,T21--A8
-sm,vibedu,HC_HP_LF,T21--2
-sm,menfer,HC_HP_LF,T22--8
-sm,menfer,HC_HP_LF,T22-1
-sm,symalb,HC_HP_LF,T22-cl
-sm,vacmem,HC_HP_LF,T22-oct25
-sm,betpap,HC_HP_LF,T23-11
-sm,riblac,HC_HP_LF,T23-11
-sm,rubpar,HC_HP_LF,T23-cl
-sm,symalb,HC_HP_LF,T23-cl
-sm,acegla,HC_HP_LF,T24--14
-sm,menfer,HC_HP_LF,T24--1
-sm,popbal,HC_HP_LF,T24--12
-sm,acegla,HC_HP_LF,T25--5
-sm,betpap,HC_HP_LF,T25--9
-sm,corsto,HC_HP_LF,T25--9
-sm,vibedu,HC_HP_LF,T25--11
-sm,alninc,HC_HP_LF,T26-3
-sm,alnvir,HC_HP_LF,T26-2
-sm,menfer,HC_HP_LF,T26-#3
-sm,popbal,HC_HP_LF,T26-12
-sm,alninc,HC_HP_LF,T27-1
-sm,corsto,HC_HP_LF,T27-11
-sm,poptre,HC_HP_LF,T27-7
-sm,symalb,HC_HP_LF,T27-3
-sm,corsto,HC_HP_LF,T28-13
-sm,loninv,HC_HP_LF,T28-5-branched
-sm,loninv,HC_HP_LF,T28-10
-sm,rubpar,HC_HP_LF,T28
-sm,poptre,HC_HP_LF,T29-2
-sm,spipyr,HC_HP_LF,T29
-sm,shecan,HC_HP_LF,T29--10
-sm,vibedu,HC_HP_LF,T29-3
-sm,betpap,HC_HP_LF,T3-6
-sm,sorsco,HC_HP_LF,T3-xx
-sm,sorsco,HC_HP_LF,T3-xx
-sm,shecan,HC_HP_LF,T3-12
-sm,vacmem,HC_HP_LF,T3-oct25
-sm,corsto,HC_HP_LF,T30-13
-sm,poptre,HC_HP_LF,T30-B
-sm,rubpar,HC_HP_LF,T30
-sm,spipyr,HC_HP_LF,T30-b38
-sm,alninc,HC_HP_LF,T31-5
-sm,loninv,HC_HP_LF,T31-A
-sm,menfer,HC_HP_LF,T31-9
-sm,rubpar,HC_HP_LF,T31-w/ 10
-sm,alnvir,HC_HP_LF,T32-10
-sm,riblac,HC_HP_LF,T32-A
-sm,sorsco,HC_HP_LF,T32-12
-sm,vacmem,HC_HP_LF,T32-oct21
-sm,popbal,HC_HP_LF,T33-onion E
-sm,symalb,HC_HP_LF,T33
-sm,spipyr,HC_HP_LF,T33
-sm,symalb,HC_HP_LF,T33
-sm,riblac,HC_HP_LF,T34-D
-sm,symalb,HC_HP_LF,T34
-sm,sorsco,HC_HP_LF,T34-xx
-sm,spipyr,HC_HP_LF,T34
-sm,alnvir,HC_HP_LF,T35-10
-sm,riblac,HC_HP_LF,T35-6
-sm,spibet,HC_HP_LF,T35-A25
-sm,amealn,HC_HP_LF,T36-5
-sm,spipyr,HC_HP_LF,T36--b28
-sm,spipyr,HC_HP_LF,T36--b30
-sm,sorsco,HC_HP_LF,T36-12
-sm,amealn,HC_HP_LF,T37-7
-sm,poptre,HC_HP_LF,T37-8
-sm,vibedu,HC_HP_LF,T37-A
-sm,shecan,HC_HP_LF,T37-10
-sm,alninc,HC_HP_LF,T38-5
-sm,alnvir,HC_HP_LF,T38-19
-sm,riblac,HC_HP_LF,T38-11
-sm,riblac,HC_HP_LF,T38-12
-sm,loninv,HC_HP_LF,T39-10
-sm,rubpar,HC_HP_LF,T39
-sm,symalb,HC_HP_LF,T39
-sm,sorsco,HC_HP_LF,T39
-sm,alninc,HC_HP_LF,T4- 5
-sm,poptre,HC_HP_LF,T4-7
-sm,rubpar,HC_HP_LF,T4-w/10
-sm,sorsco,HC_HP_LF,T4-5
-sm,alninc,HC_HP_LF,T40-1
-sm,alnvir,HC_HP_LF,T40-1
-sm,spibet,HC_HP_LF,T40-A14
-sm,vacmem,HC_HP_LF,T40-oct21
-sm,loninv,HC_HP_LF,T5-10
-sm,popbal,HC_HP_LF,T5-8
-sm,rubpar,HC_HP_LF,T5
-sm,spibet,HC_HP_LF,T5
-sm,betpap,HC_HP_LF,T6-B
-sm,corsto,HC_HP_LF,T6-13
-sm,vibedu,HC_HP_LF,T6-3
-sm,menfer,HC_HP_LF,T7-13
-sm,spibet,HC_HP_LF,T7
-sm,spipyr,HC_HP_LF,T7
-sm,vacmem,HC_HP_LF,T7-oct21
-sm,betpap,HC_HP_LF,T8-6
-sm,riblac,HC_HP_LF,T8-9
-sm,spibet,HC_HP_LF,T8-
-sm,sorsco,HC_HP_LF,T8
-sm,menfer,HC_HP_LF,T9-#3
-sm,poptre,HC_HP_LF,T9-8
-sm,spibet,HC_HP_LF,T9
-Shecan8,,,
-sm,menfer,HC_LP_HF,T1-3
-sm,spipyr,HC_LP_HF,T1
-sm,vibedu,HC_LP_HF,T1-3
-Shecan11,,,
-sm,menfer,HC_LP_HF,T10-13
-sm,spibet,HC_LP_HF,T10
-sm,sorsco,HC_LP_HF,T10-xx
-sm,vacmem,HC_LP_HF,T10-oct21
-sm,alnvir,HC_LP_HF,T11-6
-sm,corsto,HC_LP_HF,T11-8
-sm,riblac,HC_LP_HF,T11-2
-sm,vibedu,HC_LP_HF,T11-11
-sm,amealn,HC_LP_HF,T12-6
-Shecan12,,,
-sm,corsto,HC_LP_HF,T12-10
-sm,loninv,HC_LP_HF,T12-9
-sm,symalb,HC_LP_HF,T12-cl
-sm,alninc,HC_LP_HF,T13-1
-sm,corsto,HC_LP_HF,T13-9
-sm,popbal,HC_LP_HF,T13-4
-sm,alnvir,HC_LP_HF,T14-6
-sm,rubpar,HC_LP_HF,T14-w/10
-sm,sorsco,HC_LP_HF,T14-12
-sm,vibedu,HC_LP_HF,T14-9
-sm,betpap,HC_LP_HF,T15-6
-sm,poptre,HC_LP_HF,T15-8
-sm,symalb,HC_LP_HF,T15-cl
-sm,symalb,HC_LP_HF,T15-clw
-sm,corsto,HC_LP_HF,T16-b
-sm,spipyr,HC_LP_HF,T16-b41
-sm,sorsco,HC_LP_HF,T16
-Shecan6,,,
-sm,alnvir,HC_LP_HF,T17-2
-sm,poptre,HC_LP_HF,T17-C
-sm,riblac,HC_LP_HF,T17-2
-sm,spibet,HC_LP_HF,T17-A22
-sm,betpap,HC_LP_HF,T18-6
-sm,popbal,HC_LP_HF,T18-A
-sm,poptre,HC_LP_HF,T18-8
-sm,rubpar,HC_LP_HF,T18-w/10
-sm,alninc,HC_LP_HF,T19-4
-sm,loninv,HC_LP_HF,T19-11
-sm,symalb,HC_LP_HF,T19-3
-sm,spibet,HC_LP_HF,T19-A19
-sm,menfer,HC_LP_HF,T2-13
-sm,symalb,HC_LP_HF,T2-9
-sm,sorsco,HC_LP_HF,T2
-sm,spipyr,HC_LP_HF,T2
-sm,acegla,HC_LP_HF,T20-14
-sm,loninv,HC_LP_HF,T20--5
-sm,poptre,HC_LP_HF,T20--2
-sm,alninc,HC_LP_HF,T21-4
-sm,popbal,HC_LP_HF,T21-4
-sm,riblac,HC_LP_HF,T21-11
-sm,riblac,HC_LP_HF,T21--2
-sm,acegla,HC_LP_HF,T22--13
-sm,menfer,HC_LP_HF,T22--1
-sm,poptre,HC_LP_HF,T22--#2
-sm,spipyr,HC_LP_HF,T22--B4
-sm,alninc,HC_LP_HF,T23--5
-sm,betpap,HC_LP_HF,T23--B
-sm,poptre,HC_LP_HF,T23--D
-sm,sorsco,HC_LP_HF,T23--7
-sm,betpap,HC_LP_HF,T24-6
-sm,riblac,HC_LP_HF,T24-9
-sm,sorsco,HC_LP_HF,T24
-sm,vibedu,HC_LP_HF,T24-3
-Shecan12,,,
-sm,corsto,HC_LP_HF,T25-c
-sm,popbal,HC_LP_HF,T25-8
-sm,rubpar,HC_LP_HF,T25
-sm,sorsco,HC_LP_HF,T25
-sm,acegla,HC_LP_HF,T26--15
-sm,betpap,HC_LP_HF,T26--9
-sm,sorsco,HC_LP_HF,T26--6
-sm,spipyr,HC_LP_HF,T26--9
-sm,alninc,HC_LP_HF,T27--5
-sm,alnvir,HC_LP_HF,T27--19
-sm,riblac,HC_LP_HF,T27-10
-sm,sorsco,HC_LP_HF,T27-7
-sm,acegla,HC_LP_HF,T28--11
-sm,loninv,HC_LP_HF,T28--11
-sm,menfer,HC_LP_HF,T28--1
-sm,symalb,HC_LP_HF,T28--cl
-sm,alnvir,HC_LP_HF,T29-2
-sm,popbal,HC_LP_HF,T29-onionB
-sm,riblac,HC_LP_HF,T29-2
-sm,vibedu,HC_LP_HF,T29-6
-sm,loninv,HC_LP_HF,T3-9
-sm,poptre,HC_LP_HF,T3-10
-sm,sorsco,HC_LP_HF,T3
-sm,sorsco,HC_LP_HF,T3
-sm,alninc,HC_LP_HF,T30--3
-sm,alninc,HC_LP_HF,T30--4
-sm,corsto,HC_LP_HF,T30--5
-sm,rubpar,HC_LP_HF,T30--with 10
-sm,alnvir,HC_LP_HF,T31-6
-sm,menfer,HC_LP_HF,T31-9
-sm,sorsco,HC_LP_HF,T31-12
-sm,amealn,HC_LP_HF,T32-5
-sm,menfer,HC_LP_HF,T32-12
-sm,symalb,HC_LP_HF,T32
-sm,sorsco,HC_LP_HF,T32-1
-sm,corsto,HC_LP_HF,T33-C
-sm,poptre,HC_LP_HF,T33-10
-sm,spibet,HC_LP_HF,T33-BB1
-Shecan10,,,
-sm,amealn,HC_LP_HF,T34-3
-sm,rubpar,HC_LP_HF,T34-cl
-sm,rubpar,HC_LP_HF,T34-cl
-sm,spipyr,HC_LP_HF,T34-B32
-sm,amealn,HC_LP_HF,T35-A
-sm,rubpar,HC_LP_HF,T35-cl
-sm,spibet,HC_LP_HF,T35-A33
-sm,sorsco,HC_LP_HF,T35-1
-sm,acegla,HC_LP_HF,T36--11
-sm,betpap,HC_LP_HF,T36--B
-sm,popbal,HC_LP_HF,T36--3
-sm,spipyr,HC_LP_HF,T36--area w/9
-sm,betpap,HC_LP_HF,T37-2
-sm,vacmem,HC_LP_HF,T37-oct25
-sm,vacmem,HC_LP_HF,T37-oct25
-sm,vacmem,HC_LP_HF,T37-oct25
-sm,alninc,HC_LP_HF,T38-1
-sm,popbal,HC_LP_HF,T38-8
-sm,spibet,HC_LP_HF,T38-A20
-sm,spipyr,HC_LP_HF,T38-B20
-sm,amealn,HC_LP_HF,T39-A
-sm,menfer,HC_LP_HF,T39-2
-sm,symalb,HC_LP_HF,T39-cl
-sm,vacmem,HC_LP_HF,T39-oct25
-sm,amealn,HC_LP_HF,T4--7
-sm,alnvir,HC_LP_HF,T4--10
-sm,rubpar,HC_LP_HF,T4--cl
-sm,vacmem,HC_LP_HF,T4--Oct21
-sm,acegla,HC_LP_HF,T40--14
-sm,riblac,HC_LP_HF,T40--11
-sm,sorsco,HC_LP_HF,T40--11
-sm,acegla,HC_LP_HF,T5--14
-sm,loninv,HC_LP_HF,T5--5
-sm,spibet,HC_LP_HF,T5--A8
-sm,vacmem,HC_LP_HF,T5--10
-sm,alnvir,HC_LP_HF,T6--6
-sm,betpap,HC_LP_HF,T6--11
-sm,vibedu,HC_LP_HF,T6-5
-sm,vibedu,HC_LP_HF,T6-6
-sm,amealn,HC_LP_HF,T7-6
-sm,corsto,HC_LP_HF,T7-10
-sm,popbal,HC_LP_HF,T7-5
-sm,sorsco,HC_LP_HF,T7-12
-sm,loninv,HC_LP_HF,T8-5
-sm,vibedu,HC_LP_HF,T8
-sm,vacmem,HC_LP_HF,T8-oct25
-Shecan7,,,
-sm,amealn,HC_LP_HF,T9--7
-sm,acegla,HC_LP_HF,T9--10
-sm,loninv,HC_LP_HF,T9--11
-sm,spibet,HC_LP_HF,T9--A3
-sm,alninc,HC_LP_LF,T1-4
-sm,loninv,HC_LP_LF,T1-11
-sm,sorsco,HC_LP_LF,T1-5
-sm,betpap,HC_LP_LF,T10-6
-sm,menfer,HC_LP_LF,T10-8
-sm,spibet,HC_LP_LF,T10-A36
-sm,spipyr,HC_LP_LF,T10-b35
-sm,menfer,HC_LP_LF,T11-12
-sm,rubpar,HC_LP_LF,T11
-sm,spibet,HC_LP_LF,T11
-Shecan6,,,
-sm,acegla,HC_LP_LF,T12--11
-sm,betpap,HC_LP_LF,T12--B
-sm,poptre,HC_LP_LF,T12--11
-sm,loninv,HC_LP_LF,T13-10
-sm,sorsco,HC_LP_LF,T13-xx
-sm,vibedu,HC_LP_LF,T13-3
-Shecan11,,,
-sm,amealn,HC_LP_LF,T14-6
-sm,alnvir,HC_LP_LF,T14-6
-sm,vacmem,HC_LP_LF,T14-oct21
-sm,loninv,HC_LP_LF,T15-10
-sm,symalb,HC_LP_LF,T15
-sm,spibet,HC_LP_LF,T15
-sm,spipyr,HC_LP_LF,T15
-sm,menfer,HC_LP_LF,T16-13
-sm,spipyr,HC_LP_LF,T16
-sm,vibedu,HC_LP_LF,T16-3
-Shecan8,,,
-sm,alnvir,HC_LP_LF,T17-6
-sm,betpap,HC_LP_LF,T17-5
-sm,sorsco,HC_LP_LF,T17-12
-sm,sorsco,HC_LP_LF,T17-11
-sm,menfer,HC_LP_LF,T18-13
-sm,riblac,HC_LP_LF,T18-3b
-sm,spibet,HC_LP_LF,T18
-sm,spibet,HC_LP_LF,T18
-sm,betpap,HC_LP_LF,T19-A
-sm,sorsco,HC_LP_LF,T19
-sm,vibedu,HC_LP_LF,T19-3
-sm,shecan,HC_LP_LF,T19-12
-sm,amealn,HC_LP_LF,T2-7
-sm,corsto,HC_LP_LF,T-10
-sm,riblac,HC_LP_LF,T2-3
-sm,spipyr,HC_LP_LF,T2-B28
-sm,corsto,HC_LP_LF,T20-C
-sm,loninv,HC_LP_LF,T20-10
-sm,popbal,HC_LP_LF,T20-8
-sm,sorsco,HC_LP_LF,T20-xx
-sm,riblac,HC_LP_LF,T21-D
-sm,rubpar,HC_LP_LF,T21
-sm,vibedu,HC_LP_LF,T21-E
-sm,vacmem,HC_LP_LF,T21-oct21
-sm,riblac,HC_LP_LF,T22-D
-sm,shecan8,HC_LP_LF,T22
-sm,vacmem,HC_LP_LF,T22-oct21
-sm,amealn,HC_LP_LF,T23-3
-sm,alninc,HC_LP_LF,T23-1
-sm,popbal,HC_LP_LF,T23-8
-sm,rubpar,HC_LP_LF,T23-cl
-sm,popbal,HC_LP_LF,T24
-sm,poptre,HC_LP_LF,T24
-sm,symalb,HC_LP_LF,T24
-sm,sorsco,HC_LP_LF,T24
-sm,acegla,HC_LP_LF,T25--13
-sm,riblac,HC_LP_LF,T25--11
-sm,spipyr,HC_LP_LF,T25--b8
-sm,vibedu,HC_LP_LF,T25--2
-sm,betpap,HC_LP_LF,T26-6
-sm,poptre,HC_LP_LF,T26-8
-sm,symalb,HC_LP_LF,T26
-sm,sorsco,HC_LP_LF,T26-XX
-sm,riblac,HC_LP_LF,T27-D
-sm,symalb,HC_LP_LF,T27
-sm,spibet,HC_LP_LF,T27
-sm,vacmem,HC_LP_LF,T27-oct21
-sm,amealn,HC_LP_LF,T28-6
-sm,amealn,HC_LP_LF,T28-A
-Shecan10,,,
-sm,loninv,HC_LP_LF,T28-5
-sm,spipyr,HC_LP_LF,T28-B26
-sm,alninc,HC_LP_LF,T29--3
-sm,alninc,HC_LP_LF,T29--4
-sm,betpap,HC_LP_LF,T29--a
-sm,betpap,HC_LP_LF,T29--b
-sm,loninv,HC_LP_LF,T3-7
-sm,popbal,HC_LP_LF,T3-A
-sm,riblac,HC_LP_LF,T3-3
-sm,sorsco,HC_LP_LF,T3--xx
-sm,amealn,HC_LP_LF,T30-3
-sm,alninc,HC_LP_LF,T30-2
-sm,alnvir,HC_LP_LF,T30-2
-sm,spipyr,HC_LP_LF,T30-b12
-sm,amealn,HC_LP_LF,T31-7
-sm,alninc,HC_LP_LF,T31-1
-sm,menfer,HC_LP_LF,T31-1
-sm,symalb,HC_LP_LF,T31-2
-sm,acegla,HC_LP_LF,T32--15
-sm,betpap,HC_LP_LF,T32--A
-sm,popbal,HC_LP_LF,T32--3
-sm,spibet,HC_LP_LF,T32--A6
-sm,corsto,HC_LP_LF,T33-8
-sm,popbal,HC_LP_LF,T33-8
-sm,rubpar,HC_LP_LF,T33
-sm,sorsco,HC_LP_LF,T33
-Shecan6,,,
-sm,alnvir,HC_LP_LF,T34-2
-sm,alnvir,HC_LP_LF,T34-6
-sm,corsto,HC_LP_LF,T34-9
-sm,vibedu,HC_LP_LF,T34-9
-sm,amealn,HC_LP_LF,T35-1
-sm,alninc,HC_LP_LF,T35-1
-sm,poptre,HC_LP_LF,T35-7
-sm,vacmem,HC_LP_LF,T35-oct 21
-sm,alninc,HC_LP_LF,T36- 4
-sm,corsto,HC_LP_LF,T36-9
-sm,corsto,HC_LP_LF,T36-5
-sm,vibedu,HC_LP_LF,T36-6
-sm,loninv,HC_LP_LF,T37-11
-sm,rubpar,HC_LP_LF,T37-w/10
-sm,sorsco,HC_LP_LF,T37-xx
-sm,spipyr,HC_LP_LF,T37
-sm,menfer,HC_LP_LF,T38-3
-sm,poptre,HC_LP_LF,T38-7
-sm,sorsco,HC_LP_LF,T38-xx
-sm,vacmem,HC_LP_LF,T38-oct21
-sm,acegla,HC_LP_LF,T39--13
-sm,symalb,HC_LP_LF,T39--cl
-sm,spibet,HC_LP_LF,T39--a11
-sm,vacmem,HC_LP_LF,T39--oct21
-sm,acegla,HC_LP_LF,T4--9
-sm,alnvir,HC_LP_LF,T4--10
-sm,corsto,HC_LP_LF,T4--9
-sm,menfer,HC_LP_LF,T4--3
-sm,acegla,HC_LP_LF,T40--7
-sm,alnvir,HC_LP_LF,T40--19
-sm,poptre,HC_LP_LF,T40--#1
-sm,rubpar,HC_LP_LF,T40-cl
-sm,poptre,HC_LP_LF,T5-b
-sm,rubpar,HC_LP_LF,T5
-sm,shecan,HC_LP_LF,T5-10
-sm,vibedu,HC_LP_LF,T5-3
-sm,alnvir,HC_LP_LF,T6-2
-sm,symalb,HC_LP_LF,T6-2
-sm,sorsco,HC_LP_LF,T6
-sm,sorsco,HC_LP_LF,T6
-sm,acegla,HC_LP_LF,T7--10
-sm,poptre,HC_LP_LF,T7--D
-sm,riblac,HC_LP_LF,T7--11
-sm,symalb,HC_LP_LF,T7--2
-sm,corsto,HC_LP_LF,T8-8
-sm,popbal,HC_LP_LF,T8-8
-sm,rubpar,HC_LP_LF,T8
-sm,vacmem,HC_LP_LF,T8-oct25
-sm,acegla,HC_LP_LF,T9--14
-sm,loninv,HC_LP_LF,T9--10
-sm,menfer,HC_LP_LF,T9--12
-sm,popbal,HC_LP_LF,T9--12
-sm,amealn,LC_HP_HF,T1-A
-sm,loninv,LC_HP_HF,T1-5
-sm,popbal,LC_HP_HF,T1-C
-Shecan7,,,
-sm,riblac,LC_HP_HF,T10-D
-sm,rubpar,LC_HP_HF,T10
-sm,symalb,LC_HP_HF,T10
-sm,symalb,LC_HP_HF,T10
-sm,rubpar,LC_HP_HF,T11
-sm,sorsco,LC_HP_HF,T11--xx
-sm,spipyr,LC_HP_HF,T11
-sm,vacmem,LC_HP_HF,T11-oct21
-sm,corsto,LC_HP_HF,T12-A
-sm,loninv,LC_HP_HF,T12-7
-sm,poptre,LC_HP_HF,T12-8
-sm,symalb,LC_HP_HF,T12
-sm,alnvir,LC_HP_HF,T13-10
-sm,corsto,LC_HP_HF,T13-8
-sm,rubpar,LC_HP_HF,T13cl
-sm,sorsco,LC_HP_HF,T13-11
-sm,acegla,LC_HP_HF,T14--10
-sm,alninc,LC_HP_HF,T14--4
-sm,popbal,LC_HP_HF,T14--3
-sm,menfer,LC_HP_HF,T15-3
-sm,rubpar,LC_HP_HF,T15
-sm,spipyr,LC_HP_HF,T15
-Shecan11,,,
-sm,alninc,LC_HP_HF,T16--2
-sm,alnvir,LC_HP_HF,T16--10
-sm,corsto,LC_HP_HF,T16--11
-sm,vacmem,LC_HP_HF,T16-oct21
-sm,popbal,LC_HP_HF,T17-8
-sm,spibet,LC_HP_HF,T17
-sm,symalb,LC_HP_HF,T17
-sm,vibedu,LC_HP_HF,T17-3
-sm,amealn,LC_HP_HF,T18-A
-sm,loninv,LC_HP_HF,T18-5
-sm,symalb,LC_HP_HF,T18-cl
-sm,sorsco,LC_HP_HF,T18-A
-sm,acegla,LC_HP_HF,T19--13
-sm,poptre,LC_HP_HF,T19--D
-sm,riblac,LC_HP_HF,T19--8
-sm,spibet,LC_HP_HF,T19--A9
-sm,loninv,LC_HP_HF,T2-7
-sm,popbal,LC_HP_HF,T2-A
-sm,riblac,LC_HP_HF,T2-3B
-sm,shecan,LC_HP_HF,T2-13
-sm,alnvir,LC_HP_HF,T20-6
-sm,betpap,LC_HP_HF,T20-10
-sm,rubpar,LC_HP_HF,T20-cl
-sm,sorsco,LC_HP_HF,T20-11
-sm,amealn,LC_HP_HF,T21-7
-sm,amealn,LC_HP_HF,T21-3
-sm,alninc,LC_HP_HF,T21-5
-sm,menfer,LC_HP_HF,T21-#3
-sm,corsto,LC_HP_HF,T22-A
-sm,riblac,LC_HP_HF,T22-3
-sm,spibet,LC_HP_HF,T22
-sm,spipyr,LC_HP_HF,T22
-Shecan10,,,
-sm,alnvir,LC_HP_HF,T23-2
-sm,betpap,LC_HP_HF,T23-10
-sm,menfer,LC_HP_HF,T23-8
-sm,acegla,LC_HP_HF,T24--10
-sm,alnvir,LC_HP_HF,T24--19
-sm,loninv,LC_HP_HF,T24--11
-sm,sorsco,LC_HP_HF,T24--12
-sm,poptre,LC_HP_HF,T25-C
-sm,symalb,LC_HP_HF,T25
-sm,spipyr,LC_HP_HF,T25
-ShecanA,,,
-sm,acegla,LC_HP_HF,T26--2
-sm,acegla,LC_HP_HF,T26--9
-sm,loninv,LC_HP_HF,T26--11
-sm,poptre,LC_HP_HF,T26--D
-sm,alninc,LC_HP_HF,T27--1
-sm,poptre,LC_HP_HF,T27--C
-sm,symalb,LC_HP_HF,T27--2
-sm,acegla,LC_HP_HF,T28--9
-sm,alninc,LC_HP_HF,T28--2
-sm,alnvir,LC_HP_HF,T28--19
-sm,poptre,LC_HP_HF,T28--D
-sm,shecan,LC_HP_HF,T29-7
-sm,spipyr,LC_HP_HF,T29
-sm,spipyr,LC_HP_HF,T29
-sm,shecan,LC_HP_HF,T29-11
-sm,amealn,LC_HP_HF,T3-6
-sm,corsto,LC_HP_HF,T3-10
-sm,menfer,LC_HP_HF,T3-9
-sm,spibet,LC_HP_HF,T3-A27
-Shecan12,,,
-sm,popbal,LC_HP_HF,T30-8
-sm,rubpar,LC_HP_HF,T30
-sm,spipyr,LC_HP_HF,T30
-sm,vacmem,LC_HP_HF,T30-oct21
-sm,amealn,LC_HP_HF,T31-7
-sm,alninc,LC_HP_HF,T31-5
-sm,betpap,LC_HP_HF,T31-A
-sm,loninv,LC_HP_HF,T31-?
-sm,alnvir,LC_HP_HF,T32-6
-sm,betpap,LC_HP_HF,T32-10
-sm,popbal,LC_HP_HF,T32-onionB
-sm,rubpar,LC_HP_HF,T32-w/10
-sm,acegla,LC_HP_HF,T33-13
-sm,spipyr,LC_HP_HF,T33--b12
-sm,vibedu,LC_HP_HF,T33--4
-sm,amealn,LC_HP_HF,T34-1
-sm,alninc,LC_HP_HF,T34-5
-sm,riblac,LC_HP_HF,T34-7
-sm,vibedu,LC_HP_HF,T34-2
-sm,betpap,LC_HP_HF,T35-6
-sm,menfer,LC_HP_HF,T35-2
-sm,menfer,LC_HP_HF,T35-11
-sm,symalb,LC_HP_HF,T35
-sm,acegla,LC_HP_HF,T36--13
-sm,sorsco,LC_HP_HF,T36--11
-sm,vibedu,LC_HP_HF,T36--11
-sm,vibedu,LC_HP_HF,T36--2
-sm,poptre,LC_HP_HF,T37--b
-sm,symalb,LC_HP_HF,T37
-sm,vibedu,LC_HP_HF,T37-3
-sm,symalb,LC_HP_HF,T38
-sm,symalb,LC_HP_HF,T38
-sm,spibet,LC_HP_HF,T38
-sm,vacmem,LC_HP_HF,T38-oct21
-sm,betpap,LC_HP_HF,T39-6
-sm,menfer,LC_HP_HF,T39-#3
-sm,sorsco,LC_HP_HF,T39-11
-sm,vacmem,LC_HP_HF,T39-oct25
-sm,menfer,LC_HP_HF,T4-1
-sm,popbal,LC_HP_HF,T4-8
-sm,spibet,LC_HP_HF,T4
-sm,spibet,LC_HP_HF,T4
-sm,amealn,LC_HP_HF,T40-5
-sm,alninc,LC_HP_HF,T40-1
-sm,symalb,LC_HP_HF,T40-cl
-sm,vibedu,LC_HP_HF,T40-4
-sm,betpap,LC_HP_HF,T5-6
-sm,loninv,LC_HP_HF,T5-5
-sm,spibet,LC_HP_HF,T5-A36
-sm,vibedu,LC_HP_HF,T5-2
-sm,alnvir,LC_HP_HF,T6-2
-sm,symalb,LC_HP_HF,T6-cl
-sm,sorsco,LC_HP_HF,T6-11
-sm,vacmem,LC_HP_HF,T6-8
-sm,corsto,LC_HP_HF,T7-8-straight
-sm,corsto,LC_HP_HF,T7-A
-sm,popbal,LC_HP_HF,T7-8
-sm,riblac,LC_HP_HF,T7-3
-sm,betpap,LC_HP_HF,T8-6
-sm,corsto,LC_HP_HF,T8-10
-sm,riblac,LC_HP_HF,T8-12(skinny
-sm,riblac,LC_HP_HF,T8-9
-sm,poptre,LC_HP_HF,T9-8
-sm,rubpar,LC_HP_HF,T9-w10
-sm,vacmem,LC_HP_HF,T9-oct21
-sm,vacmem,LC_HP_HF,T9-oct21
-sm,acegla,LC_HP_LF,T1--11
-sm,corsto,LC_HP_LF,T1--11
-sm,spibet,LC_HP_LF,T1--A7
-sm,riblac,LC_HP_LF,T10-3b
-sm,riblac,LC_HP_LF,T10-3b
-sm,shecan,LC_HP_LF,T10-8
-sm,amealn,LC_HP_LF,T11--7
-sm,acegla,LC_HP_LF,T11--9
-sm,alninc,LC_HP_LF,T11--4
-sm,symalb,LC_HP_LF,T11--3
-sm,amealn,LC_HP_LF,T12-1
-sm,alninc,LC_HP_LF,T12--1
-sm,sorsco,LC_HP_LF,T12-7
-sm,vibedu,LC_HP_LF,T12-4
-sm,betpap,LC_HP_LF,T13-10
-sm,menfer,LC_HP_LF,T13-2
-sm,rubpar,LC_HP_LF,T13-cl
-sm,sorsco,LC_HP_LF,T13-1
-sm,acegla,LC_HP_LF,T14--7
-sm,alnvir,LC_HP_LF,T14--10
-sm,rubpar,LC_HP_LF,T14-cl
-sm,rubpar,LC_HP_LF,T14-cl
-sm,corsto,LC_HP_LF,T15-A
-sm,poptre,LC_HP_LF,T15-C
-sm,symalb,LC_HP_LF,T15
-sm,symalb,LC_HP_LF,T15
-sm,alnvir,LC_HP_LF,T16-2
-sm,riblac,LC_HP_LF,T16-2
-sm,sorsco,LC_HP_LF,T16-11
-sm,vibedu,LC_HP_LF,T16-9
-sm,amealn,LC_HP_LF,T17-7
-sm,loninv,LC_HP_LF,T17-10
-sm,riblac,LC_HP_LF,T17-3
-sm,vibedu,LC_HP_LF,T17-10
-Shecan10,,,
-sm,acegla,LC_HP_LF,T18 --2
-sm,acegla,LC_HP_LF,T18--9
-sm,alninc,LC_HP_LF,T18--2
-sm,sorsco,LC_HP_LF,T18--12
-sm,loninv,LC_HP_LF,T19-11
-sm,riblac,LC_HP_LF,T19-3
-sm,spibet,LC_HP_LF,T19
-sm,spipyr,LC_HP_LF,T19
-sm,amealn,LC_HP_LF,T2-3
-sm,poptre,LC_HP_LF,T2-10
-sm,spibet,LC_HP_LF,T2-A29
-Shecan7,,,
-sm,poptre,LC_HP_LF,T20-D
-sm,rubpar,LC_HP_LF,T20
-sm,spibet,LC_HP_LF,T20
-sm,spipyr,LC_HP_LF,T20
-sm,amealn,LC_HP_LF,T21-3
-sm,alnvir,LC_HP_LF,T21-2
-sm,sorsco,LC_HP_LF,T21-12
-sm,corsto,LC_HP_LF,T22-A
-sm,loninv,LC_HP_LF,T22-7
-sm,menfer,LC_HP_LF,T22-13
-sm,popbal,LC_HP_LF,T22-8
-sm,riblac,LC_HP_LF,T23-3b
-sm,spibet,LC_HP_LF,T23
-sm,spipyr,LC_HP_LF,T23
-sm,vibedu,LC_HP_LF,T23-3
-sm,betpap,LC_HP_LF,T24-10
-sm,sorsco,LC_HP_LF,T24
-sm,sorsco,LC_HP_LF,T24
-sm,vibedu,LC_HP_LF,T24
-sm,popbal,LC_HP_LF,T25-8
-sm,poptre,LC_HP_LF,T25-B
-sm,spibet,LC_HP_LF,T25
-sm,Shecan,LC_HP_LF,T25
-sm,amealn,LC_HP_LF,T26-7
-sm,betpap,LC_HP_LF,T26-6
-sm,rubpar,LC_HP_LF,T26-w10
-sm,vacmem,LC_HP_LF,T26oct 21
-sm,amealn,LC_HP_LF,T27-6
-sm,alnvir,LC_HP_LF,T27-6
-sm,sorsco,LC_HP_LF,T27-12
-sm,vacmem,LC_HP_LF,T27-oct 21
-sm,alninc,LC_HP_LF,T28-1
-sm,corsto,LC_HP_LF,T28-11
-sm,spibet,LC_HP_LF,T28-A17
-sm,sorsco,LC_HP_LF,T28-5
-sm,alninc,LC_HP_LF,T29-5
-sm,symalb,LC_HP_LF,T29-cl
-sm,vacmem,LC_HP_LF,T29-cl
-sm,vacmem,LC_HP_LF,T29-cl
-sm,betpap,LC_HP_LF,T3-5
-sm,loninv,LC_HP_LF,T3-5
-sm,menfer,LC_HP_LF,T3-8
-sm,symalb,LC_HP_LF,T3-cl
-sm,amealn,LC_HP_LF,T30-3
-sm,alninc,LC_HP_LF,T30-1
-sm,poptre,LC_HP_LF,T30-C
-sm,spipyr,LC_HP_LF,T30-B15
-sm,loninv,LC_HP_LF,T31-10
-sm,riblac,LC_HP_LF,T31-9
-sm,riblac,LC_HP_LF,T31-3b
-sm,sorsco,LC_HP_LF,T31-xx
-Shecan11,,,
-sm,loninv,LC_HP_LF,T32-10
-sm,poptre,LC_HP_LF,T32-D
-sm,sorsco,LC_HP_LF,T32-cx
-sm,vibedu,LC_HP_LF,T32-3
-sm,alninc,LC_HP_LF,T33-1
-sm,popbal,LC_HP_LF,T33-8
-sm,symalb,LC_HP_LF,T33-2
-sm,spipyr,LC_HP_LF,T33-b21
-sm,alnvir,LC_HP_LF,T34-2
-sm,menfer,LC_HP_LF,T34-8
-sm,poptre,LC_HP_LF,T34-8
-sm,sorsco,LC_HP_LF,T34-11
-sm,acegla,LC_HP_LF,T35-11
-sm,menfer,LC_HP_LF,T35--#3
-sm,rubpar,LC_HP_LF,T35--cl
-sm,spipyr,LC_HP_LF,T35--b5
-sm,corsto,LC_HP_LF,T36-A
-sm,menfer,LC_HP_LF,T36-13
-sm,symalb,LC_HP_LF,T36
-sm,spipyr,LC_HP_LF,T36
-sm,alninc,LC_HP_LF,T37-5
-sm,betpap,LC_HP_LF,T37-1
-sm,menfer,LC_HP_LF,T37-#3
-sm,vacmem,LC_HP_LF,T37-oct21`
-sm,alnvir,LC_HP_LF,T38-6
-sm,alnvir,LC_HP_LF,T38-10
-sm,corsto,LC_HP_LF,T38-12
-sm,vibedu,LC_HP_LF,T38-9
-sm,corsto,LC_HP_LF,T39-A
-sm,symalb,LC_HP_LF,T39
-sm,spipyr,LC_HP_LF,T39
-sm,vibedu,LC_HP_LF,T39-3
-sm,popbal,LC_HP_LF,T4-8
-sm,poptre,LC_HP_LF,T4-C
-sm,vacmem,LC_HP_LF,T4-oct21
-Sm,shecan,LC_HP_LF,T4-7
-sm,betpap,LC_HP_LF,T40-5
-sm,corsto,LC_HP_LF,T40-b
-sm,sorsco,LC_HP_LF,T40-A
-sm,vacmem,LC_HP_LF,T40-oct 25
-sm,betpap,LC_HP_LF,T5-5
-sm,loninv,LC_HP_LF,T5-5
-sm,popbal,LC_HP_LF,T5-A
-sm,spibet,LC_HP_LF,T5-A34
-sm,betpap,LC_HP_LF,T6-10
-sm,loninv,LC_HP_LF,T6-9
-sm,rubpar,LC_HP_LF,T6-cl
-sm,rubpar,LC_HP_LF,T6-cl
-Shecan7,,,
-sm,alnvir,LC_HP_LF,T7-6
-sm,sorsco,LC_HP_LF,T7-12
-sm,vacmem,LC_HP_LF,T7-oct21
-sm,acegla,LC_HP_LF,T8--13
-sm,menfer,LC_HP_LF,T8--9
-sm,popbal,LC_HP_LF,T8--12
-sm,popbal,LC_HP_LF,T8--3
-sm,acegla,LC_HP_LF,T9--13
-sm,popbal,LC_HP_LF,T9--12
-sm,sorsco,LC_HP_LF,T9--7
-sm,amealn,LC_LP_HF,T1-1
-sm,alnvir,LC_LP_HF,T1-6
-sm,betpap,LC_LP_HF,T1-A
-sm,sorsco,LC_LP_HF,T1-11
-sm,acegla,LC_LP_HF,T10--11
-sm,poptre,LC_LP_HF,T10--C
-sm,rubpar,LC_LP_HF,T10-cl
-sm,vacmem,LC_LP_HF,T10--oct21/8
-sm,acegla,LC_LP_HF,T11--15
-sm,betpap,LC_LP_HF,T11--A
-sm,symalb,LC_LP_HF,T11--cl
-sm,alninc,LC_LP_HF,T12-2
-sm,alnvir,LC_LP_HF,T12-3
-sm,corsto,LC_LP_HF,T12-11
-sm,spipyr,LC_LP_HF,T12-b13
-sm,alnvir,LC_LP_HF,T13-6
-sm,poptre,LC_LP_HF,T13-8
-sm,spibet,LC_LP_HF,T13-A23
-sm,spibet,LC_LP_HF,T13-A24
-sm,poptre,LC_LP_HF,T14-B
-sm,riblac,LC_LP_HF,T14-9
-sm,symalb,LC_LP_HF,T14
-sm,spibet,LC_LP_HF,T14
-sm,riblac,LC_LP_HF,T15-D
-sm,rubpar,LC_LP_HF,T15
-sm,symalb,LC_LP_HF,T15
-sm,shecan,LC_LP_HF,T15-A
-sm,corsto,LC_LP_HF,T16-A
-sm,menfer,LC_LP_HF,T16-13
-sm,symalb,LC_LP_HF,T16
-sm,vacmem,LC_LP_HF,T16-oct21
-sm,popbal,LC_LP_HF,T17-8
-sm,riblac,LC_LP_HF,T17-9
-sm,shecan,LC_LP_HF,T1710
-sm,vibedu,LC_LP_HF,T17-3
-sm,loninv,LC_LP_HF,T18-10
-sm,popbal,LC_LP_HF,T18-8
-sm,shecan,LC_LP_HF,T18-11
-sm,vibedu,LC_LP_HF,T18-3
-sm,alninc,LC_LP_HF,T19-1
-sm,betpap,LC_LP_HF,T19-10
-sm,poptre,LC_LP_HF,T19-7
-sm,spipyr,LC_LP_HF,T19-B17
-sm,riblac,LC_LP_HF,T2-D
-sm,shecan,LC_LP_HF,T2-A
-sm,symalb,LC_LP_HF,T2
-sm,vacmem,LC_LP_HF,T2-oct21
-sm,amealn,LC_LP_HF,T20-5
-sm,alnvir,LC_LP_HF,T20-6
-sm,sorsco,LC_LP_HF,T20-11
-sm,alnvir,LC_LP_HF,T21-2
-sm,popbal,LC_LP_HF,T21-onion b
-sm,popbal,LC_LP_HF,T21-8
-sm,rubpar,LC_LP_HF,T21-w/10
-sm,alninc,LC_LP_HF,T22-4
-sm,riblac,LC_LP_HF,T22-2
-sm,spibet,LC_LP_HF,T22-A18
-sm,vibedu,LC_LP_HF,T22-6
-sm,amealn,LC_LP_HF,T23-3
-sm,rubpar,LC_LP_HF,T23-cl
-sm,symalb,LC_LP_HF,T23-cl
-sm,vacmem,LC_LP_HF,T23-oct25
-sm,betpap,LC_LP_HF,T24-10
-sm,loninv,LC_LP_HF,T24-9
-sm,symalb,LC_LP_HF,T24-cl
-sm,vacmem,LC_LP_HF,T24-oct25
-sm,betpap,LC_LP_HF,T25-11
-sm,corsto,LC_LP_HF,T25-C
-sm,riblac,LC_LP_HF,T25-11
-sm,sorsco,LC_LP_HF,T25-A
-sm,acegla,LC_LP_HF,T26--11
-sm,corsto,LC_LP_HF,T26--9
-sm,menfer,LC_LP_HF,T26--2
-sm,menfer,LC_LP_HF,T26--9
-sm,menfer,LC_LP_HF,T27-11
-sm,poptre,LC_LP_HF,T27-D
-sm,sorsco,LC_LP_HF,T27-xx
-sm,vibedu,LC_LP_HF,T27-3
-Shecan11,,,
-sm,amealn,LC_LP_HF,T28-3
-sm,loninv,LC_LP_HF,T28-9
-sm,spipyr,LC_LP_HF,T28-B31
-sm,vibedu,LC_LP_HF,T28-8
-sm,acegla,LC_LP_HF,T29--10
-sm,alninc,LC_LP_HF,T29--4
-sm,rubpar,LC_LP_HF,T29--Cl
-sm,spibet,LC_LP_HF,T29--spibet7_01
-sm,alnvir,LC_LP_HF,T3-10
-sm,loninv,LC_LP_HF,T3-6
-sm,rubpar,LC_LP_HF,T3-w/10
-sm,vacmem,LC_LP_HF,T3-oct 21
-sm,riblac,LC_LP_HF,T30-3b
-sm,spibet,LC_LP_HF,T30
-sm,shecan,LC_LP_HF,T30-11
-Sm,symalb,LC_LP_HF,T30
-sm,acegla,LC_LP_HF,T31--13
-sm,spipyr,LC_LP_HF,T31--b11
-sm,sorsco,LC_LP_HF,T31--11
-sm,alninc,LC_LP_HF,T32--5
-sm,betpap,LC_LP_HF,T32-10
-sm,menfer,LC_LP_HF,T32-4
-sm,alnvir,LC_LP_HF,T33-2
-sm,popbal,LC_LP_HF,T33-onion b
-sm,poptre,LC_LP_HF,T33-8
-sm,spipyr,LC_LP_HF,T33-b25
-sm,corsto,LC_LP_HF,T34-A
-sm,loninv,LC_LP_HF,T34-7
-sm,sorsco,LC_LP_HF,T34-xx
-sm,vacmem,LC_LP_HF,T34-oct25
-Shecan10,,,
-sm,popbal,LC_LP_HF,T35-8
-sm,symalb,LC_LP_HF,T35
-sm,spibet,LC_LP_HF,T35
-sm,vacmem,LC_LP_HF,T35-oct21
-sm,amealn,LC_LP_HF,T36-3
-sm,poptre,LC_LP_HF,T36-10
-sm,poptre,LC_LP_HF,T36-10
-sm,vibedu,LC_LP_HF,T36-8
-sm,loninv,LC_LP_HF,T37-10
-sm,menfer,LC_LP_HF,T37-13
-sm,shecan,LC_LP_HF,T37-6
-sm,vibedu,LC_LP_HF,T37-3
-sm,amealn,LC_LP_HF,T38-A
-sm,corsto,LC_LP_HF,T38-B
-sm,vibedu,LC_LP_HF,T38-8
-Shecan7,,,
-sm,betpap,LC_LP_HF,T39-5
-sm,loninv,LC_LP_HF,T39-9
-sm,menfer,LC_LP_HF,T39-6
-sm,menfer,LC_LP_HF,T39-8
-sm,acegla,LC_LP_HF,T4--11
-sm,corsto,LC_LP_HF,T4--4
-sm,spipyr,LC_LP_HF,T4-b1
-sm,spipyr,LC_LP_HF,T4--b2
-sm,alninc,LC_LP_HF,T40-3
-sm,alninc,LC_LP_HF,T40-4
-sm,popbal,LC_LP_HF,T40-12
-sm,rubpar,LC_LP_HF,T40with 10
-sm,amealn,LC_LP_HF,T5-A
-sm,corsto,LC_LP_HF,T5-B
-sm,symalb,LC_LP_HF,T5-cl
-sm,spipyr,LC_LP_HF,T5-B32
-Shecan7,,,
-sm,amealn,LC_LP_HF,T6
-sm,alnvir,LC_LP_HF,T6
-sm,sorsco,LC_LP_HF,T6
-sm,acegla,LC_LP_HF,T7--11
-sm,popbal,LC_LP_HF,T7--8
-sm,rubpar,LC_LP_HF,T7--cl
-sm,acegla,LC_LP_HF,T8--15
-sm,betpap,LC_LP_HF,T8--9
-sm,loninv,LC_LP_HF,T8--11
-sm,riblac,LC_LP_HF,T8--8
-sm,alninc,LC_LP_HF,T9--1
-sm,spibet,LC_LP_HF,T9-A16
-sm,sorsco,LC_LP_HF,T9
-sm,sorsco,LC_LP_HF,T9
-sm,alninc,LC_LP_LF,T1-4
-sm,poptre,LC_LP_LF,T1-7
-sm,vibedu,LC_LP_LF,T1-6
-sm,vacmem,LC_LP_LF,T1-oct21
-sm,alninc,LC_LP_LF,T10-4
-sm,loninv,LC_LP_LF,T10-11
-sm,riblac,LC_LP_LF,T10-10
-sm,symalb,LC_LP_LF,T10-9
-sm,poptre,LC_LP_LF,T11-B
-sm,poptre,LC_LP_LF,T11-D
-sm,vibedu,LC_LP_LF,T11-3
-sm,vacmem,LC_LP_LF,T11-oct21
-sm,amealn,LC_LP_LF,T12-A
-sm,corsto,LC_LP_LF,T12-c
-sm,sorsco,LC_LP_LF,T12
-sm,sorsco,LC_LP_LF,T12
-sm,popbal,LC_LP_LF,T13-8
-sm,popbal,LC_LP_LF,T13-8
-sm,vacmem,LC_LP_LF,T13-oct21
-sm,vacmem,LC_LP_LF,T13-oct21
-sm,riblac,LC_LP_LF,T14-3
-sm,riblac,LC_LP_LF,T14-3
-sm,spipyr,LC_LP_LF,T14
-sm,shecan,LC_LP_LF,T14-A
-sm,alninc,LC_LP_LF,T15-1
-sm,rubpar,LC_LP_LF,T15-w/10
-sm,rubpar,LC_LP_LF,T15-w/10
-sm,symalb,LC_LP_LF,T15-3
-sm,amealn,LC_LP_LF,T16--7
-sm,acegla,LC_LP_LF,T16--10
-sm,betpap,LC_LP_LF,T16--A
-sm,vibedu,LC_LP_LF,T16--11
-sm,loninv,LC_LP_LF,T17-10
-sm,menfer,LC_LP_LF,T17-12
-sm,rubpar,LC_LP_LF,T17
-Shecan11,,,
-sm,alninc,LC_LP_LF,T18-1
-sm,betpap,LC_LP_LF,T18-8
-sm,popbal,LC_LP_LF,T18-4
-sm,vacmem,LC_LP_LF,T18-oct21
-sm,betpap,LC_LP_LF,T19-11
-sm,corsto,LC_LP_LF,T19-C
-sm,spibet,LC_LP_LF,T19-A34
-sm,sorsco,LC_LP_LF,T19
-sm,acegla,LC_LP_LF,T2--11
-sm,popbal,LC_LP_LF,T2--12
-sm,rubpar,LC_LP_LF,T2--cl
-sm,spipyr,LC_LP_LF,T2--b7
-sm,acegla,LC_LP_LF,T20
-sm,spibet,LC_LP_LF,T20
-sm,spipyr,LC_LP_LF,T20
-sm,acegla,LC_LP_LF,T21--13
-sm,popbal,LC_LP_LF,T21--3
-sm,rubpar,LC_LP_LF,T21--cl
-sm,sorsco,LC_LP_LF,T21--7
-sm,acegla,LC_LP_LF,T22--15
-sm,betpap,LC_LP_LF,T22--9
-sm,menfer,LC_LP_LF,T22--#3
-sm,symalb,LC_LP_LF,T22--CL
-sm,alnvir,LC_LP_LF,T23--1
-sm,alnvir,LC_LP_LF,T23--10
-sm,corsto,LC_LP_LF,T23--9
-sm,riblac,LC_LP_LF,T23--
-sm,alninc,LC_LP_LF,T24-5
-sm,alnvir,LC_LP_LF,T24-2
-sm,menfer,LC_LP_LF,T24-1
-sm,sorsco,LC_LP_LF,T24-11
-sm,alninc,LC_LP_LF,T25-4
-sm,poptre,LC_LP_LF,T25-7
-sm,poptre,LC_LP_LF,T25-D
-sm,sorsco,LC_LP_LF,T25-11
-sm,acegla,LC_LP_LF,T26--7
-sm,alnvir,LC_LP_LF,T26--10
-sm,betpap,LC_LP_LF,T26--A
-sm,corsto,LC_LP_LF,T26--9
-sm,corsto,LC_LP_LF,T27-A
-sm,sorsco,LC_LP_LF,T27-xx
-sm,spipyr,LC_LP_LF,T27
-sm,vibedu,LC_LP_LF,T27-3
-sm,betpap,LC_LP_LF,T28-5
-sm,menfer,LC_LP_LF,T28-2
-sm,rubpar,LC_LP_LF,T28-cl
-Shecan10,,,
-sm,amealn,LC_LP_LF,T29-6
-sm,alnvir,LC_LP_LF,T29-1
-sm,popbal,LC_LP_LF,T29-8
-sm,poptre,LC_LP_LF,T29-D
-sm,alninc,LC_LP_LF,T3-4
-sm,menfer,LC_LP_LF,T3-9
-sm,rubpar,LC_LP_LF,T3-w/10
-sm,shecan,LC_LP_LF,T30-8
-sm,shecan,LC_LP_LF,T30-10
-sm,shecan,LC_LP_LF,T30-6
-sm,vibedu,LC_LP_LF,T30-b
-sm,amealn,LC_LP_LF,T31--3
-sm,acegla,LC_LP_LF,T31--5
-sm,spibet,LC_LP_LF,T31--A4
-sm,spibet,LC_LP_LF,T31--A5
-sm,alnvir,LC_LP_LF,T32--10
-sm,betpap,LC_LP_LF,T32--7
-sm,vacmem,LC_LP_LF,T32-10
-sm,amealn,LC_LP_LF,T33-5
-sm,riblac,LC_LP_LF,T33-11
-sm,sorsco,LC_LP_LF,T33-A
-Shecan10,,,
-sm,riblac,LC_LP_LF,T34-3
-sm,rubpar,LC_LP_LF,T34
-sm,spibet,LC_LP_LF,T34
-sm,spibet,LC_LP_LF,T34
-Sm,shecan,LC_LP_LF,T34-10
-sm,poptre,LC_LP_LF,T35-7
-sm,riblac,LC_LP_LF,T35-3b
-sm,sorsco,LC_LP_LF,T35-xx
-sm,spipyr,LC_LP_LF,T35
-sm,loninv,LC_LP_LF,T36-10
-sm,spipyr,LC_LP_LF,T36
-sm,spipyr,LC_LP_LF,T36
-sm,vacmem,LC_LP_LF,T36-oct21
-sm,alnvir,LC_LP_LF,T37-2
-sm,loninv,LC_LP_LF,T37-11
-sm,menfer,LC_LP_LF,T37-9
-sm,riblac,LC_LP_LF,T38-3
-sm,spibet,LC_LP_LF,T38
-sm,vibedu,LC_LP_LF,T38-B
-Sm,shecan,LC_LP_LF,T38-7
-sm,loninv,LC_LP_LF,T39-10
-sm,loninv,LC_LP_LF,T39-10
-sm,menfer,LC_LP_LF,T39-12
-sm,symalb,LC_LP_LF,T39
-sm,popbal,LC_LP_LF,T4-8
-sm,poptre,LC_LP_LF,T4-bC
-sm,symalb,LC_LP_LF,T4-
-sm,shecan,LC_LP_LF,T4-11
-sm,corsto,LC_LP_LF,T40-A
-sm,symalb,LC_LP_LF,T40
-sm,spibet,LC_LP_LF,T40
-sm,vibedu,LC_LP_LF,T40-3
-sm,alninc,LC_LP_LF,T5-1
-sm,betpap,LC_LP_LF,T5-10
-sm,popbal,LC_LP_LF,T5-20
-sm,sorsco,LC_LP_LF,T5-8
-sm,alnvir,LC_LP_LF,T6-19
-sm,corsto,LC_LP_LF,T6--8
-sm,loninv,LC_LP_LF,T6--5
-sm,symalb,LC_LP_LF,T6--3
-sm,amealn,LC_LP_LF,T7-7
-sm,amealn,LC_LP_LF,T7-6
-sm,loninv,LC_LP_LF,T7-9
-Shecan10,,,
-sm,symalb,LC_LP_LF,T7-cl
-sm,acegla,LC_LP_LF,T8--11
-sm,corsto,LC_LP_LF,T8--4
-sm,spipyr,LC_LP_LF,T8--b3
-sm,vacmem,LC_LP_LF,T8--oct21
-sm,amealn,LC_LP_LF,T9-3
-sm,menfer,LC_LP_LF,T9-2
-sm,sorsco,LC_LP_LF,T9-1
-sm,vibedu,LC_LP_LF,T9-11
+sie,asorscoignmen,,flask,abbrev,
+sm,HC_HP_HF,5,1,amealn,
+sm,HC_HP_HF,1,1,alninc,
+sm,HC_HP_HF,11,1,sorsco,
+sm,HC_HP_HF,4,1,vibedu,
+sm,HC_HP_HF, b,10,corso,
+sm,HC_HP_HF,,10,rubpar,
+sm,HC_HP_HF,,10,symalb,
+sm,HC_HP_HF, b40,10,spipyr,
+sm,HC_HP_HF, A,11,bepap,
+sm,HC_HP_HF, A,11,bepap,
+sm,HC_HP_HF, B,11,popre,
+sm,HC_HP_HF, b,11,popre,
+sm,HC_HP_HF,12,11,shecan,
+sm,HC_HP_HF,10,12,loninv,
+sm,HC_HP_HF,12,12,menfer,
+sm,HC_HP_HF, A,12,popbal,
+sm,HC_HP_HF,8,12,popre,
+sm,HC_HP_HF,1,13,alninc,
+sm,HC_HP_HF,20,13,popbal,
+sm,HC_HP_HF, ,13,symalb,
+sm,HC_HP_HF,5,13,sorsco,
+sm,HC_HP_HF,11,14,acegla,
+sm,HC_HP_HF,10,14,loninv,
+sm,HC_HP_HF, #3,14,menfer,
+sm,HC_HP_HF,11,14,popre,
+sm,HC_HP_HF,1,15,amealn,
+sm,HC_HP_HF,9,15,loninv,
+sm,HC_HP_HF, A28,15,spibe,
+sm,HC_HP_HF,6,15,sorsco,
+sm,HC_HP_HF, onionE,16,popbal,
+sm,HC_HP_HF,,16,symalb,
+sm,HC_HP_HF,,16,spibe,
+Sm,HC_HP_HF, A,16,shecan,
+sm,HC_HP_HF, onionE,17,popbal,
+sm,HC_HP_HF,,17,rubpar,
+sm,HC_HP_HF,,17,rubpar,
+sm,HC_HP_HF,3,17,vibedu,
+sm,HC_HP_HF,5,18,alninc,
+sm,HC_HP_HF,2,18,menfer,
+sm,HC_HP_HF,20,18,popbal,
+sm,HC_HP_HF,5,19,alninc,
+sm,HC_HP_HF,11,19,corso,
+sm,HC_HP_HF,4,19,menfer,
+sm,HC_HP_HF,2,19,symalb,
+sm,HC_HP_HF,,2,symalb,
+sm,HC_HP_HF,,2,spibe,
+sm,HC_HP_HF,8,2,shecan,
+sm,HC_HP_HF, D,2,vibedu,
+sm,HC_HP_HF, 3b,20,riblac,
+sm,HC_HP_HF,,20,spibe,
+sm,HC_HP_HF, oc21,20,vacmem,
+sm,HC_HP_HF, oc21,20,vacmem,
+sm,HC_HP_HF,5,21,amealn,
+sm,HC_HP_HF,9,21,loninv,
+sm,HC_HP_HF, oc 23,21,vacmem,
+sm,HC_HP_HF, A,22,bepap,
+sm,HC_HP_HF,9,22,riblac,
+sm,HC_HP_HF,,22,symalb,
+sm,HC_HP_HF,12,22,shecan,
+sm,HC_HP_HF,,22,sorsco,
+sm,HC_HP_HF, A,23,bepap,
+sm,HC_HP_HF, A,23,popbal,
+sm,HC_HP_HF, A38,23,spibe,
+sm,HC_HP_HF,6,24,alnvir,
+sm,HC_HP_HF,2,24,alnvir,
+sm,HC_HP_HF, cl,24,symalb,
+sm,HC_HP_HF, oc 21,24,vacmem,
+sm,HC_HP_HF, A,25,bepap,
+sm,HC_HP_HF,13,25,corso,
+sm,HC_HP_HF, B,25,popre,
+sm,HC_HP_HF, cl,25,rubpar,
+sm,HC_HP_HF,12,26,menfer,
+sm,HC_HP_HF,11,26,menfer,
+sm,HC_HP_HF,,26,rubpar,
+sm,HC_HP_HF,7,26,shecan,
+sm,HC_HP_HF,15,27,acegla,
+sm,HC_HP_HF, B,27,bepap,
+sm,HC_HP_HF,6,27,sorsco,
+sm,HC_HP_HF, oc21,27,vacmem,
+sm,HC_HP_HF,8,28,popbal,
+sm,HC_HP_HF,9,28,riblac,
+sm,HC_HP_HF,3,28,vibedu,
+sm,HC_HP_HF, oc21,28,vacmem,
+sm,HC_HP_HF,12,28,shecan,
+sm,HC_HP_HF,6,29,alnvir,
+sm,HC_HP_HF,3,29,riblac,
+sm,HC_HP_HF, b24,29,spipyr,
+sm,HC_HP_HF,12,29,sorsco,
+sm,HC_HP_HF,,3,alnvir,
+sm,HC_HP_HF,,3,alnvir,
+sm,HC_HP_HF,,3,popbal,
+sm,HC_HP_HF,,3,sorsco,
+sm,HC_HP_HF,4,30,alninc,
+sm,HC_HP_HF,19,30,alnvir,
+sm,HC_HP_HF,11,30,corso,
+sm,HC_HP_HF,11,30,vibedu,
+sm,HC_HP_HF,7,31,acegla,
+sm,HC_HP_HF,2,31,alninc,
+sm,HC_HP_HF,10,31,riblac,
+sm,HC_HP_HF,12,31,riblac,
+sm,HC_HP_HF,10,32,loninv,
+sm,HC_HP_HF,,32,spipyr,
+sm,HC_HP_HF,,32,sorsco,
+sm,HC_HP_HF, 0c21,32,vacmem,
+sm,HC_HP_HF, b,33,corso,
+sm,HC_HP_HF, b,33,popre,
+sm,HC_HP_HF, A39,33,spibe,
+sm,HC_HP_HF, B39,33,spipyr,
+sm,HC_HP_HF,6,33,shecan,
+sm,HC_HP_HF,7,34,amealn,
+sm,HC_HP_HF,10,34,corso,
+sm,HC_HP_HF, w10,34,rubpar,
+sm,HC_HP_HF, B,34,vibedu,
+sm,HC_HP_HF, ,35,bepap,
+sm,HC_HP_HF,,35,loninv,
+sm,HC_HP_HF,,35,rubpar,
+sm,HC_HP_HF,,35,sorsco,
+sm,HC_HP_HF,5,36,alninc,
+sm,HC_HP_HF,5,36,loninv,
+sm,HC_HP_HF,4,36,menfer,
+sm,HC_HP_HF, B13,36,spipyr,
+sm,HC_HP_HF,11,37,acegla,
+sm,HC_HP_HF,5,37,corso,
+sm,HC_HP_HF, cl,37,rubpar,
+sm,HC_HP_HF,7,37,sorsco,
+sm,HC_HP_HF,5,38,amealn,
+sm,HC_HP_HF, A,38,menfer,
+sm,HC_HP_HF, b28,38,spipyr,
+sm,HC_HP_HF,10,38,shecan,
+sm,HC_HP_HF,2,39,acegla,
+sm,HC_HP_HF,19,39,alnvir,
+sm,HC_HP_HF, A1,39,spibe,
+sm,HC_HP_HF, A2,39,spibe,
+sm,HC_HP_HF,5,4,amealn,
+sm,HC_HP_HF,5,4,alninc,
+sm,HC_HP_HF,11,4,sorsco,
+sm,HC_HP_HF,13,40,acegla,
+sm,HC_HP_HF,2,40,symalb,
+sm,HC_HP_HF,11,40,sorsco,
+sm,HC_HP_HF, b9,40,spipyr,
+sm,HC_HP_HF,7,5,acegla,
+sm,HC_HP_HF,19,5,alnvir,
+sm,HC_HP_HF,9,5,corso,
+sm,HC_HP_HF,10,5,riblac,
+sm,HC_HP_HF,5,6,amealn,
+sm,HC_HP_HF,9,6,loninv,
+sm,HC_HP_HF, C,6,vibedu,
+sm,HC_HP_HF, D,6,vibedu,
+sm,HC_HP_HF, C,7,popre,
+sm,HC_HP_HF,3,7,riblac,
+sm,HC_HP_HF,8,7,shecan,
+sm,HC_HP_HF, oc21,7,vacmem,
+sm,HC_HP_HF,6,8,amealn,
+sm,HC_HP_HF,6,8,bepap,
+sm,HC_HP_HF,8,8,popre,
+sm,HC_HP_HF,12,8,sorsco,
+sm,HC_HP_HF,13,9,acegla,
+sm,HC_HP_HF,11,9,sorsco,
+sm,HC_HP_HF, b10,9,spipyr,
+sm,HC_HP_LF,7,1,amealn,
+sm,HC_HP_LF,10,1,corso,
+sm,HC_HP_LF, cl,1,symalb,
+sm,HC_HP_LF,12,1,sorsco,
+sm,HC_HP_LF,7,10,amealn,
+sm,HC_HP_LF, w10,10,rubpar,
+sm,HC_HP_LF, A,10,vibedu,
+sm,HC_HP_LF,12,10,shecan,
+sm,HC_HP_LF,5,11,bepap,
+sm,HC_HP_LF,11,11,riblac,
+sm,HC_HP_LF,,11,sorsco,
+sm,HC_HP_LF,,11,vibedu,
+sm,HC_HP_LF,8,12,popbal,
+sm,HC_HP_LF, B,12,popre,
+sm,HC_HP_LF,10,12,shecan,
+sm,HC_HP_LF,7,13,amealn,
+sm,HC_HP_LF,10,13,acegla,
+sm,HC_HP_LF, A,13,bepap,
+sm,HC_HP_LF,12,13,sorsco,
+sm,HC_HP_LF, CLA,14,amealn,
+sm,HC_HP_LF,6,14,amealn,
+sm,HC_HP_LF,10,14,bepap,
+sm,HC_HP_LF,8,14,popre,
+sm,HC_HP_LF,2,15,alnvir,
+sm,HC_HP_LF,8,15,corso,
+sm,HC_HP_LF,2,15,menfer,
+sm,HC_HP_LF,9,15,vibedu,
+sm,HC_HP_LF,6,16,alnvir,
+sm,HC_HP_LF,10,16,loninv,
+sm,HC_HP_LF,11,16,loninv,
+sm,HC_HP_LF, oc21,16,vacmem,
+sm,HC_HP_LF,2,17,acegla,
+sm,HC_HP_LF,2,17,alnvir,
+sm,HC_HP_LF, area w/ 9,17,spipyr,
+sm,HC_HP_LF, oc21,17,vacmem,
+sm,HC_HP_LF,14,18,acegla,
+sm,HC_HP_LF,4,18,corso,
+sm,HC_HP_LF, cl,18,symalb,
+sm,HC_HP_LF, oc21,18,vacmem,
+sm,HC_HP_LF,3,19,amealn,
+sm,HC_HP_LF, A32,19,spibe,
+sm,HC_HP_LF,1,19,sorsco,
+sm,HC_HP_LF,7,19,shecan,
+sm,HC_HP_LF,7,2,acegla,
+sm,HC_HP_LF,2,2,alninc,
+sm,HC_HP_LF,3,2,alninc,
+sm,HC_HP_LF,11,2,loninv,
+sm,HC_HP_LF,14,20,acegla,
+sm,HC_HP_LF,3,20,popbal,
+sm,HC_HP_LF,8,20,popbal,
+sm,HC_HP_LF,2,20,symalb,
+sm,HC_HP_LF,11,21,acegla,
+sm,HC_HP_LF,8,21,popbal,
+sm,HC_HP_LF, A8,21,spibe,
+sm,HC_HP_LF,2,21,vibedu,
+sm,HC_HP_LF,8,22,menfer,
+sm,HC_HP_LF,1,22,menfer,
+sm,HC_HP_LF, cl,22,symalb,
+sm,HC_HP_LF, oc25,22,vacmem,
+sm,HC_HP_LF,11,23,bepap,
+sm,HC_HP_LF,11,23,riblac,
+sm,HC_HP_LF, cl,23,rubpar,
+sm,HC_HP_LF, cl,23,symalb,
+sm,HC_HP_LF,14,24,acegla,
+sm,HC_HP_LF,1,24,menfer,
+sm,HC_HP_LF,12,24,popbal,
+sm,HC_HP_LF,5,25,acegla,
+sm,HC_HP_LF,9,25,bepap,
+sm,HC_HP_LF,9,25,corso,
+sm,HC_HP_LF,11,25,vibedu,
+sm,HC_HP_LF,3,26,alninc,
+sm,HC_HP_LF,2,26,alnvir,
+sm,HC_HP_LF, #3,26,menfer,
+sm,HC_HP_LF,12,26,popbal,
+sm,HC_HP_LF,1,27,alninc,
+sm,HC_HP_LF,11,27,corso,
+sm,HC_HP_LF,7,27,popre,
+sm,HC_HP_LF,3,27,symalb,
+sm,HC_HP_LF,13,28,corso,
+sm,HC_HP_LF,5,28,loninv, branched
+sm,HC_HP_LF,10,28,loninv,
+sm,HC_HP_LF,,28,rubpar,
+sm,HC_HP_LF,2,29,popre,
+sm,HC_HP_LF,,29,spipyr,
+sm,HC_HP_LF,10,29,shecan,
+sm,HC_HP_LF,3,29,vibedu,
+sm,HC_HP_LF,6,3,bepap,
+sm,HC_HP_LF, xx,3,sorsco,
+sm,HC_HP_LF, xx,3,sorsco,
+sm,HC_HP_LF,12,3,shecan,
+sm,HC_HP_LF, oc25,3,vacmem,
+sm,HC_HP_LF,13,30,corso,
+sm,HC_HP_LF, B,30,popre,
+sm,HC_HP_LF,,30,rubpar,
+sm,HC_HP_LF, b38,30,spipyr,
+sm,HC_HP_LF,5,31,alninc,
+sm,HC_HP_LF, A,31,loninv,
+sm,HC_HP_LF,9,31,menfer,
+sm,HC_HP_LF, w/ 10,31,rubpar,
+sm,HC_HP_LF,10,32,alnvir,
+sm,HC_HP_LF, A,32,riblac,
+sm,HC_HP_LF,12,32,sorsco,
+sm,HC_HP_LF, oc21,32,vacmem,
+sm,HC_HP_LF, onion E,33,popbal,
+sm,HC_HP_LF,,33,symalb,
+sm,HC_HP_LF,,33,spipyr,
+sm,HC_HP_LF,,33,symalb,
+sm,HC_HP_LF, D,34,riblac,
+sm,HC_HP_LF,,34,symalb,
+sm,HC_HP_LF, xx,34,sorsco,
+sm,HC_HP_LF,,34,spipyr,
+sm,HC_HP_LF,10,35,alnvir,
+sm,HC_HP_LF,6,35,riblac,
+sm,HC_HP_LF, A25,35,spibe,
+sm,HC_HP_LF,5,36,amealn,
+sm,HC_HP_LF, b28,36,spipyr,
+sm,HC_HP_LF, b30,36,spipyr,
+sm,HC_HP_LF,12,36,sorsco,
+sm,HC_HP_LF,7,37,amealn,
+sm,HC_HP_LF,8,37,popre,
+sm,HC_HP_LF, A,37,vibedu,
+sm,HC_HP_LF,10,37,shecan,
+sm,HC_HP_LF,5,38,alninc,
+sm,HC_HP_LF,19,38,alnvir,
+sm,HC_HP_LF,11,38,riblac,
+sm,HC_HP_LF,12,38,riblac,
+sm,HC_HP_LF,10,39,loninv,
+sm,HC_HP_LF,,39,rubpar,
+sm,HC_HP_LF,,39,symalb,
+sm,HC_HP_LF,,39,sorsco,
+sm,HC_HP_LF,5,4,alninc,
+sm,HC_HP_LF,7,4,popre,
+sm,HC_HP_LF, w/10,4,rubpar,
+sm,HC_HP_LF,5,4,sorsco,
+sm,HC_HP_LF,1,40,alninc,
+sm,HC_HP_LF,1,40,alnvir,
+sm,HC_HP_LF, A14,40,spibe,
+sm,HC_HP_LF, oc21,40,vacmem,
+sm,HC_HP_LF,10,5,loninv,
+sm,HC_HP_LF,8,5,popbal,
+sm,HC_HP_LF,,5,rubpar,
+sm,HC_HP_LF,,5,spibe,
+sm,HC_HP_LF, B,6,bepap,
+sm,HC_HP_LF,13,6,corso,
+sm,HC_HP_LF,3,6,vibedu,
+sm,HC_HP_LF,13,7,menfer,
+sm,HC_HP_LF,,7,spibe,
+sm,HC_HP_LF,,7,spipyr,
+sm,HC_HP_LF, oc21,7,vacmem,
+sm,HC_HP_LF,6,8,bepap,
+sm,HC_HP_LF,9,8,riblac,
+sm,HC_HP_LF, ,8,spibe,
+sm,HC_HP_LF,,8,sorsco,
+sm,HC_HP_LF, #3,9,menfer,
+sm,HC_HP_LF,8,9,popre,
+sm,HC_HP_LF,,9,spibe,
+sm,HC_HP_LF,8,9,shecan,
+sm,HC_LP_HF,3,1,menfer,
+sm,HC_LP_HF,,1,spipyr,
+sm,HC_LP_HF,3,1,vibedu,
+sm,HC_LP_HF,11,1,shecan,
+sm,HC_LP_HF,13,10,menfer,
+sm,HC_LP_HF,,10,spibe,
+sm,HC_LP_HF, xx,10,sorsco,
+sm,HC_LP_HF, oc21,10,vacmem,
+sm,HC_LP_HF,6,11,alnvir,
+sm,HC_LP_HF,8,11,corso,
+sm,HC_LP_HF,2,11,riblac,
+sm,HC_LP_HF,11,11,vibedu,
+sm,HC_LP_HF,6,12,amealn,
+sm,HC_LP_HF,12,12,shecan,
+sm,HC_LP_HF,10,12,corso,
+sm,HC_LP_HF,9,12,loninv,
+sm,HC_LP_HF, cl,12,symalb,
+sm,HC_LP_HF,1,13,alninc,
+sm,HC_LP_HF,9,13,corso,
+sm,HC_LP_HF,4,13,popbal,
+sm,HC_LP_HF,6,14,alnvir,
+sm,HC_LP_HF, w/10,14,rubpar,
+sm,HC_LP_HF,12,14,sorsco,
+sm,HC_LP_HF,9,14,vibedu,
+sm,HC_LP_HF,6,15,bepap,
+sm,HC_LP_HF,8,15,popre,
+sm,HC_LP_HF, cl,15,symalb,
+sm,HC_LP_HF, clw,15,symalb,
+sm,HC_LP_HF, b,16,corso,
+sm,HC_LP_HF, b41,16,spipyr,
+sm,HC_LP_HF,,16,sorsco,
+sm,HC_LP_HF,6,16,shecan,
+sm,HC_LP_HF,2,17,alnvir,
+sm,HC_LP_HF, C,17,popre,
+sm,HC_LP_HF,2,17,riblac,
+sm,HC_LP_HF, A22,17,spibe,
+sm,HC_LP_HF,6,18,bepap,
+sm,HC_LP_HF, A,18,popbal,
+sm,HC_LP_HF,8,18,popre,
+sm,HC_LP_HF, w/10,18,rubpar,
+sm,HC_LP_HF,4,19,alninc,
+sm,HC_LP_HF,11,19,loninv,
+sm,HC_LP_HF,3,19,symalb,
+sm,HC_LP_HF, A19,19,spibe,
+sm,HC_LP_HF,13,2,menfer,
+sm,HC_LP_HF,9,2,symalb,
+sm,HC_LP_HF,,2,sorsco,
+sm,HC_LP_HF,,2,spipyr,
+sm,HC_LP_HF,14,20,acegla,
+sm,HC_LP_HF,5,20,loninv,
+sm,HC_LP_HF,2,20,popre,
+sm,HC_LP_HF,4,21,alninc,
+sm,HC_LP_HF,4,21,popbal,
+sm,HC_LP_HF,11,21,riblac,
+sm,HC_LP_HF,2,21,riblac,
+sm,HC_LP_HF,13,22,acegla,
+sm,HC_LP_HF,1,22,menfer,
+sm,HC_LP_HF, #2,22,popre,
+sm,HC_LP_HF, B4,22,spipyr,
+sm,HC_LP_HF,5,23,alninc,
+sm,HC_LP_HF, B,23,bepap,
+sm,HC_LP_HF, D,23,popre,
+sm,HC_LP_HF,7,23,sorsco,
+sm,HC_LP_HF,6,24,bepap,
+sm,HC_LP_HF,9,24,riblac,
+sm,HC_LP_HF,,24,sorsco,
+sm,HC_LP_HF,3,24,vibedu,
+sm,HC_LP_HF,12,24,shecan,
+sm,HC_LP_HF, c,25,corso,
+sm,HC_LP_HF,8,25,popbal,
+sm,HC_LP_HF,,25,rubpar,
+sm,HC_LP_HF,,25,sorsco,
+sm,HC_LP_HF,15,26,acegla,
+sm,HC_LP_HF,9,26,bepap,
+sm,HC_LP_HF,6,26,sorsco,
+sm,HC_LP_HF,9,26,spipyr,
+sm,HC_LP_HF,5,27,alninc,
+sm,HC_LP_HF,19,27,alnvir,
+sm,HC_LP_HF,10,27,riblac,
+sm,HC_LP_HF,7,27,sorsco,
+sm,HC_LP_HF,11,28,acegla,
+sm,HC_LP_HF,11,28,loninv,
+sm,HC_LP_HF,1,28,menfer,
+sm,HC_LP_HF, cl,28,symalb,
+sm,HC_LP_HF,2,29,alnvir,
+sm,HC_LP_HF, onionB,29,popbal,
+sm,HC_LP_HF,2,29,riblac,
+sm,HC_LP_HF,6,29,vibedu,
+sm,HC_LP_HF,9,3,loninv,
+sm,HC_LP_HF,10,3,popre,
+sm,HC_LP_HF,,3,sorsco,
+sm,HC_LP_HF,,3,sorsco,
+sm,HC_LP_HF,3,30,alninc,
+sm,HC_LP_HF,4,30,alninc,
+sm,HC_LP_HF,5,30,corso,
+sm,HC_LP_HF, wih 10,30,rubpar,
+sm,HC_LP_HF,6,31,alnvir,
+sm,HC_LP_HF,9,31,menfer,
+sm,HC_LP_HF,12,31,sorsco,
+sm,HC_LP_HF,5,32,amealn,
+sm,HC_LP_HF,12,32,menfer,
+sm,HC_LP_HF,,32,symalb,
+sm,HC_LP_HF,1,32,sorsco,
+sm,HC_LP_HF, C,33,corso,
+sm,HC_LP_HF,10,33,popre,
+sm,HC_LP_HF, BB1,33,spibe,
+sm,HC_LP_HF,10,33,shecan,
+sm,HC_LP_HF,3,34,amealn,
+sm,HC_LP_HF, cl,34,rubpar,
+sm,HC_LP_HF, cl,34,rubpar,
+sm,HC_LP_HF, B32,34,spipyr,
+sm,HC_LP_HF, A,35,amealn,
+sm,HC_LP_HF, cl,35,rubpar,
+sm,HC_LP_HF, A33,35,spibe,
+sm,HC_LP_HF,1,35,sorsco,
+sm,HC_LP_HF,11,36,acegla,
+sm,HC_LP_HF, B,36,bepap,
+sm,HC_LP_HF,3,36,popbal,
+sm,HC_LP_HF, area w/9,36,spipyr,
+sm,HC_LP_HF,2,37,bepap,
+sm,HC_LP_HF, oc25,37,vacmem,
+sm,HC_LP_HF, oc25,37,vacmem,
+sm,HC_LP_HF, oc25,37,vacmem,
+sm,HC_LP_HF,1,38,alninc,
+sm,HC_LP_HF,8,38,popbal,
+sm,HC_LP_HF, A20,38,spibe,
+sm,HC_LP_HF, B20,38,spipyr,
+sm,HC_LP_HF, A,39,amealn,
+sm,HC_LP_HF,2,39,menfer,
+sm,HC_LP_HF, cl,39,symalb,
+sm,HC_LP_HF, oc25,39,vacmem,
+sm,HC_LP_HF,7,4,amealn,
+sm,HC_LP_HF,10,4,alnvir,
+sm,HC_LP_HF, cl,4,rubpar,
+sm,HC_LP_HF, Oc21,4,vacmem,
+sm,HC_LP_HF,14,40,acegla,
+sm,HC_LP_HF,11,40,riblac,
+sm,HC_LP_HF,11,40,sorsco,
+sm,HC_LP_HF,14,5,acegla,
+sm,HC_LP_HF,5,5,loninv,
+sm,HC_LP_HF, A8,5,spibe,
+sm,HC_LP_HF,10,5,vacmem,
+sm,HC_LP_HF,6,6,alnvir,
+sm,HC_LP_HF,11,6,bepap,
+sm,HC_LP_HF,5,6,vibedu,
+sm,HC_LP_HF,6,6,vibedu,
+sm,HC_LP_HF,6,7,amealn,
+sm,HC_LP_HF,10,7,corso,
+sm,HC_LP_HF,5,7,popbal,
+sm,HC_LP_HF,12,7,sorsco,
+sm,HC_LP_HF,5,8,loninv,
+sm,HC_LP_HF,,8,vibedu,
+sm,HC_LP_HF, oc25,8,vacmem,
+sm,HC_LP_HF,7,8,shecan,
+sm,HC_LP_HF,7,9,amealn,
+sm,HC_LP_HF,10,9,acegla,
+sm,HC_LP_HF,11,9,loninv,
+sm,HC_LP_HF, A3,9,spibe,
+sm,HC_LP_LF,4,1,alninc,
+sm,HC_LP_LF,11,1,loninv,
+sm,HC_LP_LF,5,1,sorsco,
+sm,HC_LP_LF,6,10,bepap,
+sm,HC_LP_LF,8,10,menfer,
+sm,HC_LP_LF, A36,10,spibe,
+sm,HC_LP_LF, b35,10,spipyr,
+sm,HC_LP_LF,12,11,menfer,
+sm,HC_LP_LF,,11,rubpar,
+sm,HC_LP_LF,,11,spibe,
+sm,HC_LP_LF,6,11,shecan,
+sm,HC_LP_LF,11,12,acegla,
+sm,HC_LP_LF, B,12,bepap,
+sm,HC_LP_LF,11,12,popre,
+sm,HC_LP_LF,10,13,loninv,
+sm,HC_LP_LF, xx,13,sorsco,
+sm,HC_LP_LF,3,13,vibedu,
+sm,HC_LP_LF,11,2019,shecan,13
+sm,HC_LP_LF,6,14,amealn,
+sm,HC_LP_LF,6,14,alnvir,
+sm,HC_LP_LF, oc21,14,vacmem,
+sm,HC_LP_LF,10,15,loninv,
+sm,HC_LP_LF,,15,symalb,
+sm,HC_LP_LF,,15,spibe,
+sm,HC_LP_LF,,15,spipyr,
+sm,HC_LP_LF,13,16,menfer,
+sm,HC_LP_LF,,16,spipyr,
+sm,HC_LP_LF,3,16,vibedu,
+sm,HC_LP_LF,8,16,shecan,
+sm,HC_LP_LF,6,17,alnvir,
+sm,HC_LP_LF,5,17,bepap,
+sm,HC_LP_LF,12,17,sorsco,
+sm,HC_LP_LF,11,17,sorsco,
+sm,HC_LP_LF,13,18,menfer,
+sm,HC_LP_LF, 3b,18,riblac,
+sm,HC_LP_LF,,18,spibe,
+sm,HC_LP_LF,,18,spibe,
+sm,HC_LP_LF, A,19,bepap,
+sm,HC_LP_LF,,19,sorsco,
+sm,HC_LP_LF,3,19,vibedu,
+sm,HC_LP_LF,12,19,shecan,
+sm,HC_LP_LF,7,2,amealn,
+sm,HC_LP_LF,10,,corso,
+sm,HC_LP_LF,3,2,riblac,
+sm,HC_LP_LF, B28,2,spipyr,
+sm,HC_LP_LF, C,20,corso,
+sm,HC_LP_LF,10,20,loninv,
+sm,HC_LP_LF,8,20,popbal,
+sm,HC_LP_LF, xx,20,sorsco,
+sm,HC_LP_LF, D,21,riblac,
+sm,HC_LP_LF,,21,rubpar,
+sm,HC_LP_LF, E,21,vibedu,
+sm,HC_LP_LF, oc21,21,vacmem,
+sm,HC_LP_LF, D,22,riblac,
+sm,HC_LP_LF,,22,shecan8,
+sm,HC_LP_LF, oc21,22,vacmem,
+sm,HC_LP_LF,3,23,amealn,
+sm,HC_LP_LF,1,23,alninc,
+sm,HC_LP_LF,8,23,popbal,
+sm,HC_LP_LF, cl,23,rubpar,
+sm,HC_LP_LF,,24,popbal,
+sm,HC_LP_LF,,24,popre,
+sm,HC_LP_LF,,24,symalb,
+sm,HC_LP_LF,,24,sorsco,
+sm,HC_LP_LF,13,25,acegla,
+sm,HC_LP_LF,11,25,riblac,
+sm,HC_LP_LF, b8,25,spipyr,
+sm,HC_LP_LF,2,25,vibedu,
+sm,HC_LP_LF,6,26,bepap,
+sm,HC_LP_LF,8,26,popre,
+sm,HC_LP_LF,,26,symalb,
+sm,HC_LP_LF, XX,26,sorsco,
+sm,HC_LP_LF, D,27,riblac,
+sm,HC_LP_LF,,27,symalb,
+sm,HC_LP_LF,,27,spibe,
+sm,HC_LP_LF, oc21,27,vacmem,
+sm,HC_LP_LF,6,28,amealn,
+sm,HC_LP_LF, A,28,amealn,
+sm,HC_LP_LF,10,28,shecan,
+sm,HC_LP_LF,5,28,loninv,
+sm,HC_LP_LF, B26,28,spipyr,
+sm,HC_LP_LF,3,29,alninc,
+sm,HC_LP_LF,4,29,alninc,
+sm,HC_LP_LF, a,29,bepap,
+sm,HC_LP_LF, b,29,bepap,
+sm,HC_LP_LF,7,3,loninv,
+sm,HC_LP_LF, A,3,popbal,
+sm,HC_LP_LF,3,3,riblac,
+sm,HC_LP_LF, xx,3,sorsco,
+sm,HC_LP_LF,3,30,amealn,
+sm,HC_LP_LF,2,30,alninc,
+sm,HC_LP_LF,2,30,alnvir,
+sm,HC_LP_LF, b12,30,spipyr,
+sm,HC_LP_LF,7,31,amealn,
+sm,HC_LP_LF,1,31,alninc,
+sm,HC_LP_LF,1,31,menfer,
+sm,HC_LP_LF,2,31,symalb,
+sm,HC_LP_LF,15,32,acegla,
+sm,HC_LP_LF, A,32,bepap,
+sm,HC_LP_LF,3,32,popbal,
+sm,HC_LP_LF, A6,32,spibe,
+sm,HC_LP_LF,8,33,corso,
+sm,HC_LP_LF,8,33,popbal,
+sm,HC_LP_LF,,33,rubpar,
+sm,HC_LP_LF,,33,sorsco,
+sm,HC_LP_LF,6,33,shecan ,
+sm,HC_LP_LF,2,34,alnvir,
+sm,HC_LP_LF,6,34,alnvir,
+sm,HC_LP_LF,9,34,corso,
+sm,HC_LP_LF,9,34,vibedu,
+sm,HC_LP_LF,1,35,amealn,
+sm,HC_LP_LF,1,35,alninc,
+sm,HC_LP_LF,7,35,popre,
+sm,HC_LP_LF, oc 21,35,vacmem,
+sm,HC_LP_LF,4,36,alninc,
+sm,HC_LP_LF,9,36,corso,
+sm,HC_LP_LF,5,36,corso,
+sm,HC_LP_LF,6,36,vibedu,
+sm,HC_LP_LF,11,37,loninv,
+sm,HC_LP_LF, w/10,37,rubpar,
+sm,HC_LP_LF, xx,37,sorsco,
+sm,HC_LP_LF,,37,spipyr,
+sm,HC_LP_LF,3,38,menfer,
+sm,HC_LP_LF,7,38,popre,
+sm,HC_LP_LF, xx,38,sorsco,
+sm,HC_LP_LF, oc21,38,vacmem,
+sm,HC_LP_LF,13,39,acegla,
+sm,HC_LP_LF, cl,39,symalb,
+sm,HC_LP_LF, a11,39,spibe,
+sm,HC_LP_LF, oc21,39,vacmem,
+sm,HC_LP_LF,9,4,acegla,
+sm,HC_LP_LF,10,4,alnvir,
+sm,HC_LP_LF,9,4,corso,
+sm,HC_LP_LF,3,4,menfer,
+sm,HC_LP_LF,7,40,acegla,
+sm,HC_LP_LF,19,40,alnvir,
+sm,HC_LP_LF, #1,40,popre,
+sm,HC_LP_LF, cl,40,rubpar,
+sm,HC_LP_LF, b,5,popre,
+sm,HC_LP_LF,,5,rubpar,
+sm,HC_LP_LF,10,5,shecan,
+sm,HC_LP_LF,3,5,vibedu,
+sm,HC_LP_LF,2,6,alnvir,
+sm,HC_LP_LF,2,6,symalb,
+sm,HC_LP_LF,,6,sorsco,
+sm,HC_LP_LF,,6,sorsco,
+sm,HC_LP_LF,10,7,acegla,
+sm,HC_LP_LF, D,7,popre,
+sm,HC_LP_LF,11,7,riblac,
+sm,HC_LP_LF,2,7,symalb,
+sm,HC_LP_LF,8,8,corso,
+sm,HC_LP_LF,8,8,popbal,
+sm,HC_LP_LF,,8,rubpar,
+sm,HC_LP_LF, oc25,8,vacmem,
+sm,HC_LP_LF,14,9,acegla,
+sm,HC_LP_LF,10,9,loninv,
+sm,HC_LP_LF,12,9,menfer,
+sm,HC_LP_LF,12,9,popbal,
+sm,LC_HP_HF, A,1,amealn,
+sm,LC_HP_HF,5,1,loninv,
+sm,LC_HP_HF, C,1,popbal,
+sm,LC_HP_HF,7,1,shecan,
+sm,LC_HP_HF, D,10,riblac,
+sm,LC_HP_HF,,10,rubpar,
+sm,LC_HP_HF,,10,symalb,
+sm,LC_HP_HF,,10,symalb,
+sm,LC_HP_HF,,11,rubpar,
+sm,LC_HP_HF,,11,spipyr,
+sm,LC_HP_HF, oc21,11,vacmem,
+sm,LC_HP_HF, A,12,corso,
+sm,LC_HP_HF,7,12,loninv,
+sm,LC_HP_HF,8,12,popre,
+sm,LC_HP_HF,,12,symalb,
+sm,LC_HP_HF,10,13,alnvir,
+sm,LC_HP_HF,8,13,corso,
+sm,LC_HP_HF,,13cl,rubpar,
+sm,LC_HP_HF,11,13,sorsco,
+sm,LC_HP_HF,10,14,acegla,
+sm,LC_HP_HF,4,14,alninc,
+sm,LC_HP_HF,3,14,popbal,
+sm,LC_HP_HF,3,15,menfer,
+sm,LC_HP_HF,,15,rubpar,
+sm,LC_HP_HF,,15,spipyr,
+sm,LC_HP_HF,11,15,shecan,
+sm,LC_HP_HF,2,16,alninc,
+sm,LC_HP_HF,10,16,alnvir,
+sm,LC_HP_HF,11,16,corso,
+sm,LC_HP_HF, oc21,16,vacmem,
+sm,LC_HP_HF,8,17,popbal,
+sm,LC_HP_HF,,17,spibe,
+sm,LC_HP_HF,,17,symalb,
+sm,LC_HP_HF,3,17,vibedu,
+sm,LC_HP_HF, A,18,amealn,
+sm,LC_HP_HF,5,18,loninv,
+sm,LC_HP_HF, cl,18,symalb,
+sm,LC_HP_HF, A,18,sorsco,
+sm,LC_HP_HF,13,19,acegla,
+sm,LC_HP_HF, D,19,popre,
+sm,LC_HP_HF,8,19,riblac,
+sm,LC_HP_HF, A9,19,spibe,
+sm,LC_HP_HF,7,2,loninv,
+sm,LC_HP_HF, A,2,popbal,
+sm,LC_HP_HF, 3B,2,riblac,
+sm,LC_HP_HF,13,2,shecan,
+sm,LC_HP_HF,6,20,alnvir,
+sm,LC_HP_HF,10,20,bepap,
+sm,LC_HP_HF, cl,20,rubpar,
+sm,LC_HP_HF,11,20,sorsco,
+sm,LC_HP_HF,7,21,amealn,
+sm,LC_HP_HF,3,21,amealn,
+sm,LC_HP_HF,5,21,alninc,
+sm,LC_HP_HF, #3,21,menfer,
+sm,LC_HP_HF, A,22,corso,
+sm,LC_HP_HF,3,22,riblac,
+sm,LC_HP_HF,,22,spibe,
+sm,LC_HP_HF,,22,spipyr,
+sm,LC_HP_HF,10,22,shecan,
+sm,LC_HP_HF,2,23,alnvir,
+sm,LC_HP_HF,10,23,bepap,
+sm,LC_HP_HF,8,23,menfer,
+sm,LC_HP_HF,10,24,acegla,
+sm,LC_HP_HF,19,24,alnvir,
+sm,LC_HP_HF,11,24,loninv,
+sm,LC_HP_HF,12,24,sorsco,
+sm,LC_HP_HF, C,25,popre,
+sm,LC_HP_HF,,25,symalb,
+sm,LC_HP_HF,,25,spipyr,
+sm,LC_HP_HF, A,25,shecan,
+sm,LC_HP_HF,2,26,acegla,
+sm,LC_HP_HF,9,26,acegla,
+sm,LC_HP_HF,11,26,loninv,
+sm,LC_HP_HF, D,26,popre,
+sm,LC_HP_HF,1,27,alninc,
+sm,LC_HP_HF, C,27,popre,
+sm,LC_HP_HF,2,27,symalb,
+sm,LC_HP_HF,9,28,acegla,
+sm,LC_HP_HF,2,28,alninc,
+sm,LC_HP_HF,19,28,alnvir,
+sm,LC_HP_HF, D,28,popre,
+sm,LC_HP_HF,7,29,shecan,
+sm,LC_HP_HF,,29,spipyr,
+sm,LC_HP_HF,,29,spipyr,
+sm,LC_HP_HF,11,29,shecan,
+sm,LC_HP_HF,6,3,amealn,
+sm,LC_HP_HF,10,3,corso,
+sm,LC_HP_HF,9,3,menfer,
+sm,LC_HP_HF, A27,3,spibe,
+sm,LC_HP_HF,12,3,shecan,
+sm,LC_HP_HF,8,30,popbal,
+sm,LC_HP_HF,,30,rubpar,
+sm,LC_HP_HF,,30,spipyr,
+sm,LC_HP_HF, oc21,30,vacmem,
+sm,LC_HP_HF,7,31,amealn,
+sm,LC_HP_HF,5,31,alninc,
+sm,LC_HP_HF, A,31,bepap,
+sm,LC_HP_HF, ?,31,loninv,
+sm,LC_HP_HF,6,32,alnvir,
+sm,LC_HP_HF,10,32,bepap,
+sm,LC_HP_HF, onionB,32,popbal,
+sm,LC_HP_HF, w/10,32,rubpar,
+sm,LC_HP_HF,13,33,acegla,
+sm,LC_HP_HF, b12,33,spipyr,
+sm,LC_HP_HF,4,33,vibedu,
+sm,LC_HP_HF,1,34,amealn,
+sm,LC_HP_HF,5,34,alninc,
+sm,LC_HP_HF,7,34,riblac,
+sm,LC_HP_HF,2,34,vibedu,
+sm,LC_HP_HF,6,35,bepap,
+sm,LC_HP_HF,2,35,menfer,
+sm,LC_HP_HF,11,35,menfer,
+sm,LC_HP_HF,,35,symalb,
+sm,LC_HP_HF,13,36,acegla,
+sm,LC_HP_HF,11,36,sorsco,
+sm,LC_HP_HF,11,36,vibedu,
+sm,LC_HP_HF,2,36,vibedu,
+sm,LC_HP_HF, b,37,popre,
+sm,LC_HP_HF,,37,symalb,
+sm,LC_HP_HF,3,37,vibedu,
+sm,LC_HP_HF,,38,symalb,
+sm,LC_HP_HF,,38,symalb,
+sm,LC_HP_HF,,38,spibe,
+sm,LC_HP_HF, oc21,38,vacmem,
+sm,LC_HP_HF,6,39,bepap,
+sm,LC_HP_HF, #3,39,menfer,
+sm,LC_HP_HF,11,39,sorsco,
+sm,LC_HP_HF, oc25,39,vacmem,
+sm,LC_HP_HF,1,4,menfer,
+sm,LC_HP_HF,8,4,popbal,
+sm,LC_HP_HF,,4,spibe,
+sm,LC_HP_HF,,4,spibe,
+sm,LC_HP_HF,5,40,amealn,
+sm,LC_HP_HF,1,40,alninc,
+sm,LC_HP_HF, cl,40,symalb,
+sm,LC_HP_HF,4,40,vibedu,
+sm,LC_HP_HF,6,5,bepap,
+sm,LC_HP_HF,5,5,loninv,
+sm,LC_HP_HF, A36,5,spibe,
+sm,LC_HP_HF,2,5,vibedu,
+sm,LC_HP_HF,2,6,alnvir,
+sm,LC_HP_HF, cl,6,symalb,
+sm,LC_HP_HF,11,6,sorsco,
+sm,LC_HP_HF,8,6,vacmem,
+sm,LC_HP_HF,8,7,corso, sraigh
+sm,LC_HP_HF, A,7,corso,
+sm,LC_HP_HF,8,7,popbal,
+sm,LC_HP_HF,3,7,riblac,
+sm,LC_HP_HF,6,8,bepap,
+sm,LC_HP_HF,10,8,corso,
+sm,LC_HP_HF, 12(skinny,8,riblac,
+sm,LC_HP_HF,9,8,riblac,
+sm,LC_HP_HF,8,9,popre,
+sm,LC_HP_HF, w10,9,rubpar,
+sm,LC_HP_HF, oc21,9,vacmem,
+sm,LC_HP_HF, oc21,9,vacmem,
+sm,LC_HP_LF,11,1,acegla,
+sm,LC_HP_LF,11,1,corso,
+sm,LC_HP_LF, A7,1,spibe,
+sm,LC_HP_LF, 3b,10,riblac,
+sm,LC_HP_LF, 3b,10,riblac,
+sm,LC_HP_LF,8,10,shecan,
+sm,LC_HP_LF,7,11,amealn,
+sm,LC_HP_LF,9,11,acegla,
+sm,LC_HP_LF,4,11,alninc,
+sm,LC_HP_LF,3,11,symalb,
+sm,LC_HP_LF,1,12,amealn,
+sm,LC_HP_LF,1,12,alninc,
+sm,LC_HP_LF,7,12,sorsco,
+sm,LC_HP_LF,4,12,vibedu,
+sm,LC_HP_LF,10,13,bepap,
+sm,LC_HP_LF,2,13,menfer,
+sm,LC_HP_LF, cl,13,rubpar,
+sm,LC_HP_LF,1,13,sorsco,
+sm,LC_HP_LF,7,14,acegla,
+sm,LC_HP_LF,10,14,alnvir,
+sm,LC_HP_LF, cl,14,rubpar,
+sm,LC_HP_LF, cl,14,rubpar,
+sm,LC_HP_LF, A,15,corso,
+sm,LC_HP_LF, C,15,popre,
+sm,LC_HP_LF,,15,symalb,
+sm,LC_HP_LF,,15,symalb,
+sm,LC_HP_LF,2,16,alnvir,
+sm,LC_HP_LF,2,16,riblac,
+sm,LC_HP_LF,11,16,sorsco,
+sm,LC_HP_LF,9,16,vibedu,
+sm,LC_HP_LF,7,17,amealn,
+sm,LC_HP_LF,10,17,loninv,
+sm,LC_HP_LF,3,17,riblac,
+sm,LC_HP_LF,10,17,vibedu,
+sm,LC_HP_LF,10,17,shecan,
+sm,LC_HP_LF,2,18,acegla,
+sm,LC_HP_LF,9,18,acegla,
+sm,LC_HP_LF,2,18,alninc,
+sm,LC_HP_LF,12,18,sorsco,
+sm,LC_HP_LF,11,19,loninv,
+sm,LC_HP_LF,3,19,riblac,
+sm,LC_HP_LF,,19,spibe,
+sm,LC_HP_LF,,19,spipyr,
+sm,LC_HP_LF,3,2,amealn,
+sm,LC_HP_LF,10,2,popre,
+sm,LC_HP_LF, A29,2,spibe,
+sm,LC_HP_LF,7,2,shecan,
+sm,LC_HP_LF, D,20,popre,
+sm,LC_HP_LF,,20,rubpar,
+sm,LC_HP_LF,,20,spibe,
+sm,LC_HP_LF,,20,spipyr,
+sm,LC_HP_LF,3,21,amealn,
+sm,LC_HP_LF,2,21,alnvir,
+sm,LC_HP_LF,12,21,sorsco,
+sm,LC_HP_LF, A,22,corso,
+sm,LC_HP_LF,7,22,loninv,
+sm,LC_HP_LF,13,22,menfer,
+sm,LC_HP_LF,8,22,popbal,
+sm,LC_HP_LF, 3b,23,riblac,
+sm,LC_HP_LF,,23,spibe,
+sm,LC_HP_LF,,23,spipyr,
+sm,LC_HP_LF,3,23,vibedu,
+sm,LC_HP_LF,10,24,bepap,
+sm,LC_HP_LF,,24,sorsco,
+sm,LC_HP_LF,,24,sorsco,
+sm,LC_HP_LF,,24,vibedu,
+sm,LC_HP_LF,8,25,popbal,
+sm,LC_HP_LF, B,25,popre,
+sm,LC_HP_LF,,25,spibe,
+sm,LC_HP_LF,,25,Shecan,
+sm,LC_HP_LF,7,26,amealn,
+sm,LC_HP_LF,6,26,bepap,
+sm,LC_HP_LF, w10,26,rubpar,
+sm,LC_HP_LF,,26oc 21,vacmem,
+sm,LC_HP_LF,6,27,amealn,
+sm,LC_HP_LF,6,27,alnvir,
+sm,LC_HP_LF,12,27,sorsco,
+sm,LC_HP_LF, oc 21,27,vacmem,
+sm,LC_HP_LF,1,28,alninc,
+sm,LC_HP_LF,11,28,corso,
+sm,LC_HP_LF, A17,28,spibe,
+sm,LC_HP_LF,5,28,sorsco,
+sm,LC_HP_LF,5,29,alninc,
+sm,LC_HP_LF, cl,29,symalb,
+sm,LC_HP_LF, cl,29,vacmem,
+sm,LC_HP_LF, cl,29,vacmem,
+sm,LC_HP_LF,5,3,bepap,
+sm,LC_HP_LF,5,3,loninv,
+sm,LC_HP_LF,8,3,menfer,
+sm,LC_HP_LF, cl,3,symalb,
+sm,LC_HP_LF,3,30,amealn,
+sm,LC_HP_LF,1,30,alninc,
+sm,LC_HP_LF, C,30,popre,
+sm,LC_HP_LF, B15,30,spipyr,
+sm,LC_HP_LF,10,31,loninv,
+sm,LC_HP_LF,9,31,riblac,
+sm,LC_HP_LF, 3b,31,riblac,
+sm,LC_HP_LF, xx,31,sorsco,
+sm,LC_HP_LF,11,31,shecan,
+sm,LC_HP_LF,10,32,loninv,
+sm,LC_HP_LF, D,32,popre,
+sm,LC_HP_LF, cx,32,sorsco,
+sm,LC_HP_LF,3,32,vibedu,
+sm,LC_HP_LF,1,33,alninc,
+sm,LC_HP_LF,8,33,popbal,
+sm,LC_HP_LF,2,33,symalb,
+sm,LC_HP_LF, b21,33,spipyr,
+sm,LC_HP_LF,2,34,alnvir,
+sm,LC_HP_LF,8,34,menfer,
+sm,LC_HP_LF,8,34,popre,
+sm,LC_HP_LF,11,34,sorsco,
+sm,LC_HP_LF,11,35,acegla,
+sm,LC_HP_LF, #3,35,menfer,
+sm,LC_HP_LF, cl,35,rubpar,
+sm,LC_HP_LF, b5,35,spipyr,
+sm,LC_HP_LF, A,36,corso,
+sm,LC_HP_LF,13,36,menfer,
+sm,LC_HP_LF,,36,symalb,
+sm,LC_HP_LF,,36,spipyr,
+sm,LC_HP_LF,5,37,alninc,
+sm,LC_HP_LF,1,37,bepap,
+sm,LC_HP_LF, #3,37,menfer,
+sm,LC_HP_LF, oc21`,37,vacmem,
+sm,LC_HP_LF,6,38,alnvir,
+sm,LC_HP_LF,10,38,alnvir,
+sm,LC_HP_LF,12,38,corso,
+sm,LC_HP_LF,9,38,vibedu,
+sm,LC_HP_LF, A,39,corso,
+sm,LC_HP_LF,,39,symalb,
+sm,LC_HP_LF,,39,spipyr,
+sm,LC_HP_LF,3,39,vibedu,
+sm,LC_HP_LF,8,4,popbal,
+sm,LC_HP_LF, C,4,popre,
+sm,LC_HP_LF, oc21,4,vacmem,
+Sm,LC_HP_LF,7,4,shecan,
+sm,LC_HP_LF,5,40,bepap,
+sm,LC_HP_LF, b,40,corso,
+sm,LC_HP_LF, A,40,sorsco,
+sm,LC_HP_LF, oc 25,40,vacmem,
+sm,LC_HP_LF,5,5,bepap,
+sm,LC_HP_LF,5,5,loninv,
+sm,LC_HP_LF, A,5,popbal,
+sm,LC_HP_LF, A34,5,spibe,
+sm,LC_HP_LF,10,6,bepap,
+sm,LC_HP_LF,9,6,loninv,
+sm,LC_HP_LF, cl,6,rubpar,
+sm,LC_HP_LF, cl,6,rubpar,
+sm,LC_HP_LF,7,6,shecan,
+sm,LC_HP_LF,6,7,alnvir,
+sm,LC_HP_LF,12,7,sorsco,
+sm,LC_HP_LF, oc21,7,vacmem,
+sm,LC_HP_LF,13,8,acegla,
+sm,LC_HP_LF,9,8,menfer,
+sm,LC_HP_LF,12,8,popbal,
+sm,LC_HP_LF,3,8,popbal,
+sm,LC_HP_LF,13,9,acegla,
+sm,LC_HP_LF,12,9,popbal,
+sm,LC_HP_LF,7,9,sorsco,
+sm,LC_LP_HF,1,1,amealn,
+sm,LC_LP_HF,6,1,alnvir,
+sm,LC_LP_HF, A,1,bepap,
+sm,LC_LP_HF,11,1,sorsco,
+sm,LC_LP_HF,11,10,acegla,
+sm,LC_LP_HF, C,10,popre,
+sm,LC_LP_HF, cl,10,rubpar,
+sm,LC_LP_HF, oc21/8,10,vacmem,
+sm,LC_LP_HF,15,11,acegla,
+sm,LC_LP_HF, A,11,bepap,
+sm,LC_LP_HF, cl,11,symalb,
+sm,LC_LP_HF,2,12,alninc,
+sm,LC_LP_HF,3,12,alnvir,
+sm,LC_LP_HF,11,12,corso,
+sm,LC_LP_HF, b13,12,spipyr,
+sm,LC_LP_HF,6,13,alnvir,
+sm,LC_LP_HF,8,13,popre,
+sm,LC_LP_HF, A23,13,spibe,
+sm,LC_LP_HF, A24,13,spibe,
+sm,LC_LP_HF, B,14,popre,
+sm,LC_LP_HF,9,14,riblac,
+sm,LC_LP_HF,,14,symalb,
+sm,LC_LP_HF,,14,spibe,
+sm,LC_LP_HF, D,15,riblac,
+sm,LC_LP_HF,,15,rubpar,
+sm,LC_LP_HF,,15,symalb,
+sm,LC_LP_HF, A,15,shecan,
+sm,LC_LP_HF, A,16,corso,
+sm,LC_LP_HF,13,16,menfer,
+sm,LC_LP_HF,,16,symalb,
+sm,LC_LP_HF, oc21,16,vacmem,
+sm,LC_LP_HF,8,17,popbal,
+sm,LC_LP_HF,9,17,riblac,
+sm,LC_LP_HF,,1710,shecan,
+sm,LC_LP_HF,3,17,vibedu,
+sm,LC_LP_HF,10,18,loninv,
+sm,LC_LP_HF,8,18,popbal,
+sm,LC_LP_HF,11,18,shecan,
+sm,LC_LP_HF,3,18,vibedu,
+sm,LC_LP_HF,1,19,alninc,
+sm,LC_LP_HF,10,19,bepap,
+sm,LC_LP_HF,7,19,popre,
+sm,LC_LP_HF, B17,19,spipyr,
+sm,LC_LP_HF, D,2,riblac,
+sm,LC_LP_HF, A,2,shecan,
+sm,LC_LP_HF,,2,symalb,
+sm,LC_LP_HF, oc21,2,vacmem,
+sm,LC_LP_HF,5,20,amealn,
+sm,LC_LP_HF,6,20,alnvir,
+sm,LC_LP_HF,11,20,sorsco,
+sm,LC_LP_HF,2,21,alnvir,
+sm,LC_LP_HF, onion b,21,popbal,
+sm,LC_LP_HF,8,21,popbal,
+sm,LC_LP_HF, w/10,21,rubpar,
+sm,LC_LP_HF,4,22,alninc,
+sm,LC_LP_HF,2,22,riblac,
+sm,LC_LP_HF, A18,22,spibe,
+sm,LC_LP_HF,6,22,vibedu,
+sm,LC_LP_HF,3,23,amealn,
+sm,LC_LP_HF, cl,23,rubpar,
+sm,LC_LP_HF, cl,23,symalb,
+sm,LC_LP_HF, oc25,23,vacmem,
+sm,LC_LP_HF,10,24,bepap,
+sm,LC_LP_HF,9,24,loninv,
+sm,LC_LP_HF, cl,24,symalb,
+sm,LC_LP_HF, oc25,24,vacmem,
+sm,LC_LP_HF,11,25,bepap,
+sm,LC_LP_HF, C,25,corso,
+sm,LC_LP_HF,11,25,riblac,
+sm,LC_LP_HF, A,25,sorsco,
+sm,LC_LP_HF,11,26,acegla,
+sm,LC_LP_HF,9,26,corso,
+sm,LC_LP_HF,2,26,menfer,
+sm,LC_LP_HF,9,26,menfer,
+sm,LC_LP_HF,11,27,menfer,
+sm,LC_LP_HF, D,27,popre,
+sm,LC_LP_HF, xx,27,sorsco,
+sm,LC_LP_HF,3,27,vibedu,
+sm,LC_LP_HF,11,27,shecan,
+sm,LC_LP_HF,3,28,amealn,
+sm,LC_LP_HF,9,28,loninv,
+sm,LC_LP_HF, B31,28,spipyr,
+sm,LC_LP_HF,8,28,vibedu,
+sm,LC_LP_HF,10,29,acegla,
+sm,LC_LP_HF,4,29,alninc,
+sm,LC_LP_HF, Cl,29,rubpar,
+sm,LC_LP_HF, spibe7_01,29,spibe,
+sm,LC_LP_HF,10,3,alnvir,
+sm,LC_LP_HF,6,3,loninv,
+sm,LC_LP_HF, w/10,3,rubpar,
+sm,LC_LP_HF, oc 21,3,vacmem,
+sm,LC_LP_HF, 3b,30,riblac,
+sm,LC_LP_HF,,30,spibe,
+sm,LC_LP_HF,11,30,shecan,
+Sm,LC_LP_HF,,30,symalb,
+sm,LC_LP_HF,13,31,acegla,
+sm,LC_LP_HF, b11,31,spipyr,
+sm,LC_LP_HF,11,31,sorsco,
+sm,LC_LP_HF,5,32,alninc,
+sm,LC_LP_HF,10,32,bepap,
+sm,LC_LP_HF,4,32,menfer,
+sm,LC_LP_HF,2,33,alnvir,
+sm,LC_LP_HF, onion b,33,popbal,
+sm,LC_LP_HF,8,33,popre,
+sm,LC_LP_HF, b25,33,spipyr,
+sm,LC_LP_HF, A,34,corso,
+sm,LC_LP_HF,7,34,loninv,
+sm,LC_LP_HF, xx,34,sorsco,
+sm,LC_LP_HF, oc25,34,vacmem,
+sm,LC_LP_HF,11,34,shecan,
+sm,LC_LP_HF,8,35,popbal,
+sm,LC_LP_HF,,35,symalb,
+sm,LC_LP_HF,,35,spibe,
+sm,LC_LP_HF, oc21,35,vacmem,
+sm,LC_LP_HF,3,36,amealn,
+sm,LC_LP_HF,10,36,popre,
+sm,LC_LP_HF,10,36,popre,
+sm,LC_LP_HF,8,36,vibedu,
+sm,LC_LP_HF,10,37,loninv,
+sm,LC_LP_HF,13,37,menfer,
+sm,LC_LP_HF,6,37,shecan,
+sm,LC_LP_HF,3,37,vibedu,
+sm,LC_LP_HF, A,38,amealn,
+sm,LC_LP_HF, B,38,corso,
+sm,LC_LP_HF,8,38,vibedu,
+sm,LC_LP_HF,7,38,shecan,
+sm,LC_LP_HF,5,39,bepap,
+sm,LC_LP_HF,9,39,loninv,
+sm,LC_LP_HF,6,39,menfer,
+sm,LC_LP_HF,8,39,menfer,
+sm,LC_LP_HF,11,4,acegla,
+sm,LC_LP_HF,4,4,corso,
+sm,LC_LP_HF, b1,4,spipyr,
+sm,LC_LP_HF, b2,4,spipyr,
+sm,LC_LP_HF,3,40,alninc,
+sm,LC_LP_HF,4,40,alninc,
+sm,LC_LP_HF,12,40,popbal,
+sm,LC_LP_HF,,40wih 10,rubpar,
+sm,LC_LP_HF, A,5,amealn,
+sm,LC_LP_HF, B,5,corso,
+sm,LC_LP_HF, cl,5,symalb,
+sm,LC_LP_HF, B32,5,spipyr,
+sm,LC_LP_HF,7,5,shecan,
+sm,LC_LP_HF,,6,amealn,
+sm,LC_LP_HF,,6,alnvir,
+sm,LC_LP_HF,,6,sorsco,
+sm,LC_LP_HF,11,7,acegla,
+sm,LC_LP_HF,8,7,popbal,
+sm,LC_LP_HF, cl,7,rubpar,
+sm,LC_LP_HF,15,8,acegla,
+sm,LC_LP_HF,9,8,bepap,
+sm,LC_LP_HF,11,8,loninv,
+sm,LC_LP_HF,8,8,riblac,
+sm,LC_LP_HF,1,9,alninc,
+sm,LC_LP_HF, A16,9,spibe,
+sm,LC_LP_HF,,9,sorsco,
+sm,LC_LP_HF,,9,sorsco,
+sm,LC_LP_LF,4,1,alninc,
+sm,LC_LP_LF,7,1,popre,
+sm,LC_LP_LF,6,1,vibedu,
+sm,LC_LP_LF, oc21,1,vacmem,
+sm,LC_LP_LF,4,10,alninc,
+sm,LC_LP_LF,11,10,loninv,
+sm,LC_LP_LF,10,10,riblac,
+sm,LC_LP_LF,9,10,symalb,
+sm,LC_LP_LF, B,11,popre,
+sm,LC_LP_LF, D,11,popre,
+sm,LC_LP_LF,3,11,vibedu,
+sm,LC_LP_LF, oc21,11,vacmem,
+sm,LC_LP_LF, A,12,amealn,
+sm,LC_LP_LF, c,12,corso,
+sm,LC_LP_LF,,12,sorsco,
+sm,LC_LP_LF,,12,sorsco,
+sm,LC_LP_LF,8,13,popbal,
+sm,LC_LP_LF,8,13,popbal,
+sm,LC_LP_LF, oc21,13,vacmem,
+sm,LC_LP_LF, oc21,13,vacmem,
+sm,LC_LP_LF,3,14,riblac,
+sm,LC_LP_LF,3,14,riblac,
+sm,LC_LP_LF,,14,spipyr,
+sm,LC_LP_LF, A,14,shecan,
+sm,LC_LP_LF,1,15,alninc,
+sm,LC_LP_LF, w/10,15,rubpar,
+sm,LC_LP_LF, w/10,15,rubpar,
+sm,LC_LP_LF,3,15,symalb,
+sm,LC_LP_LF,7,16,amealn,
+sm,LC_LP_LF,10,16,acegla,
+sm,LC_LP_LF, A,16,bepap,
+sm,LC_LP_LF,11,16,vibedu,
+sm,LC_LP_LF,10,17,loninv,
+sm,LC_LP_LF,12,17,menfer,
+sm,LC_LP_LF,,17,rubpar,
+sm,LC_LP_LF,7,17,shecan,
+sm,LC_LP_LF,1,18,alninc,
+sm,LC_LP_LF,8,18,bepap,
+sm,LC_LP_LF,4,18,popbal,
+sm,LC_LP_LF, oc21,18,vacmem,
+sm,LC_LP_LF,11,19,bepap,
+sm,LC_LP_LF, C,19,corso,
+sm,LC_LP_LF, A34,19,spibe,
+sm,LC_LP_LF,,19,sorsco,
+sm,LC_LP_LF,11,2,acegla,
+sm,LC_LP_LF,12,2,popbal,
+sm,LC_LP_LF, cl,2,rubpar,
+sm,LC_LP_LF, b7,2,spipyr,
+sm,LC_LP_LF,,20,acegla,
+sm,LC_LP_LF,,20,spibe,
+sm,LC_LP_LF,,20,spipyr,
+sm,LC_LP_LF,13,21,acegla,
+sm,LC_LP_LF,3,21,popbal,
+sm,LC_LP_LF, cl,21,rubpar,
+sm,LC_LP_LF,7,21,sorsco,
+sm,LC_LP_LF,15,22,acegla,
+sm,LC_LP_LF,9,22,bepap,
+sm,LC_LP_LF, #3,22,menfer,
+sm,LC_LP_LF, CL,22,symalb,
+sm,LC_LP_LF,1,23,alnvir,
+sm,LC_LP_LF,10,23,alnvir,
+sm,LC_LP_LF,9,23,corso,
+sm,LC_LP_LF, ,23,riblac,
+sm,LC_LP_LF,5,24,alninc,
+sm,LC_LP_LF,2,24,alnvir,
+sm,LC_LP_LF,1,24,menfer,
+sm,LC_LP_LF,11,24,sorsco,
+sm,LC_LP_LF,4,25,alninc,
+sm,LC_LP_LF,7,25,popre,
+sm,LC_LP_LF, D,25,popre,
+sm,LC_LP_LF,11,25,sorsco,
+sm,LC_LP_LF,7,26,acegla,
+sm,LC_LP_LF,10,26,alnvir,
+sm,LC_LP_LF, A,26,bepap,
+sm,LC_LP_LF,9,26,corso,
+sm,LC_LP_LF, A,27,corso,
+sm,LC_LP_LF, xx,27,sorsco,
+sm,LC_LP_LF,,27,spipyr,
+sm,LC_LP_LF,3,27,vibedu,
+sm,LC_LP_LF,5,28,bepap,
+sm,LC_LP_LF,2,28,menfer,
+sm,LC_LP_LF, cl,28,rubpar,
+sm,LC_LP_LF,,10,shecan,
+sm,LC_LP_LF,6,29,amealn,
+sm,LC_LP_LF,1,29,alnvir,
+sm,LC_LP_LF,8,29,popbal,
+sm,LC_LP_LF, D,29,popre,
+sm,LC_LP_LF,4,3,alninc,
+sm,LC_LP_LF,9,3,menfer,
+sm,LC_LP_LF, w/10,3,rubpar,
+sm,LC_LP_LF,8,30,shecan,
+sm,LC_LP_LF,10,30,shecan,
+sm,LC_LP_LF,6,30,shecan,
+sm,LC_LP_LF, b,30,vibedu,
+sm,LC_LP_LF,3,31,amealn,
+sm,LC_LP_LF,5,31,acegla,
+sm,LC_LP_LF, A4,31,spibe,
+sm,LC_LP_LF, A5,31,spibe,
+sm,LC_LP_LF,10,32,alnvir,
+sm,LC_LP_LF,7,32,bepap,
+sm,LC_LP_LF,10,32,vacmem,
+sm,LC_LP_LF,5,33,amealn,
+sm,LC_LP_LF,11,33,riblac,
+sm,LC_LP_LF, A,33,sorsco,
+sm,LC_LP_LF,10,33,shecan,
+sm,LC_LP_LF,3,34,riblac,
+sm,LC_LP_LF,,34,rubpar,
+sm,LC_LP_LF,,34,spibe,
+sm,LC_LP_LF,,34,spibe,
+Sm,LC_LP_LF,10,34,shecan,
+sm,LC_LP_LF,7,35,popre,
+sm,LC_LP_LF, 3b,35,riblac,
+sm,LC_LP_LF, xx,35,sorsco,
+sm,LC_LP_LF,,35,spipyr,
+sm,LC_LP_LF,10,36,loninv,
+sm,LC_LP_LF,,36,spipyr,
+sm,LC_LP_LF,,36,spipyr,
+sm,LC_LP_LF, oc21,36,vacmem,
+sm,LC_LP_LF,2,37,alnvir,
+sm,LC_LP_LF,11,37,loninv,
+sm,LC_LP_LF,9,37,menfer,
+sm,LC_LP_LF,3,38,riblac,
+sm,LC_LP_LF,,38,spibe,
+sm,LC_LP_LF, B,38,vibedu,
+Sm,LC_LP_LF,7,38,shecan,
+sm,LC_LP_LF,10,39,loninv,
+sm,LC_LP_LF,10,39,loninv,
+sm,LC_LP_LF,12,39,menfer,
+sm,LC_LP_LF,,39,symalb,
+sm,LC_LP_LF,8,4,popbal,
+sm,LC_LP_LF, bC,4,popre,
+sm,LC_LP_LF, ,4,symalb,
+sm,LC_LP_LF,11,4,shecan,
+sm,LC_LP_LF, A,40,corso,
+sm,LC_LP_LF,,40,symalb,
+sm,LC_LP_LF,,40,spibe,
+sm,LC_LP_LF,3,40,vibedu,
+sm,LC_LP_LF,1,5,alninc,
+sm,LC_LP_LF,10,5,bepap,
+sm,LC_LP_LF,20,5,popbal,
+sm,LC_LP_LF,8,5,sorsco,
+sm,LC_LP_LF,19,6,alnvir,
+sm,LC_LP_LF,8,6,corso,
+sm,LC_LP_LF,5,6,loninv,
+sm,LC_LP_LF,3,6,symalb,
+sm,LC_LP_LF,7,7,amealn,
+sm,LC_LP_LF,6,7,amealn,
+sm,LC_LP_LF,9,7,loninv,
+sm,LC_LP_LF,10,7,shecan,
+sm,LC_LP_LF, cl,7,symalb,
+sm,LC_LP_LF,11,8,acegla,
+sm,LC_LP_LF,4,8,corso,
+sm,LC_LP_LF, b3,8,spipyr,
+sm,LC_LP_LF, oc21,8,vacmem,
+sm,LC_LP_LF,3,9,amealn,
+sm,LC_LP_LF,2,9,menfer,
+sm,LC_LP_LF,1,9,sorsco,
+sm,LC_LP_LF,11,9,vibedu,

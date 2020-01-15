@@ -971,7 +971,7 @@
 50,mp,LLL,tml,3,rubpar,1,100,1,7,25,3,75,NA,NA,NA,NA,NA,NA,,
 50,mp,LLL,10,3,samrac,3,100,2,3,100,NA,NA,NA,NA,NA,NA,NA,NA,,
 50,mp,LLL,11,3,shecan,NA,NA,NA,15,30,11,30,10,25,NA,y,NA,NA,,
-50,sm,LLL,4,3,alninc,1,100,1,1,-100,NA,NA,NA,NA,8,NA,NA,NA,,
+50,sm,LLL,4,3,alninc,1,100,1,1,100,NA,NA,NA,NA,8,NA,NA,NA,,
 50,sm,LLL,9,3,menfer,1,70,11,0,100,NA,NA,NA,NA,NA,NA,NA,NA,,
 50,sm,LLL, w/10,3,rubpar,1,100,1,1,50,0,50,NA,NA,NA,NA,NA,NA,,
 50,mp,LLL,2,4,menfer,1,25,8,0,100,NA,NA,NA,NA,NA,NA,0,75,,

@@ -130,11 +130,13 @@ HLH-- ch 6
 HHL-- ch 5 - ck
 HLL-- ch 4 - ck
 
-Dec 31:
+Dec 31: Realized I should be recording what chambers I do observations in each day. Opps.
 Observations in LLH, LHH, LHL, LLL, HLH, HHL, 
+Changed water for HC flasks
 
 Jan 3
 Hobo #5 was out of chamber at 2pm
+Changed water for HC flasks
 
 Jan 4
 Observations done for LC-HF chambers and started observations for HC chambers
@@ -143,16 +145,18 @@ Jan 5
 Completed observations for HC chambers
 
 Jan 6: 
-Observations on LC-HF chambers -culling samples
+Observations on LC-HF chambers -culling samples that were dead
 
 Jan 7:
 Observations on LC-LF chambers 
+Changed Lc water changing to Tuesday so Sadie and Adam could help. 
 
 Jan 8: 
 Observations on HC-LF, and most of HC-HF
 
 Jan 9: 
 Finished last few samples in HC-HF and conducted observations in LC-LF
+Changed HC water changing to Thursdays, so Sadie can help again.
 
 Jan 10:
 Finished last few LC-LF and did all the LC-HF
@@ -168,7 +172,7 @@ Finished LC-LF. LC-HF, half of LC-HF
 
 Jan 14:
 Observations, finished LC-HF and started HC-HF
-
+Changed water in LC
 Rotated chambers
 LLL - ch 8 - done
 LHL - ch 11 - done
@@ -187,6 +191,7 @@ SNOW DAY!
 
 Jan 16: 
 Observations on HC-LF
+Changed water for HC flasks
 
 Jan 17:
 Observations on LC-HF and started LC-LF & HC-HF
@@ -198,18 +203,20 @@ Jan 19:
 Observations for HC-LF and finish LC_LF
 
 Jan 20: 
-HC_HF, maybe start LC
+HC_HF, started LC
 
 Chamber 12 malfunction: At 10 am chamber 12 pressure rose and shut down, realized and restarted chamber at 2 (4h), swapped samples that were in there (HC_HP_LF) with LC_HP_LF in case it happens again. Reducing effects on the experiment 
 
 Jan 21: 
 Observations conducted on all LC samples. 
+Changed water in LC
 
 Jan 22: 
 Observations conducted on HC_LF, only took 4.5 h
 
 Jan 23: 
 Observations for HC_HF
+Changed water for HC flasks
 
 Jan 24:
 Observations on LC samples
@@ -225,6 +232,7 @@ Observations on all the LC chambers - ~5 hours
 
 Jan 28:
 Observations on the HC_LF
+Changed water in LC
 
 Rotated chambers
 LLL - ch 8 --> 9
@@ -241,9 +249,217 @@ Observations on HC_HF
 
 January 30:
 Observations on LC
+Changed water for HC flasks
 
 January 31:
+Observations on HC_LF. It was raining really hard an the ceiling near chamber 12 started to drip. 
+
+February 1: 
+Observations on HC_HF and a small amount of LLH
+
+February 2:
+Observations on all LC
+
+February 3:
+Accidentally did observations on HC_HF instead of HC_LF, stayed late to start doing HC_LF, got through about half of each.
+
+February 4: 
+Finished HC_LF
+Changed water in LC 
+
+February 5:
+Observations on LC
+
+Feb 6: 
+Observations on HC_HF and prep for moving out of chamber, combining flasks with fewer than 3 individuals. 
+Changed water for HC flasks
+
+February 7:
+Observations on HC_LF and a few (~10) LLL. Moving out of chambers 8, 9, 11. Few enough they can all fit into 4 chambers, but did not have time to move out of chamber 13. 
+
+HLH & LLH - ch 6
+HLL& LLL - ch 12 
+HHH & LHH - ch 5
+
+February 8: 
+Observations on LC. Moved out of chamber 13. 
+HHL and LHL ch 4
+
+Noticed that the temp in ch 5 was not reading as 20C, 18.6. Checked HOBO data to see what actual temperature was, still around 20C. 
+
+February 9:
+Observations on HC_HF.
+
+Issue with Ch 5 temp continues, so moved back into ch 13, will email Shannon.
+
+February 10: 
 Observations on HC_LF
+
+February 11:
+Observations on LC
+Changed water in LC
+
+February 12:
+Observations on HC_HF
+
+February 13: 
+Observations on HC_LF ~3 h
+Changed water for HC flasks
+
+February 14:
+Observations on LC
+
+February 15:
+Observations on HC_HF. Did some HLL. 
+
+February 16: 
+Observations on HC_LF. Week 12 for low chill, end of this treatment, from now on LC only checked ever 4 days.
+
+February 17:
+First day off in 12 weeks!!
+
+February 18:
+Moved LC samples to Green house. Did observations on LC and HC_HF. Observations on HC only took 2 hours this time. 
+Changed water in LC
+
+February 19:
+Observations on HC_LF. Put hobos in greenhouse.
+
+February 20:
+No observations!
+Changed water for HC flasks
+
+February 21:
+Observations on HC_HF & LC because might not yet have greenhouse access on Saturday.
+
+Rotated chambers:
+HLH - ch 13
+HLL - ch 4 
+HHH - ch 12
+HHL - ch 6
+
+February 22:
+Observations on HC_LF
+
+Edits:
+Typo: 
+mp_HLL_34_Alnvir, 19 instead of 10 
+mp_HLL_9_spipyr, 19 instead of 15
+mp_HLL_18_alninc, nonsensical value for 2dary terminal %, replaced with NA
+
+2124
+1952
+1895
+1816
+1806
+1724
+1708
+1595
+157
+      
+February 24:
+Observations on HC_HF & some HF/LF.
+
+February 25:
+Observations on remaining HC/LF and LC
+Changed water in LC
+
+HHH_5_acegla, actually only one but at 7 other 2 still at phase 3.
+
+February 26:
+Removing dead individuals
+
+February 27: 
+Observations on HC_HF 
+Changed water for HC flasks
+
+February 28:
+Observations on HC/LF 
+
+February 29: 
+Observations on LC
+
+March 1:
+Observations on HC_HF, very few, most are starting to die. 
+
+March 2:
+Observations on HC/LF & LC
+
+March 3:
+Changed water in LC, no observations
+
+March 4:
+Observations on HC/HF & lc
+
+March 5:
+Observations on HC/LF 
+Changed water for HC flasks
+
+Rotated chambers
+HLH - ch 4
+HLL - ch 6 
+HHH - ch 13
+HHL - ch 12
+
+March 6:
+
+March 7:
+Observations on HC/HF; very little has changed. Many are dead or about to die.  
+
+March 8:
+Observations on HC/LF & LC.
+
+March 9: 
+Removed dead individuals from HC treatments and consolidated flasks.
+
+March 10:
+Observations on HC/HF 
+Changed water in LC
+
+March 11:
+Observations on HC/LF 
+
+March 12:
+Changed water for HC flasks & LC obs
+
+March 13:
+Observations on HC/HF 
+
+March 14:
+Observations on HC/LF 
+
+March 16:
+Observations on HC/HF 
+
+March 17:
+Final observations on LC & observations on HC/LF. Swap LC for HC in greenhouse. End of growth chamber portion of experiment. 
+
+March 19:
+Changed water for HC flasks
+
+March 20:
+Observations of remaining samples
+
+March 24: 
+Observations on remaining samples
+
+March 26:
+Changed water for HC flasks
+
+March 28:
+Observations on remaining samples
+
+April 1:
+Observations on remaining samples
+
+April 2:
+Changed water for HC flasks
+
+April 9: 
+Changed water for HC flasks
+
+April 16:
+Changed water for HC flasks
 
 
 

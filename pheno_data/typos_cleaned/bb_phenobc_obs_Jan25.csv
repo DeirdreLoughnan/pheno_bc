@@ -2218,7 +2218,7 @@
 33,mp,HC_LP_HF,9,39,rhoalb,17,100,2,17,100,NA,NA,NA,NA,2,NA,NA,NA,,,
 33,sm,HC_LP_HF, A,39,amealn,15,100,2,15,20,11,10,10,70,10,NA,NA,NA,,,
 33,sm,HC_LP_HF,2,39,menfer,0,100,NA,7,20,0,80,NA,NA,NA,NA,NA,NA,,,
-33,sm,HC_LP_HF, cl,39,symalb,NA,NA,NA,17,15,11,7,20,5,NA,NA,NA,NA,,,
+33,sm,HC_LP_HF, cl,39,symalb,NA,NA,NA,17,15,NA,NA,7,20,NA,NA,NA,NA,,,
 33,sm,HC_LP_HF, oc25,39,vacmem,3,100,NA,15,25,9,20,7,15,NA,y,NA,NA,,,
 33,mp,HC_LP_HF,6,40,alnvir,10,70,3,7,100,,,NA,NA,13,NA,7,30,,,
 33,mp,HC_LP_HF,2,40,amealn,11,50,2,10,40,9,60,NA,NA,12,y,10,50,,,

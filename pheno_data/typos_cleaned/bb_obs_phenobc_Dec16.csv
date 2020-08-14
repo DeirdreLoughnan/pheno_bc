@@ -336,7 +336,7 @@
 21,mp,LHL,7,2,vibedu,3,100,10,3,100,NA,NA,NA,NA,NA,NA,NA,NA
 21,sm,LHL,3,2,amealn,3,66,3,3,25,1,40,0,35,NA,NA,1,33
 21,sm,LHL,10,2,popre,1,45,11,0,100,NA,NS,NA,NA,1,NA,0,55
-21,sm,LHL,7,2,shecan,3,50,2,3,3,25,1,60,0,15,NA,NA,NA
+21,sm,LHL,7,2,shecan,3,50,2,3,25,1,60,0,15,NA,NA,NA,NA
 21,sm,LHL, A29,2,spibet,3,100,1,3,75,0,25,NA,NA,4,NA,NA,NA
 21,mp,LHL,6,3,popbal,0,100,NA,0,100,,,,,,,,
 21,mp,LHL,sg,3,rubpar,0,100,NA,0,100,,,,,,,,
@@ -454,7 +454,7 @@
 21,sm,LHL,NA,17,amealn,1,100,1,1,50,0,50,NA,NA,10,NA,NA,NA
 21,sm,LHL,NA,17,loninv,3,100,2,3,40,1,40,0,20,24,NA,NA,NA
 21,sm,LHL,NA,17,riblac,1,100,2,3,50,1,40,0,10,18,NA,NA,NA
-21,sm,LHL,NA,17,shecan,1,100,1,3,40,1,30,30,NA,NA,NA,NA,NA
+21,sm,LHL,NA,17,shecan,1,100,1,3,40,1,30,NA,NA,NA,NA,NA,NA
 21,sm,LHL,NA,17,vibedu,10,100,1,9,100,NA,NA,NA,NA,11,NA,NA,NA
 21,mp,LHL,10,18,alninc,1,100,1,1,100,NA,NA,NA,NA,NA,NA,NA,NA
 21,mp,LHL,6,18,popbal,0,100,1,0,100,NA,NA,NA,NA,NA,NA,NA,NA
@@ -463,7 +463,7 @@
 21,sm,LHL,2,18,acegla,1,100,4,1,30,0,70,NA,NA,10,NA,NA,NA
 21,sm,LHL,9,18,acegla,1,100,3,1,60,0,40,NA,NA,12,NA,NA,NA
 21,sm,LHL,2,18,alninc,1,100,2,0,100,NA,NA,NA,NA,9,NA,NA,NA
-21,sm,LHL,12,18,sorsco,9,50,2,0,100,NA,NA,NA,NA,NA,1,50,NA
+21,sm,LHL,12,18,sorsco,9,50,2,0,100,NA,NA,NA,NA,NA,NA,1,50
 21,mp,LHL,NA,19,corsto,9,100,1,9,30,3,30,NA,NA,10,NA,NA,NA
 21,mp,LHL,NA,19,rhoalb,3,100,1,1,100,NA,NA,NA,NA,8,NA,NA,NA
 21,mp,LHL,8,19,vibedu,3,100,1,3,90,1,10,NA,NA,9,NA,NA,NA
@@ -473,7 +473,7 @@
 21,sm,LHL,NA,19,spibet,3,100,1,3,100,NA,NA,NA,NA,5,NA,NA,NA
 21,sm,LHL,NA,19,spipyr,1,100,4,3,30,1,40,0,30,32,NA,NA,NA
 21,mp,LHL,1,20,corsto,1,100,2,1,65,NA,NA,NA,NA,NA,NA,NA,NA
-21,mp,LHL,5,20,corsto,3,60,5,3,15,1,60,0,25,6,1,40,NA
+21,mp,LHL,5,20,corsto,3,60,5,3,15,1,60,0,25,6,NA,1,40
 21,mp,LHL,11,20,rhoalb,3,20,5,1,80,0,20,NA,NA,NA,NA,1,80
 21,mp,LHL,7,20,vibedu,3,100,1,3,80,1,20,NA,NA,NA,NA,NA,NA
 21,sm,LHL, D,20,popre,1,100,9,1,100,NA,NA,NA,NA,NA,NA,NA,NA
@@ -630,7 +630,7 @@
 21,sm,LHL,NA,39,corsto,3,100,1,1,100,NA,NA,NA,NA,NA,NA,NA,NA
 21,sm,LHL,NA,39,spipyr,1,100,1,1,90,0,10,NA,NA,NA,NA,NA,NA
 21,sm,LHL,NA,39,symalb,NA,NA,NA,3,10,1,50,0,40,NA,NA,NA,NA
-21,sm,LHL,NA,39,vibedu,7,40,1,9,20,7,60,20,NA,26,NA,7,20
+21,sm,LHL,NA,39,vibedu,7,40,1,9,20,7,60,NA,NA,26,NA,7,20
 21,mp,LHL,10,40,alninc,0,100,NA,0,100,,,,,,,,
 21,mp,LHL,8,40,samrac,0,100,NA,0,100,,,,,,,,
 21,mp,LHL,4,40,shecan,0,100,NA,0,100,,,,,,,,
@@ -762,7 +762,7 @@
 21,sm,LLH,NA,15,rubpar,1,100,1,1,20,0,80,,,,,,
 21,sm,LLH, A,15,shecan,3,50,2,3,50,1,50,,,,,1,50
 21,sm,LLH,NA,15,symalb,NA,NA,NA,1,60,0,40,,,,,,
-21,mp,LLH,NA,16,alnvir,3,100,3,3,55,15,0,30,NA,21,NA,NA,NA
+21,mp,LLH,NA,16,alnvir,3,100,3,3,55,1,15,0,30,21,NA,NA,NA
 21,mp,LLH,NA,16,corsto,9,100,2,7,60,3,40,NA,NA,NA,NA,NA,NA
 21,mp,LLH,NA,16,popbal,0,100,1,0,100,NA,NA,NA,NA,NA,NA,NA,NA
 21,mp,LLH,NA,16,spipyr,1,100,1,9,5,7,15,3,40,NA,NA,NA,NA
@@ -937,7 +937,7 @@
 21,sm,LLH,NA,37,menfer,3,90,8,1,40,0,60,NA,NA,NA,NA,NA,NA
 21,sm,LLH,NA,37,shecan,3,100,1,1,100,NA,NA,NA,NA,31,NA,NA,NA
 21,sm,LLH,NA,37,vibedu,11,100,1,11,10,10,25,3,65,17,NA,NA,NA
-21,mp,LLH,9,38,acegla,3,100,3,15,1,15,0,70,,13,,,
+21,mp,LLH,9,38,acegla,3,100,NA,3,15,1,15,0,70,13,,,
 21,mp,LLH,6,38,riblac,7,50,6,7,50,3,30,1,10,27,,,
 21,mp,LLH,NA,38,spibet,11,100,1,3,100,,,,,,,,
 21,mp,LLH,NA,38,spipyr,1,100,1,3,40,1,40,0,20,14,,,
@@ -1214,7 +1214,7 @@
 21,mp,LLL,14,32,vibedu,3,100,1,3,100,,,,,4,,,
 21,sm,LLL,10,32,alnvir,NA,NA,NA,3,33,1,66,,,6,,,
 21,sm,LLL,7,32,betpap,1,100,1,3,30,1,50,0,20,6,,,
-21,sm,LLL,10,32,vacmem,3,10,,1,30,0,70,,,,1,70,
+21,sm,LLL,10,32,vacmem,3,10,,1,30,0,70,,,,NA,1,70
 21,mp,LLL,ALL,33,alninc,3,50,6,1,20,0,80,,,5,,,
 21,mp,LLL,2,33,alnvir,1,100,3,1,60,0,40,,,,,,
 21,mp,LLL,9,33,corsto,NA,NA,NA,3,60,1,15,0,25,13,,,

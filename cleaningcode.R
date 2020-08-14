@@ -19,7 +19,7 @@ files
 data<-ldply(files, read_csv, na = "")
 
 df<-as.data.frame(data)
-df[df=="<NA>"] = NA   
+df[df=="<NA>"] = "NA"   
 head(df)
 #Interesting, there are a number of additional columns being added, some with no data
 
@@ -71,11 +71,11 @@ unique(df$bbch.t)
 temp<-subset(df, bbch.t =="4");temp
 #HHLsm36amealn has 4 as its bbc.t for day 5 and 6
 
-df$bbch.t[which(df$treatment == "HC_HP_LF" & df$flask == "36" & df$species =="amealn" & df$day == "5")] <- NA
-df$percent.t[which(df$treatment == "HC_HP_LF" & df$flask == "36" & df$species =="amealn" & df$day == "5")] <- NA
+df$bbch.t[which(df$treatment == "HC_HP_LF" & df$flask == "36" & df$species =="amealn" & df$day == "5")] <- "NA"
+df$percent.t[which(df$treatment == "HC_HP_LF" & df$flask == "36" & df$species =="amealn" & df$day == "5")] <- "NA"
 
-df$bbch.t[which(df$treatment == "HC_HP_LF" & df$flask == "36" & df$species =="amealn" & df$day == "6")] <- NA
-df$percent.t[which(df$treatment == "HC_HP_LF" & df$flask == "36" & df$species =="amealn" & df$day == "6")] <- NA
+df$bbch.t[which(df$treatment == "HC_HP_LF" & df$flask == "36" & df$species =="amealn" & df$day == "6")] <- "NA"
+df$percent.t[which(df$treatment == "HC_HP_LF" & df$flask == "36" & df$species =="amealn" & df$day == "6")] <- "NA"
 
 temp<-subset(df, bbch.t =="4");temp
 
@@ -84,41 +84,41 @@ test<-subset(df, treatment == "HC_HP_LF")
 
 #temp<-subset(df, bbch.t =="6");temp
 #HHHsm34 has 6 as its bbc.t for day 3
-df$bbch.t[which(df$treatment == "HC_HP_HF" & df$flask == "34" & df$species =="vibedu" & df$day == "3")] <- NA
-df$percent.t[which(df$treatment == "HC_HP_HF" & df$flask == "34" & df$species =="vibedu" & df$day == "3")] <- NA
+df$bbch.t[which(df$treatment == "HC_HP_HF" & df$flask == "34" & df$species =="vibedu" & df$day == "3")] <- "NA"
+df$percent.t[which(df$treatment == "HC_HP_HF" & df$flask == "34" & df$species =="vibedu" & df$day == "3")] <- "NA"
 
-df$bbch.t[which(df$treatment == "HC_HP_HF" & df$flask == "34" & df$species =="vibedu" & df$day == "5")] <- NA
-df$percent.t[which(df$treatment == "HC_HP_HF" & df$flask == "34" & df$species =="vibedu" & df$day == "5")] <- NA
+df$bbch.t[which(df$treatment == "HC_HP_HF" & df$flask == "34" & df$species =="vibedu" & df$day == "5")] <- "NA"
+df$percent.t[which(df$treatment == "HC_HP_HF" & df$flask == "34" & df$species =="vibedu" & df$day == "5")] <- "NA"
 
 ###########################################################################################
 temp<-subset(df, bbch.t =="32");temp
 #LHL12amealn had a value of 32 on day
-df$bbch.t[which(df$treatment == "LC_HP_LF" & df$flask == "12" & df$species =="amealn"  & df$day == "15")] <- NA
-df$percent.t[which(df$treatment == "LC_HP_LF" & df$flask == "12" & df$species =="amealn"  & df$day == "15")] <- NA
+df$bbch.t[which(df$treatment == "LC_HP_LF" & df$flask == "12" & df$species =="amealn"  & df$day == "15")] <- "NA"
+df$percent.t[which(df$treatment == "LC_HP_LF" & df$flask == "12" & df$species =="amealn"  & df$day == "15")] <- "NA"
 
-df$bbch.t[which(df$treatment == "LC_HP_LF" & df$flask == "12" & df$species =="amealn"  & df$day == "16")] <- NA
-df$percent.t[which(df$treatment == "LC_HP_LF" & df$flask == "12" & df$species =="amealn"  & df$day == "16")] <- NA
+df$bbch.t[which(df$treatment == "LC_HP_LF" & df$flask == "12" & df$species =="amealn"  & df$day == "16")] <- "NA"
+df$percent.t[which(df$treatment == "LC_HP_LF" & df$flask == "12" & df$species =="amealn"  & df$day == "16")] <- "NA"
 
-df$bbch.t[which(df$treatment == "LC_HP_LF" & df$flask == "12" & df$species =="amealn"  & df$day == "17")] <- NA
-df$percent.t[which(df$treatment == "LC_HP_LF" & df$flask == "12" & df$species =="amealn"  & df$day == "17")] <- NA
+df$bbch.t[which(df$treatment == "LC_HP_LF" & df$flask == "12" & df$species =="amealn"  & df$day == "17")] <- "NA"
+df$percent.t[which(df$treatment == "LC_HP_LF" & df$flask == "12" & df$species =="amealn"  & df$day == "17")] <- "NA"
 
-df$bbch.t[which(df$treatment == "LC_HP_LF" & df$flask == "12" & df$species =="amealn"  & df$day == "18")] <- NA
-df$percent.t[which(df$treatment == "LC_HP_LF" & df$flask == "12" & df$species =="amealn"  & df$day == "18")] <- NA
+df$bbch.t[which(df$treatment == "LC_HP_LF" & df$flask == "12" & df$species =="amealn"  & df$day == "18")] <- "NA"
+df$percent.t[which(df$treatment == "LC_HP_LF" & df$flask == "12" & df$species =="amealn"  & df$day == "18")] <- "NA"
 
 ###########################################################################################
 #temp<-subset(df, bbch.t =="5");temp
 #LLL9vibedu has 5 as its bbc.t for day 15
-df$bbch.t[which(df$treatment == "LC_LP_LF" & df$flask == "9" & df$species =="vibedu" & df$day == "15")] <- NA
-df$percent.t[which(df$treatment == "LC_LP_LF" & df$flask == "9" & df$species =="vibedu" & df$day == "15")] <- NA
+df$bbch.t[which(df$treatment == "LC_LP_LF" & df$flask == "9" & df$species =="vibedu" & df$day == "15")] <- "NA"
+df$percent.t[which(df$treatment == "LC_LP_LF" & df$flask == "9" & df$species =="vibedu" & df$day == "15")] <- "NA"
 
 ###########################################################################################
 #temp<-subset(df, bbch.t =="8");temp
 #LHH1amealn has 8 as its bbc.t for day 23 and 24
-df$bbch.t[which(df$treatment == "LC_HP_HF" & df$flask == "1" & df$species =="amealn"  & df$day == "23")] <- NA
-df$percent.t[which(df$treatment == "LC_HP_HF" & df$flask == "1" & df$species =="amealn" & df$day == "23")] <- NA
+df$bbch.t[which(df$treatment == "LC_HP_HF" & df$flask == "1" & df$species =="amealn"  & df$day == "23")] <- "NA"
+df$percent.t[which(df$treatment == "LC_HP_HF" & df$flask == "1" & df$species =="amealn" & df$day == "23")] <- "NA"
 
-df$bbch.t[which(df$treatment == "LC_HP_HF" & df$flask == "1" & df$species =="amealn"  & df$day == "24")] <- NA
-df$percent.t[which(df$treatment == "LC_HP_HF" & df$flask == "1" & df$species =="amealn" & df$day == "24")] <- NA
+df$bbch.t[which(df$treatment == "LC_HP_HF" & df$flask == "1" & df$species =="amealn"  & df$day == "24")] <- "NA"
+df$percent.t[which(df$treatment == "LC_HP_HF" & df$flask == "1" & df$species =="amealn" & df$day == "24")] <- "NA"
 
 ###########################################################################################
 temp<-subset(df, bbch.t =="157");temp #should just be 15 for day 31 and 32
@@ -131,8 +131,8 @@ df$bbch.t[which(df$treatment == "LC_HP_HF" & temp$flask == "39" & temp$species =
 ###########################################################################################
 #temp<-subset(df, bbch.t =="18");temp
 #HHHspibet3 on day 31
-df$bbch.t[which(df$treatment == "HC_HP_HF" & df$flask == "3" & df$species =="spibet" & df$day == "31")] <- NA
-df$percent.t[which(df$treatment == "HC_HP_HF" & df$flask == "3" & df$species =="spibet" & df$day == "31")] <- NA
+df$bbch.t[which(df$treatment == "HC_HP_HF" & df$flask == "3" & df$species =="spibet" & df$day == "31")] <- "NA"
+df$percent.t[which(df$treatment == "HC_HP_HF" & df$flask == "3" & df$species =="spibet" & df$day == "31")] <- "NA"
 
 ###########################################################################################
 
@@ -175,46 +175,46 @@ temp<-subset(df, bbch.l =="73");temp
 # df$bbch.l[which(df$treatment == "LC_LP_LF" & df$flask == "33" & df$species =="corsto" & df$day == "22")] <- NA
 
 # fixing the incorrect 19 values, I think it should be 10, but no way of knowing for certain
-df$bbch.l[which(df$treatment == "HC_HP_HF" & df$flask == "11" & df$species =="rhoalb" & df$day == "15")] <- NA
-df$percent.t[which(df$treatment == "HC_HP_HF" & df$flask == "11" & df$species =="rhoalb"  & df$day == "15")] <- NA
+df$bbch.l[which(df$treatment == "HC_HP_HF" & df$flask == "11" & df$species =="rhoalb" & df$day == "15")] <- "NA"
+df$percent.t[which(df$treatment == "HC_HP_HF" & df$flask == "11" & df$species =="rhoalb"  & df$day == "15")] <- "NA"
 
-df$bbch.l[which(df$treatment == "HC_HP_HF" & df$flask == "11" & df$species =="rhoalb" & df$day == "16")] <- NA
-df$percent.t[which(df$treatment == "HC_HP_HF" & df$flask == "11" & df$species =="rhoalb"  & df$day == "16")] <- NA
+df$bbch.l[which(df$treatment == "HC_HP_HF" & df$flask == "11" & df$species =="rhoalb" & df$day == "16")] <- "NA"
+df$percent.t[which(df$treatment == "HC_HP_HF" & df$flask == "11" & df$species =="rhoalb"  & df$day == "16")] <- "NA"
 
-df$bbch.l[which(df$treatment == "HC_HP_HF" & df$flask == "11" & df$species =="rhoalb" & df$day == "17")] <- NA
-df$percent.t[which(df$treatment == "LHC_HP_HF" & df$flask == "11" & df$species =="rhoalb"  & df$day == "17")] <- NA
+df$bbch.l[which(df$treatment == "HC_HP_HF" & df$flask == "11" & df$species =="rhoalb" & df$day == "17")] <- "NA"
+df$percent.t[which(df$treatment == "LHC_HP_HF" & df$flask == "11" & df$species =="rhoalb"  & df$day == "17")] <- "NA"
 
-df$bbch.l[which(df$treatment == "HC_HP_HF" & df$flask == "11" & df$species =="rhoalb" & df$day == "18")] <- NA
-df$percent.t[which(df$treatment == "HC_HP_HF" & df$flask == "11" & df$species =="rhoalb"  & df$day == "18")] <- NA
+df$bbch.l[which(df$treatment == "HC_HP_HF" & df$flask == "11" & df$species =="rhoalb" & df$day == "18")] <- "NA"
+df$percent.t[which(df$treatment == "HC_HP_HF" & df$flask == "11" & df$species =="rhoalb"  & df$day == "18")] <- "NA"
 
-df$bbch.l[which(df$treatment == "LC_LP_LF" & df$flask == "32" & df$species =="shecan" & df$day == "54")] <- NA
-df$percent.t[which(df$treatment == "LC_LP_LF" & df$flask == "32" & df$species =="shecan"  & df$day == "54")] <- NA
+df$bbch.l[which(df$treatment == "LC_LP_LF" & df$flask == "32" & df$species =="shecan" & df$day == "54")] <- "NA"
+df$percent.t[which(df$treatment == "LC_LP_LF" & df$flask == "32" & df$species =="shecan"  & df$day == "54")] <- "NA"
 
-df$bbch.l[which(df$treatment == "LC_LP_LF" & df$flask == "32" & df$species =="shecan" & df$day == "55")] <- NA
-df$percent.t[which(df$treatment == "LC_LP_LF" & df$flask == "32" & df$species =="shecan"  & df$day == "55")] <- NA
+df$bbch.l[which(df$treatment == "LC_LP_LF" & df$flask == "32" & df$species =="shecan" & df$day == "55")] <- "NA"
+df$percent.t[which(df$treatment == "LC_LP_LF" & df$flask == "32" & df$species =="shecan"  & df$day == "55")] <- "NA"
 
-df$bbch.l[which(df$treatment == "LC_LP_LF" & df$flask == "32" & df$species =="shecan" & df$day == "56")] <- NA
-df$percent.t[which(df$treatment == "LC_LP_LF" & df$flask == "32" & df$species =="shecan"  & df$day == "56")] <- NA
+df$bbch.l[which(df$treatment == "LC_LP_LF" & df$flask == "32" & df$species =="shecan" & df$day == "56")] <- "NA"
+df$percent.t[which(df$treatment == "LC_LP_LF" & df$flask == "32" & df$species =="shecan"  & df$day == "56")] <- "NA"
 
 #######################################################################
 #Fixing the accidental \\
-df$bbch.l[which(df$treatment == "HC_LP_LF" & df$flask == "10" & df$species =="menfer" & df$day == "33")] <- NA
-df$percent.t[which(df$treatment == "HC_LP_LF" & df$flask == "10" & df$species =="menfer"  & df$day == "33")] <- NA
+df$bbch.l[which(df$treatment == "HC_LP_LF" & df$flask == "10" & df$species =="menfer" & df$day == "33")] <- "NA"
+df$percent.t[which(df$treatment == "HC_LP_LF" & df$flask == "10" & df$species =="menfer"  & df$day == "33")] <- "NA"
 
-df$bbch.l[which(df$treatment == "HC_LP_LF" & df$flask == "10" & df$species =="menfer" & df$day == "34")] <- NA
-df$percent.t[which(df$treatment == "HC_LP_LF" & df$flask == "10" & df$species =="menfer"  & df$day == "34")] <- NA
+df$bbch.l[which(df$treatment == "HC_LP_LF" & df$flask == "10" & df$species =="menfer" & df$day == "34")] <- "NA"
+df$percent.t[which(df$treatment == "HC_LP_LF" & df$flask == "10" & df$species =="menfer"  & df$day == "34")] <- "NA"
 
-df$bbch.l[which(df$treatment == "HC_LP_LF" & df$flask == "10" & df$species =="menfer" & df$day == "35")] <- NA
-df$percent.t[which(df$treatment == "HC_LP_LF" & df$flask == "10" & df$species =="menfer"  & df$day == "35")] <- NA
+df$bbch.l[which(df$treatment == "HC_LP_LF" & df$flask == "10" & df$species =="menfer" & df$day == "35")] <- "NA"
+df$percent.t[which(df$treatment == "HC_LP_LF" & df$flask == "10" & df$species =="menfer"  & df$day == "35")] <- "NA"
 
-df$bbch.l[which(df$treatment == "HC_LP_LF" & df$flask == "10" & df$species =="menfer" & df$day == "36")] <- NA
-df$percent.t[which(df$treatment == "HC_LP_LF" & df$flask == "10" & df$species =="menfer"  & df$day == "36")] <- NA
+df$bbch.l[which(df$treatment == "HC_LP_LF" & df$flask == "10" & df$species =="menfer" & df$day == "36")] <- "NA"
+df$percent.t[which(df$treatment == "HC_LP_LF" & df$flask == "10" & df$species =="menfer"  & df$day == "36")] <- "NA"
 
-df$bbch.l[which(df$treatment == "HC_LP_LF" & df$flask == "10" & df$species =="menfer" & df$day == "37")] <- NA
-df$percent.t[which(df$treatment == "HC_LP_LF" & df$flask == "10" & df$species =="menfer"  & df$day == "37")] <- NA
+df$bbch.l[which(df$treatment == "HC_LP_LF" & df$flask == "10" & df$species =="menfer" & df$day == "37")] <- "NA"
+df$percent.t[which(df$treatment == "HC_LP_LF" & df$flask == "10" & df$species =="menfer"  & df$day == "37")] <- "NA"
 
-df$bbch.l[which(df$treatment == "HC_LP_LF" & df$flask == "10" & df$species =="menfer" & df$day == "38")] <- NA
-df$percent.t[which(df$treatment == "HC_LP_LF" & df$flask == "10" & df$species =="menfer"  & df$day == "38")] <- NA
+df$bbch.l[which(df$treatment == "HC_LP_LF" & df$flask == "10" & df$species =="menfer" & df$day == "38")] <- "NA"
+df$percent.t[which(df$treatment == "HC_LP_LF" & df$flask == "10" & df$species =="menfer"  & df$day == "38")] <- "NA"
 
 
 # ###########################################################################################
@@ -233,8 +233,8 @@ df$percent.t[which(df$treatment == "HC_LP_LF" & df$flask == "10" & df$species ==
 
 ###########################################################################################
 # bbch.l is incorrectly 5
-df$bbch.l[which(df$treatment == "LC_LP_LF" & df$flask == "27" & df$species =="shecan" & df$day == "38")] <- NA
-df$percent.t[which(df$treatment == "LC_LP_LF" & df$flask == "27" & df$species =="shecan" & df$day == "38")] <- NA
+df$bbch.l[which(df$treatment == "LC_LP_LF" & df$flask == "27" & df$species =="shecan" & df$day == "38")] <- "NA"
+df$percent.t[which(df$treatment == "LC_LP_LF" & df$flask == "27" & df$species =="shecan" & df$day == "38")] <- "NA"
 
 unique(df$bbch.l) # Looks great
 
@@ -244,22 +244,22 @@ unique(df$bbch.l) # Looks great
 unique(df$bbch2.l)
 ###########################################################################################
 # bbch2.l is incorrectly 40
-df$bbch2.l[which(df$population == "sm" & df$treatment == "LC_LP_LF" & df$flask == "9" & df$species =="vibedu" & df$day == "28")] <- NA
-df$percent2.l[which(df$population == "sm" & df$treatment == "LC_LP_LF" & df$flask == "9" & df$species =="vibedu" & df$day == "28")] <- NA
+df$bbch2.l[which(df$population == "sm" & df$treatment == "LC_LP_LF" & df$flask == "9" & df$species =="vibedu" & df$day == "28")] <- "NA"
+df$percent2.l[which(df$population == "sm" & df$treatment == "LC_LP_LF" & df$flask == "9" & df$species =="vibedu" & df$day == "28")] <- "NA"
 
-df$bbch2.l[which(df$population == "sm" & df$treatment == "LC_LP_LF" & df$flask == "9" & df$species =="vibedu" & df$day == "29")] <- NA
-df$percent2.l[which(df$population == "sm" & df$treatment == "LC_LP_LF" & df$flask == "9" & df$species =="vibedu" & df$day == "29")] <- NA
+df$bbch2.l[which(df$population == "sm" & df$treatment == "LC_LP_LF" & df$flask == "9" & df$species =="vibedu" & df$day == "29")] <- "NA"
+df$percent2.l[which(df$population == "sm" & df$treatment == "LC_LP_LF" & df$flask == "9" & df$species =="vibedu" & df$day == "29")] <- "NA"
 
-df$bbch2.l[which(df$population == "sm" & df$treatment == "LC_LP_LF" & df$flask == "9" & df$species =="vibedu" & df$day == "31")] <- NA
-df$percent2.l[which(df$population == "sm" & df$treatment == "LC_LP_LF" & df$flask == "9" & df$species =="vibedu" & df$day == "31")] <- NA
+df$bbch2.l[which(df$population == "sm" & df$treatment == "LC_LP_LF" & df$flask == "9" & df$species =="vibedu" & df$day == "31")] <- "NA"
+df$percent2.l[which(df$population == "sm" & df$treatment == "LC_LP_LF" & df$flask == "9" & df$species =="vibedu" & df$day == "31")] <- "NA"
 
 ###########################################################################################
 # bbch2.l is incorrectly 1-
-df$bbch2.l[which(df$treatment == "LC_LP_HF" & df$flask == "5" & df$species =="popbal" & df$day == "40")] <- NA
-df$percent2.l[which(df$treatment == "LC_LP_HF" & df$flask == "5" & df$species =="popbal" & df$day == "40")] <- NA
+df$bbch2.l[which(df$treatment == "LC_LP_HF" & df$flask == "5" & df$species =="popbal" & df$day == "40")] <- "NA"
+df$percent2.l[which(df$treatment == "LC_LP_HF" & df$flask == "5" & df$species =="popbal" & df$day == "40")] <- "NA"
 
-df$bbch2.l[which(df$treatment == "LC_LP_HF" & df$flask == "5" & df$species =="popbal" & df$day == "41")] <- NA
-df$percent2.l[which(df$treatment == "LC_LP_HF" & df$flask == "5" & df$species =="popbal" & df$day == "41")] <- NA
+df$bbch2.l[which(df$treatment == "LC_LP_HF" & df$flask == "5" & df$species =="popbal" & df$day == "41")] <- "NA"
+df$percent2.l[which(df$treatment == "LC_LP_HF" & df$flask == "5" & df$species =="popbal" & df$day == "41")] <- "NA"
 
 ###########################################################################################
 # bbch2.l is incorrectly 5, supposed to be 3
@@ -268,26 +268,26 @@ df$bbch2.l[which(df$treatment == "LC_HP_LF" & df$flask == "6" & df$species =="lo
 
 ###########################################################################################
 # bbch2.l is incorrectly 6, it should be 7
-df$bbch2.l[which(df$population == "sm" & df$treatment == "HC_LP_LF" & df$flask == "27" & df$species =="riblac" & df$day == "19")] <- NA
-df$percent2.l[which(df$population == "sm" & df$treatment == "HC_LP_LF" & df$flask == "27" & df$species =="riblac" & df$day == "19")] <- NA
+df$bbch2.l[which(df$population == "sm" & df$treatment == "HC_LP_LF" & df$flask == "27" & df$species =="riblac" & df$day == "19")] <- "NA"
+df$percent2.l[which(df$population == "sm" & df$treatment == "HC_LP_LF" & df$flask == "27" & df$species =="riblac" & df$day == "19")] <- "NA"
 
-df$bbch2.l[which(df$population == "sm" & df$treatment == "HC_LP_LF" & df$flask == "27" & df$species =="riblac" & df$day == "20")] <- NA
-df$percent2.l[which(df$population == "sm" & df$treatment == "HC_LP_LF" & df$flask == "27" & df$species =="riblac" & df$day == "20")] <- NA
+df$bbch2.l[which(df$population == "sm" & df$treatment == "HC_LP_LF" & df$flask == "27" & df$species =="riblac" & df$day == "20")] <- "NA"
+df$percent2.l[which(df$population == "sm" & df$treatment == "HC_LP_LF" & df$flask == "27" & df$species =="riblac" & df$day == "20")] <- "NA"
 
-df$bbch2.l[which(df$population == "sm" & df$treatment == "HC_LP_LF" & df$flask == "27" & df$species =="riblac" & df$day == "21")] <- NA
-df$percent2.l[which(df$population == "sm" & df$treatment == "HC_LP_LF" & df$flask == "27" & df$species =="riblac" & df$day == "21")] <- NA
+df$bbch2.l[which(df$population == "sm" & df$treatment == "HC_LP_LF" & df$flask == "27" & df$species =="riblac" & df$day == "21")] <- "NA"
+df$percent2.l[which(df$population == "sm" & df$treatment == "HC_LP_LF" & df$flask == "27" & df$species =="riblac" & df$day == "21")] <- "NA"
 
-df$bbch2.l[which(df$population == "sm" & df$treatment == "HC_LP_LF" & df$flask == "27" & df$species =="riblac" & df$day == "22")] <- NA
-df$percent2.l[which(df$population == "sm" & df$treatment == "HC_LP_LF" & df$flask == "27" & df$species =="riblac" & df$day == "22")] <- NA
+df$bbch2.l[which(df$population == "sm" & df$treatment == "HC_LP_LF" & df$flask == "27" & df$species =="riblac" & df$day == "22")] <- "NA"
+df$percent2.l[which(df$population == "sm" & df$treatment == "HC_LP_LF" & df$flask == "27" & df$species =="riblac" & df$day == "22")] <- "NA"
 
-df$bbch2.l[which(df$population == "sm" & df$treatment == "HC_LP_LF" & df$flask == "27" & df$species =="riblac" & df$day == "23")] <- NA
-df$percent2.l[which(df$population == "sm" & df$treatment == "HC_LP_LF" & df$flask == "27" & df$species =="riblac" & df$day == "23")] <- NA
+df$bbch2.l[which(df$population == "sm" & df$treatment == "HC_LP_LF" & df$flask == "27" & df$species =="riblac" & df$day == "23")] <- "NA"
+df$percent2.l[which(df$population == "sm" & df$treatment == "HC_LP_LF" & df$flask == "27" & df$species =="riblac" & df$day == "23")] <- "NA"
 
-df$bbch2.l[which(df$population == "sm" & df$treatment == "LC_LP_HF" & df$flask == "19" & df$species =="betpap" & df$day == "27")] <- NA
-df$percent2.l[which(df$population == "sm" & df$treatment == "LC_LP_HF" & df$flask == "19" & df$species =="betpap" & df$day == "27")] <- NA
+df$bbch2.l[which(df$population == "sm" & df$treatment == "LC_LP_HF" & df$flask == "19" & df$species =="betpap" & df$day == "27")] <- "NA"
+df$percent2.l[which(df$population == "sm" & df$treatment == "LC_LP_HF" & df$flask == "19" & df$species =="betpap" & df$day == "27")] <- "NA"
 
-df$bbch2.l[which(df$population == "sm" & df$treatment == "LC_LP_HF" & df$flask == "19" & df$species =="betpap" & df$day == "28")] <- NA
-df$percent2.l[which(df$population == "sm" & df$treatment == "LC_LP_HF" & df$flask == "19" & df$species =="betpap" & df$day == "28")] <- NA
+df$bbch2.l[which(df$population == "sm" & df$treatment == "LC_LP_HF" & df$flask == "19" & df$species =="betpap" & df$day == "28")] <- "NA"
+df$percent2.l[which(df$population == "sm" & df$treatment == "LC_LP_HF" & df$flask == "19" & df$species =="betpap" & df$day == "28")] <- "NA"
 
 #Unlear whether the accidental 19 values should be 9 or 10
 df$bbch2.l[df$bbch2.l=="70"] <- "NA"
@@ -346,9 +346,9 @@ df$bbch3.l[df$bbch3.l=="5"] <- "7"
 
 # It is unclear what the 25 values should be 
 temp$bbch3.l[temp$bbch3.l=="25"] <- "NA"
-df$percent3.l[which(df$population == "sm" & df$treatment == "LC_HP_HF" & df$flask == "34" & df$species =="alninc" & df$day == "46")] <- NA
-df$percent3.l[which(df$population == "sm" & df$treatment == "LC_HP_HF" & df$flask == "34" & df$species =="alninc" & df$day == "47")] <- NA
-df$percent3.l[which(df$population == "sm" & df$treatment == "LC_HP_HF" & df$flask == "34" & df$species =="alninc" & df$day == "48")] <- NA
+df$percent3.l[which(df$population == "sm" & df$treatment == "LC_HP_HF" & df$flask == "34" & df$species =="alninc" & df$day == "46")] <- "NA"
+df$percent3.l[which(df$population == "sm" & df$treatment == "LC_HP_HF" & df$flask == "34" & df$species =="alninc" & df$day == "47")] <- "NA"
+df$percent3.l[which(df$population == "sm" & df$treatment == "LC_HP_HF" & df$flask == "34" & df$species =="alninc" & df$day == "48")] <- "NA"
 
 unique(df$bbch3.l)
 
@@ -410,8 +410,33 @@ df$percent3.l[df$percent3.l=="i"] <- "NA"
 df$percent4.t[df$percent4.t=="8-"] <- "80"
 
 
+###################################################################################################
+# Since symalb and menfer did not have terminal buds, all the bbc.t and percent.t should be NA
+
+symalb<-subset(df, species=="symalb")
+head(symalb)
+unique(symalb$bbch4.t)
+
+temp<-subset(symalb, bbch.t =="15");temp
+
+df$bbch.t[which( df$species =="symalb")] <- "NA"
+df$percent.t[which(df$species =="symalb")] <-"NA"
+df$bbch4.t[which( df$species =="symalb")] <- "NA"
+df$percent4.t[which(df$species =="symalb")] <-"NA"
+
+df$bbch.t[which( df$species =="menfer")] <- "NA"
+df$percent.t[which(df$species =="menfer")] <-"NA"
+df$bbch4.t[which( df$species =="menfer")] <- "NA"
+df$percent4.t[which(df$species =="menfer")] <-"NA"
+
+###################################################################################################
+###################################################################################################
+
 # For the sake of cleaning the data I am going to remove the extra columns I added:
+names(df)
+df1<-df[,c(1:3,5:15,18,19)]
+names(df1)
+head(df1)
 
 
-
-
+write.csv(df1,"bc_phenology.csv")

@@ -442,4 +442,4 @@ head(df1)
 unique(df1$treatment) # there are two rows of poptre from day 36 and 38, flask 20 that have NA instead of treatment, to be conservative I am going to remove these
 df1<-subset(df1, treatment!= "NA")
 
-write.csv(df1,"bc_phenology.csv")
+#write.csv(df1,"bc_phenology.csv")

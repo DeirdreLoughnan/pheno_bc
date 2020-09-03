@@ -61,9 +61,10 @@ df$species[df$species=="spipyr-missing"] <- "spipyr"
 df$species[df$species=="poptre-missing"] <- "poptre"
 df$species[df$species=="spibe"] <- "spibet"
 df$species[df$species=="popre"] <- "poptre"
-df$species[df$species=="bepap"] <- "bepap"
+df$species[df$species=="bepap"] <- "betpap"
 df$species[df$species=="shecan8"] <- "shecan"
 df$species[df$species=="Shecan"] <- "shecan"
+df$species[df$species=="corso"] <- "corsto"
 
 unique(df$bbch.t)
 # 4 32 5 8 157 6 18 Na
@@ -438,5 +439,7 @@ df1<-df[,c(1:3,5:15,18,19)]
 names(df1)
 head(df1)
 
+unique(df1$treatment) # there are two rows of poptre from day 36 and 38, flask 20 that have NA instead of treatment, to be conservative I am going to remove these
+df1<-subset(df1, treatment!= "NA")
 
 write.csv(df1,"bc_phenology.csv")

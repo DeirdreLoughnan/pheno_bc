@@ -105,7 +105,26 @@ warnings()
 head(gc)
 #What if I would to use a similar approach as above, but selecting for values that are greater than the requried sum?
 gc$bbch.l.sum<-rowSums(gc[,c("bbch.l","bbch2.l","bbch3.l")], na.rm=TRUE)
-gc$percent.l.sum<-rowSums(gc[,c("percent.l","percent2.l","percent.l")], na.rm=TRUE)
-head(gc)
+gc$percent.l.sum<-rowSums(gc[,c("percent.l","percent2.l","percent3.l")], na.rm=TRUE)
+tail(gc)
   
-
+bday <- lday <- nl <- vector() # This creates empty vectors for the bbday, leaf out, the nl yes no vector of whether this event occured (1 means yes, there was leafout; 0 means no leafout)
+d$lab<-as.factor(gc$lab)
+#levels(d$lab)
+for(i in levels(gc$lab)){ # i=levels(d$lab)[2496] # for each individual clipping. # DL: why did DF have 602, that seems low
+  
+  dx <- gc[gc$lab == i,]
+  bdax <- which(apply(dx[,c("bbch.t","bbch.l")], 1, max, na.rm=T) >= 3) # for each unique identifier, is the bbch >=3?
+  if(length(bdax) < 1) bdax = NA else bdax = dx[min(bdax),'day']
+  
+  ldax <- which(apply(dx[,c("bbch.t","bbch.l")], 1, max, na.rm=T) >= 6)
+  if(length(ldax) < 1) {ldax = NA; nl <- c(nl, 0)} else {ldax = dx[min(ldax),'day']; nl <- c(nl, 1)}
+  
+  
+  bday <- c(bday, bdax)
+  lday <- c(lday, ldax)
+}
+dx <- gc[match(levels(gc$lab), gc$lab),] # with twig id in same order as the loop above
+dx <- dx[,2:ncol(dx)]
+dx <- data.frame(dx, lday, bday, nl)
+head(dx)

@@ -53,10 +53,13 @@ samrac<-subset(end, species=="samrac")
 #############################################################
  #    Starting to work with the terminal buds first 
 #############################################################
+# Since this dataset includes the LC's days in the greenhouse, I need to subset those out and just have the 12 weeks they spent in the growth chambers:
+gc<-subset(d, day<=84)
+unique(gc$day)
 
 # I am curious if all samples even reached stage 7 or...
 
-max<-pheno %>% 
+max<-gc %>% 
   group_by(lab) %>%
   slice(which.max(bbch.t))
 
@@ -67,24 +70,21 @@ sort(unique(low$species))
 
 count<-table(low$species)
 
-#acegla alninc alnvir amealn  bepap betpap  corso corsto loninv popbal poptre rhoalb riblac rubpar samrac shecan sorsco 
-#33      1      7      6     48      1     23      2     37      4     14      1     39     52      8      4     33 
-#spibet spipyr vacmem vibedu 
-#23     38     59      7 
 # For species in both pops there were 128 samples max, so rub par 40% of the time the terminal bud did not bb, for ace gla and sorsco it was 25%
 
-# Now need to subset the day to get doy when bb occured
-bday <- lday <- nl <- vector()
-d$lab<-as.factor(d$lab)
-levels(d$lab)
-for(i in levels(d$lab)){ # i=levels(d$lab)[2496] # for each individual clipping. # DL: why did DF have 602, that seems low
+####################################################################################################################
+# This code is taken from Dan Flynn and cleaning the east coast data (found in the budchill repo)
+# 1. for both terminal and lateral buds, what is the max stage within a row? Identify which rows are greater or equal to the specific BBCH stage
+# 2. now for that individual, find the earliest day at which that stage was reached.
+####################################################################################################################
+
+bday <- lday <- nl <- vector() # This creates empty vectors for the bbday, leaf out, the nl yes no vector of whether this event occured (1 means yes, there was leafout; 0 means no leafout)
+d$lab<-as.factor(gc$lab)
+#levels(d$lab)
+for(i in levels(gc$lab)){ # i=levels(d$lab)[2496] # for each individual clipping. # DL: why did DF have 602, that seems low
   
-  dx <- d[d$lab == i,]
-  
-  # 1. for both terminal and lateral buds, what is the max stage within a row? Identify which rows are greater or equal to the specific BBCH stage
-  # 2. now for that individual, find the earliest day at which that stage was reached.
-  # Lizzie understand 'nl' to mean a yes/no (1/0) on whether an individual twig made it to leafout (1 means yes, there was leafout; 0 means no leafout)
-  bdax <- which(apply(dx[,c("bbch.t","bbch.l")], 1, max, na.rm=T) >= 3)
+  dx <- gc[gc$lab == i,]
+  bdax <- which(apply(dx[,c("bbch.t","bbch.l")], 1, max, na.rm=T) >= 3) # for each unique identifier, is the bbch >=3?
   if(length(bdax) < 1) bdax = NA else bdax = dx[min(bdax),'day']
   
   ldax <- which(apply(dx[,c("bbch.t","bbch.l")], 1, max, na.rm=T) >= 6)
@@ -94,8 +94,18 @@ for(i in levels(d$lab)){ # i=levels(d$lab)[2496] # for each individual clipping.
   bday <- c(bday, bdax)
   lday <- c(lday, ldax)
 }
-dx <- d[match(levels(d$lab), d$lab),] # with twig id in same order as the loop above
+dx <- gc[match(levels(gc$lab), gc$lab),] # with twig id in same order as the loop above
 dx <- dx[,2:ncol(dx)]
 dx <- data.frame(dx, lday, bday, nl)
 head(dx)
 warnings()
+
+####################################################################################################################
+
+head(gc)
+#What if I would to use a similar approach as above, but selecting for values that are greater than the requried sum?
+gc$bbch.l.sum<-rowSums(gc[,c("bbch.l","bbch2.l","bbch3.l")], na.rm=TRUE)
+gc$percent.l.sum<-rowSums(gc[,c("percent.l","percent2.l","percent.l")], na.rm=TRUE)
+head(gc)
+  
+

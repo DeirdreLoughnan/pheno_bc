@@ -1,3 +1,4 @@
 *.RData
 *.DS_Store
 *.xlsx
+*/pheno_data/excel

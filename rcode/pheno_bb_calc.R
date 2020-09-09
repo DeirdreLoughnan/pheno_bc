@@ -79,12 +79,12 @@ count<-table(low$species)
 ####################################################################################################################
 
 bday <- lday <- nl <- vector() # This creates empty vectors for the bbday, leaf out, the nl yes no vector of whether this event occured (1 means yes, there was leafout; 0 means no leafout)
-d$lab<-as.factor(gc$lab)
+gc$lab<-as.factor(gc$lab)
 #levels(d$lab)
 for(i in levels(gc$lab)){ # i=levels(d$lab)[2496] # for each individual clipping. # DL: why did DF have 602, that seems low
   
   dx <- gc[gc$lab == i,]
-  bdax <- which(apply(dx[,c("bbch.t","bbch.l")], 1, max, na.rm=T) >= 3) # for each unique identifier, is the bbch >=3?
+  bdax <- which(apply(dx[,c("bbch.t","bbch.l")], MARGIN=1, max, na.rm=T) >= 3) # margin =1 means it is applied over rows, takes the maximum value >= 3
   if(length(bdax) < 1) bdax = NA else bdax = dx[min(bdax),'day']
   
   ldax <- which(apply(dx[,c("bbch.t","bbch.l")], 1, max, na.rm=T) >= 6)
@@ -108,23 +108,41 @@ gc$bbch.l.sum<-rowSums(gc[,c("bbch.l","bbch2.l","bbch3.l")], na.rm=TRUE)
 gc$percent.l.sum<-rowSums(gc[,c("percent.l","percent2.l","percent3.l")], na.rm=TRUE)
 tail(gc)
   
-bday <- lday <- nl <- vector() # This creates empty vectors for the bbday, leaf out, the nl yes no vector of whether this event occured (1 means yes, there was leafout; 0 means no leafout)
-d$lab<-as.factor(gc$lab)
+bdaylat <- ldaylat <- nllat <- vector() # This creates empty vectors for the bbday, leaf out, the nl yes no vector of whether this event occured (1 means yes, there was leafout; 0 means no leafout)
+gc$lab<-as.factor(gc$lab)
 #levels(d$lab)
 for(i in levels(gc$lab)){ # i=levels(d$lab)[2496] # for each individual clipping. # DL: why did DF have 602, that seems low
   
   dx <- gc[gc$lab == i,]
-  bdax <- which(apply(dx[,c("bbch.t","bbch.l")], 1, max, na.rm=T) >= 3) # for each unique identifier, is the bbch >=3?
+  bdaxlat <- which(apply(dx[,c("bbch.l","bbch2.l","bbch3.l")], MARGIN=1, max, na.rm=TRUE) >= 7 & apply(dx[,c("percent.l.sum")], MARGIN=1, max, na.rm=TRUE) >= 80) # for each unique identifier, is the bbch >=3?
   if(length(bdax) < 1) bdax = NA else bdax = dx[min(bdax),'day']
   
-  ldax <- which(apply(dx[,c("bbch.t","bbch.l")], 1, max, na.rm=T) >= 6)
-  if(length(ldax) < 1) {ldax = NA; nl <- c(nl, 0)} else {ldax = dx[min(ldax),'day']; nl <- c(nl, 1)}
-  
-  
-  bday <- c(bday, bdax)
-  lday <- c(lday, ldax)
+  bdaylat <- c(bdaylat, bdaxlat)
+
 }
+length(dx[,c("bbch.l.sum")]) # 75
+
+#Error in apply(dx[, c("bbch.l.sum")], MARGIN = 1, max, na.rm = TRUE) : dim(X) must have a positive length
+# but it does, doesn't it?
+
+
 dx <- gc[match(levels(gc$lab), gc$lab),] # with twig id in same order as the loop above
-dx <- dx[,2:ncol(dx)]
-dx <- data.frame(dx, lday, bday, nl)
+dx <- dx[,c(1:6,19)]
+test <- data.frame(dx,bdaylat)
 head(dx)
+dim(dx)
+dim(bdaylat)
+#######################################################################################
+head(gc)
+latbb<-subset(gc, bbch.l.sum >= 21)
+
+latbb<-subset(gc, bbch.l.sum >= 21 & percent.l.sum >=80)
+
+test<- latbb %>%
+  group_by(lab) %>%
+  slice(which.min(day))
+
+length(unique(test$lab)) # 1142 out of the 2406 unique samples
+
+unique(test$species)
+head(test)

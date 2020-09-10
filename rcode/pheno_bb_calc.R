@@ -28,32 +28,26 @@ d<-data %>%
 
 head(d)
 
-# I have 21 species, but rhoalb, betpap, samrac were only at one site
-18*8*8*2+3*8*8 # there should be 2496 samples, but I actually have more...2546
-
 begin<-subset(d, day==0)
 count.begin<-table(begin$species)
+sum(count.begin)
 
 end<-subset(d, day==88)
 count.end<-table(end$species)
-
-2496-2406 # only had 90 die! 
-count<-table(d$species)
-# Should look into which ones these are...
+sum(count.end)
 
 d$day<-as.numeric(d$day)
-range(d$day, na.rm=TRUE)
+range(d$day, na.rm=TRUE) # this dataset includes the low chill greenhouse days, 
 sort(unique(data$species))
 
-end<-subset(d, day==88)
-count<-table(end$species)
-sum(count)
-samrac<-subset(end, species=="samrac")
-
+#The final dataset has 2406 unique individuals, while I started with 2560
+(2560-2406)/2560
+# There was approximately 6% mortality 
 #############################################################
  #    Starting to work with the terminal buds first 
 #############################################################
 # Since this dataset includes the LC's days in the greenhouse, I need to subset those out and just have the 12 weeks they spent in the growth chambers:
+
 gc<-subset(d, day<=84)
 unique(gc$day)
 
@@ -64,7 +58,8 @@ max<-gc %>%
   slice(which.max(bbch.t))
 
 low<-subset(max, bbch.t<7)
-# there are 440 samples for which the terminal bud did not burst
+# there are 405 out of 2406 samples for which the terminal bud did not burst or approximately 17%
+
 sort(unique(low$species))
 # 1+ indiviudal for every species that had a terminal bud
 
@@ -78,7 +73,7 @@ count<-table(low$species)
 # 2. now for that individual, find the earliest day at which that stage was reached.
 ####################################################################################################################
 
-bday <- lday <- nl <- vector() # This creates empty vectors for the bbday, leaf out, the nl yes no vector of whether this event occured (1 means yes, there was leafout; 0 means no leafout)
+tbb <- tlf <- nl <- vector() # This creates empty vectors for the bbday, leaf out, the nl yes no vector of whether this event occured (1 means yes, there was leafout; 0 means no leafout)
 gc$lab<-as.factor(gc$lab)
 #levels(d$lab)
 for(i in levels(gc$lab)){ # i=levels(d$lab)[2496] # for each individual clipping. # DL: why did DF have 602, that seems low
@@ -91,47 +86,49 @@ for(i in levels(gc$lab)){ # i=levels(d$lab)[2496] # for each individual clipping
   if(length(ldax) < 1) {ldax = NA; nl <- c(nl, 0)} else {ldax = dx[min(ldax),'day']; nl <- c(nl, 1)}
   
   
-  bday <- c(bday, bdax)
-  lday <- c(lday, ldax)
+  tbb<- c(tbb, bdax)
+  tlf <- c(tlf, ldax)
 }
 dx <- gc[match(levels(gc$lab), gc$lab),] # with twig id in same order as the loop above
-dx <- dx[,2:ncol(dx)]
-dx <- data.frame(dx, lday, bday, nl)
-head(dx)
+#dx <- dx[,2:ncol(dx)] 
+dx <- dx[,c(1:6,19)]
+terminalbb <- data.frame(dx, tlf, tbb, nl)
+
 warnings()
 
-####################################################################################################################
 
-head(gc)
+#############################################################
+#    Now moving on to the lateral buds 
+#############################################################
+
 #What if I would to use a similar approach as above, but selecting for values that are greater than the requried sum?
 gc$bbch.l.sum<-rowSums(gc[,c("bbch.l","bbch2.l","bbch3.l")], na.rm=TRUE)
 gc$percent.l.sum<-rowSums(gc[,c("percent.l","percent2.l","percent3.l")], na.rm=TRUE)
-tail(gc)
+
   
-bdaylat <- ldaylat <- nllat <- vector() # This creates empty vectors for the bbday, leaf out, the nl yes no vector of whether this event occured (1 means yes, there was leafout; 0 means no leafout)
+ llf <- nll <- vector() # This creates empty vectors for the bbday, leaf out, the nl yes no vector of whether this event occured (1 means yes, there was leafout; 0 means no leafout)
 gc$lab<-as.factor(gc$lab)
 #levels(d$lab)
 for(i in levels(gc$lab)){ # i=levels(d$lab)[2496] # for each individual clipping. # DL: why did DF have 602, that seems low
   
   dx <- gc[gc$lab == i,]
-  bdaxlat <- which(apply(dx[,c("bbch.l","bbch2.l","bbch3.l")], MARGIN=1, max, na.rm=TRUE) >= 7 & apply(dx[,c("percent.l.sum")], MARGIN=1, max, na.rm=TRUE) >= 80) # for each unique identifier, is the bbch >=3?
-  if(length(bdax) < 1) bdax = NA else bdax = dx[min(bdax),'day']
+#  bdaxlat <- which(apply(dx[,c("bbch.l","bbch2.l","bbch3.l")], MARGIN=1, max, na.rm=TRUE) >= 7) # for each unique identifier, is the bbch >=3?
+#  if(length(bdax) < 1) bdax = NA else bdax = dx[min(bdax),'day']
+
+  ldax <- which(apply(dx[,c("bbch.l","bbch2.l","bbch3.l")], 1, max, na.rm=T) >= 7)
+  if(length(ldax) < 1) {ldax = NA; nll <- c(nll, 0)} else {ldax = dx[min(ldax),'day']; nll <- c(nll, 1)}
   
-  bdaylat <- c(bdaylat, bdaxlat)
+  llf <- c(llf, ldax)
 
 }
-length(dx[,c("bbch.l.sum")]) # 75
 
-#Error in apply(dx[, c("bbch.l.sum")], MARGIN = 1, max, na.rm = TRUE) : dim(X) must have a positive length
-# but it does, doesn't it?
+dxl <- gc[match(levels(gc$lab), gc$lab),] # with twig id in same order as the loop above
+#dx <- dx[,2:ncol(dx)] 
+dxl <- dxl[,c(1:6,19)]
+lateralbb <- data.frame(dxl, llf, nl)
 
+head(lateralbb)
 
-dx <- gc[match(levels(gc$lab), gc$lab),] # with twig id in same order as the loop above
-dx <- dx[,c(1:6,19)]
-test <- data.frame(dx,bdaylat)
-head(dx)
-dim(dx)
-dim(bdaylat)
 #######################################################################################
 head(gc)
 latbb<-subset(gc, bbch.l.sum >= 21)

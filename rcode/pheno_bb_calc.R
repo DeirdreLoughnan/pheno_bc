@@ -115,7 +115,7 @@ for(i in levels(gc$lab)){ # i=levels(d$lab)[2496] # for each individual clipping
 #  bdaxlat <- which(apply(dx[,c("bbch.l","bbch2.l","bbch3.l")], MARGIN=1, max, na.rm=TRUE) >= 7) # for each unique identifier, is the bbch >=3?
 #  if(length(bdax) < 1) bdax = NA else bdax = dx[min(bdax),'day']
 
-  ldax <- which(apply(dx[,c("bbch.l","bbch2.l","bbch3.l")], 1, max, na.rm=T) >= 7)
+  ldax <- which(apply(dx[,c("bbch.l","bbch2.l","bbch3.l")], 1, max, na.rm=T) >= 7 & dx$percent.l.sum >=80)
   if(length(ldax) < 1) {ldax = NA; nll <- c(nll, 0)} else {ldax = dx[min(ldax),'day']; nll <- c(nll, 1)}
   
   llf <- c(llf, ldax)
@@ -130,16 +130,4 @@ lateralbb <- data.frame(dxl, llf, nl)
 head(lateralbb)
 
 #######################################################################################
-head(gc)
-latbb<-subset(gc, bbch.l.sum >= 21)
 
-latbb<-subset(gc, bbch.l.sum >= 21 & percent.l.sum >=80)
-
-test<- latbb %>%
-  group_by(lab) %>%
-  slice(which.min(day))
-
-length(unique(test$lab)) # 1142 out of the 2406 unique samples
-
-unique(test$species)
-head(test)

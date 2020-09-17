@@ -73,6 +73,8 @@ count<-table(low$species)
 # 2. now for that individual, find the earliest day at which that stage was reached.
 ####################################################################################################################
 
+
+
 tbb <- tlf <- nl <- vector() # This creates empty vectors for the bbday, leaf out, the nl yes no vector of whether this event occured (1 means yes, there was leafout; 0 means no leafout)
 gc$lab<-as.factor(gc$lab)
 #levels(d$lab)
@@ -102,7 +104,24 @@ warnings()
 #############################################################
 
 #What if I would to use a similar approach as above, but selecting for values that are greater than the requried sum?
-gc$bbch.l.sum<-rowSums(gc[,c("bbch.l","bbch2.l","bbch3.l")], na.rm=TRUE)
+head(gc)
+
+bbch.l.sum<-vector
+for ( i in nrow(gc)){
+  if(gc$bbch.l[i] > 6) { 
+  temp<-gc$bbch.l[i]
+  #bbch.l.sum =gc$percent.l
+}  else {
+  temp<-0
+ }
+bbch.l.sum<-rbind(temp,bbch.l.sum)  
+}
+
+
+while(gc[,c("bbch.l","bbch2.l")] > 7){
+  gc$test<-rowSum(gc[,c("bbch.l","bbch2.l")], na.rm=TRUE)
+}
+gc$bbch.l.sum<-rowSum(gc[,c("bbch.l","bbch2.l","bbch3.l")], na.rm=TRUE)
 gc$percent.l.sum<-rowSums(gc[,c("percent.l","percent2.l","percent3.l")], na.rm=TRUE)
 
   
@@ -131,3 +150,38 @@ head(lateralbb)
 
 #######################################################################################
 
+first<-subset(gc, bbch.l>=7)
+second<-subset(first, bbch2.l>=7)
+
+second$percent.l.sum<-rowSums(second[,c("percent.l","percent2.l")], na.rm=TRUE)
+second80<-subset(second, percent.l.sum>=80)
+
+third<-subset(second, bbch3.l>=7)
+
+third$percent.l.sum<-rowSums(third[,c("percent.l","percent2.l","percent3.l")], na.rm=TRUE)
+third80<-subset(third, percent.l.sum>=80)
+
+fin80<-rbind(second80,third80)
+
+############################################################
+fin80$lab<-as.factor(fin80$lab)
+
+llf <- nll <- vector()
+for(i in levels(fin80$lab)){ # i=levels(d$lab)[2496] # for each individual clipping. # DL: why did DF have 602, that seems low
+  
+  dx <- fin80[fin80$lab == i,]
+ 
+  ldax <- which( dx$percent.l.sum >=80)
+  if(length(ldax) < 1) {ldax = NA; nll <- c(nll, 0)} else {ldax = dx[min(ldax),'day']; nll <- c(nll, 1)}
+  
+  llf <- c(llf, ldax)
+  
+}
+
+dxl <- fin80[match(levels(fin80$lab), fin80$lab),] # with twig id in same order as the loop above
+#dx <- dx[,2:ncol(dx)] 
+dxl <- dxl[,c(1:6,19)]
+lateralbb <- data.frame(dxl, llf, nl)
+
+latbb<-subset(lateralbb, day>=0)
+unique(latbb$lab)

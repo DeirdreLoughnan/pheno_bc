@@ -195,7 +195,7 @@ unique(latbb$lab)
 
 
 ## <><><><><><><><><><><><><><><><><><><><><>
-#Faith's code starts here
+#Code sent from Faith on September 17, 2020, hugely helpful! I modified it slightly by adding grouping by day but overall it was perfect! 
 #-------------------------------------
 
 d<-gc
@@ -250,4 +250,10 @@ data.frame(dlong7 %>%
              filter(day == min(day))
 ) # you need the dplyr:: before mutate otherwise it doesnt work 
 
+amealnfl10<-subset(data, lab =="mp_HC_HP_HF_10_amealn") # yup first day is day 5
 
+alinc14<-subset(data, lab =="sm_LC_HP_HF_14_alninc") # yup firs day is day 36
+
+betpap17<-subset(data, lab =="sm_HC_LP_LF_17_betpap") # yup firs day is day 36
+
+#Yay this worked!! 

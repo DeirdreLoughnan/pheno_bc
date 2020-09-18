@@ -5,8 +5,9 @@
 
 if(length(grep("deirdreloughnan", getwd())>0)) { 
   setwd("~/Documents/github/pheno_bc") 
-} else
+} else {
   setwd("~/Documents/github/pheno_bc")
+}
 
 rm(list=ls()) 
 options(stringsAsFactors = FALSE)
@@ -17,7 +18,7 @@ require(tidyr)
 
 # read in the cleaning phenology data:
 data<-read.csv("input/bc_phenology.csv")
-data<-data[,(2:17)] # getting rid of the X count column
+
 # Starting with the terminal buds:
 
 # Would it be useful to have a unique identifying for every sample?
@@ -103,9 +104,12 @@ warnings()
 #    Now moving on to the lateral buds 
 #############################################################
 
-#What if I would to use a similar approach as above, but selecting for values that are greater than the requried sum?
+#What if I would to use a similar approach as above, but start by calculating when the three bbch levels over phase 7 sum to 80%?
+
 head(gc)
 
+# Idea 1: using some sort of if else, if bbch.l, bbch2.l, bbch3.l are greater than 7 then add them together, else give it a value of 0 or NA
+#...not going well
 bbch.l.sum<-vector
 for ( i in nrow(gc)){
   if(gc$bbch.l[i] > 6) { 
@@ -117,7 +121,7 @@ for ( i in nrow(gc)){
 bbch.l.sum<-rbind(temp,bbch.l.sum)  
 }
 
-
+# idea 2, should I be using a while statement instead...
 while(gc[,c("bbch.l","bbch2.l")] > 7){
   gc$test<-rowSum(gc[,c("bbch.l","bbch2.l")], na.rm=TRUE)
 }
@@ -149,6 +153,9 @@ lateralbb <- data.frame(dxl, llf, nl)
 head(lateralbb)
 
 #######################################################################################
+#idea 3: subset the data so you get only rows that have either 2 or 3 of the phases greater than phase 7 and then sum them to see how many samples even reach 80%
+
+# I dont want to use this method, it is so hack and I don't think it gives the right answer
 
 first<-subset(gc, bbch.l>=7)
 second<-subset(first, bbch2.l>=7)
@@ -185,3 +192,62 @@ lateralbb <- data.frame(dxl, llf, nl)
 
 latbb<-subset(lateralbb, day>=0)
 unique(latbb$lab)
+
+
+## <><><><><><><><><><><><><><><><><><><><><>
+#Faith's code starts here
+#-------------------------------------
+
+d<-gc
+#Task is to select bbch.1 7 and above, sum percentages, then get 1st day where percentage above 80%
+
+#1. reshape data so it is in long format 
+dlong <- gather(d, key = "bbchL", value = "stage", c(bbch.l, bbch2.l, bbch3.l))
+#dlong <- gather(dlong, key = "percentL", value = "l.percent", c(percent.l, percent2.l,percent3.l))
+
+#put relevent percentages with stages - a bit clunky but does the job 
+dlong$bbchPercent <- dlong$percent.l
+dlong$bbchPercent [dlong$bbchL == "bbch2.l"] <- dlong$percent2.l [dlong$bbchL == "bbch2.l"] 
+dlong$bbchPercent [dlong$bbchL == "bbch3.l"] <- dlong$percent3.l [dlong$bbchL == "bbch3.l"] 
+
+head(dlong)
+str(dlong)
+
+#Remove na rows
+dlong <- dlong[!is.na(dlong$stage),]
+
+#1. Select bbch.1 7 and above
+dlong7 <- dlong[dlong$stage >= 7,]
+
+#sum percentages each sample
+#sumPercent <- aggregate(dlong7$bbchPercent, by=list(Category=dlong7$lab), FUN=sum)
+sumPercent <- aggregate(dlong7$bbchPercent, by=list(Category=dlong7$lab, day=dlong7$day), FUN=sum)
+
+names(sumPercent) <- c("lab","day", "sumPercent")
+#names(sumPercent) <- c("lab","day.l.bb", "sumPercent")
+
+dlong7sum <- merge(dlong7, sumPercent, by = c("lab",'day'))
+head(dlong7sum)
+#Select samples with 80 or more percent 
+dlong7sum80 <- dlong7sum[dlong7sum$sumPercent >= 80,]
+
+#Select first day with 80% or more
+daymin<- aggregate(dlong7sum80$day, by=list(Category=dlong7sum80$lab), FUN=min)
+names(daymin) <- c("lab", "firstday")
+dlong7sum80Daymin <- merge(dlong7sum80, daymin, by = "lab")
+
+nrow(daymin) # 1101
+length(unique(daymin$lab))
+
+test<-daymin[order(daymin$firstday),]
+
+#Alternative dplyr solution (sorry Lizzie!)
+data.frame(dlong7 %>% 
+             filter(stage >=7) %>%
+             group_by(lab,day) %>%
+             dplyr::mutate(sumPercent = sum(bbchPercent) ) %>%
+             filter(sumPercent >= 80) %>%
+             filter(day == min(day))
+) # you need the dplyr:: before mutate otherwise it doesnt work 
+
+

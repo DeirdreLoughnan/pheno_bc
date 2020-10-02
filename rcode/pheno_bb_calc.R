@@ -48,7 +48,7 @@ sort(unique(data$species))
  #    Starting to work with the terminal buds first 
 #############################################################
 # Since this dataset includes the LC's days in the greenhouse, I need to subset those out and just have the 12 weeks they spent in the growth chambers:
-
+head(gc)
 gc<-subset(d, day<=84)
 unique(gc$day)
 
@@ -82,10 +82,10 @@ gc$lab<-as.factor(gc$lab)
 for(i in levels(gc$lab)){ # i=levels(d$lab)[2496] # for each individual clipping. # DL: why did DF have 602, that seems low
   
   dx <- gc[gc$lab == i,]
-  bdax <- which(apply(dx[,c("bbch.t","bbch.l")], MARGIN=1, max, na.rm=T) >= 3) # margin =1 means it is applied over rows, takes the maximum value >= 3
+  bdax <- which(apply(dx[,c("bbch.t","bbch.l")], MARGIN=1, max, na.rm=T) >3) # margin =1 means it is applied over rows, takes the maximum value > 3
   if(length(bdax) < 1) bdax = NA else bdax = dx[min(bdax),'day']
   
-  ldax <- which(apply(dx[,c("bbch.t","bbch.l")], 1, max, na.rm=T) >= 6)
+  ldax <- which(apply(dx[,c("bbch.t","bbch.l")], 1, max, na.rm=T) >= 11)
   if(length(ldax) < 1) {ldax = NA; nl <- c(nl, 0)} else {ldax = dx[min(ldax),'day']; nl <- c(nl, 1)}
   
   
@@ -94,11 +94,17 @@ for(i in levels(gc$lab)){ # i=levels(d$lab)[2496] # for each individual clipping
 }
 dx <- gc[match(levels(gc$lab), gc$lab),] # with twig id in same order as the loop above
 #dx <- dx[,2:ncol(dx)] 
-dx <- dx[,c(1:6,19)]
+dx <- dx[,c(3:8,20)]
 terminalbb <- data.frame(dx, tlf, tbb, nl)
 
 warnings()
 
+head(terminalbb) # here is the data for the terminal bud, there are 2406 individuals, with a value for each
+
+nobb<-subset(terminalbb, nl==0) # 411 samples didnt bb
+table(nobb$chill) # mostly low chill
+table(nobb$force) # mostly low force
+table(nobb$photo) # mostly low photoperiod
 
 #############################################################
 #    Now moving on to the lateral buds 

@@ -76,7 +76,7 @@ count<-table(low$species)
 
 
 
-tbb <- tlf <- nl <- vector() # This creates empty vectors for the bbday, leaf out, the nl yes no vector of whether this event occured (1 means yes, there was leafout; 0 means no leafout)
+tbb <-vector() # This creates empty vectors for the bbday, leaf out, the nl yes no vector of whether this event occured (1 means yes, there was leafout; 0 means no leafout)
 gc$lab<-as.factor(gc$lab)
 #levels(d$lab)
 for(i in levels(gc$lab)){ # i=levels(d$lab)[2496] # for each individual clipping. # DL: why did DF have 602, that seems low
@@ -84,18 +84,14 @@ for(i in levels(gc$lab)){ # i=levels(d$lab)[2496] # for each individual clipping
   dx <- gc[gc$lab == i,]
   bdax <- which(apply(dx[,c("bbch.t","bbch.l")], MARGIN=1, max, na.rm=T) >3) # margin =1 means it is applied over rows, takes the maximum value > 3
   if(length(bdax) < 1) bdax = NA else bdax = dx[min(bdax),'day']
-  
-  ldax <- which(apply(dx[,c("bbch.t","bbch.l")], 1, max, na.rm=T) >= 11)
-  if(length(ldax) < 1) {ldax = NA; nl <- c(nl, 0)} else {ldax = dx[min(ldax),'day']; nl <- c(nl, 1)}
-  
-  
+
   tbb<- c(tbb, bdax)
-  tlf <- c(tlf, ldax)
+
 }
 dx <- gc[match(levels(gc$lab), gc$lab),] # with twig id in same order as the loop above
 #dx <- dx[,2:ncol(dx)] 
 dx <- dx[,c(3:8,20)]
-terminalbb <- data.frame(dx, tlf, tbb, nl)
+terminalbb <- data.frame(dx, tbb)
 
 warnings()
 
@@ -111,98 +107,6 @@ table(nobb$photo) # mostly low photoperiod
 #############################################################
 
 #What if I would to use a similar approach as above, but start by calculating when the three bbch levels over phase 7 sum to 80%?
-
-head(gc)
-
-# Idea 1: using some sort of if else, if bbch.l, bbch2.l, bbch3.l are greater than 7 then add them together, else give it a value of 0 or NA
-#...not going well
-bbch.l.sum<-vector
-for ( i in nrow(gc)){
-  if(gc$bbch.l[i] > 6) { 
-  temp<-gc$bbch.l[i]
-  #bbch.l.sum =gc$percent.l
-}  else {
-  temp<-0
- }
-bbch.l.sum<-rbind(temp,bbch.l.sum)  
-}
-
-# idea 2, should I be using a while statement instead...
-while(gc[,c("bbch.l","bbch2.l")] > 7){
-  gc$test<-rowSum(gc[,c("bbch.l","bbch2.l")], na.rm=TRUE)
-}
-gc$bbch.l.sum<-rowSum(gc[,c("bbch.l","bbch2.l","bbch3.l")], na.rm=TRUE)
-gc$percent.l.sum<-rowSums(gc[,c("percent.l","percent2.l","percent3.l")], na.rm=TRUE)
-
-  
- llf <- nll <- vector() # This creates empty vectors for the bbday, leaf out, the nl yes no vector of whether this event occured (1 means yes, there was leafout; 0 means no leafout)
-gc$lab<-as.factor(gc$lab)
-#levels(d$lab)
-for(i in levels(gc$lab)){ # i=levels(d$lab)[2496] # for each individual clipping. # DL: why did DF have 602, that seems low
-  
-  dx <- gc[gc$lab == i,]
-#  bdaxlat <- which(apply(dx[,c("bbch.l","bbch2.l","bbch3.l")], MARGIN=1, max, na.rm=TRUE) >= 7) # for each unique identifier, is the bbch >=3?
-#  if(length(bdax) < 1) bdax = NA else bdax = dx[min(bdax),'day']
-
-  ldax <- which(apply(dx[,c("bbch.l","bbch2.l","bbch3.l")], 1, max, na.rm=T) >= 7 & dx$percent.l.sum >=80)
-  if(length(ldax) < 1) {ldax = NA; nll <- c(nll, 0)} else {ldax = dx[min(ldax),'day']; nll <- c(nll, 1)}
-  
-  llf <- c(llf, ldax)
-
-}
-
-dxl <- gc[match(levels(gc$lab), gc$lab),] # with twig id in same order as the loop above
-#dx <- dx[,2:ncol(dx)] 
-dxl <- dxl[,c(1:6,19)]
-lateralbb <- data.frame(dxl, llf, nl)
-
-head(lateralbb)
-
-#######################################################################################
-#idea 3: subset the data so you get only rows that have either 2 or 3 of the phases greater than phase 7 and then sum them to see how many samples even reach 80%
-
-# I dont want to use this method, it is so hack and I don't think it gives the right answer
-
-first<-subset(gc, bbch.l>=7)
-second<-subset(first, bbch2.l>=7)
-
-second$percent.l.sum<-rowSums(second[,c("percent.l","percent2.l")], na.rm=TRUE)
-second80<-subset(second, percent.l.sum>=80)
-
-third<-subset(second, bbch3.l>=7)
-
-third$percent.l.sum<-rowSums(third[,c("percent.l","percent2.l","percent3.l")], na.rm=TRUE)
-third80<-subset(third, percent.l.sum>=80)
-
-fin80<-rbind(second80,third80)
-
-############################################################
-fin80$lab<-as.factor(fin80$lab)
-
-llf <- nll <- vector()
-for(i in levels(fin80$lab)){ # i=levels(d$lab)[2496] # for each individual clipping. # DL: why did DF have 602, that seems low
-  
-  dx <- fin80[fin80$lab == i,]
- 
-  ldax <- which( dx$percent.l.sum >=80)
-  if(length(ldax) < 1) {ldax = NA; nll <- c(nll, 0)} else {ldax = dx[min(ldax),'day']; nll <- c(nll, 1)}
-  
-  llf <- c(llf, ldax)
-  
-}
-
-dxl <- fin80[match(levels(fin80$lab), fin80$lab),] # with twig id in same order as the loop above
-#dx <- dx[,2:ncol(dx)] 
-dxl <- dxl[,c(1:6,19)]
-lateralbb <- data.frame(dxl, llf, nl)
-
-latbb<-subset(lateralbb, day>=0)
-unique(latbb$lab)
-
-
-## <><><><><><><><><><><><><><><><><><><><><>
-#Code sent from Faith on September 17, 2020, hugely helpful! I modified it slightly by adding grouping by day but overall it was perfect! 
-#-------------------------------------
 
 d<-gc
 #Task is to select bbch.1 7 and above, sum percentages, then get 1st day where percentage above 80%
@@ -234,18 +138,50 @@ names(sumPercent) <- c("lab","day", "sumPercent")
 
 dlong7sum <- merge(dlong7, sumPercent, by = c("lab",'day'))
 head(dlong7sum)
-#Select samples with 80 or more percent 
+
+#Select samples with 80 or more percent --> 1068 rows, if it is lower at 50, then there are 1437 rows
 dlong7sum80 <- dlong7sum[dlong7sum$sumPercent >= 80,]
 
 #Select first day with 80% or more
-daymin<- aggregate(dlong7sum80$day, by=list(Category=dlong7sum80$lab), FUN=min)
-names(daymin) <- c("lab", "firstday")
-dlong7sum80Daymin <- merge(dlong7sum80, daymin, by = "lab")
+latdaymin80<- aggregate(dlong7sum80$day, by=list(Category=dlong7sum80$lab), FUN=min)
+names(latdaymin80) <- c("lab", "latbb80")
 
-nrow(daymin) # 1101
+#dlong7sum80Daymin <- merge(dlong7sum80, daymin, by = "lab")
 length(unique(daymin$lab))
 
-test<-daymin[order(daymin$firstday),]
+#Select first day with 50%, then there are 1437 rows
+dlong7sum50 <- dlong7sum[dlong7sum$sumPercent >= 50,]
+latdaymin50<- aggregate(dlong7sum50$day, by=list(Category=dlong7sum50$lab), FUN=min)
+names(latdaymin50) <- c("lab", "latbb50")
+nrow(latdaymin50)
+
+#Select first day of lateral bb, then there are  rows 19323
+dlong7sum1 <- dlong7sum[dlong7sum$sumPercent > 0,]
+latdaymin1<- aggregate(dlong7sum1$day, by=list(Category=dlong7sum1$lab), FUN=min)
+names(latdaymin1) <- c("lab", "latbb1")
+nrow(latdaymin1)
+
+
+######################################################
+# Combine the terminal and the lateral bb days
+
+head(terminalbb)
+head(latdaymin80)
+head(latdaymin50)
+head(latdaymin1)
+
+pheno<-merge(terminalbb, latdaymin80, by= "lab", all.x=TRUE) # the all.x=T is telling it that I want all rows from this dataset, even if there isn't a corresponding row in latdaymin
+
+pheno<-merge(pheno, latdaymin50, by= "lab", all.x=TRUE) 
+pheno<-merge(pheno, latdaymin1, by= "lab", all.x=TRUE) 
+
+head(pheno)
+
+######################################################
+# To make it more comparable to 
+##### GOOO ###########################################
+
+# test<-daymin[order(daymin$firstday),]
 
 #Alternative dplyr solution (sorry Lizzie!)
 data.frame(dlong7 %>% 

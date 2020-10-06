@@ -15,6 +15,7 @@ options(stringsAsFactors = FALSE)
 require(plyr)
 require(dplyr)
 require(tidyr)
+require(chillR)
 
 # read in the cleaning phenology data:
 data<-read.csv("input/bc_phenology.csv")
@@ -28,6 +29,22 @@ d<-data %>%
   separate(treatment, c("chill","photo","force"), "_")
 
 head(d)
+
+##### Adding individual ############
+indiv<-read.csv("input/indiv.no.cleaned.csv", na.strings = "")
+
+#creat lab to join by
+indiv$lab<-paste(indiv$site,indiv$chill, indiv$photo,indiv$force,indiv$flask, indiv$species, sep="_")
+
+#subset to just the colns needed
+indiv<-indiv[,c(6,9)]
+# indiv[complete.cases(indiv),]
+# test<-subset(indiv, indiv!= "NA")
+head(indiv)
+
+d<-merge(d, indiv, by= "lab", all.x=T) 
+
+####################################################################
 
 begin<-subset(d, day==0)
 count.begin<-table(begin$species)
@@ -76,28 +93,29 @@ count<-table(low$species)
 
 
 
-tbb <-vector() # This creates empty vectors for the bbday, leaf out, the nl yes no vector of whether this event occured (1 means yes, there was leafout; 0 means no leafout)
+tbb <-nl<-vector() # This creates empty vectors for the bbday, leaf out, the nl yes no vector of whether this event occured (1 means yes, there was leafout; 0 means no leafout)
 gc$lab<-as.factor(gc$lab)
 #levels(d$lab)
 for(i in levels(gc$lab)){ # i=levels(d$lab)[2496] # for each individual clipping. # DL: why did DF have 602, that seems low
   
   dx <- gc[gc$lab == i,]
   bdax <- which(apply(dx[,c("bbch.t","bbch.l")], MARGIN=1, max, na.rm=T) >3) # margin =1 means it is applied over rows, takes the maximum value > 3
-  if(length(bdax) < 1) bdax = NA else bdax = dx[min(bdax),'day']
-
+  if(length(bdax) < 1) {bdax = NA; nl <- c(nl, 0)} else {bdax = dx[min(bdax),'day']; nl <- c(nl, 1)}
+  
   tbb<- c(tbb, bdax)
 
 }
 dx <- gc[match(levels(gc$lab), gc$lab),] # with twig id in same order as the loop above
 #dx <- dx[,2:ncol(dx)] 
-dx <- dx[,c(3:8,20)]
-terminalbb <- data.frame(dx, tbb)
+dx <- dx[,c(1,3:8,20,21)]
+terminalbb <- data.frame(dx, tbb,nl)
 
 warnings()
 
 head(terminalbb) # here is the data for the terminal bud, there are 2406 individuals, with a value for each
 
-nobb<-subset(terminalbb, nl==0) # 411 samples didnt bb
+#
+nobb<-subset(terminalbb, nl==0) # 209 samples didnt bb
 table(nobb$chill) # mostly low chill
 table(nobb$force) # mostly low force
 table(nobb$photo) # mostly low photoperiod
@@ -147,15 +165,15 @@ latdaymin80<- aggregate(dlong7sum80$day, by=list(Category=dlong7sum80$lab), FUN=
 names(latdaymin80) <- c("lab", "latbb80")
 
 #dlong7sum80Daymin <- merge(dlong7sum80, daymin, by = "lab")
-length(unique(daymin$lab))
+length(unique(latdaymin80$lab))
 
-#Select first day with 50%, then there are 1437 rows
+#Select first day with 50%, then there are 1450 rows
 dlong7sum50 <- dlong7sum[dlong7sum$sumPercent >= 50,]
 latdaymin50<- aggregate(dlong7sum50$day, by=list(Category=dlong7sum50$lab), FUN=min)
 names(latdaymin50) <- c("lab", "latbb50")
 nrow(latdaymin50)
 
-#Select first day of lateral bb, then there are  rows 19323
+#Select first day of lateral bb, then there are  rows 1923
 dlong7sum1 <- dlong7sum[dlong7sum$sumPercent > 0,]
 latdaymin1<- aggregate(dlong7sum1$day, by=list(Category=dlong7sum1$lab), FUN=min)
 names(latdaymin1) <- c("lab", "latbb1")
@@ -165,37 +183,109 @@ nrow(latdaymin1)
 ######################################################
 # Combine the terminal and the lateral bb days
 
-head(terminalbb)
-head(latdaymin80)
-head(latdaymin50)
-head(latdaymin1)
-
 pheno<-merge(terminalbb, latdaymin80, by= "lab", all.x=TRUE) # the all.x=T is telling it that I want all rows from this dataset, even if there isn't a corresponding row in latdaymin
-
 pheno<-merge(pheno, latdaymin50, by= "lab", all.x=TRUE) 
 pheno<-merge(pheno, latdaymin1, by= "lab", all.x=TRUE) 
 
 head(pheno)
 
+
 ######################################################
-# To make it more comparable to 
+# To make it more comparable to the Flynn dataset, I am adding a treatment column, and then try to calculate chill portions...for the terminal bud? 
+
+pheno$treatment<-paste(pheno$chill, pheno$photo, pheno$force, sep = "_")
+
+#Calculating chill portions
+
+
+# plots
+
+# re-sort to make sure ordered by date correctly
+pheno.indiv <- pheno.indiv[order(pheno.indiv$tbb, pheno.indiv$lab, pheno.indiv$treatment),]
+
+ggplot(pheno.indiv, aes(species, jitter(tbb, 3), color = chill)) +
+  geom_point(aes(color = treatment)) 
+
+
+# Dan Flynn plots
+
+colz <- c("darkorchid","blue3", "cadetblue","coral3")
+lcol <- alpha(colz, 0.1)
+names(lcol) = levels(pheno.indiv$chill)
+
+d<-pheno.indiv
+
+pdf( width = 8, height = 4)
+
+par(mfcol=c(1, 3), mar = c(3,3,1,0.5))
+for(spx in levels(d$species)){ # spx = "BETALL"
+  
+  dxx = d[d$species == spx,]
+  
+  counter = 1
+  for(i in sort(as.character((unique(d$chill))))){# i = "high chill or low chill"
+    
+    dseq = seq(0, max(dxx$day))
+    plot(dseq, seq(0, 7,length=length(dseq)), type = "n", 
+         ylab = "Stage",
+         xlab = "")
+    if(counter == 1) mtext(spx, line = -2, adj = 0.5)
+    legend("topleft",bty="n",i, cex = 0.85, inset = 0)
+    xx <- dxx[dxx$time == i,]
+    # calculate mean response by date and chill
+    xt <- tapply(pmax(xx$tleaf, xx$lleaf,na.rm=T), list(xx$day, xx$chill), mean, na.rm=T)
+    
+    for(j in unique(xx$ind)){ #j=unique(xx$ind)[1]
+      xj <- xx[xx$ind == j,]
+      pcol = lcol[xj$chill]
+      lines(xj$day, xj$tleaf, col = pcol)
+    }
+    lines(rownames(xt), xt[,1], col = colz[1], lwd = 2)
+    lines(rownames(xt), xt[,2], col = colz[2], lwd = 2)
+    lines(rownames(xt), xt[,3], col = colz[3], lwd = 2)
+    lines(rownames(xt), xt[,4], col = colz[4], lwd = 2)
+    
+    
+    # add a legend
+    if(counter == 3) {    
+      legend("topright", bty = "n",
+             col = colz,
+             lwd = 2,
+             legend = c(1, 2, 4, 8),
+             title = "°C")
+    }
+    
+    counter = counter + 1
+  }
+  
+}
+dev.off()
+system(paste("open '", paste("figures/Trace Plots ", Sys.Date(), ".pdf", sep=""), "' -a /Applications/Preview.app", sep=""))
+
+
+#write.csv(pheno.indiv, "input/day.of.bb.csv")
+#
+
+##### GOOO ###########################################
+
+
 ##### GOOO ###########################################
 
 # test<-daymin[order(daymin$firstday),]
 
 #Alternative dplyr solution (sorry Lizzie!)
-data.frame(dlong7 %>% 
-             filter(stage >=7) %>%
-             group_by(lab,day) %>%
-             dplyr::mutate(sumPercent = sum(bbchPercent) ) %>%
-             filter(sumPercent >= 80) %>%
-             filter(day == min(day))
-) # you need the dplyr:: before mutate otherwise it doesnt work 
-
-amealnfl10<-subset(data, lab =="mp_HC_HP_HF_10_amealn") # yup first day is day 5
-
-alinc14<-subset(data, lab =="sm_LC_HP_HF_14_alninc") # yup firs day is day 36
-
-betpap17<-subset(data, lab =="sm_HC_LP_LF_17_betpap") # yup firs day is day 36
+# data.frame(dlong7 %>% 
+#              filter(stage >=7) %>%
+#              group_by(lab,day) %>%
+#              dplyr::mutate(sumPercent = sum(bbchPercent) ) %>%
+#              filter(sumPercent >= 80) %>%
+#              filter(day == min(day))
+# ) # you need the dplyr:: before mutate otherwise it doesnt work 
+# 
+# amealnfl10<-subset(data, lab =="mp_HC_HP_HF_10_amealn") # yup first day is day 5
+# 
+# alinc14<-subset(data, lab =="sm_LC_HP_HF_14_alninc") # yup firs day is day 36
+# 
+# betpap17<-subset(data, lab =="sm_HC_LP_LF_17_betpap") # yup firs day is day 36
 
 #Yay this worked!! 

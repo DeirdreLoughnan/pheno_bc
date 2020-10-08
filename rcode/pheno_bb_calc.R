@@ -4,7 +4,7 @@
 # building off of Dan Flynn's data
 
 if(length(grep("deirdreloughnan", getwd())>0)) { 
-  setwd("~/Documents/github/pheno_bc") 
+  setwd("~/Documents/github/pheno_bc/") 
 } else {
   setwd("~/Documents/github/pheno_bc")
 }
@@ -20,8 +20,6 @@ require(chillR)
 # read in the cleaning phenology data:
 data<-read.csv("input/bc_phenology.csv")
 
-# Starting with the terminal buds:
-
 # Would it be useful to have a unique identifying for every sample?
 data$lab<-paste(data$population,data$treatment,data$flask, data$species, sep="_")
 
@@ -30,11 +28,28 @@ d<-data %>%
 
 head(d)
 
-##### Adding individual ############
-indiv<-read.csv("input/indiv.no.cleaned.csv", na.strings = "")
+#start by identifying the samples that are duplicates, demarcated with T or F
+d$dup<-duplicated(d[,c("day","lab")])
 
-#creat lab to join by
-indiv$lab<-paste(indiv$site,indiv$chill, indiv$photo,indiv$force,indiv$flask, indiv$species, sep="_")
+test<-subset(d, lab =="mp_LC_HP_HF_4_shecan")
+d$dup<-duplicated(d[,c("day","lab")])
+
+d<-d %>% 
+  group_by(dup) %>% 
+  mutate(ref=ifelse(dup, "b", "a"))
+
+indiv$lab<-paste(indiv$lab, indiv$ref, sep="_")
+
+head(indiv)
+
+# Starting with the terminal buds:
+
+
+##### Adding individual ############
+# indiv<-read.csv("input/indiv.no.cleaned.csv", na.strings = "")
+
+source("rcode/cleaning.indivno.R")
+
 
 #subset to just the colns needed
 indiv<-indiv[,c(6,9)]
@@ -107,7 +122,7 @@ for(i in levels(gc$lab)){ # i=levels(d$lab)[2496] # for each individual clipping
 }
 dx <- gc[match(levels(gc$lab), gc$lab),] # with twig id in same order as the loop above
 #dx <- dx[,2:ncol(dx)] 
-dx <- dx[,c(1,3:8,20,21)]
+dx <- dx[,c("lab", "population", "chill", "photo", "force", "flask", "species", "indiv")]
 terminalbb <- data.frame(dx, tbb,nl)
 
 warnings()
@@ -194,26 +209,40 @@ head(pheno)
 # To make it more comparable to the Flynn dataset, I am adding a treatment column, and then try to calculate chill portions...for the terminal bud? 
 
 pheno$treatment<-paste(pheno$chill, pheno$photo, pheno$force, sep = "_")
-
+head(pheno)
 #Calculating chill portions
-
 
 # plots
 
-# re-sort to make sure ordered by date correctly
-pheno.indiv <- pheno.indiv[order(pheno.indiv$tbb, pheno.indiv$lab, pheno.indiv$treatment),]
+head(pheno)
+ggplot(pheno, aes(species, jitter(tbb, 3), color = chill)) +
+  geom_point(aes(color = treatment)) +
+  facet_wrap (~treatment)
 
-ggplot(pheno.indiv, aes(species, jitter(tbb, 3), color = chill)) +
-  geom_point(aes(color = treatment)) 
+ggplot(pheno, aes(species, jitter(latbb80, 3), color = chill)) +
+  geom_point(aes(color = treatment)) +
+  facet_wrap (~treatment)
+
+# hhh<-subset(pheno, treatment == "HC_HP_HF")
+# hll<-subset(pheno, treatment == "HC_LP_LF")
+# hlh<-subset(pheno, treatment == "HC_LP_HF")
+# hhl<-subset(pheno, treatment == "HC_HP_LF")
+# lll<-subset(pheno, treatment == "LC_LP_LF")
+# lhh<-subset(pheno, treatment == "LC_HP_HF")
+# llh<-subset(pheno, treatment == "LC_LP_HF")
+# lhl<-subset(pheno, treatment == "LC_HP_LF")
+
 
 
 # Dan Flynn plots
 
 colz <- c("darkorchid","blue3", "cadetblue","coral3")
 lcol <- alpha(colz, 0.1)
-names(lcol) = levels(pheno.indiv$chill)
+names(lcol) = levels(pheno$chill)
 
-d<-pheno.indiv
+
+
+d<-pheno
 
 pdf( width = 8, height = 4)
 
@@ -263,7 +292,7 @@ dev.off()
 system(paste("open '", paste("figures/Trace Plots ", Sys.Date(), ".pdf", sep=""), "' -a /Applications/Preview.app", sep=""))
 
 
-#write.csv(pheno.indiv, "input/day.of.bb.csv")
+#write.csv(pheno, "input/day.of.bb.csv")
 #
 
 ##### GOOO ###########################################

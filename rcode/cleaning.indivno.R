@@ -2,20 +2,19 @@
 
 if(length(grep("deirdreloughnan", getwd())>0)) { 
   setwd("~/Documents/github/pheno_bc") 
-} else
+} else {
   setwd("~/Documents/github/pheno_bc")
+}
 
 require(plyr)
 require(tidyr)
 require(stringr)
-rm(list=ls()) 
-options(stringsAsFactors = FALSE)
+# rm(list=ls()) 
+# options(stringsAsFactors = FALSE)
 
 mp<-read.csv("pheno_data/MP_indivno.csv",na.strings= "")
 
 sm<-read.csv("pheno_data/SM_indivno.csv", na.strings = "")
-
-df <- data.frame(x = c(NA, "a.b", "a.d", "b.c"))
 
 mp1<-mp %>% 
   separate(flask_id, c("species","chill","photo","force","flask"), "_")
@@ -235,9 +234,46 @@ sm1$indiv[sm1$indiv==" #1"] <- "1"
 
 unique(sm1$indiv)
 
+
 head(sm1)
 head(mp1)
 
-comb<-rbind(sm1,mp1)
+indiv<-rbind(sm1,mp1)
 
-write.csv(comb, "indiv.no.cleaned.csv")
+indiv$species[indiv$species=="rupar"] <- "rubpar"
+indiv$species[indiv$species=="spipyr-missing"] <- "spipyr"
+indiv$species[indiv$species=="poptre-missing"] <- "poptre"
+indiv$species[indiv$species=="spibe"] <- "spibet"
+indiv$species[indiv$species=="popre"] <- "poptre"
+indiv$species[indiv$species=="bepap"] <- "betpap"
+indiv$species[indiv$species=="shecan8"] <- "shecan"
+indiv$species[indiv$species=="Shecan"] <- "shecan"
+indiv$species[indiv$species=="corso"] <- "corsto"
+
+head(indiv)
+
+unique(indiv$species)
+
+#creating a unique label for each row, one that deals with the issue of having multiples of some species in each flask
+indiv$lab<-paste(indiv$site,indiv$chill, indiv$photo,indiv$force,indiv$flask, indiv$species, sep="_")
+
+#start by identifying the samples that are duplicates, demarcated with T or F
+indiv$dup<-duplicated(indiv[,"lab"])
+
+indiv<-indiv %>% 
+  group_by(dup) %>% 
+  mutate(ref=ifelse(dup, "b", "a"))
+
+indiv$lab<-paste(indiv$lab, indiv$ref, sep="_")
+
+head(indiv)
+#write.csv(indiv, "indiv.no.cleaned.csv")
+
+## GOOO ####
+# indiv %>%
+#   group_by_at(vars(8)) %>%
+#   mutate(ref = ifelse(dup, paste0("id", first(id)), NA_character_))
+# 
+# test<- indiv %>% 
+#   group_by(dup) %>% 
+#   mutate(ref=ifelse(dup, paste("b",1:n()), NA_character_))

@@ -23,6 +23,38 @@ data<-read.csv("input/bc_phenology.csv")
 # Would it be useful to have a unique identifying for every sample?
 data$lab<-paste(data$population,data$treatment,data$flask, data$species, sep="_")
 head(data)
+data$labpopsp<-paste(data$population,data$species, sep="_")
+sort(unique(data$labpopsp))
+
+# what does the data look like generally?
+# 20 species from mp,20 species from mp; so in theory there should be 2560 samples, but after chilling we had 2539
+temp<-data[, c("day","species","treatment", "lab")]
+temp0<-subset(temp, day == "0")
+table(temp0$species)
+sum(table(temp0$species))
+
+# temp<-subset(temp, lab!= "mp_HC_HP_HF_41_corsto")
+# temp<-subset(temp, lab!= "mp_HC_HP_HF_41_loninv")
+# temp<-subset(temp, lab!="mp_HC_HP_HF_41_rubpar")
+# temp<-subset(temp, lab!="mp_HC_HP_HF_41_poptre")
+
+# looking for differences in the data
+# temp0<-subset(temp, day == "0" & species == "poptre"); temp0<-temp0[1:128,]
+# temp50<-subset(temp, day == "50" & species == "poptre"); temp50<-temp50[1:128,]
+# identical(temp0$lab, temp50$lab)
+
+data<-subset(data, lab!= "mp_HC_HP_HF_41_corsto")
+data<-subset(data, lab!= "mp_HC_HP_HF_41_loninv")
+data<-subset(data, lab!="mp_HC_HP_HF_41_rubpar")
+data<-subset(data, lab!="mp_HC_HP_HF_41_poptre")
+
+data<-subset(data, lab!="mp_HC_LP_HF_37_loninv")
+data<-subset(data, lab!="mp_HC_LP_HF_4_rubpar")
+data<-subset(data, lab!="sm_HC_HP_HF_25_vibedu")
+data<-subset(data, lab!="sm_HC_LP_HF_22_acegla")
+data<-subset(data, lab!="sm_HC_LP_LF_36_acegla")
+
+
 
 d<-data %>% 
   separate(treatment, c("chill","photo","force"), "_")
@@ -35,8 +67,8 @@ d$dup<-duplicated(d[,c("day","lab")])
 
 test<-subset(d, dup == "TRUE") # 17131
 # there are two flasks that have 3 of the same species in it!
-test<-subset(d, lab =="sm_HC_LP_HF_37_vacmem")
-test<-subset(d, lab =="mp_LC_LP_LF_4_menfer")
+# test<-subset(d, lab =="sm_HC_LP_HF_37_vacmem")
+# test<-subset(d, lab =="mp_LC_LP_LF_4_menfer")
 head(d)
 
 d<-d %>% 
@@ -45,17 +77,19 @@ d<-d %>%
 
 d$lab2<-paste(d$lab, d$ref, sep="_")
 
-head(test$ref)
+length(unique(d$lab)) # 2404
+length(unique(d$lab2)) # 2613
 
-length(unique(d$lab)) # 2407
-length(unique(d$lab2)) # 2624
 
 tail(sort(unique(d$lab)))
 tail(sort(unique(d$lab2)))
 
-temp<-d[, c("day","ref", "lab2")]
-temp0<-subset(temp, day == "0")
-table(temp0$ref)
+head(d)
+# There are a few species that have some extras
+goop<-subset(d, day == 50 & species == "riblac")
+sort(unique(goop$lab2))
+
+
 #there should actually be 2539 samples
 
 # Starting with the terminal buds:

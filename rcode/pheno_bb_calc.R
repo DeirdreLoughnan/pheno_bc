@@ -9,38 +9,54 @@ if(length(grep("deirdreloughnan", getwd())>0)) {
   setwd("~/Documents/github/pheno_bc")
 }
 
-rm(list=ls()) 
-options(stringsAsFactors = FALSE)
-
 require(plyr)
 require(dplyr)
 require(tidyr)
 require(chillR)
+
+rm(list=ls()) 
+options(stringsAsFactors = FALSE)
 
 # read in the cleaning phenology data:
 data<-read.csv("input/bc_phenology.csv")
 
 # Would it be useful to have a unique identifying for every sample?
 data$lab<-paste(data$population,data$treatment,data$flask, data$species, sep="_")
+head(data)
 
 d<-data %>% 
   separate(treatment, c("chill","photo","force"), "_")
+unique(d$day)
 
-head(d)
 
 #start by identifying the samples that are duplicates, demarcated with T or F
+
 d$dup<-duplicated(d[,c("day","lab")])
 
-test<-subset(d, lab =="mp_LC_HP_HF_4_shecan")
-d$dup<-duplicated(d[,c("day","lab")])
+test<-subset(d, dup == "TRUE") # 17131
+# there are two flasks that have 3 of the same species in it!
+test<-subset(d, lab =="sm_HC_LP_HF_37_vacmem")
+test<-subset(d, lab =="mp_LC_LP_LF_4_menfer")
+head(d)
 
 d<-d %>% 
-  group_by(dup) %>% 
+  group_by(day, lab) %>% 
   mutate(ref=ifelse(dup, "b", "a"))
 
-indiv$lab<-paste(indiv$lab, indiv$ref, sep="_")
+d$lab2<-paste(d$lab, d$ref, sep="_")
 
-head(indiv)
+head(test$ref)
+
+length(unique(d$lab)) # 2407
+length(unique(d$lab2)) # 2624
+
+tail(sort(unique(d$lab)))
+tail(sort(unique(d$lab2)))
+
+temp<-d[, c("day","ref", "lab2")]
+temp0<-subset(temp, day == "0")
+table(temp0$ref)
+#there should actually be 2539 samples
 
 # Starting with the terminal buds:
 
@@ -50,14 +66,20 @@ head(indiv)
 
 source("rcode/cleaning.indivno.R")
 
-
+head(indiv)
 #subset to just the colns needed
-indiv<-indiv[,c(6,9)]
+indiv<-indiv[,c("lab2","indiv")]
 # indiv[complete.cases(indiv),]
 # test<-subset(indiv, indiv!= "NA")
 head(indiv)
 
-d<-merge(d, indiv, by= "lab", all.x=T) 
+
+dtemp<-merge(d, indiv, by= "lab2", all.x=T) # this is adding rows! 
+
+mptemp<-subset(indiv, site == "mp");length(unique(mptemp$labtemp)) # 204
+
+smtemp<-subset(indiv, site == "sm");length(unique(smtemp$labtemp)) #186
+
 
 ####################################################################
 
@@ -80,14 +102,14 @@ sort(unique(data$species))
  #    Starting to work with the terminal buds first 
 #############################################################
 # Since this dataset includes the LC's days in the greenhouse, I need to subset those out and just have the 12 weeks they spent in the growth chambers:
-head(gc)
+
 gc<-subset(d, day<=84)
 unique(gc$day)
-
+head(gc)
 # I am curious if all samples even reached stage 7 or...
 
 max<-gc %>% 
-  group_by(lab) %>%
+  group_by(lab,ref) %>%
   slice(which.max(bbch.t))
 
 low<-subset(max, bbch.t<7)

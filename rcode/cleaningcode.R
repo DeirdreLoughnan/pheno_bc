@@ -18,13 +18,14 @@ files
 #data<-ldply(files, read_csv, na = c("","NA"))
 data<-ldply(files, read_csv, na = "")
 
+
 df<-as.data.frame(data)
 df[df=="<NA>"] = "NA"   
 head(df)
 #Interesting, there are a number of additional columns being added, some with no data
 
 df<-df[order(df$day),]
-
+unique(df$day)
 #These are all misplaced comments
 unique(df$X21) 
 unique(df$X20)
@@ -441,5 +442,7 @@ head(df1)
 
 unique(df1$treatment) # there are two rows of poptre from day 36 and 38, flask 20 that have NA instead of treatment, to be conservative I am going to remove these
 df1<-subset(df1, treatment!= "NA")
+df1<-subset(df1, day!= "NA")
 
-#write.csv(df1,"bc_phenology.csv")
+#write.csv(df1,"input/bc_phenology.csv")
+

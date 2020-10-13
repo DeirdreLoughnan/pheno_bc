@@ -264,7 +264,7 @@ indiv<-indiv %>%
   group_by(dup) %>% 
   mutate(ref=ifelse(dup, "b", "a"))
 
-indiv$lab<-paste(indiv$lab, indiv$ref, sep="_")
+indiv$lab2<-paste(indiv$lab, indiv$ref, sep="_")
 
 head(indiv)
 #write.csv(indiv, "indiv.no.cleaned.csv")

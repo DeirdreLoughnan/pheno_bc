@@ -140,6 +140,7 @@ sort(unique(data$species))
 gc<-subset(d, day<=84)
 unique(gc$day)
 head(gc)
+gc<-as.data.frame(gc)
 # I am curious if all samples even reached stage 7 or...
 
 max<-gc %>% 
@@ -178,10 +179,10 @@ for(i in levels(gc$lab)){ # i=levels(d$lab)[2496] # for each individual clipping
 }
 dx <- gc[match(levels(gc$lab), gc$lab),] # with twig id in same order as the loop above
 #dx <- dx[,2:ncol(dx)] 
-dx <- dx[,c("lab", "population", "chill", "photo", "force", "flask", "species", "indiv")]
+dx <- dx[,c("lab", "population", "chill", "photo", "force", "flask", "species"#, "indiv"
+            )]
 terminalbb <- data.frame(dx, tbb,nl)
 
-warnings()
 
 head(terminalbb) # here is the data for the terminal bud, there are 2406 individuals, with a value for each
 
@@ -269,17 +270,44 @@ head(pheno)
 #Calculating chill portions
 
 # plots
+# start by plotting means by species and by treatments:
+phenoplot_sp<-ddply(pheno, .(treatment, species), summarize, termbb=mean(tbb, na.rm=TRUE), lat50bb=mean(latbb50, na.rm=TRUE))
 
-head(pheno)
-ggplot(pheno, aes(species, jitter(tbb, 3), color = chill)) +
+head(phenoplot_sp)
+
+ggplot(phenoplot, aes(species, termbb)) +
   geom_point(aes(color = treatment)) +
-  facet_wrap (~treatment)
+  theme(axis.text.x = element_text(angle = 45, vjust = 0.5, hjust=1))
 
-ggplot(pheno, aes(species, jitter(latbb80, 3), color = chill)) +
+# plotting means by just treatments:
+phenoplot_trt<-ddply(pheno, .(treatment), summarize, termbb=mean(tbb, na.rm=TRUE), lat50bb=mean(latbb50, na.rm=TRUE))
+
+#terminal dobb
+ggplot(phenoplot_sp, aes(treatment, termbb)) +
   geom_point(aes(color = treatment)) +
-  facet_wrap (~treatment)
+  theme(axis.text.x = element_text(angle = 45, vjust = 0.5, hjust=1)) + 
+  scale_y_continuous(limits = c(0, 88))
 
-# hhh<-subset(pheno, treatment == "HC_HP_HF")
+#lateral dobb
+ggplot(phenoplot_sp, aes(treatment, lat50bb)) +
+  geom_point(aes(color = treatment)) +
+  theme(axis.text.x = element_text(angle = 45, vjust = 0.5, hjust=1))+ 
+  scale_y_continuous(limits = c(0, 88))
+
+# Just the mean treatment value
+# terminla
+ggplot(phenoplot_trt, aes(treatment, termbb)) +
+  geom_point(aes(color = treatment)) +
+  theme(axis.text.x = element_text(angle = 45, vjust = 0.5, hjust=1))+ 
+  scale_y_continuous(limits = c(0, 88))
+
+ggplot(phenoplot_trt, aes(treatment, lat50bb)) +
+  geom_point(aes(color = treatment)) +
+  theme(axis.text.x = element_text(angle = 45, vjust = 0.5, hjust=1))+ 
+  scale_y_continuous(limits = c(0, 88))
+
+
+ hhh<-subset(pheno, treatment == "HC_HP_HF")
 # hll<-subset(pheno, treatment == "HC_LP_LF")
 # hlh<-subset(pheno, treatment == "HC_LP_HF")
 # hhl<-subset(pheno, treatment == "HC_HP_LF")

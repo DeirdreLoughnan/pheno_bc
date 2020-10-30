@@ -188,6 +188,19 @@ msstrt<-subset(mss, treatment == "HC_LP_LF"); unique(msstrt$lab)
 mss88trt<-subset(mss88, treatment == "HC_LP_LF"); unique(mss88trt$lab)
 
 #################################################################
+#################################################################
+#symalb
+smss<-subset(temp0, species=="symalb" & population == "sm")
+table(smss$treatment)
+
+smss88<-subset(temp88, species=="symalb" & population == "sm")
+table(smss88$treatment)
+
+smsstrt<-subset(smss, treatment == "LC_HP_HF"); unique(smsstrt$lab)
+table
+smss88trt<-subset(smss88, treatment == "LC_HP_HF"); unique(smss88trt$lab)
+
+
 
 
 d<-data %>% 

@@ -18,16 +18,16 @@ rm(list=ls())
 options(stringsAsFactors = FALSE)
 
 # read in the cleaning phenology data:
-#data<-read.csv("input/bc_phenology.csv")
-source("rcode/cleaning/cleaningcode.R")
+data<-read.csv("input/bc_phenology.csv")
+#source("rcode/cleaning/cleaningcode.R")
 
 data<-df1
 
 # Would it be useful to have a unique identifying for every sample?
-data$lab<-paste(data$population,data$treatment,data$flask, data$species, sep="_")
-head(data)
-data$labpopsp<-paste(data$population,data$species, sep="_")
-sort(unique(data$labpopsp))
+# data$lab<-paste(data$population,data$treatment,data$flask, data$species, sep="_")
+# head(data)
+# data$labpopsp<-paste(data$population,data$species, sep="_")
+# sort(unique(data$labpopsp))
 
 # what does the data look like generally?
 # 20 species from mp,20 species from mp; so in theory there should be 2560 samples, but after chilling we had 2539
@@ -39,53 +39,7 @@ sum(table(temp0$species))
 temp88<-subset(temp, day == "88")
 table(temp88$species)
 
-################ Why are there so many extra? 
-# start looking into 
-#poptre
-smss<-subset(temp0, species=="poptre" & population == "mp")
-table(smss$treatment)
 
-
-smss88<-subset(temp88, species=="poptre" & population == "mp")
-table(smss88$treatment)
-
-smsstrt<-subset(smss, treatment == "HC_HP_LF"); unique(smsstrt$lab)
-smss88trt<-subset(smss88, treatment == "HC_HP_LF"); unique(smss88trt$lab)
-
-
-#shecan
-
-#sorsco
-smss<-subset(temp0, species=="sorsco" & population == "m")
-sort(unique(smss$lab))
-table(smss$treatment)
-sum(table(temp0$species))
-
-smss88<-subset(temp88, species=="sorsco" & population == "sm")
-table(smss88$treatment)
-sum(table(temp0$species))
-
-smsstrt<-subset(smss, treatment == "HC_HP_LF"); unique(smsstrt$lab)
-smss88trt<-subset(smss88, treatment == "HC_HP_LF"); unique(smss88trt$lab)
-
-smsstrt<-subset(smss, treatment == "HC_LP_HF"); unique(smsstrt$lab)
-smss88trt<-subset(smss88, treatment == "HC_LP_HF"); unique(smss88trt$lab)
-
-smsstrt<-subset(smss, treatment == "HC_LP_LF"); unique(smsstrt$lab)
-smss88trt<-subset(smss88, treatment == "HC_LP_LF"); unique(smss88trt$lab)
-
-#spibet
-#spipyr
-#vibedu
-
-
-#acegla
-#corsto
-#loninv
-#poptre
-#rubpar
-#shecan
-#vibedu
 
 d<-data %>% 
   separate(treatment, c("chill","photo","force"), "_")
@@ -111,11 +65,20 @@ d$lab2<-paste(d$lab, d$ref, sep="_")
 length(unique(d$lab)) # 2404
 length(unique(d$lab2)) # 2613
 
+# How many indiv of each sp are there?
+d0<-subset(d, day == "0")
+table(d0$species)
+
+d50<-subset(d, day == "50")
+table(d50$species)
+
+head(d0)
 
 tail(sort(unique(d$lab)))
 tail(sort(unique(d$lab2)))
 
-head(d)
+d<-as.data.frame(d);head(d)
+
 # There are a few species that have some extras
 goop<-subset(d, day == 50 & species == "riblac")
 sort(unique(goop$lab2))

@@ -6,6 +6,7 @@
 data {
   int<lower=0> N;
   int<lower=0> n_sp;
+  int<lower=0> n_site;
   int<lower=1, upper=n_sp> sp[N]; // not sure what this is doing
   vector[N] chill; 
   vector[N] site;
@@ -17,8 +18,11 @@ data {
 // The parameters accepted by the model. 
 
 parameters {
-  real mu;
-  real<lower=0> sigma;
+  real mu_a;
+  real mu_force; 
+  real mu_chill;
+  real mu_photo;
+  real mu_site;
   
   vector[n_sp] a_sp;
   vector[n_sp] b_force;
@@ -26,11 +30,7 @@ parameters {
   vector[n_sp] b_chill;
   vector[n_sp] b_site;
   
-  real mu_force; 
-  real mu_chill;
-  real mu_photo;
-  real mu_site;
-
+  real<lower=0> sigma_a;
   real<lower=0> sigma_force;
   real<lower=0> sigma_photo;
   real<lower=0> sigma_chill;
@@ -42,8 +42,12 @@ parameters {
 transformed parameters{
   vector[N] y_hat;
 
-  for (i in 1:N){
-    y_hat[i]=a_sp[sp[i]] + b_site[sp[i]] * site[i] + b_force[sp[i]] * force[i] + b_photo[sp[i]] * photo[i] + b_chill[sp[i]] * chill[i];
+  for(i in 1:N){
+		y_hat[i] = a_sp[sp[i]] + 
+		b_site[sp[i]] * site[i] + 
+		b_force[sp[i]] * force[i] + 
+		b_photo[sp[i]] * photo[i] + 
+		b_chill[sp[i]] * chill[i];
   }
 }
 
@@ -64,6 +68,7 @@ model {
 	b_chill ~ normal(mu_chill, sigma_chill);
 	b_site ~ normal(mu_site, sigma_site);
 	
+	a_sp ~ normal(mu_a,sigma_a);
   bb ~ normal(y_hat, sigma_y);
 }
 

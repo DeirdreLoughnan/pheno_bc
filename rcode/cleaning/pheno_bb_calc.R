@@ -3,8 +3,8 @@
 # The aim is to extract the day of study on which the terminal bud reached stage 7 first and the day when the lateral buds reached 80% at stage 7
 # building off of Dan Flynn's data
 
-if(length(grep("deirdreloughnan", getwd())>0)) { 
-  setwd("~/Documents/github/pheno_bc/") 
+if(length(grep("deirdreloughnan", getwd())>0)) {
+  setwd("~/Documents/github/pheno_bc/")
 } else {
   setwd("~/Documents/github/pheno_bc")
 }
@@ -21,7 +21,7 @@ options(stringsAsFactors = FALSE)
 data<-read.csv("input/bc_phenology.csv")
 #source("rcode/cleaning/cleaningcode.R")
 
-data<-df1
+
 
 # Would it be useful to have a unique identifying for every sample?
 # data$lab<-paste(data$population,data$treatment,data$flask, data$species, sep="_")
@@ -62,6 +62,18 @@ d<-d %>%
 
 d$lab2<-paste(d$lab, d$ref, sep="_")
 
+
+d<-as.data.frame(d)
+
+ddups <- vector()
+for(i in 1:length(d$dup)){
+  if(d$dup[i] == "TRUE"){
+    ddups<-rbind(ddups, d[i,])
+  }
+}
+
+head(ddups)
+
 length(unique(d$lab)) # 2404
 length(unique(d$lab2)) # 2613
 
@@ -92,7 +104,7 @@ sort(unique(goop$lab2))
 ##### Adding individual ############
 # indiv<-read.csv("input/indiv.no.cleaned.csv", na.strings = "")
 
-source("rcode/cleaning.indivno.R")
+source("rcode/cleaning/cleaning.indivno.R")
 
 head(indiv)
 #subset to just the colns needed
@@ -104,9 +116,9 @@ head(indiv)
 
 dtemp<-merge(d, indiv, by= "lab2", all.x=T) # this is adding rows! 
 
-mptemp<-subset(indiv, site == "mp");length(unique(mptemp$labtemp)) # 204
-
-smtemp<-subset(indiv, site == "sm");length(unique(smtemp$labtemp)) #186
+# mptemp<-subset(indiv, site == "mp");length(unique(mptemp$labtemp)) # 204
+# 
+# smtemp<-subset(indiv, site == "sm");length(unique(smtemp$labtemp)) #186
 
 
 ####################################################################
@@ -265,110 +277,110 @@ head(pheno)
 
 # plots
 # start by plotting means by species and by treatments:
-phenoplot_sp<-ddply(pheno, .(treatment, species), summarize, termbb=mean(tbb, na.rm=TRUE), lat50bb=mean(latbb50, na.rm=TRUE))
-
-head(phenoplot_sp)
-
-ggplot(phenoplot, aes(species, termbb)) +
-  geom_point(aes(color = treatment)) +
-  theme(axis.text.x = element_text(angle = 45, vjust = 0.5, hjust=1))
-
-# plotting means by just treatments:
-phenoplot_trt<-ddply(pheno, .(treatment), summarize, termbb=mean(tbb, na.rm=TRUE), lat50bb=mean(latbb50, na.rm=TRUE))
-
-#terminal dobb
-ggplot(phenoplot_sp, aes(treatment, termbb)) +
-  geom_point(aes(color = treatment)) +
-  theme(axis.text.x = element_text(angle = 45, vjust = 0.5, hjust=1)) + 
-  scale_y_continuous(limits = c(0, 88))
-
-#lateral dobb
-ggplot(phenoplot_sp, aes(treatment, lat50bb)) +
-  geom_point(aes(color = treatment)) +
-  theme(axis.text.x = element_text(angle = 45, vjust = 0.5, hjust=1))+ 
-  scale_y_continuous(limits = c(0, 88))
-
-# Just the mean treatment value
-# terminla
-ggplot(phenoplot_trt, aes(treatment, termbb)) +
-  geom_point(aes(color = treatment)) +
-  theme(axis.text.x = element_text(angle = 45, vjust = 0.5, hjust=1))+ 
-  scale_y_continuous(limits = c(0, 88))
-
-ggplot(phenoplot_trt, aes(treatment, lat50bb)) +
-  geom_point(aes(color = treatment)) +
-  theme(axis.text.x = element_text(angle = 45, vjust = 0.5, hjust=1))+ 
-  scale_y_continuous(limits = c(0, 88))
-
-
- hhh<-subset(pheno, treatment == "HC_HP_HF")
-# hll<-subset(pheno, treatment == "HC_LP_LF")
-# hlh<-subset(pheno, treatment == "HC_LP_HF")
-# hhl<-subset(pheno, treatment == "HC_HP_LF")
-# lll<-subset(pheno, treatment == "LC_LP_LF")
-# lhh<-subset(pheno, treatment == "LC_HP_HF")
-# llh<-subset(pheno, treatment == "LC_LP_HF")
-# lhl<-subset(pheno, treatment == "LC_HP_LF")
-
-
-
-# Dan Flynn plots
-
-colz <- c("darkorchid","blue3", "cadetblue","coral3")
-lcol <- alpha(colz, 0.1)
-names(lcol) = levels(pheno$chill)
-
-
-
-d<-pheno
-
-pdf( width = 8, height = 4)
-
-par(mfcol=c(1, 3), mar = c(3,3,1,0.5))
-for(spx in levels(d$species)){ # spx = "BETALL"
-  
-  dxx = d[d$species == spx,]
-  
-  counter = 1
-  for(i in sort(as.character((unique(d$chill))))){# i = "high chill or low chill"
-    
-    dseq = seq(0, max(dxx$day))
-    plot(dseq, seq(0, 7,length=length(dseq)), type = "n", 
-         ylab = "Stage",
-         xlab = "")
-    if(counter == 1) mtext(spx, line = -2, adj = 0.5)
-    legend("topleft",bty="n",i, cex = 0.85, inset = 0)
-    xx <- dxx[dxx$time == i,]
-    # calculate mean response by date and chill
-    xt <- tapply(pmax(xx$tleaf, xx$lleaf,na.rm=T), list(xx$day, xx$chill), mean, na.rm=T)
-    
-    for(j in unique(xx$ind)){ #j=unique(xx$ind)[1]
-      xj <- xx[xx$ind == j,]
-      pcol = lcol[xj$chill]
-      lines(xj$day, xj$tleaf, col = pcol)
-    }
-    lines(rownames(xt), xt[,1], col = colz[1], lwd = 2)
-    lines(rownames(xt), xt[,2], col = colz[2], lwd = 2)
-    lines(rownames(xt), xt[,3], col = colz[3], lwd = 2)
-    lines(rownames(xt), xt[,4], col = colz[4], lwd = 2)
-    
-    
-    # add a legend
-    if(counter == 3) {    
-      legend("topright", bty = "n",
-             col = colz,
-             lwd = 2,
-             legend = c(1, 2, 4, 8),
-             title = "°C")
-    }
-    
-    counter = counter + 1
-  }
-  
-}
-dev.off()
-system(paste("open '", paste("figures/Trace Plots ", Sys.Date(), ".pdf", sep=""), "' -a /Applications/Preview.app", sep=""))
-
+# phenoplot_sp<-ddply(pheno, .(treatment, species), summarize, termbb=mean(tbb, na.rm=TRUE), lat50bb=mean(latbb50, na.rm=TRUE))
+# 
+# head(phenoplot_sp)
+# 
+# ggplot(phenoplot, aes(species, termbb)) +
+#   geom_point(aes(color = treatment)) +
+#   theme(axis.text.x = element_text(angle = 45, vjust = 0.5, hjust=1))
+# 
+# # plotting means by just treatments:
+# phenoplot_trt<-ddply(pheno, .(treatment), summarize, termbb=mean(tbb, na.rm=TRUE), lat50bb=mean(latbb50, na.rm=TRUE))
+# 
+# #terminal dobb
+# ggplot(phenoplot_sp, aes(treatment, termbb)) +
+#   geom_point(aes(color = treatment)) +
+#   theme(axis.text.x = element_text(angle = 45, vjust = 0.5, hjust=1)) + 
+#   scale_y_continuous(limits = c(0, 88))
+# 
+# #lateral dobb
+# ggplot(phenoplot_sp, aes(treatment, lat50bb)) +
+#   geom_point(aes(color = treatment)) +
+#   theme(axis.text.x = element_text(angle = 45, vjust = 0.5, hjust=1))+ 
+#   scale_y_continuous(limits = c(0, 88))
+# 
+# # Just the mean treatment value
+# # terminla
+# ggplot(phenoplot_trt, aes(treatment, termbb)) +
+#   geom_point(aes(color = treatment)) +
+#   theme(axis.text.x = element_text(angle = 45, vjust = 0.5, hjust=1))+ 
+#   scale_y_continuous(limits = c(0, 88))
+# 
+# ggplot(phenoplot_trt, aes(treatment, lat50bb)) +
+#   geom_point(aes(color = treatment)) +
+#   theme(axis.text.x = element_text(angle = 45, vjust = 0.5, hjust=1))+ 
+#   scale_y_continuous(limits = c(0, 88))
+# 
+# 
+#  hhh<-subset(pheno, treatment == "HC_HP_HF")
+# # hll<-subset(pheno, treatment == "HC_LP_LF")
+# # hlh<-subset(pheno, treatment == "HC_LP_HF")
+# # hhl<-subset(pheno, treatment == "HC_HP_LF")
+# # lll<-subset(pheno, treatment == "LC_LP_LF")
+# # lhh<-subset(pheno, treatment == "LC_HP_HF")
+# # llh<-subset(pheno, treatment == "LC_LP_HF")
+# # lhl<-subset(pheno, treatment == "LC_HP_LF")
+# 
+# 
+# 
+# # Dan Flynn plots
+# 
+# colz <- c("darkorchid","blue3", "cadetblue","coral3")
+# lcol <- alpha(colz, 0.1)
+# names(lcol) = levels(pheno$chill)
+# 
+# 
+# 
+# d<-pheno
+# 
+# pdf( width = 8, height = 4)
+# 
+# par(mfcol=c(1, 3), mar = c(3,3,1,0.5))
+# for(spx in levels(d$species)){ # spx = "BETALL"
+#   
+#   dxx = d[d$species == spx,]
+#   
+#   counter = 1
+#   for(i in sort(as.character((unique(d$chill))))){# i = "high chill or low chill"
+#     
+#     dseq = seq(0, max(dxx$day))
+#     plot(dseq, seq(0, 7,length=length(dseq)), type = "n", 
+#          ylab = "Stage",
+#          xlab = "")
+#     if(counter == 1) mtext(spx, line = -2, adj = 0.5)
+#     legend("topleft",bty="n",i, cex = 0.85, inset = 0)
+#     xx <- dxx[dxx$time == i,]
+#     # calculate mean response by date and chill
+#     xt <- tapply(pmax(xx$tleaf, xx$lleaf,na.rm=T), list(xx$day, xx$chill), mean, na.rm=T)
+#     
+#     for(j in unique(xx$ind)){ #j=unique(xx$ind)[1]
+#       xj <- xx[xx$ind == j,]
+#       pcol = lcol[xj$chill]
+#       lines(xj$day, xj$tleaf, col = pcol)
+#     }
+#     lines(rownames(xt), xt[,1], col = colz[1], lwd = 2)
+#     lines(rownames(xt), xt[,2], col = colz[2], lwd = 2)
+#     lines(rownames(xt), xt[,3], col = colz[3], lwd = 2)
+#     lines(rownames(xt), xt[,4], col = colz[4], lwd = 2)
+#     
+#     
+#     # add a legend
+#     if(counter == 3) {    
+#       legend("topright", bty = "n",
+#              col = colz,
+#              lwd = 2,
+#              legend = c(1, 2, 4, 8),
+#              title = "°C")
+#     }
+#     
+#     counter = counter + 1
+#   }
+#   
+# }
+# dev.off()
+# system(paste("open '", paste("figures/Trace Plots ", Sys.Date(), ".pdf", sep=""), "' -a /Applications/Preview.app", sep=""))
+# 
 
 #write.csv(pheno, "input/day.of.bb.csv")
 #

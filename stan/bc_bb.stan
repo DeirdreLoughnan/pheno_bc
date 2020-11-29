@@ -54,7 +54,7 @@ transformed parameters{
 model {
   // Priors. Make them flat
 	mu_force ~ normal(0, 35); // 100 = 3 months on either side. Narrow down to 35
-	mu_photo ~ normal(0, 35);
+	mu_photo ~ normal(0, 40);
 	mu_chill ~ normal(0, 35);
 	mu_site ~ normal(0, 35);
 	

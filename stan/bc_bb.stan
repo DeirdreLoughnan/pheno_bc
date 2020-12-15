@@ -79,3 +79,10 @@ model {
   bb ~ normal(y_hat, sigma_y);
 }
 
+generated quantities{
+   real ypred_new[N];
+   
+   for (i in 1:N)
+   ypred_new[i] = normal_rng(y_hat[i], sigma_y);
+}
+

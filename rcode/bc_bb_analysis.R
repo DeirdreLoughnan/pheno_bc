@@ -7,7 +7,9 @@ library(scales)
 library(arm)
 library(rstan)
 library(shinystan)
-# library(sjPlot)
+require(reshape2)
+require(bayesplot)
+require(ggplot2)
 library(rstanarm)
 library(RColorBrewer)
 
@@ -18,9 +20,10 @@ options(stringsAsFactors = FALSE)
 
 if(length(grep("deirdreloughnan", getwd())>0)) { 
   setwd("~/Documents/github/pheno_bc") 
-}  else{
-  setwd("~/deirdre/") # for midge
-}
+}  
+#else{
+#  setwd("~/deirdre/") # for midge
+#}
 
 source('rcode/cleaning/pheno_bb_calc.R')
 head(pheno)
@@ -82,4 +85,38 @@ sm.sum <- summary(mdl)$summary
 sm.sum
 ssm<- as.shinystan(mdl)
 launch_shinystan(ssm)
+
+## The model no longer has any divergent transitions for the terminal buds!
+#####################################################################
+
+# PPC 
+
+mdl.slopes<-as.data.frame(sm.sum[grep("b", rownames(sm.sum)),c(1,6)]) 
+mdl.int<-as.data.frame(sm.sum[grep("a", rownames(sm.sum)),]) 
+mdl.a<-mdl.int[,1]
+mdl.b<-mdl.slopes[,1]
+
+
+ggplot()+
+  geom_point(data=mdl.slopes,aes(y=row.names(mdl.slopes), x=mean), color="darkgreen")+
+  labs(x="doy", y="Species")
+
+# not the most normal 
+hist(ext$a)
+
+#####################################################################
+
+#plot(mdl, pars="a", ci_level=0.5, outer_level=0.5,col="blue")
+
+# PPC based on the vingette from https://cran.r-project.org/web/packages/bayesplot/vignettes/graphical-ppcs.html 
+
+ext<-rstan::extract(mdl)
+
+y<-pheno.t$tbb
+
+y.ext<-ext$ypred_new # I want this to be a matrix, which it is, with one element for each data point in y
+
+ppc_dens_overlay(y, y.ext[1:50, ])
+
+
 

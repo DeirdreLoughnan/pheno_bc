@@ -82,11 +82,19 @@ mdl<-stan("stan/bc_bb.stan",
             ,iter=2000, chains=4, seed=1235)
 
 sm.sum <- summary(mdl)$summary
+sm.sum[grep("mu_",rownames(sm.sum)),]
 sm.sum
 ssm<- as.shinystan(mdl)
 launch_shinystan(ssm)
 
 ## The model no longer has any divergent transitions for the terminal buds!
+#pairs(sm.sum, pars=c("mu_a","mu_force","mu_chill","mu_photo_ncp")) # this gives a lot of warning messages and not the figure i was hoping/expected
+
+range(sm.sum[,"n_eff"])
+
+save(sm.sum, file="tbb_photoncp.Rda")
+load("output/tbb_photoncp.Rda")
+getwd()
 #####################################################################
 
 # PPC 
@@ -118,5 +126,6 @@ y.ext<-ext$ypred_new # I want this to be a matrix, which it is, with one element
 
 ppc_dens_overlay(y, y.ext[1:50, ])
 
-
-
+mean(ext$b_force)
+mean(ext$b_chill)
+mean(ext$b_photo)

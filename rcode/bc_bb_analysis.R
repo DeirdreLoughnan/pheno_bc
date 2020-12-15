@@ -73,7 +73,7 @@ datalist<-with(pheno.t,
                           force = force.n,
                           site=site.n
                     ))
-datalist$chill
+
 mdl<-stan("stan/bc_bb.stan",
             data= datalist
             ,iter=2000, chains=4, seed=1235)

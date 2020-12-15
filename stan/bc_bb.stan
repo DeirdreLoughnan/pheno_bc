@@ -21,26 +21,30 @@ parameters {
   real mu_a;
   real mu_force; 
   real mu_chill;
-  real mu_photo;
+  real mu_photo_ncp;
   real mu_site;
   
   vector[n_sp] a_sp;
   vector[n_sp] b_force;
-  vector[n_sp] b_photo;
   vector[n_sp] b_chill;
   vector[n_sp] b_site;
+  vector[n_sp] b_photo_ncp;
   
   real<lower=0> sigma_a;
   real<lower=0> sigma_force;
-  real<lower=0> sigma_photo;
   real<lower=0> sigma_chill;
   real<lower=0> sigma_site;
+  real<lower=0> sigma_photo_ncp;
  
   real<lower=0> sigma_y; 
 }
 
 transformed parameters{
+  vector[n_sp] b_photo;
   vector[N] y_hat;
+  b_photo = mu_photo_ncp + sigma_photo_ncp * b_photo_ncp;
+  
+
 
   for(i in 1:N){
 		y_hat[i] = a_sp[sp[i]] + 
@@ -54,17 +58,20 @@ transformed parameters{
 model {
   // Priors. Make them flat
 	mu_force ~ normal(0, 35); // 100 = 3 months on either side. Narrow down to 35
-	mu_photo ~ normal(0, 40);
+//	mu_photo ~ normal(0, 40);
 	mu_chill ~ normal(0, 35);
 	mu_site ~ normal(0, 35);
 	
+	b_photo_ncp ~normal(0,35);
+	
+	
 	sigma_force ~ normal(0, 10); // Start big at 10, go smaller if introduces problems
-	sigma_photo ~ normal(0, 10); 
+	sigma_photo_ncp ~ normal(0, 10); 
 	sigma_chill ~ normal(0, 10);
 	sigma_site ~ normal(0, 10);
 	
 	b_force ~ normal(mu_force, sigma_force);
-	b_photo ~ normal(mu_photo, sigma_photo);
+//	b_photo ~ normal(mu_photo, sigma_photo);
 	b_chill ~ normal(mu_chill, sigma_chill);
 	b_site ~ normal(mu_site, sigma_site);
 	

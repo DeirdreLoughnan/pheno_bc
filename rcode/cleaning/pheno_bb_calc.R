@@ -12,7 +12,7 @@ if(length(grep("deirdreloughnan", getwd())>0)) {
 require(plyr)
 require(dplyr)
 require(tidyr)
-require(chillR)
+# require(chillR)
 
 rm(list=ls()) 
 options(stringsAsFactors = FALSE)

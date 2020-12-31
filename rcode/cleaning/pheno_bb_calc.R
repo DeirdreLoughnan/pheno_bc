@@ -18,16 +18,11 @@ rm(list=ls())
 options(stringsAsFactors = FALSE)
 
 # read in the cleaning phenology data:
-data<-read.csv("input/bc_phenology.csv")
+data<-read.csv("input/bc_phenology.csv", header=T, na.strings=c("","NA"))
 #source("rcode/cleaning/cleaningcode.R")
 
 
 
-# Would it be useful to have a unique identifying for every sample?
-# data$lab<-paste(data$population,data$treatment,data$flask, data$species, sep="_")
-# head(data)
-# data$labpopsp<-paste(data$population,data$species, sep="_")
-# sort(unique(data$labpopsp))
 
 # what does the data look like generally?
 # 20 species from mp,20 species from mp; so in theory there should be 2560 samples, but after chilling we had 2539
@@ -40,17 +35,33 @@ temp88<-subset(temp, day == "88")
 table(temp88$species)
 
 
+#begin by dividing the treatment names (C_P_F) into their own columns
+data<-data %>% 
+  separate(treatment, c("chill","photo","force"), "_")
+unique(d$day)
+data$lab<-paste(data$population,data$treatment,data$flask, data$species, sep=".")
+d<-data
+#start by identifying the samples that are duplicates, demarcated with T or F
+
+d$dup<-duplicated(d[,c("day","lab")])
+
+#Check that it worked the way I wanted
+#test<-subset(d, dup == "TRUE") # 17131
+# there are two flasks that have 3 of the same species in it!
+# test<-subset(d, lab =="sm_HC_LP_HF_37_vacmem")
+# test<-subset(d, lab =="mp_LC_LP_LF_4_menfer")
+head(d)
 
 d<-data %>% 
   separate(treatment, c("chill","photo","force"), "_")
 unique(d$day)
-
+head(d)
 
 #start by identifying the samples that are duplicates, demarcated with T or F
 
 d$dup<-duplicated(d[,c("day","lab")])
 
-test<-subset(d, dup == "TRUE") # 17131
+#test<-subset(d, dup == "TRUE") # 17131
 # there are two flasks that have 3 of the same species in it!
 # test<-subset(d, lab =="sm_HC_LP_HF_37_vacmem")
 # test<-subset(d, lab =="mp_LC_LP_LF_4_menfer")
@@ -58,19 +69,30 @@ head(d)
 
 d<-d %>% 
   group_by(day, lab) %>% 
-  mutate(ref=ifelse(dup, "b", "a"))
-
-d$lab2<-paste(d$lab, d$ref, sep="_")
-
-
+  mutate(ref=ifelse(dup, "2", "1"))
+head(d)
+d$lab2<-paste(d$lab, d$ref, sep=".")
 d<-as.data.frame(d)
+head(d)
 
-ddups <- vector()
-for(i in 1:length(d$dup)){
-  if(d$dup[i] == "TRUE"){
-    ddups<-rbind(ddups, d[i,])
-  }
-}
+# there are four flasks that have three samples
+d$dup2<-duplicated(d[,c("day","lab2")])
+d<-d %>% 
+  group_by(day, lab2) %>% 
+  mutate(ref2=ifelse(dup2, "3", ""))
+head(d)
+d$lab3<-paste(dtest$lab2, d$ref2, sep=".")
+d<-as.data.frame(d)
+head(d)
+
+
+# For curiosity, here I am creating a new datset of jus the samples that have pairs of the same species in a flask
+# ddups <- vector()
+# for(i in 1:length(d$dup)){
+#   if(d$dup[i] == "TRUE"){
+#     ddups<-rbind(ddups, d[i,])
+#   }
+# }
 
 head(ddups)
 

@@ -38,29 +38,14 @@ table(temp88$species)
 #begin by dividing the treatment names (C_P_F) into their own columns
 data<-data %>% 
   separate(treatment, c("chill","photo","force"), "_")
-unique(d$day)
-data$lab<-paste(data$population,data$treatment,data$flask, data$species, sep=".")
+head(data)
+data$lab<-paste(data$population,data$chill,data$photo,data$force,data$flask, data$species, sep=".")
 d<-data
 #start by identifying the samples that are duplicates, demarcated with T or F
 
 d$dup<-duplicated(d[,c("day","lab")])
 
 #Check that it worked the way I wanted
-#test<-subset(d, dup == "TRUE") # 17131
-# there are two flasks that have 3 of the same species in it!
-# test<-subset(d, lab =="sm_HC_LP_HF_37_vacmem")
-# test<-subset(d, lab =="mp_LC_LP_LF_4_menfer")
-head(d)
-
-d<-data %>% 
-  separate(treatment, c("chill","photo","force"), "_")
-unique(d$day)
-head(d)
-
-#start by identifying the samples that are duplicates, demarcated with T or F
-
-d$dup<-duplicated(d[,c("day","lab")])
-
 #test<-subset(d, dup == "TRUE") # 17131
 # there are two flasks that have 3 of the same species in it!
 # test<-subset(d, lab =="sm_HC_LP_HF_37_vacmem")
@@ -75,16 +60,14 @@ d$lab2<-paste(d$lab, d$ref, sep=".")
 d<-as.data.frame(d)
 head(d)
 
-# there are four flasks that have three samples
 d$dup2<-duplicated(d[,c("day","lab2")])
 d<-d %>% 
   group_by(day, lab2) %>% 
   mutate(ref2=ifelse(dup2, "3", ""))
 head(d)
-d$lab3<-paste(dtest$lab2, d$ref2, sep=".")
+d$lab3<-paste(d$lab2, d$ref2, sep=".")
 d<-as.data.frame(d)
 head(d)
-
 
 # For curiosity, here I am creating a new datset of jus the samples that have pairs of the same species in a flask
 # ddups <- vector()
@@ -96,8 +79,9 @@ head(d)
 
 head(ddups)
 
-length(unique(d$lab)) # 2404
-length(unique(d$lab2)) # 2613
+length(unique(d$lab)) 
+length(unique(d$lab2))
+length(unique(d$lab3)) 
 
 # How many indiv of each sp are there?
 d0<-subset(d, day == "0")
@@ -126,17 +110,17 @@ sort(unique(goop$lab2))
 ##### Adding individual ############
 # indiv<-read.csv("input/indiv.no.cleaned.csv", na.strings = "")
 
-source("rcode/cleaning/cleaning.indivno.R")
-
-head(indiv)
-#subset to just the colns needed
-indiv<-indiv[,c("lab2","indiv")]
-# indiv[complete.cases(indiv),]
-# test<-subset(indiv, indiv!= "NA")
-head(indiv)
-
-
-dtemp<-merge(d, indiv, by= "lab2", all.x=T) # this is adding rows! 
+# source("rcode/cleaning/cleaning.indivno.R")
+# 
+# head(indiv)
+# #subset to just the colns needed
+# indiv<-indiv[,c("lab3","indiv")]
+# # indiv[complete.cases(indiv),]
+# # test<-subset(indiv, indiv!= "NA")
+# head(indiv)
+# 
+# 
+# dtemp<-merge(d, indiv, by= "lab2", all.x=T) # this is adding rows! 
 
 # mptemp<-subset(indiv, site == "mp");length(unique(mptemp$labtemp)) # 204
 # 

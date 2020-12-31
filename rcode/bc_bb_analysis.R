@@ -77,9 +77,14 @@ datalist<-with(pheno.t,
                           site=site.n
                     ))
 
-mdl<-stan("stan/bc_bb.stan",
-            data= datalist
-            ,iter=2000, chains=4, seed=1235)
+# mdl<-stan("stan/bc.bb.inter.stan",
+#             data= datalist
+#             ,iter=2000, chains=4)
+#gives 200 divergent transitions, 41 transitions that exceed max tree depth, chains were not mixed, with low ESS
+
+mdl<-stan("stan/bc.bb.ncpphoto.ncpinter.stan",
+          data= datalist
+          ,iter=2000, chains=4)
 
 sm.sum <- summary(mdl)$summary
 sm.sum[grep("mu_",rownames(sm.sum)),]
@@ -92,7 +97,7 @@ launch_shinystan(ssm)
 
 range(sm.sum[,"n_eff"])
 
-save(sm.sum, file="tbb_photoncp.Rda")
+save(sm.sum, file="tbb_photo_winter_ncp.Rda")
 load("output/tbb_photoncp.Rda")
 getwd()
 #####################################################################
@@ -109,8 +114,7 @@ ggplot()+
   geom_point(data=mdl.slopes,aes(y=row.names(mdl.slopes), x=mean), color="darkgreen")+
   labs(x="doy", y="Species")
 
-# not the most normal 
-hist(ext$a)
+
 
 #####################################################################
 
@@ -119,6 +123,9 @@ hist(ext$a)
 # PPC based on the vingette from https://cran.r-project.org/web/packages/bayesplot/vignettes/graphical-ppcs.html 
 
 ext<-rstan::extract(mdl)
+
+# not the most normal 
+hist(ext$a)
 
 y<-pheno.t$tbb
 

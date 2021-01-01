@@ -57,6 +57,7 @@ pheno$site.n<-as.numeric(pheno$site.n)
 head(pheno)
 
 #going to split it into analysis of terminal bb and lateral bb
+# Starting with the terminal buds:
 pheno.term<-pheno[,c("tbb","species.fact","chill.n","force.n","photo.n","site.n","species")]
 pheno.t<-pheno.term[complete.cases(pheno.term),]
 
@@ -82,26 +83,70 @@ datalist<-with(pheno.t,
 #             ,iter=2000, chains=4)
 #gives 200 divergent transitions, 41 transitions that exceed max tree depth, chains were not mixed, with low ESS
 
-mdl<-stan("stan/bc.bb.ncpphoto.ncpinter.stan",
+mdl.t<-stan("stan/bc.bb.ncpphoto.ncpinter.stan",
           data= datalist
           ,iter=2000, chains=4)
 
-sm.sum <- summary(mdl)$summary
-sm.sum[grep("mu_",rownames(sm.sum)),]
-sm.sum
+sumt <- summary(mdl.t)$summary
+sumt[grep("mu_",rownames(sumt)),]
+sumt
+ssm<- as.shinystan(mdl.t)
+launch_shinystan(ssm)
+
+## The model no longer has any divergent transitions for the terminal buds!
+#pairs(sm.sum, pars=c("mu_a","mu_force","mu_chill","mu_photo_ncp")) # this gives a lot of warning messages and not the figure i was hoping/expected
+
+range(sumt[,"n_eff"])
+
+save(sumt, file="tbb_ncp_termianlbud.Rda")
+load("output/tbb_ncp_termianlbud.Rda")
+
+#####################################################################
+#####################################################################
+
+# now running the same model for the lateral buds
+pheno.lat<-pheno[,c("latbb50","species.fact","chill.n","force.n","photo.n","site.n","species")]
+pheno.l<-pheno.lat[complete.cases(pheno.lat),]
+nrow(pheno.lat)-nrow(pheno.l)  # a lot of species did not reach even 50%! 1004
+
+
+temp<-subset(pheno.lat,species=="corsto" & is.na(latbb50));head(temp); unique(temp$species)
+
+# there were 1004 samples that did not have lateral bb
+
+datalist<-with(pheno.l,
+               list( N=nrow(pheno.l),
+                     n_sp =length(unique(pheno.l$species.fact)),
+                     n_site =length(unique(pheno.l$site.n)),
+                     bb = latbb50,
+                     sp =species.fact,
+                     chill = chill.n,
+                     photo = photo.n,
+                     force = force.n,
+                     site=site.n
+               ))
+
+# mdl<-stan("stan/bc.bb.inter.stan",
+#             data= datalist
+#             ,iter=2000, chains=4)
+#gives 200 divergent transitions, 41 transitions that exceed max tree depth, chains were not mixed, with low ESS
+
+mdl.l<-stan("stan/bc.bb.ncpphoto.ncpinter.stan",
+          data= datalist
+          ,iter=2000, chains=4)
+
+suml <- summary(mdl.l)$summary
+suml[grep("mu_",rownames(suml)),]
+suml
 ssm<- as.shinystan(mdl)
 launch_shinystan(ssm)
 
 ## The model no longer has any divergent transitions for the terminal buds!
 #pairs(sm.sum, pars=c("mu_a","mu_force","mu_chill","mu_photo_ncp")) # this gives a lot of warning messages and not the figure i was hoping/expected
 
-range(sm.sum[,"n_eff"])
+save(suml, file="tbb_photo_winter_ncp_lateralbud.Rda")
 
-save(sm.sum, file="tbb_photo_winter_ncp.Rda")
-load("output/tbb_photoncp.Rda")
-getwd()
 #####################################################################
-
 # PPC 
 
 mdl.slopes<-as.data.frame(sm.sum[grep("b", rownames(sm.sum)),c(1,6)]) 
@@ -136,3 +181,144 @@ ppc_dens_overlay(y, y.ext[1:50, ])
 mean(ext$b_force)
 mean(ext$b_chill)
 mean(ext$b_photo)
+
+######################################################
+# plotting code taken from buds-master Pheno Budburst analysis.R
+
+
+col4fig <- c("mean","sd","25%","50%","75%","Rhat")
+col4table <- c("mean","sd","2.5%","50%","97.5%","Rhat")
+
+# manually to get right order
+mu_params <- c("mu_force",
+               "mu_photo",
+               "mu_chill",
+               "mu_site",
+               "mu_inter_fp",
+               "mu_inter_fc",
+               "mu_inter_pc",
+               "mu_inter_fs",
+               "mu_inter_ps",
+               "mu_inter_sc")
+
+meanzt <- sumt[mu_params,col4fig]
+meanzl <- suml[mu_params,col4fig]
+
+rownames(meanzt) = c("Forcing",
+                     "Photoperiod",
+                     "Chilling",
+                     "Site",
+                     "Forcing x Photoperiod",
+                     "Forcing x Chilling",
+                     "Photoperiod x Chilling",
+                     "Forcing x Site",
+                     "Photoperiod x Site",
+                     "Site x Chilling"
+)
+
+rownames(meanzl) = c("Forcing",
+                     "Photoperiod",
+                     "Chilling",
+                     "Site",
+                     "Forcing x Photoperiod",
+                     "Forcing x Chilling",
+                     "Photoperiod x Chilling",
+                     "Forcing x Site",
+                     "Photoperiod x Site",
+                     "Site x Chilling"
+)
+
+meanzt.table <- sumt[mu_params,col4table]
+row.names(meanzt.table) <- row.names(meanzt)
+head(meanzt.table)
+
+meanzl.table <- suml[mu_params,col4table]
+row.names(meanzl.table) <- row.names(meanzl)
+head(meanzl.table)
+# Begin by checking to see what cue is most important and whether there are strong correlations between cues:
+df.mean.t <- data.frame(bb.force=sumt[grep("b_force", rownames(sumt)),1],
+                          bb.photo=sumt[grep("b_photo_ncp", rownames(sumt)),1],
+                          bb.chill=sumt[grep("b_chill", rownames(sumt)),1])
+
+df.mean.l <- data.frame(lat.force=suml[grep("b_force", rownames(sumt)),1],
+                        lat.photo=suml[grep("b_photo_ncp", rownames(sumt)),1],
+                        lat.chill=suml[grep("b_chill", rownames(sumt)),1])
+
+df.mean.t[which(df.mean.t$bb.force > df.mean.t$bb.photo),] # species 11- rho alb
+df.mean.l[which(df.mean.l$lat.force > df.mean.l$lat.photo),] #none
+df.mean.t[which(df.mean.t$bb.chill > df.mean.t$bb.force),] # 12
+# 3, 5,6,8,9,10,12,13,15,17,18,20
+df.mean.l[which(df.mean.l$lat.chill > df.mean.l$lat.force),] # 16
+#1,2,5,6,7,8,10,11,12,13,15,16,17,18,19,20
+
+# all correlated
+summary(lm(bb.force~bb.photo, data=df.mean.t))
+summary(lm(bb.force~bb.chill, data=df.mean.t))
+summary(lm(bb.force~bb.photo, data=df.mean.t))
+summary(lm(lat.force~lat.photo, data=df.mean.l))
+summary(lm(lat.force~lat.chill, data=df.mean.l))
+summary(lm(lat.chill~lat.photo, data=df.mean.l))
+
+par(mfrow=c(2,1), mar = c(5, 10, 2, 1))
+
+# Upper panel: bud burst
+plot(seq(-22, 
+         12,
+         length.out = nrow(meanzt)), 
+     1:nrow(meanzt),
+     type="n",
+     xlab = "",
+     ylab = "",
+     yaxt = "n")
+
+#legend(x = -20, y = 2, bty="n", legend = "a. Budburst", text.font = 2)
+#rasterImage(bbpng, -20, 1, -16, 4)
+
+axis(2, at = nrow(meanzt):1, labels = rownames(meanzt), las = 1, cex.axis = 0.8)
+points(meanzt[,'mean'],
+       nrow(meanzt):1,
+       pch = 16,
+       col = "midnightblue")
+arrows(meanzt[,"75%"], nrow(meanzt):1, meanzt[,"25%"], nrow(meanzt):1,
+       len = 0, col = "black")
+abline(v = 0, lty = 3)
+# add advance/delay arrows
+par(xpd=NA)
+arrows(1, 15.5, 6, 15.5, len=0.1, col = "black")
+legend(5, 16.5, legend="delay", bty="n", text.font = 1, cex=0.75)
+arrows(-1, 15.5, -6, 15.5, len=0.1, col = "black")
+legend(-12, 16.5, legend="advance", bty="n", text.font = 1, cex=0.75)
+legend(-2, 16.5, legend="0", bty="n", text.font = 1, cex=0.75)
+par(xpd=FALSE)
+
+par(mar=c(5, 10, 2, 1))
+# Lower panel: leaf-out
+plot(seq(-22, 
+         12, 
+         length.out = nrow(meanzl)), 
+     1:nrow(meanzl),
+     type="n",
+     xlab = "Model estimate change in day of phenological event",
+     ylab = "",
+     yaxt = "n")
+
+#legend(x = -24, y = 6, bty="n", legend = "b. Leafout", text.font = 2)
+#rasterImage(lopng, -20, 1, -14, 4)
+
+axis(2, at = nrow(meanzl):1, labels = rownames(meanzl), las = 1, cex.axis = 0.8)
+points(meanzl[,'mean'],
+       nrow(meanzl):1,
+       pch = 16,
+       col = "midnightblue")
+arrows(meanzl[,"75%"], nrow(meanzl):1, meanzl[,"25%"], nrow(meanzl):1,
+       len = 0, col = "black")
+abline(v = 0, lty = 3)
+
+# add advance/delay arrows
+# par(xpd=NA)
+# arrows(1, 15.5, 6, 15.5, len=0.1, col = "black")
+# legend(5, 16.5, legend="delay", bty="n", text.font = 1, cex=0.75)
+# arrows(-1, 15.5, -6, 15.5, len=0.1, col = "black")
+# legend(-12, 16.5, legend="advance", bty="n", text.font = 1, cex=0.75)
+# legend(-2, 16.5, legend="0", bty="n", text.font = 1, cex=0.75)
+# par(xpd=FALSE)

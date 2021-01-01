@@ -41,12 +41,12 @@ parameters {
   real mu_chill;
   real mu_photo;
   real mu_site;
-  real mu_b_inter_fp;
-  real mu_b_inter_fs;
-  real mu_b_inter_ps;
-  real mu_b_inter_fc;
-  real mu_b_inter_pc;
-  real mu_b_inter_sc;
+  real mu_inter_fp;
+  real mu_inter_fs;
+  real mu_inter_ps;
+  real mu_inter_fc;
+  real mu_inter_pc;
+  real mu_inter_sc;
   
   vector[n_sp] a_sp;
   vector[n_sp] b_force;
@@ -89,12 +89,12 @@ transformed parameters{
   
   b_photo = mu_photo + sigma_photo * b_photo_ncp;
   
-  b_inter_fp = mu_b_inter_fp + sigma_b_inter_fp*b_inter_fp_ncp;
-  b_inter_fs = mu_b_inter_fs + sigma_b_inter_fs*b_inter_fs_ncp;
-  b_inter_ps = mu_b_inter_ps + sigma_b_inter_ps*b_inter_ps_ncp;
-  b_inter_fc = mu_b_inter_fc + sigma_b_inter_fc*b_inter_fc_ncp;
-  b_inter_pc = mu_b_inter_pc + sigma_b_inter_pc*b_inter_pc_ncp;
-  b_inter_sc = mu_b_inter_sc + sigma_b_inter_sc*b_inter_sc_ncp;
+  b_inter_fp = mu_inter_fp + sigma_b_inter_fp*b_inter_fp_ncp;
+  b_inter_fs = mu_inter_fs + sigma_b_inter_fs*b_inter_fs_ncp;
+  b_inter_ps = mu_inter_ps + sigma_b_inter_ps*b_inter_ps_ncp;
+  b_inter_fc = mu_inter_fc + sigma_b_inter_fc*b_inter_fc_ncp;
+  b_inter_pc = mu_inter_pc + sigma_b_inter_pc*b_inter_pc_ncp;
+  b_inter_sc = mu_inter_sc + sigma_b_inter_sc*b_inter_sc_ncp;
 
   for(i in 1:N){
 		y_hat[i] = a_sp[sp[i]] + 

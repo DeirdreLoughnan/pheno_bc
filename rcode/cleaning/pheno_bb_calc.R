@@ -77,7 +77,7 @@ head(d)
 #   }
 # }
 
-head(ddups)
+#head(ddups)
 
 length(unique(d$lab)) 
 length(unique(d$lab2))

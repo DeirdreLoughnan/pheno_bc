@@ -327,6 +327,8 @@ df$bbch2.l[df$bbch2.l=="11`"] <- "11"
 #The 2 should be 3
 df$bbch2.l[df$bbch2.l=="2"] <- "3"
 
+#Somehow on day 15 a samrac pop was changed to sm
+df$population[which(df$species =="samrac" & df$treatment == "LC_HP_HF")] <- "mp"
 
 unique(df$bbch2.l)
 ##################################################################################
@@ -464,6 +466,7 @@ df1<-subset(df1, lab!= "mp_HC_HP_HF_41_corsto")
 df1<-subset(df1, lab!= "mp_HC_HP_HF_41_loninv")
 df1<-subset(df1, lab!="mp_HC_HP_HF_41_rubpar")
 df1<-subset(df1, lab!="mp_HC_HP_HF_41_poptre")
+df1<-subset(df1, lab!="sm_HC_LP_HF_41_amealn")
 df1<-subset(df1, lab!="mp_HC_LP_HF_37_loninv")
 df1<-subset(df1, lab!="mp_HC_LP_HF_4_rubpar")
 df1<-subset(df1, lab!="sm_HC_HP_HF_25_vibedu")
@@ -498,14 +501,118 @@ df1<-subset(df1, lab!="sm_HC_LP_HF_16_sorsco")
 df1<-subset(df1, lab!="sm_HC_LP_HF_3_shecan")
 df1<-subset(df1, lab!="sm_HC_LP_LF_13_shecan")
 
-221724-221416
+#There are some weird ones that are not supposed to exist...something weird must have happened on the 15-19
+df1<-subset(df1, lab!="sm_HC_HP_LF_33_symalb")
+df1<-subset(df1, lab!="mp_LC_LP_HF_2_loninv")
+df1<-subset(df1, lab!="mp_LC_LP_HF_21_menfer")
+df1<-subset(df1, lab!="mp_LC_LP_HF_2_poptre")
+df1<-subset(df1, lab!="mp_LC_LP_HF_21_rhoalb")
+df1<-subset(df1, lab!="mp_LC_LP_HF_2_spibet")
+df1<-subset(df1, lab!="mp_LC_LP_HF_2_spibet")
+df1<-subset(df1, lab!="mp_LC_LP_HF_2_spibet")
+df1<-subset(df1, lab!="sm_LC_HP_HF_30_symalb")
+
+
+
+
+temp<-subset(df1, lab == "sm_LC_HP_HF_10_symalb")
+
+#investigate closer
+temp<-subset(df1, lab == "sm_LC_LP_HF_2_symalb")
+temp<-subset(df1, lab == "sm_LC_LP_HF_30_symalb")
+temp<-subset(df1, lab == "sm_LC_HP_LF_13_corsto")
+
+
+
 sort(unique(df1$indiv))
-# Removing the individuals the died
+# Removing the individuals that died
 data<-df
 temp<-df1[, c("day","indiv","population","species","treatment","lab")]
 temp0<-subset(temp, day == "0")
 table(temp0$species)
 sum(table(temp0$species))
 
+##############################################################################################
+#begin by dividing the treatment names (C_P_F) into their own columns
+data<-df1 %>% 
+  separate(treatment, c("chill","photo","force"), "_")
+head(data)
+data$lab<-paste(data$population,data$chill,data$photo,data$force,data$flask, data$species, sep=".")
+d<-data
+head(d)
+#start by identifying the samples that are duplicates, demarcated with T or F
+
+d$dup<-duplicated(d[,c("day","lab")]) # there are 212 samples that are duplicated
+
+#Check that it worked the way I wanted
+#test<-subset(d, dup == "TRUE") # 17131
+# there are two flasks that have 3 of the same species in it!
+# test<-subset(d, lab =="sm_HC_LP_HF_37_vacmem")
+# test<-subset(d, lab =="mp_LC_LP_LF_4_menfer")
+head(d)
+
+d<-d %>% 
+  group_by(day, lab) %>% 
+  mutate(ref=ifelse(dup, "2", "1"))
+head(d)
+d$lab2<-paste(d$lab, d$ref, sep=".")
+d<-as.data.frame(d)
+head(d)
+
+#There are an additional four samples that had three per flask:
+
+d$dup2<-duplicated(d[,c("day","lab2")])
+
+d$lab2[which(d$lab == "mp.LC.LP.LF.4.menfer" & d$dup2 == "TRUE")] <- "mp.LC.LP.LF.4.menfer.3"
+d$lab2[which(d$lab == "sm.LC.LP.LF.30.shecan" & d$dup2 == "TRUE")] <- "sm.LC.LP.LF.30.shecan.3"
+d$lab2[which(d$lab == "sm.HC.LP.HF.37.vacmem" & d$dup2 == "TRUE")] <- "sm.HC.LP.HF.37.vacmem.3"
+d$lab2[which(d$lab == "sm.LC.LP.HF.9.sorsco" & d$dup2 == "TRUE")] <- "sm.LC.LP.HF.9.sorsco.3"
+
+length(unique(d$lab2))
+
+# d<-d %>% 
+#   group_by(day, lab2) %>% 
+#   mutate(ref2=ifelse(dup2, "3", ""))
+# head(d)
+# d$lab3<-paste(d$lab2, d$ref2, sep=".")
+# d<-as.data.frame(d)
+# head(d)
+
+# For curiosity, here I am creating a new datset of jus the samples that have pairs of the same species in a flask
+# ddups <- vector()
+# for(i in 1:length(d$dup)){
+#   if(d$dup[i] == "TRUE"){
+#     ddups<-rbind(ddups, d[i,])
+#   }
+# }
+
+#head(ddups)
+
+length(unique(d$lab)) 
+length(unique(d$lab2))
+length(unique(d$lab3)) 
+
+# How many indiv of each sp are there?
+d0<-subset(d, day == "0")
+table(d0$species)
+
+d50<-subset(d, day == "50")
+table(d50$species)
+
+head(d0)
+
+tail(sort(unique(d$lab)))
+tail(sort(unique(d$lab2)))
+
+d<-as.data.frame(d);head(d)
+
+# There are a few species that have some extras
+goop<-subset(d, day == 50 & species == "riblac")
+sort(unique(goop$lab2))
+
+
+
 #write.csv(df1,"input/bc_phenology.csv", row.names=FALSE)
 
+head(df1)
+smsamrac<-subset(df1, population == "sm" & species == "samrac")

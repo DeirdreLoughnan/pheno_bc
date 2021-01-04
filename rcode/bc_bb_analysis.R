@@ -98,7 +98,7 @@ launch_shinystan(ssm)
 
 range(sumt[,"n_eff"])
 
-save(sumt, file="tbb_ncp_termianlbud.Rda")
+save(sumt, file="output/tbb_ncp_termianlbud.Rda")
 load("output/tbb_ncp_termianlbud.Rda")
 
 #####################################################################
@@ -144,7 +144,7 @@ launch_shinystan(ssm)
 ## The model no longer has any divergent transitions for the terminal buds!
 #pairs(sm.sum, pars=c("mu_a","mu_force","mu_chill","mu_photo_ncp")) # this gives a lot of warning messages and not the figure i was hoping/expected
 
-save(suml, file="tbb_photo_winter_ncp_lateralbud.Rda")
+save(suml, file="output/tbb_photo_winter_ncp_lateralbud.Rda")
 
 #####################################################################
 # PPC 
@@ -259,8 +259,8 @@ summary(lm(lat.force~lat.photo, data=df.mean.l))
 summary(lm(lat.force~lat.chill, data=df.mean.l))
 summary(lm(lat.chill~lat.photo, data=df.mean.l))
 
+pdf(file.path( "figures/changes.pheno.pdf"), width = 7, height = 8)
 par(mfrow=c(2,1), mar = c(5, 10, 2, 1))
-
 # Upper panel: bud burst
 plot(seq(-22, 
          12,
@@ -322,3 +322,4 @@ abline(v = 0, lty = 3)
 # legend(-12, 16.5, legend="advance", bty="n", text.font = 1, cex=0.75)
 # legend(-2, 16.5, legend="0", bty="n", text.font = 1, cex=0.75)
 # par(xpd=FALSE)
+dev.off()

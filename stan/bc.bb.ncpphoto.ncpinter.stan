@@ -24,7 +24,7 @@ transformed data {
   vector[N] inter_pc;       // photo*chill            
   vector[N] inter_sc;       // chill * site           
           
-//what is the dot doing?
+//what is the dot doing? bc vectors of length n?
   inter_fp    = force .* photo; 
   inter_fs    = force .* site;  
   inter_ps    = photo .* site;  
@@ -115,10 +115,16 @@ transformed parameters{
 model {
   // Priors. Make them flat
 	mu_force ~ normal(0, 35); // 100 = 3 months on either side. Narrow down to 35
-//	mu_photo ~ normal(0, 40);
+	mu_photo ~ normal(0, 35);
 	mu_chill ~ normal(0, 35);
 	mu_site ~ normal(0, 35);
 	
+	mu_inter_fp ~ normal(0,35);
+	mu_inter_fc ~ normal(0,35);
+	mu_inter_pc ~ normal(0,35);
+	mu_inter_fs ~ normal(0,35);
+	mu_inter_ps ~ normal(0,35);
+	mu_inter_sc ~ normal(0,35);
 	
 	sigma_force ~ normal(0, 10); // Start big at 10, go smaller if introduces problems
 	sigma_photo ~ normal(0, 10); 
@@ -131,18 +137,25 @@ model {
 	sigma_b_inter_pc ~ normal(0, 10);	
 	sigma_b_inter_sc ~ normal(0, 10);
 	
-	b_photo_ncp ~normal(0,35);
+	b_photo_ncp ~normal(0,1);
 	
 	b_force ~ normal(mu_force, sigma_force);
-//	b_photo ~ normal(mu_photo, sigma_photo);
+//  b_photo ~ normal(mu_photo, sigma_photo); // bc still need this info
 	b_chill ~ normal(mu_chill, sigma_chill);
 	b_site ~ normal(mu_site, sigma_site);
-	b_inter_fp_ncp ~ normal(0, 35); 
-  b_inter_fs_ncp ~ normal(0, 35);
-	b_inter_ps_ncp ~ normal(0, 35);		
-	b_inter_fc_ncp ~ normal(0, 35);
-	b_inter_pc_ncp ~ normal(0, 35);		
-	b_inter_sc_ncp ~ normal(0, 35);		
+	b_inter_fp_ncp ~ normal(0, 1); 
+  b_inter_fs_ncp ~ normal(0, 1);
+	b_inter_ps_ncp ~ normal(0, 1);		
+	b_inter_fc_ncp ~ normal(0, 1);
+	b_inter_pc_ncp ~ normal(0, 1);		
+	b_inter_sc_ncp ~ normal(0, 1);	
+	
+// 	b_inter_fp ~ normal(0, 35); 
+//   b_inter_fs ~ normal(0, 35);
+// 	b_inter_ps ~ normal(0, 35);		
+// 	b_inter_fc ~ normal(0, 35);
+// 	b_inter_pc ~ normal(0, 35);		
+// 	b_inter_sc ~ normal(0, 35);
 	
 	a_sp ~ normal(mu_a,sigma_a);
   bb ~ normal(y_hat, sigma_y);

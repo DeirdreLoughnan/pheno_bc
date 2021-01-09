@@ -61,7 +61,7 @@ Finished transferring samples to the flasks. The experiment is now fully set up.
 2 Poptre from Smithers were dead 
 
 Nov 9:
-Checked samples 
+Checked samples in all chambers
 
 Nov 14:
 Changed water for all flasks
@@ -76,8 +76,20 @@ LLL-- ch 12 hobo 7 & 8
 November 26:
 Changed water of all flasks
 
+November 27:
+Started observations: LHL, LHH, LLH
+
+November 28:
+Observations for LHL, LHH, LLH, LLL
+
+November 29:
+Observations for LLL, LHH, LLH, LHL
+
 November 30:
 Observations on LHL, LHH
+
+Dec 1:
+Observations for LHL, LHH, LLH, HHH
 
 Dec 2:
 Changed water of low chill flasks
@@ -85,7 +97,6 @@ Observations on LHL, LHH, LLH, LLL
 
 Dec 3: 
 Changed water of high chill flaks
-
 Observations for LHH, LLH, LLL.
 
 Dec 4:
@@ -93,11 +104,26 @@ Observations for LHH, LHL, LLL, LLH
 
 Dec 5:
 Met with Lizzie and discussed experiment progress 
+Observations LLH, LHL
 
-Observations for LHH
+Dec 6:
+Obs LHH, LLH, LHL, LLL
+
+Dec 7:
+Observations LHH, LLh, LLL, LHL
+
+Dec 8:
+Observations LHH, LHL, LLH, LLL
 
 Dec 9: 
 Changed water in low chill flasks
+LLH, LHL
+
+Dec 10: 
+Observations for LHH LHL LLH LLL
+
+Dec 11: 
+Observations for LHH LHL LLH LLL
 
 Dec 13:
 Changed water in high chill flasks
@@ -109,12 +135,32 @@ LLL-- ch 4
 
 Dec 16:
 Changed water in three of four chambers
+Observations for  LHL  LLL LLH 
+
 
 Dec 17:
 Finished changing water of the 4th chamber (LLL) 
 Checked HOBO batteries
+Observations for LHH LHL LLH
+
+Dec 18:
+Observations for LHH LHL 
+
+Dec 19:
+Observations for LHL, LLH 
+
+Dec 20:
+Observations for LHH 
+
+
+Dec 21:
+Observations LHL, LLH
+
+Dec 22:
+Observations LHH, LLH
 
 Dec 23:
+Observations LHL, LLL
 Moved high chill flasks into forcing chambers for day 0 (day 50 of experiment)
 -with help from Mika and Sadie
 Changed water of low chill flasks
@@ -124,10 +170,26 @@ HLH-- ch 11 hobo 9 & 11
 HHL-- ch 9 hobo 10 & 16
 HLL-- ch 13 hobo 13 & 15 
 
+Dec 24: 
+Observations LHH, LLH
+
+Dec 26: 
+Observations LHL, LLL, LLH, HHH
+
 Dec 27:
+Observations LLL, LHL, HC
+
 Changed water for high chill flasks
 
+Dec 28:
+Observations LLH, LHH, HC
+
+Dec 29:
+LHH LHL LLH LLL
+
 Dec 30:
+Observations:
+LHL, LHH,LHH, LLL, HHH, HLH, HHL, HLL
 Changing water of LC flasks
 Rotated chambers
 
@@ -145,7 +207,15 @@ Dec 31: Realized I should be recording what chambers I do observations in each d
 Observations in LLH, LHH, LHL, LLL, HLH, HHL, 
 Changed water for HC flasks
 
-Jan 3
+Jan 1:
+Observations LHH, LHL, HHL, HLH, HLL
+
+Jan 2:
+Observations LHL, LLL, HHH, HLH, HHL
+
+Jan 3:
+Observations LHL, LLL, LHH, LLH, HHL, HLH, HLL
+
 Hobo #5 was out of chamber at 2pm
 Changed water for HC flasks
 
@@ -171,6 +241,7 @@ Changed HC water changing to Thursdays, so Sadie can help again.
 
 Typos:
 smLHH20rubpar 89-->9
+
 Jan 10:
 Finished last few LC-LF and did all the LC-HF
 
@@ -184,7 +255,7 @@ Jan11:
 Observations on HCHPHF, most of HCLPHF, and most of HCHPLF
 
 Jan 12:
-Finished HCLPHF, HCHPLF, and HCLFLF, started LC-LF
+Finished HCLPHF, HCHPLF, and HCLFLF, started LHL, LLL
 
 Typos:
 Smlhl9popbal 2nd term 22-->11
@@ -192,7 +263,7 @@ Mplll28amelan phase 4 --> NA
 smHHL38alninc phase 2 term--> NA
 
 Jan 13:
-Finished LC-LF. LC-HF, half of LC-HF
+Finished LC-LF. LC-HF, half of HLH
 
 Jan 14:
 Observations, finished LC-HF and started HC-HF
@@ -251,7 +322,7 @@ smHHH31acegla 2nd term bud % 8- -->80
 
  
 Jan 20: 
-HC_HF, started LC
+HC_HF
 
 Chamber 12 malfunction: At 10 am chamber 12 pressure rose and shut down, realized and restarted chamber at 2 (4h), swapped samples that were in there (HC_HP_LF) with LC_HP_LF in case it happens again. Reducing effects on the experiment 
 
@@ -304,6 +375,7 @@ HHH - ch 4 --> 5
 Typos cleaned:
 mpLLL6riblac /// -->50%
 smHLL10menfer /-->0
+
 January 29:
 Observations on HC_HF
 
@@ -343,7 +415,7 @@ Finished HC_LF
 Changed water in LC 
 
 Typos:
-The % bud burst for LLL5Alnvir, lining and spite all should be 100%
+The % bud burst for LLL5Alnvir, loninv and spibet all should be 100%
 mpLLL22vacmem, cells shifted over one to left
 
 February 5:
@@ -501,6 +573,7 @@ March 11:
 Observations on HC/LF
 Typos:
 Last time typo in file: LLH_riblac_30 cells shifted over, changed highest lateral bud values to NA
+
 March 12:
 Changed water for HC flasks & LC obs
 

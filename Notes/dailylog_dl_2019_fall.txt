@@ -63,13 +63,463 @@ Finished transferring samples to the flasks. The experiment is now fully set up.
 Nov 9:
 Checked samples 
 
-November 12: checked samples and added twist ties
+Nov 14:
+Changed water for all flasks
 
-November 13: checked samples and added twist ties
+November 25:
+Day 0 for low chill of three weeks (day 22 of experiment).
+LHH-- ch 4 hobo 1 and 2
+LLH-- ch 5 hobo 3 & 4
+LHL-- ch 6 hobo 5 & 6
+LLL-- ch 12 hobo 7 & 8
 
-November 14: Changed water. Door was opened frequency and closed from 8:30 to 7pm
+November 26:
+Changed water of all flasks
 
-November 15: Finished changing water, with door being opened and closed frequently from 3:30-5pm.
+November 30:
+Observations on LHL, LHH
 
-November 16: checked samples and added twist ties. Noted bud swelling in rubpar, shecan individuals. 
+Dec 2:
+Changed water of low chill flasks
+Observations on LHL, LHH, LLH, LLL
 
+Dec 3: 
+Changed water of high chill flaks
+
+Observations for LHH, LLH, LLL.
+
+Dec 4:
+Observations for LHH, LHL, LLL, LLH
+
+Dec 5:
+Met with Lizzie and discussed experiment progress 
+
+Observations for LHH
+
+Dec 9: 
+Changed water in low chill flasks
+
+Dec 13:
+Changed water in high chill flasks
+Rotated chambers for low chill flasks
+LHH-- ch 12 
+LLH-- ch 6
+LHL-- ch 5 
+LLL-- ch 4
+
+Dec 16:
+Changed water in three of four chambers
+
+Dec 17:
+Finished changing water of the 4th chamber (LLL) 
+Checked HOBO batteries
+
+Dec 23:
+Moved high chill flasks into forcing chambers for day 0 (day 50 of experiment)
+-with help from Mika and Sadie
+Changed water of low chill flasks
+
+HHH-- ch 8 hobo 14 & 12
+HLH-- ch 11 hobo 9 & 11 
+HHL-- ch 9 hobo 10 & 16
+HLL-- ch 13 hobo 13 & 15 
+
+Dec 27:
+Changed water for high chill flasks
+
+Dec 30:
+Changing water of LC flasks
+Rotated chambers
+
+LHH-- ch 8
+LLH-- ch 11
+LHL-- ch 9 
+LLpLf-- ch 13
+
+HHH-- ch 12
+HLH-- ch 6
+HHL-- ch 5 - ck
+HLL-- ch 4 - ck
+
+Dec 31: Realized I should be recording what chambers I do observations in each day. Opps.
+Observations in LLH, LHH, LHL, LLL, HLH, HHL, 
+Changed water for HC flasks
+
+Jan 3
+Hobo #5 was out of chamber at 2pm
+Changed water for HC flasks
+
+Jan 4
+Observations done for LC-HF chambers and started observations for HC chambers
+
+Jan 5
+Completed observations for HC chambers
+
+Jan 6: 
+Observations on LC-HF chambers -culling samples that were dead
+
+Jan 7:
+Observations on LC-LF chambers 
+Changed Lc water changing to Tuesday so Sadie and Adam could help. 
+
+Jan 8: 
+Observations on HC-LF, and most of HC-HF
+
+Jan 9: 
+Finished last few samples in HC-HF and conducted observations in LC-LF
+Changed HC water changing to Thursdays, so Sadie can help again.
+
+Typos:
+smLHH20rubpar 89-->9
+Jan 10:
+Finished last few LC-LF and did all the LC-HF
+
+Typos:
+Smhhl32riblac, 60 --> 0, 60
+mpLLLalnvir shifted over to left one column
+Mplll36symalb --> shifted over one to right
+smHLH1spipyr 4? Changed to NA
+
+Jan11:
+Observations on HCHPHF, most of HCLPHF, and most of HCHPLF
+
+Jan 12:
+Finished HCLPHF, HCHPLF, and HCLFLF, started LC-LF
+
+Typos:
+Smlhl9popbal 2nd term 22-->11
+Mplll28amelan phase 4 --> NA
+smHHL38alninc phase 2 term--> NA
+
+Jan 13:
+Finished LC-LF. LC-HF, half of LC-HF
+
+Jan 14:
+Observations, finished LC-HF and started HC-HF
+Changed water in LC
+Rotated chambers
+LLL - ch 8 - done
+LHL - ch 11 - done
+HLH    - ch 9 -done
+LHH - ch 13 - done
+HHL - ch 12 - done
+LLH - ch 6 - done
+HLL - ch 5 - done 
+HHH - ch 4 - done
+
+Hobos moved around from 2:30-5, disregard data
+
+Typos:
+mpHHL11shecan 7/9 --> NA
+
+Jan 15:
+Finished HC-HF observations
+SNOW DAY!
+
+Typos:
+mpHHH11corsto  phase 25--> NA
+
+Jan 16: 
+Observations on HC-LF
+Changed water for HC flasks
+
+Typos:
+smHLL32popbal phase 40--> NA
+
+
+Jan 17:
+Observations on LC-HF and started LC-LF & HC-HF
+
+Typos:
+Mphhh11corsto-->25 phase changed to NA
+
+
+Jan 18:
+Finished HC-HF and continued with LC_LF
+
+Typos:
+mpHH32vacmem 0/5 lateral-->NA
+
+
+
+Jan 19:
+Observations for HC-LF and finish LC_LF
+smHLH1spipyr 4? Changed to NA
+
+Typos:
+smHHH31acegla 2nd term bud % 8- -->80
+
+ 
+Jan 20: 
+HC_HF, started LC
+
+Chamber 12 malfunction: At 10 am chamber 12 pressure rose and shut down, realized and restarted chamber at 2 (4h), swapped samples that were in there (HC_HP_LF) with LC_HP_LF in case it happens again. Reducing effects on the experiment 
+
+Typos found:
+mpHHL18sorsco secondary terminal bud 30% not 50
+
+Jan 21: 
+Observations conducted on all LC samples. 
+Changed water in LC
+
+
+Jan 22: 
+Observations conducted on HC_LF, only took 4.5 h
+
+Typos:
+mpHHL10popbal main terminal bud 25% not 75%
+smHLH37vacmem stage 5 --> NAs
+mpHLL36rubpar stage 10? -->NA
+
+Jan 23: 
+Observations for HC_HF
+Changed water for HC flasks
+
+Jan 24:
+Observations on LC samples
+
+Jan 25:
+Finished observations on LC_HP_LF and did observations on HC_LF
+
+Jan 26:
+Observations on HC_HF; observations now only taking ~ 4 hours
+
+Jan 27:
+Observations on all the LC chambers - ~5 hours
+
+Jan 28:
+Observations on the HC_LF
+Changed water in LC
+
+Rotated chambers
+LLL - ch 8 --> 9
+LHL - ch 11 --> 13
+HLH    - ch 9 --> 8
+LHH - ch 13 --> 11
+HHL - ch 12 --> 4
+LLH - ch 6 --> 6
+HLL - ch 5 --> 12 
+HHH - ch 4 --> 5
+
+Typos cleaned:
+mpLLL6riblac /// -->50%
+smHLL10menfer /-->0
+January 29:
+Observations on HC_HF
+
+January 30:
+Observations on LC
+Changed water for HC flasks
+
+January 31:
+Observations on HC_LF. It was raining really hard an the ceiling near chamber 12 started to drip. 
+
+Typos:
+smHHH12popbal, 2nd terminal bud 3%-->30%
+
+February 1: 
+Observations on HC_HF and a small amount of LLH
+
+mpHLH40ALnvir 50,90, should be 9,50
+mpHHL13Acegla 11 should be 7
+mpHHH24Poptre 1+G1474 should just be 1
+smLLL39loninv o should be 7
+smLLL32alnvir / should be 1
+smLLL3alninc 59 should be 50
+mpLHL9spibet shift terminal cells over
+
+February 2:
+Observations on all LC
+
+
+February 3:
+Accidentally did observations on HC_HF instead of HC_LF, stayed late to start doing HC_LF, got through about half of each.
+
+Typo:
+
+
+February 4: 
+Finished HC_LF
+Changed water in LC 
+
+Typos:
+The % bud burst for LLL5Alnvir, lining and spite all should be 100%
+mpLLL22vacmem, cells shifted over one to left
+
+February 5:
+Observations on LC
+
+Feb 6: 
+Observations on HC_HF and prep for moving out of chamber, combining flasks with fewer than 3 individuals. 
+Changed water for HC flasks
+
+February 7:
+Observations on HC_LF and a few (~10) LLL. Moving out of chambers 8, 9, 11. Few enough they can all fit into 4 chambers, but did not have time to move out of chamber 13. 
+
+HLH & LLH - ch 6
+HLL& LLL - ch 12 
+HHH & LHH - ch 5
+
+February 8: 
+Observations on LC. Moved out of chamber 13. 
+HHL and LHL ch 4
+
+Noticed that the temp in ch 5 was not reading as 20C, 18.6. Checked HOBO data to see what actual temperature was, still around 20C. 
+
+February 9:
+Observations on HC_HF.
+
+Issue with Ch 5 temp continues, so moved back into ch 13, will email Shannon.
+
+February 10: 
+Observations on HC_LF
+
+February 11:
+Observations on LC
+Changed water in LC
+
+February 12:
+Observations on HC_HF
+
+February 13: 
+Observations on HC_LF ~3 h
+Changed water for HC flasks
+
+February 14:
+Observations on LC
+
+February 15:
+Observations on HC_HF. Did some HLL. 
+
+February 16: 
+Observations on HC_LF. Week 12 for low chill, end of this treatment, from now on LC only checked ever 4 days.
+
+February 17:
+First day off in 12 weeks!!
+
+February 18:
+Moved LC samples to Green house. Did observations on LC and HC_HF. Observations on HC only took 2 hours this time. 
+Changed water in LC
+
+February 19:
+Observations on HC_LF. Put hobos in greenhouse.
+
+February 20:
+No observations!
+Changed water for HC flasks
+
+February 21:
+Observations on HC_HF & LC because might not yet have greenhouse access on Saturday.
+
+Rotated chambers:
+HLH - ch 13
+HLL - ch 4 
+HHH - ch 12
+HHL - ch 6
+
+February 22:
+Observations on HC_LF
+
+Edits:
+Typo: 
+mp_HLL_34_Alnvir, 19 instead of 10 
+mp_HLL_9_spipyr, 19 instead of 15
+mp_HLL_18_alninc, nonsensical value for 2dary terminal %, replaced with NA
+
+2124
+1952
+1895
+1816
+1806
+1724
+1708
+1595
+157
+      
+February 24:
+Observations on HC_HF & some HF/LF.
+
+February 25:
+Observations on remaining HC/LF and LC
+Changed water in LC
+
+HHH_5_acegla, actually only one but at 7 other 2 still at phase 3.
+
+February 26:
+Removing dead individuals
+
+February 27: 
+Observations on HC_HF 
+Changed water for HC flasks
+
+February 28:
+Observations on HC/LF 
+
+February 29: 
+Observations on LC
+
+March 1:
+Observations on HC_HF, very few, most are starting to die. 
+
+March 2:
+Observations on HC/LF & LC
+
+March 3:
+Changed water in LC, no observations
+
+March 4:
+Observations on HC/HF & lc
+
+March 5:
+Observations on HC/LF 
+Changed water for HC flasks
+
+Rotated chambers
+HLH - ch 4
+HLL - ch 6 
+HHH - ch 13
+HHL - ch 12
+
+March 6:
+
+March 7:
+Observations on HC/HF; very little has changed. Many are dead or about to die.  
+Typos:
+HHL_alnvir_37 22 should be phase 11 
+
+March 8:
+Observations on HC/LF & LC.
+
+March 9: 
+Removed dead individuals from HC treatments and consolidated flasks.
+
+March 10:
+Observations on HC/HF 
+Changed water in LC
+
+March 11:
+Observations on HC/LF
+Typos:
+Last time typo in file: LLH_riblac_30 cells shifted over, changed highest lateral bud values to NA
+March 12:
+Changed water for HC flasks & LC obs
+
+March 13:
+Observations on HC/HF 
+
+March 14:
+Observations on HC/LF 
+
+March 16:
+Observations on HC. Swap LC for HC in greenhouse. End of growth chamber portion of experiment. Moved HOBO out of growth chambers at 2:09.
+
+March 17:
+Final observations on LC. 
+
+March 18:
+BC declares a state of emergency over the covid-19 pandemic. UBC closes and suspends all non-essential research. 
+
+March 19:
+The experiment is stopped and the remaining samples in the greenhouse are cleared away. 
+
+THE EXPERIMENT IS OVER

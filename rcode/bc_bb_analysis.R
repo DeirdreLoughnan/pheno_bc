@@ -31,7 +31,7 @@ head(pheno)
 ############################################################
 # Preping the data for the model
 #1. converting species to a factor
-
+colnames(pheno)[colnames(pheno)=="day"] <- "tbb"
 pheno<-pheno %>% separate(treatment, c("chill", "photo","force")); pheno<-as.data.frame(pheno)
 #2. Adding columns of treatments as numeric values
 pheno$chill.n<-pheno$chill
@@ -58,7 +58,7 @@ head(pheno)
 
 #going to split it into analysis of terminal bb and lateral bb
 # Starting with the terminal buds:
-pheno.term<-pheno[,c("tbb","chill.n","force.n","photo.n","site.n","species")]
+pheno.term<-pheno[,c("tbb","chill.n","force.n","photo.n","site.n","species","lab2")]
 pheno.t<-pheno.term[complete.cases(pheno.term),]
 
 pheno.t$species.fact<-as.numeric(as.factor(pheno.t$species))
@@ -108,14 +108,12 @@ load("output/tbb_ncp_termianlbud.Rda")
 #####################################################################
 
 # now running the same model for the lateral buds
-pheno.lat<-pheno[,c("latbb50","species.fact","chill.n","force.n","photo.n","site.n","species")]
+pheno.lat<-pheno[,c("latbb50","chill.n","force.n","photo.n","site.n","species")]
 pheno.l<-pheno.lat[complete.cases(pheno.lat),]
-nrow(pheno.lat)-nrow(pheno.l)  # a lot of species did not reach even 50%! 1004
+nrow(pheno.lat)-nrow(pheno.l)  # a lot of samples did not reach even 50%! 1084
 
-
-temp<-subset(pheno.lat,species=="corsto" & is.na(latbb50));head(temp); unique(temp$species)
-
-# there were 1004 samples that did not have lateral bb
+pheno.l$species.fact<-as.numeric(as.factor(pheno.l$species))
+sort(unique(pheno.l$species.fact))
 
 datalist<-with(pheno.l,
                list( N=nrow(pheno.l),

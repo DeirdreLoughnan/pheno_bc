@@ -111,26 +111,39 @@ count<-table(low$species)
 
 
 
-tbb <-nl<-vector() # This creates empty vectors for the bbday, leaf out, the nl yes no vector of whether this event occured (1 means yes, there was leafout; 0 means no leafout)
-gc$lab2<-as.factor(gc$lab2)
-#levels(d$lab2)
-for(i in levels(gc$lab2)){ # i=levels(d$lab2)[2505] # for each individual clipping. # DL: why did DF have 602, that seems low
-  
-  dx <- gc[gc$lab2 == i,]
-  bdax <- which(apply(dx[,c("bbch.t","bbch.t")], MARGIN=1, max, na.rm=TRUE) >3) # margin =1 means it is applied over rows, takes the maximum value > 3
-  if(length(bdax) < 1) {bdax = NA; nl <- c(nl, 0)} else {bdax = dx[min(bdax),'day']; nl <- c(nl, 1)}
-  
-  tbb<- c(tbb, bdax)
+# tbb <-nl<-vector() # This creates empty vectors for the bbday, leaf out, the nl yes no vector of whether this event occured (1 means yes, there was leafout; 0 means no leafout)
+# gc$lab2<-as.factor(gc$lab2)
+# #levels(d$lab2)
+# for(i in levels(gc$lab2)){ # i=levels(d$lab2)[2505] # for each individual clipping. # DL: why did DF have 602, that seems low
+#   
+#   dx <- gc[gc$lab2 == i,]
+#   bdax <- which(apply(dx[,c("bbch.t","bbch.t")], MARGIN=1, max, na.rm=TRUE) >3) # margin =1 means it is applied over rows, takes the maximum value > 3
+#   if(length(bdax) < 1) {bdax = NA; nl <- c(nl, 0)} else {bdax = dx[min(bdax),'day']; nl <- c(nl, 1)}
+#   
+#   tbb<- c(tbb, bdax)
+# 
+# }
+# dx <- gc[match(levels(gc$lab2), gc$lab2),] # with twig id in same order as the loop above
+# #dx <- dx[,2:ncol(dx)] 
+# dx <- dx[,c("lab2", "population", "treatment", "flask", "species"#, "indiv"
+#             )]
+# terminalbb <- data.frame(dx, tbb,nl)
 
-}
+test<- subset(gc, bbch.t >= 7)
+test2<- aggregate(test$day, by=list(Category=test$lab2), FUN=min)
+names(test2) <- c("lab2", "tbb")
+test2$lab<-test2$lab2
+
+terminalbb <- aggregate(test["day"],
+              test[c("lab2", "population", "treatment", "flask", "species")], 
+              FUN=min)
+
 dx <- gc[match(levels(gc$lab2), gc$lab2),] # with twig id in same order as the loop above
-#dx <- dx[,2:ncol(dx)] 
-dx <- dx[,c("lab2", "population", "treatment", "flask", "species"#, "indiv"
-            )]
-terminalbb <- data.frame(dx, tbb,nl)
+dx <- dx[,c("lab2", "population", "treatment", "flask", "species")]
+head(test2)
+terminalbb <- merge(test2, dx, by = "lab2", all =T)
 
-
-head(terminalbb) # here is the data for the terminal bud, there are 2406 individuals, with a value for each
+# head(terminalbb) # here is the data for the terminal bud, there are 2406 individuals, with a value for each
 
 #
 nobb<-subset(terminalbb, nl==0) # 209 samples didnt bb

@@ -19,6 +19,7 @@ options(stringsAsFactors = FALSE)
 
 # read in the cleaning phenology data:
 data<-read.csv("input/bc_phenology.csv", header=T, na.strings=c("","NA"))
+
 #source("rcode/cleaning/cleaningcode.R")
 
 # what does the data look like generally?
@@ -98,9 +99,6 @@ max<-gc %>%
 low<-subset(max, bbch.t<7)
 # there are 405 out of 2406 samples for which the terminal bud did not burst or approximately 17%
 
-sort(unique(low$species))
-# 1+ indiviudal for every species that had a terminal bud
-
 count<-table(low$species)
 
 # For species in both pops there were 128 samples max, so rub par 40% of the time the terminal bud did not bb, for ace gla and sorsco it was 25%
@@ -116,10 +114,10 @@ count<-table(low$species)
 tbb <-nl<-vector() # This creates empty vectors for the bbday, leaf out, the nl yes no vector of whether this event occured (1 means yes, there was leafout; 0 means no leafout)
 gc$lab2<-as.factor(gc$lab2)
 #levels(d$lab2)
-for(i in levels(gc$lab2)){ # i=levels(d$lab2)[2496] # for each individual clipping. # DL: why did DF have 602, that seems low
+for(i in levels(gc$lab2)){ # i=levels(d$lab2)[2505] # for each individual clipping. # DL: why did DF have 602, that seems low
   
   dx <- gc[gc$lab2 == i,]
-  bdax <- which(apply(dx[,c("bbch.t","bbch.l")], MARGIN=1, max, na.rm=T) >3) # margin =1 means it is applied over rows, takes the maximum value > 3
+  bdax <- which(apply(dx[,c("bbch.t","bbch.t")], MARGIN=1, max, na.rm=TRUE) >3) # margin =1 means it is applied over rows, takes the maximum value > 3
   if(length(bdax) < 1) {bdax = NA; nl <- c(nl, 0)} else {bdax = dx[min(bdax),'day']; nl <- c(nl, 1)}
   
   tbb<- c(tbb, bdax)
@@ -127,7 +125,7 @@ for(i in levels(gc$lab2)){ # i=levels(d$lab2)[2496] # for each individual clippi
 }
 dx <- gc[match(levels(gc$lab2), gc$lab2),] # with twig id in same order as the loop above
 #dx <- dx[,2:ncol(dx)] 
-dx <- dx[,c("lab2", "population", "chill", "photo", "force", "flask", "species"#, "indiv"
+dx <- dx[,c("lab2", "population", "treatment", "flask", "species"#, "indiv"
             )]
 terminalbb <- data.frame(dx, tbb,nl)
 
@@ -202,16 +200,16 @@ nrow(latdaymin1)
 
 ######################################################
 # Combine the terminal and the lateral bb days
-
+head(terminalbb)
 pheno<-merge(terminalbb, latdaymin80, by= "lab2", all.x=TRUE) # the all.x=T is telling it that I want all rows from this dataset, even if there isn't a corresponding row in latdaymin
 pheno<-merge(pheno, latdaymin50, by= "lab2", all.x=TRUE) 
 pheno<-merge(pheno, latdaymin1, by= "lab2", all.x=TRUE) 
 
 head(pheno)
 
-pheno$treatment<-paste(pheno$chill, pheno$photo, pheno$force, sep = ".")
+#pheno$treatment<-paste(pheno$chill, pheno$photo, pheno$force, sep = ".")
 head(pheno)
-#write.csv(pheno, "input/day.of.bb.Jan4.2021.csv")
+write.csv(pheno, "input/day.of.bb.csv", row.names = FALSE)
 ######################################################
 # To make it more comparable to the Flynn dataset, I am adding a treatment column, and then try to calculate chill portions...for the terminal bud? 
 

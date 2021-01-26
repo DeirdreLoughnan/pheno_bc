@@ -302,3 +302,132 @@ for (i in 1:length(unique(hlh$species))){
     ylim(0,20)
   ggsave(spplot, file=paste("rcode/cleaning/plots_rawdat/lateral/HLH",i,".pdf"))
 }
+
+## To check the lateral buds, I think it would be simplest to plot the sumPercent, ie the total % of lateral bb that is greater than 7, it should show a coninual increase
+
+source('rcode/cleaning/pheno_bb_calc.R')
+
+head(dlong7sum)
+dlong7sum$sumPercent<-as.numeric(dlong7sum$sumPercent)
+dlong7sum$lab2<-as.character(dlong7sum$lab2)
+
+hhh<-subset(dlong7sum, treatment =="HC.HP.HF")
+for (i in 1:length(unique(hhh$species))){
+  sp<-sort(unique(hhh$species))
+  sub<-subset(hhh, species== sp[i])
+  
+  spplot<-
+    ggplot(sub)+
+    aes(x=day, y=sumPercent, colour = lab2, linetype = population)+
+    geom_line() +
+    labs(x="day",y="bbch") +
+    xlim(-0.5,113)+
+    ylim(0,100)
+  ggsave(spplot, file=paste("rcode/cleaning/plots_rawdat/lateral/hhhlat",i,".pdf"))
+}
+
+hlh<-subset(dlong7sum, treatment =="HC.LP.HF")
+for (i in 1:length(unique(hlh$species))){
+    sp<-sort(unique(hlh$species))
+    sub<-subset(hlh, species== sp[i])
+
+    spplot<-
+      ggplot(sub)+
+      aes(x=day, y=sumPercent, colour = lab2, linetype = population)+
+      geom_line() +
+      labs(x="day",y="bbch") +
+      xlim(-0.5,113)+
+      ylim(0,100)
+    ggsave(spplot, file=paste("rcode/cleaning/plots_rawdat/lateral/hlhlat",i,".pdf"))
+}
+
+hll<-subset(dlong7sum, treatment =="HC.LP.LF")
+for (i in 1:length(unique(hll$species))){
+  sp<-sort(unique(hll$species))
+  sub<-subset(hll, species== sp[i])
+  
+  spplot<-
+    ggplot(sub)+
+    aes(x=day, y=sumPercent, colour = lab2, linetype = population)+
+    geom_line() +
+    labs(x="day",y="bbch") +
+    xlim(-0.5,113)+
+    ylim(0,100)
+  ggsave(spplot, file=paste("rcode/cleaning/plots_rawdat/lateral/hlllat",i,".pdf"))
+}
+
+hhl<-subset(dlong7sum, treatment =="HC.HP.LF")
+for (i in 1:length(unique(hhl$species))){
+  sp<-sort(unique(hhl$species))
+  sub<-subset(hhl, species== sp[i])
+  
+  spplot<-
+    ggplot(sub)+
+    aes(x=day, y=sumPercent, colour = lab2, linetype = population)+
+    geom_line() +
+    labs(x="day",y="bbch") +
+    xlim(-0.5,113)+
+    ylim(0,100)
+  ggsave(spplot, file=paste("rcode/cleaning/plots_rawdat/lateral/hhllat",i,".pdf"))
+}
+
+######################################################################################
+lhh<-subset(dlong7sum, treatment =="LC.HP.HF")
+for (i in 1:length(unique(lhh$species))){
+  sp<-sort(unique(lhh$species))
+  sub<-subset(lhh, species== sp[i])
+  
+  spplot<-
+    ggplot(sub)+
+    aes(x=day, y=sumPercent, colour = lab2, linetype = population)+
+    geom_line() +
+    labs(x="day",y="bbch") +
+    xlim(-0.5,113)+
+    ylim(0,100)
+  ggsave(spplot, file=paste("rcode/cleaning/plots_rawdat/lateral/lhhlat",i,".pdf"))
+}
+
+llh<-subset(dlong7sum, treatment =="LC.LP.HF")
+for (i in 1:length(unique(llh$species))){
+  sp<-sort(unique(llh$species))
+  sub<-subset(llh, species== sp[i])
+  
+  spplot<-
+    ggplot(sub)+
+    aes(x=day, y=sumPercent, colour = lab2, linetype = population)+
+    geom_line() +
+    labs(x="day",y="bbch") +
+    xlim(-0.5,113)+
+    ylim(0,100)
+  ggsave(spplot, file=paste("rcode/cleaning/plots_rawdat/lateral/llhlat",i,".pdf"))
+}
+
+lll<-subset(dlong7sum, treatment =="LC.LP.LF")
+for (i in 1:length(unique(lll$species))){
+  sp<-sort(unique(lll$species))
+  sub<-subset(lll, species== sp[i])
+  
+  spplot<-
+    ggplot(sub)+
+    aes(x=day, y=sumPercent, colour = lab2, linetype = population)+
+    geom_line() +
+    labs(x="day",y="bbch") +
+    xlim(-0.5,113)+
+    ylim(0,100)
+  ggsave(spplot, file=paste("rcode/cleaning/plots_rawdat/lateral/llllat",i,".pdf"))
+}
+
+lhl<-subset(dlong7sum, treatment =="LC.HP.LF")
+for (i in 1:length(unique(lhl$species))){
+  sp<-sort(unique(lhl$species))
+  sub<-subset(lhl, species== sp[i])
+  
+  spplot<-
+    ggplot(sub)+
+    aes(x=day, y=sumPercent, colour = lab2, linetype = population)+
+    geom_line() +
+    labs(x="day",y="bbch") +
+    xlim(-0.5,113)+
+    ylim(0,100)
+  ggsave(spplot, file=paste("rcode/cleaning/plots_rawdat/lateral/lhllat",i,".pdf"))
+}

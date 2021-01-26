@@ -31,8 +31,8 @@ head(pheno)
 ############################################################
 # Preping the data for the model
 #1. converting species to a factor
-pheno$species.fact<-as.numeric(as.factor(pheno$species))
 
+pheno<-pheno %>% separate(treatment, c("chill", "photo","force")); pheno<-as.data.frame(pheno)
 #2. Adding columns of treatments as numeric values
 pheno$chill.n<-pheno$chill
 pheno$chill.n[pheno$chill.n=="HC"] <- "1"
@@ -58,9 +58,12 @@ head(pheno)
 
 #going to split it into analysis of terminal bb and lateral bb
 # Starting with the terminal buds:
-pheno.term<-pheno[,c("tbb","species.fact","chill.n","force.n","photo.n","site.n","species")]
+pheno.term<-pheno[,c("tbb","chill.n","force.n","photo.n","site.n","species")]
 pheno.t<-pheno.term[complete.cases(pheno.term),]
 
+pheno.t$species.fact<-as.numeric(as.factor(pheno.t$species))
+head(pheno)
+sort(unique(pheno.t$species.fact))
 
 nrow(pheno.term)-nrow(pheno.t)
 temp<-subset(pheno.term, is.na(tbb));head(temp); unique(temp$species)
@@ -77,7 +80,7 @@ datalist<-with(pheno.t,
                           force = force.n,
                           site=site.n
                     ))
-
+datalist$sp
 # mdl<-stan("stan/bc.bb.inter.stan",
 #             data= datalist
 #             ,iter=2000, chains=4)
@@ -85,7 +88,7 @@ datalist<-with(pheno.t,
 
 mdl.t<-stan("stan/bc.bb.ncpphoto.ncpinter.stan",
           data= datalist
-          ,iter=2000, chains=4)
+          ,iter=2000, chains=4, control = list(adapt_delta = 0.99))
 
 sumt <- summary(mdl.t)$summary
 sumt[grep("mu_",rownames(sumt)),]
@@ -133,7 +136,7 @@ datalist<-with(pheno.l,
 
 mdl.l<-stan("stan/bc.bb.ncpphoto.ncpinter.stan",
           data= datalist
-          ,iter=2000, chains=4)
+          ,iter=4000, chains=4)
 
 suml <- summary(mdl.l)$summary
 suml[grep("mu_",rownames(suml)),]
@@ -246,7 +249,7 @@ df.mean.l <- data.frame(lat.force=suml[grep("b_force", rownames(sumt)),1],
 
 df.mean.t[which(df.mean.t$bb.force > df.mean.t$bb.photo),] # species 11- rho alb
 df.mean.l[which(df.mean.l$lat.force > df.mean.l$lat.photo),] #none
-df.mean.t[which(df.mean.t$bb.chill > df.mean.t$bb.force),] # 12
+df.mean.t[which(df.mean.t$bb.chill > df.mean.t$bb.force),] # 14
 # 3, 5,6,8,9,10,12,13,15,17,18,20
 df.mean.l[which(df.mean.l$lat.chill > df.mean.l$lat.force),] # 16
 #1,2,5,6,7,8,10,11,12,13,15,16,17,18,19,20

@@ -15,6 +15,7 @@ require(readr)
 
 files <- list.files(path="~/Documents/github/pheno_bc/pheno_data/typos_cleaned", pattern="*.csv", full.names=TRUE)
 files
+
 #data<-ldply(files, read_csv, na = c("","NA"))
 data<-ldply(files, read_csv, na = "")
 
@@ -559,15 +560,16 @@ d$lab2<-paste(d$lab, d$ref, sep=".")
 d<-as.data.frame(d)
 head(d)
 
+d$treatment<-paste(d$chill, d$photo, d$force, sep = ".")
 #There are an additional four samples that had three per flask:
 
 d$dup2<-duplicated(d[,c("day","lab2")])
 
 d$lab2[which(d$lab == "mp.LC.LP.LF.4.menfer" & d$dup2 == "TRUE")] <- "mp.LC.LP.LF.4.menfer.3"
-d$lab2[which(d$lab == "sm.LC.LP.LF.30.shecan" & d$dup2 == "TRUE")] <- "sm.LC.LP.LF.30.shecan.3"
+#d$lab2[which(d$lab == "sm.LC.LP.LF.30.shecan" & d$dup2 == "TRUE")] <- "sm.LC.LP.LF.30.shecan.3"
 d$lab2[which(d$lab == "sm.HC.LP.HF.37.vacmem" & d$dup2 == "TRUE")] <- "sm.HC.LP.HF.37.vacmem.3"
-d$lab2[which(d$lab == "sm.LC.LP.HF.9.sorsco" & d$dup2 == "TRUE")] <- "sm.LC.LP.HF.9.sorsco.3"
 
+temp1<-subset(d, lab2== "mp.LC.LP.LF.4.menfer.3")
 length(unique(d$lab2))
 
 # d<-d %>% 
@@ -606,13 +608,398 @@ tail(sort(unique(d$lab2)))
 
 d<-as.data.frame(d);head(d)
 
-# There are a few species that have some extras
-goop<-subset(d, day == 50 & species == "riblac")
-sort(unique(goop$lab2))
-
-
-
-#write.csv(df1,"input/bc_phenology.csv", row.names=FALSE)
-
 head(df1)
-smsamrac<-subset(df1, population == "sm" & species == "samrac")
+
+#where is the extra corsto?
+d$bbch.t<-as.numeric(d$bbch.t); head(d)
+
+c0<-subset(d, species == "acegla" & treatment == "LC.HP.HF");table(c0$lab2)
+c0<-subset(d, species == "acegla" & treatment == "LC.HP.LF");table(c0$lab2)
+c0<-subset(d, species == "acegla" & treatment == "LC.LP.HF");table(c0$lab2)
+c0<-subset(d, species == "acegla" & treatment == "LC.LP.LF");table(c0$lab2)
+c0<-subset(d, species == "acegla" & treatment == "HC.HP.HF");table(c0$lab2)
+c0<-subset(d, species == "acegla" & treatment == "HC.HP.LF");table(c0$lab2)
+c0<-subset(d, species == "acegla" & treatment == "HC.LP.HF");table(c0$lab2)
+c0<-subset(d, species == "acegla" & treatment == "HC.LP.LF");table(c0$lab2)
+
+c0<-subset(d, species == "alninc" & treatment == "LC.HP.HF");table(c0$lab2)
+c0<-subset(d, species == "alninc" & treatment == "LC.HP.LF");table(c0$lab2)
+c0<-subset(d, species == "alninc" & treatment == "LC.LP.HF");table(c0$lab2)
+c0<-subset(d, species == "alninc" & treatment == "LC.LP.LF");table(c0$lab2)
+c0<-subset(d, species == "alninc" & treatment == "HC.HP.HF");table(c0$lab2)
+c0<-subset(d, species == "alninc" & treatment == "HC.HP.LF");table(c0$lab2)
+c0<-subset(d, species == "alninc" & treatment == "HC.LP.HF");table(c0$lab2)
+c0<-subset(d, species == "alninc" & treatment == "HC.LP.LF");table(c0$lab2)
+
+c0<-subset(d, species == "alnvir" & treatment == "LC.HP.HF");table(c0$lab2)
+c0<-subset(d, species == "alnvir" & treatment == "LC.HP.LF");table(c0$lab2)
+c0<-subset(d, species == "alnvir" & treatment == "LC.LP.HF");table(c0$lab2)
+c0<-subset(d, species == "alnvir" & treatment == "LC.LP.LF");table(c0$lab2)
+c0<-subset(d, species == "alnvir" & treatment == "HC.HP.HF");table(c0$lab2)
+c0<-subset(d, species == "alnvir" & treatment == "HC.HP.LF");table(c0$lab2)
+c0<-subset(d, species == "alnvir" & treatment == "HC.LP.HF");table(c0$lab2)
+c0<-subset(d, species == "alnvir" & treatment == "HC.LP.LF");table(c0$lab2)
+
+c0<-subset(d, species == "amealn" & treatment == "LC.HP.HF");table(c0$lab2)
+c0<-subset(d, species == "amealn" & treatment == "LC.HP.LF");table(c0$lab2)
+c0<-subset(d, species == "amealn" & treatment == "LC.LP.HF");table(c0$lab2)
+c0<-subset(d, species == "amealn" & treatment == "LC.LP.LF");table(c0$lab2)
+c0<-subset(d, species == "amealn" & treatment == "HC.HP.HF");table(c0$lab2)
+c0<-subset(d, species == "amealn" & treatment == "HC.HP.LF");table(c0$lab2)
+c0<-subset(d, species == "amealn" & treatment == "HC.LP.HF");table(c0$lab2)
+c0<-subset(d, species == "amealn" & treatment == "HC.LP.LF");table(c0$lab2)
+
+c0<-subset(d, species == "betpap" & treatment == "LC.HP.HF");table(c0$lab2)
+c0<-subset(d, species == "betpap" & treatment == "LC.HP.LF");table(c0$lab2)
+c0<-subset(d, species == "betpap" & treatment == "LC.LP.HF");table(c0$lab2)
+c0<-subset(d, species == "betpap" & treatment == "LC.LP.LF");table(c0$lab2)
+c0<-subset(d, species == "betpap" & treatment == "HC.HP.HF");table(c0$lab2)
+c0<-subset(d, species == "betpap" & treatment == "HC.HP.LF");table(c0$lab2)
+c0<-subset(d, species == "betpap" & treatment == "HC.LP.HF");table(c0$lab2)
+c0<-subset(d, species == "betpap" & treatment == "HC.LP.LF");table(c0$lab2)
+
+c0<-subset(d, species == "corsto" & treatment == "LC.HP.HF");table(c0$lab2)
+c0<-subset(d, species == "corsto" & treatment == "LC.HP.LF");table(c0$lab2)
+c0<-subset(d, species == "corsto" & treatment == "LC.LP.HF");table(c0$lab2)
+c0<-subset(d, species == "corsto" & treatment == "LC.LP.LF");table(c0$lab2)
+c0<-subset(d, species == "corsto" & treatment == "HC.HP.HF");table(c0$lab2)
+c0<-subset(d, species == "corsto" & treatment == "HC.HP.LF");table(c0$lab2)
+c0<-subset(d, species == "corsto" & treatment == "HC.LP.HF");table(c0$lab2)
+c0<-subset(d, species == "corsto" & treatment == "HC.LP.LF");table(c0$lab2)
+
+c0<-subset(d, species == "loninv" & treatment == "LC.HP.HF");table(c0$lab2)
+c0<-subset(d, species == "loninv" & treatment == "LC.HP.LF");table(c0$lab2)
+c0<-subset(d, species == "loninv" & treatment == "LC.LP.HF");table(c0$lab2)
+c0<-subset(d, species == "loninv" & treatment == "LC.LP.LF");table(c0$lab2)
+c0<-subset(d, species == "loninv" & treatment == "HC.HP.HF");table(c0$lab2)
+c0<-subset(d, species == "loninv" & treatment == "HC.HP.LF");table(c0$lab2)
+c0<-subset(d, species == "loninv" & treatment == "HC.LP.HF");table(c0$lab2)
+c0<-subset(d, species == "loninv" & treatment == "HC.LP.LF");table(c0$lab2)
+
+c0<-subset(d, species == "menfer" & treatment == "LC.HP.HF");table(c0$lab2)
+c0<-subset(d, species == "menfer" & treatment == "LC.HP.LF");table(c0$lab2)
+c0<-subset(d, species == "menfer" & treatment == "LC.LP.HF");table(c0$lab2)
+c0<-subset(d, species == "menfer" & treatment == "LC.LP.LF");table(c0$lab2)
+c0<-subset(d, species == "menfer" & treatment == "HC.HP.HF");table(c0$lab2)
+c0<-subset(d, species == "menfer" & treatment == "HC.HP.LF");table(c0$lab2)
+c0<-subset(d, species == "menfer" & treatment == "HC.LP.HF");table(c0$lab2)
+c0<-subset(d, species == "menfer" & treatment == "HC.LP.LF");table(c0$lab2)
+
+c0<-subset(d, species == "popbal" & treatment == "LC.HP.HF");table(c0$lab2)
+c0<-subset(d, species == "popbal" & treatment == "LC.HP.LF");table(c0$lab2)
+c0<-subset(d, species == "popbal" & treatment == "LC.LP.HF");table(c0$lab2)
+c0<-subset(d, species == "popbal" & treatment == "LC.LP.LF");table(c0$lab2)
+c0<-subset(d, species == "popbal" & treatment == "HC.HP.HF");table(c0$lab2)
+c0<-subset(d, species == "popbal" & treatment == "HC.HP.LF");table(c0$lab2)
+c0<-subset(d, species == "popbal" & treatment == "HC.LP.HF");table(c0$lab2)
+c0<-subset(d, species == "popbal" & treatment == "HC.LP.LF");table(c0$lab2)
+
+c0<-subset(d, species == "poptre" & treatment == "LC.HP.HF");table(c0$lab2)
+c0<-subset(d, species == "poptre" & treatment == "LC.HP.LF");table(c0$lab2)
+c0<-subset(d, species == "poptre" & treatment == "LC.LP.HF");table(c0$lab2)
+c0<-subset(d, species == "poptre" & treatment == "LC.LP.LF");table(c0$lab2)
+c0<-subset(d, species == "poptre" & treatment == "HC.HP.HF");table(c0$lab2)
+c0<-subset(d, species == "poptre" & treatment == "HC.HP.LF");table(c0$lab2)
+c0<-subset(d, species == "poptre" & treatment == "HC.LP.HF");table(c0$lab2)
+c0<-subset(d, species == "poptre" & treatment == "HC.LP.LF");table(c0$lab2)
+
+c0<-subset(d, species == "rhoalb" & treatment == "LC.HP.HF");table(c0$lab2)
+c0<-subset(d, species == "rhoalb" & treatment == "LC.HP.LF");table(c0$lab2)
+c0<-subset(d, species == "rhoalb" & treatment == "LC.LP.HF");table(c0$lab2)
+c0<-subset(d, species == "rhoalb" & treatment == "LC.LP.LF");table(c0$lab2)
+c0<-subset(d, species == "rhoalb" & treatment == "HC.HP.HF");table(c0$lab2)
+c0<-subset(d, species == "rhoalb" & treatment == "HC.HP.LF");table(c0$lab2)
+c0<-subset(d, species == "rhoalb" & treatment == "HC.LP.HF");table(c0$lab2)
+c0<-subset(d, species == "rhoalb" & treatment == "HC.LP.LF");table(c0$lab2)
+
+c0<-subset(d, species == "riblac" & treatment == "LC.HP.HF");table(c0$lab2)
+c0<-subset(d, species == "riblac" & treatment == "LC.HP.LF");table(c0$lab2)
+c0<-subset(d, species == "riblac" & treatment == "LC.LP.HF");table(c0$lab2)
+c0<-subset(d, species == "riblac" & treatment == "LC.LP.LF");table(c0$lab2)
+c0<-subset(d, species == "riblac" & treatment == "HC.HP.HF");table(c0$lab2)
+c0<-subset(d, species == "riblac" & treatment == "HC.HP.LF");table(c0$lab2)
+c0<-subset(d, species == "riblac" & treatment == "HC.LP.HF");table(c0$lab2)
+c0<-subset(d, species == "riblac" & treatment == "HC.LP.LF");table(c0$lab2)
+
+c0<-subset(d, species == "rubpar" & treatment == "LC.HP.HF");table(c0$lab2)
+c0<-subset(d, species == "rubpar" & treatment == "LC.HP.LF");table(c0$lab2)
+c0<-subset(d, species == "rubpar" & treatment == "LC.LP.HF");table(c0$lab2)
+c0<-subset(d, species == "rubpar" & treatment == "LC.LP.LF");table(c0$lab2)
+c0<-subset(d, species == "rubpar" & treatment == "HC.HP.HF");table(c0$lab2)
+c0<-subset(d, species == "rubpar" & treatment == "HC.HP.LF");table(c0$lab2)
+c0<-subset(d, species == "rubpar" & treatment == "HC.LP.HF");table(c0$lab2)
+c0<-subset(d, species == "rubpar" & treatment == "HC.LP.LF");table(c0$lab2)
+
+c0<-subset(d, species == "samrac" & treatment == "LC.HP.HF");table(c0$lab2)
+c0<-subset(d, species == "samrac" & treatment == "LC.HP.LF");table(c0$lab2)
+c0<-subset(d, species == "samrac" & treatment == "LC.LP.HF");table(c0$lab2)
+c0<-subset(d, species == "samrac" & treatment == "LC.LP.LF");table(c0$lab2)
+c0<-subset(d, species == "samrac" & treatment == "HC.HP.HF");table(c0$lab2)
+c0<-subset(d, species == "samrac" & treatment == "HC.HP.LF");table(c0$lab2)
+c0<-subset(d, species == "samrac" & treatment == "HC.LP.HF");table(c0$lab2)
+c0<-subset(d, species == "samrac" & treatment == "HC.LP.LF");table(c0$lab2)
+
+c0<-subset(d, species == "shecan" & treatment == "LC.HP.HF");table(c0$lab2)
+c0<-subset(d, species == "shecan" & treatment == "LC.HP.LF");table(c0$lab2)
+c0<-subset(d, species == "shecan" & treatment == "LC.LP.HF");table(c0$lab2)
+c0<-subset(d, species == "shecan" & treatment == "LC.LP.LF");table(c0$lab2)
+c0<-subset(d, species == "shecan" & treatment == "HC.HP.HF");table(c0$lab2)
+c0<-subset(d, species == "shecan" & treatment == "HC.HP.LF");table(c0$lab2)
+c0<-subset(d, species == "shecan" & treatment == "HC.LP.HF");table(c0$lab2)
+c0<-subset(d, species == "shecan" & treatment == "HC.LP.LF");table(c0$lab2)
+
+c0<-subset(d, species == "spibet" & treatment == "LC.HP.HF");table(c0$lab2)
+c0<-subset(d, species == "spibet" & treatment == "LC.HP.LF");table(c0$lab2)
+c0<-subset(d, species == "spibet" & treatment == "LC.LP.HF");table(c0$lab2)
+c0<-subset(d, species == "spibet" & treatment == "LC.LP.LF");table(c0$lab2)
+c0<-subset(d, species == "spibet" & treatment == "HC.HP.HF");table(c0$lab2)
+c0<-subset(d, species == "spibet" & treatment == "HC.HP.LF");table(c0$lab2)
+c0<-subset(d, species == "spibet" & treatment == "HC.LP.HF");table(c0$lab2)
+c0<-subset(d, species == "spibet" & treatment == "HC.LP.LF");table(c0$lab2)
+
+c0<-subset(d, species == "spipyr" & treatment == "LC.HP.HF");table(c0$lab2)
+c0<-subset(d, species == "spipyr" & treatment == "LC.HP.LF");table(c0$lab2)
+c0<-subset(d, species == "spipyr" & treatment == "LC.LP.HF");table(c0$lab2)
+c0<-subset(d, species == "spipyr" & treatment == "LC.LP.LF");table(c0$lab2)
+c0<-subset(d, species == "spipyr" & treatment == "HC.HP.HF");table(c0$lab2)
+c0<-subset(d, species == "spipyr" & treatment == "HC.HP.LF");table(c0$lab2)
+c0<-subset(d, species == "spipyr" & treatment == "HC.LP.HF");table(c0$lab2)
+c0<-subset(d, species == "spipyr" & treatment == "HC.LP.LF");table(c0$lab2)
+
+c0<-subset(d, species == "symalb" & treatment == "LC.HP.HF");table(c0$lab2)
+c0<-subset(d, species == "symalb" & treatment == "LC.HP.LF");table(c0$lab2)
+c0<-subset(d, species == "symalb" & treatment == "LC.LP.HF");table(c0$lab2)
+c0<-subset(d, species == "symalb" & treatment == "LC.LP.LF");table(c0$lab2)
+c0<-subset(d, species == "symalb" & treatment == "HC.HP.HF");table(c0$lab2)
+c0<-subset(d, species == "symalb" & treatment == "HC.HP.LF");table(c0$lab2)
+c0<-subset(d, species == "symalb" & treatment == "HC.LP.HF");table(c0$lab2)
+c0<-subset(d, species == "symalb" & treatment == "HC.LP.LF");table(c0$lab2)
+
+c0<-subset(d, species == "vacmem" & treatment == "LC.HP.HF");table(c0$lab2)
+c0<-subset(d, species == "vacmem" & treatment == "LC.HP.LF");table(c0$lab2)
+c0<-subset(d, species == "vacmem" & treatment == "LC.LP.HF");table(c0$lab2)
+c0<-subset(d, species == "vacmem" & treatment == "LC.LP.LF");table(c0$lab2)
+c0<-subset(d, species == "vacmem" & treatment == "HC.HP.HF");table(c0$lab2)
+c0<-subset(d, species == "vacmem" & treatment == "HC.HP.LF");table(c0$lab2)
+c0<-subset(d, species == "vacmem" & treatment == "HC.LP.HF");table(c0$lab2)
+c0<-subset(d, species == "vacmem" & treatment == "HC.LP.LF");table(c0$lab2)
+
+c0<-subset(d, species == "vibedu" & treatment == "LC.HP.HF");table(c0$lab2)
+c0<-subset(d, species == "vibedu" & treatment == "LC.HP.LF");table(c0$lab2)
+c0<-subset(d, species == "vibedu" & treatment == "LC.LP.HF");table(c0$lab2)
+c0<-subset(d, species == "vibedu" & treatment == "LC.LP.LF");table(c0$lab2)
+c0<-subset(d, species == "vibedu" & treatment == "HC.HP.HF");table(c0$lab2)
+c0<-subset(d, species == "vibedu" & treatment == "HC.HP.LF");table(c0$lab2)
+c0<-subset(d, species == "vibedu" & treatment == "HC.LP.HF");table(c0$lab2)
+c0<-subset(d, species == "vibedu" & treatment == "HC.LP.LF");table(c0$lab2)
+
+
+dups<-c("mp.LC.HP.HF.15.acegla.1","sm.LC.HP.LF.1.corsto.2","sm.LC.HP.LF.39.corsto.2","sm.LC.HP.LF.13.corsto.1","sm.LC.HP.LF.28.corsto.2","mp.LC.HP.HF.15.acegla.1","sm.LC.HP.LF.1.acegla.2","mp.LC.LP.HF.21.acegla.2","sm.LC.LP.HF.11.acegla.2","sm.LC.LP.HF.31.acegla.2","mp.LC.LP.LF.1.acegla.2","sm.LC.HP.HF.31.alninc.2","sm.LC.HP.LF.28.alninc.2","sm.LC.LP.HF.9.alninc.2","sm.LC.LP.HF.22.alninc.2","sm.LC.LP.LF.1.alninc.2","mp.LC.LP.HF.12.alnvir.2","sm.LC.HP.LF.17.loninv.2","sm.LC.LP.HF.28.loninv.2","mp.LC.LP.HF.2.menfer.2","mp.LC.LP.HF.40.menfer.2","sm.LC.LP.HF.27.menfer.2","sm.LC.LP.HF.32.menfer.2","mp.LC.HP.HF.20.poptre.1","sm.LC.HP.HF.20.poptre.1","sm.LC.LP.HF.27.poptre.2", "sm.LC.LP.HF.13.poptre.2","sm.LC.LP.LF.1.poptre.2","sm.LC.HP.LF.17.riblac.2","sm.LC.LP.HF.22.riblac.2","sm.LC.HP.HF.30.rubpar.2","mp.LC.LP.HF.12.shecan.2","sm.LC.LP.LF.10.shecan.1","sm.LC.HP.LF.1.spibet.2","sm.LC.HP.LF.28.spibet.2","sm.LC.LP.HF.9.spibet.2","sm.LC.LP.HF.22.spibet.2","sm.LC.LP.LF.38.spibet.2", "sm.LC.HP.LF.39.spipyr.2","mp.LC.LP.HF.12.spipyr.2","mp.LC.LP.HF.21.spipyr.1","sm.LC.LP.HF.28.spipyr.2","mp.LC.HP.HF.20.symalb.1","sm.LC.HP.LF.39.symalb.2","mp.LC.HP.HF.20.vacmem.1","sm.LC.HP.HF.30.vacmem.2","sm.LC.HP.LF.21.vacmem.1","sm.LC.LP.LF.1.vacmem.2","sm.LC.HP.LF.17.vibedu.2","sm.LC.HP.LF.16.vibedu.2","sm.LC.HP.LF.39.vibedu.2","sm.LC.LP.HF.27.vibedu.2","sm.LC.LP.HF.22.vibedu.2","sm.LC.LP.HF.28.vibedu.2","sm.LC.LP.LF.1.vibedu.2","sm.HC.LP.LF.7.vibedu.1","sm.LC.LP.HF.27.shecan.2","sm.LC.LP.LF.30.shecan.2","sm.HC.HP.HF.8.sorsco.1","sm.HC.HP.HF.29.sorsco.1","sm.HC.LP.HF.25.sorsco.1","sm.HC.LP.HF.32.sorsco.1","sm.HC.LP.HF.3.sorsco.2","sm.LC.LP.HF.9.sorsco.3","mp.LC.LP.HF.30.sorsco.2","sm.LC.LP.LF.12.sorsco.2","sm.LC.HP.HF.19.sorsco.1","sm.LC.LP.HF.16.symalb.1","mp.LC.HP.HF.20.symalb.1","sm.LC.HP.HF.6.symalb.1","sm.LC.HP.HF.38.symalb.2","sm.LC.HP.HF.10.symalb.2","sm.LC.HP.LF.17.amealn.2","mp.LC.LP.HF.12.amealn.2","sm.LC.LP.HF.28.amealn.2")
+
+test<-d[d$lab2 %in% dups,]
+
+d<-d[!d$lab2 %in% dups,]
+
+
+length(unique(d$lab2))
+
+# Done! Writing the final datafile 
+write.csv(d,"input/bc_phenology.csv", row.names=FALSE)
+
+# There are a few unexplained extras:
+#corsto
+# c1<-subset(d, species == "corsto" & treatment == "LC.HP.LF")
+# sp[16]
+# for (i in 1:length(unique(c1$flask))){
+#   sp<-sort(unique(c1$lab2))
+#   sub<-subset(c1, lab2== sp[16])
+#   
+#   #spplot<-
+#   ggplot(sub)+
+#     aes(x=day, y=bbch.t)+
+#     geom_line() +
+#     labs(x="day",y="bbch") +
+#     xlim(-0.5,113)+
+#     ylim(0,20)
+#   ggsave(spplot, file=paste("rcode/cleaning/plots_rawdat/checking/corsto",i,".pdf"))
+# }
+# 
+# # Poptre
+# c1<-subset(d, species == "shecan" & treatment == "HC.HP.HF")
+# c2<-subset(d, species == "shecan" & treatment == "LC.LP.HF")
+# c3<-subset(d, species == "shecan" & treatment == "LC.LP.LF")
+# 
+# sp[16]
+# for (i in 1:length(unique(c1$lab2))){
+#   sp<-sort(unique(c1$lab2))
+#   sub<-subset(c1, lab2== sp[i])
+#   
+#   spplot<-
+#   ggplot(sub)+
+#     aes(x=day, y=bbch.t)+
+#     geom_line() +
+#     labs(x="day",y="bbch") +
+#     xlim(-0.5,113)+
+#     ylim(0,20)
+#   ggsave(spplot, file=paste("rcode/cleaning/plots_rawdat/checking/shecan",i,".pdf"))
+# }
+# 
+# for (i in 1:length(unique(c2$lab2))){
+#   sp<-sort(unique(c2$lab2))
+#   sub<-subset(c2, lab2== sp[i])
+#   
+#   spplot<-
+#     ggplot(sub)+
+#     aes(x=day, y=bbch.t)+
+#     geom_line() +
+#     labs(x="day",y="bbch") +
+#     xlim(-0.5,113)+
+#     ylim(0,20)
+#   ggsave(spplot, file=paste("rcode/cleaning/plots_rawdat/checking/shecan",i,".pdf"))
+# }
+# sp[15]
+# 
+# 
+# for (i in 1:length(unique(c3$lab2))){
+#   sp<-sort(unique(c3$lab2))
+#   sub<-subset(c3, lab2== sp[i])
+#   
+#   spplot<-
+#     ggplot(sub)+
+#     aes(x=day, y=bbch.t)+
+#     geom_line() +
+#     labs(x="day",y="bbch") +
+#     xlim(-0.5,113)+
+#     ylim(0,20)
+#   ggsave(spplot, file=paste("rcode/cleaning/plots_rawdat/checking/shecan",i,".pdf"))
+# }
+# sp[5]
+# temp<-subset(d, lab2 == "sm.LC.LP.LF.30.shecan.3")
+# 
+# #sorsco
+# c1<-subset(d, species == "sorsco" & treatment == "HC.HP.HF") #19
+# c2<-subset(d, species == "sorsco" & treatment == "HC.LP.HF") #21
+# c3<-subset(d, species == "sorsco" & treatment == "LC.LP.HF") #20
+# c4<-subset(d, species == "sorsco" & treatment == "LC.LP.LF") #17
+# c5<-subset(d, species == "sorsco" & treatment == "LC.HP.HF") #17
+# 
+# table(c1$population)
+# 
+# sp[16]
+# for (i in 1:length(unique(c1$lab2))){
+#   sp<-sort(unique(c1$lab2))
+#   sub<-subset(c1, lab2== sp[i])
+#   
+#   spplot<-
+#     ggplot(sub)+
+#     aes(x=day, y=bbch.t)+
+#     geom_line() +
+#     labs(x="day",y="bbch") +
+#     xlim(-0.5,113)+
+#     ylim(0,20)
+#   ggsave(spplot, file=paste("rcode/cleaning/plots_rawdat/checking/sorsco",i,".pdf"))
+# }
+# 
+# for (i in 1:length(unique(c2$lab2))){
+#   sp<-sort(unique(c2$lab2))
+#   sub<-subset(c2, lab2== sp[i])
+#   
+#   spplot<-
+#     ggplot(sub)+
+#     aes(x=day, y=bbch.t)+
+#     geom_line() +
+#     labs(x="day",y="bbch") +
+#     xlim(-0.5,113)+
+#     ylim(0,20)
+#   ggsave(spplot, file=paste("rcode/cleaning/plots_rawdat/checking/sorsco",i,".pdf"))
+# }
+# sp[18]
+# 
+# 
+# for (i in 1:length(unique(c3$lab2))){
+#   sp<-sort(unique(c3$lab2))
+#   sub<-subset(c3, lab2== sp[i])
+#   
+#   spplot<-
+#     ggplot(sub)+
+#     aes(x=day, y=bbch.t)+
+#     geom_line() +
+#     labs(x="day",y="bbch") +
+#     xlim(-0.5,113)+
+#     ylim(0,20)
+#   ggsave(spplot, file=paste("rcode/cleaning/plots_rawdat/checking/sorsco",i,".pdf"))
+# }
+# sp[3]
+# 
+# for (i in 1:length(unique(c4$lab2))){
+#   sp<-sort(unique(c4$lab2))
+#   sub<-subset(c4, lab2== sp[i])
+#   
+#   spplot<-
+#     ggplot(sub)+
+#     aes(x=day, y=bbch.t)+
+#     geom_line() +
+#     labs(x="day",y="bbch") +
+#     xlim(-0.5,113)+
+#     ylim(0,20)
+#   ggsave(spplot, file=paste("rcode/cleaning/plots_rawdat/checking/sorsco4",i,".pdf"))
+# }
+# sp[4]
+# 
+# 
+# for (i in 1:length(unique(c5$lab2))){
+#   sp<-sort(unique(c5$lab2))
+#   sub<-subset(c5, lab2== sp[i])
+#   
+#   spplot<-
+#     ggplot(sub)+
+#     aes(x=day, y=bbch.t)+
+#     geom_line() +
+#     labs(x="day",y="bbch") +
+#     xlim(-0.5,113)+
+#     ylim(0,20)
+#   ggsave(spplot, file=paste("rcode/cleaning/plots_rawdat/checking/sorsco5",i,".pdf"))
+# }
+# sp[13]
+# 
+# #symalb
+# c1<-subset(d, species == "symalb" & treatment == "LC.HP.HF") #21
+# c2<-subset(d, species == "symalb" & treatment == "LC.LP.HF") #20
+# d$bbch.l<-as.numeric(d$bbch.l)
+# table(c1$treatment)
+# 
+# sp[16]
+# for (i in 1:length(unique(c1$lab2))){
+#   sp<-sort(unique(c1$lab2))
+#   sub<-subset(c1, lab2== sp[22])
+#   
+#   #spplot<-
+#     ggplot(sub)+
+#     aes(x=day, y=bbch.l)+
+#     geom_line() +
+#     labs(x="day",y="bbch") +
+#     xlim(-0.5,113)+
+#     ylim(0,20)
+#  #ggsave(spplot, file=paste("rcode/cleaning/plots_rawdat/checking/symalblat",i,".pdf"))
+# }
+# sp[3]
+# sp[12]
+# 
+# for (i in 1:length(unique(c2$lab2))){
+#   sp<-sort(unique(c2$lab2))
+#   sub<-subset(c2, lab2== sp[i])
+#   
+#   #spplot<-
+#     ggplot(sub)+
+#     aes(x=day, y=bbch.l)+
+#     geom_line() +
+#     labs(x="day",y="bbch") +
+#     xlim(-0.5,113)+
+#     ylim(0,20)
+#   #ggsave(spplot, file=paste("rcode/cleaning/plots_rawdat/checking/sorsco",i,".pdf"))
+# }
+# sp[18]
+# 
+# 
+# unique(c2$lab2)
+# temp<-subset(d, lab2 == "mp.LC.HP.HF.30.symalb.2")

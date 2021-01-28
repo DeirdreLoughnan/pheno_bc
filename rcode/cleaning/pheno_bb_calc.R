@@ -129,14 +129,13 @@ count<-table(low$species)
 #             )]
 # terminalbb <- data.frame(dx, tbb,nl)
 
-test<- subset(gc, bbch.t >= 7)
-test2<- aggregate(test$day, by=list(Category=test$lab2), FUN=min)
-names(test2) <- c("lab2", "tbb")
-test2$lab<-test2$lab2
+bursted<- subset(gc, bbch.t >= 7)
+# daybursted<- aggregate(bursted$day, by=list(Category=bursted$lab2), FUN=min)
+# names(daybursted) <- c("lab2", "tbb")
 
-terminalbb <- aggregate(test["day"],
-              test[c("lab2", "population", "treatment", "flask", "species")], 
-              FUN=min)
+terminalbb <- aggregate(bursted["day"],
+                        bursted[c("lab2", "population", "treatment", "flask", "species")], 
+                        FUN=min)
 
 dx <- gc[match(levels(gc$lab2), gc$lab2),] # with twig id in same order as the loop above
 dx <- dx[,c("lab2", "population", "treatment", "flask", "species")]
@@ -151,6 +150,20 @@ table(nobb$chill) # mostly low chill
 table(nobb$force) # mostly low force
 table(nobb$photo) # mostly low photoperiod
 
+
+comp<-merge(flynn, faith, by = c("lab2","population","treatment","flask","species"))
+comp<-comp[,c("lab2","population","treatment","species","tbb","day")]
+head(comp)
+
+require(ggplot2)
+
+pdf(file="figures/compar_bbcalc.pdf")
+ggplot(comp)+
+      aes(x=day, y=tbb, color = species)+
+      geom_point() +
+      labs(x="Faith's",y="Flynn's") +
+      facet_wrap("treatment") 
+dev.off()
 #############################################################
 #    Now moving on to the lateral buds 
 #############################################################

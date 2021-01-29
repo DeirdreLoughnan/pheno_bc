@@ -3,81 +3,79 @@
 # The aim is to extract the day of study on which the terminal bud reached stage 7 first and the day when the lateral buds reached 80% at stage 7
 # building off of Dan Flynn's data
 
-if(length(grep("deirdreloughnan", getwd())>0)) {
+if(length(grep("deirdreloughnan", getwd()) > 0)) {
   setwd("~/Documents/github/pheno_bc/")
-} else {
+  } else {
   setwd("~/Documents/github/pheno_bc")
 }
 
+require(ggplot2)
 require(plyr)
 require(dplyr)
 require(tidyr)
 # require(chillR)
 
-rm(list=ls()) 
+rm(list = ls()) 
 options(stringsAsFactors = FALSE)
 
 # read in the cleaning phenology data:
-data<-read.csv("input/bc_phenology.csv", header=T, na.strings=c("","NA"))
+data <- read.csv("input/bc_phenology.csv", header=TRUE, na.strings=c("","NA"))
 
 #source("rcode/cleaning/cleaningcode.R")
 
 # what does the data look like generally?
 # 20 species from mp,20 species from mp; so in theory there should be 2560 samples, but after chilling we had 
 
-alive<-subset(data, bbch.l>0)
+alive <- subset(data, bbch.l > 0)
 length(unique(alive$lab2)) #2319
 
 1-(2319/2560)
 # so 9.4 of samples did not budburst, either because they were dead, or becuase of insufficient conditions
 
-d<-data
+d <- data
 # How many indiv of each sp are there?
-d0<-subset(d, day == "0")
+d0 <- subset(d, day == "0")
 table(d0$species)
 
-d88<-subset(d, day == "88")
+d88 <- subset(d, day == "88")
 table(d88$species)
 
 head(d0)
 
-
-d<-as.data.frame(d);head(d)
-
-# Starting with the terminal buds:
+d <- as.data.frame(d); head(d)
 
 ##### Adding individual ############
-# indiv<-read.csv("input/indiv.no.cleaned.csv", na.strings = "")
+# indiv <- read.csv("input/indiv.no.cleaned.csv", na.strings = "")
 
 # source("rcode/cleaning/cleaning.indivno.R")
 # 
 # head(indiv)
 # #subset to just the colns needed
-# indiv<-indiv[,c("lab3","indiv")]
-# # indiv[complete.cases(indiv),]
-# # test<-subset(indiv, indiv!= "NA")
+# indiv <- indiv[ , c("lab3","indiv")]
+# # indiv[complete.cases(indiv), ]
+# # test <- subset(indiv, indiv!= "NA")
 # head(indiv)
 # 
 # 
-# dtemp<-merge(d, indiv, by= "lab2", all.x=T) # this is adding rows! 
+# dtemp <- merge(d, indiv, by = "lab2", all.x = TRUE) # this is adding rows! 
 
-# mptemp<-subset(indiv, site == "mp");length(unique(mptemp$labtemp)) # 204
+# mptemp <- subset(indiv, site == "mp");length(unique(mptemp$labtemp)) # 204
 # 
-# smtemp<-subset(indiv, site == "sm");length(unique(smtemp$labtemp)) #186
+# smtemp <- subset(indiv, site == "sm");length(unique(smtemp$labtemp)) #186
 
 
 ####################################################################
 
-begin<-subset(d, day==0)
-count.begin<-table(begin$species)
+begin <- subset(d, day == 0)
+count.begin <- table(begin$species)
 sum(count.begin)
 
-end<-subset(d, day==88)
-count.end<-table(end$species)
+end <- subset(d, day == 88)
+count.end <- table(end$species)
 sum(count.end)
 
-d$day<-as.numeric(d$day)
-range(d$day, na.rm=TRUE) # this dataset includes the low chill greenhouse days, 
+d$day <- as.numeric(d$day)
+range(d$day, na.rm = TRUE) # this dataset includes the low chill greenhouse days, 
 sort(unique(data$species))
 
 
@@ -86,20 +84,20 @@ sort(unique(data$species))
 #############################################################
 # Since this dataset includes the LC's days in the greenhouse, I need to subset those out and just have the 12 weeks they spent in the growth chambers:
 
-gc<-subset(d, day<=84)
+gc <- subset(d, day <= 84)
 unique(gc$day)
 head(gc)
-gc<-as.data.frame(gc)
+gc <- as.data.frame(gc)
 # I am curious if all samples even reached stage 7 or...
 
-max<-gc %>% 
-  group_by(lab2,ref) %>%
+max <- gc %>% 
+  group_by(lab2, ref) %>%
   slice(which.max(bbch.t))
 
-low<-subset(max, bbch.t<7)
+low <- subset(max, bbch.t<7)
 # there are 405 out of 2406 samples for which the terminal bud did not burst or approximately 17%
 
-count<-table(low$species)
+count <- table(low$species)
 
 # For species in both pops there were 128 samples max, so rub par 40% of the time the terminal bud did not bb, for ace gla and sorsco it was 25%
 
@@ -109,59 +107,54 @@ count<-table(low$species)
 # 2. now for that individual, find the earliest day at which that stage was reached.
 ####################################################################################################################
 
-
-
-# tbb <-nl<-vector() # This creates empty vectors for the bbday, leaf out, the nl yes no vector of whether this event occured (1 means yes, there was leafout; 0 means no leafout)
-# gc$lab2<-as.factor(gc$lab2)
+# tbb <- nl <- vector() # This creates empty vectors for the bbday, leaf out, the nl yes no vector of whether this event occured (1 means yes, there was leafout; 0 means no leafout)
+# gc$lab2 <- as.factor(gc$lab2)
 # #levels(d$lab2)
-# for(i in levels(gc$lab2)){ # i=levels(d$lab2)[2505] # for each individual clipping. # DL: why did DF have 602, that seems low
+# for(i in levels(gc$lab2)){ # i = levels(d$lab2)[2505] # for each individual clipping. # DL: why did DF have 602, that seems low
 #   
 #   dx <- gc[gc$lab2 == i,]
-#   bdax <- which(apply(dx[,c("bbch.t","bbch.t")], MARGIN=1, max, na.rm=TRUE) >3) # margin =1 means it is applied over rows, takes the maximum value > 3
-#   if(length(bdax) < 1) {bdax = NA; nl <- c(nl, 0)} else {bdax = dx[min(bdax),'day']; nl <- c(nl, 1)}
+#   bdax <- which(apply(dx[, c("bbch.t","bbch.t")], MARGIN = 1, max, na.rm = TRUE) >3) # margin = 1 means it is applied over rows, takes the maximum value > 3
+#   if(length(bdax) < 1) {bdax = NA; nl <- c(nl, 0)} else {bdax = dx[min(bdax), 'day']; nl <- c(nl, 1)}
 #   
-#   tbb<- c(tbb, bdax)
+#   tbb <- c(tbb, bdax)
 # 
 # }
 # dx <- gc[match(levels(gc$lab2), gc$lab2),] # with twig id in same order as the loop above
 # #dx <- dx[,2:ncol(dx)] 
 # dx <- dx[,c("lab2", "population", "treatment", "flask", "species"#, "indiv"
 #             )]
-# terminalbb <- data.frame(dx, tbb,nl)
+# terminalbb <- data.frame(dx, tbb, nl)
 
-bursted<- subset(gc, bbch.t >= 7)
-# daybursted<- aggregate(bursted$day, by=list(Category=bursted$lab2), FUN=min)
+bursted  <- subset(gc, bbch.t >= 7)
+# daybursted <- aggregate(bursted$day, by = list(Category = bursted$lab2), FUN = min)
 # names(daybursted) <- c("lab2", "tbb")
 
 terminalbb <- aggregate(bursted["day"],
                         bursted[c("lab2", "population", "treatment", "flask", "species")], 
-                        FUN=min)
+                        FUN = min)
 
 dx <- gc[match(levels(gc$lab2), gc$lab2),] # with twig id in same order as the loop above
-dx <- dx[,c("lab2", "population", "treatment", "flask", "species")]
+dx <- dx[, c("lab2", "population", "treatment", "flask", "species")]
 head(test2)
-terminalbb <- merge(test2, dx, by = "lab2", all =T)
+terminalbb <- merge(test2, dx, by = "lab2", all = TRUE)
 
 # head(terminalbb) # here is the data for the terminal bud, there are 2406 individuals, with a value for each
 
-#
-nobb<-subset(terminalbb, nl==0) # 209 samples didnt bb
+nobb <- subset(terminalbb, nl == 0) # 209 samples didnt bb
 table(nobb$chill) # mostly low chill
 table(nobb$force) # mostly low force
 table(nobb$photo) # mostly low photoperiod
 
 
-comp<-merge(flynn, faith, by = c("lab2","population","treatment","flask","species"))
-comp<-comp[,c("lab2","population","treatment","species","tbb","day")]
+comp <- merge(flynn, faith, by = c("lab2","population","treatment","flask","species"))
+comp <- comp[, c("lab2","population","treatment","species","tbb","day")]
 head(comp)
 
-require(ggplot2)
-
-pdf(file="figures/compar_bbcalc.pdf")
-ggplot(comp)+
-      aes(x=day, y=tbb, color = species)+
+pdf(file = "figures/compar_bbcalc.pdf")
+ggplot(comp) +
+      aes(x = day, y = tbb, color = species) +
       geom_point() +
-      labs(x="Faith's",y="Flynn's") +
+      labs(x = "Faith's",y = "Flynn's") +
       facet_wrap("treatment") 
 dev.off()
 #############################################################
@@ -169,10 +162,8 @@ dev.off()
 #############################################################
 
 #What if I would to use a similar approach as above, but start by calculating when the three bbch levels over phase 7 sum to 80%?
-
-d<-gc
+d <- gc
 #Task is to select bbch.1 7 and above, sum percentages, then get 1st day where percentage above 80%
-
 #1. reshape data so it is in long format 
 dlong <- gather(d, key = "bbchL", value = "stage", c(bbch.l, bbch2.l, bbch3.l))
 #dlong <- gather(dlong, key = "percentL", value = "l.percent", c(percent.l, percent2.l,percent3.l))
@@ -186,54 +177,53 @@ head(dlong)
 str(dlong)
 
 #Remove na rows
-dlong <- dlong[!is.na(dlong$stage),]
+dlong <- dlong[!is.na(dlong$stage), ]
 
 #1. Select bbch.1 7 and above
-dlong7 <- dlong[dlong$stage >= 7,]
+dlong7 <- dlong[dlong$stage >= 7, ]
 
 #sum percentages each sample
-#sumPercent <- aggregate(dlong7$bbchPercent, by=list(Category=dlong7$lab2), FUN=sum)
-sumPercent <- aggregate(dlong7$bbchPercent, by=list(Category=dlong7$lab2, day=dlong7$day), FUN=sum)
+#sumPercent <- aggregate(dlong7$bbchPercent, by = list(Category = dlong7$lab2), FUN = sum)
+sumPercent <- aggregate(dlong7$bbchPercent, by = list(Category = dlong7$lab2, day = dlong7$day), FUN = sum)
 
-names(sumPercent) <- c("lab2","day", "sumPercent")
-#names(sumPercent) <- c("lab2","day.l.bb", "sumPercent")
+names(sumPercent) <- c("lab2", "day", "sumPercent")
+#names(sumPercent) <- c("lab2", "day.l.bb", "sumPercent")
 
-dlong7sum <- merge(dlong7, sumPercent, by = c("lab2",'day'))
+dlong7sum <- merge(dlong7, sumPercent, by = c("lab2", 'day'))
 head(dlong7sum)
 
 #Select samples with 80 or more percent --> 1068 rows, if it is lower at 50, then there are 1437 rows
-dlong7sum80 <- dlong7sum[dlong7sum$sumPercent >= 80,]
+dlong7sum80 <- dlong7sum[dlong7sum$sumPercent >= 80, ]
 
 #Select first day with 80% or more
-latdaymin80<- aggregate(dlong7sum80$day, by=list(Category=dlong7sum80$lab2), FUN=min)
+latdaymin80 <- aggregate(dlong7sum80$day, by = list(Category = dlong7sum80$lab2), FUN = min)
 names(latdaymin80) <- c("lab2", "latbb80")
 
 #dlong7sum80Daymin <- merge(dlong7sum80, daymin, by = "lab2")
 length(unique(latdaymin80$lab2))
 
 #Select first day with 50%, then there are 1450 rows
-dlong7sum50 <- dlong7sum[dlong7sum$sumPercent >= 50,]
-latdaymin50<- aggregate(dlong7sum50$day, by=list(Category=dlong7sum50$lab2), FUN=min)
+dlong7sum50 <- dlong7sum[dlong7sum$sumPercent >= 50, ]
+latdaymin50 <- aggregate(dlong7sum50$day, by = list(Category = dlong7sum50$lab2), FUN = min)
 names(latdaymin50) <- c("lab2", "latbb50")
 nrow(latdaymin50)
 
 #Select first day of lateral bb, then there are  rows 1923
-dlong7sum1 <- dlong7sum[dlong7sum$sumPercent > 0,]
-latdaymin1<- aggregate(dlong7sum1$day, by=list(Category=dlong7sum1$lab2), FUN=min)
+dlong7sum1 <- dlong7sum[dlong7sum$sumPercent > 0, ]
+latdaymin1 <- aggregate(dlong7sum1$day, by = list(Category = dlong7sum1$lab2), FUN = min)
 names(latdaymin1) <- c("lab2", "latbb1")
 nrow(latdaymin1)
-
 
 ######################################################
 # Combine the terminal and the lateral bb days
 head(terminalbb)
-pheno<-merge(terminalbb, latdaymin80, by= "lab2", all.x=TRUE) # the all.x=T is telling it that I want all rows from this dataset, even if there isn't a corresponding row in latdaymin
-pheno<-merge(pheno, latdaymin50, by= "lab2", all.x=TRUE) 
-pheno<-merge(pheno, latdaymin1, by= "lab2", all.x=TRUE) 
+pheno <- merge(terminalbb, latdaymin80, by = "lab2", all.x = TRUE) # the all.x = T is telling it that I want all rows from this dataset, even if there isn't a corresponding row in latdaymin
+pheno <- merge(pheno, latdaymin50, by = "lab2", all.x = TRUE) 
+pheno <- merge(pheno, latdaymin1, by = "lab2", all.x = TRUE) 
 
 head(pheno)
 
-#pheno$treatment<-paste(pheno$chill, pheno$photo, pheno$force, sep = ".")
+#pheno$treatment <- paste(pheno$chill, pheno$photo, pheno$force, sep = ".")
 head(pheno)
 write.csv(pheno, "input/day.of.bb.csv", row.names = FALSE)
 ######################################################
@@ -244,75 +234,70 @@ write.csv(pheno, "input/day.of.bb.csv", row.names = FALSE)
 # making fequncy tables:
 require(plyr)
 
-term<-pheno[, c("population","species","tbb","treatment","lab2")];head(term)
-term.cc<-term[complete.cases(term),]
+term <- pheno[, c("population","species","tbb","treatment","lab2")]; head(term)
+term.cc <- term[complete.cases(term), ]
 
-term.summ<-term.cc %>%
+term.summ <- term.cc %>%
   count(treatment, species, population)
 
-lat80<-pheno[, c("population","species","latbb80","treatment","lab2")];head(lat80)
-lat80.cc<-term[complete.cases(lat80),]
+lat80 <- pheno[, c("population","species","latbb80","treatment","lab2")]; head(lat80)
+lat80.cc <- term[complete.cases(lat80), ]
 
-lat80.summ<-lat80.cc %>%
+lat80.summ <- lat80.cc %>%
   count(treatment, species, population)
 
-lat50<-pheno[, c("population","species","latbb50","treatment","lab2")];head(lat50)
-lat50.cc<-term[complete.cases(lat50),]
+lat50 <- pheno[, c("population","species","latbb50","treatment","lab2")]; head(lat50)
+lat50.cc <- term[complete.cases(lat50), ]
 
-lat50.summ<-lat50.cc %>%
+lat50.summ <- lat50.cc %>%
   count(treatment, species, population)
 
 
-#Calculating chill portions
 
-# plots
-
-
+# PLOTS
 # start by plotting means by species and by treatments:
-# phenoplot_sp<-ddply(pheno, .(treatment, species), summarize, termbb=mean(tbb, na.rm=TRUE), lat50bb=mean(latbb50, na.rm=TRUE))
-# 
-# head(phenoplot_sp)
+# phenoplot_sp <- ddply(pheno, .(treatment, species), summarize, termbb = mean(tbb, na.rm = TRUE), lat50bb = mean(latbb50, na.rm = TRUE))
 # 
 # ggplot(phenoplot, aes(species, termbb)) +
 #   geom_point(aes(color = treatment)) +
-#   theme(axis.text.x = element_text(angle = 45, vjust = 0.5, hjust=1))
+#   theme(axis.text.x = element_text(angle = 45, vjust = 0.5, hjust = 1))
 # 
 # # plotting means by just treatments:
-# phenoplot_trt<-ddply(pheno, .(treatment), summarize, termbb=mean(tbb, na.rm=TRUE), lat50bb=mean(latbb50, na.rm=TRUE))
+# phenoplot_trt <- ddply(pheno, .(treatment), summarize, termbb = mean(tbb, na.rm = TRUE), lat50bb = mean(latbb50, na.rm = TRUE))
 # 
 # #terminal dobb
 # ggplot(phenoplot_sp, aes(treatment, termbb)) +
 #   geom_point(aes(color = treatment)) +
-#   theme(axis.text.x = element_text(angle = 45, vjust = 0.5, hjust=1)) + 
+#   theme(axis.text.x = element_text(angle = 45, vjust = 0.5, hjust = 1)) + 
 #   scale_y_continuous(limits = c(0, 88))
 # 
 # #lateral dobb
 # ggplot(phenoplot_sp, aes(treatment, lat50bb)) +
 #   geom_point(aes(color = treatment)) +
-#   theme(axis.text.x = element_text(angle = 45, vjust = 0.5, hjust=1))+ 
+#   theme(axis.text.x = element_text(angle = 45, vjust = 0.5, hjust = 1)) + 
 #   scale_y_continuous(limits = c(0, 88))
 # 
 # # Just the mean treatment value
-# # terminla
+# # terminal
 # ggplot(phenoplot_trt, aes(treatment, termbb)) +
 #   geom_point(aes(color = treatment)) +
-#   theme(axis.text.x = element_text(angle = 45, vjust = 0.5, hjust=1))+ 
+#   theme(axis.text.x = element_text(angle = 45, vjust = 0.5, hjust = 1)) + 
 #   scale_y_continuous(limits = c(0, 88))
 # 
 # ggplot(phenoplot_trt, aes(treatment, lat50bb)) +
 #   geom_point(aes(color = treatment)) +
-#   theme(axis.text.x = element_text(angle = 45, vjust = 0.5, hjust=1))+ 
+#   theme(axis.text.x = element_text(angle = 45, vjust = 0.5, hjust = 1)) + 
 #   scale_y_continuous(limits = c(0, 88))
 # 
 # 
-#  hhh<-subset(pheno, treatment == "HC_HP_HF")
-# # hll<-subset(pheno, treatment == "HC_LP_LF")
-# # hlh<-subset(pheno, treatment == "HC_LP_HF")
-# # hhl<-subset(pheno, treatment == "HC_HP_LF")
-# # lll<-subset(pheno, treatment == "LC_LP_LF")
-# # lhh<-subset(pheno, treatment == "LC_HP_HF")
-# # llh<-subset(pheno, treatment == "LC_LP_HF")
-# # lhl<-subset(pheno, treatment == "LC_HP_LF")
+#  hhh <- subset(pheno, treatment == "HC_HP_HF")
+# # hll <- subset(pheno, treatment == "HC_LP_LF")
+# # hlh <- subset(pheno, treatment == "HC_LP_HF")
+# # hhl <- subset(pheno, treatment == "HC_HP_LF")
+# # lll <- subset(pheno, treatment == "LC_LP_LF")
+# # lhh <- subset(pheno, treatment == "LC_HP_HF")
+# # llh <- subset(pheno, treatment == "LC_LP_HF")
+# # lhl <- subset(pheno, treatment == "LC_HP_LF")
 # 
 # 
 # 
@@ -324,37 +309,36 @@ lat50.summ<-lat50.cc %>%
 # 
 # 
 # 
-# d<-pheno
+# d <- pheno
 # 
 # pdf( width = 8, height = 4)
-# 
-# par(mfcol=c(1, 3), mar = c(3,3,1,0.5))
+# par(mfcol = c(1, 3), mar = c(3, 3, 1, 0.5))
 # for(spx in levels(d$species)){ # spx = "BETALL"
 #   
-#   dxx = d[d$species == spx,]
+#   dxx = d[d$species == spx, ]
 #   
 #   counter = 1
 #   for(i in sort(as.character((unique(d$chill))))){# i = "high chill or low chill"
 #     
 #     dseq = seq(0, max(dxx$day))
-#     plot(dseq, seq(0, 7,length=length(dseq)), type = "n", 
+#     plot(dseq, seq(0, 7, length = length(dseq)), type = "n", 
 #          ylab2 = "Stage",
 #          xlab2 = "")
 #     if(counter == 1) mtext(spx, line = -2, adj = 0.5)
-#     legend("topleft",bty="n",i, cex = 0.85, inset = 0)
+#     legend("topleft", bty = "n", i, cex = 0.85, inset = 0)
 #     xx <- dxx[dxx$time == i,]
 #     # calculate mean response by date and chill
-#     xt <- tapply(pmax(xx$tleaf, xx$lleaf,na.rm=T), list(xx$day, xx$chill), mean, na.rm=T)
+#     xt <- tapply(pmax(xx$tleaf, xx$lleaf, na.rm = T), list(xx$day, xx$chill), mean, na.rm = TRUE)
 #     
-#     for(j in unique(xx$ind)){ #j=unique(xx$ind)[1]
-#       xj <- xx[xx$ind == j,]
+#     for(j in unique(xx$ind)){ #j = unique(xx$ind)[1]
+#       xj <- xx[xx$ind == j, ]
 #       pcol = lcol[xj$chill]
 #       lines(xj$day, xj$tleaf, col = pcol)
 #     }
-#     lines(rownames(xt), xt[,1], col = colz[1], lwd = 2)
-#     lines(rownames(xt), xt[,2], col = colz[2], lwd = 2)
-#     lines(rownames(xt), xt[,3], col = colz[3], lwd = 2)
-#     lines(rownames(xt), xt[,4], col = colz[4], lwd = 2)
+#     lines(rownames(xt), xt[, 1], col = colz[1], lwd = 2)
+#     lines(rownames(xt), xt[, 2], col = colz[2], lwd = 2)
+#     lines(rownames(xt), xt[, 3], col = colz[3], lwd = 2)
+#     lines(rownames(xt), xt[, 4], col = colz[4], lwd = 2)
 #     
 #     
 #     # add a legend
@@ -365,38 +349,12 @@ lat50.summ<-lat50.cc %>%
 #              legend = c(1, 2, 4, 8),
 #              title = "°C")
 #     }
-#     
 #     counter = counter + 1
 #   }
-#   
 # }
 # dev.off()
 # system(paste("open '", paste("figures/Trace Plots ", Sys.Date(), ".pdf", sep=""), "' -a /Applications/Preview.app", sep=""))
 # 
-
 #write.csv(pheno, "input/day.of.bb.csv")
 #
 
-##### GOOO ###########################################
-
-
-##### GOOO ###########################################
-
-# test<-daymin[order(daymin$firstday),]
-
-#Alternative dplyr solution (sorry Lizzie!)
-# data.frame(dlong7 %>% 
-#              filter(stage >=7) %>%
-#              group_by(lab2,day) %>%
-#              dplyr::mutate(sumPercent = sum(bbchPercent) ) %>%
-#              filter(sumPercent >= 80) %>%
-#              filter(day == min(day))
-# ) # you need the dplyr:: before mutate otherwise it doesnt work 
-# 
-# amealnfl10<-subset(data, lab2 =="mp_HC_HP_HF_10_amealn") # yup first day is day 5
-# 
-# alinc14<-subset(data, lab2 =="sm_LC_HP_HF_14_alninc") # yup firs day is day 36
-# 
-# betpap17<-subset(data, lab2 =="sm_HC_LP_LF_17_betpap") # yup firs day is day 36
-
-#Yay this worked!! 

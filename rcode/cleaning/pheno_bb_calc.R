@@ -1,7 +1,8 @@
 # This code will compile the final data file for use in my phenology analysis
 
 # The aim is to extract the day of study on which the terminal bud reached stage 7 first and the day when the lateral buds reached 80% at stage 7
-# building off of Dan Flynn's data
+
+# D. Flynn calcualted the day that both lat and terminal buds bb, but here I want to treat them seperately and look only at one or the other
 
 if(length(grep("deirdreloughnan", getwd()) > 0)) {
   setwd("~/Documents/github/pheno_bc/")
@@ -19,7 +20,7 @@ rm(list = ls())
 options(stringsAsFactors = FALSE)
 
 # read in the cleaning phenology data:
-data <- read.csv("input/bc_phenology.csv", header=TRUE, na.strings=c("","NA"))
+data <- read.csv("input/bc_phenology_Jan312021.csv", header=TRUE, na.strings=c("","NA"))
 
 #source("rcode/cleaning/cleaningcode.R")
 
@@ -40,9 +41,7 @@ table(d0$species)
 d88 <- subset(d, day == "88")
 table(d88$species)
 
-head(d0)
-
-d <- as.data.frame(d); head(d)
+d <- as.data.frame(d)
 
 ##### Adding individual ############
 # indiv <- read.csv("input/indiv.no.cleaned.csv", na.strings = "")
@@ -86,7 +85,7 @@ sort(unique(data$species))
 
 gc <- subset(d, day <= 84)
 unique(gc$day)
-head(gc)
+#head(gc)
 gc <- as.data.frame(gc)
 # I am curious if all samples even reached stage 7 or...
 
@@ -99,64 +98,36 @@ low <- subset(max, bbch.t<7)
 
 count <- table(low$species)
 
-# For species in both pops there were 128 samples max, so rub par 40% of the time the terminal bud did not bb, for ace gla and sorsco it was 25%
+#########################################################################
 
-####################################################################################################################
-# This code is taken from Dan Flynn and cleaning the east coast data (found in the budchill repo)
-# 1. for both terminal and lateral buds, what is the max stage within a row? Identify which rows are greater or equal to the specific BBCH stage
-# 2. now for that individual, find the earliest day at which that stage was reached.
-####################################################################################################################
-
-# tbb <- nl <- vector() # This creates empty vectors for the bbday, leaf out, the nl yes no vector of whether this event occured (1 means yes, there was leafout; 0 means no leafout)
-# gc$lab2 <- as.factor(gc$lab2)
-# #levels(d$lab2)
-# for(i in levels(gc$lab2)){ # i = levels(d$lab2)[2505] # for each individual clipping. # DL: why did DF have 602, that seems low
-#   
-#   dx <- gc[gc$lab2 == i,]
-#   bdax <- which(apply(dx[, c("bbch.t","bbch.t")], MARGIN = 1, max, na.rm = TRUE) >3) # margin = 1 means it is applied over rows, takes the maximum value > 3
-#   if(length(bdax) < 1) {bdax = NA; nl <- c(nl, 0)} else {bdax = dx[min(bdax), 'day']; nl <- c(nl, 1)}
-#   
-#   tbb <- c(tbb, bdax)
-# 
-# }
-# dx <- gc[match(levels(gc$lab2), gc$lab2),] # with twig id in same order as the loop above
-# #dx <- dx[,2:ncol(dx)] 
-# dx <- dx[,c("lab2", "population", "treatment", "flask", "species"#, "indiv"
-#             )]
-# terminalbb <- data.frame(dx, tbb, nl)
-
+# starting by subsetting the observations that are above the level of bb, which occurs at stage 7
 bursted  <- subset(gc, bbch.t >= 7)
-# daybursted <- aggregate(bursted$day, by = list(Category = bursted$lab2), FUN = min)
-# names(daybursted) <- c("lab2", "tbb")
 
+# for every unique, label, pop, trt, flask, sp, it is getting the minimum (ie first) day that an obs of 7 or greater was observed
 terminalbb <- aggregate(bursted["day"],
                         bursted[c("lab2", "population", "treatment", "flask", "species")], 
                         FUN = min)
 
-dx <- gc[match(levels(gc$lab2), gc$lab2),] # with twig id in same order as the loop above
-dx <- dx[, c("lab2", "population", "treatment", "flask", "species")]
-head(test2)
-terminalbb <- merge(test2, dx, by = "lab2", all = TRUE)
-
+# below is the code used to show that the DFlynn and my data were different 
 # head(terminalbb) # here is the data for the terminal bud, there are 2406 individuals, with a value for each
 
-nobb <- subset(terminalbb, nl == 0) # 209 samples didnt bb
-table(nobb$chill) # mostly low chill
-table(nobb$force) # mostly low force
-table(nobb$photo) # mostly low photoperiod
-
-
-comp <- merge(flynn, faith, by = c("lab2","population","treatment","flask","species"))
-comp <- comp[, c("lab2","population","treatment","species","tbb","day")]
-head(comp)
-
-pdf(file = "figures/compar_bbcalc.pdf")
-ggplot(comp) +
-      aes(x = day, y = tbb, color = species) +
-      geom_point() +
-      labs(x = "Faith's",y = "Flynn's") +
-      facet_wrap("treatment") 
-dev.off()
+# nobb <- subset(terminalbb, nl == 0) # 209 samples didnt bb
+# table(nobb$chill) # mostly low chill
+# table(nobb$force) # mostly low force
+# table(nobb$photo) # mostly low photoperiod
+# 
+# 
+# comp <- merge(flynn, faith, by = c("lab2","population","treatment","flask","species"))
+# comp <- comp[, c("lab2","population","treatment","species","tbb","day")]
+# head(comp)
+# 
+# pdf(file = "figures/compar_bbcalc.pdf")
+# ggplot(comp) +
+#       aes(x = day, y = tbb, color = species) +
+#       geom_point() +
+#       labs(x = "Faith's",y = "Flynn's") +
+#       facet_wrap("treatment") 
+# dev.off()
 #############################################################
 #    Now moving on to the lateral buds 
 #############################################################
@@ -173,8 +144,8 @@ dlong$bbchPercent <- dlong$percent.l
 dlong$bbchPercent [dlong$bbchL == "bbch2.l"] <- dlong$percent2.l [dlong$bbchL == "bbch2.l"] 
 dlong$bbchPercent [dlong$bbchL == "bbch3.l"] <- dlong$percent3.l [dlong$bbchL == "bbch3.l"] 
 
-head(dlong)
-str(dlong)
+#head(dlong)
+#str(dlong)
 
 #Remove na rows
 dlong <- dlong[!is.na(dlong$stage), ]
@@ -190,7 +161,7 @@ names(sumPercent) <- c("lab2", "day", "sumPercent")
 #names(sumPercent) <- c("lab2", "day.l.bb", "sumPercent")
 
 dlong7sum <- merge(dlong7, sumPercent, by = c("lab2", 'day'))
-head(dlong7sum)
+#head(dlong7sum)
 
 #Select samples with 80 or more percent --> 1068 rows, if it is lower at 50, then there are 1437 rows
 dlong7sum80 <- dlong7sum[dlong7sum$sumPercent >= 80, ]
@@ -216,41 +187,44 @@ nrow(latdaymin1)
 
 ######################################################
 # Combine the terminal and the lateral bb days
-head(terminalbb)
+#head(terminalbb)
 pheno <- merge(terminalbb, latdaymin80, by = "lab2", all.x = TRUE) # the all.x = T is telling it that I want all rows from this dataset, even if there isn't a corresponding row in latdaymin
 pheno <- merge(pheno, latdaymin50, by = "lab2", all.x = TRUE) 
 pheno <- merge(pheno, latdaymin1, by = "lab2", all.x = TRUE) 
 
-head(pheno)
+#head(pheno)
+
+# pheno<-pheno %>%
+#   separate(treatment, c("chill","photo","force"), "_")
 
 #pheno$treatment <- paste(pheno$chill, pheno$photo, pheno$force, sep = ".")
 head(pheno)
-write.csv(pheno, "input/day.of.bb.csv", row.names = FALSE)
+#write.csv(pheno, "input/day.of.bb.Jan312021.csv", row.names = FALSE)
 ######################################################
 # To make it more comparable to the Flynn dataset, I am adding a treatment column, and then try to calculate chill portions...for the terminal bud? 
 
 
 
 # making fequncy tables:
-require(plyr)
-
-term <- pheno[, c("population","species","tbb","treatment","lab2")]; head(term)
-term.cc <- term[complete.cases(term), ]
-
-term.summ <- term.cc %>%
-  count(treatment, species, population)
-
-lat80 <- pheno[, c("population","species","latbb80","treatment","lab2")]; head(lat80)
-lat80.cc <- term[complete.cases(lat80), ]
-
-lat80.summ <- lat80.cc %>%
-  count(treatment, species, population)
-
-lat50 <- pheno[, c("population","species","latbb50","treatment","lab2")]; head(lat50)
-lat50.cc <- term[complete.cases(lat50), ]
-
-lat50.summ <- lat50.cc %>%
-  count(treatment, species, population)
+# require(plyr)
+# 
+# term <- pheno[, c("population","species","tbb","treatment","lab2")]; head(term)
+# term.cc <- term[complete.cases(term), ]
+# 
+# term.summ <- term.cc %>%
+#   count(treatment, species, population)
+# 
+# lat80 <- pheno[, c("population","species","latbb80","treatment","lab2")]; head(lat80)
+# lat80.cc <- term[complete.cases(lat80), ]
+# 
+# lat80.summ <- lat80.cc %>%
+#   count(treatment, species, population)
+# 
+# lat50 <- pheno[, c("population","species","latbb50","treatment","lab2")]; head(lat50)
+# lat50.cc <- term[complete.cases(lat50), ]
+# 
+# lat50.summ <- lat50.cc %>%
+#   count(treatment, species, population)
 
 
 

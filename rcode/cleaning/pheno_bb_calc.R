@@ -133,10 +133,10 @@ terminalbb <- aggregate(bursted["day"],
 #############################################################
 
 #What if I would to use a similar approach as above, but start by calculating when the three bbch levels over phase 7 sum to 80%?
-d <- gc
+dlat <- gc
 #Task is to select bbch.1 7 and above, sum percentages, then get 1st day where percentage above 80%
 #1. reshape data so it is in long format 
-dlong <- gather(d, key = "bbchL", value = "stage", c(bbch.l, bbch2.l, bbch3.l))
+dlong <- gather(dlat, key = "bbchL", value = "stage", c(bbch.l, bbch2.l, bbch3.l))
 #dlong <- gather(dlong, key = "percentL", value = "l.percent", c(percent.l, percent2.l,percent3.l))
 
 #put relevent percentages with stages - a bit clunky but does the job 

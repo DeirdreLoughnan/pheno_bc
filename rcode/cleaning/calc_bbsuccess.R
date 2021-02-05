@@ -22,8 +22,9 @@ d <- read.csv("input/bc_phenology_Feb42021.csv", header=TRUE, na.strings=c("","N
 # 20 species from mp,20 species from sm; so in theory there should be 2560 samples, but after chilling we had 
 21*8*8*2
 alive <- subset(d, bbch.l > 0)
-length(unique(alive$lab2)) #2316
+length(unique(alive$lab2)) #2313
 
+dead <- subset(d, bbch.l < 0)
 1-(2316/2560)
 # so 9.25 of samples did not budburst, either because they were dead, or becuase of insufficient conditions
 
@@ -94,7 +95,7 @@ count <- table(low$species)
 sum(count)
 # For species in both pops there were 128 samples max, so rub par 40% of the time the terminal bud did not bb, for ace gla and sorsco it was 25%
 #460 samples did not have terminal bb; 
-460/2496
+459/2496 #18.4
 ####################################################################################################################
 # This code is taken from Dan Flynn and cleaning the east coast data (found in the budchill repo)
 # 1. for both terminal and lateral buds, what is the max stage within a row? Identify which rows are greater or equal to the specific BBCH stage
@@ -125,3 +126,34 @@ trt.succ <- terminalbb %>%
 
 amealn <- subset(terminalbb, species == "amealn")
 
+######################################################
+dlat <- gc
+#Task is to select bbch.1 7 and above, sum percentages, then get 1st day where percentage above 80%
+#1. reshape data so it is in long format 
+dlong <- gather(dlat, key = "bbchL", value = "stage", c(bbch.l, bbch2.l, bbch3.l))
+#dlong <- gather(dlong, key = "percentL", value = "l.percent", c(percent.l, percent2.l,percent3.l))
+
+#put relevent percentages with stages - a bit clunky but does the job 
+dlong$bbchPercent <- dlong$percent.l
+dlong$bbchPercent [dlong$bbchL == "bbch2.l"] <- dlong$percent2.l [dlong$bbchL == "bbch2.l"] 
+dlong$bbchPercent [dlong$bbchL == "bbch3.l"] <- dlong$percent3.l [dlong$bbchL == "bbch3.l"] 
+
+#head(dlong)
+#str(dlong)
+
+#Remove na rows
+dlong <- dlong[!is.na(dlong$stage), ]
+
+#1. Select bbch.1 7 and above
+dlong7 <- dlong[dlong$stage >= 7, ]
+
+#sum percentages each sample
+#sumPercent <- aggregate(dlong7$bbchPercent, by = list(Category = dlong7$lab2), FUN = sum)
+sumPercent <- aggregate(dlong7$bbchPercent, by = list(Category = dlong7$lab2, day = dlong7$day), FUN = sum)
+
+names(sumPercent) <- c("lab2", "day", "sumPercent")
+#names(sumPercent) <- c("lab2", "day.l.bb", "sumPercent")
+
+dlong7sum <- merge(dlong7, sumPercent, by = c("lab2", 'day'))
+
+dead <- subset(dlong7sum, sumPercent < 0)

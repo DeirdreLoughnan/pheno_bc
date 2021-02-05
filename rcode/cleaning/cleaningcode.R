@@ -30,13 +30,13 @@ df <- df[order(df$day),]
 unique(df$day)
 #These are all misplaced comments
 
-
+head(df)
 unique(df$X22)
 unique(df$comments) 
 names(df)
 #subsetting out the sporatic comments and the final percent columns that are not actually filled out
 df <- df[ , c("day", "population","treatment","indiv","flask","species","bbch.t","percent.t","bbch.l"
-              ,"percent.l","bbch2.l","percent2.l","bbch3.l","percent3.l","bbch4.t","percent4.t")]
+              ,"percent.l","bbch2.l","percent2.l","bbch3.l","percent3.l","bbch4.t","percent4.t", "comments")]
 
 
 #Double check that there are no random typos
@@ -433,7 +433,7 @@ df$percent4.t[which(df$species =="menfer")] <-"NA"
 # For the sake of cleaning the data I am going to remove the extra columns I added:
 names(df)
 df1 <- df[ , c("day", "population","indiv","treatment","flask","species","bbch.t","percent.t","bbch.l"
-            ,"percent.l","bbch2.l","percent2.l","bbch3.l","percent3.l","bbch4.t","percent4.t")]
+            ,"percent.l","bbch2.l","percent2.l","bbch3.l","percent3.l","bbch4.t","percent4.t", "comments")]
 
 names(df1)
 head(df1)
@@ -520,8 +520,8 @@ head(d)
 
 #head(ddups)
 
-length(unique(d$lab)) 
-length(unique(d$lab2))
+length(unique(d$lab))  #2400
+length(unique(d$lab2)) # 2619
 
 
 # How many indiv of each sp are there?
@@ -540,9 +540,22 @@ d <- as.data.frame(d);head(d)
 
 head(df1)
 
-#where is the extra corsto?
-d$bbch.t <- as.numeric(d$bbch.t); head(d)
+# Ones that either died, broke, or were put back wrong according to my notes:
+discard <- c("sm.HC.HP.LF.8.sorsco.1","sm.HC.LP.LF.13.sorsco.1","sm.HC.LP.HF.2.sorsco.1", "mp.Lc.LP.LF.1.spibet","sm.Hc.LP.LF.28.shecan","sm.LC.HP.HF.33.vibedu.2", "sm.LC.HP.HF.38.spibet.2", "mp.LC.HP.LF.28.menfer.1", "sm.LC.LP.HF.13.poptre.2", "sm.LC.LP.LF.21.sorsco.1", "sm.HC.HP.HF.25.vibedu.1","mp.HC.LP.LF.30.riblac.1", "mp.LC.HP.HF.15.acegla.1", "mp.LC.HP.HF.26.acegla.1", "sm.LC.HP.LF.4.popbal.1",  "sm.LC.LP.HF.23.amealn.1", "mp.LC.LP.HF.15.alninc.1","sm.LC.HP.HF.2.loninv.1","sm.LC.LP.HF.13.alnvir.1","mp.LC.HP.LF.21.symalb.1","sm.LC.HP.HF.20.poptre.1","mp.HC.HP.HF.1.acegla.1","sm.HC.HP.LF.14.poptre.1","sm.HC.LP.HF.5.acegla.1","mp.HC.LP.HF.19.popbal.1","mp.HC.LP.HF.33.vacmem.1","mp.HC.LP.LF.38.corsto.2","sm.HC.HP.HF.10.rubpar.1", "mp.HC.HP.LF.27.vacmem.2", "sm.HC.HP.LF.5.rubpar.1",  "sm.HC.HP.LF.29.poptre.1", "sm.HC.HP.HF.31.alninc.1", "sm.LC.HP.HF.6.alnvir.1","sm.LC.HP.LF.12.sorsco.1", "sm.LC.LP.LF.8.spipyr.1",  "sm.LC.HP.HF.13.rubpar.1", "mp.LC.HP.LF.5.riblac.1",  "mp.HC.LP.HF.9.acegla.1",  "mp.HC.LP.HF.32.shecan.1","mp.HC.LP.HF.35.acegla.1", "mp.LC.HP.HF.3.poptre.1",  "mp.LC.HP.HF.20.acegla.1", "sm.LC.HP.HF.36.acegla.1", "sm.LC.HP.HF.38.vacmem.1","sm.LC.HP.LF.35.acegla.1","mp.LC.LP.HF.39.samrac.1","mp.LC.LP.LF.20.acegla.1","mp.HC.HP.HF.3.spibet.1",  "mp.HC.HP.HF.3.spibet.2",  "mp.HC.HP.HF.3.symalb.1",  "mp.HC.HP.HF.32.spibet.1", "sm.HC.HP.LF.3.sorsco.1","sm.HC.HP.LF.3.sorsco.2",  "sm.HC.HP.LF.34.sorsco.1", "sm.HC.LP.HF.10.sorsco.1", "sm.HC.LP.LF.3.sorsco.1", "sm.HC.LP.LF.20.sorsco.1","sm.HC.LP.LF.26.sorsco.1", "sm.HC.LP.LF.37.sorsco.1", "sm.HC.LP.LF.38.sorsco.1", "sm.HC.HP.LF.39.sorsco.1", "sm.HC.HP.HF.32.sorsco.1","sm.HC.HP.HF.35.sorsco.1", "sm.HC.LP.LF.19.sorsco.1", "sm.HC.LP.LF.24.sorsco.1", "sm.HC.HP.HF.22.sorsco.1")
 
+d <- d[!d$lab2 %in% discard,]
+
+# Something happened on the 10th and the 15 that some rows got duplicated, not a killer mistake, since so few samples were doing anything yet
+
+oops10 <- c("sm.LC.HP.LF.1.corsto.2","sm.LC.HP.LF.39.corsto.2","sm.LC.HP.LF.28.corsto.2","sm.LC.HP.LF.1.acegla.2","sm.LC.LP.HF.11.acegla.2", "mp.LC.LP.LF.1.acegla.2", "sm.LC.HP.LF.28.alninc.2","sm.LC.LP.HF.22.alninc.2","mp.LC.LP.HF.12.alnvir.2","sm.LC.HP.LF.17.loninv.2","sm.LC.LP.HF.28.loninv.2","sm.LC.LP.HF.27.menfer.2", "sm.LC.LP.HF.27.poptre.2","sm.LC.HP.LF.17.riblac.2", "sm.LC.LP.HF.22.riblac.2", "sm.LC.HP.HF.30.rubpar.2","mp.LC.LP.HF.12.shecan.2", "sm.LC.HP.LF.1.spibet.2", "sm.LC.LP.HF.9.spibet.2","sm.LC.LP.HF.22.spibet.2","sm.LC.HP.LF.28.spibet.2","sm.LC.HP.LF.39.spipyr.2","mp.LC.LP.HF.12.spipyr.2","sm.LC.LP.HF.28.spipyr.2","sm.LC.HP.LF.17.vibedu.2","sm.LC.HP.LF.39.vibedu.2","sm.LC.LP.HF.27.vibedu.2","sm.LC.LP.HF.22.vibedu.2","sm.LC.LP.HF.28.vibedu.2","sm.HC.LP.LF.7.vibedu.1","sm.LC.LP.HF.27.shecan.2","mp.LC.LP.HF.12.amealn.2","sm.LC.LP.HF.28.amealn.2","sm.LC.HP.LF.17.amealn.2","sm.LC.LP.HF.9.alninc.2","sm.LC.HP.HF.30.symalb.2","sm.LC.HP.LF.28.sorsco.2","sm.HC.LP.HF.16.sorsco.1","sm.LC.HP.LF.17.vibedu.2","sm.LC.LP.HF.27.vibedu.2","sm.LC.LP.HF.28.vibedu.2","sm.LC.LP.HF.22.vibedu.2","sm.HC.LP.LF.7.vibedu.1")
+
+oops15 <- c("sm.LC.HP.LF.13.corsto.1", "sm.LC.LP.HF.31.acegla.2","sm.LC.HP.HF.31.alninc.2", "sm.LC.LP.LF.1.alninc.2","mp.LC.LP.HF.2.menfer.2","mp.LC.LP.HF.40.menfer.2","sm.LC.LP.HF.32.menfer.2", "mp.LC.HP.HF.20.poptre.1", "sm.LC_HP_HF.20.poptre.1" , "sm.LC.LP.LF.1.poptre.2","sm.LC.LP.LF.10.shecan.1","sm.LC.LP.LF.38.spibet.2", "sm.LC.HP.LF.39.spipyr.2", "mp.LC.LP.HF.21.spipyr.1","mp.LC.HP.HF.20.symalb.1","sm.LC.HP.LF.39.symalb.2","mp.LC.HP.HF.20.vacmem.1","sm.LC.HP.HF.30.vacmem.2","sm.LC.HP.LF.21.vacmem.1","sm.LC.LP.LF.1.vacmem.2","sm.LC.HP.LF.16.vibedu.2","sm.LC.HP.LF.39.vibedu.2","sm.LC.LP.LF.1.vibedu.2","mp.LC.LP.HF.30.sorsco.2", "mp.LC.HP.HF.20.symalb.1","mp.LC.HP.HF.20.sorsco.1"," mp.LC.LP.HF.21.rhoalb.1", "mp.LC.LP.HF.21.menfer.1", "sm.LC.LP.HF.13.poptre.2","sm.LC.LP.LF.30.shecan.2","sm.HC.HP.HF.8.sorsco.1","sm.HC.HP.HF.29.sorsco.1","sm.HC.LP.HF.25.sorsco.1","sm.HC.LP.HF.32.sorsco.1","sm.HC.LP.HF.3.sorsco.2","sm.LC.LP.LF.12.sorsco.2","sm.LC.HP.HF.19.sorsco.1","sm.LC.LP.HF.16.symalb.1","sm.LC.HP.HF.6.symalb.1","sm.LC.HP.HF.10.symalb.2","mp.LC.LP.HF.21.acegla.2","mp.LC.LP.HF.2.loninv.1","mp.LC.LP.HF.2.poptre.1","mp.LC.LP.HF.21.rhoalb.1","mp.HC.LP.HF.33.rubpar.2","sm.LC.HP.HF.30.symalb.1","sm.LC.HP.LF.17.shecan.2","sm.LC.LP.HF.37.shecan.1", "sm.LC.LP.HF.38.shecan.1","sm.LC.LP.HF.5.shecan.1","sm.LC.LP.LF.7.shecan.1","mp.LC.HP.HF.8.spibet.1", "mp.LC.LP.HF.39.spibet.1", "sm.LC.HP.HF.38.symalb.1", "sm.LC.HP.HF.38.symalb.2", "sm.LC.HP.HF.40.symalb.1","sm.HC.HP.LF.33.symalb.1", "sm.HC.HP.LF.33.symalb.2","mp.LC.HP.HF.20.sorsco.1","sm.LC.HP.LF.13.sorsco.1","sm.LC.HP.LF.21.sorsco.1","sm.LC.HP.LF.28.sorsco.2","sm.LC.HP.LF.7.sorsco.1","mp.LC.LP.HF.30.sorsco.2","sm.LC.LP.HF.9.sorsco.2","sm.HC.HP.HF.1.sorsco.1","sm.HC.HP.HF.9.sorsco.1","sm.HC.LP.HF.16.sorsco.1","sm.HC.LP.HF.3.sorsco.1", "sm.HC.LP.HF.3.sorsco.2", "sm.HC.LP.HF.31.sorsco.1","sm.LC.HP.HF.30.vacmem.2","sm.LC.HP.LF.21.vacmem.1","sm.LC.LP.LF.1.vacmem.2","sm.LC.LP.LF.1.vacmem.2","sm.LC.HP.LF.39.vibedu.2","sm.LC.LP.LF.1.vibedu.2","sm.LC.HP.LF.16.vibedu.2")
+
+d <- d[!d$lab2 %in% oops10,]
+d <- d[!d$lab2 %in% oops15,]
+nrow(d)-nrow(dtemp)
+
+# double checking i didn't miss any 
 # c0 <- subset(d, species == "acegla" & treatment == "LC.HP.HF");table(c0$lab2)
 # c0 <- subset(d, species == "acegla" & treatment == "LC.HP.LF");table(c0$lab2)
 # c0 <- subset(d, species == "acegla" & treatment == "LC.LP.HF");table(c0$lab2)
@@ -632,7 +645,7 @@ d$bbch.t <- as.numeric(d$bbch.t); head(d)
 # c0 <- subset(d, species == "poptre" & treatment == "HC.HP.LF");table(c0$lab2)
 # c0 <- subset(d, species == "poptre" & treatment == "HC.LP.HF");table(c0$lab2)
 # c0 <- subset(d, species == "poptre" & treatment == "HC.LP.LF");table(c0$lab2)
-# 
+# #
 # c0 <- subset(d, species == "rhoalb" & treatment == "LC.HP.HF");table(c0$lab2)
 # c0 <- subset(d, species == "rhoalb" & treatment == "LC.HP.LF");table(c0$lab2)
 # c0 <- subset(d, species == "rhoalb" & treatment == "LC.LP.HF");table(c0$lab2)
@@ -651,14 +664,14 @@ d$bbch.t <- as.numeric(d$bbch.t); head(d)
 # c0 <- subset(d, species == "riblac" & treatment == "HC.LP.HF");table(c0$lab2)
 # c0 <- subset(d, species == "riblac" & treatment == "HC.LP.LF");table(c0$lab2)
 # 
-c0 <- subset(d, species == "rubpar" & treatment == "LC.HP.HF");table(c0$lab2)
-c0 <- subset(d, species == "rubpar" & treatment == "LC.HP.LF");table(c0$lab2)
-c0 <- subset(d, species == "rubpar" & treatment == "LC.LP.HF");table(c0$lab2)
-c0 <- subset(d, species == "rubpar" & treatment == "LC.LP.LF");table(c0$lab2)
-c0 <- subset(d, species == "rubpar" & treatment == "HC.HP.HF");table(c0$lab2)
-c0 <- subset(d, species == "rubpar" & treatment == "HC.HP.LF");table(c0$lab2)
-c0 <- subset(d, species == "rubpar" & treatment == "HC.LP.HF");table(c0$lab2)
-c0 <- subset(d, species == "rubpar" & treatment == "HC.LP.LF");table(c0$lab2)
+# c0 <- subset(d, species == "rubpar" & treatment == "LC.HP.HF");table(c0$lab2)
+# c0 <- subset(d, species == "rubpar" & treatment == "LC.HP.LF");table(c0$lab2)
+# c0 <- subset(d, species == "rubpar" & treatment == "LC.LP.HF");table(c0$lab2)
+# c0 <- subset(d, species == "rubpar" & treatment == "LC.LP.LF");table(c0$lab2)
+# c0 <- subset(d, species == "rubpar" & treatment == "HC.HP.HF");table(c0$lab2)
+# c0 <- subset(d, species == "rubpar" & treatment == "HC.HP.LF");table(c0$lab2)
+# c0 <- subset(d, species == "rubpar" & treatment == "HC.LP.HF");table(c0$lab2)
+# c0 <- subset(d, species == "rubpar" & treatment == "HC.LP.LF");table(c0$lab2)
 # 
 # c0 <- subset(d, species == "samrac" & treatment == "LC.HP.HF");table(c0$lab2)
 # c0 <- subset(d, species == "samrac" & treatment == "LC.HP.LF");table(c0$lab2)
@@ -704,7 +717,7 @@ c0 <- subset(d, species == "rubpar" & treatment == "HC.LP.LF");table(c0$lab2)
 # c0 <- subset(d, species == "symalb" & treatment == "HC.HP.LF");table(c0$lab2)
 # c0 <- subset(d, species == "symalb" & treatment == "HC.LP.HF");table(c0$lab2)
 # c0 <- subset(d, species == "symalb" & treatment == "HC.LP.LF");table(c0$lab2)
-
+# 
 # c0 <- subset(d, species == "sorsco" & treatment == "LC.HP.HF");table(c0$lab2)
 # c0 <- subset(d, species == "sorsco" & treatment == "LC.HP.LF");table(c0$lab2)
 # c0 <- subset(d, species == "sorsco" & treatment == "LC.LP.HF");table(c0$lab2)
@@ -713,7 +726,7 @@ c0 <- subset(d, species == "rubpar" & treatment == "HC.LP.LF");table(c0$lab2)
 # c0 <- subset(d, species == "sorsco" & treatment == "HC.HP.LF");table(c0$lab2)
 # c0 <- subset(d, species == "sorsco" & treatment == "HC.LP.HF");table(c0$lab2)
 # c0 <- subset(d, species == "sorsco" & treatment == "HC.LP.LF");table(c0$lab2)
-
+# 
 # c0 <- subset(d, species == "vacmem" & treatment == "LC.HP.HF");table(c0$lab2)
 # c0 <- subset(d, species == "vacmem" & treatment == "LC.HP.LF");table(c0$lab2)
 # c0 <- subset(d, species == "vacmem" & treatment == "LC.LP.HF");table(c0$lab2)
@@ -732,51 +745,64 @@ c0 <- subset(d, species == "rubpar" & treatment == "HC.LP.LF");table(c0$lab2)
 # c0 <- subset(d, species == "vibedu" & treatment == "HC.LP.HF");table(c0$lab2)
 # c0 <- subset(d, species == "vibedu" & treatment == "HC.LP.LF");table(c0$lab2)
 
-dups <- c("mp.LC.HP.HF.15.acegla.1","sm.LC.HP.LF.1.corsto.2","sm.LC.HP.LF.39.corsto.2","sm.LC.HP.LF.13.corsto.1","sm.LC.HP.LF.28.corsto.2","mp.LC.HP.HF.15.acegla.1","sm.LC.HP.LF.1.acegla.2","mp.LC.LP.HF.21.acegla.2","sm.LC.LP.HF.11.acegla.2","sm.LC.LP.HF.31.acegla.2","mp.LC.LP.LF.1.acegla.2","sm.LC.HP.HF.31.alninc.2","sm.LC.HP.LF.28.alninc.2","sm.LC.LP.HF.9.alninc.2","sm.LC.LP.HF.22.alninc.2","sm.LC.LP.LF.1.alninc.2","mp.LC.LP.HF.12.alnvir.2","sm.LC.HP.LF.17.loninv.2","sm.LC.LP.HF.28.loninv.2","mp.LC.LP.HF.2.menfer.2","mp.LC.LP.HF.40.menfer.2","sm.LC.LP.HF.27.menfer.2","sm.LC.LP.HF.32.menfer.2","mp.LC.HP.HF.20.poptre.1","sm.LC.HP.HF.20.poptre.1","sm.LC.LP.HF.27.poptre.2", "sm.LC.LP.HF.13.poptre.2","sm.LC.LP.LF.1.poptre.2","sm.LC.HP.LF.17.riblac.2", "sm.LC.LP.HF.22.riblac.2","sm.LC.HP.HF.30.rubpar.2","mp.LC.LP.HF.12.shecan.2","sm.LC.LP.LF.10.shecan.1","sm.LC.HP.LF.1.spibet.2","sm.LC.HP.LF.28.spibet.2","sm.LC.LP.HF.9.spibet.2","sm.LC.LP.HF.22.spibet.2","sm.LC.LP.LF.38.spibet.2", "sm.LC.HP.LF.39.spipyr.2", "mp.LC.LP.HF.12.spipyr.2","mp.LC.LP.HF.21.spipyr.1","sm.LC.LP.HF.28.spipyr.2","mp.LC.HP.HF.20.symalb.1","sm.LC.HP.LF.39.symalb.2","mp.LC.HP.HF.20.vacmem.1","sm.LC.HP.HF.30.vacmem.2","sm.LC.HP.LF.21.vacmem.1","sm.LC.LP.LF.1.vacmem.2","sm.LC.HP.LF.17.vibedu.2","sm.LC.HP.LF.16.vibedu.2","sm.LC.HP.LF.39.vibedu.2","sm.LC.LP.HF.27.vibedu.2","sm.LC.LP.HF.22.vibedu.2","sm.LC.LP.HF.28.vibedu.2","sm.LC.LP.LF.1.vibedu.2","sm.HC.LP.LF.7.vibedu.1","sm.LC.LP.HF.27.shecan.2","sm.LC.LP.LF.30.shecan.2","sm.HC.HP.HF.8.sorsco.1","sm.HC.HP.HF.29.sorsco.1","sm.HC.LP.HF.25.sorsco.1","sm.HC.LP.HF.32.sorsco.1","sm.HC.LP.HF.3.sorsco.2","sm.LC.LP.HF.9.sorsco.3","mp.LC.LP.HF.30.sorsco.2","sm.LC.LP.LF.12.sorsco.2","sm.LC.HP.HF.19.sorsco.1","sm.LC.LP.HF.16.symalb.1","sm.LC.HP.HF.6.symalb.1","sm.LC.HP.HF.38.symalb.2","sm.LC.HP.HF.10.symalb.2","sm.LC.HP.HF.10.symalb.2","mp.LC.LP.HF.12.amealn.2","sm.LC.LP.HF.28.amealn.2","mp.LC.HP.HF.20.sorsco.1","sm.LC.HP.LF.13.sorsco.1","sm.LC.HP.LF.28.sorsco.2","sm.LC.HP.LF.21.sorsco.1","sm.LC.HP.LF.21.sorsco.1","sm.LC.HP.LF.7.sorsco.1", "mp.LC.HP.LF.24.sorsco.1","mp.LC.HP.LF.24.sorsco.2", "sm.LC.HP.HF.30.symalb.2","sm.LC.HP.HF.30.symalb.1","sm.LC.HP.LF.13.sorsco.1","mp.LC.LP.HF.19.sorsco.2","mp.LC.LP.HF.19.sorsco.2","sm.LC.LP.HF.9.sorsco.2","sm.LC.LP.HF.7.sorsco.1",  "sm.LC.LP.LF.30.sorsco.1","sm.LC.LP.LF.21.sorsco.1","sm.HC.HP.LF.39.sorsco.1","sm.HC.HP.HF.32.sorsco.1","sm.HC.HP.HF.35.sorsco.1","sm.HC.LP.HF.10.sorsco.1","mp.HC.HP.HF.3.symalb.1","sm.HC.HP.LF.3.sorsco.1","sm.HC.HP.LF.34.sorsco.1","sm.HC.LP.LF.3.sorsco.1","sm.HC.LP.LF.13.sorsco.1","sm.HC.LP.LF.20.sorsco.1","sm.HC.LP.LF.37.sorsco.1","sm.HC.LP.LF.38.sorsco.1","sm.HC.LP.LF.19.sorsco.1","sm.HC.LP.LF.24.sorsco.1","sm.HC.LP.LF.26.sorsco.1","sm.HC.HP.HF.22.sorsco.1","sm.HC.HP.LF.8.sorsco.1","sm.HC.HP.LF.11.sorsco.1","sm.HC.LP.HF.2.sorsco.1","sm.HC.LP.HF.16.sorsco.1","sm.HC.LP.HF.3.shecan.1","sm.HC.LP.LF.13.shecan.1","sm.HC.HP.LF.33.symalb.1","mp.LC.LP.HF.2.spibet.1", "mp.LC.LP.HF.2.spibet.1","mp.LC.LP.HF.2.spibet.1","sm.LC.HP.HF.30.symalb.1","sm.LC.HP.HF.38.spibet.1", "sm.HC.LP.HF.22.acegla.2","sm.HC.LP.LF.36.acegla.1","sm.HC.LP.LF.2.corsto.1","mp.HC.LP.HF.37.loninv.1","sm.HC.HP.HF.25.vibedu.1","mp_LC_LP_HF_2_poptre","mp.HC.LP.HF.4.rubpar.1")
-
-temp <- subset(d, lab == "sm_LC_HP_HF_33_vibedu")
-temp <- subset(d, lab2 == "sm.LC.HP.HF.38.spibet")
-test <- d[d$lab2 %in% dups,]
-
-#extra rowsaccidentally added : mostly on day 10 and 15
-#"sm.LC.HP.LF.1.corsto.2","sm.LC.HP.LF.39.corsto.2","sm.LC.HP.LF.28.corsto.2","sm.LC.HP.LF.1.acegla.2","sm.LC.LP.HF.11.acegla.2", "mp.LC.LP.LF.1.acegla.2", "sm.LC.HP.LF.28.alninc.2","sm.LC.LP.HF.22.alninc.2","mp.LC.LP.HF.12.alnvir.2","sm.LC.HP.LF.17.loninv.2","sm.LC.LP.HF.28.loninv.2","sm.LC.LP.HF.27.menfer.2", "sm.LC.LP.HF.27.poptre.2","sm.LC.HP.LF.17.riblac.2, "sm.LC.LP.HF.22.riblac.2", "sm.LC.HP.HF.30.rubpar.2","mp.LC.LP.HF.12.shecan.2", "sm.LC.HP.LF.1.spibet.2", "sm.LC.LP.HF.9.spibet.2","sm.LC.LP.HF.22.spibet.2"
-#"sm.LC.HP.LF.28.spibet.2",  "sm.LC.HP.LF.39.spipyr.2,"mp.LC.LP.HF.12.spipyr.2","sm.LC.LP.HF.28.spipyr.2","sm.LC.HP.LF.17.vibedu.2","sm.LC.HP.LF.39.vibedu.2","sm.LC.LP.HF.27.vibedu.2","sm.LC.LP.HF.22.vibedu.2","sm.LC.LP.HF.28.vibedu.2,"sm.HC.LP.LF.7.vibedu.1","sm.LC.LP.HF.27.shecan.2","mp.LC.LP.HF.12.amealn.2","sm.LC.LP.HF.28.amealn.2"
-
-# samples put in wrong flasks: 15-19
-#"mp.LC.HP.HF.15.acegla.1" - an unknown indiv that got put in flask 15
-# sm.LC.HP.LF.13.corsto.1, "sm.LC.LP.HF.31.acegla.2","sm.LC.HP.HF.31.alninc.2, "sm.LC.LP.LF.1.alninc.2","mp.LC.LP.HF.2.menfer.2","mp.LC.LP.HF.40.menfer.2","sm.LC.LP.HF.32.menfer.2", "mp.LC.HP.HF.20.poptre.1", "sm.LC_HP_HF.20.poptre.1" , "sm.LC.LP.LF.1.poptre.2","sm.LC.LP.LF.10.shecan.1","sm.LC.LP.LF.38.spibet.2", "sm.LC.HP.LF.39.spipyr.2, "mp.LC.LP.HF.21.spipyr.1","mp.LC.HP.HF.20.symalb.1","sm.LC.HP.LF.39.symalb.2","mp.LC.HP.HF.20.vacmem.1","sm.LC.HP.HF.30.vacmem.2","sm.LC.HP.LF.21.vacmem.1","sm.LC.LP.LF.1.vacmem.2","sm.LC.HP.LF.16.vibedu.2","sm.LC.HP.LF.39.vibedu.2","sm.LC.LP.LF.1.vibedu.2","mp.LC.LP.HF.30.sorsco.2","mp.LC.HP.HF.20.symalb.1",mp.LC.HP.HF.20.sorsco.1
-
-# a lot of obs
-#"sm.LC.LP.HF.13.poptre.2","sm.LC.LP.LF.30.shecan.2","sm.HC.HP.HF.8.sorsco.1","sm.HC.HP.HF.29.sorsco.1","sm.HC.LP.HF.25.sorsco.1","sm.HC.LP.HF.32.sorsco.1","sm.HC.LP.HF.3.sorsco.2","sm.LC.LP.LF.12.sorsco.2","sm.LC.HP.HF.19.sorsco.1","sm.LC.LP.HF.16.symalb.1","sm.LC.HP.HF.6.symalb.1","sm.LC.HP.HF.10.symalb.2"
-
-test <- d[d$lab2 %in% dups,]
-
-d <- d[!d$lab2 %in% dups,]
-
-sorsco <-subset(d, species =="sorsco")
-sort((unique(sorsco$lab2)))
-length(unique(sorsco$lab2))
-
-symalb <-subset(d, species =="symalb")
-sort((unique(symalb$lab2)))
-length(unique(sorsco$lab2))
-
-trt.succ <- symalb %>%
-  group_by(treatment) %>%
-  summarise(no_rows = length(unique(lab2)))
-
-rubpar <-subset(d, species =="rubpar")
-sort((unique(rub$lab2)))
-length(unique(sorsco$lab2))
-
-trt.succ <- rubpar %>%
-  group_by(treatment) %>%
-  summarise(no_rows = length(unique(lab2)))
-
-
-
+# sorsco <-subset(d, species =="sorsco")
+# sort((unique(sorsco$lab2)))
+# length(unique(sorsco$lab2))
+# 
+# symalb <-subset(d, species =="symalb")
+# sort((unique(symalb$lab2)))
+# length(unique(sorsco$lab2))
+# 
+# trt.succ <- symalb %>%
+#   group_by(treatment) %>%
+#   summarise(no_rows = length(unique(lab2)))
+# 
+# rubpar <-subset(d, species =="rubpar")
+# sort((unique(rub$lab2)))
+# length(unique(sorsco$lab2))
+# 
+# trt.succ <- rubpar %>%
+#   group_by(treatment) %>%
+#   summarise(no_rows = length(unique(lab2)))
+# 
+# amealn <-subset(d, species =="amealn")
+# 
+# trt.succ <- amealn %>%
+#   group_by(treatment) %>%
+#   summarise(no_rows = length(unique(lab2)))
+# 
+# menfer <-subset(d, species =="menfer")
+# 
+# trt.succ <- menfer %>%
+#   group_by(treatment) %>%
+#   summarise(no_rows = length(unique(lab2)))
+# 
+# rhoalb <-subset(d, species =="rhoalb")
+# 
+# trt.succ <- rhoalb %>%
+#   group_by(treatment) %>%
+#   summarise(no_rows = length(unique(lab2)))
+# 
+# loninv <-subset(d, species =="loninv")
+# 
+# trt.succ <- loninv %>%
+#   group_by(treatment) %>%
+#   summarise(no_rows = length(unique(lab2)))
+# 
+# shecan <-subset(d, species =="shecan")
+# 
+# trt.succ <- shecan %>%
+#   group_by(treatment) %>%
+#   summarise(no_rows = length(unique(lab2)))
+# 
+# poptre <-subset(d, species =="poptre")
+# 
+# trt.succ <- poptre %>%
+#   group_by(treatment) %>%
+#   summarise(no_rows = length(unique(lab2)))
+# 
 # Done! Writing the final datafile 
-write.csv(d,"input/bc_phenology_Feb42021.csv", row.names=FALSE)
+write.csv(d,"input/bc_phenology_Feb52021.csv", row.names=FALSE)
 
 # There are a few unexplained extras:
 #corsto
@@ -976,4 +1002,14 @@ write.csv(d,"input/bc_phenology_Feb42021.csv", row.names=FALSE)
 # unique(c2$lab2)
 # temp <- subset(d, lab2 == "mp.LC.HP.HF.30.symalb.2")
 
+dead <- c("dead","missing","bud driedout","buds dead","I guess not dead…","term dead","buds died", "died","term dead; dead","extra poptre","extra spibet","buds dried out","bud dead","died -buds dead","died -remaining buds deaed","dead, remaining buds dead","dies;", "died, buds dried", "died,","dies","Dead",  "extra spipyr",  "extra shecan","I guess not dead?","buds are dead","remaining buds are dead","dead -remianing buds dead","dies")
+dcom <- d[d$comments %in% dead,]
 
+dcom$bbch.l <- as.numeric(as.character(dcom$bbch.l)) 
+dcom.t <- subset(dcom, bbch.t < 7)
+dcom.tl <- subset(dcom.t, bbch.l < 7)
+
+unique(dcom.tl$lab2)
+
+ex<-c("XX","x", "xx")
+dex <- d[d$indiv %in% ex,]

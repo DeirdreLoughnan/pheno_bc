@@ -14,29 +14,36 @@ rm(list = ls())
 options(stringsAsFactors = FALSE)
 
 # read in the cleaning phenology data:
-d <- read.csv("input/bc_phenology_Feb42021.csv", header=TRUE, na.strings=c("","NA"))
+source('rcode/cleaning/pheno_bb_calc.R')
 
 #source("rcode/cleaning/cleaningcode.R")
 
 # what does the data look like generally?
 # 20 species from mp,20 species from sm; so in theory there should be 2560 samples, but after chilling we had 
-21*8*8*2
-alive <- subset(d, bbch.l > 0)
-length(unique(alive$lab2)) #2313
-
-dead <- subset(d, bbch.l < 0)
-1-(2316/2560)
-# so 9.25 of samples did not budburst, either because they were dead, or becuase of insufficient conditions
-
 
 # How many indiv of each sp are there?
-d0 <- subset(d, day == "0")
-table(d0$species)
 
 d88 <- subset(d, day == "88")
-table(d88$species)
+surv <- sum(table(d88$species))
+table(d88$species) # acegla had the worst survivorship, followed by sorsco, rubpar, vacmem, spibet and spirpyr
 
-d <- as.data.frame(d)
+initial <- 18 * 128 + 3 * 64 # 2496 samples went into chilling, 2458 went into forcing and survived the experiment
+
+1 - surv/initial # had 1.52 % mortatility 
+
+###### Excluding the dead, how many samples did not budburst? ###############
+
+smpin <- d88 %>%
+  group_by(species) %>%
+  summarise(no_rows = length(species))
+
+smpbb <- pheno %>%
+  group_by(species) %>%
+  summarise(no_rows = length(species))
+
+spwithbb <- merge(smpin, smpbb, by = "species")
+spwithbb$prop.bb <- spwithbb$no_rows.y/spwithbb$no_rows.x
+
 
 ##### Adding individual ############
 # indiv <- read.csv("input/indiv.no.cleaned.csv", na.strings = "")
@@ -120,40 +127,41 @@ dx <- dx[,c("lab2", "population", "treatment", "flask", "species"#, "indiv"
             )]
 terminalbb <- data.frame(dx, tbb, nl)
 
-trt.succ <- terminalbb %>%
+dfly <- terminalbb %>%
   group_by(species) %>%
   summarise(no_rows = length(species))
 
-amealn <- subset(terminalbb, species == "amealn")
+smpin <- d88 %>%
+  group_by(species) %>%
+  summarise(no_rows = length(species))
 
-######################################################
-dlat <- gc
-#Task is to select bbch.1 7 and above, sum percentages, then get 1st day where percentage above 80%
-#1. reshape data so it is in long format 
-dlong <- gather(dlat, key = "bbchL", value = "stage", c(bbch.l, bbch2.l, bbch3.l))
-#dlong <- gather(dlong, key = "percentL", value = "l.percent", c(percent.l, percent2.l,percent3.l))
+dfwithbb <- merge(smpin, dfly, by = "species")
+dfwithbb$prop.bb <- spwithbb$no_rows.y/spwithbb$no_rows.x
 
-#put relevent percentages with stages - a bit clunky but does the job 
-dlong$bbchPercent <- dlong$percent.l
-dlong$bbchPercent [dlong$bbchL == "bbch2.l"] <- dlong$percent2.l [dlong$bbchL == "bbch2.l"] 
-dlong$bbchPercent [dlong$bbchL == "bbch3.l"] <- dlong$percent3.l [dlong$bbchL == "bbch3.l"] 
+sorsco <- subset(d, species == "sorsco")
+sorsco.t <- subset( sorsco, bbch.t >= 7)
+length(unique(sorsco.t$lab2))
 
-#head(dlong)
-#str(dlong)
+terminalss <- aggregate(sorsco.t["day"],
+                        sorsco.t[c("lab2", "population", "treatment", "flask", "species")], 
+                        FUN = min)
+names(terminalss)[names(terminalss) == "day"] <- "tbb"
+head(terminalss)
+unique(terminalss$lab2)
 
-#Remove na rows
-dlong <- dlong[!is.na(dlong$stage), ]
 
-#1. Select bbch.1 7 and above
-dlong7 <- dlong[dlong$stage >= 7, ]
+alninc <- subset(d, species == "alninc")
+alninc.t <- subset( alninc, bbch.t >= 7)
+length(unique(alninc.t$lab2))
 
-#sum percentages each sample
-#sumPercent <- aggregate(dlong7$bbchPercent, by = list(Category = dlong7$lab2), FUN = sum)
-sumPercent <- aggregate(dlong7$bbchPercent, by = list(Category = dlong7$lab2, day = dlong7$day), FUN = sum)
+terminalai <- aggregate(alninc.t["day"],
+                        alninc.t[c("lab2", "population", "treatment", "flask", "species")], 
+                        FUN = min)
+names(terminalai)[names(terminalai) == "day"] <- "tbb"
+head(terminalai)
+unique(terminalai$lab2)
 
-names(sumPercent) <- c("lab2", "day", "sumPercent")
-#names(sumPercent) <- c("lab2", "day.l.bb", "sumPercent")
-
-dlong7sum <- merge(dlong7, sumPercent, by = c("lab2", 'day'))
-
-dead <- subset(dlong7sum, sumPercent < 0)
+alninc <- subset(latdaymin1, species == "alninc") ; length(unique(alninc$lab2))
+alninc <- subset(pheno, species == "alninc") ; length(unique(alninc$lab2))
+alninc.t <- subset( bursted, bbch.t >= 7 & species == "alninc"); length(unique(alninc.t$lab2))
+alninc.t <- subset( terminalbb, species == "sorsco"); length(unique(alninc.t$lab2))

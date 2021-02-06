@@ -20,28 +20,28 @@ rm(list = ls())
 options(stringsAsFactors = FALSE)
 
 # read in the cleaning phenology data:
-data <- read.csv("input/bc_phenology_Jan312021.csv", header=TRUE, na.strings=c("","NA"))
-
+d <- read.csv("input/bc_phenology_Feb52021.csv", header=TRUE, na.strings=c("","NA"))
+head(d)
 #source("rcode/cleaning/cleaningcode.R")
 
 # what does the data look like generally?
 # 20 species from mp,20 species from mp; so in theory there should be 2560 samples, but after chilling we had 
 
-alive <- subset(data, bbch.l > 0)
-length(unique(alive$lab2)) #2319
-
-1-(2319/2560)
-# so 9.4 of samples did not budburst, either because they were dead, or becuase of insufficient conditions
-
-d <- data
-# How many indiv of each sp are there?
-d0 <- subset(d, day == "0")
-table(d0$species)
-
-d88 <- subset(d, day == "88")
-table(d88$species)
-
-d <- as.data.frame(d)
+# alive <- subset(data, bbch.l > 0)
+# length(unique(alive$lab2)) #2319
+# 
+# 1-(2319/2560)
+# # so 9.4 of samples did not budburst, either because they were dead, or becuase of insufficient conditions
+# 
+#
+# # How many indiv of each sp are there?
+# d0 <- subset(d, day == "0")
+# table(d0$species)
+# 
+# d88 <- subset(d, day == "88")
+# table(d88$species)
+# 
+# d <- as.data.frame(d)
 
 ##### Adding individual ############
 # indiv <- read.csv("input/indiv.no.cleaned.csv", na.strings = "")
@@ -69,13 +69,17 @@ begin <- subset(d, day == 0)
 count.begin <- table(begin$species)
 sum(count.begin)
 
+begin <- subset(d, day == 50)
+count.begin <- table(begin$species)
+sum(count.begin)
+
 end <- subset(d, day == 88)
 count.end <- table(end$species)
 sum(count.end)
 
 d$day <- as.numeric(d$day)
 range(d$day, na.rm = TRUE) # this dataset includes the low chill greenhouse days, 
-sort(unique(data$species))
+sort(unique(d$species))
 
 
 #############################################################
@@ -107,6 +111,8 @@ bursted  <- subset(gc, bbch.t >= 7)
 terminalbb <- aggregate(bursted["day"],
                         bursted[c("lab2", "population", "treatment", "flask", "species")], 
                         FUN = min)
+names(terminalbb)[names(terminalbb) == "day"] <- "tbb"
+head(terminalbb)
 
 # below is the code used to show that the DFlynn and my data were different 
 # head(terminalbb) # here is the data for the terminal bud, there are 2406 individuals, with a value for each
@@ -185,21 +191,44 @@ latdaymin1 <- aggregate(dlong7sum1$day, by = list(Category = dlong7sum1$lab2), F
 names(latdaymin1) <- c("lab2", "latbb1")
 nrow(latdaymin1)
 
+# latdaymin80 <- aggregate(dlong7sum80["day"], dlong7sum80[c("lab2", "population", "treatment", "flask", "species")], FUN = min)
+# names(latdaymin80)[names(latdaymin80) == "day"] <- "latbb80"
+# #names(latdaymin80) <- c("lab2", "latbb80")
+# 
+# #dlong7sum80Daymin <- merge(dlong7sum80, daymin, by = "lab2")
+# length(unique(latdaymin80$lab2))
+# 
+# #Select first day with 50%, then there are 1450 rows
+# dlong7sum50 <- dlong7sum[dlong7sum$sumPercent >= 50, ]
+# latdaymin50 <- aggregate(dlong7sum50["day"], dlong7sum50[c("lab2", "population", "treatment", "flask", "species")], FUN = min)
+# names(latdaymin50)[names(latdaymin50) == "day"] <- "latbb50"
+# 
+# #Select first day of lateral bb, then there are  rows 1923
+# dlong7sum1 <- dlong7sum[dlong7sum$sumPercent > 0, ]
+# latdaymin1 <- aggregate(dlong7sum1["day"], dlong7sum1[c("lab2", "population", "treatment", "flask", "species")], FUN = min)
+# names(latdaymin1)[names(latdaymin1) == "day"] <- "latbb1"
+
+
 ######################################################
 # Combine the terminal and the lateral bb days
 #head(terminalbb)
-pheno <- merge(terminalbb, latdaymin80, by = "lab2", all.x = TRUE) # the all.x = T is telling it that I want all rows from this dataset, even if there isn't a corresponding row in latdaymin
-pheno <- merge(pheno, latdaymin50, by = "lab2", all.x = TRUE) 
-pheno <- merge(pheno, latdaymin1, by = "lab2", all.x = TRUE) 
+pheno.temp <- merge(latdaymin1, latdaymin50, by = c("lab2"), all.x = TRUE)
+pheno.temp2 <- merge(pheno.temp, latdaymin80, by = "lab2", all.x = TRUE) # the all.x = T is telling it that I want all rows from this dataset, even if there isn't a corresponding row in latdaymin
+pheno <- merge(pheno.temp2, terminalbb, by = "lab2", all.x = TRUE, all.y = T) 
+pheno$lab3 <- pheno$lab2
 
-#head(pheno)
+# pheno <- pheno[,c("lab2", "population.x", "treatment.x", "flask.x", "species.x","latbb1", "latbb50","latbb80","tbb")]
+# names(pheno)[names(pheno) == "population.x"] <- "population"
+# names(pheno)[names(pheno) == "treatment.x"] <- "treatment"
+# names(pheno)[names(pheno) == "flask.x"] <- "flask"
+# names(pheno)[names(pheno) == "species.x"] <- "species"
 
-# pheno<-pheno %>%
-#   separate(treatment, c("chill","photo","force"), "_")
+
+pheno <- pheno %>% separate(lab3, c("population","chill", "photo","force","flask","species", "rep"), convert = T)
 
 #pheno$treatment <- paste(pheno$chill, pheno$photo, pheno$force, sep = ".")
 head(pheno)
-#write.csv(pheno, "input/day.of.bb.Jan312021.csv", row.names = FALSE)
+write.csv(pheno, "input/day.of.bb.Feb52021.csv", row.names = FALSE)
 ######################################################
 # To make it more comparable to the Flynn dataset, I am adding a treatment column, and then try to calculate chill portions...for the terminal bud? 
 

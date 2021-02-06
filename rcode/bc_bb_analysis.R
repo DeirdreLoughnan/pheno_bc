@@ -31,8 +31,8 @@ head(pheno)
 ############################################################
 # Preping the data for the model
 #1. converting species to a factor
-colnames(pheno)[colnames(pheno) == "day"] <- "tbb"
-pheno <- pheno %>% separate(treatment, c("chill", "photo","force")); pheno <- as.data.frame(pheno)
+# colnames(pheno)[colnames(pheno) == "day"] <- "tbb"
+# pheno <- pheno %>% separate(treatment, c("chill", "photo","force")); pheno <- as.data.frame(pheno)
 #2. Adding columns of treatments as numeric values
 pheno$chill.n <- pheno$chill
 pheno$chill.n[pheno$chill.n == "HC"] <- "1"
@@ -62,12 +62,9 @@ pheno.term <- pheno[,c("tbb", "chill.n", "force.n", "photo.n", "site.n", "specie
 pheno.t <- pheno.term[complete.cases(pheno.term), ]
 
 pheno.t$species.fact <- as.numeric(as.factor(pheno.t$species))
-head(pheno)
 sort(unique(pheno.t$species.fact))
 
 nrow(pheno.term) - nrow(pheno.t)
-temp <- subset(pheno.term, is.na(tbb)); head(temp); unique(temp$species)
-# there were 204 samples that did not have terminal bb
 
 datalist <- with(pheno.t,
                     list( N=nrow(pheno.t),
@@ -89,7 +86,7 @@ datalist$sp
 
 mdl.t <- stan("stan/bc.bb.ncpphoto.ncpinter.stan",
           data = datalist,
-          iter = 2000, chains=4, control = list(adapt_delta = 0.99))
+          iter = 4000, chains=4, control = list(adapt_delta = 0.99))
 
 sumt <- summary(mdl.t)$summary
 sumt[grep("mu_", rownames(sumt)), ]
@@ -104,7 +101,7 @@ range(sumt[, "n_eff"])
 range(sumt[, "Rhat"])
 
 save(sumt, file="output/tbb_ncp_termianlbud.Rds")
-load("output/tbb_ncp_termianlbud.Rda")
+#load("output/tbb_ncp_termianlbud.Rda")
 
 #####################################################################
 #####################################################################
@@ -147,7 +144,7 @@ launch_shinystan(ssm)
 ## The model no longer has any divergent transitions for the terminal buds!
 #pairs(sm.sum, pars=c("mu_a","mu_force","mu_chill","mu_photo_ncp")) # this gives a lot of warning messages and not the figure i was hoping/expected
 
-save(suml, file="output/tbb_photo_winter_ncp_lateralbud.Rda")
+save(suml, file="output/tbb_photo_winter_ncp_lateralbud.Rds")
 
 #####################################################################
 # PPC 

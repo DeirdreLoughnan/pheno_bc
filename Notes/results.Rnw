@@ -1,0 +1,55 @@
+%%% start preambling . . .  %%%
+\documentclass{article}
+
+% required 
+\usepackage{Sweave}
+\usepackage{graphicx}
+
+\usepackage[small]{caption}
+\setlength{\captionmargin}{30pt}
+\setlength{\abovecaptionskip}{0pt}
+\setlength{\belowcaptionskip}{10pt}
+
+% optional: muck with spacing
+\topmargin -1.5cm        
+\oddsidemargin 0.5cm   
+\evensidemargin 0.5cm  % same as oddsidemargin but for left-hand pages
+\textwidth 15.59cm
+\textheight 21.94cm 
+% \renewcommand{\baselinestretch}{1.5} % 1.5 lines between lines
+\parindent 0pt		  % sets leading space for paragraphs
+% optional: cute, fancy headers
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+
+
+% more optionals! %
+\usepackage[hyphens]{url} % this wraps my URL versus letting it spill across the page, a bad habit LaTeX has
+
+%%% end preambling. %%%
+
+\begin{document}
+
+\title{{\huge Phenology:} \\ Tables and Figures}
+\author{Deirdre Loughnan}
+\date{4 February 2021}
+\maketitle 
+
+\section{General Survival and sucess}
+
+At the start of the experiment, 2496 samples went into chilling, 2458 went into forcing and survived the experiment. Of the samples that did died, it was largely due to human error, some species were very brittle, while others popped out of their flasks or were returned to the wrong flask, but these samples were only 1.52%
+In total, 9.5\% of samples did not bud burst at all.
+Of all the samples, 18.42\% did not have terminal bud burst, most of these were vac mem, followed by rubpar and acegla. 
+
+<<label=tablex3, echo=FALSE, results=tex>>=
+setwd("~/Documents/github/pheno_bc")
+spwithbb <- read.csv("output/bb.success.ax.trt.csv", head = TRUE)
+library(xtable)
+
+mytable <- data.frame(spwithbb, row.names = "Species")
+names(mytable) <- c("Proportion Budburst")
+make.mytable <- xtable(mytable, caption="Proporation of samples with budburst per species")
+print(make.mytable,include.rownames=TRUE, caption.placement="top", hline.after=c(-1,0))
+@
+
+\end{document}

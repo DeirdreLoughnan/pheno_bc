@@ -41,7 +41,7 @@ At the start of the experiment, 2496 samples went into chilling, 2458 went into 
 In total, 9.5\% of samples did not bud burst at all.
 Of all the samples, 18.42\% did not have terminal bud burst, most of these were vac mem, followed by rubpar and acegla. 
 
-<<label=tablex3, echo=FALSE, results=tex>>=
+<<label=tablex3, echo=FALSE, results='asis'>>=
 setwd("~/Documents/github/pheno_bc")
 spwithbb <- read.csv("output/bb.success.ax.trt.csv", head = TRUE)
 library(xtable)
@@ -51,5 +51,7 @@ names(mytable) <- c("Proportion Budburst")
 make.mytable <- xtable(mytable, caption="Proporation of samples with budburst per species")
 print(make.mytable,include.rownames=TRUE, caption.placement="top", hline.after=c(-1,0))
 @
+
+
 
 \end{document}

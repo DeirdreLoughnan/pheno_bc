@@ -539,7 +539,7 @@ d <- as.data.frame(d);head(d)
 
 # Ones that either died, broke, or were put back wrong according to my notes:
 discard <- c("sm.HC.HP.LF.8.sorsco.1","sm.HC.LP.LF.13.sorsco.1","sm.HC.LP.HF.2.sorsco.1", "mp.Lc.LP.LF.1.spibet","sm.Hc.LP.LF.28.shecan","sm.LC.HP.HF.33.vibedu.2", "sm.LC.HP.HF.38.spibet.2", "mp.LC.HP.LF.28.menfer.1", "sm.LC.LP.HF.13.poptre.2", "sm.LC.LP.LF.21.sorsco.1", "sm.HC.HP.HF.25.vibedu.1", "mp.LC.HP.HF.15.acegla.1", "sm.LC.LP.HF.23.amealn.1", "mp.LC.LP.HF.15.alninc.1","sm.LC.HP.HF.2.loninv.1","sm.LC.LP.HF.13.alnvir.1","mp.LC.HP.LF.21.symalb.1","mp.HC.HP.HF.1.acegla.1","sm.HC.LP.HF.5.acegla.1","mp.HC.LP.HF.19.popbal.1","mp.HC.LP.HF.33.vacmem.1","mp.HC.LP.LF.38.corsto.2","sm.HC.HP.HF.10.rubpar.1", "mp.HC.HP.LF.27.vacmem.2", "sm.HC.HP.LF.5.rubpar.1",  "sm.HC.HP.LF.29.poptre.1", "sm.HC.HP.HF.31.alninc.1", "sm.LC.HP.HF.6.alnvir.1","sm.LC.HP.LF.12.sorsco.1", "sm.LC.LP.LF.8.spipyr.1",  "sm.LC.HP.HF.13.rubpar.1", "mp.LC.HP.LF.5.riblac.1",  "mp.HC.LP.HF.9.acegla.1",  "mp.HC.LP.HF.32.shecan.1","mp.HC.LP.HF.35.acegla.1", "mp.LC.HP.HF.3.poptre.1",  "mp.LC.HP.HF.20.acegla.1", "sm.LC.HP.HF.36.acegla.1", "sm.LC.HP.HF.38.vacmem.1","sm.LC.HP.LF.35.acegla.1","mp.LC.LP.HF.39.samrac.1","mp.LC.LP.LF.20.acegla.1","mp.HC.HP.HF.3.spibet.1",  "mp.HC.HP.HF.3.spibet.2", "sm.HC.HP.LF.3.sorsco.1","sm.HC.HP.LF.3.sorsco.2",  "sm.HC.HP.LF.34.sorsco.1", "sm.HC.LP.HF.10.sorsco.1", "sm.HC.LP.LF.3.sorsco.1", "sm.HC.LP.LF.20.sorsco.1","sm.HC.LP.LF.26.sorsco.1", "sm.HC.LP.LF.37.sorsco.1", "sm.HC.LP.LF.38.sorsco.1", "sm.HC.HP.LF.39.sorsco.1", "sm.HC.HP.HF.32.sorsco.1","sm.HC.HP.HF.35.sorsco.1", "sm.HC.LP.LF.19.sorsco.1", "sm.HC.LP.LF.24.sorsco.1", "sm.HC.HP.HF.22.sorsco.1")
-poptre
+
 deadones <- d[d$lab2 %in% discard,]
 
 d <- d[!d$lab2 %in% discard,]
@@ -801,7 +801,7 @@ head(d)
 #   summarise(no_rows = length(unique(lab2)))
 # 
 # Done! Writing the final datafile 
-#write.csv(d,"input/bc_phenology_Feb52021.csv", row.names=FALSE)
+# write.csv(d,"input/bc_phenology_Feb52021.csv", row.names=FALSE)
 
 # There are a few unexplained extras:
 #corsto

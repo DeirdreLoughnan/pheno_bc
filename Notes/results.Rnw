@@ -1,5 +1,5 @@
 %%% start preambling . . .  %%%
-\documentclass{article}
+\documentclass{article}\usepackage[]{graphicx}\usepackage[]{color}
 
 % required 
 \usepackage{Sweave}
@@ -19,8 +19,8 @@
 % \renewcommand{\baselinestretch}{1.5} % 1.5 lines between lines
 \parindent 0pt		  % sets leading space for paragraphs
 % optional: cute, fancy headers
-\usepackage{fancyhdr}
-\pagestyle{fancy}
+%\usepackage{fancyhdr}
+%\pagestyle{fancy}
 
 
 % more optionals! %
@@ -41,17 +41,65 @@ At the start of the experiment, 2496 samples went into chilling, 2458 went into 
 In total, 9.5\% of samples did not bud burst at all.
 Of all the samples, 18.42\% did not have terminal bud burst, most of these were vac mem, followed by rubpar and acegla. 
 
-<<label=tablex3, echo=FALSE, results='asis'>>=
+<<label=table1, echo=FALSE, results='asis'>>=
 setwd("~/Documents/github/pheno_bc")
 spwithbb <- read.csv("output/bb.success.ax.trt.csv", head = TRUE)
 library(xtable)
 
-mytable <- data.frame(spwithbb, row.names = "Species")
-names(mytable) <- c("Proportion Budburst")
-make.mytable <- xtable(mytable, caption="Proporation of samples with budburst per species")
-print(make.mytable,include.rownames=TRUE, caption.placement="top", hline.after=c(-1,0))
+bb_suc <- data.frame(spwithbb, row.names = "Species")
+names(bb_suc) <- c("Proportion Budburst")
+make.bb_suc <- xtable(bb_suc, caption="Proporation of samples with budburst per species")
+print(make.bb_suc,include.rownames=TRUE, caption.placement="top", hline.after=c(-1,0))
+
+
 @
 
+<<label=table2, echo=FALSE, results='asis'>>=
+setwd("~/Documents/github/pheno_bc")
+term <- read.csv("output/term.mdl.esti.csv", head = TRUE)
+
+rownames(term) = c("Forcing",
+                     "Photoperiod",
+                     "Chilling",
+                     "Site",
+                     "Forcing x Photoperiod",
+                     "Forcing x Chilling",
+                     "Photoperiod x Chilling",
+                     "Forcing x Site",
+                     "Photoperiod x Site",
+                     "Site x Chilling"
+  )
+
+names(term) <- c("Mean", "Sd", "2.5%", "50%", "97.5%", "Rhat")
+make.term <- xtable(term, caption="Model estimates for budburst of terminal buds")
+print(make.term,include.rownames=TRUE, caption.placement="top", hline.after=c(-1,0))
+@
+
+<<label=table3, echo=FALSE, results='asis'>>=
+setwd("~/Documents/github/pheno_bc")
+lat <- read.csv("output/lat.mdl.esti.csv", head = TRUE)
+
+rownames(lat) = c("Forcing",
+                     "Photoperiod",
+                     "Chilling",
+                     "Site",
+                     "Forcing x Photoperiod",
+                     "Forcing x Chilling",
+                     "Photoperiod x Chilling",
+                     "Forcing x Site",
+                     "Photoperiod x Site",
+                     "Site x Chilling"
+  )
+
+names(lat) <- c("Mean", "Sd", "2.5%", "50%", "97.5%", "Rhat")
+make.lat <- xtable(lat, caption="Model estimates for budburst of lateral buds")
+print(make.lat,include.rownames=TRUE, caption.placement="top", hline.after=c(-1,0))
+
+@
+
+% \begin{figure}[ht] 
+% \includegraphics{figures/changespheno.png}
+% \end{figure}
 
 
 \end{document}

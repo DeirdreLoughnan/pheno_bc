@@ -27,7 +27,7 @@ if(length(grep("deirdreloughnan", getwd()) > 0)) {
 
 source('rcode/cleaning/pheno_bb_calc.R')
 head(pheno)
-
+length(unique(pheno$lab2))
 ############################################################
 # Preping the data for the model
 #1. converting species to a factor
@@ -318,3 +318,4 @@ abline(v = 0, lty = 3)
 # legend(-2, 16.5, legend="0", bty="n", text.font = 1, cex=0.75)
 # par(xpd=FALSE)
 dev.off()
+

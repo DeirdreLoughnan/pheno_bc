@@ -554,6 +554,20 @@ d <- d[!d$lab2 %in% oops10,]
 d <- d[!d$lab2 %in% oops15,]
 
 head(d)
+
+# dtemp <- d[, 1:19]
+# df_dat <- split(dtemp, dtemp$day)
+# 
+# for (i in 1:length(unique(dtemp$day))){
+# write.csv(df_dat[i], paste('rcode/cleaning/cleaned_datafiles/day_', i,'.csv'), row.names = FALSE)
+# }
+# #lapply(
+
+
+# Done! Writing the final datafile 
+# write.csv(d,"input/bc_phenology_Feb52021.csv", row.names=FALSE)
+
+
 # double checking i didn't miss any 
 # c0 <- subset(d, species == "acegla" & treatment == "LC.HP.HF");table(c0$lab2)
 # c0 <- subset(d, species == "acegla" & treatment == "LC.HP.LF");table(c0$lab2)

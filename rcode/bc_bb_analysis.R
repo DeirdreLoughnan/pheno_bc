@@ -28,6 +28,8 @@ if(length(grep("deirdreloughnan", getwd()) > 0)) {
 source('rcode/cleaning/pheno_bb_calc.R')
 head(pheno)
 length(unique(pheno$lab2))
+
+# there are 2285 samples that bb either with just their terminal buds, or both terminal and lateral
 ############################################################
 # Preping the data for the model
 #1. converting species to a factor
@@ -226,10 +228,13 @@ rownames(meanzl) = c("Forcing",
 meanzt.table <- sumt[mu_params, col4table]
 row.names(meanzt.table) <- row.names(meanzt)
 head(meanzt.table)
+write.table(meanzt.table , "output/term.mdl.esti.csv", sep = ",", row.names = FALSE)
 
 meanzl.table <- suml[mu_params, col4table]
 row.names(meanzl.table) <- row.names(meanzl)
 head(meanzl.table)
+write.table(meanzl.table , "output/lat.mdl.esti.csv", sep = ",", row.names = FALSE)
+
 # Begin by checking to see what cue is most important and whether there are strong correlations between cues:
 df.mean.t <- data.frame(bb.force = sumt[grep("b_force", rownames(sumt)), 1],
                           bb.photo = sumt[grep("b_photo_ncp", rownames(sumt)), 1],

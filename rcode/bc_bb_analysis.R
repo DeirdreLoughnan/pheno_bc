@@ -7,11 +7,11 @@ library(scales)
 library(arm)
 library(rstan)
 library(shinystan)
-require(reshape2)
-require(bayesplot)
-require(ggplot2)
-library(rstanarm)
+library(reshape2)
+library(bayesplot)
+library(ggplot2)
 library(RColorBrewer)
+library(dplyr)
 
 options(mc.cores = parallel::detectCores())
 
@@ -25,11 +25,25 @@ if(length(grep("deirdreloughnan", getwd()) > 0)) {
 #  setwd("~/deirdre/") # for midge
 #}
 
-source('rcode/cleaning/pheno_bb_calc.R')
+#source('rcode/cleaning/pheno_bb_calc.R')
 head(pheno)
 length(unique(pheno$lab2))
 
-# there are 2285 samples that bb either with just their terminal buds, or both terminal and lateral
+df <- read.csv("input/day.of.bb.DFlynn.csv", header=TRUE, na.strings=c("","NA"))
+head(df)
+
+dl <- read.csv("input/day.of.bb.DL.csv", header=TRUE, na.strings=c("","NA"))
+head(dl)
+dl$lab3 <- dl$lab2
+dl$lab2 <- paste(dl$species, dl$population, dl$rep, sep = "_")
+
+# mergeing the my data with DF
+pheno <- rbind.fill(dl, df)
+head(pheno)
+
+# because I only had two chilling treatments, I am removing the DF zero chill
+pheno <- subset(pheno, chill != "chill0")
+# combined the data has 3197 unique samples
 ############################################################
 # Preping the data for the model
 #1. converting species to a factor
@@ -54,6 +68,8 @@ pheno$photo.n <- as.numeric(pheno$photo.n)
 pheno$site.n <- pheno$population
 pheno$site.n[pheno$site.n == "sm"] <- "1"
 pheno$site.n[pheno$site.n == "mp"] <- "0"
+pheno$site.n[pheno$site.n == "HF"] <- "2"
+pheno$site.n[pheno$site.n == "SH"] <- "3"
 pheno$site.n <- as.numeric(pheno$site.n)
 
 head(pheno)
@@ -61,12 +77,12 @@ head(pheno)
 #going to split it into analysis of terminal bb and lateral bb
 # Starting with the terminal buds:
 pheno.term <- pheno[,c("tbb", "chill.n", "force.n", "photo.n", "site.n", "species", "lab2")]
-pheno.t <- pheno.term[complete.cases(pheno.term), ]
+pheno.t <- pheno.term[complete.cases(pheno.term), ] # 1780 rows data 
 
 pheno.t$species.fact <- as.numeric(as.factor(pheno.t$species))
-sort(unique(pheno.t$species.fact))
+sort(unique(pheno.t$species.fact)) # 30 species 
 
-nrow(pheno.term) - nrow(pheno.t)
+nrow(pheno.term) - nrow(pheno.t) # 547 that had no terminal bb
 
 datalist <- with(pheno.t,
                     list( N=nrow(pheno.t),

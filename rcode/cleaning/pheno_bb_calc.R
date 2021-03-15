@@ -224,11 +224,11 @@ pheno$lab3 <- pheno$lab2
 # names(pheno)[names(pheno) == "species.x"] <- "species"
 
 
-pheno <- pheno %>% separate(lab3, c("population","chill", "photo","force","flask","species", "rep"), convert = T)
+pheno <- pheno %>% separate(lab3, c("population","chill", "photo","force","flask","species", "rep"), convert = TRUE)
 
-#pheno$treatment <- paste(pheno$chill, pheno$photo, pheno$force, sep = ".")
+pheno$treatment <- paste(pheno$chill, pheno$photo, pheno$force, sep = ".")
 head(pheno)
-write.csv(pheno, "input/day.of.bb.Feb52021.csv", row.names = FALSE)
+write.csv(pheno, "input/day.of.bb.DL.csv", row.names = FALSE)
 ######################################################
 # To make it more comparable to the Flynn dataset, I am adding a treatment column, and then try to calculate chill portions...for the terminal bud? 
 

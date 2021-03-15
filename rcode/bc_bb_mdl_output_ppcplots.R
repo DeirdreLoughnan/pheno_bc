@@ -285,9 +285,37 @@ dev.off()
 ##########################################################################################################
 ## Replicating Flynn Figure 2:
 
+b_force <- sumt[grep("b_force", rownames(sumt))]
+b_photo <- sumt[grep("b_photo", rownames(sumt))]; b_photo <- b_photo[31:60]
+b_chill <- sumt[grep("b_chill", rownames(sumt))]
+
 # Comparisons of trees vs shrubs:
 shrubs = c("VIBLAN","RHAFRA","RHOPRI","SPIALB","VACMYR","VIBCAS", "AROMEL","ILEMUC", "KALANG", "LONCAN", "LYOLIG", "alninc","alnvir","amelan", "corsto","loninv", "menfer","rhoalb", "riblac","rubpar","samrac","shecan","sorsco","spibet","spipyr","symalb","vacmem","vibedu")
 trees = c("ACEPEN", "ACERUB", "ACESAC", "ALNINC", "BETALL", "BETLEN", "BETPAP", "CORCOR", "FAGGRA", "FRANIG", "HAMVIR", "NYSSYL", "POPGRA", "PRUPEN", "QUEALB" , "QUERUB", "QUEVEL", "acegla","betpap", "poptre", "popbal")
+
+species.fact <- sort(unique(pheno.t$species.fact))
+species <- sort(unique(pheno.t$species))
+type <- c("tree","tree", "tree","tree", "shrub", "shrub", "shrub", "tree", "tree", "tree", "shrub","tree" , "shrub", "shrub", "tree", "tree", "tree", "tree", "shrub", "shrub", "shrub", "shrub", "shrub", "shrub", "shrub", "shrub", "shrub", "shrub", "shrub", "shrub")
+test <- data.frame(species, species.fact, b_force, b_photo, b_chill, type)
+head(test)
+
+pdf(file.path( "figures/chill_vs_force_dldf.pdf"), width = 7, height = 8)
+ggplot(test, aes(x= b_chill, y = b_force, col = type)) +
+   geom_point() +
+  geom_text(aes(label=species),hjust=0.5, vjust= 1)
+dev.off()
+
+pdf(file.path( "figures/chill_vs_photo_dldf.pdf"), width = 7, height = 8)
+ggplot(test, aes(x= b_chill, y = b_photo, col = type)) +
+  geom_point() +
+  geom_text(aes(label=species),hjust=0.5, vjust= 1)
+dev.off()
+
+pdf(file.path( "figures/force_vs_photo_dldf.pdf"), width = 7, height = 8)
+ggplot(test, aes(x= b_force, y = b_photo, col = type)) +
+  geom_point() +
+  geom_text(aes(label=species),hjust=0.5, vjust= 1)
+dev.off()
 
 treeshrub = levels(pheno$species)
 treeshrub[treeshrub %in% shrubs] = 1

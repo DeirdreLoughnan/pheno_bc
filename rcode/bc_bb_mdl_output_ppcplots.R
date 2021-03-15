@@ -79,19 +79,17 @@ head(pheno)
 pheno.term <- pheno[,c("tbb", "chill.n", "force.n", "photo.n", "site.n", "species", "lab2")]
 pheno.t <- pheno.term[complete.cases(pheno.term), ] # 1780 rows data 
 
-## Load the model output:
-load("output/latbb_ncp_lateralbud_withDF.Rds")
-load("output/tbb_ncp_termianlbud_withDF.Rds")
-
 pheno.t$species.fact <- as.numeric(as.factor(pheno.t$species))
 sort(unique(pheno.t$species.fact)) # 30 species 
 
+## Load the model output:
+load("output/latbb_ncp_lateralbud_withDF.Rds")
+load("output/tbb_ncp_termianlbud_withDF.Rds")
+load("output/latbb1_photo_winter_ncp_lateralbud.Rds")
 
 sumt <- summary(mdl.t)$summary
-sumt[grep("mu_", rownames(sumt)), ]
-sumt
-ssm <-  as.shinystan(mdl.t)
-launch_shinystan(ssm)
+sumerl <- summary(mdl.l)$summary
+suml1 <- summary(mdl.l1)$summary
 
 ## The model no longer has any divergent transitions for the terminal buds!
 #pairs(sm.sum, pars=c("mu_a","mu_force","mu_chill","mu_photo_ncp")) # this gives a lot of warning messages and not the figure i was hoping/expected
@@ -99,63 +97,22 @@ launch_shinystan(ssm)
 range(sumt[, "n_eff"])
 range(sumt[, "Rhat"])
 
-save(sumt, file="output/tbb_ncp_termianlbud.Rds")
-#load("output/tbb_ncp_termianlbud.Rda")
+range(suml[, "n_eff"])
+range(suml[, "Rhat"])
 
-#####################################################################
-#####################################################################
-
-# now running the same model for the lateral buds
-pheno.lat <- pheno[, c("latbb50", "chill.n", "force.n", "photo.n", "site.n", "species")]
-pheno.l <- pheno.lat[complete.cases(pheno.lat), ]
-nrow(pheno.lat) - nrow(pheno.l)  # a lot of samples did not reach even 50%! 1084
-
-pheno.l$species.fact <- as.numeric(as.factor(pheno.l$species))
-sort(unique(pheno.l$species.fact))
-
-datalist <- with(pheno.l,
-               list( N = nrow(pheno.l),
-                     n_sp = length(unique(pheno.l$species.fact)),
-                     n_site = length(unique(pheno.l$site.n)),
-                     bb = latbb50,
-                     sp = species.fact,
-                     chill = chill.n,
-                     photo = photo.n,
-                     force = force.n,
-                     site = site.n
-               ))
-
-# mdl <- stan("stan/bc.bb.inter.stan",
-#             data= datalist
-#             ,iter=2000, chains=4)
-#gives 200 divergent transitions, 41 transitions that exceed max tree depth, chains were not mixed, with low ESS
-
-mdl.l <- stan("stan/bc.bb.ncpphoto.ncpinter.stan",
-          data= datalist,
-          iter=4000, chains=4, control = list(adapt_delta = 0.99))
-
-suml <- summary(mdl.l)$summary
-suml[grep("mu_",rownames(suml)), ]
-suml
-ssm <- as.shinystan(mdl)
-launch_shinystan(ssm)
-
-## The model no longer has any divergent transitions for the terminal buds!
-#pairs(sm.sum, pars=c("mu_a","mu_force","mu_chill","mu_photo_ncp")) # this gives a lot of warning messages and not the figure i was hoping/expected
-
-save(suml, file="output/tbb_photo_winter_ncp_lateralbud.Rds")
-
+range(suml1[, "n_eff"])
+range(suml1[, "Rhat"])
 #####################################################################
 # PPC 
 
-mdl.slopes <- as.data.frame(sm.sum[grep("b", rownames(sm.sum)), c(1,6)]) 
-mdl.int <- as.data.frame(sm.sum[grep("a", rownames(sm.sum)), ]) 
+mdl.slopes <- as.data.frame(sumt[grep("b", rownames(sumt)), c(1,6)]) 
+mdl.int <- as.data.frame(sumt[grep("a", rownames(sumt)), ]) 
 mdl.a <- mdl.int[, 1]
 mdl.b <- mdl.slopes[, 1]
 
-ggplot() +
-  geom_point(data = mdl.slopes, aes(y = row.names(mdl.slopes), x = mean), color = "darkgreen") +
-  labs( x = "doy", y = "Species")
+# ggplot() +
+#   geom_point(data = mdl.slopes, aes(y = row.names(mdl.slopes), x = mean), color = "darkgreen") +
+#   labs( x = "doy", y = "Species")
 
 #####################################################################
 
@@ -225,11 +182,17 @@ rownames(meanzl) = c("Forcing",
 meanzt.table <- sumt[mu_params, col4table]
 row.names(meanzt.table) <- row.names(meanzt)
 head(meanzt.table)
-write.table(meanzt.table , "output/term.mdl.esti.csv", sep = ",", row.names = FALSE)
+write.table(meanzt.table , "output/term_mdl_esti_dldf.csv", sep = ",", row.names = FALSE)
 
 meanzl.table <- suml[mu_params, col4table]
 row.names(meanzl.table) <- row.names(meanzl)
 head(meanzl.table)
+write.table(meanzl.table , "output/lat.mdl.esti.csv", sep = ",", row.names = FALSE)
+
+#
+meanzl1.table <- suml1[mu_params, col4table]
+row.names(meanzl1.table) <- row.names(meanzl)
+head(meanzl1.table)
 write.table(meanzl.table , "output/lat.mdl.esti.csv", sep = ",", row.names = FALSE)
 
 # Begin by checking to see what cue is most important and whether there are strong correlations between cues:
@@ -241,22 +204,20 @@ df.mean.l <- data.frame(lat.force = suml[grep("b_force", rownames(sumt)), 1],
                         lat.photo = suml[grep("b_photo_ncp", rownames(sumt)), 1],
                         lat.chill = suml[grep("b_chill", rownames(sumt)), 1])
 
-df.mean.t[which(df.mean.t$bb.force > df.mean.t$bb.photo), ] # species 11- rho alb
+df.mean.t[which(df.mean.t$bb.force > df.mean.t$bb.photo), ] # none
 df.mean.l[which(df.mean.l$lat.force > df.mean.l$lat.photo), ] #none
-df.mean.t[which(df.mean.t$bb.chill > df.mean.t$bb.force), ] # 14
-# 3, 5,6,8,9,10,12,13,15,17,18,20
-df.mean.l[which(df.mean.l$lat.chill > df.mean.l$lat.force), ] # 16
-#1,2,5,6,7,8,10,11,12,13,15,16,17,18,19,20
+df.mean.t[which(df.mean.t$bb.chill > df.mean.t$bb.force), ] # 20
+df.mean.l[which(df.mean.l$lat.chill > df.mean.l$lat.force), ] # 29
 
 # all correlated
-summary(lm(bb.force~bb.photo, data=df.mean.t))
-summary(lm(bb.force~bb.chill, data=df.mean.t))
-summary(lm(bb.force~bb.photo, data=df.mean.t))
-summary(lm(lat.force~lat.photo, data=df.mean.l))
-summary(lm(lat.force~lat.chill, data=df.mean.l))
-summary(lm(lat.chill~lat.photo, data=df.mean.l))
+summary(lm(bb.force~bb.photo, data=df.mean.t))# ns
+summary(lm(bb.force~bb.chill, data=df.mean.t)) #s
+summary(lm(bb.force~bb.photo, data=df.mean.t)) #ns
+summary(lm(lat.force~lat.photo, data=df.mean.l))#ns
+summary(lm(lat.force~lat.chill, data=df.mean.l)) # s
+summary(lm(lat.chill~lat.photo, data=df.mean.l)) #ns
 
-pdf(file.path( "figures/changes.pheno.pdf"), width = 7, height = 8)
+pdf(file.path( "figures/changes_pheno_dldf.pdf"), width = 7, height = 8)
 par(mfrow = c(2,1), mar = c(5, 10, 2, 1))
 # Upper panel: bud burst
 plot(seq(-22, 
@@ -321,11 +282,90 @@ abline(v = 0, lty = 3)
 # par(xpd=FALSE)
 dev.off()
 
+##########################################################################################################
+## Replicating Flynn Figure 2:
+
 # Comparisons of trees vs shrubs:
 shrubs = c("VIBLAN","RHAFRA","RHOPRI","SPIALB","VACMYR","VIBCAS", "AROMEL","ILEMUC", "KALANG", "LONCAN", "LYOLIG", "alninc","alnvir","amelan", "corsto","loninv", "menfer","rhoalb", "riblac","rubpar","samrac","shecan","sorsco","spibet","spipyr","symalb","vacmem","vibedu")
 trees = c("ACEPEN", "ACERUB", "ACESAC", "ALNINC", "BETALL", "BETLEN", "BETPAP", "CORCOR", "FAGGRA", "FRANIG", "HAMVIR", "NYSSYL", "POPGRA", "PRUPEN", "QUEALB" , "QUERUB", "QUEVEL", "acegla","betpap", "poptre", "popbal")
 
-treeshrub = levels(dx$sp)
+treeshrub = levels(pheno$species)
 treeshrub[treeshrub %in% shrubs] = 1
 treeshrub[treeshrub %in% trees] = 2
 treeshrub = as.numeric(treeshrub)
+par(mar=rep(1,4))
+layout(matrix(c(1, 2, 3, # use layout instead of par(mfrow for more control of where labels end up
+                4, 5, 6,
+                7, 8, 9),ncol = 3, byrow = T),
+       widths = c(1, 4, 4),
+       heights = c(4, 4, 1))
+plotblank = function(){plot(1:10, type="n",bty="n",xaxt="n",yaxt="n",ylab="",xlab="")}
+
+plotblank() 
+text(5,5, "Budburst \n Change (days) due to 5° warming", font = 2, srt = 90) # \n\n add two line breaks
+
+plot( "b_photo", "b_warm",
+         #  ylab = "Advance due to 5° warming", 
+         # xlab = "Advance due to 4 hr longer photoperiod", 
+         ylim = c(-27, 0.5),
+         xlim = c(-16, 0.5),
+         #  xaxt="n", 
+         group = treeshrub,
+         data = sumt)
+
+legend("topleft", bty = "n", inset = 0.035, legend = "A.", text.font=2)
+
+legend("bottomright",
+       pch = "+",
+       col = colz,
+       legend = c("Shrubs","Trees"),
+       inset = 0.02, 
+       bg = 'white')
+
+plotlet("b_chill1", "b_warm", 
+        # ylab = "Advance due to 5° warming", 
+        #  xlab = "Advance due to 30d 4° chilling", 
+        ylim = c(-27, 0.5),
+        xlim = c(-28, -8),
+        yaxt="n",
+        # xaxt="n", 
+        group = treeshrub,
+        data = sumerb)
+axis(2, seq(0, -25, by = -5), labels = FALSE)
+legend("topleft", bty = "n", inset = 0.035, legend = "B.", text.font=2)
+
+plotblank()
+text(5,5, "Leafout \n Change (days) due to 5° warming", font = 2, srt = 90)
+
+plotlet("b_photo", "b_warm", 
+        #    ylab = "Advance due to 5° warming", 
+        #     xlab = "Advance due to 4 hr longer photoperiod", 
+        ylim = c(-27, 0.5),
+        xlim = c(-16, 0.5),
+        group = treeshrub,
+        data = sumerl)
+legend("topleft", bty = "n", inset = 0.035, legend = "C.", text.font=2)
+plotlet("b_chill1", "b_warm", 
+        #   ylab = "Advance due to 5° warming", 
+        #   xlab = "Advance due to 30d 4° chilling", 
+        ylim = c(-27, 0.5),
+        xlim = c(-28, -8),
+        yaxt="n",
+        group = treeshrub,
+        data = sumerl)
+axis(2, seq(0, -25, by = -5), labels = FALSE)
+legend("topleft", bty = "n", inset = 0.035, legend = "D.", text.font=2)
+plotblank()
+
+plotblank()
+text(5.5, 5, "Change (days) due to 4 hr longer photoperiod", font = 2, pos = 3)
+
+plotblank()
+text(5.5, 5, "Change (days) due to 30d 4° chilling", font = 2, pos = 3)
+
+dev.off();#system(paste("open", file.path(figpath, "Fig2_4panel.pdf"), "-a /Applications/Preview.app"))
+
+
+
+
+

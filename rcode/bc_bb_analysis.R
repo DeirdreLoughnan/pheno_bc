@@ -340,3 +340,11 @@ abline(v = 0, lty = 3)
 # par(xpd=FALSE)
 dev.off()
 
+# Comparisons of trees vs shrubs:
+shrubs = c("VIBLAN","RHAFRA","RHOPRI","SPIALB","VACMYR","VIBCAS", "AROMEL","ILEMUC", "KALANG", "LONCAN", "LYOLIG", "alninc","alnvir","amelan", "corsto","loninv", "menfer","rhoalb", "riblac","rubpar","samrac","shecan","sorsco","spibet","spipyr","symalb","vacmem","vibedu")
+trees = c("ACEPEN", "ACERUB", "ACESAC", "ALNINC", "BETALL", "BETLEN", "BETPAP", "CORCOR", "FAGGRA", "FRANIG", "HAMVIR", "NYSSYL", "POPGRA", "PRUPEN", "QUEALB" , "QUERUB", "QUEVEL", "acegla","betpap", "poptre", "popbal")
+
+treeshrub = levels(dx$sp)
+treeshrub[treeshrub %in% shrubs] = 1
+treeshrub[treeshrub %in% trees] = 2
+treeshrub = as.numeric(treeshrub)

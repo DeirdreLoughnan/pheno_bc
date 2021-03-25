@@ -12,6 +12,7 @@ library(bayesplot)
 library(ggplot2)
 library(RColorBrewer)
 library(dplyr)
+library(plyr)
 
 options(mc.cores = parallel::detectCores())
 
@@ -38,7 +39,8 @@ dl$lab3 <- dl$lab2
 dl$lab2 <- paste(dl$species, dl$population, dl$rep, sep = "_")
 
 # mergeing the my data with DF
-pheno <- rbind.fill(dl, df)
+#pheno <- rbind.fill(dl, df)
+pheno <- dl
 head(pheno)
 
 # because I only had two chilling treatments, I am removing the DF zero chill
@@ -68,8 +70,8 @@ pheno$photo.n <- as.numeric(pheno$photo.n)
 pheno$site.n <- pheno$population
 pheno$site.n[pheno$site.n == "sm"] <- "1"
 pheno$site.n[pheno$site.n == "mp"] <- "0"
-pheno$site.n[pheno$site.n == "HF"] <- "2"
-pheno$site.n[pheno$site.n == "SH"] <- "3"
+#pheno$site.n[pheno$site.n == "HF"] <- "2"
+#pheno$site.n[pheno$site.n == "SH"] <- "3"
 pheno$site.n <- as.numeric(pheno$site.n)
 
 head(pheno)
@@ -95,7 +97,6 @@ datalist <- with(pheno.t,
                           force = force.n,
                           site = site.n
                     ))
-datalist$sp
 
 # mdl <- stan("stan/bc.bb.inter.stan",
 #             data= datalist

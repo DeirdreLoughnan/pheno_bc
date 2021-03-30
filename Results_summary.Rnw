@@ -107,6 +107,14 @@ make.lat <- xtable(lat, caption="Model estimates for budburst of lateral buds")
 print(make.lat,include.rownames=TRUE, caption.placement="top", hline.after=c(-1,0))
 
 @
+\subsection{Summary of figures for terminal buds}
+\begin{itemize}
+\item Tree species were generally more sensitive to forcing and chilling, as were shrubs like loninv and samrac
+\item Samrac and rhoalb were relativley more sensitive to photoperiod than other shrubs, and poptre more than other trees
+\item Tree species show later budburst in response to forcing than shrubs  \ref{fig:tf}
+\item But we do not see the same gradient in species with chilling or photoperiod
+\item The mean day to lateral budburst shows the same relative trends
+\end{itemize}
 
 \begin{figure}[ht]
 <<label= fig1, echo= FALSE, fig=TRUE >>=
@@ -122,7 +130,7 @@ tbb.mdlout
 <<label= fig2, echo= FALSE, fig=TRUE >>=
 cf
 @
-\caption{Species responses to high chilling and high forcing treatments}
+\caption{Species responses to high chilling and high forcing treatments. }
 \end{figure}
 
 \begin{figure}[ht]
@@ -136,49 +144,49 @@ cp
 <<label= fig4, echo= FALSE, fig=TRUE >>=
 fp
 @
-\caption{Species responses to high chilling and long photoperiod treatments}
+\caption{Species responses to high forcing and long photoperiod treatments}
 \end{figure}
 
 \begin{figure}[ht]
 <<label= fig5, echo= FALSE, fig=TRUE >>=
 tf
 @
-\caption{Species responses to high forcing and long photoperiod treatments}
+\caption{Mean day of terminal budburst in response to high forcing}
 \end{figure}
 
 \begin{figure}[ht]
 <<label= fig6, echo= FALSE, fig=TRUE >>=
 tc
 @
-\caption{Species responses to high forcing and long photoperiod treatments}
+\caption{Mean day of terminal budburst in response to high chilling}
 \end{figure}
 
 \begin{figure}[ht]
 <<label= fig7, echo= FALSE, fig=TRUE >>=
 tp
 @
-\caption{Species responses to high forcing and long photoperiod treatments}
+\caption{Mean day of terminal budburst in response to long photoperiod}
 \end{figure}
 
 \begin{figure}[ht]
 <<label= fig8, echo= FALSE, fig=TRUE >>=
 lf
 @
-\caption{Species responses to high forcing and long photoperiod treatments}
+\caption{Mean day of lateral budburst in response to high forcing}
 \end{figure}
 
 \begin{figure}[ht]
 <<label= fig9, echo= FALSE, fig=TRUE >>=
 lc
 @
-\caption{Species responses to high forcing and long photoperiod treatments}
+\caption{Mean day of lateral budburst in response to high chilling}
 \end{figure}
 
 \begin{figure}[ht]
 <<label= fig10, echo= FALSE, fig=TRUE >>=
 lp
 @
-\caption{Species responses to high forcing and long photoperiod treatments}
+\caption{Mean day of lateral budburst in response to long photoperiod}
 \end{figure}
 
 

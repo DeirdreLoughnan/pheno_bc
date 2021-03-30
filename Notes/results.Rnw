@@ -29,6 +29,7 @@
 %%% end preambling. %%%
 
 \begin{document}
+\SweaveOpts{concordance=TRUE}
 
 \title{{\huge Phenology:} \\ Tables and Figures}
 \author{Deirdre Loughnan}
@@ -41,7 +42,7 @@ At the start of the experiment, 2496 samples went into chilling, 2458 went into 
 In total, 9.5\% of samples did not bud burst at all.
 Of all the samples, 18.42\% did not have terminal bud burst, most of these were vac mem, followed by rubpar and acegla. 
 
-<<label=table1, echo=FALSE, results='asis'>>=
+<<label=table1, echo=FALSE, results=tex>>=
 setwd("~/Documents/github/pheno_bc")
 spwithbb <- read.csv("output/bb.success.ax.trt.csv", head = TRUE)
 library(xtable)
@@ -54,7 +55,7 @@ print(make.bb_suc,include.rownames=TRUE, caption.placement="top", hline.after=c(
 
 @
 
-<<label=table2, echo=FALSE, results='asis'>>=
+<<label=table2, echo=FALSE, results=text>>=
 setwd("~/Documents/github/pheno_bc")
 term <- read.csv("output/term.mdl.esti.csv", head = TRUE)
 
@@ -75,7 +76,7 @@ make.term <- xtable(term, caption="Model estimates for budburst of terminal buds
 print(make.term,include.rownames=TRUE, caption.placement="top", hline.after=c(-1,0))
 @
 
-<<label=table3, echo=FALSE, results='asis'>>=
+<<label=table3, echo=FALSE, results=tex>>=
 setwd("~/Documents/github/pheno_bc")
 lat <- read.csv("output/lat.mdl.esti.csv", head = TRUE)
 

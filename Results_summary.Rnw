@@ -55,9 +55,19 @@ print(make.bb_suc,include.rownames=TRUE, caption.placement="top", hline.after=c(
 
 @
 
+\section{Results:}
+\begin{itemize}
+\item All three cues cause an advance in budburst, but vary in their response when considered together
+\item Forcing is the dominant driver of budburst, closely followed by chilling for both terminal and lateral budburst. 
+\item Forcing has a stronger effect on lateral budburst (-18.52) than terminal budburst (-16.87), but the effect of chilling is slightly weaker at -13.17 for lateral buds and -14.75 for terminal buds
+\item Our nothern site is slightly more advanced
+\item The interaction between high forcing and high chilling shows a delaying effect, the impacts terminal budburst (6.53) more than lateral budburst (4.78)
+\item There is a greater effect of photoperiod at the more Northern site for terminal budburst (-1.40) than lateral (-0.45)
+\end{itemize}
+
 <<label=table2, echo=FALSE, results=tex >>=
 setwd("~/Documents/github/pheno_bc")
-term <- read.csv("output/term.mdl.esti.csv", head = TRUE)
+term <- read.csv("output/term_mdl_esti_dl.csv", head = TRUE)
 
 rownames(term) = c("Forcing",
                      "Photoperiod",
@@ -123,10 +133,53 @@ cp
 \end{figure}
 
 \begin{figure}[ht]
-<<label= fig2, echo= FALSE, fig=TRUE >>=
+<<label= fig4, echo= FALSE, fig=TRUE >>=
 fp
+@
+\caption{Species responses to high chilling and long photoperiod treatments}
+\end{figure}
+
+\begin{figure}[ht]
+<<label= fig5, echo= FALSE, fig=TRUE >>=
+tf
 @
 \caption{Species responses to high forcing and long photoperiod treatments}
 \end{figure}
+
+\begin{figure}[ht]
+<<label= fig6, echo= FALSE, fig=TRUE >>=
+tc
+@
+\caption{Species responses to high forcing and long photoperiod treatments}
+\end{figure}
+
+\begin{figure}[ht]
+<<label= fig7, echo= FALSE, fig=TRUE >>=
+tp
+@
+\caption{Species responses to high forcing and long photoperiod treatments}
+\end{figure}
+
+\begin{figure}[ht]
+<<label= fig8, echo= FALSE, fig=TRUE >>=
+lf
+@
+\caption{Species responses to high forcing and long photoperiod treatments}
+\end{figure}
+
+\begin{figure}[ht]
+<<label= fig9, echo= FALSE, fig=TRUE >>=
+lc
+@
+\caption{Species responses to high forcing and long photoperiod treatments}
+\end{figure}
+
+\begin{figure}[ht]
+<<label= fig10, echo= FALSE, fig=TRUE >>=
+lp
+@
+\caption{Species responses to high forcing and long photoperiod treatments}
+\end{figure}
+
 
 \end{document}

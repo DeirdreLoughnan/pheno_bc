@@ -3,32 +3,31 @@
 # Budburst experiment for bc species in 2019
 # Code largely based off of budchill code written by D. Flynn and Lizzie --> budchill_analysis.R
 
-library(scales)
+#library(scales)
 library(arm)
 library(rstan)
-library(shinystan)
-library(reshape2)
+#library(shinystan)
+#library(reshape2)
 library(bayesplot)
 library(ggplot2)
-library(RColorBrewer)
+#library(RColorBrewer)
 library(dplyr)
 library(plyr)
 
-options(mc.cores = parallel::detectCores())
+#options(mc.cores = parallel::detectCores())
 
 rm(list=ls()) 
 options(stringsAsFactors = FALSE)
 
-if(length(grep("deirdreloughnan", getwd()) > 0)) { 
-  setwd("~/Documents/github/pheno_bc") 
-}  
-#else{
-#  setwd("~/deirdre/") # for midge
-#}
+if(length(grep("deirdreloughnan", getwd()) > 0)) {
+  setwd("~/Documents/github/pheno_bc")
+} else{
+ setwd("~/deirdre/") # for midge
+}
 
 #source('rcode/cleaning/pheno_bb_calc.R')
-head(pheno)
-length(unique(pheno$lab2))
+# head(pheno)
+# length(unique(pheno$lab2))
 
 df <- read.csv("input/day.of.bb.DFlynn.csv", header=TRUE, na.strings=c("","NA"))
 head(df)
@@ -126,21 +125,21 @@ ext.l <- rstan::extract(mdl.l)
 ext.dldf <- rstan::extract(mdl.t.df)
 
 # not the most normal 
-hist(ext.t$a)
+#hist(ext.t$a)
 
-hist(ext.t$b_force)
-hist(ext.t$b_chill)
-hist(ext.t$b_photo)
+# hist(ext.t$b_force)
+# hist(ext.t$b_chill)
+# hist(ext.t$b_photo)
 
 y <- pheno.t$tbb
 
 y.ext <- ext.dldf$ypred_new # I want this to be a matrix, which it is, with one element for each data point in y
 
-ppc_dens_overlay(y, y.ext[1:50, ])
+den_plot <- ppc_dens_overlay(y, y.ext[1:50, ])
 
-mean(ext$b_force)
-mean(ext$b_chill)
-mean(ext$b_photo)
+mean(ext.t$b_force)
+mean(ext.t$b_chill)
+mean(ext.t$b_photo)
 
 ######################################################
 # plotting code taken from buds-master Pheno Budburst analysis.R
@@ -202,17 +201,17 @@ rownames(meanztdf) = c("Forcing",
 meanzt.table <- sumt[mu_params, col4table]
 row.names(meanzt.table) <- row.names(meanzt)
 head(meanzt.table)
-#write.table(meanzt.table , "output/term_mdl_esti_dldf.csv", sep = ",", row.names = FALSE)
+write.table(meanzt.table , "output/term_mdl_esti_dl.csv", sep = ",", row.names = FALSE)
 
 meanzl.table <- suml[mu_params, col4table]
 row.names(meanzl.table) <- row.names(meanzl)
 head(meanzl.table)
-#write.table(meanzl.table , "output/lat.mdl.esti.csv", sep = ",", row.names = FALSE)
+write.table(meanzl.table , "output/lat.mdl.esti.csv", sep = ",", row.names = FALSE)
 
 meanztdf.table <- sumtdf[mu_params, col4table]
 row.names(meanztdf.table) <- row.names(meanztdf)
 head(meanztdf.table)
-#write.table(meanzt.table , "output/term_mdl_esti_dldf.csv", sep = ",", row.names = FALSE)
+write.table(meanzt.table , "output/term_mdl_esti_dldf.csv", sep = ",", row.names = FALSE)
 
 #
 # meanzl1.table <- suml1[mu_params, col4table]
@@ -249,7 +248,7 @@ summary(lm(lat.chill~lat.photo, data=df.mean.l)) #ns
 #pdf(file.path( "figures/changes_pheno_dldf.pdf"), width = 7, height = 8)
 par(mfrow = c(2,1), mar = c(5, 10, 2, 1))
 # Upper panel: bud burst
-plot(seq(-22, 
+tbb.mdlout <- plot(seq(-22, 
          12,
          length.out = nrow(meanzt)), 
      1:nrow(meanzt),
@@ -302,36 +301,36 @@ arrows(meanzl[,"75%"], nrow(meanzl):1, meanzl[,"25%"], nrow(meanzl):1,
 abline(v = 0, lty = 3)
 
 ## Plotting both my and the df terminal bud data:
-par(mfrow = c(1,1))
-# Upper panel: bud burst
-plot(seq(-22, 
-         12,
-         length.out = nrow(meanztdf)), 
-     1:nrow(meanztdf),
-     type = "n",
-     xlab = "",
-     ylab = "",
-     yaxt = "n")
-
-#legend(x = -20, y = 2, bty="n", legend = "a. Budburst", text.font = 2)
-#rasterImage(bbpng, -20, 1, -16, 4)
-
-axis(2, at = nrow(meanztdf):1, labels = rownames(meanztdf), las = 1, cex.axis = 0.8)
-points(meanztdf[, 'mean'],
-       nrow(meanztdf):1,
-       pch = 16,
-       col = "midnightblue")
-arrows(meanztdf[, "75%"], nrow(meanztdf):1, meanztdf[, "25%"], nrow(meanztdf):1,
-       len = 0, col = "black")
-abline(v = 0, lty = 3)
-# add advance/delay arrows
-par(xpd=NA)
-arrows(1, 15.5, 6, 15.5, len = 0.1, col = "black")
-legend(5, 16.5, legend = "delay", bty = "n", text.font = 1, cex = 0.75)
-arrows(-1, 15.5, -6, 15.5, len = 0.1, col = "black")
-legend(-12, 16.5, legend = "advance", bty = "n", text.font = 1, cex = 0.75)
-legend(-2, 16.5, legend = "0", bty = "n", text.font = 1, cex = 0.75)
-par(xpd = FALSE)
+# par(mfrow = c(1,1))
+# # Upper panel: bud burst
+# plot(seq(-22, 
+#          12,
+#          length.out = nrow(meanztdf)), 
+#      1:nrow(meanztdf),
+#      type = "n",
+#      xlab = "",
+#      ylab = "",
+#      yaxt = "n")
+# 
+# #legend(x = -20, y = 2, bty="n", legend = "a. Budburst", text.font = 2)
+# #rasterImage(bbpng, -20, 1, -16, 4)
+# 
+# axis(2, at = nrow(meanztdf):1, labels = rownames(meanztdf), las = 1, cex.axis = 0.8)
+# points(meanztdf[, 'mean'],
+#        nrow(meanztdf):1,
+#        pch = 16,
+#        col = "midnightblue")
+# arrows(meanztdf[, "75%"], nrow(meanztdf):1, meanztdf[, "25%"], nrow(meanztdf):1,
+#        len = 0, col = "black")
+# abline(v = 0, lty = 3)
+# # add advance/delay arrows
+# par(xpd=NA)
+# arrows(1, 15.5, 6, 15.5, len = 0.1, col = "black")
+# legend(5, 16.5, legend = "delay", bty = "n", text.font = 1, cex = 0.75)
+# arrows(-1, 15.5, -6, 15.5, len = 0.1, col = "black")
+# legend(-12, 16.5, legend = "advance", bty = "n", text.font = 1, cex = 0.75)
+# legend(-2, 16.5, legend = "0", bty = "n", text.font = 1, cex = 0.75)
+# par(xpd = FALSE)
 
 # add advance/delay arrows
 # par(xpd=NA)
@@ -351,10 +350,10 @@ b_photo <- sumt[grep("b_photo", rownames(sumt))]; b_photo <- b_photo[20:38]
 b_chill <- sumt[grep("b_chill", rownames(sumt))]
 
 # Comparisons of trees vs shrubs:
-shrubs = c("alninc","alnvir","amelan", "corsto","loninv", "menfer","rhoalb", "riblac","rubpar","samrac","shecan","sorsco","spibet","spipyr","symalb","vacmem","vibedu")
+shrubs = c("alninc","alnvir","amealn", "corsto","loninv", "menfer","rhoalb", "riblac","rubpar","samrac","shecan","sorsco","spibet","spipyr","symalb","vacmem","vibedu")
 trees = c("acegla","betpap", "poptre", "popbal")
 
-sp.temp <- c("alninc","alnvir","amelan", "corsto","loninv", "rhoalb", "riblac","rubpar","samrac","shecan","sorsco","spibet","spipyr","vacmem","vibedu","acegla","betpap", "poptre", "popbal")
+sp.temp <- c("alninc","alnvir","amealn", "corsto","loninv", "rhoalb", "riblac","rubpar","samrac","shecan","sorsco","spibet","spipyr","vacmem","vibedu","acegla","betpap", "poptre", "popbal")
 species.fact <- as.numeric(as.factor(sort(sp.temp)))
 species <- sort(unique(sp.temp))
 type <- c("tree", "shrub", "shrub", "shrub", "tree", "shrub", "shrub",  "tree", "tree","shrub", "shrub", "shrub", "shrub", "shrub", "shrub", "shrub", "shrub", "shrub", "shrub")
@@ -366,36 +365,82 @@ type <- c("tree", "shrub", "shrub", "shrub", "tree", "shrub", "shrub",  "tree", 
 # species.fact <- sort(unique(pheno.t$species.fact))
 # species <- sort(unique(pheno.t$species))
 # type <- c("tree","tree", "tree","tree", "shrub", "shrub", "shrub", "tree", "tree", "tree", "shrub","tree" , "shrub", "shrub", "tree", "tree", "tree", "tree", "shrub", "shrub", "shrub", "shrub", "shrub", "shrub", "shrub", "shrub", "shrub", "shrub", "shrub", "shrub")
-test <- data.frame(species, species.fact, b_force, b_photo, b_chill, type)
-head(test)
+type <- data.frame(species, species.fact, b_force, b_photo, b_chill, type)
+head(type)
 
-pdf(file.path( "figures/chill_vs_force_dldf.pdf"), width = 7, height = 8)
-ggplot(test, aes(x= b_chill, y = b_force, col = type)) +
-   geom_point() +
+#pdf(file.path( "figures/chill_vs_force_dldf.pdf"), width = 7, height = 8)
+cf <- ggplot(type, aes(x= b_chill, y = b_force, col = type)) +
+  geom_point() +
   ylim (-25, 1) +
   xlim (-30, 0) +
   geom_text(aes(label=species),hjust=0.5, vjust= 1) +
-  theme_bw()
-dev.off()
+  theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
+        panel.background = element_blank(), axis.line = element_line(colour = "black"))
+#dev.off()
 
-pdf(file.path( "figures/chill_vs_photo_dldf.pdf"), width = 7, height = 8)
-ggplot(test, aes(x= b_chill, y = b_photo, col = type)) +
+#pdf(file.path( "figures/chill_vs_photo_dldf.pdf"), width = 7, height = 8)
+cp <- ggplot(type, aes(x= b_chill, y = b_photo, col = type)) +
   geom_point() +
   ylim (-3.5, 1) +
   xlim (-30, 0) +
   geom_text(aes(label=species),hjust=0.5, vjust= 1) +
-  theme_bw()
-  geom_text(aes(label=species),hjust=0.5, vjust= 1)
-dev.off()
+  theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
+        panel.background = element_blank(), axis.line = element_line(colour = "black"))
+geom_text(aes(label=species),hjust=0.5, vjust= 1)
+#dev.off()
 
-pdf(file.path( "figures/force_vs_photo_dldf.pdf"), width = 7, height = 8)
-ggplot(test, aes(x= b_force, y = b_photo, col = type)) +
+#pdf(file.path( "figures/force_vs_photo_dldf.pdf"), width = 7, height = 8)
+fp <- ggplot(type, aes(x= b_force, y = b_photo, col = type)) +
   geom_point() +
   geom_text(aes(label=species),hjust=0.5, vjust= 1)+
   ylim (-3.5, 0.5) +
   xlim (-22, 0) +
-  theme_bw()
-dev.off()
+  theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
+        panel.background = element_blank(), axis.line = element_line(colour = "black"))
+#dev.off()
+
+
+## Plotting the day to bb with the cues on the y-axis 
+term.bb <- ddply(dl, c("species"), summarize, mean = mean(tbb, na.rm = TRUE), mean.lat = mean(latbb50, na.rm = TRUE))
+
+term <- merge(term.bb, type, by = "species", all =TRUE)
+term <- term[complete.cases(term), ] 
+
+tf <- ggplot(term, aes(y = b_force, x= mean,col = type), xlab = "Mean day of budburst") +
+  geom_point() +
+  geom_text(aes(label=species),hjust=0.5, vjust= 1) +
+  theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
+        panel.background = element_blank(), axis.line = element_line(colour = "black"))
+
+tc <- ggplot(term, aes(y = b_chill, x= mean,col = type), xlab = "Mean day of budburst") +
+  geom_point() +
+  geom_text(aes(label=species),hjust=0.5, vjust= 1) +
+  theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
+        panel.background = element_blank(), axis.line = element_line(colour = "black"))
+
+tp <- ggplot(term, aes(y = b_photo, x= mean,col = type), xlab = "Mean day of budburst") +
+  geom_point() +
+  geom_text(aes(label=species),hjust=0.5, vjust= 1) +
+  theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
+        panel.background = element_blank(), axis.line = element_line(colour = "black"))
+
+lf<- ggplot(term, aes(y = b_force, x= mean.lat,col = type), xlab = "Mean day of budburst") +
+  geom_point() +
+  geom_text(aes(label=species),hjust=0.5, vjust= 1) +
+  theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
+        panel.background = element_blank(), axis.line = element_line(colour = "black"))
+
+lc <- ggplot(term, aes(y = b_chill, x= mean.lat,col = type), xlab = "Mean day of budburst") +
+  geom_point() +
+  geom_text(aes(label=species),hjust=0.5, vjust= 1) +
+  theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
+        panel.background = element_blank(), axis.line = element_line(colour = "black"))
+
+lp <- ggplot(term, aes(y = b_photo, x= mean.lat,col = type), xlab = "Mean day of budburst") +
+  geom_point() +
+  geom_text(aes(label=species),hjust=0.5, vjust= 1) +
+  theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
+        panel.background = element_blank(), axis.line = element_line(colour = "black"))
 
 # treeshrub = levels(pheno$species)
 # treeshrub[treeshrub %in% shrubs] = 1

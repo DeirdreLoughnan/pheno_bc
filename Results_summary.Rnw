@@ -113,12 +113,12 @@ print(make.lat,include.rownames=TRUE, caption.placement="top", hline.after=c(-1,
 \begin{itemize}
 \item Tree species were generally more sensitive to forcing and chilling, as were shrubs like loninv and samrac
 \item Samrac and rhoalb were relativley more sensitive to photoperiod than other shrubs, and poptre more than other trees
-\item Tree species show later budburst in response to forcing than shrubs  \ref{fig:tf}
+\item Tree species show later budburst in response to forcing than shrubs 
 \item But we do not see the same gradient in species with chilling or photoperiod
 \item The mean day to lateral budburst shows the same relative trends
 \end{itemize}
 
-\begin{figure}[h!]
+\begin{figure}[ht]
 <<label= fig1, echo= FALSE, fig=TRUE >>=
 
 source("rcode/bc_bb_mdl_output_ppcplots.R")
@@ -128,63 +128,63 @@ tbb.mdlout
 \caption{Model estimates for a. terminal budburst and 50 percent of lateral buds}
 \end{figure}
 
-\begin{figure}[h!]
+\begin{figure}[ht]
 <<label= fig2, echo= FALSE, fig=TRUE >>=
 cf
 @
 \caption{Species responses to high chilling and high forcing treatments. }
 \end{figure}
 
-\begin{figure}[h!]
+\begin{figure}[ht]
 <<label= fig3, echo= FALSE, fig=TRUE >>=
 cp
 @
 \caption{Species responses to high chilling and long photoperiod treatments}
 \end{figure}
 
-\begin{figure}[h!]
+\begin{figure}[ht]
 <<label= fig4, echo= FALSE, fig=TRUE >>=
 fp
 @
 \caption{Species responses to high forcing and long photoperiod treatments}
 \end{figure}
 
-\begin{figure}[h!]
+\begin{figure}[ht]
 <<label= fig5, echo= FALSE, fig=TRUE >>=
 tf
 @
 \caption{Mean day of terminal budburst in response to high forcing}
 \end{figure}
 
-\begin{figure}[h!]
+\begin{figure}[ht]
 <<label= fig6, echo= FALSE, fig=TRUE >>=
 tc
 @
 \caption{Mean day of terminal budburst in response to high chilling}
 \end{figure}
 
-\begin{figure}[h!]
+\begin{figure}[ht]
 <<label= fig7, echo= FALSE, fig=TRUE >>=
 tp
 @
 \caption{Mean day of terminal budburst in response to long photoperiod}
 \end{figure}
 
-\begin{figure}[h!]
+\begin{figure}[ht]
 <<label= fig8, echo= FALSE, fig=TRUE >>=
 lf
 @
 \caption{Mean day of lateral budburst in response to high forcing}
 \end{figure}
 
-\begin{figure}[h!]
+\begin{figure}[ht]
 <<label= fig9, echo= FALSE, fig=TRUE >>=
 lc
 @
 \caption{Mean day of lateral budburst in response to high chilling}
 \end{figure}
 
-\begin{figure}[h!]
+\begin{figure}[ht]
 <<label= fig10, echo= FALSE, fig=TRUE >>=
 lp
 @
@@ -192,7 +192,23 @@ lp
 \end{figure}
 
 
-\section {Merging estern and western species data}
+
+\section{Merging estern and western species data}
+
+{\begin{figure} [ht]
+  -\begin{center}
+  -\includegraphics[width=14cm]{figures/dltrt_boxplot.pdf}
+  -\caption{Day to terminal budburst across western species within a treatment group}\label{fig:dlboxplot}
+  -\end{center}
+  -\end{figure}}
+  
+{\begin{figure} [ht]
+  -\begin{center}
+  -\includegraphics[width=14cm]{figures/dftrt_boxplot.pdf}
+  -\caption{Day to terminal budburst across eastern species within a treatment group }\label{fig:dfboxplot}
+  -\end{center}
+  -\end{figure}}
+
 <<label=table4, echo=FALSE, results=tex >>=
 #setwd("~/Documents/github/pheno_bc")
 term.dfdl <- read.csv("output/term_mdl_esti_dldf.csv", head = TRUE)
@@ -215,43 +231,43 @@ print(make.dfdl,include.rownames=TRUE, caption.placement="top", hline.after=c(-1
 
 @
 
-\begin{figure}[h!]
-<<label= fig11, echo= FALSE, fig=TRUE >>=
+\begin{figure}[ht]
+<<label= fig13, echo= FALSE, fig=TRUE >>=
 cf.both
 @
 \caption{Species responses to high chilling and high forcing treatments for both eastern and western species}
 \end{figure}
 
-\begin{figure}[h!]
-<<label= fig12, echo= FALSE, fig=TRUE >>=
+\begin{figure}[ht]
+<<label= fig14, echo= FALSE, fig=TRUE >>=
 cp.both
 @
 \caption{Species responses to high chilling and long photoperiod treatments for both eastern and western species}
 \end{figure}
 
-\begin{figure}[h!]
-<<label= fig13, echo= FALSE, fig=TRUE >>=
+\begin{figure}[ht]
+<<label= fig15, echo= FALSE, fig=TRUE >>=
 fp.both
 @
 \caption{Species responses to high forcing and long photoperiod treatments for both eastern and western species}
 \end{figure}
 
-\begin{figure}[h!]
-<<label= fig14, echo= FALSE, fig=TRUE >>=
+\begin{figure}[ht]
+<<label= fig16, echo= FALSE, fig=TRUE >>=
 tf.both
 @
 \caption{Mean day of terminal budburst in response to high forcing for both eastern and western species}
 \end{figure}
 
-\begin{figure}[h!]
-<<label= fig15, echo= FALSE, fig=TRUE >>=
+\begin{figure}[ht]
+<<label= fig17, echo= FALSE, fig=TRUE >>=
 tc.both
 @
 \caption{Mean day of terminal budburst in response to high chilling for both eastern and western species}
 \end{figure}
 
-\begin{figure}[h!]
-<<label= fig16, echo= FALSE, fig=TRUE >>=
+\begin{figure}[ht]
+<<label= fig18, echo= FALSE, fig=TRUE >>=
 tp.both
 @
 \caption{Mean day of terminal budburst in response to long photoperiod for both eastern and western species}

@@ -525,6 +525,11 @@ tp.both <- ggplot(term.both, aes(y = b.photo.both, x= mean,col = type.both)) +
   theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
         panel.background = element_blank(), axis.line = element_line(colour = "black"))
 
+##### General boxplots across treatments:
+#par(mar =c (6,5,1,1))
+west <- boxplot(dl$tbb ~ dl$treatment, las =2, xlab ="", ylab = "Day of terminal bb of western spp." )
+
+east <- boxplot(df$tbb ~ df$treatment, las =2, xlab ="", ylab = "Day of terminal bb of eastern spp.")
 
 # treeshrub = levels(pheno$species)
 # treeshrub[treeshrub %in% shrubs] = 1

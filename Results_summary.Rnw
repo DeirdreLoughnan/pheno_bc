@@ -292,4 +292,12 @@ tp.both
 \caption{Mean day of terminal budburst in response to long photoperiod for both eastern and western species}
 \end{figure}
 
+\clearpage
+
+{\begin{figure} [ht]
+  -\begin{center}
+  -\includegraphics[width=14cm]{figures/density_term_dldf.pdf}
+  -\end{center}
+  -\end{figure}}
+  
 \end{document}

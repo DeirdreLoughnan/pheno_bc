@@ -39,12 +39,32 @@ dl$transect <- "western"
 dl$lab3 <- dl$lab2
 dl$lab2 <- paste(dl$species, dl$population, dl$rep, sep = "_")
 
+dl$chill.n <- dl$chill
+dl$chill.n[dl$chill.n == "HC"] <- "1"
+dl$chill.n[dl$chill.n == "LC"] <- "0"
+dl$chill.n <- as.numeric(dl$chill.n)
+
+dl$force.n <- dl$force
+dl$force.n[dl$force.n == "HF"] <- "1"
+dl$force.n[dl$force.n == "LF"] <- "0"
+dl$force.n <- as.numeric(dl$force.n)
+
+dl$photo.n <- dl$photo
+dl$photo.n[dl$photo.n == "HP"] <- "1"
+dl$photo.n[dl$photo.n == "LP"] <- "0"
+dl$photo.n <- as.numeric(dl$photo.n)
+
+dl$site.n <- dl$population
+dl$site.n[dl$site.n == "sm"] <- "1"
+dl$site.n[dl$site.n == "mp"] <- "0"
+dl$site.n <- as.numeric(dl$site.n)
+
+
 # mergeing the my data with DF
 pheno <- rbind.fill(dl, df)
 
 #pheno <- dl
 # because I only had two chilling treatments, I am removing the DF zero chill
-pheno <- subset(pheno, chill != "chill0")
 # combined the data has 3197 unique samples
 ############################################################
 # Preping the data for the model
@@ -78,6 +98,13 @@ head(pheno)
 
 #going to split it into analysis of terminal bb and lateral bb
 # Starting with the terminal buds:
+dl.term <- dl[,c("tbb", "chill.n", "force.n", "photo.n", "site.n", "species", "lab2","transect")]
+dl.t <- dl.term[complete.cases(dl.term), ] # 1780 rows data 
+
+dl.t$species.fact <- as.numeric(as.factor(dl.t$species))
+sort(unique(dl.t$species.fact)) # 30 species 
+
+
 pheno.term <- pheno[,c("tbb", "chill.n", "force.n", "photo.n", "site.n", "species", "lab2","transect")]
 pheno.t <- pheno.term[complete.cases(pheno.term), ] # 1780 rows data 
 
@@ -87,24 +114,27 @@ sort(unique(pheno.t$species.fact)) # 30 species
 ## Load the model output:
 load("output/tbb_ncp_dl.Rds")
 load("output/latbb50_ncp_dl.Rds")
+#load("output/lat1_ncp_dldf.Rds")
 
-sumt <- summary(mdl.t)$summary
-suml <- summary(mdl.l)$summary
+sumdl <- summary(mdl.t)$summary
+sum50 <- summary(mdl.l)$summary
 
-load("output/tbb_ncp_dldf.Rds")
-sumtdf <- summary(mdl.t.df)$summary
-
-## The model no longer has any divergent transitions for the terminal buds!
-#pairs(sm.sum, pars=c("mu_a","mu_force","mu_chill","mu_photo_ncp")) # this gives a lot of warning messages and not the figure i was hoping/expected
-
-range(sumt[, "n_eff"])
-range(sumt[, "Rhat"])
-
-range(suml[, "n_eff"])
-range(suml[, "Rhat"])
-
-range(sumtdf[, "n_eff"])
-range(sumtdf[, "Rhat"])
+load("output/tbb_ncp_termianlbud_dldf.Rds")# 
+sumtdf <- sumt
+# load("output/tbb_ncp_dldf.Rds")
+# sumtdf <- summary(mdl.t.df)$summary
+# 
+# ## The model no longer has any divergent transitions for the terminal buds!
+# #pairs(sm.sum, pars=c("mu_a","mu_force","mu_chill","mu_photo_ncp")) # this gives a lot of warning messages and not the figure i was hoping/expected
+# 
+# range(sumt[, "n_eff"])
+# range(sumt[, "Rhat"])
+# 
+# range(sum1l[, "n_eff"])
+# range(sum1l[, "Rhat"])
+# 
+# range(sumtdf[, "n_eff"])
+# range(sumtdf[, "Rhat"])
 #####################################################################
 # PPC 
 
@@ -161,8 +191,8 @@ mu_params <- c("mu_force",
                "mu_inter_ps",
                "mu_inter_sc")
 
-meanzt <- sumt[mu_params, col4fig]
-meanzl <- suml[mu_params, col4fig]
+meanzt <- sumdl[mu_params, col4fig]
+meanzl <- sum50[mu_params, col4fig]
 meanztdf <- sumtdf[mu_params, col4fig]
 
 rownames(meanzt) = c("Forcing",
@@ -200,15 +230,15 @@ rownames(meanztdf) = c("Forcing",
                      "Photoperiod x Site",
                      "Site x Chilling"
 )
-meanzt.table <- sumt[mu_params, col4table]
+meanzt.table <- sumdl[mu_params, col4table]
 row.names(meanzt.table) <- row.names(meanzt)
 head(meanzt.table)
 #write.table(meanzt.table , "output/term_mdl_esti_dl.csv", sep = ",", row.names = FALSE)
 
-meanzl.table <- suml[mu_params, col4table]
+meanzl.table <- sum50[mu_params, col4table]
 row.names(meanzl.table) <- row.names(meanzl)
 head(meanzl.table)
-#write.table(meanzl.table , "output/lat.mdl.esti.csv", sep = ",", row.names = FALSE)
+#write.table(meanzl.table , "output/lat.mdl.esti.dldf.csv", sep = ",", row.names = FALSE)
 
 meanztdf.table <- sumtdf[mu_params, col4table]
 row.names(meanztdf.table) <- row.names(meanztdf)
@@ -216,23 +246,23 @@ head(meanztdf.table)
 #write.table(meanztdf.table , "output/term_mdl_esti_dldf.csv", sep = ",", row.names = FALSE)
 
 #
-# meanzl1.table <- suml1[mu_params, col4table]
+# meanzl1.table <- sum1l1[mu_params, col4table]
 # row.names(meanzl1.table) <- row.names(meanzl)
 # head(meanzl1.table)
 # write.table(meanzl.table , "output/lat.mdl.esti.csv", sep = ",", row.names = FALSE)
 
 # Begin by checking to see what cue is most important and whether there are strong correlations between cues:
-df.mean.t <- data.frame(bb.force = sumt[grep("b_force", rownames(sumt)), 1],
-                          bb.photo = sumt[grep("b_photo_ncp", rownames(sumt)), 1],
-                          bb.chill = sumt[grep("b_chill", rownames(sumt)), 1])
+df.mean.t <- data.frame(bb.force = sumdl[grep("b_force", rownames(sumdl)), 1],
+                          bb.photo = sumdl[grep("b_photo_ncp", rownames(sumdl)), 1],
+                          bb.chill = sumdl[grep("b_chill", rownames(sumdl)), 1])
 
-df.mean.l <- data.frame(lat.force = suml[grep("b_force", rownames(sumt)), 1],
-                        lat.photo = suml[grep("b_photo_ncp", rownames(sumt)), 1],
-                        lat.chill = suml[grep("b_chill", rownames(sumt)), 1])
+df.mean.l <- data.frame(lat.force = sum50[grep("b_force", rownames(sum50)), 1],
+                        lat.photo = sum50[grep("b_photo_ncp", rownames(sum50)), 1],
+                        lat.chill = sum50[grep("b_chill", rownames(sum50)), 1])
 
-df.mean.tdf <- data.frame(bb.force = sumtdf[grep("b_force", rownames(sumtdf)), 1],
-                        bb.photo = sumtdf[grep("b_photo_ncp", rownames(sumtdf)), 1],
-                        bb.chill = sumtdf[grep("b_chill", rownames(sumtdf)), 1])
+ df.mean.tdf <- data.frame(bb.force = sumtdf[grep("b_force", rownames(sumtdf)), 1],
+                         bb.photo = sumtdf[grep("b_photo_ncp", rownames(sumtdf)), 1],
+                         bb.chill = sumtdf[grep("b_chill", rownames(sumtdf)), 1])
 
 df.mean.t[which(df.mean.t$bb.force > df.mean.t$bb.photo), ] # none
 df.mean.l[which(df.mean.l$lat.force > df.mean.l$lat.photo), ] #none
@@ -301,36 +331,36 @@ arrows(meanzl[,"75%"], nrow(meanzl):1, meanzl[,"25%"], nrow(meanzl):1,
 abline(v = 0, lty = 3)
 
 # Plotting both my and the df terminal bud data:
-par(mfrow = c(1,1))
-# Upper panel: bud burst
-plot(seq(-22,
-         12,
-         length.out = nrow(meanztdf)),
-     1:nrow(meanztdf),
-     type = "n",
-     xlab = "",
-     ylab = "",
-     yaxt = "n")
+# par(mfrow = c(1,1))
+# # Upper panel: bud burst
+# plot(seq(-22,
+#          12,
+#          length.out = nrow(meanztdf)),
+#      1:nrow(meanztdf),
+#      type = "n",
+#      xlab = "",
+#      ylab = "",
+#      yaxt = "n")
 
 #legend(x = -20, y = 2, bty="n", legend = "a. Budburst", text.font = 2)
 #rasterImage(bbpng, -20, 1, -16, 4)
 
-axis(2, at = nrow(meanztdf):1, labels = rownames(meanztdf), las = 1, cex.axis = 0.8)
-points(meanztdf[, 'mean'],
-       nrow(meanztdf):1,
-       pch = 16,
-       col = "midnightblue")
-arrows(meanztdf[, "75%"], nrow(meanztdf):1, meanztdf[, "25%"], nrow(meanztdf):1,
-       len = 0, col = "black")
-abline(v = 0, lty = 3)
-# add advance/delay arrows
-par(xpd=NA)
-arrows(1, 15.5, 6, 15.5, len = 0.1, col = "black")
-legend(5, 16.5, legend = "delay", bty = "n", text.font = 1, cex = 0.75)
-arrows(-1, 15.5, -6, 15.5, len = 0.1, col = "black")
-legend(-12, 16.5, legend = "advance", bty = "n", text.font = 1, cex = 0.75)
-legend(-2, 16.5, legend = "0", bty = "n", text.font = 1, cex = 0.75)
-par(xpd = FALSE)
+# axis(2, at = nrow(meanztdf):1, labels = rownames(meanztdf), las = 1, cex.axis = 0.8)
+# points(meanztdf[, 'mean'],
+#        nrow(meanztdf):1,
+#        pch = 16,
+#        col = "midnightblue")
+# arrows(meanztdf[, "75%"], nrow(meanztdf):1, meanztdf[, "25%"], nrow(meanztdf):1,
+#        len = 0, col = "black")
+# abline(v = 0, lty = 3)
+# # add advance/delay arrows
+# par(xpd=NA)
+# arrows(1, 15.5, 6, 15.5, len = 0.1, col = "black")
+# legend(5, 16.5, legend = "delay", bty = "n", text.font = 1, cex = 0.75)
+# arrows(-1, 15.5, -6, 15.5, len = 0.1, col = "black")
+# legend(-12, 16.5, legend = "advance", bty = "n", text.font = 1, cex = 0.75)
+# legend(-2, 16.5, legend = "0", bty = "n", text.font = 1, cex = 0.75)
+# par(xpd = FALSE)
 
 # add advance/delay arrows
 # par(xpd=NA)
@@ -345,9 +375,9 @@ par(xpd = FALSE)
 ##########################################################################################################
 ## Replicating Flynn Figure 2:
 
-b.force <- sumt[grep("b_force", rownames(sumt))]
-b.photo <- sumt[grep("b_photo", rownames(sumt))]; b.photo <- b.photo[20:38]
-b.chill <- sumt[grep("b_chill", rownames(sumt))]
+b.force <- sumdl[grep("b_force", rownames(sumdl))]
+b.photo <- sumdl[grep("b_photo", rownames(sumdl))]; b.photo <- b.photo[21:39]
+b.chill <- sumdl[grep("b_chill", rownames(sumdl))]
 
 # Comparisons of trees vs shrubs:
 shrubs = c("alninc","alnvir","amealn", "corsto","loninv", "menfer","rhoalb", "riblac","rubpar","samrac","shecan","sorsco","spibet","spipyr","symalb","vacmem","vibedu")
@@ -358,7 +388,7 @@ species.fact <- as.numeric(as.factor(sort(sp.temp)))
 species <- sort(unique(sp.temp))
 type <- c("tree", "shrub", "shrub", "shrub", "tree", "shrub", "shrub",  "tree", "tree","shrub", "shrub", "shrub", "shrub", "shrub", "shrub", "shrub", "shrub", "shrub", "shrub")
 
-dl.t <- subset(pheno.t, transect == "western")
+pheno.t <- subset(pheno.t, transect == "western")
 
 type <- c("tree","shrub", "shrub", "shrub", "tree", "shrub", "shrub", "tree", "tree", "shrub", "shrub", "shrub", "shrub", "shrub", "shrub", "shrub", "shrub", "shrub", "shrub")
 type <- data.frame(species, species.fact, b.force, b.photo, b.chill, type)
@@ -399,16 +429,16 @@ fp <- ggplot(type, aes(x= b.force, y = b.photo, col = type)) +
         panel.background = element_blank(), axis.line = element_line(colour = "black"))
 #dev.off()
 
-## Plotting the day to bb with the cues on the y-axis 
+## Plotting the day to bb with the cues on the y-axis
 term.bb <- ddply(dl, c("species"), summarize, mean = mean(tbb, na.rm = TRUE), mean.lat = mean(latbb50, na.rm = TRUE))
 
 term <- merge(term.bb, type, by = "species", all =TRUE)
-term <- term[complete.cases(term), ] 
+term <- term[complete.cases(term), ]
 
 tf <- ggplot(term, aes(y = b.force, x= mean,col = type)) +
   geom_point() +
   geom_text(aes(label=species),hjust=0.5, vjust= 1) +
-  labs(x = "Mean day of budburst",y = "High forcing") + 
+  labs(x = "Mean day of budburst",y = "High forcing") +
   theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
         panel.background = element_blank(), axis.line = element_line(colour = "black"))
 
@@ -456,8 +486,12 @@ b.chill.both <- sumtdf[grep("b_chill", rownames(sumtdf))]
 shrubs.both = c("VIBLAN","RHAFRA","RHOPRI","SPIALB","VACMYR","VIBCAS", "AROMEL","ILEMUC", "KALANG", "LONCAN", "LYOLIG", "alninc","alnvir","amelan", "corsto","loninv", "menfer","rhoalb", "riblac","rubpar","samrac","shecan","sorsco","spibet","spipyr","symalb","vacmem","vibedu")
 trees.both = c("ACEPEN", "ACERUB", "ACESAC", "ALNINC", "BETALL", "BETLEN", "BETPAP", "CORCOR", "FAGGRA", "FRANIG", "HAMVIR", "NYSSYL", "POPGRA", "PRUPEN", "QUEALB" , "QUERUB", "QUEVEL", "acegla","betpap", "poptre", "popbal")
 
-species.fact.both <- sort(unique(pheno.t$species.fact))
+pheno.term <- pheno[,c("tbb", "chill.n", "force.n", "photo.n", "site.n", "species", "lab2","transect")]
+pheno.t <- pheno.term[complete.cases(pheno.term), ] # 1780 rows data 
+
+
 species.both <- sort(unique(pheno.t$species))
+species.fact.both <-as.numeric( as.factor(unique(pheno.t$species)))
 type.both <- c("tree","tree", "tree","tree", "shrub", "shrub", "shrub", "tree", "tree", "tree", "shrub","tree" , "shrub", "shrub", "tree", "tree", "tree", "tree", "shrub", "shrub", "shrub", "shrub", "shrub", "shrub", "shrub", "shrub", "shrub", "shrub", "shrub", "shrub")
 both <- data.frame(species.both, species.fact.both, b.force.both, b.photo.both, b.chill.both, type.both)
 
@@ -526,11 +560,14 @@ tp.both <- ggplot(term.both, aes(y = b.photo.both, x= mean,col = type.both)) +
         panel.background = element_blank(), axis.line = element_line(colour = "black"))
 
 ##### General boxplots across treatments:
-#par(mar =c (6,5,1,1))
-west <- boxplot(dl$tbb ~ dl$treatment, las =2, xlab ="", ylab = "Day of terminal bb of western spp." )
+# par(mar =c (6,5,1,1))
+# pdf(file="figures/dltrt_boxplot.pdf")
+# west <- boxplot(dl$tbb ~ dl$treatment, las =2, xlab ="", ylab = "Day of terminal bb of western spp." )
+# dev.off()
 
-east <- boxplot(df$tbb ~ df$treatment, las =2, xlab ="", ylab = "Day of terminal bb of eastern spp.")
-
+# pdf(file="figures/dftrt_boxplot.pdf")
+# east <- boxplot(df$tbb ~ df$treatment, las =2, xlab ="", ylab = "Day of terminal bb of eastern spp.")
+# dev.off()
 # treeshrub = levels(pheno$species)
 # treeshrub[treeshrub %in% shrubs] = 1
 # treeshrub[treeshrub %in% trees] = 2

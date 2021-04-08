@@ -39,12 +39,10 @@ dl$lab3 <- dl$lab2
 dl$lab2 <- paste(dl$species, dl$population, dl$rep, sep = "_")
 
 # mergeing the my data with DF
-#pheno <- rbind.fill(dl, df)
-pheno <- dl
+pheno <- rbind.fill(dl, df)
+#pheno <- dl
 head(pheno)
 
-# because I only had two chilling treatments, I am removing the DF zero chill
-pheno <- subset(pheno, chill != "chill0")
 # combined the data has 3197 unique samples
 ############################################################
 # Preping the data for the model
@@ -68,10 +66,10 @@ pheno$photo.n[pheno$photo.n == "LP"] <- "0"
 pheno$photo.n <- as.numeric(pheno$photo.n)
 
 pheno$site.n <- pheno$population
-pheno$site.n[pheno$site.n == "sm"] <- "1"
-pheno$site.n[pheno$site.n == "mp"] <- "0"
-#pheno$site.n[pheno$site.n == "HF"] <- "2"
-#pheno$site.n[pheno$site.n == "SH"] <- "3"
+pheno$site.n[pheno$site.n == "sm"] <- "0"
+pheno$site.n[pheno$site.n == "mp"] <- "1"
+pheno$site.n[pheno$site.n == "HF"] <- "2"
+pheno$site.n[pheno$site.n == "SH"] <- "3"
 pheno$site.n <- as.numeric(pheno$site.n)
 
 head(pheno)
@@ -125,46 +123,85 @@ save(sumt, file="output/tbb_ncp_termianlbud.Rds")
 #####################################################################
 #####################################################################
 
+# # now running the same model for the lateral buds
+# pheno.50lat <- pheno[, c("latbb50", "chill.n", "force.n", "photo.n", "site.n", "species")]
+# pheno.50l <- pheno.50lat[complete.cases(pheno.50lat), ]
+# nrow(pheno.50lat) - nrow(pheno.50l)  # a lot of samples did not reach even 50%! 1084
+# 
+# pheno.50l$species.fact <- as.numeric(as.factor(pheno.50l$species))
+# sort(unique(pheno.50l$species.fact))
+# 
+# datalist <- with(pheno.50l,
+#                list( N = nrow(pheno.50l),
+#                      n_sp = length(unique(pheno.50l$species.fact)),
+#                      n_site = length(unique(pheno.50l$site.n)),
+#                      bb = latbb50,
+#                      sp = species.fact,
+#                      chill = chill.n,
+#                      photo = photo.n,
+#                      force = force.n,
+#                      site = site.n
+#                ))
+# 
+# # mdl <- stan("stan/bc.bb.inter.stan",
+# #             data= datalist
+# #             ,iter=2000, chains=4)
+# #gives 200 divergent transitions, 41 transitions that exceed max tree depth, chains were not mixed, with low ESS
+# 
+# mdl.50l <- stan("stan/bc.bb.ncpphoto.ncpinter.stan",
+#           data= datalist,
+#           iter=4000, chains=4, control = list(adapt_delta = 0.99))
+# 
+# sum50l <- summary(mdl.50l)$summary
+# sum50l[grep("mu_",rownames(sum50l)), ]
+# sum50l
+# ssm <- as.shinystan(mdl.50l)
+# launch_shinystan(ssm)
+# 
+# ## The model no longer has any divergent transitions for the terminal buds!
+# #pairs(sm.sum, pars=c("mu_a","mu_force","mu_chill","mu_photo_ncp")) # this gives a lot of warning messages and not the figure i was hoping/expected
+# 
+# save(sum50l, file="output/tbb_photo_winter_ncp_lateralbud.Rds")
+
 # now running the same model for the lateral buds
-pheno.lat <- pheno[, c("latbb50", "chill.n", "force.n", "photo.n", "site.n", "species")]
-pheno.l <- pheno.lat[complete.cases(pheno.lat), ]
-nrow(pheno.lat) - nrow(pheno.l)  # a lot of samples did not reach even 50%! 1084
+pheno.1lat <- pheno[, c("latbb1", "chill.n", "force.n", "photo.n", "site.n", "species")]
+pheno.1l <- pheno.1lat[complete.cases(pheno.1lat), ]
+nrow(pheno.1lat) - nrow(pheno.1l)  
 
-pheno.l$species.fact <- as.numeric(as.factor(pheno.l$species))
-sort(unique(pheno.l$species.fact))
+pheno.1l$species.fact <- as.numeric(as.factor(pheno.1l$species))
+sort(unique(pheno.1l$species.fact))
 
-datalist <- with(pheno.l,
-               list( N = nrow(pheno.l),
-                     n_sp = length(unique(pheno.l$species.fact)),
-                     n_site = length(unique(pheno.l$site.n)),
-                     bb = latbb50,
-                     sp = species.fact,
-                     chill = chill.n,
-                     photo = photo.n,
-                     force = force.n,
-                     site = site.n
-               ))
+datalist <- with(pheno.1l,
+                 list( N = nrow(pheno.1l),
+                       n_sp = length(unique(pheno.1l$species.fact)),
+                       n_site = length(unique(pheno.1l$site.n)),
+                       bb = latbb1,
+                       sp = species.fact,
+                       chill = chill.n,
+                       photo = photo.n,
+                       force = force.n,
+                       site = site.n
+                 ))
 
 # mdl <- stan("stan/bc.bb.inter.stan",
 #             data= datalist
 #             ,iter=2000, chains=4)
 #gives 200 divergent transitions, 41 transitions that exceed max tree depth, chains were not mixed, with low ESS
 
-mdl.l <- stan("stan/bc.bb.ncpphoto.ncpinter.stan",
-          data= datalist,
-          iter=4000, chains=4, control = list(adapt_delta = 0.99))
+mdl.1l <- stan("stan/bc.bb.ncpphoto.ncpinter.stan",
+                data= datalist,
+                iter=4000, chains=4, control = list(adapt_delta = 0.99))
 
-suml <- summary(mdl.l)$summary
-suml[grep("mu_",rownames(suml)), ]
-suml
-ssm <- as.shinystan(mdl)
+sum1l <- summary(mdl.1l)$summary
+sum1l[grep("mu_",rownames(sum1l)), ]
+sum1l
+ssm <- as.shinystan(mdl.1l)
 launch_shinystan(ssm)
 
 ## The model no longer has any divergent transitions for the terminal buds!
 #pairs(sm.sum, pars=c("mu_a","mu_force","mu_chill","mu_photo_ncp")) # this gives a lot of warning messages and not the figure i was hoping/expected
 
-save(suml, file="output/tbb_photo_winter_ncp_lateralbud.Rds")
-
+save(sum1l, file="output/tbb_photo_winter_ncp_lateralbud.Rds")
 #####################################################################
 # PPC 
 

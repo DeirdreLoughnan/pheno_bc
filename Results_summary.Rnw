@@ -65,6 +65,7 @@ print(make.bb_suc,include.rownames=TRUE, caption.placement="top", hline.after=c(
 \item There is a greater effect of photoperiod at the more Northern site for terminal budburst (-1.40) than lateral (-0.45)
 \end{itemize}
 
+\clearpage
 <<label=table2, echo=FALSE, results=tex >>=
 setwd("~/Documents/github/pheno_bc")
 term <- read.csv("output/term_mdl_esti_dl.csv", head = TRUE)
@@ -118,6 +119,8 @@ print(make.lat,include.rownames=TRUE, caption.placement="top", hline.after=c(-1,
 \item The mean day to lateral budburst shows the same relative trends
 \end{itemize}
 
+\clearpage
+
 \begin{figure}[ht]
 <<label= fig1, echo= FALSE, fig=TRUE >>=
 
@@ -128,6 +131,7 @@ tbb.mdlout
 \caption{Model estimates for a. terminal budburst and 50 percent of lateral buds}
 \end{figure}
 
+\clearpage
 \begin{figure}[ht]
 <<label= fig2, echo= FALSE, fig=TRUE >>=
 cf
@@ -135,6 +139,7 @@ cf
 \caption{Species responses to high chilling and high forcing treatments. }
 \end{figure}
 
+\clearpage
 \begin{figure}[ht]
 <<label= fig3, echo= FALSE, fig=TRUE >>=
 cp
@@ -142,6 +147,7 @@ cp
 \caption{Species responses to high chilling and long photoperiod treatments}
 \end{figure}
 
+\clearpage
 \begin{figure}[ht]
 <<label= fig4, echo= FALSE, fig=TRUE >>=
 fp
@@ -149,6 +155,7 @@ fp
 \caption{Species responses to high forcing and long photoperiod treatments}
 \end{figure}
 
+\clearpage
 \begin{figure}[ht]
 <<label= fig5, echo= FALSE, fig=TRUE >>=
 tf
@@ -156,6 +163,7 @@ tf
 \caption{Mean day of terminal budburst in response to high forcing}
 \end{figure}
 
+\clearpage
 \begin{figure}[ht]
 <<label= fig6, echo= FALSE, fig=TRUE >>=
 tc
@@ -163,6 +171,7 @@ tc
 \caption{Mean day of terminal budburst in response to high chilling}
 \end{figure}
 
+\clearpage
 \begin{figure}[ht]
 <<label= fig7, echo= FALSE, fig=TRUE >>=
 tp
@@ -170,6 +179,7 @@ tp
 \caption{Mean day of terminal budburst in response to long photoperiod}
 \end{figure}
 
+\clearpage
 \begin{figure}[ht]
 <<label= fig8, echo= FALSE, fig=TRUE >>=
 lf
@@ -177,6 +187,7 @@ lf
 \caption{Mean day of lateral budburst in response to high forcing}
 \end{figure}
 
+\clearpage
 \begin{figure}[ht]
 <<label= fig9, echo= FALSE, fig=TRUE >>=
 lc
@@ -184,6 +195,7 @@ lc
 \caption{Mean day of lateral budburst in response to high chilling}
 \end{figure}
 
+\clearpage
 \begin{figure}[ht]
 <<label= fig10, echo= FALSE, fig=TRUE >>=
 lp
@@ -192,7 +204,7 @@ lp
 \end{figure}
 
 
-
+\clearpage
 \section{Merging estern and western species data}
 
 {\begin{figure} [ht]
@@ -209,6 +221,7 @@ lp
   -\end{center}
   -\end{figure}}
 
+\clearpage
 <<label=table4, echo=FALSE, results=tex >>=
 #setwd("~/Documents/github/pheno_bc")
 term.dfdl <- read.csv("output/term_mdl_esti_dldf.csv", head = TRUE)
@@ -231,6 +244,7 @@ print(make.dfdl,include.rownames=TRUE, caption.placement="top", hline.after=c(-1
 
 @
 
+\clearpage
 \begin{figure}[ht]
 <<label= fig13, echo= FALSE, fig=TRUE >>=
 cf.both
@@ -238,6 +252,7 @@ cf.both
 \caption{Species responses to high chilling and high forcing treatments for both eastern and western species}
 \end{figure}
 
+\clearpage
 \begin{figure}[ht]
 <<label= fig14, echo= FALSE, fig=TRUE >>=
 cp.both
@@ -245,6 +260,7 @@ cp.both
 \caption{Species responses to high chilling and long photoperiod treatments for both eastern and western species}
 \end{figure}
 
+\clearpage
 \begin{figure}[ht]
 <<label= fig15, echo= FALSE, fig=TRUE >>=
 fp.both
@@ -252,6 +268,7 @@ fp.both
 \caption{Species responses to high forcing and long photoperiod treatments for both eastern and western species}
 \end{figure}
 
+\clearpage
 \begin{figure}[ht]
 <<label= fig16, echo= FALSE, fig=TRUE >>=
 tf.both
@@ -259,6 +276,7 @@ tf.both
 \caption{Mean day of terminal budburst in response to high forcing for both eastern and western species}
 \end{figure}
 
+\clearpage
 \begin{figure}[ht]
 <<label= fig17, echo= FALSE, fig=TRUE >>=
 tc.both
@@ -266,6 +284,7 @@ tc.both
 \caption{Mean day of terminal budburst in response to high chilling for both eastern and western species}
 \end{figure}
 
+\clearpage
 \begin{figure}[ht]
 <<label= fig18, echo= FALSE, fig=TRUE >>=
 tp.both

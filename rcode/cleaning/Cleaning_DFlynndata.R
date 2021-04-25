@@ -40,16 +40,16 @@ colnames(df)[colnames(df) == "tleaf"] <- "bbch.t"
 colnames(df)[colnames(df) == "lleaf"] <- "bbch.l"
 
 # removing the zero chill treatment:
-df <- subset(df, chill != "chill0")
+#df <- subset(df, chill != "chill0")
 
 # Changing the labels of the different treatments:
 unique(df$force) # cool warm
 df$force[df$force == "cool"] <- "LF"
 df$force[df$force == "warm"] <- "HF"
 
-unique(df$chill) # cool warm
-df$chill[df$chill == "chill2"] <- "HC"
-df$chill[df$chill == "chill1"] <- "LC"
+# unique(df$chill) # cool warm
+# df$chill[df$chill == "chill2"] <- "HC"
+# df$chill[df$chill == "chill1"] <- "LC"
 
 unique(df$photo) # cool warm
 df$photo[df$photo == "long"] <- "HP"
@@ -97,4 +97,4 @@ names(pheno.term) <- c("lab2","lab3","population", "treatment", "chill", "force"
 pheno.df <- rbind(pheno.both, pheno.term, pheno.lat)
 
 
-write.csv(pheno.df, "input/day.of.bb.DFlynn.csv", row.names = FALSE)
+write.csv(pheno.df, "input/day.of.bb.DFlynn.chill0.csv", row.names = FALSE)

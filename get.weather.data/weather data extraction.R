@@ -121,6 +121,16 @@ hopeTable
 #combine both tables
 fullTable <- rbind(smithTable,hopeTable)
 
+#get rid of empty rows (where year=NA)
+completeFun <- function(data, desiredCols) {
+  completeVec <- complete.cases(data[, desiredCols])
+  return(data[completeVec, ])
+}
+fullTable <- completeFun(fullTable, "DAY")
+
+
+write.csv(fullTable, 'fullweatherdata.csv')
+
 #Create plots
 
 #Max temp
@@ -150,3 +160,4 @@ fullTable %>%
   ylab("Temperature °C") +
   xlab("Date")+
   theme_bw()
+

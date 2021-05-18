@@ -1,4 +1,5 @@
 ### LOAD SMITHERS DATA
+library(rvest)
 
 #load sept data
 url <- "https://climate.weather.gc.ca/climate_data/daily_data_e.html?timeframe=2&Year=2019&Month=9&Day=12&hlyRange=2010-02-02%7C2021-05-12&dlyRange=2010-04-08%7C2021-05-12&mlyRange=%7C&StationID=48628&Prov=BC&urlExtension=_e.html&searchType=stnName&optLimit=yearRange&StartYear=1840&EndYear=2021&selRowPerPage=25&Line=0&searchMethod=contains&txtStationName=Smithers"

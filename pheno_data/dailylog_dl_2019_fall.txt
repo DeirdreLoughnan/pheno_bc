@@ -99,6 +99,12 @@ Observations for LHH
 Dec 9: 
 Changed water in low chill flasks
 
+Dec 11:
+Observations on LHH, LHL, LLL, LLH
+
+Dec 12:
+Observations on LHH, LHL, LLL, LLH
+
 Dec 13:
 Changed water in high chill flasks
 Rotated chambers for low chill flasks
@@ -107,12 +113,32 @@ LLH-- ch 6
 LHL-- ch 5 
 LLL-- ch 4
 
+Dec 14:
+Observations on LHH, LHL, LLL, LLH
+
 Dec 16:
 Changed water in three of four chambers
+Observations LHL, LLH, LLL
 
 Dec 17:
 Finished changing water of the 4th chamber (LLL) 
 Checked HOBO batteries
+Observations LHH, LHL, LLH
+
+Dec 18:
+Observations on LHH
+
+Dec 19:
+Observations on LHL & LLH
+
+Dec 20:
+Observations on LHH, LHL, LLL
+
+Dec 21:
+Observations on  LHL, LLH
+
+Dec 22:
+Observations on LHH, LLH
 
 Dec 23:
 Moved high chill flasks into forcing chambers for day 0 (day 50 of experiment)
@@ -124,8 +150,24 @@ HLH-- ch 11 hobo 9 & 11
 HHL-- ch 9 hobo 10 & 16
 HLL-- ch 13 hobo 13 & 15 
 
+Observations onLHL, LLL, all the high chill
+
+Dec 24:
+Observations on LHH, LLH
+
+Dec 26:
+Observations on LLL, LHL, LLH, HHH, HHL,
+
 Dec 27:
 Changed water for high chill flasks
+
+Observations on LLL, HHH, HHL, HLH, HLL
+
+Dec 28:
+Observations on LHH, LHL, LLH, HLH, HHH, HHL, HLL
+
+Dec 29:
+Observations on LHH, LHL, LLL, LLH
 
 Dec 30:
 Changing water of LC flasks
@@ -141,16 +183,26 @@ HLH-- ch 6
 HHL-- ch 5 - ck
 HLL-- ch 4 - ck
 
-Dec 31: Realized I should be recording what chambers I do observations in each day. Opps.
+Observations on LHH, LHL, LLH, LLL, HLH, HHH, HHL, HLL
+
+Dec 31: Realized I should be recording what chambers I do observations in each day. Opps. * The above dates have been updated based on my GitHub commits
 Observations in LLH, LHH, LHL, LLL, HLH, HHL, 
 Changed water for HC flasks
+
+Jan 1:
+Observations on LHL, LHH, HHL,HLH, HLL
+
+Jan 2: 
+Observations on LHL, LLL, HHL,HLH, HHH
 
 Jan 3
 Hobo #5 was out of chamber at 2pm
 Changed water for HC flasks
 
+Observations on LLH, LHL,LHH, LLL
+
 Jan 4
-Observations done for LC-HF chambers and started observations for HC chambers
+Observations done for LC-HF chambers and started observations for HC chambers, HHH, HHL, HLH, HLL
 
 Jan 5
 Completed observations for HC chambers
@@ -213,7 +265,7 @@ Typos:
 mpHHL11shecan 7/9 --> NA
 
 Jan 15:
-Finished HC-HF observations
+Finished HC-HF observations, HHL, HLH
 SNOW DAY!
 
 Typos:

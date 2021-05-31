@@ -1,90 +1,112 @@
+rm(list=ls())
+options(stringsAsFactors = FALSE)
 
 library(chillR)
 library (Interpol.T)
-###load fullTable from weatherdataextraction.R first
 
+###load fullTable from weatherdataextraction.R first
+if(length(grep("deirdreloughnan", getwd())>0)) {
+  setwd("~/Documents/github/pheno_bc")
+} else{
+  setwd("~/deirdre/pheno") #
+}
+
+###load fullTable from weatherdataextraction.R first
+fullTable <- read.csv("get.weather.data/fullweatherdata.csv")
 
 ## Hope calcs
 
 ### Hope field
 
-calibration_l = list(
+calibration_hope = list(
   Average = data.frame(time_min = rep(5, 12),
                        time_max = rep(14, 12),
                        time_suns = rep(17, 12),
                        C_m = rep(0.35, 12))
 )
-chillcalcsH <- vector()
+#chillcalcsHope <- vector()
 
-xx <- filter(fullTable, site== "Hope")
-xx$DAY<-strptime(xx$DAY,"%Y-%m-%d", tz="GMT")
+hope <- subset(fullTable, site== "Hope" & X <132)
+hope$DAY<-strptime(hope$DAY,"%Y-%m-%d", tz="GMT")
 
 
-year = as.numeric(format(xx$DAY, "%Y"))
-month = as.numeric(format(xx$DAY, "%m"))
-day = as.numeric(format(xx$DAY, "%d"))
+year = as.numeric(format(hope$DAY, "%Y"))
+month = as.numeric(format(hope$DAY, "%m"))
+day = as.numeric(format(hope$DAY, "%d"))
 
-Min_Temp_degC= data.frame(year, month, day, T = xx$Min_Temp_degC)
-Max_Temp_degC = data.frame(year, month, day, T = xx$Max_Temp_degC)
+Min_Temp_degC_MP= data.frame(year, month, day, T = hope$Min_Temp_degC)
+Max_Temp_degC_MP = data.frame(year, month, day, T = hope$Max_Temp_degC)
 
-hrly = vector()
+hrly_MP = vector()
 
-for(j in 1:nrow(xx)){
+for(j in 1:nrow(hope)){
   
-  xy <- Th_interp(Min_Temp_degC, Max_Temp_degC, #function that creates 24 values of hourly temperature from minimum and maximum daily values.
+  xy_MP <- Th_interp(Min_Temp_degC_MP, Max_Temp_degC_MP, #function that creates 24 values of hourly temperature from minimum and maximum daily values.
                   day = j,
-                  tab_calibr = calibration_l$Average)
+                  tab_calibr = calibration_hope$Average)
   
-  hrly = rbind(hrly,
+  hrly_MP = rbind(hrly_MP,
                data.frame(
-                 DAY = xx[j,'DAY'],
-                 Temp = xy$Th,
-                 Year = Min_Temp_degC$year[j], 
-                 JDay = as.numeric(format(xx[j,'DAY'], "%j")),
-                 month = Min_Temp_degC$month[j],
-                 day = Min_Temp_degC$day[j],
+                 DAY = hope[j,'DAY'],
+                 Temp = xy_MP$Th,
+                 Year = Min_Temp_degC_MP$year[j], 
+                 JDay = as.numeric(format(hope[j,'DAY'], "%j")),
+                 month = Min_Temp_degC_MP$month[j],
+                 day = Min_Temp_degC_MP$day[j],
                  Hour = 1:24
                )
   )
   
 }
 # Skip interpolation if NA for temperature data
-if(apply(hrly, 2, function(x) all(!is.na(x)))["Temp"]) {
+if(apply(hrly_MP, 2, function(x) all(!is.na(x)))["Temp"]) {
   
-  chillcalcH <- chilling(hrly, hrly$JDay[1], hrly$JDay[nrow(hrly)]) # 
-} else { chillcalcH <- data.frame("Season"=NA,"End_year"=NA,"Chilling_Hours"=NA, "Utah_Model"=NA, "Chill_portions"=NA) }
+  chillcalcsHope <- chilling(hrly_MP, hrly_MP$JDay[1], hrly_MP$JDay[nrow(hrly_MP)]) # 
+} else { chillcalcsHopeope <- data.frame("Season"=NA,"End_year"=NA,"Chilling_Hours"=NA, "Utah_Model"=NA, "Chill_portions"=NA) }
 
-chillcalcsH <- rbind(chillcalcsH, chillcalcH[c("Season","End_year","Chilling_Hours","Utah_Model","Chill_portions")])
+chillingHope <- chillcalcsHope[c("Season","End_year","Chilling_Hours","Utah_Model","Chill_portions")]
 
 
-### Hope experimental 
+### Hope experimental #################################################################
 
-# Chilling in experimental setting. For 53 days at 4 deg C (Hope)
-
-dayseq = seq(as.numeric(format(as.POSIXlt("2019-01-02", "%Y-%m-%d"), "%j")),
-             as.numeric(format(as.POSIXlt("2019-02-23", "%Y-%m-%d"), "%j")))
-
-chill2 <- data.frame(
-  Year = as.numeric(rep("2019", 53*24)),
+# Chilling in experimental setting. 
+#For high chill 55 days at 4 deg C (Hope)
+dayseq = seq(as.numeric(format(as.POSIXlt("2019-10-29", "%Y-%m-%d"), "%j")),
+             as.numeric(format(as.POSIXlt("2019-12-22", "%Y-%m-%d"), "%j")))
+length(dayseq)
+chill.hc.hope <- data.frame(
+  Year = as.numeric(rep("2019", 55*24)),
   JDay = as.numeric(rep(dayseq, each = 24)),
-  Hour = rep(0:23,53),
+  Hour = rep(0:23,55),
   Temp = 4
 )
 
+chill.hc.hope.calc <- chilling(chill.hc.hope,chill.hc.hope$JDay[1] 
+                       ,chill.hc.hope$JDay[nrow(chill.hc.hope)])
 
-chill2calc <- chilling(chill2,chill2$JDay[1] 
-                       ,chill2$JDay[nrow(chill2)])
+# For 28 low chill days at 4 deg C (Hope)
+dayseq = seq(as.numeric(format(as.POSIXlt("2019-10-29", "%Y-%m-%d"), "%j")),
+             as.numeric(format(as.POSIXlt("2019-11-25", "%Y-%m-%d"), "%j")))
+length(dayseq)
+chill.lc.hope <- data.frame(
+  Year = as.numeric(rep("2019", 28*24)),
+  JDay = as.numeric(rep(dayseq, each = 24)),
+  Hour = rep(0:23,28),
+  Temp = 4
+)
+
+chill.lc.hope.calc <- chilling(chill.lc.hope,chill.lc.hope$JDay[1] 
+                               ,chill.lc.hope$JDay[nrow(chill.lc.hope)])
 
 colz = c("Season","End_year","Chilling_Hours","Utah_Model","Chill_portions")
 
-hopeCalc <- rbind(chill2calc[colz], chillcalcsH)
+hopeCalc <- rbind(chill.hc.hope.calc[colz], chill.lc.hope.calc[colz], chillingHope)
 
-allHope <- data.frame(Treatment = c("Hope Experimental", "Hope Field"), hopeCalc)
+allHope <- data.frame(Treatment = c("HC", "LC","Field"), hopeCalc)
+allHope$site <- "MP"
 
-
-
-### Smithers calcs  
-
+allHope
+### Smithers calcs   ###############################################################
 
 ### Smithers field
 
@@ -94,76 +116,86 @@ calibration_l = list(
                        time_suns = rep(17, 12),
                        C_m = rep(0.35, 12))
 )
-chillcalcsS <- vector()
+#chillcalcsSmithers <- vector()
 
-xx <- filter(fullTable, site== "Smithers")
-xx$DAY<-strptime(xx$DAY,"%Y-%m-%d", tz="GMT")
+smithers <- subset(fullTable, site== "Smithers" & X < 59)
+smithers$DAY<-strptime(smithers$DAY,"%Y-%m-%d", tz="GMT")
 
+year = as.numeric(format(smithers$DAY, "%Y"))
+month = as.numeric(format(smithers$DAY, "%m"))
+day = as.numeric(format(smithers$DAY, "%d"))
 
-year = as.numeric(format(xx$DAY, "%Y"))
-month = as.numeric(format(xx$DAY, "%m"))
-day = as.numeric(format(xx$DAY, "%d"))
+Min_Temp_degC_SM= data.frame(year, month, day, T = smithers$Min_Temp_degC)
+Max_Temp_degC_SM = data.frame(year, month, day, T = smithers$Max_Temp_degC)
 
-Min_Temp_degC= data.frame(year, month, day, T = xx$Min_Temp_degC)
-Max_Temp_degC = data.frame(year, month, day, T = xx$Max_Temp_degC)
+hrly_SM = vector()
 
-hrly = vector()
-
-for(j in 1:nrow(xx)){
+for(j in 1:nrow(smithers)){
   
-  xy <- Th_interp(Min_Temp_degC, Max_Temp_degC, #function that creates 24 values of hourly temperature from minimum and maximum daily values.
+  xy_SM <- Th_interp(Min_Temp_degC_SM, Max_Temp_degC_SM, #function that creates 24 values of hourly temperature from minimum and maximum daily values.
                   day = j,
                   tab_calibr = calibration_l$Average)
   
-  hrly = rbind(hrly,
+  hrly_SM = rbind(hrly_SM,
                data.frame(
-                 DAY = xx[j,'DAY'],
-                 Temp = xy$Th,
-                 Year = Min_Temp_degC$year[j], 
-                 JDay = as.numeric(format(xx[j,'DAY'], "%j")),
-                 month = Min_Temp_degC$month[j],
-                 day = Min_Temp_degC$day[j],
+                 DAY = smithers[j,'DAY'],
+                 Temp = xy_SM$Th,
+                 Year = Min_Temp_degC_SM$year[j], 
+                 JDay = as.numeric(format(smithers[j,'DAY'], "%j")),
+                 month = Min_Temp_degC_SM$month[j],
+                 day = Min_Temp_degC_SM$day[j],
                  Hour = 1:24
                )
   )
   
 }
 # Skip interpolation if NA for temperature data
-if(apply(hrly, 2, function(x) all(!is.na(x)))["Temp"]) {
+if(apply(hrly_SM, 2, function(x) all(!is.na(x)))["Temp"]) {
   
-  chillcalcS <- chilling(hrly, hrly$JDay[1], hrly$JDay[nrow(hrly)]) # 
+  chillcalcS <- chilling(hrly_SM, hrly_SM$JDay[1], hrly_SM$JDay[nrow(hrly_SM)]) # 
 } else { chillcalcS <- data.frame("Season"=NA,"End_year"=NA,"Chilling_Hours"=NA, "Utah_Model"=NA, "Chill_portions"=NA) }
 
-chillcalcsS <- rbind(chillcalcsS, chillcalcS[c("Season","End_year","Chilling_Hours","Utah_Model","Chill_portions")])
+chillingSmithers <- chillcalcS[c("Season","End_year","Chilling_Hours","Utah_Model","Chill_portions")]
 
 ### Smithers experimental
-# Chilling in experimental setting. For 28 days at 4 deg C (manning)
-
-dayseq = seq(as.numeric(format(as.POSIXlt("2019-01-02", "%Y-%m-%d"), "%j")),
-             as.numeric(format(as.POSIXlt("2019-01-29", "%Y-%m-%d"), "%j")))
-
-chill1 <- data.frame(
-  Year = as.numeric(rep("2019", 28*24)),
+#For high chill 59 days at 4 deg C (Smithers)
+dayseq = seq(as.numeric(format(as.POSIXlt("2019-10-25", "%Y-%m-%d"), "%j")),
+             as.numeric(format(as.POSIXlt("2019-12-22", "%Y-%m-%d"), "%j")))
+length(dayseq)
+chill.hc.smithers <- data.frame(
+  Year = as.numeric(rep("2019", 59*24)),
   JDay = as.numeric(rep(dayseq, each = 24)),
-  Hour = rep(0:23,28),
+  Hour = rep(0:23,59),
   Temp = 4
 )
 
+chill.hc.smithers.calc <- chilling(chill.hc.smithers,chill.hc.smithers$JDay[1] 
+                               ,chill.hc.smithers$JDay[nrow(chill.hc.smithers)])
 
-chill1calc <- chilling(chill1,chill1$JDay[1] 
-                       ,chill1$JDay[nrow(chill1)])
+# For high chill 32 days at 4 deg C (Hope)
+dayseq = seq(as.numeric(format(as.POSIXlt("2019-10-25", "%Y-%m-%d"), "%j")),
+             as.numeric(format(as.POSIXlt("2019-11-25", "%Y-%m-%d"), "%j")))
+length(dayseq)
+chill.lc.smithers <- data.frame(
+  Year = as.numeric(rep("2019", 32*24)),
+  JDay = as.numeric(rep(dayseq, each = 24)),
+  Hour = rep(0:23,32),
+  Temp = 4
+)
 
-colz = c("Season", "End_year", "Chilling_Hours","Utah_Model","Chill_portions")
+chill.lc.smithers.calc <- chilling(chill.lc.smithers,chill.lc.smithers$JDay[1] 
+                               ,chill.lc.smithers$JDay[nrow(chill.lc.smithers)])
 
-smithCalc <- rbind(chill1calc[colz], chillcalcsS)
+colz = c("Season","End_year","Chilling_Hours","Utah_Model","Chill_portions")
 
-#bind smith field and experimental
-allSmith <- data.frame(Treatment = c("Smithers Experimental", "Smithers Field"), smithCalc)
+smithersCalc <- rbind(chill.hc.smithers.calc[colz], chill.lc.smithers.calc[colz], chillingSmithers)
 
+allsmithers <- data.frame(Treatment = c("HC", "LC","Field"), smithersCalc)
+allsmithers$site <- "SM"
 
-
+allsmithers
 #biind smithers and hope together  
 
-allChill <- rbind(allSmith, allHope)
-
+allChill <- rbind(allsmithers, allHope)
+allChill
 write.csv(allChill, "chilling_values_Hope_Smithers.csv", row.names=FALSE, eol="\r\n")

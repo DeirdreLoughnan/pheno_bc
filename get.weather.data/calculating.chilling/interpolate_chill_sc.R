@@ -198,4 +198,14 @@ allsmithers
 
 allChill <- rbind(allsmithers, allHope)
 allChill
-write.csv(allChill, "chilling_values_Hope_Smithers.csv", row.names=FALSE, eol="\r\n")
+
+colz = c("Chilling_Hours","Utah_Model","Chill_portions")
+final.chill <- rbind(chillingSmithers[colz] + chill.hc.smithers.calc[colz], chillingSmithers[colz] + chill.lc.smithers.calc[colz],
+                      chillingHope[colz] + chill.hc.hope.calc[colz], chillingHope[colz] + chill.lc.hope.calc[colz])
+
+finalChill <- data.frame(population = c("sm", "sm","mp", "mp"),
+                      chill = rep(c("HC", "LC", "HC","LC"), 1), final.chill)
+
+finalChill
+
+write.csv(finalChill, "input/chilling_values_Hope_Smithers.csv", row.names=FALSE)

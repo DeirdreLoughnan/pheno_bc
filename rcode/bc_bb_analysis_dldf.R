@@ -27,22 +27,29 @@ if(length(grep("deirdreloughnan", getwd()) > 0)) {
 #}
 
 #source('rcode/cleaning/pheno_bb_calc.R')
-head(pheno)
-length(unique(pheno$lab2))
+# head(pheno)
+# length(unique(pheno$lab2))
 
-df <- read.csv("input/day.of.bb.DFlynn.csv", header=TRUE, na.strings=c("","NA"))
+df <- read.csv("input/day.of.bb.DFlynn.chill0.csv", header=TRUE, na.strings=c("","NA"))
 head(df)
+df.chill <- read.csv("input/chilling_values_eastern.csv")
+df.wchill <- merge(df, df.chill, by =c("population","chill"))
 
 dl <- read.csv("input/day.of.bb.DL.csv", header=TRUE, na.strings=c("","NA"))
 head(dl)
-dl$lab3 <- dl$lab2
-dl$lab2 <- paste(dl$species, dl$population, dl$rep, sep = "_")
+dl.chill <- read.csv("input/chilling_values_Hope_Smithers.csv")
+
+dl.wchill <- merge(dl, dl.chill, by = c("population","chill"))
+dl.wchill$lab3 <- dl.wchill$lab2
+dl.wchill$lab2 <- paste(dl.wchill$species, dl.wchill$population, dl.wchill$rep, sep = "_")
 
 # mergeing the my data with DF
-pheno <- rbind.fill(dl, df)
+pheno <- rbind.fill(dl.wchill, df.wchill)
 #pheno <- dl
 head(pheno)
 
+#write.csv(pheno, "input/pheno.wchill.midge.csv")
+# 
 # combined the data has 3197 unique samples
 ############################################################
 # Preping the data for the model
@@ -50,10 +57,11 @@ head(pheno)
 # colnames(pheno)[colnames(pheno) == "day"] <- "tbb"
 # pheno <- pheno %>% separate(treatment, c("chill", "photo","force")); pheno <- as.data.frame(pheno)
 #2. Adding columns of treatments as numeric values
-pheno$chill.n <- pheno$chill
-pheno$chill.n[pheno$chill.n == "HC"] <- "1"
-pheno$chill.n[pheno$chill.n == "LC"] <- "0"
-pheno$chill.n <- as.numeric(pheno$chill.n)
+# pheno$chill.n <- pheno$chill
+# pheno$chill.n[pheno$chill.n == "HC"] <- "1"
+# pheno$chill.n[pheno$chill.n == "LC"] <- "0"
+# pheno$chill.n <- as.numeric(pheno$chill.n)
+# Trying to run the model with chill portions 
 
 pheno$force.n <- pheno$force
 pheno$force.n[pheno$force.n == "HF"] <- "1"
@@ -76,49 +84,52 @@ head(pheno)
 
 #going to split it into analysis of terminal bb and lateral bb
 # Starting with the terminal buds:
-pheno.term <- pheno[,c("tbb", "chill.n", "force.n", "photo.n", "site.n", "species", "lab2")]
+#pheno.term <- pheno[,c("tbb", "chill.n", "force.n", "photo.n", "site.n", "species", "lab2")]
+pheno.term <- pheno[,c("tbb", "force.n", "photo.n", "site.n", "species", "lab2","Utah_Model","Chill_portions")]
+
 pheno.t <- pheno.term[complete.cases(pheno.term), ] # 1780 rows data 
 
 pheno.t$species.fact <- as.numeric(as.factor(pheno.t$species))
-sort(unique(pheno.t$species.fact)) # 30 species 
+sort(unique(pheno.t$species.fact)) # 30 species, 47 with chill0 47 
 
-nrow(pheno.term) - nrow(pheno.t) # 547 that had no terminal bb
+nrow(pheno.term) - nrow(pheno.t) # 547 that had no terminal bb, 609
 
-# datalist <- with(pheno.t,
-#                     list( N=nrow(pheno.t),
-#                           n_sp = length(unique(pheno.t$species.fact)),
-#                           n_site = length(unique(pheno.t$site.n)),
-#                           bb = tbb,
-#                           sp = species.fact,
-#                           chill = chill.n,
-#                           photo = photo.n,
-#                           force = force.n,
-#                           site = site.n
-#                     ))
-# 
-# # mdl <- stan("stan/bc.bb.inter.stan",
-# #             data= datalist
-# #             ,iter=2000, chains=4)
-# #gives 200 divergent transitions, 41 transitions that exceed max tree depth, chains were not mixed, with low ESS
-# 
-# mdl.t <- stan("stan/bc.bb.ncpphoto.ncpinter.stan",
-#           data = datalist,
-#           iter = 4000, chains=4, control = list(adapt_delta = 0.99))
-# 
-# sumt <- summary(mdl.t)$summary
-# sumt[grep("mu_", rownames(sumt)), ]
-# sumt
-# ssm <-  as.shinystan(mdl.t)
-# launch_shinystan(ssm)
-# 
-# ## The model no longer has any divergent transitions for the terminal buds!
-# #pairs(sm.sum, pars=c("mu_a","mu_force","mu_chill","mu_photo_ncp")) # this gives a lot of warning messages and not the figure i was hoping/expected
-# 
-# range(sumt[, "n_eff"])
-# range(sumt[, "Rhat"])
-# 
-# save(sumt, file="output/tbb_ncp_termianlbud.Rds")
-#load("output/tbb_ncp_termianlbud.Rda")
+datalist <- with(pheno.t,
+                    list( N=nrow(pheno.t),
+                          n_sp = length(unique(pheno.t$species.fact)),
+                          n_site = length(unique(pheno.t$site.n)),
+                          bb = tbb,
+                          sp = species.fact,
+                          chill = Chill_portions,
+                          photo = photo.n,
+                          force = force.n,
+                          site = site.n
+                    ))
+
+# mdl <- stan("stan/bc.bb.inter.stan",
+#             data= datalist
+#             ,iter=2000, chains=4)
+#gives 200 divergent transitions, 41 transitions that exceed max tree depth, chains were not mixed, with low ESS
+
+mdl.t <- stan("stan/bc.bb.ncpphoto.ncpinter.stan",
+          data = datalist,
+          iter = 4000, chains=4, control = list(adapt_delta = 0.99))
+
+sumt <- summary(mdl.t)$summary
+sumt[grep("mu_", rownames(sumt)), ]
+sumt
+ssm <-  as.shinystan(mdl.t)
+launch_shinystan(ssm)
+
+## The model no longer has any divergent transitions for the terminal buds!
+#pairs(sm.sum, pars=c("mu_a","mu_force","mu_chill","mu_photo_ncp")) # this gives a lot of warning messages and not the figure i was hoping/expected
+
+range(sumt[, "n_eff"])
+range(sumt[, "Rhat"])
+
+save(sumt, file="output/tbb_ncp_termianlbud.Rds")
+load("output/tbb_ncp_termianlbud.Rds")
+
 
 #####################################################################
 #####################################################################

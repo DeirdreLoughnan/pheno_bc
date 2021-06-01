@@ -223,16 +223,28 @@ pheno$lab3 <- pheno$lab2
 # names(pheno)[names(pheno) == "flask.x"] <- "flask"
 # names(pheno)[names(pheno) == "species.x"] <- "species"
 
-
 pheno <- pheno %>% separate(lab3, c("population","chill", "photo","force","flask","species", "rep"), convert = TRUE)
 
 pheno$treatment <- paste(pheno$chill, pheno$photo, pheno$force, sep = ".")
 head(pheno)
 write.csv(pheno, "input/day.of.bb.DL.csv", row.names = FALSE)
 ######################################################
-# To make it more comparable to the Flynn dataset, I am adding a treatment column, and then try to calculate chill portions...for the terminal bud? 
 
+# Now, I want to add a 0 or a 1 to denote whether the terminal or the lateral bud bb first:
 
+# start with just a subset:
+subby <- pheno[10:30,]
+pheno$first <- "NA"
+
+for(i in length(unique(pheno$lab2))){ # i=levels(d$id)[500] # for each individual clipping.
+  if(pheno$tbb < pheno$latbb1) pheno$first = 0 
+  else pheno$first = 1
+}
+
+pheno$first <- ifelse(pheno$tbb < pheno$latbb1,"t", ifelse (pheno$tbb == pheno$latbb1,"tl", "l"))
+
+head(pheno)
+unique(pheno$first)
 
 # making fequncy tables:
 # require(plyr)

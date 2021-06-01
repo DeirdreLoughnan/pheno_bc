@@ -246,6 +246,11 @@ pheno$first <- ifelse(pheno$tbb < pheno$latbb1,"t", ifelse (pheno$tbb == pheno$l
 head(pheno)
 unique(pheno$first)
 
+table(pheno$species, pheno$first)
+# nine spcies bb both their lateral and terminal buds on the same day
+# 4 species (sorsco, rhoalb, loninv, acegla) bb terminal first
+# 8 bb lateral first (poptre, riblac, samrac, shecan, vacmem, vibedu, symalb, menfer)
+
 # making fequncy tables:
 # require(plyr)
 # 

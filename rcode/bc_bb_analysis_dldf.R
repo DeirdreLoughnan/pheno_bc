@@ -46,8 +46,11 @@ dl.wchill$lab2 <- paste(dl.wchill$species, dl.wchill$population, dl.wchill$rep, 
 # mergeing the my data with DF
 pheno <- rbind.fill(dl.wchill, df.wchill)
 #pheno <- dl
-head(pheno)
 
+pheno$first <- ifelse(pheno$tbb < pheno$latbb1,"t", ifelse (pheno$tbb == pheno$latbb1,"tl", "l"))
+
+head(pheno)
+table(pheno$species, pheno$first)
 #write.csv(pheno, "input/pheno.wchill.midge.csv")
 # 
 # combined the data has 3197 unique samples

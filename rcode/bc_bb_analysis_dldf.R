@@ -3,14 +3,14 @@
 # Budburst experiment for bc species in 2019
 # Code largely based off of budchill code written by D. Flynn and Lizzie --> budchill_analysis.R
 
-library(scales)
-library(arm)
+#library(scales)
+#library(arm)
 library(rstan)
 library(shinystan)
-library(reshape2)
-library(bayesplot)
-library(ggplot2)
-library(RColorBrewer)
+#library(reshape2)
+#library(bayesplot)
+#library(ggplot2)
+#library(RColorBrewer)
 library(dplyr)
 library(plyr)
 
@@ -65,6 +65,7 @@ table(pheno$species, pheno$first)
 # pheno$chill.n[pheno$chill.n == "LC"] <- "0"
 # pheno$chill.n <- as.numeric(pheno$chill.n)
 # Trying to run the model with chill portions 
+pheno$Chill_portions <- as.factor(pheno$Chill_portions)
 
 pheno$force.n <- pheno$force
 pheno$force.n[pheno$force.n == "HF"] <- "1"
@@ -97,6 +98,12 @@ sort(unique(pheno.t$species.fact)) # 30 species, 47 with chill0 47
 
 nrow(pheno.term) - nrow(pheno.t) # 547 that had no terminal bb, 609
 
+pheno.term$Chill_portions <- as.factor(pheno.term$Chill_portions)
+
+## Things are not working great, so let's take a step back and see what we get with linear models
+require(lme4)
+m1 <- lmer(tbb ~ photo.n + force.n + Chill_portions  + (1|species), data = pheno.term)
+summary(m1)
 datalist <- with(pheno.t,
                     list( N=nrow(pheno.t),
                           n_sp = length(unique(pheno.t$species.fact)),
@@ -108,7 +115,7 @@ datalist <- with(pheno.t,
                           force = force.n,
                           site = site.n
                     ))
-
+datalist$chill
 # mdl <- stan("stan/bc.bb.inter.stan",
 #             data= datalist
 #             ,iter=2000, chains=4)
@@ -118,11 +125,11 @@ mdl.t <- stan("stan/bc.bb.ncpphoto.ncpinter.stan",
           data = datalist,
           iter = 4000, chains=4, control = list(adapt_delta = 0.99))
 
-sumt <- summary(mdl.t)$summary
-sumt[grep("mu_", rownames(sumt)), ]
-sumt
-ssm <-  as.shinystan(mdl.t)
-launch_shinystan(ssm)
+# sumt <- summary(mdl.t)$summary
+# sumt[grep("mu_", rownames(sumt)), ]
+# sumt
+# ssm <-  as.shinystan(mdl.t)
+# launch_shinystan(ssm)
 
 ## The model no longer has any divergent transitions for the terminal buds!
 #pairs(sm.sum, pars=c("mu_a","mu_force","mu_chill","mu_photo_ncp")) # this gives a lot of warning messages and not the figure i was hoping/expected
@@ -130,9 +137,14 @@ launch_shinystan(ssm)
 range(sumt[, "n_eff"])
 range(sumt[, "Rhat"])
 
-save(sumt, file="output/tbb_ncp_termianlbud.Rds")
+save(mdl.t, file="output/tbb_ncp_termianlbud.chillportions.Rds")
 load("output/tbb_ncp_termianlbud.Rds")
 
+# Trying to figure out why the chill portions is not working: started by changing it to be a factor
+# load("output/output.chillport.noncp.Rda")
+# 
+# ssm <-  as.shinystan(mdl)
+# launch_shinystan(ssm)
 
 #####################################################################
 #####################################################################

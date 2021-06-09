@@ -98,11 +98,11 @@ sort(unique(pheno.t$species.fact)) # 30 species, 47 with chill0 47
 
 nrow(pheno.term) - nrow(pheno.t) # 547 that had no terminal bb, 609
 
-pheno.term$Chill_portions <- as.factor(pheno.term$Chill_portions)
+pheno.t$Chill_portions <- as.factor(pheno.t$Chill_portions)
 
 ## Things are not working great, so let's take a step back and see what we get with linear models
 require(lme4)
-m1 <- lmer(tbb ~ photo.n + force.n + Chill_portions  + (1|species), data = pheno.term)
+m1 <- lmer(tbb ~ photo.n + force.n + Chill_portions  + (1|species), data = pheno.t)
 summary(m1)
 datalist <- with(pheno.t,
                     list( N=nrow(pheno.t),
@@ -125,11 +125,11 @@ mdl.t <- stan("stan/bc.bb.ncpphoto.ncpinter.stan",
           data = datalist,
           iter = 4000, chains=4, control = list(adapt_delta = 0.99))
 
-# sumt <- summary(mdl.t)$summary
-# sumt[grep("mu_", rownames(sumt)), ]
-# sumt
-# ssm <-  as.shinystan(mdl.t)
-# launch_shinystan(ssm)
+sumt <- summary(mdl.t)$summary
+sumt[grep("mu_", rownames(sumt)), ]
+sumt
+ssm <-  as.shinystan(mdl.t)
+launch_shinystan(ssm)
 
 ## The model no longer has any divergent transitions for the terminal buds!
 #pairs(sm.sum, pars=c("mu_a","mu_force","mu_chill","mu_photo_ncp")) # this gives a lot of warning messages and not the figure i was hoping/expected
@@ -138,17 +138,59 @@ range(sumt[, "n_eff"])
 range(sumt[, "Rhat"])
 
 save(mdl.t, file="output/tbb_ncp_termianlbud.chillportions.Rds")
-load("output/tbb_ncp_termianlbud.Rds")
+load("output/tbb_ncp_termianlbud.chillportion.Rds")
 
-# Trying to figure out why the chill portions is not working: started by changing it to be a factor
-# load("output/output.chillport.noncp.Rda")
-# 
-# ssm <-  as.shinystan(mdl)
-# launch_shinystan(ssm)
+sumt <- summary(mdl.t)$summary
+mu <- sumt[grep("mu_", rownames(sumt)), ]
 
+ssm <-  as.shinystan(mdl.t)
+launch_shinystan(ssm)
+
+# June 9: poor mixing of the chains for the muForce, and mu_site, no divergent transitions, but low ESS
+post <- rstan::extract(mdl.t)
+
+y<-pheno.t$tbb
+yrep<-post$ypred_new # I want this to be a matrix, which it is, with one element for each data point in y
+
+ppc_dens_overlay(y, yrep[1:50, ])
+#
+
+library("bayesplot")
+library("ggplot2")
+
+########################################################
+post2 <- as.array(mdl.t); dim(post2)
+
+post3 <- as.matrix(mdl.t, par = c("mu_force", "mu_chill","mu_photo","mu_site"))
+
+plot_title <- ggtitle("Posterior distributions",
+                      "with medians and 80% intervals")
+
+mcmc_areas(post3,
+           pars = c("mu_force", "mu_chill", "mu_photo","mu_site"),
+           prob = 0.8) + plot_title
+mcmc_areas(post3,
+           pars = c("mu_force", "mu_photo","mu_site"),
+           prob = 0.8) + plot_title
+
+post3 %>%
+  posterior_predict(draws = 500) %>%
+  ppc_stat_grouped(y = pheno.t$tbb,
+                   group =  pheno.t$force.n,
+                   stat = "median")
+
+plot(density(post$sigmaTrait_y )) ; abline(v = trt.var, col = "red")
 #####################################################################
 #####################################################################
+fit <- stan_glm(mpg ~ ., data = mtcars)
+posterior <- as.matrix(fit)
 
+test <- as.matrix(post)
+plot_title <- ggtitle("Posterior distributions",
+                      "with medians and 80% intervals")
+mcmc_areas(posterior,
+           pars = c("cyl", "drat", "am", "wt"),
+           prob = 0.8) + plot_title
 # # now running the same model for the lateral buds
 # pheno.50lat <- pheno[, c("latbb50", "chill.n", "force.n", "photo.n", "site.n", "species")]
 # pheno.50l <- pheno.50lat[complete.cases(pheno.50lat), ]

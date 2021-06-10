@@ -98,12 +98,13 @@ sort(unique(pheno.t$species.fact)) # 30 species, 47 with chill0 47
 
 nrow(pheno.term) - nrow(pheno.t) # 547 that had no terminal bb, 609
 
-pheno.t$Chill_portions <- as.factor(pheno.t$Chill_portions)
+#pheno.t$Chill_portions <- as.factor(pheno.t$Chill_portions)
 
 ## Things are not working great, so let's take a step back and see what we get with linear models
 require(lme4)
 m1 <- lmer(tbb ~ photo.n + force.n + Chill_portions  + (1|species), data = pheno.t)
 summary(m1)
+
 datalist <- with(pheno.t,
                     list( N=nrow(pheno.t),
                           n_sp = length(unique(pheno.t$species.fact)),
@@ -115,15 +116,18 @@ datalist <- with(pheno.t,
                           force = force.n,
                           site = site.n
                     ))
-datalist$chill
+str(datalist)
+unique(datalist$chill)
+unique(datalist$force)
 # mdl <- stan("stan/bc.bb.inter.stan",
 #             data= datalist
 #             ,iter=2000, chains=4)
 #gives 200 divergent transitions, 41 transitions that exceed max tree depth, chains were not mixed, with low ESS
 
-mdl.t <- stan("stan/bc.bb.ncpphoto.ncpinter.stan",
+mdl.t <- stan("stan/bc.bb.ncpphoto.ncpinter.newpriors.stan",
           data = datalist,
           iter = 4000, chains=4, control = list(adapt_delta = 0.99))
+save(mdl.t, file="output/tbb_ncp_termianlbud.chillportions.Rds")
 
 sumt <- summary(mdl.t)$summary
 sumt[grep("mu_", rownames(sumt)), ]
@@ -134,11 +138,14 @@ launch_shinystan(ssm)
 ## The model no longer has any divergent transitions for the terminal buds!
 #pairs(sm.sum, pars=c("mu_a","mu_force","mu_chill","mu_photo_ncp")) # this gives a lot of warning messages and not the figure i was hoping/expected
 
-range(sumt[, "n_eff"])
-range(sumt[, "Rhat"])
+# range(sumt[, "n_eff"])
+# range(sumt[, "Rhat"])
 
-save(mdl.t, file="output/tbb_ncp_termianlbud.chillportions.Rds")
-load("output/tbb_ncp_termianlbud.chillportion.Rds")
+#######################################################################
+
+#load("output/tbb_ncp_termianlbud.chillportion.Rds")
+#load("output/tbb_ncp_termianlbud.chillportion.newpriors.numeric.Rds")
+load("output/tbb_ncp_termianlbud.chillportion.newpriors.numericconditions.Rds")
 
 sumt <- summary(mdl.t)$summary
 mu <- sumt[grep("mu_", rownames(sumt)), ]
@@ -146,40 +153,45 @@ mu <- sumt[grep("mu_", rownames(sumt)), ]
 ssm <-  as.shinystan(mdl.t)
 launch_shinystan(ssm)
 
+str(post)
 # June 9: poor mixing of the chains for the muForce, and mu_site, no divergent transitions, but low ESS
 post <- rstan::extract(mdl.t)
 
-y<-pheno.t$tbb
+y<-as.numeric(pheno.t$tbb)
 yrep<-post$ypred_new # I want this to be a matrix, which it is, with one element for each data point in y
 
 ppc_dens_overlay(y, yrep[1:50, ])
 #
-
-library("bayesplot")
-library("ggplot2")
+stan_hist(mdl.t)
 
 ########################################################
-post2 <- as.array(mdl.t); dim(post2)
+library("bayesplot")
+library("ggplot2")
+library("rstanarm")
 
-post3 <- as.matrix(mdl.t, par = c("mu_force", "mu_chill","mu_photo","mu_site"))
+post3 <- as.matrix(mdl.t, par = c("mu_force", "mu_chill","mu_photo","mu_site", "mu_inter_fp", "mu_inter_fc"))
 
 plot_title <- ggtitle("Posterior distributions",
                       "with medians and 80% intervals")
-
+pdf()
 mcmc_areas(post3,
-           pars = c("mu_force", "mu_chill", "mu_photo","mu_site"),
-           prob = 0.8) + plot_title
-mcmc_areas(post3,
-           pars = c("mu_force", "mu_photo","mu_site"),
+           pars = c("mu_force","mu_site"),
            prob = 0.8) + plot_title
 
-post3 %>%
-  posterior_predict(draws = 500) %>%
-  ppc_stat_grouped(y = pheno.t$tbb,
-                   group =  pheno.t$force.n,
-                   stat = "median")
+mcmc_areas(post3,
+           pars = c("mu_chill"),
+           prob = 0.8) + plot_title
 
-plot(density(post$sigmaTrait_y )) ; abline(v = trt.var, col = "red")
+
+plot(density(post$mu_force ), xlim = c(-40, 0)) ; lines(density(rnorm(1000, -30, 35)), col = "red", lwd =2)
+plot(density(post$mu_photo ), xlim = c(-15, 20)) ; abline(v = 0, col = "red")
+plot(density(post$mu_chill ), xlim = c(-15, 20)) ; abline(v = 0, col = "red")
+plot(density(post$mu_site ), xlim = c(-15, 20)) ; abline(v = 0, col = "red")
+
+plot(density(rnorm(1000, -30, 35)), col = "red", xlim = c(-100, 100),  ylim = c(0, 0.3)); lines(density(post$mu_force ), lty = 1)
+
+temp <- summary(mdl.t, pars = c("mu_photo","mu_chill"), prob = c(0.1, 0.8))$summary
+temp
 #####################################################################
 #####################################################################
 fit <- stan_glm(mpg ~ ., data = mtcars)

@@ -86,24 +86,44 @@ pheno$site.n <- as.numeric(pheno$site.n)
 
 head(pheno)
 
+##### For now I am just going to work with four chilling treatments, mine and the two shorter ones in DF
+pheno <- subset(pheno, chill != "chill2")
+
+##### z-score the treatments
+pheno$force.t <- pheno$force
+pheno$force.t[pheno$force.t == "HF"] <- 20
+pheno$force.t[pheno$force.t == "LF"] <- 15
+pheno$force.t <- as.numeric(pheno$force.t)
+
+pheno$photo.t <- pheno$photo
+pheno$photo.t[pheno$photo.t == "HP"] <- 12
+pheno$photo.t[pheno$photo.t == "LP"] <- 8
+pheno$photo.t <- as.numeric(pheno$photo.t)
+
+pheno$Chill_portions <- as.numeric(pheno$Chill_portions)
+
+pheno$force.z <- (pheno$force.t-mean(pheno$force.t,na.rm=TRUE))/sd(pheno$force.t,na.rm=TRUE)
+pheno$photo.z <- (pheno$photo.t-mean(pheno$photo.t,na.rm=TRUE))/sd(pheno$photo.t,na.rm=TRUE)
+pheno$chillport.z <- (pheno$Chill_portions-mean(pheno$Chill_portions,na.rm=TRUE))/sd(pheno$Chill_portions,na.rm=TRUE)
+
 #going to split it into analysis of terminal bb and lateral bb
 # Starting with the terminal buds:
 #pheno.term <- pheno[,c("tbb", "chill.n", "force.n", "photo.n", "site.n", "species", "lab2")]
-pheno.term <- pheno[,c("tbb", "force.n", "photo.n", "site.n", "species", "lab2","Utah_Model","Chill_portions")]
+pheno.term <- pheno[,c("tbb", "force.n", "photo.n", "site.n", "species", "lab2","Utah_Model","Chill_portions","force.z", "photo.z", "chillport.z")]
 
 pheno.t <- pheno.term[complete.cases(pheno.term), ] # 1780 rows data 
 
 pheno.t$species.fact <- as.numeric(as.factor(pheno.t$species))
 sort(unique(pheno.t$species.fact)) # 30 species, 47 with chill0 47 
 
-nrow(pheno.term) - nrow(pheno.t) # 547 that had no terminal bb, 609
+nrow(pheno.term) - nrow(pheno.t) # 588 
 
 #pheno.t$Chill_portions <- as.factor(pheno.t$Chill_portions)
 
 ## Things are not working great, so let's take a step back and see what we get with linear models
-require(lme4)
-m1 <- lmer(tbb ~ photo.n + force.n + Chill_portions  + (1|species), data = pheno.t)
-summary(m1)
+# require(lme4)
+# m1 <- lmer(tbb ~ photo.n + force.n + Chill_portions  + (1|species), data = pheno.t)
+# summary(m1)
 
 datalist <- with(pheno.t,
                     list( N=nrow(pheno.t),
@@ -116,6 +136,18 @@ datalist <- with(pheno.t,
                           force = force.n,
                           site = site.n
                     ))
+
+datalist.z <- with(pheno.t,
+                 list( N=nrow(pheno.t),
+                       n_sp = length(unique(pheno.t$species.fact)),
+                       n_site = length(unique(pheno.t$site.n)),
+                       bb = tbb,
+                       sp = species.fact,
+                       chill = chillport.z,
+                       photo = photo.z,
+                       force = force.z,
+                       site = site.n
+                 ))
 str(datalist)
 unique(datalist$chill)
 unique(datalist$force)
@@ -124,10 +156,16 @@ unique(datalist$force)
 #             ,iter=2000, chains=4)
 #gives 200 divergent transitions, 41 transitions that exceed max tree depth, chains were not mixed, with low ESS
 
+# mdl.t <- stan("stan/bc.bb.ncpphoto.ncpinter.newpriors.stan",
+#           data = datalist,
+#           iter = 4000, chains=4, control = list(adapt_delta = 0.99))
+# save(mdl.t, file="output/tbb_ncp_termianlbud.chillportions.Rds")
+
 mdl.t <- stan("stan/bc.bb.ncpphoto.ncpinter.newpriors.stan",
-          data = datalist,
-          iter = 4000, chains=4, control = list(adapt_delta = 0.99))
+              data = datalist.z,
+              iter = 4000, chains=4, control = list(adapt_delta = 0.99))
 save(mdl.t, file="output/tbb_ncp_termianlbud.chillportions.Rds")
+
 
 sumt <- summary(mdl.t)$summary
 sumt[grep("mu_", rownames(sumt)), ]

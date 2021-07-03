@@ -9,10 +9,12 @@ library(rstan)
 library(shinystan)
 #library(reshape2)
 library(bayesplot)
-#library(ggplot2)
+library(ggplot2)
 #library(RColorBrewer)
 library(dplyr)
 library(plyr)
+
+
 
 options(mc.cores = parallel::detectCores())
 
@@ -159,11 +161,11 @@ unique(datalist$force)
 #               data = term.data,
 #               iter = 4000)
 
-mdl.t <- stan("stan/bc.bb.ncpphoto.ncpinter.newpriors.stan",
+mdl.t <- stan("stan/bc.bb.ncpphoto.ncpinter.newpriors.nosite.stan",
               data = datalist.z,
               iter = 4000)
 
-save(mdl.t, file="output/tbb_ncp_termianlbud.chillportions.Rds")
+#save(mdl.t, file="output/tbb_ncp_termianlbud.chillportions.Rds")
 
 save(mdl.t, file="output/tbb.ncp.termianlbud.chillportions.nosite.Rds")
 
@@ -185,7 +187,8 @@ launch_shinystan(ssm)
 
 #load("output/tbb_ncp_termianlbud.chillportion.Rds")
 #load("output/tbb_ncp_termianlbud.chillportion.newpriors.numeric.Rds")
-load("output/tbb.ncp.termianlbud.chillportions.nosite.Rds")
+#load("output/tbb.ncp.termianlbud.chillportions.nosite.Rds")
+load("output/tbb.ncp.termianlbud.chillportions.nosite.zscore.Rds")
 
 sumt <- summary(mdl.t)$summary
 mu <- sumt[grep("mu_", rownames(sumt)), ]
@@ -193,8 +196,6 @@ mu <- sumt[grep("mu_", rownames(sumt)), ]
 ssm <-  as.shinystan(mdl.t)
 launch_shinystan(ssm)
 
-str(post)
-# June 9: poor mixing of the chains for the muForce, and mu_site, no divergent transitions, but low ESS
 post <- rstan::extract(mdl.t)
 
 y<-as.numeric(pheno.t$tbb)
@@ -205,21 +206,14 @@ ppc_dens_overlay(y, yrep[1:50, ])
 stan_hist(mdl.t)
 
 ########################################################
-library("bayesplot")
-library("ggplot2")
-library("rstanarm")
 
 post3 <- as.matrix(mdl.t, par = c("mu_force", "mu_chill","mu_photo", "mu_inter_fp", "mu_inter_fc"))
 
 plot_title <- ggtitle("Posterior distributions",
                       "with medians and 80% intervals")
-pdf()
-mcmc_areas(post3,
-           pars = c("mu_force"),
-           prob = 0.8) + plot_title
 
 mcmc_areas(post3,
-           pars = c("mu_chill"),
+           pars = c("mu_force", "mu_chill", "mu_photo"),
            prob = 0.8) + plot_title
 
 
@@ -284,7 +278,7 @@ temp
 # save(sum50l, file="output/tbb_photo_winter_ncp_lateralbud.Rds")
 
 # now running the same model for the lateral buds
-pheno.1lat <- pheno[, c("latbb1", "Chill_portions", "force.n", "photo.n", "species")]
+pheno.1lat <- pheno[, c("latbb1", "Chill_portions", "force.n", "photo.n", "species", "force.z", "photo.z", "chillport.z")]
 pheno.1l <- pheno.1lat[complete.cases(pheno.1lat), ]
 nrow(pheno.1lat) - nrow(pheno.1l)  
 
@@ -303,21 +297,36 @@ lat.data <- with(pheno.1l,
                        # site = site.n
                  ))
 
+lat.data.z <- with(pheno.1l,
+                 list( N = nrow(pheno.1l),
+                       n_sp = length(unique(pheno.1l$species.fact)),
+                       # n_site = length(unique(pheno.1l$site.n)),
+                       bb = latbb1,
+                       sp = species.fact,
+                       chill = chillport.z,
+                       photo = photo.z,
+                       force = force.z
+                       # site = site.n
+                 ))
+
 # mdl <- stan("stan/bc.bb.inter.stan",
 #             data= datalist
 #             ,iter=2000, chains=4)
 #gives 200 divergent transitions, 41 transitions that exceed max tree depth, chains were not mixed, with low ESS
 
-mdl.1l <- stan("stan/bc.bb.ncpphoto.ncpinter.newpriors.nosite.stan",
-                data= lat.data,
-                iter=4000, chains=4)
+# mdl.1l <- stan("stan/bc.bb.ncpphoto.ncpinter.newpriors.nosite.stan",
+#                 data= lat.data,
+#                 iter=4000, chains=4)
 
+mdl.1l <- stan("stan/bc.bb.ncpphoto.ncpinter.newpriors.nosite.stan",
+               data= lat.data.z,
+               iter=4000, chains=4)
 
 ## The model no longer has any divergent transitions for the terminal buds!
 #pairs(sm.sum, pars=c("mu_a","mu_force","mu_chill","mu_photo_ncp")) # this gives a lot of warning messages and not the figure i was hoping/expected
 
-#save(mdl.1l, file="output/tbb.photo.winter.ncp.lateralbud.nosite.Rds")
-load("output/tbb.photo.winter.ncp.lateralbud.nosite.Rds")
+#save(mdl.1l, file="output/tbb.photo.winter.ncp.lateralbud.nosite.zscore.Rds")
+load("output/tbb.photo.winter.ncp.lateralbud.nosite.zscore.Rds")
 
 sum1l <- summary(mdl.1l)$summary
 sum1l[grep("mu_",rownames(sum1l)), ]
@@ -438,7 +447,7 @@ summary(lm(lat.force~lat.photo, data=df.mean.l))
 summary(lm(lat.force~lat.chill, data=df.mean.l))
 summary(lm(lat.chill~lat.photo, data=df.mean.l))
 
-pdf(file.path( "figures/changes.pheno.nosite.pdf"), width = 7, height = 8)
+pdf(file.path( "figures/changes.pheno.nosite.zscore.pdf"), width = 7, height = 8)
 par(mfrow = c(2,1), mar = c(5, 10, 2, 1))
 # Upper panel: bud burst
 plot(seq(-22, 
@@ -504,11 +513,177 @@ abline(v = 0, lty = 3)
 # par(xpd=FALSE)
 dev.off()
 
-# Comparisons of trees vs shrubs:
-shrubs = c("VIBLAN","RHAFRA","RHOPRI","SPIALB","VACMYR","VIBCAS", "AROMEL","ILEMUC", "KALANG", "LONCAN", "LYOLIG", "alninc","alnvir","amelan", "corsto","loninv", "menfer","rhoalb", "riblac","rubpar","samrac","shecan","sorsco","spibet","spipyr","symalb","vacmem","vibedu")
-trees = c("ACEPEN", "ACERUB", "ACESAC", "ALNINC", "BETALL", "BETLEN", "BETPAP", "CORCOR", "FAGGRA", "FRANIG", "HAMVIR", "NYSSYL", "POPGRA", "PRUPEN", "QUEALB" , "QUERUB", "QUEVEL", "acegla","betpap", "poptre", "popbal")
+## Replicating Flynn Figure 2:
 
-treeshrub = levels(dx$sp)
-treeshrub[treeshrub %in% shrubs] = 1
-treeshrub[treeshrub %in% trees] = 2
-treeshrub = as.numeric(treeshrub)
+b.force.both <- sumt[grep("b_force", rownames(sumt))]
+b.photo.both <- sumt[grep("b_photo", rownames(sumt))]; b.photo.both <- b.photo.both[48:94]
+b.chill.both <- sumt[grep("b_chill", rownames(sumt))]
+
+shrubs.both = c("VIBLAN","RHAFRA","RHOPRI","SPIALB","VACMYR","VIBCAS", "AROMEL","ILEMUC", "KALANG", "LONCAN", "LYOLIG", "alninc","alnvir","amelan", "corsto","loninv", "menfer","rhoalb", "riblac","rubpar","samrac","shecan","sorsco","spibet","spipyr","symalb","vacmem","vibedu")
+trees.both = c("ACEPEN", "ACERUB", "ACESAC", "ALNINC", "BETALL", "BETLEN", "BETPAP", "CORCOR", "FAGGRA", "FRANIG", "HAMVIR", "NYSSYL", "POPGRA", "PRUPEN", "QUEALB" , "QUERUB", "QUEVEL", "acegla","betpap", "poptre", "popbal")
+
+pheno.term <- pheno[,c("tbb", "chillport.z", "force.z", "photo.z", "species", "lab2","transect")]
+pheno.t <- pheno.term[complete.cases(pheno.term), ] # 1780 rows data 
+
+
+species.both <- sort(unique(pheno.t$species))
+species.fact.both <-as.numeric( as.factor(unique(pheno.t$species)))
+type.both <- c("tree", "tree", "tree","tree", "shrub", "shrub", "shrub", "tree", "tree", "tree", "tree", "tree",
+               "tree", "shrub","shrub","tree","tree", "shrub", "shrub","shrub",  "shrub", "shrub", "shrub", "shrub", "shrub",
+               "tree","tree","tree","tree","tree","tree","tree","shrub", "shrub", "shrub", "shrub","shrub", "shrub", "shrub", "shrub","shrub", "shrub", "shrub", "shrub","shrub", "shrub", "shrub")
+both <- data.frame(species.both, species.fact.both, b.force.both, b.photo.both, b.chill.both, type.both)
+
+
+#pdf(file.path( "figures/chill_vs_force_dldf.pdf"), width = 7, height = 8)
+cf.both <- ggplot(both, aes(x= b.chill.both, y = b.force.both, col = type.both)) +
+  geom_point() +
+  ylim (-25, 1) +
+  xlim (-30, 0) +
+  labs( y = "High forcing", x = "High chilling") +
+  geom_text(aes(label=species.both),hjust=0.5, vjust= 1) +
+  theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
+        panel.background = element_blank(), axis.line = element_line(colour = "black"))
+#dev.off()
+
+#pdf(file.path( "figures/chill_vs_photo_dldf.pdf"), width = 7, height = 8)
+cp.both <- ggplot(both, aes(x= b.chill.both, y = b.photo.both, col = type.both)) +
+  geom_point() +
+  ylim (-3.5, 1) +
+  xlim (-30, 0) +
+  labs (x = "High chilling", y = "Long photoperiod") +
+  geom_text(aes(label=species.both),hjust=0.5, vjust= 1) +
+  theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
+        panel.background = element_blank(), axis.line = element_line(colour = "black"))
+
+#dev.off()
+#legend.position = "none"
+
+#pdf(file.path( "figures/force_vs_photo_dldf.pdf"), width = 7, height = 8)
+fp.both <- ggplot(both, aes(x= b.force.both, y = b.photo.both, col = type.both)) +
+  geom_point() +
+  geom_text(aes(label=species.both),hjust=0.5, vjust= 1)+
+  ylim (-3.5, 0.5) +
+  xlim (-22, 0) +
+  labs(x = "High forcing", y = "Long photoperiod") +
+  theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
+        panel.background = element_blank(), axis.line = element_line(colour = "black"))
+#dev.off()
+
+## Plotting the day to bb with the cues on the y-axis 
+term.bb.both <- ddply(pheno, c("species"), summarize, mean = mean(tbb, na.rm = TRUE), mean.lat = mean(latbb50, na.rm = TRUE))
+names(term.bb.both) <- c("species.both", "mean","mean.lat")
+term.both <- merge(term.bb.both, both, by = "species.both", all =TRUE)
+term.both <- term.both[,c("species.both","mean","b.force.both","b.chill.both","b.photo.both")]
+term.both <- term.both[complete.cases(term.both), ] 
+
+tf.both <- ggplot(term.both, aes(y = b.force.both, x= mean,col = type.both)) +
+  geom_point() +
+  geom_text(aes(label=species.both),hjust=0.5, vjust= 1) +
+  labs(x = "Mean day of budburst", y = "High forcing") + 
+  theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
+        panel.background = element_blank(), axis.line = element_line(colour = "black"))
+
+tc.both <- ggplot(term.both, aes(y = b.chill.both, x= mean,col = type.both)) +
+  geom_point() +
+  labs(x = "Mean day of budburst", y = "High chilling") +
+  geom_text(aes(label=species.both),hjust=0.5, vjust= 1) +
+  theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
+        panel.background = element_blank(), axis.line = element_line(colour = "black"))
+
+tp.both <- ggplot(term.both, aes(y = b.photo.both, x= mean,col = type.both)) +
+  geom_point() +
+  labs(x = "Mean day of budburst", y = "Long photoperiod")+
+  geom_text(aes(label=species.both),hjust=0.5, vjust= 1) +
+  theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
+        panel.background = element_blank(), axis.line = element_line(colour = "black"))
+
+##### General boxplots across treatments:
+# par(mar =c (6,5,1,1))
+# pdf(file="figures/dltrt_boxplot.pdf")
+# west <- boxplot(dl$tbb ~ dl$treatment, las =2, xlab ="", ylab = "Day of terminal bb of western spp." )
+# dev.off()
+
+# pdf(file="figures/dftrt_boxplot.pdf")
+# east <- boxplot(df$tbb ~ df$treatment, las =2, xlab ="", ylab = "Day of terminal bb of eastern spp.")
+# dev.off()
+# treeshrub = levels(pheno$species)
+# treeshrub[treeshrub %in% shrubs] = 1
+# treeshrub[treeshrub %in% trees] = 2
+# treeshrub = as.numeric(treeshrub)
+# par(mar=rep(1,4))
+# layout(matrix(c(1, 2, 3, # use layout instead of par(mfrow for more control of where labels end up
+#                 4, 5, 6,
+#                 7, 8, 9),ncol = 3, byrow = T),
+#        widths = c(1, 4, 4),
+#        heights = c(4, 4, 1))
+# plotblank = function(){plot(1:10, type="n",bty="n",xaxt="n",yaxt="n",y="",x="")}
+# 
+# plotblank() 
+# text(5,5, "Budburst \n Change (days) due to 5° warming", font = 2, srt = 90) # \n\n add two line breaks
+# 
+# plot( "b.photo", "b_warm",
+#          #  y = "Advance due to 5° warming", 
+#          # x = "Advance due to 4 hr longer photoperiod", 
+#          ylim = c(-27, 0.5),
+#          xlim = c(-16, 0.5),
+#          #  xaxt="n", 
+#          group = treeshrub,
+#          data = sumt)
+# 
+# legend("topleft", bty = "n", inset = 0.035, legend = "A.", text.font=2)
+# 
+# legend("bottomright",
+#        pch = "+",
+#        col = colz,
+#        legend = c("Shrubs","Trees"),
+#        inset = 0.02, 
+#        bg = 'white')
+# 
+# plotlet("b.chill1", "b_warm", 
+#         # y = "Advance due to 5° warming", 
+#         #  x = "Advance due to 30d 4° chilling", 
+#         ylim = c(-27, 0.5),
+#         xlim = c(-28, -8),
+#         yaxt="n",
+#         # xaxt="n", 
+#         group = treeshrub,
+#         data = sumerb)
+# axis(2, seq(0, -25, by = -5), labels = FALSE)
+# legend("topleft", bty = "n", inset = 0.035, legend = "B.", text.font=2)
+# 
+# plotblank()
+# text(5,5, "Leafout \n Change (days) due to 5° warming", font = 2, srt = 90)
+# 
+# plotlet("b.photo", "b_warm", 
+#         #    y = "Advance due to 5° warming", 
+#         #     x = "Advance due to 4 hr longer photoperiod", 
+#         ylim = c(-27, 0.5),
+#         xlim = c(-16, 0.5),
+#         group = treeshrub,
+#         data = sumerl)
+# legend("topleft", bty = "n", inset = 0.035, legend = "C.", text.font=2)
+# plotlet("b.chill1", "b_warm", 
+#         #   y = "Advance due to 5° warming", 
+#         #   x = "Advance due to 30d 4° chilling", 
+#         ylim = c(-27, 0.5),
+#         xlim = c(-28, -8),
+#         yaxt="n",
+#         group = treeshrub,
+#         data = sumerl)
+# axis(2, seq(0, -25, by = -5), labels = FALSE)
+# legend("topleft", bty = "n", inset = 0.035, legend = "D.", text.font=2)
+# plotblank()
+# 
+# plotblank()
+# text(5.5, 5, "Change (days) due to 4 hr longer photoperiod", font = 2, pos = 3)
+# 
+# plotblank()
+# text(5.5, 5, "Change (days) due to 30d 4° chilling", font = 2, pos = 3)
+# 
+# #dev.off();#system(paste("open", file.path(figpath, "Fig2_4panel.pdf"), "-a /Applications/Preview.app"))
+# 
+# 
+
+
+
+

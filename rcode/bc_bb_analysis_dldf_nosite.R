@@ -450,7 +450,7 @@ summary(lm(lat.chill~lat.photo, data=df.mean.l))
 pdf(file.path( "figures/changes.pheno.nosite.zscore.pdf"), width = 7, height = 8)
 par(mfrow = c(2,1), mar = c(5, 10, 2, 1))
 # Upper panel: bud burst
-plot(seq(-22, 
+plot(seq(-10, 
          12,
          length.out = nrow(meanzt)), 
      1:nrow(meanzt),
@@ -481,7 +481,7 @@ par(xpd = FALSE)
 
 par(mar = c(5, 10, 2, 1))
 # Lower panel: leaf-out
-plot(seq(-30, 
+plot(seq(-10, 
          12, 
          length.out = nrow(meanzl)), 
      1:nrow(meanzl),
@@ -682,7 +682,7 @@ tp.both <- ggplot(term.both, aes(y = b.photo.both, x= mean,col = type.both)) +
 # 
 # #dev.off();#system(paste("open", file.path(figpath, "Fig2_4panel.pdf"), "-a /Applications/Preview.app"))
 # 
-# 
+# ddd
 
 
 

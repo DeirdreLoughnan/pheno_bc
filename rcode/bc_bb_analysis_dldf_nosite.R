@@ -4,7 +4,7 @@
 # Code largely based off of budchill code written by D. Flynn and Lizzie --> budchill_analysis.R
 
 #library(scales)
-#library(arm)
+library(arm)
 library(rstan)
 library(shinystan)
 #library(reshape2)
@@ -108,10 +108,18 @@ pheno$force.z <- (pheno$force.t-mean(pheno$force.t,na.rm=TRUE))/sd(pheno$force.t
 pheno$photo.z <- (pheno$photo.t-mean(pheno$photo.t,na.rm=TRUE))/sd(pheno$photo.t,na.rm=TRUE)
 pheno$chillport.z <- (pheno$Chill_portions-mean(pheno$Chill_portions,na.rm=TRUE))/sd(pheno$Chill_portions,na.rm=TRUE)
 
+pheno$force.z2 <- (pheno$force.n-mean(pheno$force.n,na.rm=TRUE))/(sd(pheno$force.n,na.rm=TRUE)*2)
+pheno$photo.z2 <- (pheno$photo.n-mean(pheno$photo.n,na.rm=TRUE))/(sd(pheno$photo.n,na.rm=TRUE)*2)
+pheno$chillport.z2 <- (pheno$Chill_portions-mean(pheno$Chill_portions,na.rm=TRUE))/(sd(pheno$Chill_portions,na.rm=TRUE)*2)
+
+pheno$force.stnd <- arm::standardize(pheno$force.n)
+pheno$photo.stnd <- standardize(pheno$photo.n, na.rm = TRUE)
+pheno$chillport.stnd <- standardize(pheno$Chill_portions, na.rm = TRUE)
+
 #going to split it into analysis of terminal bb and lateral bb
 # Starting with the terminal buds:
 #pheno.term <- pheno[,c("tbb", "chill.n", "force.n", "photo.n", "site.n", "species", "lab2")]
-pheno.term <- pheno[,c("tbb", "force.n", "photo.n", "site.n", "species", "lab2","Utah_Model","Chill_portions","force.z", "photo.z", "chillport.z")]
+pheno.term <- pheno[,c("tbb", "force.n", "photo.n", "site.n", "species", "lab2","Utah_Model","Chill_portions","force.z", "photo.z", "chillport.z","force.z2", "photo.z2", "chillport.z2")]
 
 pheno.t <- pheno.term[complete.cases(pheno.term), ] # 1780 rows data 
 
@@ -144,9 +152,9 @@ datalist.z <- with(pheno.t,
                          n_site = length(unique(pheno.t$site.n)),
                          bb = tbb,
                          sp = species.fact,
-                         chill = chillport.z,
-                         photo = photo.z,
-                         force = force.z,
+                         chill = chillport.z2,
+                         photo = photo.z2,
+                         force = force.z2,
                          site = site.n
                    ))
 str(datalist)
@@ -167,7 +175,7 @@ mdl.t <- stan("stan/bc.bb.ncpphoto.ncpinter.newpriors.nosite.stan",
 
 #save(mdl.t, file="output/tbb_ncp_termianlbud.chillportions.Rds")
 
-save(mdl.t, file="output/tbb.ncp.termianlbud.chillportions.nosite.Rds")
+save(mdl.t, file="output/tbb.ncp.termianlbud.chillportions.nosite.z2.Rds")
 
 # no div trans or any warnings of any kind!
 

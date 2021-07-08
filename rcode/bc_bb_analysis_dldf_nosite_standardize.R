@@ -138,13 +138,13 @@ nrow(pheno.term) - nrow(pheno.t) # 547 that had no terminal bb, 609
 term.data <- with(pheno.t,
                     list( N=nrow(pheno.t),
                           n_sp = length(unique(pheno.t$species.fact)),
-                          # n_site = length(unique(pheno.t$site.n)),
+                          n_site = length(unique(pheno.t$site.n)),
                           bb = tbb,
                           sp = species.fact,
                           chill = as.numeric(Chill_portions),
                           photo = photo.n,
-                          force = force.n
-                          # site = site.n
+                          force = force.n,
+                          site = site.n
                     ))
 # datalist.z <- with(pheno.t,
 #                    list( N=nrow(pheno.t),
@@ -169,13 +169,17 @@ unique(datalist$force)
 #               data = term.data,
 #               iter = 4000)
 
-mdl.t <- stan("stan/bc.bb.ncpphoto.ncpinter.stnd.nosite.stan",
+# mdl.t <- stan("stan/bc.bb.ncpphoto.ncpinter.stnd.nosite.stan",
+#               data = term.data,
+#               iter = 4000)
+
+mdl.t <- stan("stan/bc.bb.ncpphoto.ncpinter.standardize.stan",
               data = term.data,
               iter = 4000)
 
 #save(mdl.t, file="output/tbb_ncp_termianlbud.chillportions.Rds")
 
-save(mdl.t, file="output/tbb.ncp.termianlbud.chillportions.nosite.z2.Rds")
+save(mdl.t, file="output/tbb.ncp.termianlbud.chillportions.standardize.Rds")
 
 # no div trans or any warnings of any kind!
 
@@ -196,7 +200,7 @@ launch_shinystan(ssm)
 #load("output/tbb_ncp_termianlbud.chillportion.Rds")
 #load("output/tbb_ncp_termianlbud.chillportion.newpriors.numeric.Rds")
 #load("output/tbb.ncp.termianlbud.chillportions.nosite.Rds")
-load("output/tbb.ncp.termianlbud.chillportions.nosite.zscore.Rds")
+load("output/tbb.ncp.termianlbud.chillportions.standardize_sitestd.Rds")
 
 sumt <- summary(mdl.t)$summary
 mu <- sumt[grep("mu_", rownames(sumt)), ]
@@ -386,13 +390,13 @@ col4table <- c("mean","sd","2.5%","50%","97.5%","Rhat")
 mu_params <- c("mu_force",
                "mu_photo",
                "mu_chill",
-               #"mu_site",
+               "mu_site",
                "mu_inter_fp",
                "mu_inter_fc",
-               "mu_inter_pc")
-               # "mu_inter_fs",
-               # "mu_inter_ps",
-               # "mu_inter_sc")
+               "mu_inter_pc",
+               "mu_inter_fs",
+               "mu_inter_ps",
+               "mu_inter_sc")
 
 meanzt <- sumt[mu_params, col4fig]
 meanzl <- sum1l[mu_params, col4fig]
@@ -400,13 +404,13 @@ meanzl <- sum1l[mu_params, col4fig]
 rownames(meanzt) = c("Forcing",
                      "Photoperiod",
                      "Chilling",
-                     #"Site",
+                     "Site",
                      "Forcing x Photoperiod",
                      "Forcing x Chilling",
-                     "Photoperiod x Chilling"
-                     # "Forcing x Site",
-                     # "Photoperiod x Site",
-                     #"Site x Chilling"
+                     "Photoperiod x Chilling",
+                     "Forcing x Site",
+                     "Photoperiod x Site",
+                     "Site x Chilling"
   )
 
 rownames(meanzl) = c("Forcing",
@@ -455,11 +459,11 @@ summary(lm(lat.force~lat.photo, data=df.mean.l))
 summary(lm(lat.force~lat.chill, data=df.mean.l))
 summary(lm(lat.chill~lat.photo, data=df.mean.l))
 
-pdf(file.path( "figures/changes.pheno.nosite.zscore.pdf"), width = 7, height = 8)
-par(mfrow = c(2,1), mar = c(5, 10, 2, 1))
+pdf(file.path( "figures/changes.pheno.standardized.pdf"), width = 7, height = 8)
+par(mfrow = c(1,1), mar = c(5, 10, 2, 1))
 # Upper panel: bud burst
-plot(seq(-10, 
-         12,
+plot(seq(-15, 
+         15,
          length.out = nrow(meanzt)), 
      1:nrow(meanzt),
      type = "n",

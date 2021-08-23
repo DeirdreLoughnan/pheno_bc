@@ -23,10 +23,9 @@ options(stringsAsFactors = FALSE)
 
 if(length(grep("deirdreloughnan", getwd()) > 0)) { 
   setwd("~/Documents/github/pheno_bc") 
-}  
-#else{
-#  setwd("/home/deirdre/pheno_bc") # for midge
-#}
+}  else{
+ setwd("/home/deirdre/pheno_bc") # for midge
+}
 
 #source('rcode/cleaning/pheno_bb_calc.R')
 # head(pheno)
@@ -112,9 +111,9 @@ pheno$force.z2 <- (pheno$force.n-mean(pheno$force.n,na.rm=TRUE))/(sd(pheno$force
 pheno$photo.z2 <- (pheno$photo.n-mean(pheno$photo.n,na.rm=TRUE))/(sd(pheno$photo.n,na.rm=TRUE)*2)
 pheno$chillport.z2 <- (pheno$Chill_portions-mean(pheno$Chill_portions,na.rm=TRUE))/(sd(pheno$Chill_portions,na.rm=TRUE)*2)
 
-pheno$force.stnd <- arm::standardize(pheno$force.n)
-pheno$photo.stnd <- standardize(pheno$photo.n, na.rm = TRUE)
-pheno$chillport.stnd <- standardize(pheno$Chill_portions, na.rm = TRUE)
+# pheno$force.stnd <- arm::standardize(pheno$force.n)
+# pheno$photo.stnd <- standardize(pheno$photo.n, na.rm = TRUE)
+# pheno$chillport.stnd <- standardize(pheno$Chill_portions, na.rm = TRUE)
 
 #going to split it into analysis of terminal bb and lateral bb
 # Starting with the terminal buds:
@@ -146,40 +145,43 @@ term.data <- with(pheno.t,
                           force = force.n,
                           site = site.n
                     ))
-# datalist.z <- with(pheno.t,
-#                    list( N=nrow(pheno.t),
-#                          n_sp = length(unique(pheno.t$species.fact)),
-#                          n_site = length(unique(pheno.t$site.n)),
-#                          bb = tbb,
-#                          sp = species.fact,
-#                          chill = chillport.z2,
-#                          photo = photo.z2,
-#                          force = force.z2,
-#                          site = site.n
-#                    ))
-str(datalist)
-unique(datalist$chill)
-unique(datalist$force)
+datalist.z <- with(pheno.t,
+                   list( N=nrow(pheno.t),
+                         n_sp = length(unique(pheno.t$species.fact)),
+                         n_site = length(unique(pheno.t$site.n)),
+                         bb = tbb,
+                         sp = species.fact,
+                         chill = chillport.z2,
+                         photo = photo.z2,
+                         force = force.z2,
+                         site = site.n
+                   ))
+# str(datalist)
+# unique(datalist$chill)
+# unique(datalist$force)
 # mdl <- stan("stan/bc.bb.inter.stan",
 #             data= datalist
 #             ,iter=2000, chains=4)
 #gives 200 divergent transitions, 41 transitions that exceed max tree depth, chains were not mixed, with low ESS
 
-# mdl.t <- stan("stan/bc.bb.ncpphoto.ncpinter.newpriors.nosite.stan",
-#               data = term.data,
-#               iter = 4000)
+mdl.t <- stan("stan/bc.bb.ncpphoto.ncpinter.newpriors.nosite.stan",
+              data = term.data,
+              iter = 4000)
 
 # mdl.t <- stan("stan/bc.bb.ncpphoto.ncpinter.stnd.nosite.stan",
 #               data = term.data,
 #               iter = 4000)
 
 mdl.t <- stan("stan/bc.bb.ncpphoto.ncpinter.standardize.stan",
-              data = term.data,
-              iter = 4000)
+              data = datalist.z,
+              iter = 4000, chains=4)
 
+# mdl.t <- stan("stan/bc.bb.ncpphoto.ncpinter.standardize_sitenotstd.stan",
+#               data = datalist.z,
+#               iter = 4000)
 #save(mdl.t, file="output/tbb_ncp_termianlbud.chillportions.Rds")
 
-save(mdl.t, file="output/tbb.ncp.termianlbud.chillportions.standardize.Rds")
+save(mdl.t, file="output/tbb_ncp_cport_stnd.nodivtrans.Rds")
 
 # no div trans or any warnings of any kind!
 
@@ -192,18 +194,18 @@ launch_shinystan(ssm)
 ## The model no longer has any divergent transitions for the terminal buds!
 #pairs(sm.sum, pars=c("mu_a","mu_force","mu_chill","mu_photo_ncp")) # this gives a lot of warning messages and not the figure i was hoping/expected
 
-# range(sumt[, "n_eff"])
-# range(sumt[, "Rhat"])
+range(sumt[, "n_eff"])
+range(sumt[, "Rhat"])
 
 #######################################################################
 
 #load("output/tbb_ncp_termianlbud.chillportion.Rds")
 #load("output/tbb_ncp_termianlbud.chillportion.newpriors.numeric.Rds")
 #load("output/tbb.ncp.termianlbud.chillportions.nosite.Rds")
-load("output/tbb.ncp.termianlbud.chillportions.standardize_sitestd.Rds")
+load("output/tbb_ncp_cport_stnd.nodivtrans.Rds")
 
 sumt <- summary(mdl.t)$summary
-mu <- sumt[grep("mu_", rownames(sumt)), ]
+mu <- sumt[grep("mu", rownames(sumt)), "mean"]
 
 ssm <-  as.shinystan(mdl.t)
 launch_shinystan(ssm)
@@ -238,6 +240,82 @@ plot(density(rnorm(1000, -30, 35)), col = "red", xlim = c(-100, 100),  ylim = c(
 
 temp <- summary(mdl.t, pars = c("mu_photo","mu_chill"), prob = c(0.1, 0.8))$summary
 temp
+
+## Need to back convert the values: Cat converted them to percentages:
+nao <- round((mean(fixef(mdl.t, pars="mu_force", summary=FALSE))/4)/(sd(pheno$force.t)*2)*100*2, digits=2)
+
+mu_force <- round((sumt[grep("mu_force", rownames(sumt)), "mean"]/4)/(sd(pheno$force.t)*2)*100*2, digits = 2) 
+mu_photo <- round((sumt[grep("mu_photo", rownames(sumt)), "mean"]/4)/(sd(pheno$photo.t)*2)*100*2, digits = 2) 
+mu_chill <- round((sumt[grep("mu_chill", rownames(sumt)), "mean"]/4)/(sd(pheno$Chill_portions)*2)*100*2) 
+
+
+mu_force <- round((sumt[grep("mu_force", rownames(sumt)), "mean"])/(sd(pheno$force.t)*2)*2, digits = 2) 
+mu_photo <- round((sumt[grep("mu_photo", rownames(sumt)), "mean"])/(sd(pheno$photo.t)*2)*2, digits = 2) 
+mu_chill <- round((sumt[grep("mu_chill", rownames(sumt)), "mean"])/(sd(pheno$Chill_portions)*2)*2) 
+
+##############################################################################
+# histograms
+# mu_force
+h1 <- hist(rnorm(1000, 0, 50))
+h2 <- hist(post$mu_force)
+plot(h2, col=rgb(0,0,1,1/4), xlim =c(-100,100))
+plot(h1, col=rgb(1,0,1,1/4), add = TRUE)
+
+# mu_chill
+h1 <- hist(rnorm(1000, 0, 35))
+h2 <- hist(post$mu_chill)
+plot(h2, col=rgb(0,0,1,1/4), xlim =c(-100,100))
+plot(h1, col=rgb(1,0,1,1/4), add = TRUE)
+
+# mu_photo
+h1 <- hist(rnorm(1000, 0, 35))
+h2 <- hist(post$mu_photo)
+plot(h2, col=rgb(0,0,1,1/4), xlim =c(-100,100))
+plot(h1, col=rgb(1,0,1,1/4), add = TRUE)
+
+# mu_site
+h1 <- hist(rnorm(1000, 1, 35))
+h2 <- hist(post$mu_site)
+plot(h2, col=rgb(0,0,1,1/4), xlim =c(-100,100))
+plot(h1, col=rgb(1,0,1,1/4), add = TRUE)
+
+# mu_inter_fp
+h1 <- hist(rnorm(1000, 0, 35))
+h2 <- hist(post$mu_inter_fp)
+plot(h2, col=rgb(0,0,1,1/4), xlim =c(-100,100))
+plot(h1, col=rgb(1,0,1,1/4), add = TRUE)
+
+# sigma_force
+h1 <- hist(rnorm(1000, 0, 10))
+h2 <- hist(post$sigma_force)
+plot(h2, col=rgb(0,0,1,1/4), xlim =c(-50,50))
+plot(h1, col=rgb(1,0,1,1/4), add = TRUE)
+
+# sigma_chill
+h1 <- hist(rnorm(1000, 0, 30))
+h2 <- hist(post$sigma_chill)
+plot(h2, col=rgb(0,0,1,1/4), xlim =c(-100,100))
+plot(h1, col=rgb(1,0,1,1/4), add = TRUE)
+
+# sigma_photo
+h1 <- hist(rnorm(1000, 0, 10))
+h2 <- hist(post$sigma_photo)
+plot(h2, col=rgb(0,0,1,1/4), xlim =c(-100,100))
+plot(h1, col=rgb(1,0,1,1/4), add = TRUE)
+
+# sigma_site
+h1 <- hist(rnorm(1000, 0, 20))
+h2 <- hist(post$sigma_site)
+plot(h2, col=rgb(0,0,1,1/4), xlim =c(-100,100))
+plot(h1, col=rgb(1,0,1,1/4), add = TRUE)
+
+# sigma_interaction
+h1 <- hist(rnorm(1000, 1, 10))
+h2 <- hist(post$sigma_b_inter_sc, xlim =c(-10,10))
+plot(h2, col=rgb(0,0,1,1/4), xlim =c(-100,100))
+plot(h1, col=rgb(1,0,1,1/4), add = TRUE)
+
+
 #####################################################################
 #####################################################################
 # fit <- stan_glm(mpg ~ ., data = mtcars)

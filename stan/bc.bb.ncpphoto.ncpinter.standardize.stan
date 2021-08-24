@@ -139,7 +139,7 @@ model {
 	sigma_force ~ normal(0, 10); // Start big at 10, go smaller if introduces problems
 	sigma_photo ~ normal(0, 10); 
 	sigma_chill ~ normal(0, 30);
-	sigma_site ~ normal(0, 10);
+	sigma_site ~ normal(0, 40);
 	sigma_b_inter_fp ~ normal(0, 10);
 	sigma_b_inter_fs ~ normal(0, 10);
 	sigma_b_inter_ps ~ normal(0, 10);

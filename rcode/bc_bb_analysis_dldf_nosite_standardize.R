@@ -657,7 +657,7 @@ tp.both <- ggplot(term.both, aes(y = b.photo.both, x= mean,col = type.both)) +
 # As per Lizzie's July 7 post: I should look at how linear these relationships are
 # Plot raw data (bb~ chill) with the chill effect from the model plotted on top
 
-plot(pheno.t$tbb ~ pheno.t$chillport.z2, pch = 19, col = "slategray")
+plot(pheno.t$tbb ~ pheno.t$chillport.z2, pch = 19, col = "darkgreen")
 abline(a = sumt[grep("mu_a", rownames(sumt)), "mean"], b = sumt[grep("mu_chill", rownames(sumt)), "mean"])
 
 plot(sumt[grep("sigma_chill", rownames(sumt)), "mean"])

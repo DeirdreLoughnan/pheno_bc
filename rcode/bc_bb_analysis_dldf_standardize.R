@@ -3,7 +3,10 @@
 # Budburst experiment for bc species in 2019
 # Code largely based off of budchill code written by D. Flynn and Lizzie --> budchill_analysis.R
 
-# Adding standardization: following the methods outlined by Andrew Gelman in his paper, 
+# Adding standardization: following the methods outlined by Andrew Gelman in his paper
+
+# To properly add site to the model I am going to use the indexing approach used on pg 153 of statistical rethinking, modeling code was drafted by Lizzie
+
 #library(scales)
 library(arm)
 library(rstan)
@@ -66,14 +69,14 @@ pheno$photo.n[pheno$photo.n == "LP"] <- "0"
 pheno$photo.n <- as.numeric(pheno$photo.n)
 
 # pg 153 of statistical rethinking: we have multiple categories, so we want to use index values as integers
-pheno$population <- as.factor(pheno$population)
-pheno$site.n <- as.integer(pheno$population)
+#pheno$population <- as.factor(pheno$population)
+pheno$site.n <- pheno$population
 # pheno$site.n <- pheno$population
-# pheno$site.n[pheno$site.n == "sm"] <- "0"
-# pheno$site.n[pheno$site.n == "mp"] <- "1"
-# pheno$site.n[pheno$site.n == "HF"] <- "2"
-# pheno$site.n[pheno$site.n == "SH"] <- "3"
-# pheno$site.n <- as.numeric(pheno$site.n)
+pheno$site.n[pheno$site.n == "sm"] <- "1"
+pheno$site.n[pheno$site.n == "mp"] <- "2"
+pheno$site.n[pheno$site.n == "HF"] <- "3"
+pheno$site.n[pheno$site.n == "SH"] <- "4"
+pheno$site.n <- as.integer(pheno$site.n)
 
 pheno$Chill_portions <- as.numeric(pheno$Chill_portions)
 
@@ -87,12 +90,12 @@ pheno$chillport.z2 <- (pheno$Chill_portions-mean(pheno$Chill_portions,na.rm=TRUE
 pheno$utah.z2 <- (pheno$Utah_Model-mean(pheno$Utah_Model,na.rm=TRUE))/(sd(pheno$Utah_Model,na.rm=TRUE)*2)
 
 #z-score site as well
-pheno$site.z2 <- (pheno$site.n-mean(pheno$site.n,na.rm=TRUE))/(sd(pheno$site.n,na.rm=TRUE)*2)
+#pheno$site.z2 <- (pheno$site.n-mean(pheno$site.n,na.rm=TRUE))/(sd(pheno$site.n,na.rm=TRUE)*2)
 
 #going to split it into analysis of terminal bb and lateral bb
 # Starting with the terminal buds:
 #pheno.term <- pheno[,c("tbb", "chill.n", "force.n", "photo.n", "site.n", "species", "lab2")]
-pheno.term <- pheno[,c("tbb", "force.n", "photo.n", "site.n", "species", "lab2","Utah_Model","Chill_portions","force.z2", "photo.z2", "chillport.z2", "utah.z2", "site.z2")]
+pheno.term <- pheno[,c("tbb", "force.n", "photo.n", "site.n", "species", "lab2","Utah_Model","Chill_portions","force.z2", "photo.z2", "chillport.z2", "utah.z2")]
 
 pheno.t <- pheno.term[complete.cases(pheno.term), ] # 1780 rows data 
 pheno.t$species.fact <- as.numeric(as.factor(pheno.t$species))
@@ -100,17 +103,26 @@ sort(unique(pheno.t$species.fact)) # 47
 
 nrow(pheno.term) - nrow(pheno.t) # That had no terminal bb, 609
 
-datalist.z <- with(pheno.t,
-                   list( N=nrow(pheno.t),
+# creating dummy var
+# pheno.t <- pheno.t %>% 
+#     mutate ( d2 = if_else(site.n == 2, 1, 0),
+#              d3 = if_else(site.n == 3, 1, 0),
+#              d4 = if_else(site.n == 4, 1, 0))
+# head(pheno.t)
+str(pheno.t$photo.z2)
+
+datalist_z <- list( N=nrow(pheno.t),
                          n_sp = length(unique(pheno.t$species.fact)),
                          n_site = length(unique(pheno.t$site.n)),
-                         bb = tbb,
-                         sp = species.fact,
-                         chill = chillport.z2,
-                         photo = photo.z2,
-                         force = force.z2,
-                         site = site.z2
-                   ))
+                         bb = pheno.t$tbb,
+                         sp = pheno.t$species.fact,
+                         chill = pheno.t$chillport.z2,
+                         photo = pheno.t$photo.z2,
+                         force = pheno.t$force.z2,
+                         site = pheno.t$site.n)
+str(datalist_z)
+datalist_z$photo
+
 
 datalist.zutah <- with(pheno.t,
                    list( N=nrow(pheno.t),
@@ -120,14 +132,44 @@ datalist.zutah <- with(pheno.t,
                          sp = species.fact,
                          chill = utah.z2,
                          photo = photo.z2,
-                         force = force.z2,
-                         site = site.z2
+                         force = force.z2
+                        # site = site.z2
                    ))
 
-mdl.t <- stan("stan/bc.bb.ncpphoto.ncpinter.standardize.stan",
-              data = datalist.z,
-              iter = 4000, chains=4, control = list(adapt_delta = 0.99))
+datalist_zutah_index <- with(pheno.t,
+                       list( N=nrow(pheno.t),
+                             n_sp = length(unique(pheno.t$species.fact)),
+                             n_site = length(unique(pheno.t$site.n)),
+                             bb = tbb,
+                             sp = species.fact,
+                             chill = utah.z2,
+                             photo = photo.z2,
+                             force = force.z2,
+                             site = pheno.t$site.n
+                       ))
+N=nrow(pheno.t)
+n_sp = length(unique(pheno.t$species.fact))
+n_site = length(unique(pheno.t$site.n))
+bb = pheno.t$tbb
+sp = pheno.t$species.fact
+chill = pheno.t$utah.z2
+photo = pheno.t$photo.z2
+force = pheno.t$force.z2
+site = pheno.t$site.n
+data=c("N","n_sp","n_site","bb","sp","chill","photo","force","site")
 
+datalist_zutah_index$force.z2
+head(pheno.t$force.z2)
+mdl.t <- stan("stan/bc_bb_ncp_standardize_oct18.stan",
+               data=c("N","n_sp","n_site","bb","sp","chill","photo","force","site"),
+              iter = 4000, chains=1)#, control = list(adapt_delta = 0.99))
+
+mdl.i <- stan("stan/bc.bb.ncpphoto.ncpinter.standardize.old.stan",
+              data = datalist_z,
+              iter = 4000, chains=1)
+              #, control = list(adapt_delta = 0.99))
+datalist_z$N
+length(datalist_z$site)
 save(mdl.t, file="output/tbb_utah_cport_stnd_index.Rds")
 
 # no div trans or any warnings of any kind!
@@ -153,6 +195,7 @@ mdl.t <- stan("stan/bc.bb.ncpphoto.ncpinter.standardize.stan",
 #######################################################################
 
 load("output/tbb_ncp_cport_stnd_index_DL.Rds")
+load("output/tbb_utah_cport_stnd_index.Rds")
 
 ssm <-  as.shinystan(mdl.t)
 launch_shinystan(ssm)

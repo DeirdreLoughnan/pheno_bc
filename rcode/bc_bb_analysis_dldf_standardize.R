@@ -54,10 +54,10 @@ pheno$first <- ifelse(pheno$tbb < pheno$latbb1,"t", ifelse (pheno$tbb == pheno$l
 
 head(pheno)
 table(pheno$species, pheno$first)
-#write.csv(pheno, "input/pheno.wchill.midge.csv")
+write.csv(pheno, "input/pheno.w5chill.csv")
 
 ############################################################
-
+#convert forcing and photoperiod treatments into binary
 pheno$force.n <- pheno$force
 pheno$force.n[pheno$force.n == "HF"] <- "1"
 pheno$force.n[pheno$force.n == "LF"] <- "0"
@@ -69,9 +69,8 @@ pheno$photo.n[pheno$photo.n == "LP"] <- "0"
 pheno$photo.n <- as.numeric(pheno$photo.n)
 
 # pg 153 of statistical rethinking: we have multiple categories, so we want to use index values as integers
-#pheno$population <- as.factor(pheno$population)
+# Lizzie pointed out that if you just convert it to integers, it is in alphabetical order, but to keep track of the sites, I am having smithers be 1
 pheno$site.n <- pheno$population
-# pheno$site.n <- pheno$population
 pheno$site.n[pheno$site.n == "sm"] <- "1"
 pheno$site.n[pheno$site.n == "mp"] <- "2"
 pheno$site.n[pheno$site.n == "HF"] <- "3"
@@ -83,18 +82,14 @@ pheno$Chill_portions <- as.numeric(pheno$Chill_portions)
 # pheno$force.z <- (pheno$force.t-mean(pheno$force.t,na.rm=TRUE))/sd(pheno$force.t,na.rm=TRUE)
 # pheno$photo.z <- (pheno$photo.t-mean(pheno$photo.t,na.rm=TRUE))/sd(pheno$photo.t,na.rm=TRUE)
 # pheno$chillport.z <- (pheno$Chill_portions-mean(pheno$Chill_portions,na.rm=TRUE))/sd(pheno$Chill_portions,na.rm=TRUE)
-
+# z scoring values, but since some are binary I will use 2SD as per the Gelmen et al paper
 pheno$force.z2 <- (pheno$force.n-mean(pheno$force.n,na.rm=TRUE))/(sd(pheno$force.n,na.rm=TRUE)*2)
 pheno$photo.z2 <- (pheno$photo.n-mean(pheno$photo.n,na.rm=TRUE))/(sd(pheno$photo.n,na.rm=TRUE)*2)
 pheno$chillport.z2 <- (pheno$Chill_portions-mean(pheno$Chill_portions,na.rm=TRUE))/(sd(pheno$Chill_portions,na.rm=TRUE)*2)
 pheno$utah.z2 <- (pheno$Utah_Model-mean(pheno$Utah_Model,na.rm=TRUE))/(sd(pheno$Utah_Model,na.rm=TRUE)*2)
 
-#z-score site as well
-#pheno$site.z2 <- (pheno$site.n-mean(pheno$site.n,na.rm=TRUE))/(sd(pheno$site.n,na.rm=TRUE)*2)
-
-#going to split it into analysis of terminal bb and lateral bb
+#going to split it into analyses of terminal bb and lateral bb
 # Starting with the terminal buds:
-#pheno.term <- pheno[,c("tbb", "chill.n", "force.n", "photo.n", "site.n", "species", "lab2")]
 pheno.term <- pheno[,c("tbb", "force.n", "photo.n", "site.n", "species", "lab2","Utah_Model","Chill_portions","force.z2", "photo.z2", "chillport.z2", "utah.z2")]
 
 pheno.t <- pheno.term[complete.cases(pheno.term), ] # 1780 rows data 
@@ -120,78 +115,23 @@ datalist_z <- list( N=nrow(pheno.t),
                          photo = pheno.t$photo.z2,
                          force = pheno.t$force.z2,
                          site = pheno.t$site.n)
-str(datalist_z)
+str(datalist_z$site)
 datalist_z$photo
 
-
-datalist.zutah <- with(pheno.t,
-                   list( N=nrow(pheno.t),
-                         n_sp = length(unique(pheno.t$species.fact)),
-                         n_site = length(unique(pheno.t$site.n)),
-                         bb = tbb,
-                         sp = species.fact,
-                         chill = utah.z2,
-                         photo = photo.z2,
-                         force = force.z2
-                        # site = site.z2
-                   ))
-
-datalist_zutah_index <- with(pheno.t,
-                       list( N=nrow(pheno.t),
-                             n_sp = length(unique(pheno.t$species.fact)),
-                             n_site = length(unique(pheno.t$site.n)),
-                             bb = tbb,
-                             sp = species.fact,
-                             chill = utah.z2,
-                             photo = photo.z2,
-                             force = force.z2,
-                             site = pheno.t$site.n
-                       ))
-N=nrow(pheno.t)
-n_sp = length(unique(pheno.t$species.fact))
-n_site = length(unique(pheno.t$site.n))
-bb = pheno.t$tbb
-sp = pheno.t$species.fact
-chill = pheno.t$utah.z2
-photo = pheno.t$photo.z2
-force = pheno.t$force.z2
-site = pheno.t$site.n
-data=c("N","n_sp","n_site","bb","sp","chill","photo","force","site")
-
-datalist_zutah_index$force.z2
-head(pheno.t$force.z2)
-mdl.t <- stan("stan/bc_bb_ncp_standardize_oct18.stan",
-               data=c("N","n_sp","n_site","bb","sp","chill","photo","force","site"),
-              iter = 4000, chains=1)#, control = list(adapt_delta = 0.99))
-
-mdl.i <- stan("stan/bc.bb.ncpphoto.ncpinter.standardize.old.stan",
+mdl.i <- stan("stan/bc.bb.ncpphoto.ncpinter.standardize.stan",
               data = datalist_z,
               iter = 4000, chains=1)
               #, control = list(adapt_delta = 0.99))
-datalist_z$N
-length(datalist_z$site)
-save(mdl.t, file="output/tbb_utah_cport_stnd_index.Rds")
 
-# no div trans or any warnings of any kind!
-head(pheno.t)
-temp <- subset(pheno.t, site.n != 1)
-dl.t <- subset(temp, site.n != 1)
 
-datalist.z <- with(dl.t,
-                   list( N=nrow(dl.t),
-                         n_sp = length(unique(dl.t$species.fact)),
-                         n_site = length(unique(dl.t$site.n)),
-                         bb = tbb,
-                         sp = as.numeric(as.factor(dl.t$species)),
-                         chill = chillport.z2,
-                         photo = photo.z2,
-                         force = force.z2,
-                         site = site.z2
-                   ))
+save(mdl.t, file="output/tbb_utah_cport_stnd.Rds")
 
-mdl.t <- stan("stan/bc.bb.ncpphoto.ncpinter.standardize.stan",
+
+mdl.t <- stan("stan/bc_bb_ncpphoto_ncpinter_standardize_index.stan",
               data = datalist.z,
-              iter = 4000, chains=4, control = list(adapt_delta = 0.99))
+              iter = 4000, chains=4)
+
+save(mdl.t, file="output/tbb_utah_cport_stnd_index.Rds")
 #######################################################################
 
 load("output/tbb_ncp_cport_stnd_index_DL.Rds")

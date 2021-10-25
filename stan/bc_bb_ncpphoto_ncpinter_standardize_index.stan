@@ -9,8 +9,9 @@
 data {
   int<lower = 0 > N;
   int<lower = 0 > n_sp;
-  int< lower = 0 >  n_site;
-  int<lower = 1, upper= n_site> site[N];
+  //int< lower = 0 >  Nsite;
+  // int<lower = 1, upper= n_site > site[N];
+  int n_site[N];
   int<lower = 1, upper= n_sp> sp[N]; // not sure what this is doing
   vector[N] chill; 
   //vector[N] site;
@@ -54,7 +55,7 @@ parameters {
   real mu_force; 
   real mu_chill;
   real mu_photo;
-  real mu_site;
+  //real mu_site;
   real mu_inter_fp;
   //real mu_inter_fs;
   //real mu_inter_ps;
@@ -66,7 +67,7 @@ parameters {
     
   vector[n_sp] a_sp;
   
-  vector[n_site] a_site;
+  vector[N] a_site;
   
   vector[n_sp] b_force;
   vector[n_sp] b_chill;
@@ -104,7 +105,10 @@ transformed parameters{
   vector[n_sp] b_inter_pc;
   //vector[n_sp] b_inter_sc;
   
+  vector[N] mu_site;
   vector[N] y_hat;
+  
+  mu_site = a_site[n_site];
   
   b_photo = mu_photo + sigma_photo * b_photo_ncp;
   
@@ -117,7 +121,6 @@ transformed parameters{
 
   for(i in 1:N){
 		y_hat[i] = a_sp[sp[i]] + 
-	  a_site[site[i]] + 
 		b_force[sp[i]] * force_std[i] + 
 		b_photo[sp[i]] * photo_std[i] + 
 		b_chill[sp[i]] * chill_std[i] +

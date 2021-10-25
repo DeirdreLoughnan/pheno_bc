@@ -128,10 +128,18 @@ save(mdl.t, file="output/tbb_utah_cport_stnd.Rds")
 
 
 mdl.t <- stan("stan/bc_bb_ncpphoto_ncpinter_standardize_index.stan",
-              data = datalist.z,
-              iter = 4000, chains=4)
+              data = datalist_z,
+              iter = 4000, chains=1, control = list(adapt_delta = 0.99))
 
-save(mdl.t, file="output/tbb_utah_cport_stnd_index.Rds")
+dl_test <- list( N=nrow(pheno.t),
+                    #n_site = length(unique(pheno.t$site.n)),
+                    K = pheno.t$tbb,
+                 n_site = pheno.t$site.n)
+
+mdl.test <- stan("stan/Stat_rethinking_categorical_example.stan", 
+                 data = dl_test, 
+                 iter = 4000, chains = 1)
+sum_test <- summary(mdl.test)$summary
 #######################################################################
 
 load("output/tbb_ncp_cport_stnd_index_DL.Rds")

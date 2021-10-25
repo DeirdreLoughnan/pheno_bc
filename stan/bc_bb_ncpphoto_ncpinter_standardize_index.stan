@@ -9,7 +9,7 @@
 data {
   int<lower = 0 > N;
   int<lower = 0 > n_sp;
-  int< lower = 1 >  n_site;
+  int< lower = 0 >  n_site;
   int<lower = 1, upper= n_site> site[N];
   int<lower = 1, upper= n_sp> sp[N]; // not sure what this is doing
   vector[N] chill; 

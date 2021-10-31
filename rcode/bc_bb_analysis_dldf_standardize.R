@@ -54,7 +54,7 @@ pheno$first <- ifelse(pheno$tbb < pheno$latbb1,"t", ifelse (pheno$tbb == pheno$l
 
 head(pheno)
 table(pheno$species, pheno$first)
-write.csv(pheno, "input/pheno.w5chill.csv")
+#write.csv(pheno, "input/pheno.w5chill.csv")
 
 ############################################################
 #convert forcing and photoperiod treatments into binary
@@ -107,15 +107,16 @@ nrow(pheno.term) - nrow(pheno.t) # That had no terminal bb, 609
 str(pheno.t$photo.z2)
 
 datalist_z <- list( N=nrow(pheno.t),
-                         n_sp = length(unique(pheno.t$species.fact)),
-                         n_site = length(unique(pheno.t$site.n)),
-                         bb = pheno.t$tbb,
-                         sp = pheno.t$species.fact,
-                         chill = pheno.t$chillport.z2,
-                         photo = pheno.t$photo.z2,
-                         force = pheno.t$force.z2,
-                         site = pheno.t$site.n)
-str(datalist_z$site)
+                    Nsite = nrow(pheno.t),
+                    n_sp = length(unique(pheno.t$species.fact)),
+                    n_site = length(unique(pheno.t$site.n)),
+                    bb = pheno.t$tbb,
+                    sp = pheno.t$species.fact,
+                    chill = pheno.t$chillport.z2,
+                    photo = pheno.t$photo.z2,
+                    force = pheno.t$force.z2,
+                    site = pheno.t$site.n)
+str(datalist_z$n_site)
 datalist_z$photo
 
 mdl.i <- stan("stan/bc.bb.ncpphoto.ncpinter.standardize.stan",
@@ -714,3 +715,42 @@ abline(a = 0, b = 1, lty = "dotted")
 head(pheno.t)
 
 plot
+##############################################################################
+# trying to get indexing working with the statistical rethinking code:
+
+mdl.i <- stan("example_statrethinking_5.3.stan",
+              data = datalist_z,
+              iter = 4000, chains=1)
+#, control = list(adapt_delta = 0.99))
+
+sumi <- summary(mdl.i)$summary
+
+site <- sumi[grep("a_site", rownames(sumi)), "mean"]; site
+force <- sumi[grep("mu_force", rownames(sumi)), "mean"]; force
+
+col4fig <- c("mean","sd","25%","50%","75%","Rhat")
+mu_params <- c("mu_force",
+               "mu_photo",
+               "mu_chill",
+               "a_site[1]",
+               "a_site[2]",
+               "a_site[3]",
+               "a_site[4]",
+               "mu_inter_fp",
+               "mu_inter_fc",
+               "mu_inter_pc")
+
+meanzt <- sumi[mu_params, col4fig]
+
+rownames(meanzt) = c("Forcing",
+                     "Photoperiod",
+                     "Chilling",
+                     "Site",
+                     "Forcing x Photoperiod",
+                     "Forcing x Chilling",
+                     "Photoperiod x Chilling",
+                     "a_site[1]",
+                     "a_site[2]",
+                     "a_site[3]",
+                     "a_site[4]")
+

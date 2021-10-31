@@ -6,18 +6,19 @@
 
 // Oct 12, 2021: I was not properly incorporating site as a dummy variable. Statistical Rethinking has categorical variables included as both dummy variables and indexing. Here I try the indexing approach
 
+//This is code adapted from the statistical rethinking example in section 5.3
+
 data {
   int<lower = 0 > N;
   int<lower = 0 > n_sp;
-  //int< lower = 0 >  Nsite;
-  // int<lower = 1, upper= n_site > site[N];
-  int n_site[N];
-  int<lower = 1, upper= n_sp> sp[N]; // not sure what this is doing
+  int<lower = 1, upper= n_sp> sp[N]; 
   vector[N] chill; 
   //vector[N] site;
   vector[N] force;
   vector[N] photo;
-  vector[N] bb; //response var
+  vector[N] bb;
+  
+  int site[N];
 }
 
 transformed data { 
@@ -48,26 +49,17 @@ transformed data {
   //inter_cs    = chill_std .* site_std;  
 }
 
-// The parameters accepted by the model. 
-
 parameters {
   real mu_a;
   real mu_force; 
   real mu_chill;
   real mu_photo;
-  //real mu_site;
+  
   real mu_inter_fp;
-  //real mu_inter_fs;
-  //real mu_inter_ps;
   real mu_inter_fc;
   real mu_inter_pc;
-  //real mu_inter_cs;
   
-  //vector[n_site] b_site;
-    
   vector[n_sp] a_sp;
-  
-  vector[N] a_site;
   
   vector[n_sp] b_force;
   vector[n_sp] b_chill;
@@ -78,9 +70,6 @@ parameters {
   vector[n_sp] b_inter_fc_ncp;
   vector[n_sp] b_inter_pc_ncp;
   //vector[n_sp] b_inter_sc_ncp;
-  
-  real<lower=0> sigma_a;
-  real<lower=0> sigma_site;
     
   real<lower=0> sigma_force;
   real<lower=0> sigma_chill;
@@ -90,12 +79,13 @@ parameters {
   //real<lower=0> sigma_b_inter_ps;
   real<lower=0> sigma_b_inter_fc;
   real<lower=0> sigma_b_inter_pc;
-  //real<lower=0> sigma_b_inter_sc;
- 
-  real<lower=0> sigma_y; 
+  
+  real<lower=0> sigma_a;
+  real<lower=0> sigma_y;
+  vector[4] a_site;
 }
 
-transformed parameters{
+transformed parameters {
   vector[n_sp] b_photo;
   
   vector[n_sp] b_inter_fp;
@@ -105,10 +95,10 @@ transformed parameters{
   vector[n_sp] b_inter_pc;
   //vector[n_sp] b_inter_sc;
   
-  vector[N] mu_site;
+  vector[N] mu;
   vector[N] y_hat;
-  
-  mu_site = a_site[n_site];
+
+  mu = a_site[site];
   
   b_photo = mu_photo + sigma_photo * b_photo_ncp;
   
@@ -118,10 +108,10 @@ transformed parameters{
   b_inter_fc = mu_inter_fc + sigma_b_inter_fc*b_inter_fc_ncp;
   b_inter_pc = mu_inter_pc + sigma_b_inter_pc*b_inter_pc_ncp;
   //b_inter_sc = mu_inter_sc + sigma_b_inter_sc*b_inter_sc_ncp;
-
+  
   for(i in 1:N){
-		y_hat[i] = a_sp[sp[i]] + 
-		b_force[sp[i]] * force_std[i] + 
+	y_hat[i] = a_sp[sp[i]]  +
+    b_force[sp[i]] * force_std[i] + 
 		b_photo[sp[i]] * photo_std[i] + 
 		b_chill[sp[i]] * chill_std[i] +
 		b_inter_fp[sp[i]] * inter_fp[i] +
@@ -129,54 +119,45 @@ transformed parameters{
 		//b_inter_ps[sp[i]] * inter_ps[i] +
 		b_inter_fc[sp[i]] * inter_fc[i] +
 		b_inter_pc[sp[i]] * inter_pc[i] 
-		//+ b_inter_sc[sp[i]] * inter_sc[i]
-		;
-  }
+		//+ b_inter_sc[sp[i]] * inter_sc[i] ;
+		;  }
 }
-
 model {
-  // Priors. Make them flat
-	mu_force ~ normal(0, 50); // 100 = 3 months on either side. Narrow down to 35
+  mu_force ~ normal(0, 50); // 100 = 3 months on either side. Narrow down to 35
 	mu_photo ~ normal(0, 35);
 	mu_chill ~ normal(0, 35);
-//	mu_site ~ normal(1, 35);
 	
 	mu_inter_fp ~ normal(0,35);
 	mu_inter_fc ~ normal(0,35);
 	mu_inter_pc ~ normal(0,35);
-	//mu_inter_fs ~ normal(0,35);
-	//mu_inter_ps ~ normal(0,35);
-	//mu_inter_sc ~ normal(0,35);
 	
-	sigma_force ~ normal(0, 10); // Start big at 10, go smaller if introduces problems
+  sigma_force ~ normal(0, 10); // Start big at 10, go smaller if introduces problems
 	sigma_photo ~ normal(0, 10); 
 	sigma_chill ~ normal(0, 30);
-	sigma_site ~ normal(0, 40);
-	sigma_b_inter_fp ~ normal(0, 10);
+  
+  sigma_b_inter_fp ~ normal(0, 10);
 	//sigma_b_inter_fs ~ normal(0, 10);
 	//sigma_b_inter_ps ~ normal(0, 10);
 	sigma_b_inter_fc ~ normal(0, 10);	
 	sigma_b_inter_pc ~ normal(0, 10);	
-	//sigma_b_inter_sc ~ normal(0, 10);
 	
-	b_photo_ncp ~normal(0,1);
-	
+  b_photo_ncp ~normal(0,1);
 	b_force ~ normal(mu_force, sigma_force);
-//  b_photo ~ normal(mu_photo, sigma_photo); // bc still need this info
+  //b_photo ~ normal(mu_photo, sigma_photo); // bc still need this info
 	b_chill ~ normal(mu_chill, sigma_chill);
-//	b_site ~ normal(mu_site, sigma_site);
-	b_inter_fp_ncp ~ normal(0, 1); 
+  
+  b_inter_fp_ncp ~ normal(0, 1); 
   //b_inter_fs_ncp ~ normal(0, 1);
 	//b_inter_ps_ncp ~ normal(0, 1);		
 	b_inter_fc_ncp ~ normal(0, 1);
-	b_inter_pc_ncp ~ normal(0, 1);		
-	//b_inter_sc_ncp ~ normal(0, 1);	
+	b_inter_pc_ncp ~ normal(0, 1);	
 	
-	
-	a_sp ~ normal(mu_a,sigma_a);
-	a_site ~ normal(mu_site, sigma_site);
   bb ~ normal(y_hat, sigma_y);
+  sigma_y ~ uniform(0, 50);
+  a_site ~ normal(0, .5);
+  a_sp ~ normal(mu_a,sigma_a);
 }
+
 
 generated quantities{
    real ypred_new[N];

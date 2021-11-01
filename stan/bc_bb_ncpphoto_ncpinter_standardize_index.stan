@@ -1,24 +1,18 @@
-//November 2020 started by D. Loughnan 
-
-// This Stan program aims to test for differences in budburst across woody species that dominate BC's forests 
-
-// simple linar model do.bb = a + chill + forcing + photo
-
-// Oct 12, 2021: I was not properly incorporating site as a dummy variable. Statistical Rethinking has categorical variables included as both dummy variables and indexing. Here I try the indexing approach
-
 //This is code adapted from the statistical rethinking example in section 5.3
 
 data {
   int<lower = 0 > N;
   int<lower = 0 > n_sp;
+  int<lower = 0 > n_site;
   int<lower = 1, upper= n_sp> sp[N]; 
+  int<lower = 1, upper = n_site> site[N];
   vector[N] chill; 
   //vector[N] site;
   vector[N] force;
   vector[N] photo;
   vector[N] bb;
   
-  int site[N];
+  //int site[N];
 }
 
 transformed data { 
@@ -82,7 +76,7 @@ parameters {
   
   real<lower=0> sigma_a;
   real<lower=0> sigma_y;
-  vector[4] a_site;
+  vector[n_site] a_site;
 }
 
 transformed parameters {
@@ -157,12 +151,3 @@ model {
   a_site ~ normal(0, .5);
   a_sp ~ normal(mu_a,sigma_a);
 }
-
-
-generated quantities{
-   real ypred_new[N];
-   
-   for (i in 1:N)
-   ypred_new[i] = normal_rng(y_hat[i], sigma_y);
-}
-

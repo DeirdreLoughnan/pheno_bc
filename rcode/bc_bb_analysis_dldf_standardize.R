@@ -125,22 +125,13 @@ mdl.i <- stan("stan/bc.bb.ncpphoto.ncpinter.standardize.stan",
               #, control = list(adapt_delta = 0.99))
 
 
-save(mdl.t, file="output/tbb_utah_cport_stnd.Rds")
+save(mdl.t, file="output/tbb_cport_stnd_index.Rds")
 
 
 mdl.t <- stan("stan/bc_bb_ncpphoto_ncpinter_standardize_index.stan",
               data = datalist_z,
-              iter = 4000, chains=1, control = list(adapt_delta = 0.99))
+              iter = 4000, chains=4, control = list(adapt_delta = 0.99))
 
-dl_test <- list( N=nrow(pheno.t),
-                    #n_site = length(unique(pheno.t$site.n)),
-                    K = pheno.t$tbb,
-                 n_site = pheno.t$site.n)
-
-mdl.test <- stan("stan/Stat_rethinking_categorical_example.stan", 
-                 data = dl_test, 
-                 iter = 4000, chains = 1)
-sum_test <- summary(mdl.test)$summary
 #######################################################################
 
 load("output/tbb_ncp_cport_stnd_index_DL.Rds")
@@ -151,6 +142,7 @@ launch_shinystan(ssm)
 
 sumt <- summary(mdl.t)$summary
 bforce <- sumt[grep("b_force", rownames(sumt)), "mean"]; bforce
+site <- sumt[grep("a_site", rownames(sumt)), "mean"]; site
 
 post <- rstan::extract(mdl.t)
 
@@ -252,17 +244,28 @@ col4fig <- c("mean","sd","25%","50%","75%","Rhat")
 col4table <- c("mean","sd","2.5%","50%","97.5%","Rhat")
 
 # manually to get right order
-mu_params <- c("mu_force",
+mu_params <- c("a_site[1]",
+               "a_site[2]",
+               "a_site[3]",
+               "a_site[4]",
+               "mu_force",
                "mu_photo",
                "mu_chill",
                "mu_site",
                "mu_inter_fp",
                "mu_inter_fc",
-               "mu_inter_pc",
-               "mu_inter_fs",
-               "mu_inter_ps",
-               "mu_inter_sc")
+               "mu_inter_pc")
 
+mu_params <-   c("a_site[1]",
+                  "a_site[2]",
+                  "a_site[3]",
+                  "a_site[4]",
+                  "mu_force",
+                  "mu_photo",
+                  "mu_chill",
+                  "mu_inter_fp",
+                  "mu_inter_fc",
+                  "mu_inter_pc")
 meanzt <- sumt[mu_params, col4fig]
 
 rownames(meanzt) = c("Forcing",
@@ -732,13 +735,13 @@ col4fig <- c("mean","sd","25%","50%","75%","Rhat")
 mu_params <- c("mu_force",
                "mu_photo",
                "mu_chill",
+               "mu_inter_fp",
+               "mu_inter_fc",
+               "mu_inter_pc", 
                "a_site[1]",
                "a_site[2]",
                "a_site[3]",
-               "a_site[4]",
-               "mu_inter_fp",
-               "mu_inter_fc",
-               "mu_inter_pc")
+               "a_site[4]")
 
 meanzt <- sumi[mu_params, col4fig]
 

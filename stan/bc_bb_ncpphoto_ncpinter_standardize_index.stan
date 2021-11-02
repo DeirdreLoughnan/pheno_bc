@@ -44,6 +44,7 @@ transformed data {
 }
 
 parameters {
+  real mu_grand;
   real mu_a;
   real mu_force; 
   real mu_chill;
@@ -104,7 +105,7 @@ transformed parameters {
   //b_inter_sc = mu_inter_sc + sigma_b_inter_sc*b_inter_sc_ncp;
   
   for(i in 1:N){
-	y_hat[i] = a_sp[sp[i]]  +
+	y_hat[i] = mu_grand + a_sp[sp[i]]  + a_site[site[i]]+
     b_force[sp[i]] * force_std[i] + 
 		b_photo[sp[i]] * photo_std[i] + 
 		b_chill[sp[i]] * chill_std[i] +
@@ -113,10 +114,10 @@ transformed parameters {
 		//b_inter_ps[sp[i]] * inter_ps[i] +
 		b_inter_fc[sp[i]] * inter_fc[i] +
 		b_inter_pc[sp[i]] * inter_pc[i] 
-		//+ b_inter_sc[sp[i]] * inter_sc[i] ;
 		;  }
 }
 model {
+  mu_grand ~ normal(50,5);
   mu_force ~ normal(0, 50); // 100 = 3 months on either side. Narrow down to 35
 	mu_photo ~ normal(0, 35);
 	mu_chill ~ normal(0, 35);
@@ -148,6 +149,6 @@ model {
 	
   bb ~ normal(y_hat, sigma_y);
   sigma_y ~ uniform(0, 50);
-  a_site ~ normal(0, .5);
+  a_site ~ normal(0, 0.5);
   a_sp ~ normal(mu_a,sigma_a);
 }

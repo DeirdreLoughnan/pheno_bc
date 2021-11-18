@@ -9,13 +9,17 @@
 data {
   int<lower = 0 > N;
   int<lower = 0 > n_sp;
-  int<lower = 0 > n_site;
+  //int<lower = 0 > n_site;
   int<lower = 1, upper=n_sp> sp[N];
-  int<lower = 1, upper = n_site>site[N];
+  //int<lower = 1, upper = n_site>site[N];
   vector[N] chill; 
   vector[N] force;
   vector[N] photo;
   vector[N] bb; //response var
+  
+  vector[N] site2;
+  vector[N] site3;
+  vector[N] site4;
 }
 
 transformed data { 
@@ -36,7 +40,6 @@ transformed data {
   force_std = (force-mean(force))/(2*sd(force));
   photo_std = (photo-mean(photo))/(2*sd(photo));
   chill_std = (chill-mean(chill))/(2*sd(chill));
-  //site_std = (site-mean(site))/(2*sd(site));
 
 //what is the dot doing? bc vectors of length n?
   inter_fp    = force_std .* photo_std;
@@ -66,9 +69,11 @@ parameters {
   vector[n_sp] b_force;
   //vector[n_sp] b_photo;
   vector[n_sp] b_chill;
-  real a_site2;
-  real a_site3;
-  real a_site4;
+  
+  real b_site2;
+  real b_site3;
+  real b_site4;
+  
   vector[n_sp] b_photo_ncp; //
   vector[n_sp] b_inter_fp_ncp;
   vector[n_sp] b_inter_fc_ncp;
@@ -114,9 +119,9 @@ transformed parameters{
 
   for(i in 1:N){
 		y_hat[i] = mu_grand + a_sp[sp[i]] + 
-	  a_site2 +
-	  a_site3 +
-	  a_site4 + 
+	  b_site2 * site2[i] +
+	  b_site3 * site3[i] +
+	  b_site4 * site4[i] + 
 		b_force[sp[i]] * force[i] + 
 		b_photo[sp[i]] * photo[i] + 
 		b_chill[sp[i]] * chill[i] +
@@ -136,9 +141,9 @@ model {
 	mu_force ~ normal(0, 50); // 100 = 3 months on either side. Narrow down to 35
 	mu_photo ~ normal(0, 35);
 	mu_chill ~ normal(0, 35);
-	a_site2 ~ normal(0,0.5);
-	a_site3 ~ normal(0,0.5);
-	a_site4 ~ normal(0,0.5);
+	b_site2 ~ normal(0,0.5);
+	b_site3 ~ normal(0,0.5);
+	b_site4 ~ normal(0,0.5);
 
 	mu_inter_fp ~ normal(0,35);
 	mu_inter_fc ~ normal(0,35);

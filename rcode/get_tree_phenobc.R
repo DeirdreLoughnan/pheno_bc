@@ -63,5 +63,19 @@ plot(phy.plants.phenobc,cex=.5)
 # save phylogeny
 #write.tree(phy.plants.phenobc,"data/SBphylo_phenobc.tre")
 
+# Smith and Brown tree is missing Alnus viridis and Rhamnus frangula, maybe they are in the Zanne tree -- nope
 
-
+# phy.zanne<-read.tree("data/Vascular_Plants_rooted.dated.tre")
+# 
+# missing <- c("Alnus_viridis", "Rhamnus_frangula")
+# missing.genera <- c("Alnus", "Rhamnus")
+# 
+# phy.genera.zanne<-unlist(
+#   lapply(strsplit(phy.zanne$tip.label, "_"),function(x){return(x[1])})
+# )
+# phy.genera.uniq<-sort(unique(phy.genera.zanne))
+# 
+# ## first prune the phylogeny to include only these genera
+# phy.genera.zanne.phenobc <- drop.tip(phy.plants,
+#                     which(!phy.genera.zanne %in% phenosp.genus.inphylo)) #8814 tips
+# View(sort(phy.genera.zanne.phenobc$tip.label))

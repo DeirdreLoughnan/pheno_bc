@@ -3,10 +3,12 @@
 # working on test data for phenology model 
 # testing for differences between dummy variables and indexing code
 
-if(length(grep("deirdreloughnan", getwd()) > 0)) {
+if(length(grep("deirdreloughnan", getwd())>0)) {
   setwd("~/Documents/github/pheno_bc")
+} else if(length(grep("Lizzie", getwd())>0)) {
+  setwd("~/Documents/git/teaching/stan")
 } else{
-  setwd("/home/deirdre/pheno_bc")
+  setwd("/home/deirdre/pheno_bc") # for midge
 }
 
 library(rstan)

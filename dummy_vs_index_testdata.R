@@ -17,6 +17,7 @@ require(truncnorm)
 library(ggplot2)
 library(dplyr)
 library(plyr)
+require(lme4)
 
 
 
@@ -48,30 +49,32 @@ warm = gl(nwarm, rep*nsite, length = ntot)
 photo = gl(nphoto, rep*nsite*nwarm, length = ntot)
 chill = gl(nchill, rep*nsite*nwarm*nphoto, length = ntot)
 
-mugrand = 50  
-sitediff = 0.1
+mu_grand = 50
+b_site = 1
 # sitediff2 = 0.5
 # sitediff3 = 0.75
 # sitediff4 = 1
-warmdiff = -20 
-photodiff = -14
-chilldiff = -20 
-warmphoto = 3.5
-warmchill = -3
-chillphoto = -2
+mu_a = 0
+mu_force = -20 
+mu_photo = -14
+mu_chill = -20 
+# warmphoto = 3.5
+# warmchill = -3
+# chillphoto = -2
 
-alphasp.sd = 5
-sitediff.sd = 0.5
-warmdiff.sd = 1 
-photodiff.sd = 1
-chilldiff.sd =1
+sigma_a = 5
+sigma_site = 3
+sigma_force = 1
+sigma_chill = 1
+sigma_photo =1
+sigma_y = 5
 #sitewarm.sd = 1
 # site2photo.sd = 1
 # site3photo.sd = 1
 # site4photo.sd = 1
-warmphoto.sd = 1
-warmchill.sd = 1
-chillphoto.sd = 1
+# warmphoto.sd = 1
+# warmchill.sd = 1
+# chillphoto.sd = 1
 
 fake <- vector()
 
@@ -82,20 +85,20 @@ for(i in 1:(nsp)){
 head(fake)
 
 # replicating the method for calculating the response variable used in traitors (which I understand the best)
-alpha.pheno.sp <- rnorm(nsp, 0, alphasp.sd) 
+alpha.pheno.sp <- rnorm(nsp, mu_a, sigma_a) 
 fake$alpha.pheno.sp <- rep(alpha.pheno.sp, each = ntot)
 
-alpha.force.sp <- rnorm(nsp, warmdiff, warmdiff.sd)
+alpha.force.sp <- rnorm(nsp, mu_force, sigma_force)
 fake$alpha.force.sp <- rep(alpha.force.sp, each = ntot)
 
-alpha.photo.sp <- rnorm(nsp, photodiff, photodiff.sd)
+alpha.photo.sp <- rnorm(nsp, mu_photo, sigma_photo)
 fake$alpha.photo.sp <- rep(alpha.photo.sp, each = ntot)
 
-alpha.chill.sp <- rnorm(nsp, chilldiff, chilldiff.sd)
+alpha.chill.sp <- rnorm(nsp, mu_chill, sigma_chill)
 fake$alpha.chill.sp <- rep(alpha.chill.sp, each = ntot)
 
 fake$site <- as.numeric(fake$site)
-alpha.site <- rnorm(nsite, sitediff, sitediff.sd)
+alpha.site <- rnorm(nsite, b_site, sigma_site)
 fake$alpha.site <- fake$site
 fake$alpha.site[fake$alpha.site==1] <- alpha.site[1]
 fake$alpha.site[fake$alpha.site==2] <- alpha.site[2]
@@ -104,13 +107,14 @@ fake$alpha.site[fake$alpha.site==4] <- alpha.site[4]
 
 # add dummy/ site level effects:
 fake <- fake %>%
-  mutate ( d2 = if_else(site == 2, 1, 0),
+  mutate ( d1 = if_else(site == 1, 1, 0),
+           d2 = if_else(site == 2, 1, 0),
            d3 = if_else(site == 3, 1, 0),
            d4 = if_else(site == 4, 1, 0)) 
 
 #general variance
-sigma.gen <- 5
-gen.var <- rnorm(ntotsp, 0, sigma.gen) 
+
+gen.var <- rnorm(ntotsp, 0, sigma_y) 
 fake$gen.er <- gen.var
 
 fake$warm <- as.numeric(fake$warm)
@@ -130,44 +134,16 @@ fake$chill.z2 <- (fake$chill-mean(fake$chill,na.rm=TRUE))/(sd(fake$chill,na.rm=T
 # fake$bb.prev <-  fake$alpha.pheno.sp + fake$alpha.force.sp * fake$warm + fake$alpha.chill.sp * fake$chill + fake$alpha.photo.sp * fake$photo + fake$gen.er + fake$alpha.site*fake$site  
 
 # for dummy variable test data
- fake$bb <-  mugrand + fake$alpha.pheno.sp + fake$alpha.force.sp * fake$warm + fake$alpha.chill.sp * fake$chill + fake$alpha.photo.sp * fake$photo + fake$gen.er + fake$alpha.site*fake$d2  + fake$alpha.site*fake$d3  + fake$alpha.site*fake$d4 
+ fake$bb <-  mu_grand + fake$alpha.pheno.sp + fake$alpha.force.sp * fake$warm + fake$alpha.chill.sp * fake$chill + fake$alpha.photo.sp * fake$photo + fake$gen.er + fake$alpha.site*fake$d1 + fake$alpha.site*fake$d2  + fake$alpha.site*fake$d3  + fake$alpha.site*fake$d4 
  
 
 # check if works with lmer or brms
-require(lme4)
-summary(lmer(bb ~  warm + photo + chill + site + (1|sp), data = fake)) # sanity check 
 
-summary(lmer(bb ~  warm + photo + chill + d2 + d3 + d4 + (1|sp), data = fake)) # sanity check 
+summary(lmer(bb ~  warm + photo + chill + site + (1|sp), data = fake)) 
 
-# Still having issues with the test data: starting to do a more indepth ppc:
-force <- 1:2
-photo = 1:2
-chill = 1:2
+summary(lmer(bb ~  warm + photo + chill + d2 + d3 + d4 + (1|sp), data = fake)) # 
 
-#priors:
-mu_grand <- rnorm(1000, 50, 5)
-mu_force <- rnorm(1000, 0, 50)
-mu_photo <- rnorm(1000,0, 35)
-mu_chill <- rnorm(1000,0, 35)
-b_site <- rnorm(1000,0,0.5)
-sigma_force <- rnorm(1000,0, 10)
-sigma_photo <- rnorm(1000,0, 10)
-sigma_chill <- rnorm(1000,0, 30)
-sigma_y <- rnorm(1000,0,10)
-sigma_a <- rnorm(1000, 0, 20)
 
-b_force <- rnorm(1000, mu_force[1], sigma_force[1]);
-b_chill <- rnorm(1000, mu_chill[1], sigma_chill[1]);
-b_photo <- rnorm(1000, mu_photo[1], sigma_photo[1]);
-
-a_sp <- rnorm(1000, 0,0.1);
-
-mu_bb <- mu_grand[1] + a_sp[1] + b_force[1] * force + b_chill[1] * chill + b_photo * photo + b_site[1] * site
-yhat <- rnorm(mu_bb, sigma_y[1])
-
-plot(density(mu_grand))
-# have site as a single column, with the site effects substituted for the site number
-# try running the model in brms/lmer
 
 # tbb, f/c/p.n, site.n, species, f/c/p.i, species.fact, d2, d3, d4
 datalist <- list( N=nrow(fake),
@@ -182,33 +158,32 @@ datalist <- list( N=nrow(fake),
                     site2 = fake$d2,
                     site3 = fake$d3,
                     site4 = fake$d4)
-datalist$n_site
-datalist$force
-head(fake)
 
 mdl.simpdum <- stan("stan/test_model.stan",
                   data = datalist,
                   include = FALSE, pars = c("ypred_new","y_hat"),
-                  iter = 4000, chains= 1)
+                  iter = 4000, chains= 4)
+
 sm.sd <- summary(mdl.simpdum)$summary
 
-mdl.simp2 <- stan("stan/bc.bb.ncpphoto.ncpinter.stan",
-              data = datalist,
-              iter = 4000, chains=4)
+param <- list(mu_grand = 50, mu_a = 0, mu_force = -20,
+              mu_chill = -20,  mu_photo = -14, b_site = 1, sigma_a = 5,
+              sigma_force = 1,sigma_chill = 1, sigma_photo =1, sigma_site = 3, sigma_y = 5)
 
-mdl.i <- stan("stan/bc_bb_ncpphoto_ncpinter_standardize_index.stan",
-              data = datalist,
-              iter = 4000, chains=4, control = list(adapt_delta = 0.99))
-save(mdl.i, file = "output/test_index_01.Rds")
-
-mdl.d <- stan("stan/bc_bb_ncpphoto_ncpinter_standardize_dummy.stan",
-              data = datalist,
-              iter = 4000, chains=4,
-              control = list(adapt_delta = 0.99))
-
-save(mdl.simp2, file = "output/test_dummy.Rds")
+summary(mdl.simpdum)$summary[c("mu_grand","mu_a","mu_force", "mu_chill","mu_photo","b_site2","b_site3","b_site4","sigma_a","sigma_force","sigma_chill","sigma_photo","sigma_site","sigma_y"),"mean"]; t(param)
+# mdl.i <- stan("stan/bc_bb_ncpphoto_ncpinter_standardize_index.stan",
+#               data = datalist,
+#               iter = 4000, chains=4, control = list(adapt_delta = 0.99))
+# save(mdl.i, file = "output/test_index_01.Rds")
+# 
+# mdl.d <- stan("stan/bc_bb_ncpphoto_ncpinter_standardize_dummy.stan",
+#               data = datalist,
+#               iter = 4000, chains=4,
+#               control = list(adapt_delta = 0.99))
+# 
+# save(mdl.simp2, file = "output/test_dummy.Rds")
 # Look at model output:
-sm.i <- summary(mdl.simp2)$summary
+# sm.i <- summary(mdl.simp2)$summary
 # ext<-rstan::extract(mdl.i)
 # 
 ssm<- as.shinystan(mdl.simpdum)
@@ -216,16 +191,6 @@ launch_shinystan(ssm)
 
 pairs(mdl.simpdum, pars = c("mu_grand","mu_a", "mu_force", "mu_chill", "mu_photo","b_site2","b_site3","b_site4","sigma_a", "sigma_force", "sigma_chill", "sigma_force","sigma_y", "lp__")) 
 
-
-load("output/test_index_01.Rds")
-ssm<- as.shinystan(mdl.i)
-launch_shinystan(ssm)
-
-sm.i <- summary(mdl.i)$summary
-
-pairs(mdl.i, pars = c("mu_grand","mu_a", "mu_force", "mu_chill", "mu_photo","mu_inter_fp","mu_inter_fc","mu_inter_pc", "lp__")) 
-
-pairs(mdl.i, pars = c("sigma_force", "sigma_chill","sigma_photo","sigma_a","sigma_y", "lp__")) 
 
 ext<-rstan::extract(mdl.simpdum)
 # get_variables(mdl.i)
@@ -237,7 +202,7 @@ plot(h1, col=rgb(1,0,1,1/4), add = T)
 
 h1 <- hist(rnorm(1000, 0,20))
 h2 <- hist(ext$mu_force)
-plot(h2, col=rgb(0,0,1,1/4), xlim = c(-50,0))
+plot(h2, col=rgb(0,0,1,1/4), xlim = c(-500,0))
 plot(h1, col=rgb(1,0,1,1/4), add = T)
 
 h1 <- hist(rnorm(1000, 0,35))
@@ -316,4 +281,30 @@ y.ext<-ext$y_hat # I want this to be a matrix, which it is, with one element for
 
 ppc_dens_overlay(y, y.ext[1:50, ])
 
+### # Still having issues with the test data: starting to do a more indepth ppc:
+force <- 1:2
+photo = 1:2
+chill = 1:2
 
+#priors:
+mu_grand <- rnorm(1000, 50, 5)
+mu_force <- rnorm(1000, 0, 50)
+mu_photo <- rnorm(1000,0, 35)
+mu_chill <- rnorm(1000,0, 35)
+b_site <- rnorm(1000,0,0.5)
+sigma_force <- rnorm(1000,0, 10)
+sigma_photo <- rnorm(1000,0, 10)
+sigma_chill <- rnorm(1000,0, 30)
+sigma_y <- rnorm(1000,0,10)
+sigma_a <- rnorm(1000, 0, 20)
+
+b_force <- rnorm(1000, mu_force[1], sigma_force[1]);
+b_chill <- rnorm(1000, mu_chill[1], sigma_chill[1]);
+b_photo <- rnorm(1000, mu_photo[1], sigma_photo[1]);
+
+a_sp <- rnorm(1000, 0,0.1);
+
+mu_bb <- mu_grand[1] + a_sp[1] + b_force[1] * force + b_chill[1] * chill + b_photo * photo + b_site[1] * site
+yhat <- rnorm(mu_bb, sigma_y[1])
+
+plot(density(mu_grand))

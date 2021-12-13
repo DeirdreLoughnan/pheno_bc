@@ -49,18 +49,18 @@ photo = gl(nphoto, rep*nsite*nwarm, length = ntot)
 chill = gl(nchill, rep*nsite*nwarm*nphoto, length = ntot)
 
 mugrand = 50  
-sitediff = 2
-sitediff2 = 0.5
-sitediff3 = 0.75
-sitediff4 = 1
-warmdiff = -20 # days earlier from 1 to 2
+sitediff = 0.1
+# sitediff2 = 0.5
+# sitediff3 = 0.75
+# sitediff4 = 1
+warmdiff = -20 
 photodiff = -14
 chilldiff = -20 
 warmphoto = 3.5
 warmchill = -3
 chillphoto = -2
 
-mugrand.sd = 5
+alphasp.sd = 5
 sitediff.sd = 0.5
 warmdiff.sd = 1 
 photodiff.sd = 1
@@ -82,7 +82,7 @@ for(i in 1:(nsp)){
 head(fake)
 
 # replicating the method for calculating the response variable used in traitors (which I understand the best)
-alpha.pheno.sp <- rnorm(nsp, mugrand, mugrand.sd) 
+alpha.pheno.sp <- rnorm(nsp, 0, alphasp.sd) 
 fake$alpha.pheno.sp <- rep(alpha.pheno.sp, each = ntot)
 
 alpha.force.sp <- rnorm(nsp, warmdiff, warmdiff.sd)
@@ -94,18 +94,19 @@ fake$alpha.photo.sp <- rep(alpha.photo.sp, each = ntot)
 alpha.chill.sp <- rnorm(nsp, chilldiff, chilldiff.sd)
 fake$alpha.chill.sp <- rep(alpha.chill.sp, each = ntot)
 
+fake$site <- as.numeric(fake$site)
+alpha.site <- rnorm(nsite, sitediff, sitediff.sd)
+fake$alpha.site <- fake$site
+fake$alpha.site[fake$alpha.site==1] <- alpha.site[1]
+fake$alpha.site[fake$alpha.site==2] <- alpha.site[2]
+fake$alpha.site[fake$alpha.site==3] <- alpha.site[3]
+fake$alpha.site[fake$alpha.site==4] <- alpha.site[4]
+
 # add dummy/ site level effects:
 fake <- fake %>%
   mutate ( d2 = if_else(site == 2, 1, 0),
            d3 = if_else(site == 3, 1, 0),
            d4 = if_else(site == 4, 1, 0)) 
-
-fake$site.effect <- fake$site
-fake$site.effect[fake$site.effect==1] <- 0.1
-fake$site.effect[fake$site.effect==2] <- 0.5
-fake$site.effect[fake$site.effect==3] <- 0.75
-fake$site.effect[fake$site.effect==4] <- 1
-
 
 #general variance
 sigma.gen <- 5
@@ -117,7 +118,6 @@ fake$warm[fake$warm == 2] <- 0
 fake$photo <- as.numeric(fake$photo)
 fake$photo[fake$photo == 2] <- 0
 fake$chill <- as.numeric(fake$chill)
-fake$site <- as.numeric(fake$site)
 
 # now set up the data to be z-scored:
 fake$force.z2 <- (fake$warm-mean(fake$warm,na.rm=TRUE))/(sd(fake$warm,na.rm=TRUE)*2)
@@ -125,20 +125,47 @@ fake$photo.z2 <- (fake$photo-mean(fake$photo,na.rm=TRUE))/(sd(fake$photo,na.rm=T
 fake$chill.z2 <- (fake$chill-mean(fake$chill,na.rm=TRUE))/(sd(fake$chill,na.rm=TRUE)*2) 
 
 
-#"run" the full model to simulate data 
-# fake$bb <-  fake$alpha.pheno.sp + fake$alpha.force.sp * fake$force.z2 + fake$alpha.chill.sp * fake$chill.z2 + fake$alpha.photo.sp * fake$photo.z2 + fake$gen.er + fake$site.effect2 + fake$site.effect3 + fake$site.effect4 
+#"run" the full model to simulate data
+# calcualte test data the old/wrong way with site as a numeric variable
+# fake$bb.prev <-  fake$alpha.pheno.sp + fake$alpha.force.sp * fake$warm + fake$alpha.chill.sp * fake$chill + fake$alpha.photo.sp * fake$photo + fake$gen.er + fake$alpha.site*fake$site  
 
-fake$bb <-  fake$alpha.pheno.sp + fake$alpha.force.sp * fake$warm + fake$alpha.chill.sp * fake$chill + fake$alpha.photo.sp * fake$photo + fake$gen.er + fake$site.effect
+# for dummy variable test data
+ fake$bb <-  mugrand + fake$alpha.pheno.sp + fake$alpha.force.sp * fake$warm + fake$alpha.chill.sp * fake$chill + fake$alpha.photo.sp * fake$photo + fake$gen.er + fake$alpha.site*fake$d2  + fake$alpha.site*fake$d3  + fake$alpha.site*fake$d4 
+ 
 
 # check if works with lmer or brms
 require(lme4)
-summary(lmer(bb ~ site + warm + photo + chill + (1|sp), data = fake)) # sanity check 
+summary(lmer(bb ~  warm + photo + chill + site + (1|sp), data = fake)) # sanity check 
 
+summary(lmer(bb ~  warm + photo + chill + d2 + d3 + d4 + (1|sp), data = fake)) # sanity check 
 
-head(fake)
+# Still having issues with the test data: starting to do a more indepth ppc:
+force <- 1:2
+photo = 1:2
+chill = 1:2
 
-# Still having issues with the test data: doing a more indepth ppc:
+#priors:
+mu_grand <- rnorm(1000, 50, 5)
+mu_force <- rnorm(1000, 0, 50)
+mu_photo <- rnorm(1000,0, 35)
+mu_chill <- rnorm(1000,0, 35)
+b_site <- rnorm(1000,0,0.5)
+sigma_force <- rnorm(1000,0, 10)
+sigma_photo <- rnorm(1000,0, 10)
+sigma_chill <- rnorm(1000,0, 30)
+sigma_y <- rnorm(1000,0,10)
+sigma_a <- rnorm(1000, 0, 20)
 
+b_force <- rnorm(1000, mu_force[1], sigma_force[1]);
+b_chill <- rnorm(1000, mu_chill[1], sigma_chill[1]);
+b_photo <- rnorm(1000, mu_photo[1], sigma_photo[1]);
+
+a_sp <- rnorm(1000, 0,0.1);
+
+mu_bb <- mu_grand[1] + a_sp[1] + b_force[1] * force + b_chill[1] * chill + b_photo * photo + b_site[1] * site
+yhat <- rnorm(mu_bb, sigma_y[1])
+
+plot(density(mu_grand))
 # have site as a single column, with the site effects substituted for the site number
 # try running the model in brms/lmer
 
@@ -159,10 +186,15 @@ datalist$n_site
 datalist$force
 head(fake)
 
+mdl.simpdum <- stan("stan/test_model.stan",
+                  data = datalist,
+                  include = FALSE, pars = c("ypred_new","y_hat"),
+                  iter = 4000, chains= 1)
+sm.sd <- summary(mdl.simpdum)$summary
 
-mdl.simp2 <- stan("stan/bc.bb.stan",
+mdl.simp2 <- stan("stan/bc.bb.ncpphoto.ncpinter.stan",
               data = datalist,
-              iter = 4000, chains=1)
+              iter = 4000, chains=4)
 
 mdl.i <- stan("stan/bc_bb_ncpphoto_ncpinter_standardize_index.stan",
               data = datalist,
@@ -179,10 +211,10 @@ save(mdl.simp2, file = "output/test_dummy.Rds")
 sm.i <- summary(mdl.simp2)$summary
 # ext<-rstan::extract(mdl.i)
 # 
-ssm<- as.shinystan(mdl.simp2)
+ssm<- as.shinystan(mdl.simpdum)
 launch_shinystan(ssm)
 
-pairs(mdl.simp2, pars = c("mu_grand","mu_a", "mu_force", "mu_chill", "mu_photo","mu_site", "lp__")) 
+pairs(mdl.simpdum, pars = c("mu_grand","mu_a", "mu_force", "mu_chill", "mu_photo","b_site2","b_site3","b_site4","sigma_a", "sigma_force", "sigma_chill", "sigma_force","sigma_y", "lp__")) 
 
 
 load("output/test_index_01.Rds")
@@ -195,7 +227,7 @@ pairs(mdl.i, pars = c("mu_grand","mu_a", "mu_force", "mu_chill", "mu_photo","mu_
 
 pairs(mdl.i, pars = c("sigma_force", "sigma_chill","sigma_photo","sigma_a","sigma_y", "lp__")) 
 
-ext<-rstan::extract(mdl.i)
+ext<-rstan::extract(mdl.simpdum)
 # get_variables(mdl.i)
 # 
 h1 <- hist(rnorm(1000, 50,10))
@@ -270,6 +302,11 @@ plot(h1, col=rgb(1,0,1,1/4), add = T)
 
 h1 <- hist(rnorm(1000, 0,10))
 h2 <- hist(ext$sigma_b_inter_fc)
+plot(h2, col=rgb(0,0,1,1/4), xlim = c(-50, 50))
+plot(h1, col=rgb(1,0,1,1/4), add = T)
+
+h1 <- hist(rnorm(1000, 1,5))
+h2 <- hist(ext$b_site2)
 plot(h2, col=rgb(0,0,1,1/4), xlim = c(-50, 50))
 plot(h1, col=rgb(1,0,1,1/4), add = T)
 

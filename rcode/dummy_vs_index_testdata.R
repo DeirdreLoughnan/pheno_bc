@@ -27,7 +27,7 @@ rm(list=ls())
 options(stringsAsFactors = FALSE)
 options(mc.cores = parallel::detectCores())
 
-nsite = 4 #number of sites with trait data
+nsite = 2 #number of sites with trait data
 nsp = 5 #number of species
 nind = 3
 
@@ -104,8 +104,8 @@ alpha.site <- rnorm(nsite, b_site, sigma_site)
 fake$alpha.site <- fake$site
 fake$alpha.site[fake$alpha.site==1] <- alpha.site[1]
 fake$alpha.site[fake$alpha.site==2] <- alpha.site[2]
-fake$alpha.site[fake$alpha.site==3] <- alpha.site[3]
-fake$alpha.site[fake$alpha.site==4] <- alpha.site[4]
+# fake$alpha.site[fake$alpha.site==3] <- alpha.site[3]
+# fake$alpha.site[fake$alpha.site==4] <- alpha.site[4]
 
 # add dummy/ site level effects:
 fake <- fake %>%
@@ -132,11 +132,13 @@ fake$chill.z2 <- (fake$chill-mean(fake$chill,na.rm=TRUE))/(sd(fake$chill,na.rm=T
 
 
 #"run" the full model to simulate data
-# calcualte test data the old/wrong way with site as a numeric variable
-# fake$bb.prev <-  fake$alpha.pheno.sp + fake$alpha.force.sp * fake$warm + fake$alpha.chill.sp * fake$chill + fake$alpha.photo.sp * fake$photo + fake$gen.er + fake$alpha.site*fake$site  
+# calcualte test data for two sites:
+# fake$site[fake$site == 2] <- 0
+# fake$chill <- as.numeric(fake$chill)
+# fake$bb <-  fake$alpha.pheno.sp + fake$alpha.force.sp * fake$warm + fake$alpha.chill.sp * fake$chill + fake$alpha.photo.sp * fake$photo + fake$gen.er + fake$alpha.site*fake$site  
 
 # for dummy variable test data
- fake$bb <-  mu_grand + fake$alpha.pheno.sp + fake$alpha.force.sp * fake$warm + fake$alpha.chill.sp * fake$chill + fake$alpha.photo.sp * fake$photo + fake$gen.er + fake$alpha.site*fake$d1 + fake$alpha.site*fake$d2  + fake$alpha.site*fake$d3  + fake$alpha.site*fake$d4 
+ fake$bb <-  mu_grand + fake$alpha.pheno.sp + fake$alpha.force.sp * fake$warm + fake$alpha.chill.sp * fake$chill + fake$alpha.photo.sp * fake$photo + fake$gen.er + fake$alpha.site*fake$d1 + fake$alpha.site*fake$d2  + fake$alpha.site*fake$d3  + fake$alpha.site*fake$d4
  
 
 # check if works with lmer or brms
@@ -160,6 +162,10 @@ datalist <- list( N=nrow(fake),
                     site2 = fake$d2,
                     site3 = fake$d3,
                     site4 = fake$d4)
+mdl.simpdum <- stan("stan/bc.bb.inter.stan",
+                    data = datalist,
+                    include = FALSE, pars = c("ypred_new","y_hat"),
+                    iter = 4000, chains= 4)
 
 mdl.simpdum <- stan("stan/test_model.stan",
                   data = datalist,
@@ -191,7 +197,7 @@ summary(mdl.simpdum)$summary[c("mu_grand","mu_a","mu_force", "mu_chill","mu_phot
 ssm<- as.shinystan(mdl.simpdum)
 launch_shinystan(ssm)
 
-pairs(mdl.simpdum, pars = c("mu_grand","mu_a", "mu_force", "mu_chill", "mu_photo","b_site2","b_site3","b_site4","sigma_a", "sigma_force", "sigma_chill", "sigma_force","sigma_y", "lp__")) 
+pairs(mdl.simpdum, pars = c("mu_grand","mu_a", "mu_force", "mu_chill", "mu_photo","b_site2","b_site3","b_site4","sigma_a", "sigma_force", "sigma_chill", "sigma_force","sigma_site","sigma_y", "lp__")) 
 
 
 ext<-rstan::extract(mdl.simpdum)

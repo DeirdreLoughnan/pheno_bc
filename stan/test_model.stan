@@ -54,7 +54,7 @@ transformed data {
 
 parameters {
   real mu_grand;
-  real mu_a;
+  //real mu_a;
   real mu_force; 
   real mu_chill;
   real mu_photo;
@@ -158,7 +158,7 @@ model {
 	sigma_chill ~ normal(0, 30);
 	sigma_a ~ normal(0,5);
 	sigma_site ~ normal(0,10);
-	sigma_y ~ normal(0,10);
+	sigma_y ~ normal(0,5);
 	// sigma_b_inter_fp ~ normal(0, 10);
 	// sigma_b_inter_fc ~ normal(0, 10);
 	// sigma_b_inter_pc ~ normal(0, 10);
@@ -180,7 +180,7 @@ model {
 // 	 b_inter_ps_ncp ~ normal(0, 1);	
 	
 	
-	a_sp ~ normal(mu_a,sigma_a);
+	a_sp ~ normal(0,sigma_a);
   bb ~ normal(y_hat, sigma_y);
 }
 

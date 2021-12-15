@@ -86,7 +86,6 @@ parameters {
   real <lower=0> sigma_force;
   real <lower=0> sigma_chill;
   real <lower=0> sigma_photo;
-  real <lower=0> sigma_site;
   // real<lower=0> sigma_b_inter_fp;
   // real<lower=0> sigma_b_inter_fc;
   // real<lower=0> sigma_b_inter_pc;
@@ -157,7 +156,6 @@ model {
 	sigma_photo ~ normal(0, 10); 
 	sigma_chill ~ normal(0, 30);
 	sigma_a ~ normal(0,5);
-	sigma_site ~ normal(0,10);
 	sigma_y ~ normal(0,5);
 	// sigma_b_inter_fp ~ normal(0, 10);
 	// sigma_b_inter_fc ~ normal(0, 10);
@@ -173,8 +171,8 @@ model {
 	b_chill ~ normal(mu_chill, sigma_chill);
 
 //   b_inter_fp_ncp ~ normal(0, 1);
-// 	b_inter_fc_ncp ~ normal(0, 1);
-// 	b_inter_pc_ncp ~ normal(0, 1);
+//   b_inter_fc_ncp ~ normal(0, 1);
+// 	 b_inter_pc_ncp ~ normal(0, 1);
 // 	 b_inter_cs_ncp ~ normal(0, 1);	
 //   b_inter_fs_ncp ~ normal(0, 1);
 // 	 b_inter_ps_ncp ~ normal(0, 1);	

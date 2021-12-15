@@ -27,7 +27,7 @@ rm(list=ls())
 options(stringsAsFactors = FALSE)
 options(mc.cores = parallel::detectCores())
 
-nsite = 2 #number of sites with trait data
+nsite = 4 #number of sites with trait data
 nsp = 5 #number of species
 nind = 3
 
@@ -56,7 +56,6 @@ b_site = 1
 # sitediff2 = 0.5
 # sitediff3 = 0.75
 # sitediff4 = 1
-mu_a = 0
 mu_force = -20 
 mu_photo = -14
 mu_chill = -20 
@@ -87,7 +86,7 @@ for(i in 1:(nsp)){
 head(fake)
 
 # replicating the method for calculating the response variable used in traitors (which I understand the best)
-alpha.pheno.sp <- rnorm(nsp, mu_a, sigma_a) 
+alpha.pheno.sp <- rnorm(nsp, 0, sigma_a) 
 fake$alpha.pheno.sp <- rep(alpha.pheno.sp, each = ntot)
 
 alpha.force.sp <- rnorm(nsp, mu_force, sigma_force)
@@ -104,15 +103,15 @@ alpha.site <- rnorm(nsite, b_site, sigma_site)
 fake$alpha.site <- fake$site
 fake$alpha.site[fake$alpha.site==1] <- alpha.site[1]
 fake$alpha.site[fake$alpha.site==2] <- alpha.site[2]
-# fake$alpha.site[fake$alpha.site==3] <- alpha.site[3]
-# fake$alpha.site[fake$alpha.site==4] <- alpha.site[4]
+fake$alpha.site[fake$alpha.site==3] <- alpha.site[3]
+fake$alpha.site[fake$alpha.site==4] <- alpha.site[4]
 
 # add dummy/ site level effects:
 fake <- fake %>%
   mutate ( d1 = if_else(site == 1, 1, 0),
            d2 = if_else(site == 2, 1, 0),
            d3 = if_else(site == 3, 1, 0),
-           d4 = if_else(site == 4, 1, 0)) 
+           d4 = if_else(site == 4, 1, 0))
 
 #general variance
 
@@ -133,9 +132,9 @@ fake$chill.z2 <- (fake$chill-mean(fake$chill,na.rm=TRUE))/(sd(fake$chill,na.rm=T
 
 #"run" the full model to simulate data
 # calcualte test data for two sites:
-# fake$site[fake$site == 2] <- 0
-# fake$chill <- as.numeric(fake$chill)
-# fake$bb <-  fake$alpha.pheno.sp + fake$alpha.force.sp * fake$warm + fake$alpha.chill.sp * fake$chill + fake$alpha.photo.sp * fake$photo + fake$gen.er + fake$alpha.site*fake$site  
+fake$site[fake$site == 2] <- 0
+fake$site <- as.numeric(fake$site)
+# fake$bb <-  mu_grand + fake$alpha.pheno.sp + fake$alpha.force.sp * fake$warm + fake$alpha.chill.sp * fake$chill + fake$alpha.photo.sp * fake$photo + fake$gen.er + fake$alpha.site*fake$site
 
 # for dummy variable test data
  fake$bb <-  mu_grand + fake$alpha.pheno.sp + fake$alpha.force.sp * fake$warm + fake$alpha.chill.sp * fake$chill + fake$alpha.photo.sp * fake$photo + fake$gen.er + fake$alpha.site*fake$d1 + fake$alpha.site*fake$d2  + fake$alpha.site*fake$d3  + fake$alpha.site*fake$d4
@@ -145,8 +144,9 @@ fake$chill.z2 <- (fake$chill-mean(fake$chill,na.rm=TRUE))/(sd(fake$chill,na.rm=T
 
 summary(lmer(bb ~  warm + photo + chill + site + (1|sp), data = fake)) 
 
-summary(lmer(bb ~  warm + photo + chill + d2 + d3 + d4 + (1|sp), data = fake)) # 
+summary(lmer(bb ~  warm + photo + chill + d1 + d2 + d3 + d4  + (1|sp), data = fake)) # 
 
+summary(lm(bb ~  warm + photo + chill + d2 + d3 + d4 , data = fake)) # 
 
 
 # tbb, f/c/p.n, site.n, species, f/c/p.i, species.fact, d2, d3, d4
@@ -158,11 +158,12 @@ datalist <- list( N=nrow(fake),
                     chill = fake$chill,
                     photo = fake$photo,
                     force = fake$warm,
-                    site = fake$site,
-                    site2 = fake$d2,
+                    site = fake$site
+                    , site2 = fake$d2,
                     site3 = fake$d3,
                     site4 = fake$d4)
-mdl.simpdum <- stan("stan/bc.bb.inter.stan",
+
+mdl.simp <- stan("stan/bc.bb.stan",
                     data = datalist,
                     include = FALSE, pars = c("ypred_new","y_hat"),
                     iter = 4000, chains= 4)
@@ -172,33 +173,37 @@ mdl.simpdum <- stan("stan/test_model.stan",
                   include = FALSE, pars = c("ypred_new","y_hat"),
                   iter = 4000, chains= 4)
 
-sm.sd <- summary(mdl.simpdum)$summary
+sm <- summary(mdl.simp)$summary
 
-param <- list(mu_grand = 50, mu_a = 0, mu_force = -20,
+param <- list(mu_grand = 50, mu_force = -20,
               mu_chill = -20,  mu_photo = -14, b_site = 1, sigma_a = 5,
-              sigma_force = 1,sigma_chill = 1, sigma_photo =1, sigma_site = 3, sigma_y = 5)
+              sigma_force = 1,sigma_chill = 1, sigma_photo =1,  sigma_y = 5)
 
-summary(mdl.simpdum)$summary[c("mu_grand","mu_a","mu_force", "mu_chill","mu_photo","b_site2","b_site3","b_site4","sigma_a","sigma_force","sigma_chill","sigma_photo","sigma_site","sigma_y"),"mean"]; t(param)
+summary(mdl.simp)$summary[c("mu_grand","mu_force", "mu_chill","mu_photo","mu_site","sigma_a","sigma_force","sigma_chill","sigma_photo","sigma_site","sigma_y"),"mean"]; t(param)
+
+summary(mdl.simpdum)$summary[c("mu_grand","mu_force", "mu_chill","mu_photo","b_site2","b_site3","b_site4","sigma_a","sigma_force","sigma_chill","sigma_photo","sigma_site","sigma_y"),"mean"]; t(param)
 # mdl.i <- stan("stan/bc_bb_ncpphoto_ncpinter_standardize_index.stan",
 #               data = datalist,
 #               iter = 4000, chains=4, control = list(adapt_delta = 0.99))
-# save(mdl.i, file = "output/test_index_01.Rds")
+# save(mdl.simp, file = "output/test_simple2sites.Rds")
 # 
 # mdl.d <- stan("stan/bc_bb_ncpphoto_ncpinter_standardize_dummy.stan",
 #               data = datalist,
 #               iter = 4000, chains=4,
 #               control = list(adapt_delta = 0.99))
 # 
-# save(mdl.simp2, file = "output/test_dummy.Rds")
+# save(mdl.simp, file = "output/test_2sites.Rds")
 # Look at model output:
 # sm.i <- summary(mdl.simp2)$summary
 # ext<-rstan::extract(mdl.i)
-# 
+load("output/test_simple2sites.Rds")
 ssm<- as.shinystan(mdl.simpdum)
 launch_shinystan(ssm)
 
-pairs(mdl.simpdum, pars = c("mu_grand","mu_a", "mu_force", "mu_chill", "mu_photo","b_site2","b_site3","b_site4","sigma_a", "sigma_force", "sigma_chill", "sigma_force","sigma_site","sigma_y", "lp__")) 
-
+pairs(mdl.simp, pars = c("mu_grand", "mu_force", "mu_chill", "mu_photo","mu_site","sigma_a", "sigma_force", "sigma_chill", "sigma_force","sigma_y", "lp__")) 
+#pdf("simp_dum_pairs.pdf", height = 5, width = 5)
+pairs(mdl.simpdum, pars = c("mu_grand", "mu_force", "mu_chill", "mu_photo","b_site2","b_site3","b_site4","sigma_a", "sigma_force", "sigma_chill", "sigma_force","sigma_y", "lp__")) 
+#dev.off()
 
 ext<-rstan::extract(mdl.simpdum)
 # get_variables(mdl.i)

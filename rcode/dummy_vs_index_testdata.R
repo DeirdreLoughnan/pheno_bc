@@ -52,7 +52,7 @@ photo = gl(nphoto, rep*nsite*nwarm, length = ntot)
 chill = gl(nchill, rep*nsite*nwarm*nphoto, length = ntot)
 
 mu_grand = 50
-b_site = 1
+b_site = 10
 # sitediff2 = 0.5
 # sitediff3 = 0.75
 # sitediff4 = 1
@@ -64,7 +64,7 @@ mu_chill = -20
 # chillphoto = -2
 
 sigma_a = 5
-sigma_site = 3
+sigma_site = 0.5
 sigma_force = 1
 sigma_chill = 1
 sigma_photo =1
@@ -132,21 +132,26 @@ fake$chill.z2 <- (fake$chill-mean(fake$chill,na.rm=TRUE))/(sd(fake$chill,na.rm=T
 
 #"run" the full model to simulate data
 # calcualte test data for two sites:
-fake$site[fake$site == 2] <- 0
-fake$site <- as.numeric(fake$site)
+# fake$site[fake$site == 2] <- 0
+#fake$site <- as.numeric(fake$site)
 # fake$bb <-  mu_grand + fake$alpha.pheno.sp + fake$alpha.force.sp * fake$warm + fake$alpha.chill.sp * fake$chill + fake$alpha.photo.sp * fake$photo + fake$gen.er + fake$alpha.site*fake$site
 
 # for dummy variable test data
- fake$bb <-  mu_grand + fake$alpha.pheno.sp + fake$alpha.force.sp * fake$warm + fake$alpha.chill.sp * fake$chill + fake$alpha.photo.sp * fake$photo + fake$gen.er + fake$alpha.site*fake$d1 + fake$alpha.site*fake$d2  + fake$alpha.site*fake$d3  + fake$alpha.site*fake$d4
- 
+# Faith suggested the issue might be that the effect of site 1 is not being included; bb without site 1 bb2 is with site 1 effects
+fake$bb <-  mu_grand + fake$alpha.pheno.sp + fake$alpha.force.sp * fake$warm + fake$alpha.chill.sp * fake$chill + fake$alpha.photo.sp * fake$photo + fake$gen.er  + fake$alpha.site*fake$d2  + fake$alpha.site*fake$d3  + fake$alpha.site*fake$d4
 
+fake$bb2 <-  mu_grand + fake$alpha.pheno.sp + fake$alpha.force.sp * fake$warm + fake$alpha.chill.sp * fake$chill + fake$alpha.photo.sp * fake$photo + fake$gen.er  + alpha.site*fake$d1 + alpha.site*fake$d2  + alpha.site*fake$d3  + alpha.site*fake$d4
+ 
+fake$site2 <- fake$alpha.site*fake$d2
+fake$site3 <- fake$alpha.site*fake$d3
+fake$site4 <- fake$alpha.site*fake$d4
 # check if works with lmer or brms
 
-summary(lmer(bb ~  warm + photo + chill + site + (1|sp), data = fake)) 
-
-summary(lmer(bb ~  warm + photo + chill + d1 + d2 + d3 + d4  + (1|sp), data = fake)) # 
+summary(lmer(bb ~  warm + photo + chill + alpha.site + (1|sp), data = fake)) 
+summary(lmer(bb2 ~  warm + photo + chill + alpha.site + (1|sp), data = fake)) 
 
 summary(lm(bb ~  warm + photo + chill + d2 + d3 + d4 , data = fake)) # 
+summary(lmer(bb ~  warm + photo + chill + d2 + d3 + d4 + (1|sp), data = fake)) # 
 
 
 # tbb, f/c/p.n, site.n, species, f/c/p.i, species.fact, d2, d3, d4
@@ -158,30 +163,35 @@ datalist <- list( N=nrow(fake),
                     chill = fake$chill,
                     photo = fake$photo,
                     force = fake$warm,
-                    site = fake$site
+                    #site = fake$site
+                  site = fake$alpha.site
                     , site2 = fake$d2,
                     site3 = fake$d3,
                     site4 = fake$d4)
 
-mdl.simp <- stan("stan/bc.bb.stan",
-                    data = datalist,
-                    include = FALSE, pars = c("ypred_new","y_hat"),
-                    iter = 4000, chains= 4)
+# mdl.simp <- stan("stan/bc.bb.stan",
+#                     data = datalist,
+#                     include = FALSE, pars = c("ypred_new","y_hat"),
+#                     iter = 4000, chains= 4)
 
 mdl.simpdum <- stan("stan/test_model.stan",
                   data = datalist,
                   include = FALSE, pars = c("ypred_new","y_hat"),
                   iter = 4000, chains= 4)
 
-sm <- summary(mdl.simp)$summary
+sm <- summary(mdl.simpdum)$summary
 
 param <- list(mu_grand = 50, mu_force = -20,
-              mu_chill = -20,  mu_photo = -14, b_site = 1, sigma_a = 5,
-              sigma_force = 1,sigma_chill = 1, sigma_photo =1,  sigma_y = 5)
+              mu_chill = -20,  mu_photo = -14, b_site = 10, sigma_a = 5,
+              sigma_force = 1,sigma_chill = 1, sigma_photo =1,  sigma_y = 5, site2 = alpha.site[2], site3 = alpha.site[3], site4 = alpha.site[4])
 
-summary(mdl.simp)$summary[c("mu_grand","mu_force", "mu_chill","mu_photo","mu_site","sigma_a","sigma_force","sigma_chill","sigma_photo","sigma_site","sigma_y"),"mean"]; t(param)
+# summary(mdl.simp)$summary[c("mu_grand","mu_force", "mu_chill","mu_photo","mu_site","sigma_a","sigma_force","sigma_chill","sigma_photo","sigma_site","sigma_y"),"mean"]; t(param)
 
-summary(mdl.simpdum)$summary[c("mu_grand","mu_force", "mu_chill","mu_photo","b_site2","b_site3","b_site4","sigma_a","sigma_force","sigma_chill","sigma_photo","sigma_site","sigma_y"),"mean"]; t(param)
+summary(mdl.simpdum)$summary[c("mu_grand","mu_force", "mu_chill","mu_photo","b_site2","b_site3","b_site4","sigma_a","sigma_force","sigma_chill","sigma_photo","sigma_y"),"mean"]; t(param)
+
+ssm<- as.shinystan(mdl.simpdum)
+launch_shinystan(ssm)
+
 # mdl.i <- stan("stan/bc_bb_ncpphoto_ncpinter_standardize_index.stan",
 #               data = datalist,
 #               iter = 4000, chains=4, control = list(adapt_delta = 0.99))
@@ -202,6 +212,7 @@ launch_shinystan(ssm)
 
 pairs(mdl.simp, pars = c("mu_grand", "mu_force", "mu_chill", "mu_photo","mu_site","sigma_a", "sigma_force", "sigma_chill", "sigma_force","sigma_y", "lp__")) 
 #pdf("simp_dum_pairs.pdf", height = 5, width = 5)
+
 pairs(mdl.simpdum, pars = c("mu_grand", "mu_force", "mu_chill", "mu_photo","b_site2","b_site3","b_site4","sigma_a", "sigma_force", "sigma_chill", "sigma_force","sigma_y", "lp__")) 
 #dev.off()
 
@@ -305,11 +316,11 @@ mu_force <- rnorm(1000, 0, 50)
 mu_photo <- rnorm(1000,0, 35)
 mu_chill <- rnorm(1000,0, 35)
 b_site <- rnorm(1000,0,0.5)
-sigma_force <- rnorm(1000,0, 10)
+sigma_force <- rnorm(1000,20, 10)
 sigma_photo <- rnorm(1000,0, 10)
-sigma_chill <- rnorm(1000,0, 30)
+sigma_chill <- rnorm(1000,50, 30)
 sigma_y <- rnorm(1000,0,10)
-sigma_a <- rnorm(1000, 0, 20)
+sigma_a <- rnorm(1000, 30, 20)
 
 b_force <- rnorm(1000, mu_force[1], sigma_force[1]);
 b_chill <- rnorm(1000, mu_chill[1], sigma_chill[1]);
@@ -320,4 +331,4 @@ a_sp <- rnorm(1000, 0,0.1);
 mu_bb <- mu_grand[1] + a_sp[1] + b_force[1] * force + b_chill[1] * chill + b_photo * photo + b_site[1] * site
 yhat <- rnorm(mu_bb, sigma_y[1])
 
-plot(density(mu_grand))
+plot(density(sigma_a))

@@ -53,9 +53,9 @@ chill = gl(nchill, rep*nsite*nwarm*nphoto, length = ntot)
 
 mu_grand = 50
 b_site = 10
-# sitediff2 = 0.5
-# sitediff3 = 0.75
-# sitediff4 = 1
+sitediff2 = 1
+sitediff3 = 2
+sitediff4 = 3
 mu_force = -20 
 mu_photo = -14
 mu_chill = -20 
@@ -65,9 +65,9 @@ mu_chill = -20
 
 sigma_a = 5
 sigma_site = 0.5
-sigma_force = 1
-sigma_chill = 1
-sigma_photo =1
+sigma_force = 20
+sigma_chill = 50
+sigma_photo = 20
 sigma_y = 5
 #sitewarm.sd = 1
 # site2photo.sd = 1
@@ -153,6 +153,11 @@ summary(lmer(bb2 ~  warm + photo + chill + alpha.site + (1|sp), data = fake))
 summary(lm(bb ~  warm + photo + chill + d2 + d3 + d4 , data = fake)) # 
 summary(lmer(bb ~  warm + photo + chill + d2 + d3 + d4 + (1|sp), data = fake)) # 
 
+# sanity check that it is not just that all the values are the same:
+fake$bb3 <-  mu_grand + fake$alpha.pheno.sp + fake$alpha.force.sp * fake$warm + fake$alpha.chill.sp * fake$chill + fake$alpha.photo.sp * fake$photo + fake$gen.er  + sitediff2*fake$d2  + sitediff3*fake$d3  + sitediff4*fake$d4
+
+summary(lmer(bb3 ~  warm + photo + chill + d2 + d3 + d4 + (1|sp), data = fake)) # 
+# The values are ok, but not stellar
 
 # tbb, f/c/p.n, site.n, species, f/c/p.i, species.fact, d2, d3, d4
 datalist <- list( N=nrow(fake),
@@ -163,8 +168,7 @@ datalist <- list( N=nrow(fake),
                     chill = fake$chill,
                     photo = fake$photo,
                     force = fake$warm,
-                    #site = fake$site
-                  site = fake$alpha.site
+                    site = fake$site
                     , site2 = fake$d2,
                     site3 = fake$d3,
                     site4 = fake$d4)
@@ -183,7 +187,7 @@ sm <- summary(mdl.simpdum)$summary
 
 param <- list(mu_grand = 50, mu_force = -20,
               mu_chill = -20,  mu_photo = -14, b_site = 10, sigma_a = 5,
-              sigma_force = 1,sigma_chill = 1, sigma_photo =1,  sigma_y = 5, site2 = alpha.site[2], site3 = alpha.site[3], site4 = alpha.site[4])
+              sigma_force = 20,sigma_chill = 50, sigma_photo =20,  sigma_y = 5, site2 = alpha.site[2], site3 = alpha.site[3], site4 = alpha.site[4])
 
 # summary(mdl.simp)$summary[c("mu_grand","mu_force", "mu_chill","mu_photo","mu_site","sigma_a","sigma_force","sigma_chill","sigma_photo","sigma_site","sigma_y"),"mean"]; t(param)
 
@@ -306,9 +310,20 @@ y.ext<-ext$y_hat # I want this to be a matrix, which it is, with one element for
 ppc_dens_overlay(y, y.ext[1:50, ])
 
 ### # Still having issues with the test data: starting to do a more indepth ppc:
-force <- 1:2
-photo = 1:2
-chill = 1:2
+
+
+ntot_prior<-nsite*nwarm*nphoto*nchill*nind #48 
+ntotsp<-nsite*nwarm*nphoto*nchill*nsp*nind #480
+# code below to loop through species and indiviudals 
+
+# <> <> <> <> <> <> <> <> <> <> <> <> <> <> <> <> <> <> <> <>
+#building the required dataframe 
+# <> <> <> <> <> <> <> <> <> <> <> <> <> <> <> <> <> <> <> <>
+
+site = gl(nsite, rep, length = ntot)
+warm = gl(nwarm, rep*nsite, length = ntot)
+photo = gl(nphoto, rep*nsite*nwarm, length = ntot)
+chill = gl(nchill, rep*nsite*nwarm*nphoto, length = ntot)
 
 #priors:
 mu_grand <- rnorm(1000, 50, 5)
@@ -316,7 +331,7 @@ mu_force <- rnorm(1000, 0, 50)
 mu_photo <- rnorm(1000,0, 35)
 mu_chill <- rnorm(1000,0, 35)
 b_site <- rnorm(1000,0,0.5)
-sigma_force <- rnorm(1000,20, 10)
+sigma_force <- rnorm(1000,20, 1)
 sigma_photo <- rnorm(1000,0, 10)
 sigma_chill <- rnorm(1000,50, 30)
 sigma_y <- rnorm(1000,0,10)
@@ -328,7 +343,15 @@ b_photo <- rnorm(1000, mu_photo[1], sigma_photo[1]);
 
 a_sp <- rnorm(1000, 0,0.1);
 
-mu_bb <- mu_grand[1] + a_sp[1] + b_force[1] * force + b_chill[1] * chill + b_photo * photo + b_site[1] * site
+mu_bb <- mu_grand[1] + a_sp[1] + b_force[1] * force + b_chill[1] * chill + b_photo * photo + b_site * site2 + b_site * site3 + b_site * site4
 yhat <- rnorm(mu_bb, sigma_y[1])
 
-plot(density(sigma_a))
+post <- rstan::extract(mdl.simpdum)
+plot(density(sigma_a)); lines(density(post$sigma_a), col = "red", lwd = 3)
+plot(density(sigma_y)); lines(density(post$sigma_y), col = "red", lwd = 3)
+plot(density(sigma_force)); lines(density(post$sigma_force), col = "red", lwd = 3)
+plot(density(sigma_chill)); lines(density(post$sigma_chill), col = "red", lwd = 3)
+plot(density(sigma_photo)); lines(density(post$sigma_photo), col = "red", lwd = 3)
+
+
+prior.

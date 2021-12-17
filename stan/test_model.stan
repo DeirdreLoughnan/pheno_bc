@@ -152,11 +152,11 @@ model {
 	// mu_inter_ps ~ normal(0,35);
 	// mu_inter_cs ~ normal(0,35);
 	
-	sigma_force ~ normal(0, 10); 
-	sigma_photo ~ normal(0, 10); 
-	sigma_chill ~ normal(0, 30);
+	sigma_force ~ normal(20, 1); 
+	sigma_photo ~ normal(20, 1); 
+	sigma_chill ~ normal(50, 1);
 	sigma_a ~ normal(0,5);
-	sigma_y ~ normal(0,5);
+	sigma_y ~ normal(30,5);
 	// sigma_b_inter_fp ~ normal(0, 10);
 	// sigma_b_inter_fc ~ normal(0, 10);
 	// sigma_b_inter_pc ~ normal(0, 10);

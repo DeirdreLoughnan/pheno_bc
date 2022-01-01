@@ -13,13 +13,13 @@ data {
   int<lower = 1, upper=n_sp> sp[N];
   //int<lower = 1, upper = n_site>site[N];
   vector[N] chill; 
-  vector[N] force;
-  vector[N] photo;
+  vector <lower=0, upper = 1>[N] force;
+  vector <lower=0, upper = 1>[N] photo;
   vector[N] bb; //response var
-  
-  vector[N] site2;
-  vector[N] site3;
-  vector[N] site4;
+  // added upper and lower bounds to site dummy variable
+  vector <lower=0, upper = 1>[N] site2;
+  vector <lower=0, upper = 1>[N] site3;
+  vector <lower=0, upper = 1>[N] site4;
 }
 
 transformed data { 
@@ -122,8 +122,8 @@ transformed parameters{
 	  b_site2 * site2[i] +
 	  b_site3 * site3[i] +
 	  b_site4 * site4[i] + 
-		b_force[sp[i]] * force[i] + 
-		b_photo[sp[i]] * photo[i] + 
+		b_force[sp[i]] * force_std[i] + 
+		b_photo[sp[i]] * photo_std[i] + 
 		b_chill[sp[i]] * chill[i] 
 		// + b_inter_fp[sp[i]] * inter_fp[i] +
 		// b_inter_fc[sp[i]] * inter_fc[i] +
@@ -138,9 +138,9 @@ transformed parameters{
 model {
   // Priors. Make them flat
   mu_grand ~ normal(50, 5);
-	mu_force ~ normal(0, 35); 
-	mu_photo ~ normal(0, 35);
-	mu_chill ~ normal(0, 35);
+	mu_force ~ normal(-20, 35); 
+	mu_photo ~ normal(-20, 35);
+	mu_chill ~ normal(-20, 35);
 	b_site2 ~ normal(0,5);
 	b_site3 ~ normal(0,5);
 	b_site4 ~ normal(0,5);
@@ -152,11 +152,11 @@ model {
 	// mu_inter_ps ~ normal(0,35);
 	// mu_inter_cs ~ normal(0,35);
 	
-	sigma_force ~ normal(20, 1); 
-	sigma_photo ~ normal(20, 1); 
-	sigma_chill ~ normal(50, 1);
+	sigma_force ~ normal(1, 5); 
+	sigma_photo ~ normal(1, 5); 
+	sigma_chill ~ normal(1, 5);
 	sigma_a ~ normal(0,5);
-	sigma_y ~ normal(30,5);
+	sigma_y ~ normal(0,5);
 	// sigma_b_inter_fp ~ normal(0, 10);
 	// sigma_b_inter_fc ~ normal(0, 10);
 	// sigma_b_inter_pc ~ normal(0, 10);
@@ -167,7 +167,7 @@ model {
 	
 	b_photo_ncp ~normal(0,1);
 	b_force ~ normal(mu_force, sigma_force);
- // b_photo ~ normal(mu_photo, sigma_photo); // bc still need this info
+  //b_photo ~ normal(mu_photo, sigma_photo); // bc still need this info
 	b_chill ~ normal(mu_chill, sigma_chill);
 
 //   b_inter_fp_ncp ~ normal(0, 1);
@@ -188,5 +188,6 @@ generated quantities{
    for (i in 1:N)
    ypred_new[i] = normal_rng(y_hat[i], sigma_y);
 }
+
 
 

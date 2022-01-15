@@ -78,7 +78,7 @@ mu_psite  <- 3
 
 sigma_fsite <- 0.5
 sigma_csite <- 0.5
-sigma_psite <- 0.2
+sigma_psite <- 0.5
 
 #Make a vector of site names
 sites <- 1:nsite
@@ -112,41 +112,41 @@ fake$alpha.site <- rep(rep(alpha.site, times = nPhenCombo, each = nPhenCombo*nin
 
 # adding the interaction effects:
 alpha.fc <- rnorm(nsp, mu_fc, sigma_fc)
-fake$alpha.fc <- rep(alpha.fc, each =  nsite*nPhenCombo*nind)
+fake$alpha.fc <- rep(alpha.fc, each =  nsite*nForce * nPhoto * nind)
 
 alpha.cp <- rnorm(nsp, mu_cp, sigma_cp)
-fake$alpha.cp <- rep(alpha.cp, each =  nsite*nPhenCombo*nind)
+fake$alpha.cp <- rep(alpha.cp, each =  nsite*nChill * nPhoto *nind)
 
 alpha.fp <- rnorm(nsp, mu_fp, sigma_fp)
-fake$alpha.fp <- rep(alpha.fp, each =  nsite*nPhenCombo*nind)
+fake$alpha.fp <- rep(alpha.fp, each =  nsite*nForce * nPhoto *nind)
 
 #adding interactions between the cues and the 
-alpha.fsite2 <- rnorm(nsp, mu_fsite, sigma_fsite)
-fake$alpha.fsite2 <- rep(alpha.fsite2, each =  nsite*nPhenCombo*nind)
+alpha.fsite2 <- rnorm(nsite, mu_fsite, sigma_fsite)
+fake$alpha.fsite2 <- rep(alpha.fsite2, each =  nPhenCombo*nind)
 
-alpha.fsite3 <- rnorm(nsp, mu_fsite, sigma_fsite)
-fake$alpha.fsite3 <- rep(alpha.fsite3, each =  nsite*nPhenCombo*nind)
+alpha.fsite3 <- rnorm(nsite, mu_fsite, sigma_fsite)
+fake$alpha.fsite3 <- rep(alpha.fsite3, each =  nPhenCombo*nind)
 
-alpha.fsite4 <- rnorm(nsp, mu_fsite, sigma_fsite)
-fake$alpha.fsite4 <- rep(alpha.fsite4, each =  nsite*nPhenCombo*nind)
+alpha.fsite4 <- rnorm(nsite, mu_fsite, sigma_fsite)
+fake$alpha.fsite4 <- rep(alpha.fsite4, each =  nPhenCombo*nind)
 
-alpha.csite2 <- rnorm(nsp, mu_csite, sigma_csite)
-fake$alpha.csite2 <- rep(alpha.csite2, each =  nsite*nPhenCombo*nind)
+alpha.csite2 <- rnorm(nsite, mu_csite, sigma_csite)
+fake$alpha.csite2 <- rep(alpha.csite2, each =  nPhenCombo*nind)
 
-alpha.csite3 <- rnorm(nsp, mu_csite, sigma_csite)
-fake$alpha.csite3 <- rep(alpha.csite3, each =  nsite*nPhenCombo*nind)
+alpha.csite3 <- rnorm(nsite, mu_csite, sigma_csite)
+fake$alpha.csite3 <- rep(alpha.csite3, each = nPhenCombo*nind)
 
-alpha.csite4 <- rnorm(nsp, mu_csite, sigma_csite)
-fake$alpha.csite4 <- rep(alpha.csite4, each =  nsite*nPhenCombo*nind)
+alpha.csite4 <- rnorm(nsite, mu_csite, sigma_csite)
+fake$alpha.csite4 <- rep(alpha.csite4, each =  nPhenCombo*nind)
 
-alpha.psite2 <- rnorm(nsp, mu_psite, sigma_psite)
-fake$alpha.psite2 <- rep(alpha.psite2, each =  nsite*nPhenCombo*nind)
+alpha.psite2 <- rnorm(nsite, mu_psite, sigma_psite)
+fake$alpha.psite2 <- rep(alpha.psite2, each =  nPhenCombo*nind)
 
-alpha.psite3 <- rnorm(nsp, mu_psite, sigma_psite)
-fake$alpha.psite3 <- rep(alpha.psite3, each =  nsite*nPhenCombo*nind)
+alpha.psite3 <- rnorm(nsite, mu_psite, sigma_psite)
+fake$alpha.psite3 <- rep(alpha.psite3, each =  nPhenCombo*nind)
 
-alpha.psite4 <- rnorm(nsp, mu_psite, sigma_psite)
-fake$alpha.psite4 <- rep(alpha.psite4, each =  nsite*nPhenCombo*nind)
+alpha.psite4 <- rnorm(nsite, mu_psite, sigma_psite)
+fake$alpha.psite4 <- rep(alpha.psite4, each =  nPhenCombo*nind)
 
 # add dummy/ site level effects:
 fake <- fake %>%
@@ -177,8 +177,26 @@ fake$bb_int <-  mu_grand + alpha.site[1] + fake$alpha.pheno.sp + fake$alpha.forc
   fake$alpha.site*fake$d2  + fake$alpha.site*fake$d3  + fake$alpha.site*fake$d4 + fake$alpha.fc * (fake$warm*fake$chill) + fake$alpha.cp * (fake$photo*fake$chill) + fake$alpha.fp * (fake$photo*fake$warm) +
   fake$gen.var
 
-fake$bb_int_site <-  mu_grand + alpha.site[1] + fake$alpha.pheno.sp + fake$alpha.force.sp *  fake$warm + 
+fake$bb_int_site <-  mu_grand + alpha.site[1] + alpha.csite2[1]+ fake$alpha.pheno.sp + fake$alpha.force.sp *  fake$warm + 
   fake$alpha.chill.sp * fake$chill + fake$alpha.photo.sp * fake$photo + 
+  fake$alpha.site*fake$d2  + fake$alpha.site*fake$d3  + fake$alpha.site*fake$d4 +
+  fake$alpha.fc * (fake$warm*fake$chill) + fake$alpha.cp * (fake$photo*fake$chill) + fake$alpha.fp * (fake$photo*fake$warm) +
+  fake$alpha.fsite2 * (fake$d2 * fake$warm) + fake$alpha.fsite2 * (fake$d3 * fake$warm) + fake$alpha.fsite2 * (fake$d4 * fake$warm) +
+  fake$alpha.csite2 * (fake$d2 * fake$chill) + fake$alpha.csite2 * (fake$d3 * fake$chill) + fake$alpha.csite2 * (fake$d4 * fake$chill) +
+  fake$alpha.psite2 * (fake$d2 * fake$photo) + fake$alpha.psite2 * (fake$d3 * fake$photo) + fake$alpha.psite2 * (fake$d4 * fake$photo) +
+  fake$gen.var
+
+fake$bb_int_site <-  mu_grand + alpha.site[1] + alpha.csite2[1]+ fake$alpha.pheno.sp + fake$alpha.force.sp *  fake$warm + 
+  fake$alpha.chill.sp * fake$chill + fake$alpha.photo.sp * fake$photo + 
+  fake$alpha.site*fake$d2  + fake$alpha.site*fake$d3  + fake$alpha.site*fake$d4 +
+  fake$alpha.fc * (fake$warm*fake$chill) + fake$alpha.cp * (fake$photo*fake$chill) + fake$alpha.fp * (fake$photo*fake$warm) +
+  fake$alpha.fsite2 * (fake$d2 * fake$warm) + fake$alpha.fsite2 * (fake$d3 * fake$warm) + fake$alpha.fsite2 * (fake$d4 * fake$warm) +
+  fake$alpha.csite2 * (fake$d2 * fake$chill) + fake$alpha.csite2 * (fake$d3 * fake$chill) + fake$alpha.csite2 * (fake$d4 * fake$chill) +
+  fake$alpha.psite2 * (fake$d2 * fake$photo) + fake$alpha.psite2 * (fake$d3 * fake$photo) + fake$alpha.psite2 * (fake$d4 * fake$photo) +
+  fake$gen.var
+
+fake$bb_int_site2 <-  mu_grand + alpha.site[1] + alpha.csite3[1] + alpha.csite4[1] + fake$alpha.pheno.sp + fake$alpha.force.sp *  fake$warm +
+  fake$alpha.chill.sp * fake$chill + fake$alpha.photo.sp * fake$photo +
   fake$alpha.site*fake$d2  + fake$alpha.site*fake$d3  + fake$alpha.site*fake$d4 +
   fake$alpha.fc * (fake$warm*fake$chill) + fake$alpha.cp * (fake$photo*fake$chill) + fake$alpha.fp * (fake$photo*fake$warm) +
   fake$alpha.fsite2 * (fake$d2 * fake$warm) + fake$alpha.fsite3 * (fake$d3 * fake$warm) + fake$alpha.fsite4 * (fake$d4 * fake$warm) +
@@ -196,6 +214,11 @@ summary(lm(bb_int_site ~  warm + photo + chill + d2 + d3 + d4 +
              warm * chill + chill * photo + photo*warm +
              d2 * warm + d3 * warm + d4 * warm + d2 * chill + d3 * chill + d4 * chill + d2 * photo + d3 * photo + d4 * photo
              , data = fake)) # 
+
+summary(lm(bb_int_site2 ~  warm + photo + chill + d2 + d3 + d4 +
+             warm * chill + chill * photo + photo*warm +
+             d2 * warm + d3 * warm + d4 * warm + d2 * chill + d3 * chill + d4 * chill + d2 * photo + d3 * photo + d4 * photo
+           , data = fake)) # 
 
 
 
@@ -217,9 +240,7 @@ alpha.site
                     site3 = fake$d3,
                     site4 = fake$d4)
   
-  mu_grand + alpha.site[1]
-  alpha.site
-  mdl.simpdum <- stan("stan/test_model.stan",
+  mdl.simpdum <- stan("stan/test_model_interactions_simple.stan",
                       data = datalist,
                       # include = FALSE, pars = c("ypred_new","y_hat"),
                       iter = 4000, chains= 4, warmup = 2000)
@@ -234,67 +255,69 @@ alpha.site
 #              mu_chill = -20,  mu_photo = -14, b_site = 10, sigma_a = 5,
 #              sigma_force = 1,sigma_chill = 1, sigma_photo =1,  sigma_y = 5, site2 = alpha.site[2], site3 = alpha.site[3], site4 = alpha.site[4])
   
-#  load("output/simBBDummy.Rda")
+  # load("output/simBBDummy_interactions.Rda")
+  # 
+  # 
   
+  summary(mdl.simpdum)$summary[c("mu_grand","mu_force", "mu_chill","mu_photo","b_site2","b_site3","b_site4","mu_inter_fc" ,"mu_inter_fp" ,"mu_inter_pc","sigma_a","sigma_force","sigma_chill","sigma_photo","sigma_y", "sigma_b_inter_fp" , "sigma_b_inter_pc" , "sigma_b_inter_fc", "sigma_b_inter_fp", "sigma_b_inter_pc"),"mean"]
   
-  
-  summary(mdl.simpdum)$summary[c("mu_grand","mu_force", "mu_chill","mu_photo","b_site2","b_site3","b_site4","sigma_a","sigma_force","sigma_chill","sigma_photo","sigma_y"),"mean"]
-  
+  mu_grand + alpha.site[1]
+  alpha.site
   
   # pairs(mdl.simpdum, pars = c("mu_grand", "mu_force", "mu_chill", "mu_photo","b_site2","b_site3","b_site4","sigma_a", "sigma_force", "sigma_chill", "sigma_force","sigma_y", "lp__")) 
   #dev.off()
   
-#   ext<-rstan::extract(mdl.simpdum)
-#   
-#   
-#   
-#   #Plot model posteriors and simulated values
-#   #-------------------------------------------------
-#   
-#   par(mfrow=c(1,1))
-#   
-#   plot(hist(ext$mu_grand))
-#   abline(v=mu_grand + alpha.site[1],col="red")
-#   
-#   plot(hist(ext$mu_force))
-#   abline(v=mu_force,col="red")
-#   
-#   plot(hist(ext$mu_chill))
-#   abline(v=mu_chill,col="red")
-#   
-#   plot(hist(ext$mu_photo))
-#   abline(v=mu_photo,col="red")
-#   
-#   plot(hist(ext$sigma_y))
-#   abline(v=sigma_y,col="red")
-#   
-#   plot(hist(ext$sigma_force))
-#   abline(v=sigma_force,col="red")
-#   
-#   plot(hist(ext$sigma_chill))
-#   abline(v=sigma_chill,col="red")
-#   
-#   plot(hist(ext$sigma_photo))
-#   abline(v=sigma_photo,col="red")
-#   
-#   plot(hist(ext$b_site2))
-#   abline(v=alpha.site[2],col="red")
-#   
-#   plot(hist(ext$b_site3))
-#   abline(v=alpha.site[3],col="red")
-#   
-#   plot(hist(ext$b_site4))
-#   abline(v=alpha.site[4],col="red")
-#   
-#   #plot posterior expected values againt real values
-#   load("output/simBBDummy.Rda")
-#   
-#   ext<-rstan::extract(mdl.simpdum)
-#   y <- fake$bb
-#   y.ext <- ext$ypred_new
-#   pdf("output/yvsypred.pdf", width =3, height = 3)
-#   ppc_dens_overlay(y, y.ext[1:50, ])
-#   dev.off()
+  # ext<-rstan::extract(mdl.simpdum)
+  # 
+  # 
+  # 
+  # #Plot model posteriors and simulated values
+  # #-------------------------------------------------
+  # 
+  # par(mfrow=c(1,1))
+  # 
+  # plot(hist(ext$mu_grand))
+  # abline(v=mu_grand + alpha.site[1],col="red")
+  # 
+  # plot(hist(ext$mu_force))
+  # abline(v=mu_force,col="red")
+  # 
+  # plot(hist(ext$mu_chill))
+  # abline(v=mu_chill,col="red")
+  # 
+  # plot(hist(ext$mu_photo))
+  # abline(v=mu_photo,col="red")
+  # 
+  # plot(hist(ext$sigma_y))
+  # abline(v=sigma_y,col="red")
+  # 
+  # plot(hist(ext$sigma_force))
+  # abline(v=sigma_force,col="red")
+  # 
+  # plot(hist(ext$sigma_chill))
+  # abline(v=sigma_chill,col="red")
+  # 
+  # plot(hist(ext$sigma_photo))
+  # abline(v=sigma_photo,col="red")
+  # 
+  # plot(hist(ext$b_site2))
+  # abline(v=alpha.site[2],col="red")
+  # 
+  # plot(hist(ext$b_site3))
+  # abline(v=alpha.site[3],col="red")
+  # 
+  # plot(hist(ext$b_site4))
+  # abline(v=alpha.site[4],col="red")
+  # 
+  # #plot posterior expected values againt real values
+  # load("output/simBBDummy.Rda")
+  # 
+  # ext<-rstan::extract(mdl.simpdum)
+  # y <- fake$bb
+  # y.ext <- ext$ypred_new
+  # pdf("output/yvsypred.pdf", width =3, height = 3)
+  # ppc_dens_overlay(y, y.ext[1:50, ])
+  # dev.off()
 #   #------------------------------------------------------
 #   
 #   

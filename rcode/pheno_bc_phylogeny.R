@@ -41,14 +41,12 @@ nind = 10
 
 param <- list(a_z = 4, # root value intercept
               lam_interceptsa = 0.4, # lambda intercept
-              sigma_interceptsa = 0.2, # rate of evolution intercept
-              b_zf = 0.6, # root value trait1 slope
-              lam_interceptsbf = 0.7, # lambda trait1
-              sigma_interceptsbf = 0.1, # rate of evolution trait1
-              sigma_y = 0.01 # overall sigma
+              sigma_interceptsa = 0.2 # rate of evolution intercept
 )
 # Set priors
 phypriors <- list(
+  mu_grand_prior_mu = 50,
+  mu_grand_prior_sigma = 5,
   a_z_prior_mu = 4, # true value
   a_z_prior_sigma = 1,
   lam_interceptsa_prior_alpha = 4, # 
@@ -67,8 +65,16 @@ phypriors <- list(
   mu_grand_prior_sigma = 5,
   mu_force_prior_mu = 0,
   mu_force_prior_sigma = 35,
+  mu_chill_prior_mu = 0,
+  mu_chill_prior_sigma = 35,
+  mu_photo_prior_mu = 0,
+  mu_photo_prior_sigma = 35,
   sigma_force_prior_mu = 1,
   sigma_force_prior_sigma = 5,
+  sigma_chill_prior_mu = 1,
+  sigma_chill_prior_sigma = 5,
+  sigma_photo_prior_mu = 1,
+  sigma_photo_prior_sigma = 5,
   sigma_a_prior_mu = 5,
   sigma_a_prior_sigma = 5)
 
@@ -79,8 +85,8 @@ spetree$tip.label <- paste("s", 1:nsp, sep="")
 scaledtree_intercept <- rescale(spetree, model = "lambda", param[["lam_interceptsa"]])         
 intercepts <- fastBM(scaledtree_intercept, a = param[["a_z"]], mu = 0, sig2 = param[["sigma_interceptsa"]] ^ 2)
 # Generate bf slope
-scaledtree_bf <- rescale(spetree, model = "lambda", param[["lam_interceptsbf"]])         
-slopes_bf <- fastBM(scaledtree_bf, a = param[["b_zf"]], mu = 0, sig2 = param[["sigma_interceptsbf"]] ^ 2)
+# scaledtree_bf <- rescale(spetree, model = "lambda", param[["lam_interceptsbf"]])         
+# slopes_bf <- fastBM(scaledtree_bf, a = param[["b_zf"]], mu = 0, sig2 = param[["sigma_interceptsbf"]] ^ 2)
 
 # <> <> <> <> <> <> <> <> <> <> <> <> <> <> <> <> <> <> <> <>
 #building the dataframe 
@@ -142,8 +148,8 @@ fake <- data.frame(cbind(site, sp))
 head(fake)
 
 # replicating the method for calculating the response variable used in traitors (which I understand the best)
-alpha.pheno.sp <- rnorm(nsp, 0, sigma_a) 
-fake$alpha.pheno.sp <- rep(alpha.pheno.sp, each =  nsite*nPhenCombo*nind)
+
+fake$alpha.pheno.sp <- rep(intercepts, each =  nsite*nPhenCombo*nind)
 
 alpha.force.sp <- rnorm(nsp, mu_force, sigma_force)
 fake$alpha.force.sp <- rep(alpha.force.sp, each =  nsite*nPhenCombo*nind)
@@ -171,29 +177,11 @@ fake$alpha.fp <- rep(alpha.fp, each =  nsite*nForce * nPhoto *nind)
 alpha.fsite2 <- rnorm(nsite, mu_fsite, sigma_fsite)
 fake$alpha.fsite2 <- rep(alpha.fsite2, each =  nPhenCombo*nind)
 
-# alpha.fsite3 <- rnorm(nsite, mu_fsite, sigma_fsite)
-# fake$alpha.fsite3 <- rep(alpha.fsite3, each =  nPhenCombo*nind)
-# 
-# alpha.fsite4 <- rnorm(nsite, mu_fsite, sigma_fsite)
-# fake$alpha.fsite4 <- rep(alpha.fsite4, each =  nPhenCombo*nind)
-
 alpha.csite2 <- rnorm(nsite, mu_csite, sigma_csite)
 fake$alpha.csite2 <- rep(alpha.csite2, each =  nPhenCombo*nind)
 
-# alpha.csite3 <- rnorm(nsite, mu_csite, sigma_csite)
-# fake$alpha.csite3 <- rep(alpha.csite3, each = nPhenCombo*nind)
-# 
-# alpha.csite4 <- rnorm(nsite, mu_csite, sigma_csite)
-# fake$alpha.csite4 <- rep(alpha.csite4, each =  nPhenCombo*nind)
-
 alpha.psite2 <- rnorm(nsite, mu_psite, sigma_psite)
 fake$alpha.psite2 <- rep(alpha.psite2, each =  nPhenCombo*nind)
-
-# alpha.psite3 <- rnorm(nsite, mu_psite, sigma_psite)
-# fake$alpha.psite3 <- rep(alpha.psite3, each =  nPhenCombo*nind)
-# 
-# alpha.psite4 <- rnorm(nsite, mu_psite, sigma_psite)
-# fake$alpha.psite4 <- rep(alpha.psite4, each =  nPhenCombo*nind)
 
 # add dummy/ site level effects:
 fake <- fake %>%
@@ -296,3 +284,4 @@ mdl.phylo <- stan("stan/test_model_phylogeny.stan",
                  chains = 4,
                  seed = 62921
 )
+save(mdl.phylo, file = "output/simPhylo.Rda")

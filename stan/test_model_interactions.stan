@@ -6,7 +6,7 @@
 
 // Oct 12, 2021: I was not properly incorporating site as a dummy variable. Statistical Rethinking has categorical variables included as both dummy variables and indexing. Here I try the indexing approach
 
-// Jan 7: trying to add interactions for both cues and for site
+// Jan 7: trying to add interactions for both cues and for site, maybe I do need it to be ncp...
 
 data {
   int<lower = 0 > N;
@@ -18,10 +18,9 @@ data {
   vector <lower=0, upper = 1>[N] force;
   vector <lower=0, upper = 1>[N] photo;
   vector[N] bb; //response var
-  // added upper and lower bounds to site dummy variable
-  // vector <lower=0, upper = 1>[N] site2;
-  // vector <lower=0, upper = 1>[N] site3;
-  // vector <lower=0, upper = 1>[N] site4;
+  vector <lower=0, upper = 1>[N] site2;
+  vector <lower=0, upper = 1>[N] site3;
+  vector <lower=0, upper = 1>[N] site4;
 }
 
 parameters {
@@ -44,6 +43,10 @@ parameters {
   vector[n_sp] b_cp;
   vector[n_sp] b_fp;
   
+  real b_site2;
+  real b_site3;
+  real b_site4;
+  
   real <lower=0> sigma_a;
   real <lower=0> sigma_force;
   real <lower=0> sigma_chill;
@@ -61,9 +64,12 @@ transformed parameters{
   real y_hat[N];
   for(i in 1:N){
 		y_hat[i] = mu_grand + a_sp[sp[i]] + 
-b_force[sp[i]] * force[i] + 
+    b_force[sp[i]] * force[i] + 
 		b_photo[sp[i]] * photo[i] + 
 		b_chill[sp[i]] * chill[i] + 
+	  b_site2 * site2[i] +
+	  b_site3 * site3[i] +
+	  b_site4 * site4[i] + 
 		b_fc[sp[i]] * (force[i] * chill[i]) +
 		b_cp[sp[i]] * (photo[i] * chill[i]) +
 		b_fp[sp[i]] * (force[i] * photo[i]) ;
@@ -73,25 +79,27 @@ b_force[sp[i]] * force[i] +
 model {
   // Priors. Make them flat
   mu_grand ~ normal(50, 5);
-	mu_force ~ normal(0, 35); 
-	mu_photo ~ normal(0, 35);
-	mu_chill ~ normal(0, 35);
-	// b_site2 ~ normal(0,5);
-	// b_site3 ~ normal(0,5);
-	// b_site4 ~ normal(0,5);
+	mu_force ~ normal(-10, 15); 
+	mu_photo ~ normal(-15, 15);
+	mu_chill ~ normal(-14, 15);
+	b_site2 ~ normal(0,5);
+	b_site3 ~ normal(0,5);
+	b_site4 ~ normal(0,5);
 
-	mu_fp ~ normal(0,35);
-	mu_fc ~ normal(0,35);
-	mu_cp ~ normal(0,35);
+	mu_fp ~ normal(3,10);
+	mu_cp ~ normal(2,10);
+	mu_fc ~ normal(1,10);
 
-	sigma_force ~ normal(1, 5); 
-	sigma_photo ~ normal(1, 5); 
-	sigma_chill ~ normal(1, 5);
+
+	sigma_force ~ normal(0, 5); 
+	sigma_photo ~ normal(0, 5); 
+	sigma_chill ~ normal(0, 5);
 	sigma_a ~ normal(0,5);
 	sigma_y ~ normal(0,5);
-	sigma_fp ~ normal(1, 10);
-	sigma_fc ~ normal(1, 10);
-	sigma_cp ~ normal(1, 10);
+	
+	sigma_fp ~ normal(0, 10);
+	sigma_fc ~ normal(0, 10);
+	sigma_cp ~ normal(0, 10);
 	
 	//b_photo_ncp ~normal(0,1);
 	b_force ~ normal(mu_force, sigma_force);

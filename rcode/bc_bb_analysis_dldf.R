@@ -3,6 +3,11 @@
 # Budburst experiment for bc species in 2019
 # Code largely based off of budchill code written by D. Flynn and Lizzie --> budchill_analysis.R
 
+#modified Feb 8, 2022 
+# summarizing what models have been run and why they were not good
+
+rm(list=ls()) 
+options(stringsAsFactors = FALSE)
 #library(scales)
 #library(arm)
 library(rstan)
@@ -16,8 +21,6 @@ library(plyr)
 
 options(mc.cores = parallel::detectCores())
 
-rm(list=ls()) 
-options(stringsAsFactors = FALSE)
 
 if(length(grep("deirdreloughnan", getwd()) > 0)) { 
   setwd("~/Documents/github/pheno_bc") 
@@ -44,8 +47,8 @@ dl.wchill$lab3 <- dl.wchill$lab2
 dl.wchill$lab2 <- paste(dl.wchill$species, dl.wchill$population, dl.wchill$rep, sep = "_")
 
 # mergeing the my data with DF
-pheno <- rbind.fill(dl.wchill, df.wchill)
-#pheno <- dl
+#pheno <- rbind.fill(dl.wchill, df.wchill)
+pheno <- dl.wchill
 
 pheno$first <- ifelse(pheno$tbb < pheno$latbb1,"t", ifelse (pheno$tbb == pheno$latbb1,"tl", "l"))
 
@@ -80,8 +83,8 @@ pheno$photo.n <- as.numeric(pheno$photo.n)
 pheno$site.n <- pheno$population
 pheno$site.n[pheno$site.n == "sm"] <- "0"
 pheno$site.n[pheno$site.n == "mp"] <- "1"
-pheno$site.n[pheno$site.n == "HF"] <- "2"
-pheno$site.n[pheno$site.n == "SH"] <- "3"
+# pheno$site.n[pheno$site.n == "HF"] <- "2"
+# pheno$site.n[pheno$site.n == "SH"] <- "3"
 pheno$site.n <- as.numeric(pheno$site.n)
 
 head(pheno)
@@ -110,8 +113,7 @@ pheno$chillport.z <- (pheno$Chill_portions-mean(pheno$Chill_portions,na.rm=TRUE)
 # Starting with the terminal buds:
 #pheno.term <- pheno[,c("tbb", "chill.n", "force.n", "photo.n", "site.n", "species", "lab2")]
 pheno.term <- pheno[,c("tbb", "force.n", "photo.n", "site.n", "species", "lab2","Utah_Model","Chill_portions","force.z", "photo.z", "chillport.z")]
-
-pheno.t <- pheno.term[complete.cases(pheno.term), ] # 1780 rows data 
+pheno.t <- pheno.term[complete.cases(pheno.term), ] # 1780 rows dl data 
 
 pheno.t$species.fact <- as.numeric(as.factor(pheno.t$species))
 sort(unique(pheno.t$species.fact)) # 30 species, 47 with chill0 47 
@@ -125,17 +127,17 @@ nrow(pheno.term) - nrow(pheno.t) # 588
 # m1 <- lmer(tbb ~ photo.n + force.n + Chill_portions  + (1|species), data = pheno.t)
 # summary(m1)
 
-datalist <- with(pheno.t,
-                    list( N=nrow(pheno.t),
-                          n_sp = length(unique(pheno.t$species.fact)),
-                          n_site = length(unique(pheno.t$site.n)),
-                          bb = tbb,
-                          sp = species.fact,
-                          chill = Chill_portions,
-                          photo = photo.n,
-                          force = force.n,
-                          site = site.n
-                    ))
+# datalist <- with(pheno.t,
+#                     list( N=nrow(pheno.t),
+#                           n_sp = length(unique(pheno.t$species.fact)),
+#                           n_site = length(unique(pheno.t$site.n)),
+#                           bb = tbb,
+#                           sp = species.fact,
+#                           chill = Chill_portions,
+#                           photo = photo.n,
+#                           force = force.n,
+#                           site = site.n
+#                     ))
 
 datalist.z <- with(pheno.t,
                  list( N=nrow(pheno.t),
@@ -149,8 +151,8 @@ datalist.z <- with(pheno.t,
                        site = site.n
                  ))
 str(datalist)
-unique(datalist$chill)
-unique(datalist$force)
+unique(datalist.z$chill)
+unique(datalist.z$force)
 # mdl <- stan("stan/bc.bb.inter.stan",
 #             data= datalist
 #             ,iter=2000, chains=4)
@@ -164,14 +166,8 @@ unique(datalist$force)
 mdl.t <- stan("stan/bc.bb.ncpphoto.ncpinter.newpriors.stan",
               data = datalist.z,
               iter = 4000, chains=4, control = list(adapt_delta = 0.99))
-save(mdl.t, file="output/tbb_ncp_termianlbud.chillportions.Rds")
+save(mdl.t, file="output/tbb_ncp_chillportions_zsc_dl.Rda")
 
-
-sumt <- summary(mdl.t)$summary
-sumt[grep("mu_", rownames(sumt)), ]
-sumt
-ssm <-  as.shinystan(mdl.t)
-launch_shinystan(ssm)
 
 ## The model no longer has any divergent transitions for the terminal buds!
 #pairs(sm.sum, pars=c("mu_a","mu_force","mu_chill","mu_photo_ncp")) # this gives a lot of warning messages and not the figure i was hoping/expected
@@ -181,9 +177,7 @@ launch_shinystan(ssm)
 
 #######################################################################
 
-#load("output/tbb_ncp_termianlbud.chillportion.Rds")
-#load("output/tbb_ncp_termianlbud.chillportion.newpriors.numeric.Rds")
-load("output/tbb_ncp_termianlbud.chillportion.newpriors.numericconditions.Rds")
+load("output/tbb_ncp_chillportions_zsc_dl.Rds")
 
 sumt <- summary(mdl.t)$summary
 mu <- sumt[grep("mu_", rownames(sumt)), ]
@@ -282,12 +276,12 @@ mcmc_areas(posterior,
 # save(sum50l, file="output/tbb_photo_winter_ncp_lateralbud.Rds")
 
 # now running the same model for the lateral buds
-pheno.1lat <- pheno[, c("latbb1", "chill.n", "force.n", "photo.n", "site.n", "species")]
-pheno.1l <- pheno.1lat[complete.cases(pheno.1lat), ]
-nrow(pheno.1lat) - nrow(pheno.1l)  
-
-pheno.1l$species.fact <- as.numeric(as.factor(pheno.1l$species))
-sort(unique(pheno.1l$species.fact))
+# pheno.1lat <- pheno[, c("latbb1", "chill.n", "force.n", "photo.n", "site.n", "species")]
+# pheno.1l <- pheno.1lat[complete.cases(pheno.1lat), ]
+# nrow(pheno.1lat) - nrow(pheno.1l)  
+# 
+# pheno.1l$species.fact <- as.numeric(as.factor(pheno.1l$species))
+# sort(unique(pheno.1l$species.fact))
 
 # datalist <- with(pheno.1l,
 #                  list( N = nrow(pheno.1l),
@@ -355,7 +349,7 @@ sort(unique(pheno.1l$species.fact))
 ######################################################
 # plotting code taken from buds-master Pheno Budburst analysis.R
 load("output/tbb_ncp_termianlbud_dldf.Rds")
-load("output/lat1_ncp_dldf.Rds")
+# load("output/lat1_ncp_dldf.Rds")
 
 col4fig <- c("mean","sd","25%","50%","75%","Rhat")
 col4table <- c("mean","sd","2.5%","50%","97.5%","Rhat")
@@ -373,7 +367,7 @@ mu_params <- c("mu_force",
                "mu_inter_sc")
 
 meanzt <- sumt[mu_params, col4fig]
-meanzl <- sum1l[mu_params, col4fig]
+# meanzl <- sum1l[mu_params, col4fig]
 
 rownames(meanzt) = c("Forcing",
                      "Photoperiod",
@@ -387,26 +381,26 @@ rownames(meanzt) = c("Forcing",
                      "Site x Chilling"
   )
 
-rownames(meanzl) = c("Forcing",
-                     "Photoperiod",
-                     "Chilling",
-                     "Site",
-                     "Forcing x Photoperiod",
-                     "Forcing x Chilling",
-                     "Photoperiod x Chilling",
-                     "Forcing x Site",
-                     "Photoperiod x Site",
-                     "Site x Chilling"
-  )
+# rownames(meanzl) = c("Forcing",
+  #                    "Photoperiod",
+  #                    "Chilling",
+  #                    "Site",
+  #                    "Forcing x Photoperiod",
+  #                    "Forcing x Chilling",
+  #                    "Photoperiod x Chilling",
+  #                    "Forcing x Site",
+  #                    "Photoperiod x Site",
+  #                    "Site x Chilling"
+  # )
 
 meanzt.table <- sumt[mu_params, col4table]
 row.names(meanzt.table) <- row.names(meanzt)
 head(meanzt.table)
-#write.table(meanzt.table , "output/term.mdl.esti.dldf.csv", sep = ",", row.names = FALSE)
+#write.table(meanzt.table , "output/termMdlEstiContChill.csv", sep = ",", row.names = FALSE)
 
-meanzl.table <- sum1l[mu_params, col4table]
-row.names(meanzl.table) <- row.names(meanzl)
-head(meanzl.table)
+# meanzl.table <- sum1l[mu_params, col4table]
+# row.names(meanzl.table) <- row.names(meanzl)
+# head(meanzl.table)
 #write.table(meanzl.table , "output/lat.mdl.esti.csv", sep = ",", row.names = FALSE)
 
 # Begin by checking to see what cue is most important and whether there are strong correlations between cues:
@@ -414,24 +408,24 @@ df.mean.t <- data.frame(bb.force = sumt[grep("b_force", rownames(sumt)), 1],
                           bb.photo = sumt[grep("b_photo_ncp", rownames(sumt)), 1],
                           bb.chill = sumt[grep("b_chill", rownames(sumt)), 1])
 
-df.mean.l <- data.frame(lat.force = sum1l[grep("b_force", rownames(sumt)), 1],
-                        lat.photo = sum1l[grep("b_photo_ncp", rownames(sumt)), 1],
-                        lat.chill = sum1l[grep("b_chill", rownames(sumt)), 1])
+# df.mean.l <- data.frame(lat.force = sum1l[grep("b_force", rownames(sumt)), 1],
+#                         lat.photo = sum1l[grep("b_photo_ncp", rownames(sumt)), 1],
+#                         lat.chill = sum1l[grep("b_chill", rownames(sumt)), 1])
 
 df.mean.t[which(df.mean.t$bb.force > df.mean.t$bb.photo), ] # species 11- rho alb
-df.mean.l[which(df.mean.l$lat.force > df.mean.l$lat.photo), ] #none
+# df.mean.l[which(df.mean.l$lat.force > df.mean.l$lat.photo), ] #none
 df.mean.t[which(df.mean.t$bb.chill > df.mean.t$bb.force), ] # 14
 # 3, 5,6,8,9,10,12,13,15,17,18,20
-df.mean.l[which(df.mean.l$lat.chill > df.mean.l$lat.force), ] # 16
+# df.mean.l[which(df.mean.l$lat.chill > df.mean.l$lat.force), ] # 16
 #1,2,5,6,7,8,10,11,12,13,15,16,17,18,19,20
 
 # all correlated
 summary(lm(bb.force~bb.photo, data=df.mean.t))
 summary(lm(bb.force~bb.chill, data=df.mean.t))
 summary(lm(bb.force~bb.photo, data=df.mean.t))
-summary(lm(lat.force~lat.photo, data=df.mean.l))
-summary(lm(lat.force~lat.chill, data=df.mean.l))
-summary(lm(lat.chill~lat.photo, data=df.mean.l))
+# summary(lm(lat.force~lat.photo, data=df.mean.l))
+# summary(lm(lat.force~lat.chill, data=df.mean.l))
+# summary(lm(lat.chill~lat.photo, data=df.mean.l))
 
 pdf(file.path( "figures/changes.pheno.pdf"), width = 7, height = 8)
 par(mfrow = c(2,1), mar = c(5, 10, 2, 1))
@@ -465,28 +459,28 @@ legend(-12, 16.5, legend = "advance", bty = "n", text.font = 1, cex = 0.75)
 legend(-2, 16.5, legend = "0", bty = "n", text.font = 1, cex = 0.75)
 par(xpd = FALSE)
 
-par(mar = c(5, 10, 2, 1))
-# Lower panel: leaf-out
-plot(seq(-22, 
-         12, 
-         length.out = nrow(meanzl)), 
-     1:nrow(meanzl),
-     type = "n",
-     xlab = "Model estimate change in day of phenological event",
-     ylab = "",
-     yaxt = "n")
+# par(mar = c(5, 10, 2, 1))
+# # Lower panel: leaf-out
+# plot(seq(-22, 
+#          12, 
+#          length.out = nrow(meanzl)), 
+#      1:nrow(meanzl),
+#      type = "n",
+#      xlab = "Model estimate change in day of phenological event",
+#      ylab = "",
+#      yaxt = "n")
 
 #legend(x = -24, y = 6, bty="n", legend = "b. Leafout", text.font = 2)
 #rasterImage(lopng, -20, 1, -14, 4)
 
-axis(2, at = nrow(meanzl):1, labels = rownames(meanzl), las = 1, cex.axis = 0.8)
-points(meanzl[,'mean'],
-       nrow(meanzl):1,
-       pch = 16,
-       col = "midnightblue")
-arrows(meanzl[,"75%"], nrow(meanzl):1, meanzl[,"25%"], nrow(meanzl):1,
-       len = 0, col = "black")
-abline(v = 0, lty = 3)
+# axis(2, at = nrow(meanzl):1, labels = rownames(meanzl), las = 1, cex.axis = 0.8)
+# points(meanzl[,'mean'],
+#        nrow(meanzl):1,
+#        pch = 16,
+#        col = "midnightblue")
+# arrows(meanzl[,"75%"], nrow(meanzl):1, meanzl[,"25%"], nrow(meanzl):1,
+#        len = 0, col = "black")
+# abline(v = 0, lty = 3)
 
 # add advance/delay arrows
 # par(xpd=NA)

@@ -139,7 +139,7 @@ fake <- fake %>%
 #general variance
 
 fake$gen.var <- rnorm(nrow(fake), 0, sigma_y) 
-
+hist(rnorm(nrow(fake), 0, sigma_y))
 #Simulate continuous cue values
 
 fake$photo <- rep(c(0, 1))
@@ -158,11 +158,18 @@ fake$bb_int <-  mu_grand + alpha.site[1] + fake$alpha.pheno.sp + fake$alpha.forc
   fake$alpha.site*fake$d2  + fake$alpha.site*fake$d3  + fake$alpha.site*fake$d4 + fake$alpha.fc * (fake$warm*fake$chill) + fake$alpha.cp * (fake$photo*fake$chill) + fake$alpha.fp * (fake$photo*fake$warm) +
   fake$gen.var
 
+fake$bb_int_site <-  mu_grand + alpha.site[1] + alpha.psite[1] + alpha.csite[1] + alpha.fsite[1] + fake$alpha.pheno.sp + fake$alpha.force.sp *  fake$warm + 
+  fake$alpha.chill.sp * fake$chill + fake$alpha.photo.sp * fake$photo + 
+  fake$alpha.site*fake$d2  + fake$alpha.site*fake$d3  + fake$alpha.site*fake$d4 + fake$alpha.fc * (fake$warm*fake$chill) + fake$alpha.cp * (fake$photo*fake$chill) + fake$alpha.fp * (fake$photo*fake$warm) + fake$alpha.fsite * (fake$d2*fake$warm) + fake$alpha.fsite * (fake$d3*fake$warm) + fake$alpha.fsite * (fake$d4*fake$warm) + fake$alpha.csite * (fake$d2*fake$chill) + fake$alpha.csite * (fake$d3*fake$chill) + fake$alpha.csite * (fake$d4*fake$chill) + fake$alpha.psite * (fake$d2*fake$photo) + fake$alpha.psite * (fake$d3*fake$photo) + fake$alpha.psite * (fake$d4*fake$photo) + fake$gen.var
+# estimates don't look too bad, worse for photo but might need to be ncp?
+
 # check if works with lmer or brms
 
 summary(lm(bb ~  warm + photo + chill + d2 + d3 + d4, data = fake)) # 
 
 summary(lm(bb_int ~  warm + photo + chill + d2 + d3 + d4 + warm * chill + chill * photo + photo * warm, data = fake)) # 
+
+summary(lm(bb_int_site ~  warm + photo + chill + d2 + d3 + d4 + warm * chill + chill * photo + photo * warm + d2 * warm + d2 * chill + d2 * photo + d3 * warm + d3 * chill + d3 * photo + d4 * warm + d4 * chill + d4 * photo , data = fake))
 
 mu_grand + alpha.site[1]
 alpha.site
@@ -172,7 +179,7 @@ alpha.site
 datalist <- list( N=nrow(fake),
                     n_sp = length(unique(fake$sp)),
                     n_site = length(unique(fake$site)),
-                    bb = fake$bb,
+                    bb = fake$bb_int,
                     sp = fake$sp,
                     chill = fake$chill,
                     photo = fake$photo,
@@ -182,36 +189,100 @@ datalist <- list( N=nrow(fake),
                     site3 = fake$d3,
                     site4 = fake$d4)
   
-mdl.dum <- stan("stan/test_model_interactions.stan",
+mdl.full <- stan("stan/test_model_interactions_truepriors.stan",
                    data = datalist,
                    include = FALSE, pars = c("ypred_new","y_hat"),
                    iter = 4000, chains= 4, warmup = 2000)
-save(mdl.dum, file = "output/BBDummy_int.Rda")
-  
+save(mdl.full, file = "output/BBDummy_int.Rda")
+
+# fix: issues with sigma_y, sigma_fc, sigma_cp
+
 # mdl.dumint <- stan("stan/test_model_interaction_ncp.stan",
 #                    data = datalist,
 #                    include = FALSE, pars = c("ypred_new","y_hat"),
 #                    iter = 4000, chains= 4, warmup = 2000)
 # save(mdl.dumint, file = "output/BBDummy_ncpint_test.Rda")
 ###################################################################
-load("output/BBDummy_int_test.Rda")
-# # 
-# ssm <-  as.shinystan(mdl.dum)
+#  load("output/BBDummy_int.Rda")
+# # # # 
+# ssm <-  as.shinystan(mdl.full)
 # launch_shinystan(ssm)
-# #
-# get_variables(mdl.dum)
-# summary(mdl.dum)$summary[c("mu_grand","mu_force", "mu_chill","mu_photo","b_site2","b_site3","b_site4","sigma_a","sigma_force","sigma_chill","sigma_photo","sigma_y"),"mean"]
-#    
-# load("output/BBDummy_int_test.Rda")
-#    
-summary(mdl.dumint)$summary[c("mu_grand","mu_force", "mu_chill","mu_photo","b_site2","b_site3","b_site4","mu_fc" ,"mu_fp" ,"mu_cp","sigma_a","sigma_force","sigma_chill","sigma_photo","sigma_y", "sigma_fp" , "sigma_cp" , "sigma_fc", "sigma_fp", "sigma_cp"),"mean"]
-
- 
-# summary(mdl.dum)$summary[c("mu_grand","mu_a","mu_force", "mu_chill","mu_photo","b_site2","b_site3","b_site4","mu_b_inter_fp" ,"mu_b_inter_pc", "mu_b_inter_fc","sigma_a","sigma_force","sigma_chill","sigma_photo","sigma_y","sigma_b_inter_fc","sigma_b_inter_pc","sigma_b_inter_fp"),"mean"]
-
-# mu_grand + alpha.site[1]
-# alpha.site
-  
-  # pairs(mdl.simpdum, pars = c("mu_grand", "mu_force", "mu_chill", "mu_photo","b_site2","b_site3","b_site4","sigma_a", "sigma_force", "sigma_chill", "sigma_force","sigma_y", "lp__")) 
-  #dev.off()
-  
+# # sigma_fp looks really bad, of all the sigma it is the one that is most squished up to one side
+# 
+summary(mdl.full)$summary[c("mu_grand","mu_force", "mu_chill","mu_photo","b_site2","b_site3","b_site4","mu_fc" ,"mu_fp" ,"mu_cp","sigma_a","sigma_force","sigma_chill","sigma_photo","sigma_y", "sigma_fp" , "sigma_cp" , "sigma_fc"),"mean"]
+# 
+# pairs(mdl.full, pars = c("sigma_a", "sigma_force", "sigma_chill", "sigma_photo","sigma_y","sigma_fp" , "sigma_cp" , "sigma_fc", "sigma_fp", "sigma_cp", "lp__")) 
+# #dev.off()
+# 
+# ext<-rstan::extract(mdl.full)
+# 
+# 
+# 
+# #Plot model posteriors and simulated values
+# #-------------------------------------------------
+# 
+# par(mfrow=c(1,1))
+# 
+# plot(hist(ext$mu_grand))
+# abline(v=mu_grand + alpha.site[1],col="red")
+# 
+# plot(hist(ext$mu_force))
+# abline(v=mu_force,col="red")
+# 
+# plot(hist(ext$mu_chill))
+# abline(v=mu_chill,col="red")
+# 
+# plot(hist(ext$mu_photo))
+# abline(v=mu_photo,col="red")
+# 
+# plot(hist(ext$mu_fc))
+# abline(v = mu_fc, col = "red")
+# 
+# plot(hist(ext$mu_cp))
+# abline(v = mu_cp, col = "red")
+# 
+# plot(hist(ext$mu_fp))
+# abline(v = mu_fp, col = "red")
+# 
+# plot(hist(ext$sigma_y), xlim = c(0,6))
+# abline(v = sigma_y,col="red")
+# 
+# plot(hist(ext$sigma_force))
+# abline(v = sigma_force,col="red")
+# 
+# plot(hist(ext$sigma_chill))
+# abline(v = sigma_chill,col="red")
+# 
+# plot(hist(ext$sigma_photo))
+# abline(v = sigma_photo,col="red")
+# 
+# plot(hist(ext$b_site2))
+# abline(v = alpha.site[2],col="red")
+# 
+# plot(hist(ext$b_site3))
+# abline(v = alpha.site[3],col="red")
+# 
+# plot(hist(ext$b_site4))
+# abline(v = alpha.site[4],col="red")
+# 
+# plot(hist(ext$sigma_fp))
+# abline(v = sigma_fp,col="red")
+# 
+# plot(hist(ext$sigma_fc))
+# abline(v = sigma_fc,col="red")
+# 
+# plot(hist(ext$sigma_cp))
+# abline(v = sigma_cp,col="red")
+# 
+# #plot posterior expected values againt real values
+# 
+# ext<-rstan::extract(mdl.simpdum)
+# y <- fake$bb
+# y.ext <- ext$ypred_new
+# pdf("output/yvsypred.pdf", width =3, height = 3)
+# ppc_dens_overlay(y, y.ext[1:50, ])
+# dev.off()
+# #------------------------------------------------------
+# 
+# 
+# 

@@ -97,9 +97,9 @@ model {
 	sigma_a ~ normal(0,5);
 	sigma_y ~ normal(0,5);
 	
-	sigma_fp ~ normal(0, 10);
-	sigma_fc ~ normal(0, 10);
-	sigma_cp ~ normal(0, 10);
+	sigma_fp ~ normal(0, 1);
+	sigma_fc ~ normal(0, 1);
+	sigma_cp ~ normal(0, 1);
 	
 	//b_photo_ncp ~normal(0,1);
 	b_force ~ normal(mu_force, sigma_force);

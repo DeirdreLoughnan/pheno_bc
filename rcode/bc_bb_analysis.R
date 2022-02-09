@@ -3,6 +3,11 @@
 # Budburst experiment for bc species in 2019
 # Code largely based off of budchill code written by D. Flynn and Lizzie --> budchill_analysis.R
 
+# modified by DL on Feb 8, 2022, summarizing the results from various ran models
+# 1. Running my data only, site dummy, chill dummy, with interactions
+rm(list=ls()) 
+options(stringsAsFactors = FALSE)
+
 library(scales)
 library(arm)
 library(rstan)
@@ -10,14 +15,11 @@ library(shinystan)
 library(reshape2)
 library(bayesplot)
 library(ggplot2)
-library(RColorBrewer)
+require(tidybayes)
 library(dplyr)
 library(plyr)
 
 options(mc.cores = parallel::detectCores())
-
-rm(list=ls()) 
-options(stringsAsFactors = FALSE)
 
 if(length(grep("deirdreloughnan", getwd()) > 0)) { 
   setwd("~/Documents/github/pheno_bc") 
@@ -39,8 +41,8 @@ dl$lab3 <- dl$lab2
 dl$lab2 <- paste(dl$species, dl$population, dl$rep, sep = "_")
 
 # mergeing the my data with DF
-pheno <- rbind.fill(dl, df)
-#pheno <- dl
+#pheno <- rbind.fill(dl, df)
+pheno <- dl
 head(pheno)
 
 # combined the data has 3197 unique samples
@@ -68,8 +70,8 @@ pheno$photo.n <- as.numeric(pheno$photo.n)
 pheno$site.n <- pheno$population
 pheno$site.n[pheno$site.n == "sm"] <- "0"
 pheno$site.n[pheno$site.n == "mp"] <- "1"
-pheno$site.n[pheno$site.n == "HF"] <- "2"
-pheno$site.n[pheno$site.n == "SH"] <- "3"
+# pheno$site.n[pheno$site.n == "HF"] <- "2"
+# pheno$site.n[pheno$site.n == "SH"] <- "3"
 pheno$site.n <- as.numeric(pheno$site.n)
 
 head(pheno)
@@ -105,6 +107,13 @@ mdl.t <- stan("stan/bc.bb.ncpphoto.ncpinter.stan",
           data = datalist,
           iter = 4000, chains=4, control = list(adapt_delta = 0.99))
 
+
+save(mdl.t, file="output/tbb_ncp_dl.Rda")
+#load("output/tbb_ncp_dl.Rda")
+
+#####################################################################
+#####################################################################
+load("output/tbb_ncp_dl.Rda")
 sumt <- summary(mdl.t)$summary
 sumt[grep("mu_", rownames(sumt)), ]
 sumt
@@ -112,17 +121,19 @@ ssm <-  as.shinystan(mdl.t)
 launch_shinystan(ssm)
 
 ## The model no longer has any divergent transitions for the terminal buds!
-#pairs(sm.sum, pars=c("mu_a","mu_force","mu_chill","mu_photo_ncp")) # this gives a lot of warning messages and not the figure i was hoping/expected
+ pairs(mdl.t, pars=c("mu_force",
+                     "mu_photo",
+                     "mu_chill",
+                     "mu_site",
+                     "mu_inter_fp",
+                     "mu_inter_fc",
+                     "mu_inter_pc",
+                     "mu_inter_fs",
+                     "mu_inter_ps",
+                     "mu_inter_sc")) # this gives a lot of warning messages and not the figure i was hoping/expected
 
-range(sumt[, "n_eff"])
-range(sumt[, "Rhat"])
-
-save(sumt, file="output/tbb_ncp_termianlbud.Rds")
-#load("output/tbb_ncp_termianlbud.Rda")
-
-#####################################################################
-#####################################################################
-
+range(sumt[, "n_eff"]) #1326.783 13829.827
+range(sumt[, "Rhat"]) #0.9995324 1.0040581
 # # now running the same model for the lateral buds
 # pheno.50lat <- pheno[, c("latbb50", "chill.n", "force.n", "photo.n", "site.n", "species")]
 # pheno.50l <- pheno.50lat[complete.cases(pheno.50lat), ]
@@ -201,7 +212,7 @@ launch_shinystan(ssm)
 ## The model no longer has any divergent transitions for the terminal buds!
 #pairs(sm.sum, pars=c("mu_a","mu_force","mu_chill","mu_photo_ncp")) # this gives a lot of warning messages and not the figure i was hoping/expected
 
-save(sum1l, file="output/tbb_photo_winter_ncp_lateralbud.Rds")
+save(mdl.1l, file="output/lat_ncp_dl.Rds")
 #####################################################################
 # PPC 
 
@@ -219,7 +230,7 @@ ggplot() +
 #plot(mdl, pars="a", ci_level=0.5, outer_level=0.5,col="blue")
 # PPC based on the vingette from https://cran.r-project.org/web/packages/bayesplot/vignettes/graphical-ppcs.html 
 
-ext <- rstan::extract(mdl)
+ext <- rstan::extract(mdl.t)
 
 # not the most normal 
 hist(ext$a)
@@ -282,7 +293,7 @@ rownames(meanzl) = c("Forcing",
 meanzt.table <- sumt[mu_params, col4table]
 row.names(meanzt.table) <- row.names(meanzt)
 head(meanzt.table)
-write.table(meanzt.table , "output/term.mdl.esti.csv", sep = ",", row.names = FALSE)
+write.table(meanzt.table , "output/termMdlEstiDL.csv", sep = ",", row.names = FALSE)
 
 meanzl.table <- suml[mu_params, col4table]
 row.names(meanzl.table) <- row.names(meanzl)

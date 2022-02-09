@@ -1,0 +1,73 @@
+\documentclass{article}
+
+\begin{document}
+\SweaveOpts{concordance=TRUE}
+
+Models I have run:
+
+\section{Western data: site dummy, chill dummy, with interactions}
+
+R file: bc bb analysis.R
+Stan mdl bc.bb.ncpphoto.ncpinter.stan
+Output: tbbncp dl.Rda
+Table: termMdlEstiDL.csv
+Note that the lateral analysis is for the first bud, similar to what the df data is
+
+There were 2 divergent transitions after warmup. But neff are good (1326.783 - 13829.827) and so are Rhat (0.9995324-1.0040581)
+
+\begin{table}[ht]
+\centering
+\caption{Model output for model with site as dummy (0/1), chill as dummy (1/0), and interactions} 
+\begin{tabular}{rrrrrr}
+  \hline
+mean & sd & X2.5. & X50. & X97.5. & Rhat \\ 
+  \hline
+-14.05 & 1.19 & -16.41 & -14.05 & -11.66 & 1.00 \\ 
+  -3.11 & 1.04 & -5.17 & -3.10 & -1.08 & 1.00 \\ 
+  -14.56 & 1.43 & -17.38 & -14.55 & -11.79 & 1.00 \\ 
+  3.28 & 2.10 & -0.87 & 3.28 & 7.44 & 1.00 \\ 
+  0.89 & 1.06 & -1.22 & 0.90 & 2.94 & 1.00 \\ 
+  6.58 & 1.05 & 4.48 & 6.58 & 8.60 & 1.00 \\ 
+  -0.36 & 1.02 & -2.32 & -0.37 & 1.66 & 1.00 \\ 
+  -2.82 & 1.10 & -4.99 & -2.82 & -0.67 & 1.00 \\ 
+  1.29 & 1.23 & -1.08 & 1.27 & 3.75 & 1.00 \\ 
+  -0.04 & 1.60 & -3.25 & -0.03 & 3.12 & 1.00 \\ 
+  \end{tabular}
+\end{table}
+
+\begin{figure}[h]
+    \centering
+ \includegraphics[width=\textwidth]{figures/mdlEstiDL_ypred.png} 
+    \caption{Model fit of y vs ypred}
+    \label{fig1}
+\end{figure}
+
+\begin{figure}[h]
+    \centering
+ \includegraphics[width=\textwidth]{figures/mdlEstiDL_pairsplot.png} 
+    \caption{Model pairs plot}
+    \label{fig1}
+\end{figure}
+
+\section{Western data: site dummy, chill continuous, with interactions}
+
+R file: bc bb analysis dldf.R\\
+Stan mdl: bc.bb.ncpphoto.ncpinter.newpriors.stan\\
+Output: tbb ncp chillportions zsc dl.Rda \\
+
+For this model, the cues were transformed and z scored, ie hf changed to 20, lf changed to 15 and these values (not the 0 or 1) were z scored
+
+\section{Western data: site dummy (0/1), chill continuous but with force.n and photo.n and chill standardized by 2sd, with interactions}
+
+For this model the site effects were left as 0/1, but the three cues were standardized using the methods from Gelman's paper.\\
+
+\section{Western data: site dummy, chill continuous, no interactions}
+
+\section{Western data: site as a random effect, chilling as a dummy variable}
+
+\section{All data: site as a random effect, chilling as a dummy variable, variables standardized}
+
+
+\section{All data: site dummy, chill continuous, interactions}
+
+\end{document}

@@ -177,7 +177,7 @@ save(mdl.t, file="output/tbb_ncp_chillportions_zsc_dl.Rda")
 
 #######################################################################
 
-load("output/tbb_ncp_chillportions_zsc_dl.Rds")
+load("output/tbb_ncp_chillportions_zsc_dl.Rda")
 
 sumt <- summary(mdl.t)$summary
 mu <- sumt[grep("mu_", rownames(sumt)), ]
@@ -185,6 +185,8 @@ mu <- sumt[grep("mu_", rownames(sumt)), ]
 ssm <-  as.shinystan(mdl.t)
 launch_shinystan(ssm)
 
+range(sumt[, "n_eff"])
+range(sumt[, "Rhat"])
 str(post)
 # June 9: poor mixing of the chains for the muForce, and mu_site, no divergent transitions, but low ESS
 post <- rstan::extract(mdl.t)
@@ -196,6 +198,10 @@ ppc_dens_overlay(y, yrep[1:50, ])
 #
 stan_hist(mdl.t)
 
+pairs(mdl.t, pars = c("mu_a","mu_force","mu_chill","mu_photo", "mu_site","mu_inter_fp", "mu_inter_fc",
+                      "mu_inter_fs",
+                      "mu_inter_ps",
+                      "mu_inter_sc"))
 ########################################################
 library("bayesplot")
 library("ggplot2")
@@ -396,7 +402,7 @@ rownames(meanzt) = c("Forcing",
 meanzt.table <- sumt[mu_params, col4table]
 row.names(meanzt.table) <- row.names(meanzt)
 head(meanzt.table)
-#write.table(meanzt.table , "output/termMdlEstiContChill.csv", sep = ",", row.names = FALSE)
+write.table(meanzt.table , "output/termMdlEstiContChill.csv", sep = ",", row.names = T)
 
 # meanzl.table <- sum1l[mu_params, col4table]
 # row.names(meanzl.table) <- row.names(meanzl)

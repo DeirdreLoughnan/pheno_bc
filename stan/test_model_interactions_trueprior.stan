@@ -86,27 +86,27 @@ transformed parameters{
 model {
   // Priors. Make them flat
   mu_grand ~ normal(30, 20);
-	mu_force ~ normal(-20, 15); 
-	mu_photo ~ normal(-20, 15);
-	mu_chill ~ normal(-20, 15);
+	mu_force ~ normal(-10, 15); 
+	mu_photo ~ normal(-10, 15);
+	mu_chill ~ normal(-10, 15);
 	b_site2 ~ normal(0,5);
 	b_site3 ~ normal(0,5);
 	b_site4 ~ normal(0,5);
 
-	mu_fp ~ normal(5,10);
-	mu_cp ~ normal(5,10);
-	mu_fc ~ normal(5,10);
+	mu_fp ~ normal(5,2);
+	mu_cp ~ normal(5,2);
+	mu_fc ~ normal(5,2);
 
 
-	sigma_force ~ normal(0, 5); 
-	sigma_photo ~ normal(0, 5); 
-	sigma_chill ~ normal(0, 5);
-	sigma_a ~ normal(5,5);
-	sigma_y ~ normal(5,5);
+	sigma_force ~ normal(0, 1); 
+	sigma_photo ~ normal(0, 1); 
+	sigma_chill ~ normal(0, 1);
+	sigma_a ~ normal(0,5);
+	sigma_y ~ normal(0,5);
 	
-	sigma_fp ~ normal(0, 2);
-	sigma_fc ~ normal(0, 2);
-	sigma_cp ~ normal(0, 2);
+	sigma_fp ~ normal(0, 1);
+	sigma_fc ~ normal(0, 1);
+	sigma_cp ~ normal(0, 1);
 	
 	//b_photo_ncp ~normal(0,1);
 	b_force ~ normal(mu_force, sigma_force);

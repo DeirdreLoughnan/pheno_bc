@@ -61,16 +61,16 @@ sigma_site = 10
 sigma_force = 1
 sigma_chill = 1
 sigma_photo = 1
-sigma_y = 3
+sigma_y = 4
 
 #interactions:
 mu_fp <- 3
 mu_cp <- 2
 mu_fc <- 1
 
-sigma_fp <- 0.5
-sigma_cp <- 0.5
-sigma_fc <- 0.5
+sigma_fp <- 0.2
+sigma_cp <- 0.2
+sigma_fc <- 0.2
 
 mu_fsite <- 1
 mu_csite <- 5
@@ -139,7 +139,7 @@ fake <- fake %>%
 #general variance
 
 fake$gen.var <- rnorm(nrow(fake), 0, sigma_y) 
-hist(rnorm(nrow(fake), 0, sigma_y))
+#hist(rnorm(nrow(fake), 0, sigma_y))
 #Simulate continuous cue values
 
 fake$photo <- rep(c(0, 1))
@@ -189,11 +189,11 @@ datalist <- list( N=nrow(fake),
                     site3 = fake$d3,
                     site4 = fake$d4)
   
-mdl.full <- stan("stan/test_model_interactions_truepriors.stan",
+mdl.full <- stan("stan/test_model_interactions_trueprior_tightprior.stan",
                    data = datalist,
                    include = FALSE, pars = c("ypred_new","y_hat"),
                    iter = 4000, chains= 4, warmup = 2000)
-save(mdl.full, file = "output/BBDummy_int.Rda")
+save(mdl.full, file = "output/BBDummy_int_tightprior.Rda")
 
 # fix: issues with sigma_y, sigma_fc, sigma_cp
 
@@ -204,23 +204,26 @@ save(mdl.full, file = "output/BBDummy_int.Rda")
 # save(mdl.dumint, file = "output/BBDummy_ncpint_test.Rda")
 ###################################################################
 #  load("output/BBDummy_int.Rda")
-# # # # 
+# # # # #
 # ssm <-  as.shinystan(mdl.full)
 # launch_shinystan(ssm)
-# # sigma_fp looks really bad, of all the sigma it is the one that is most squished up to one side
+# # # sigma_fp looks really bad, of all the sigma it is the one that is most squished up to one side
 # 
+# get_variables(mdl.full)
 summary(mdl.full)$summary[c("mu_grand","mu_force", "mu_chill","mu_photo","b_site2","b_site3","b_site4","mu_fc" ,"mu_fp" ,"mu_cp","sigma_a","sigma_force","sigma_chill","sigma_photo","sigma_y", "sigma_fp" , "sigma_cp" , "sigma_fc"),"mean"]
-# 
-# pairs(mdl.full, pars = c("sigma_a", "sigma_force", "sigma_chill", "sigma_photo","sigma_y","sigma_fp" , "sigma_cp" , "sigma_fc", "sigma_fp", "sigma_cp", "lp__")) 
+
+# summary(mdl.full)$summary[c("mu_grand","mu_force", "mu_chill","mu_photo","b_site2","b_site3","b_site4","mu_inter_fc" ,"mu_inter_fp" ,"mu_inter_pc","sigma_a","sigma_force","sigma_chill","sigma_photo","sigma_y", "sigma_b_inter_fp" , "sigma_b_inter_pc" , "sigma_b_inter_fc"),"mean"]
+#
+# pairs(mdl.full, pars = c("sigma_a", "sigma_force", "sigma_chill", "sigma_photo","sigma_y","sigma_fp" , "sigma_cp" , "sigma_fc", "sigma_fp", "sigma_cp", "lp__"))
 # #dev.off()
-# 
-# ext<-rstan::extract(mdl.full)
-# 
-# 
-# 
-# #Plot model posteriors and simulated values
-# #-------------------------------------------------
-# 
+# # 
+# #ext<-rstan::extract(mdl.full)
+# # 
+# # 
+# # 
+# # #Plot model posteriors and simulated values
+# # #-------------------------------------------------
+# # 
 # par(mfrow=c(1,1))
 # 
 # plot(hist(ext$mu_grand))
@@ -273,10 +276,10 @@ summary(mdl.full)$summary[c("mu_grand","mu_force", "mu_chill","mu_photo","b_site
 # 
 # plot(hist(ext$sigma_cp))
 # abline(v = sigma_cp,col="red")
-# 
-# #plot posterior expected values againt real values
-# 
-# ext<-rstan::extract(mdl.simpdum)
+
+#plot posterior expected values againt real values
+
+# ext<-rstan::extract(mdl.full)
 # y <- fake$bb
 # y.ext <- ext$ypred_new
 # pdf("output/yvsypred.pdf", width =3, height = 3)

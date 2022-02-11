@@ -19,11 +19,11 @@
 
 Plant species are experiencing novel selective pressures in light of climate change, with one of the most apparent responses being their change in phenologies. 
 \begin{itemize}
-\item Studies have observed advances in the timing of species flowering by XX days (Menzel et al. 2006) 
+\item Studies have observed advances in the timing of species phenologies (Menzel et al. 2006) 
 \item Changes seem to be greater in the spring than the fall
 \item It is important to understand and be able to predict these changes, as advances in spring phenology impacts community structures, the length of the growing season, and ultimately global climate cycles (Richardson et al. 2009).
 
-\item Not all species are advancing some are experiencing delays (Wolkovich et al. 2014) -- while this variation can rereflects the response to varying selective pressures, biotic interaction, recent research has largely focused on the abiotic drivers of plant phenologies and interspecific variation in cue requirements. 
+\item Not all species are advancing some are experiencing delays -- while this variation can reflects the response to varying selective pressures, biotic interaction, recent research has largely focused on the abiotic drivers of plant phenologies and interspecific variation in cue requirements. 
 \item In the case of woody plant species, three cues have been shown to drive the timing of budburst and leafout in temperate systems. 
 	\begin{enumerate}
 	\item Chilling
@@ -40,10 +40,6 @@ Differences between shrubs and trees:
 \end{enumerate}
 
 Differences between the timing of lateral and terminal budburst:
-\begin{enumerate}
-\item Donnelly's work: shrubs in the understory are earlier
-\end{enumerate}
-
 \end{itemize}
 
 
@@ -52,19 +48,54 @@ To my knowledge, this study will be the first community wide study of woody plan
 \begin{enumerate}
 \item Do species sensitivities to chilling, forcing, and photoperiod differ between species and how?
 \item Are the phenologies of some species driven by a single cue or do some require a combination of cues?
-\item How do cues differ in species across North America? 
-\item Do we see differences in congener species? 
+\item How do cues differ in species across North America? Do forest communities in British Columbia differ in their cues compared to central North America? 
+\item What are the differences between functional groups - trees vs shrubs?
+\item Do we see differences in congener species? Do we see phylogenetic effects? 
 \end{enumerate}
+
+\section{The model}
+
+\begin{align*}
+\hat{y}_i &=  \mu_{grand} + \alpha_{sp_i} + \beta F_{sp_i} \times F_i + \\
+& \beta C_{sp_i}  \times C_i + \beta P_{sp_i}  \times P_i + \\
+& \beta d2 \times d2 + \beta d3 \times d3 + \beta d4 \times d4 +\\
+& \beta FP_{sp_i}  \times FP_i  + \beta FC_{sp_i}  \times FC_i + \beta CP_{sp_i}  \times CP_i + \\
+& \beta FT _{sp_i} + \beta CT _{sp_i} + \beta PT _{sp_i}\\
+& \beta Fd2 \times Fd2 + \beta Fd3 \times Fd3 + \beta Fd4 \times Fd4 +\\
+& \beta Cd2 \times Cd2 + \beta Cd3 \times Cd3 + \beta Cd4 \times Cd4 +\\
+& \beta Pd2 \times Pd2 + \beta Pd3 \times Pd3 + \beta Pd4 \times Pd4 \\
+\vspace{1ex}\\
+\beta FP_{sp} &= \alpha FP + \beta FPraw_{sp}  \times \sigma FP\\
+\vspace{1ex}\\
+\beta_{F} & \sim N(\mu_{site}, \sigma_{F}) \\
+\beta_{C} & \sim N(\mu_{site}, \sigma_{C}) \\
+\beta_{P} & \sim N(\mu_{site}, \sigma_{P}) \\
+....\\
+y & \sim N(\hat{y}, \sigma_{y}) \\
+\end{align*}
+
+\begin{align*}
+\hat{y}_i &=  \mu_{grand} + \alpha_{sp_i} + \beta F_{sp_i} \times F_i + \\
+& \beta C_{sp_i}  \times C_i + \beta P_{sp_i}  \times P_i + \beta Transect  + \\
+& \beta FP_{sp_i}  \times FP_i  + \beta FC_{sp_i}  \times FC_i + \beta CP_{sp_i}  \times CP_i + \\
+& \beta FT + \beta CT  + \beta PT  \\
+\vspace{1ex}\\
+\beta FP_{sp} &= \alpha FP + \beta FPraw_{sp}  \times \sigma FP\\
+\vspace{1ex}\\
+\beta_{F} & \sim N(\mu_{site}, \sigma_{F}) \\
+\beta_{C} & \sim N(\mu_{site}, \sigma_{C}) \\
+\beta_{P} & \sim N(\mu_{site}, \sigma_{P}) \\
+....\\
+y & \sim N(\hat{y}, \sigma_{y}) \\
+\end{align*}
+
 
 \section{Results}
 
 Key results to include:
 How many cuttings did not break bud -- table of proportions of success
 What happens when you remove species with the lowest success?
-
-Can conclude that factors offset each other if the interaction becomes negative
-
-
+Can we conclude that factors offset each other if the interaction becomes negative?
 
 \section{Figures \& Tables}
 

@@ -49,8 +49,8 @@ dl.wchill$lab3 <- dl.wchill$lab2
 dl.wchill$lab2 <- paste(dl.wchill$species, dl.wchill$population, dl.wchill$rep, sep = "_")
 
 # mergeing the my data with DF
-# pheno <- rbind.fill(dl.wchill, df.wchill)
-pheno <- dl.wchill
+ pheno <- rbind.fill(dl.wchill, df.wchill)
+# pheno <- dl.wchill
 
 pheno$first <- ifelse(pheno$tbb < pheno$latbb1,"t", ifelse (pheno$tbb == pheno$latbb1,"tl", "l"))
 
@@ -75,8 +75,8 @@ pheno$photo.n <- as.numeric(pheno$photo.n)
 pheno$site.n <- pheno$population
 pheno$site.n[pheno$site.n == "sm"] <- "0"
 pheno$site.n[pheno$site.n == "mp"] <- "1"
-# pheno$site.n[pheno$site.n == "HF"] <- "2"
-# pheno$site.n[pheno$site.n == "SH"] <- "3"
+pheno$site.n[pheno$site.n == "HF"] <- "2"
+pheno$site.n[pheno$site.n == "SH"] <- "3"
 pheno$site.n <- as.integer(pheno$site.n)
 
 pheno$Chill_portions <- as.numeric(pheno$Chill_portions)
@@ -100,10 +100,11 @@ sort(unique(pheno.t$species.fact)) # 47
 nrow(pheno.term) - nrow(pheno.t) # That had no terminal bb, 609
 
 #creating dummy var
-# pheno.t <- pheno.t %>%
-#     mutate ( d2 = if_else(site.n == 2, 1, 0),
-#              d3 = if_else(site.n == 3, 1, 0),
-#              d4 = if_else(site.n == 4, 1, 0))
+pheno.t <- pheno.t %>%
+    mutate ( d2 = if_else(site.n == 2, 1, 0),
+             d3 = if_else(site.n == 3, 1, 0),
+             d4 = if_else(site.n == 4, 1, 0))
+
 head(pheno.t)
 str(pheno.t$photo.z2)
 
@@ -116,17 +117,17 @@ datalist_z <- list( N=nrow(pheno.t),
                     chill = pheno.t$chillport.z2,
                     photo = pheno.t$photo.z2,
                     force = pheno.t$force.z2,
-                    site = pheno.t$site.n)
-                    # site2 = pheno.t$d2,
-                    # site3 = pheno.t$d3,
-                    # site4 = pheno.t$d4)
+                    site = pheno.t$site.n,
+                    site2 = pheno.t$d2,
+                    site3 = pheno.t$d3,
+                    site4 = pheno.t$d4)
 # str(datalist_z$n_site)
 # datalist_z$photo
-mdl.std <- stan("stan/bc.bb.ncpphoto.ncpinter.standardize.old.stan",
-            data = datalist_z,
-            iter = 4000, chains=4)
-
-save(mdl.std, file="output/termMdlEstiContChillStndDL.Rda")
+# mdl.std <- stan("stan/bc.bb.ncpphoto.ncpinter.standardize.old.stan",
+#             data = datalist_z,
+#             iter = 4000, chains=4)
+# 
+# save(mdl.std, file="output/termMdlEstiContChillStndDL.Rda")
 
 # mdl<- stan("stan/model_faith_realdata.stan",
 #               data = datalist_z,
@@ -135,6 +136,14 @@ save(mdl.std, file="output/termMdlEstiContChillStndDL.Rda")
 # 
 # 
 # save(mdl, file="output/realDummSite.Rda")
+
+mdl<- stan("stan/test_model_interactions_tightpriors.stan",
+              data = datalist_z,
+              iter = 4000, chains=4)
+              #, control = list(adapt_delta = 0.99))
+
+
+save(mdl, file="output/realDummSiteInt.Rda")
 
 # 
 # mdl.t <- stan("stan/bc_bb_ncpphoto_ncpinter_standardize_index.stan",
@@ -147,29 +156,29 @@ save(mdl.std, file="output/termMdlEstiContChillStndDL.Rda")
 #               iter = 4000, chains=1)
 # #######################################################################
 # 
-load("output/realDummSite.Rda")
-# load("output/tbb_utah_cport_stnd_index.Rds")
+#load("output/realDummSiteInt.Rda")
+#  load("output/tbb_ncp_chillportions_zsc_dl.Rda")
+# #
+# ssm <-  as.shinystan(mdl)
+# launch_shinystan(ssm)
+# # # 
+#  sumt <- summary(mdl)$summary
+# # bforce <- sumt[grep("b_force", rownames(sumt)), "mean"]; bforce
+# # site <- sumt[grep("b_site", rownames(sumt)), "mean"]; site
+# # # 
+#  post <- rstan::extract(mdl)
+# y<-as.numeric(pheno.t$tbb)
+#  yrep<- post$y_hat
 # 
-ssm <-  as.shinystan(mdl)
-launch_shinystan(ssm)
-# 
-sumt <- summary(mdl)$summary
-bforce <- sumt[grep("b_force", rownames(sumt)), "mean"]; bforce
-site <- sumt[grep("b_site", rownames(sumt)), "mean"]; site
-# 
-post <- rstan::extract(mdl)
-y<-as.numeric(pheno.t$tbb)
-yrep<- post$y_hat
-
-# pdf("ypred_dumm_DL.pdf", height = 5, width = 5) 
-# ppc_dens_overlay(y, yrep[1:50, ])
-# dev.off()
-range(sumt[, "n_eff"])
-range(sumt[, "Rhat"])
-# 
-pdf("pairs_dummAll.pdf")
-pairs(mdl, pars = c("mu_grand","mu_force","mu_chill","mu_photo", "b_site2", "b_site3","b_site4", "sigma_a","sigma_force","sigma_chill","sigma_photo","sigma_y"))
-dev.off()
+# # pdf("ypred_dumm_DL.pdf", height = 5, width = 5) 
+#  ppc_dens_overlay(y, yrep[1:50, ])
+# # dev.off()
+# # range(sumt[, "n_eff"])
+# # range(sumt[, "Rhat"])
+# # # 
+# # pdf("pairs_dummAll.pdf")
+# pairs(mdl, pars = c("mu_grand","mu_force","mu_chill","mu_photo", "b_site2", "b_site3","b_site4", "sigma_a","sigma_force","sigma_chill","sigma_photo","sigma_y"))
+##dev.off()
 # ########################################################
 # 
 # post3 <- as.matrix(mdl.t, par = c("mu_force", "mu_chill","mu_photo", "mu_inter_fp", "mu_inter_fc"))
@@ -243,83 +252,108 @@ dev.off()
 # h2 <- hist(post$sigma_b_inter_pc, xlim =c(-10,10))
 # plot(h2, col=rgb(0,0,1,1/4), xlim =c(-100,100))
 # plot(h1, col=rgb(1,0,1,1/4), add = TRUE)
-# 
-# ####################################################################3
-# # How to interpret the z.score values:
-# mu_force_prcnt <- round((sumt[grep("mu_force", rownames(sumt)), "mean"]/4)/(sd(pheno$force.n)*2)*100*2, digits = 2) 
-# mu_photo_prcnt <- round((sumt[grep("mu_photo", rownames(sumt)), "mean"]/4)/(sd(pheno$photo.n)*2)*100*2, digits = 2) 
-# mu_chill_prcnt <- round((sumt[grep("mu_chill", rownames(sumt)), "mean"]/4)/(sd(pheno$Chill_portions)*2)*100*2) 
+
+####################################################################3
+# How to interpret the z.score values:
+# mu_force_prcnt <- round((sumt[grep("mu_force", rownames(sumt)), "mean"]/4)/(sd(pheno$force.n)*2)*100*2, digits = 2)
+# mu_photo_prcnt <- round((sumt[grep("mu_photo", rownames(sumt)), "mean"]/4)/(sd(pheno$photo.n)*2)*100*2, digits = 2)
+# mu_chill_prcnt <- round((sumt[grep("mu_chill", rownames(sumt)), "mean"]/4)/(sd(pheno$Chill_portions)*2)*100*2)
 # 
 # mu_force_bt <- mean(pheno$force.n) + ((sumt[grep("mu_force", rownames(sumt)), "mean"])*(sd(pheno$force.n)*2))
 # mu_photo_bt <- mean(pheno$photo.n) + ((sumt[grep("mu_photo", rownames(sumt)), "mean"])*(sd(pheno$photo.n)*2))
 # mu_chillport_bt <- mean(pheno$Chill_portions) + ((sumt[grep("mu_chill", rownames(sumt)), "mean"])*(sd(pheno$Chill_portions)*2))
 # mu_site_bt <- mean(pheno$site.n) + ((sumt[grep("mu_site", rownames(sumt)), "mean"])*(sd(pheno$site.n)*2))
+
+# load("output/tbb_ncp_chillportions_zsc_dl.Rda")
 # 
-col4fig <- c("mean","sd","25%","50%","75%","Rhat")
-col4table <- c("mean","sd","2.5%","50%","97.5%","Rhat")
+# sumt <- summary(mdl.t)$summary
+# col4fig <- c("mean","sd","25%","50%","75%","Rhat")
+# col4table <- c("mean","sd","2.5%","50%","97.5%","Rhat")
+# 
+# # manually to get right order
+# mu_params <- c("mu_force",
+#                "mu_photo",
+#                "mu_chill",
+#                "mu_site",
+#                "mu_inter_fp",
+#                "mu_inter_fc",
+#                "mu_inter_pc",
+#                "mu_inter_fs",
+#                "mu_inter_ps",
+#                "mu_inter_sc")
+# 
+# # mu_params <- c("mu_grand",
+# #                "mu_force",
+# #                "mu_photo",
+# #                "mu_chill",
+# #                "b_site2",
+# #                "b_site3",
+# #                "b_site4",
+# #                "mu_fp",
+# #                "mu_fc",
+# #                "mu_cp")
+# 
+# meanzt <- sumt[mu_params, col4fig]
+# # meanzl <- sum1l[mu_params, col4fig]
+# 
+# rownames(meanzt) = c("Forcing",
+#                      "Photoperiod",
+#                      "Chilling",
+#                      "Site",
+#                      "Forcing x Photoperiod",
+#                      "Forcing x Chilling",
+#                      "Photoperiod x Chilling",
+#                      "Forcing x Site",
+#                      "Photoperiod x Site",
+#                      "Chilling x Site"
+# )
+# 
+# # rownames(meanzt) = c("grand_mean",
+# #                      "Forcing",
+# #                      "Photoperiod",
+# #                      "Chilling",
+# #                      "Site2",
+# #                      "Site3","Site4",
+# #                      "Forcing x Photoperiod",
+# #                      "Forcing x Chilling",
+# #                      "Photoperiod x Chilling"
+# # )
+# 
+# meanzt.table <- sumt[mu_params, col4table]
+# row.names(meanzt.table) <- row.names(meanzt)
+# head(meanzt.table)
+# write.table(meanzt.table , "output/termMdlEstiContChillStdDL.csv", sep = ",", row.names = T)
+# 
 
-# manually to get right order
-mu_params <- c("mu_force",
-               "mu_photo",
-               "mu_chill",
-               "mu_site",
-               "mu_inter_fp",
-               "mu_inter_fc",
-               "mu_inter_pc",
-               "mu_inter_fs",
-               "mu_inter_ps",
-               "mu_inter_sc")
-
-meanzt <- sumt[mu_params, col4fig]
-# meanzl <- sum1l[mu_params, col4fig]
-
-rownames(meanzt) = c("Forcing",
-                     "Photoperiod",
-                     "Chilling",
-                     "Site",
-                     "Forcing x Photoperiod",
-                     "Forcing x Chilling",
-                     "Photoperiod x Chilling",
-                     "Forcing x Site",
-                     "Photoperiod x Site",
-                     "Site x Chilling"
-)
-
-meanzt.table <- sumt[mu_params, col4table]
-row.names(meanzt.table) <- row.names(meanzt)
-head(meanzt.table)
-write.table(meanzt.table , "output/termMdlEstiContChillStdDL.csv", sep = ",", row.names = T)
-
-
-col4fig <- c("mean","sd","25%","50%","75%","Rhat")
-col4table <- c("mean","sd","2.5%","50%","97.5%","Rhat")
-
-# manually to get right order
-mu_params <- c("mu_grand",
-               "mu_force",
-               "mu_photo",
-               "mu_chill",
-               "b_site2",
-               "b_site3",
-               "b_site4"
-               )
-
-meanzt <- sumt[mu_params, col4fig]
-# meanzl <- sum1l[mu_params, col4fig]
-
-rownames(meanzt) = c("mu_grand",
-                     "Forcing",
-                     "Photoperiod",
-                     "Chilling",
-                     "Site2",
-                     "Site3",
-                     "Site4"
-)
-
-meanzt.table <- sumt[mu_params, col4table]
-row.names(meanzt.table) <- row.names(meanzt)
-head(meanzt.table)
-write.table(meanzt.table , "output/termDummAll.csv", sep = ",", row.names = T)
+# col4fig <- c("mean","sd","25%","50%","75%","Rhat")
+# col4table <- c("mean","sd","2.5%","50%","97.5%","Rhat")
+# 
+# # manually to get right order
+# mu_params <- c("mu_grand",
+#                "mu_force",
+#                "mu_photo",
+#                "mu_chill",
+#                "b_site2",
+#                "b_site3",
+#                "b_site4"
+#                )
+# 
+# meanzt <- sumt[mu_params, col4fig]
+# # meanzl <- sum1l[mu_params, col4fig]
+# 
+# rownames(meanzt) = c("mu_grand",
+#                      "Forcing",
+#                      "Photoperiod",
+#                      "Chilling",
+#                      "Site2",
+#                      "Site3",
+#                      "Site4"
+# )
+# 
+# meanzt.table <- sumt[mu_params, col4table]
+# row.names(meanzt.table) <- row.names(meanzt)
+# head(meanzt.table)
+# write.table(meanzt.table , "output/termDummAll.csv", sep = ",", row.names = T)
 
 # row.names(meanzt.table) <- row.names(meanzt)
 # meanzt.table
@@ -594,11 +628,11 @@ write.table(meanzt.table , "output/termDummAll.csv", sep = ",", row.names = T)
 # summary(lm(lat.chill~lat.photo, data=df.mean.l))
 # 
 # pdf(file.path( "figures/changes.pheno.standardized.pdf"), width = 7, height = 8)
-# par(mfrow = c(2,1), mar = c(5, 10, 2, 1))
+# par(mfrow = c(1,1), mar = c(5, 10, 2, 1))
 # # Upper panel: bud burst
-# plot(seq(-15, 
+# plot(seq(-15,
 #          15,
-#          length.out = nrow(meanzt)), 
+#          length.out = nrow(meanzt)),
 #      1:nrow(meanzt),
 #      type = "n",
 #      xlab = "",
@@ -627,9 +661,9 @@ write.table(meanzt.table , "output/termDummAll.csv", sep = ",", row.names = T)
 # 
 # par(mar = c(5, 10, 2, 1))
 # # Lower panel: leaf-out
-# plot(seq(-15, 
-#          15, 
-#          length.out = nrow(meanzl)), 
+# plot(seq(-15,
+#          15,
+#          length.out = nrow(meanzl)),
 #      1:nrow(meanzl),
 #      type = "n",
 #      xlab = "Model estimate change in day of phenological event",
@@ -660,7 +694,73 @@ write.table(meanzt.table , "output/termDummAll.csv", sep = ",", row.names = T)
 # dev.off()
 # 
 # ## Replicating Flynn Figure 2:
+# # only my data:
+# b.force <- sumt[grep("b_force", rownames(sumt))]
+# b.photo <- sumt[grep("b_photo", rownames(sumt))]; b.photo <- b.photo[20:38]
+# b.chill <- sumt[grep("b_chill", rownames(sumt))]
 # 
+# shrubs = c("alninc","alnvir","amealn", "corsto","loninv", "menfer","rhoalb", "riblac","rubpar","samrac","shecan","sorsco","spibet","spipyr","symalb","vacmem","vibedu")
+# trees = c("acegla","betpap", "poptre", "popbal")
+# dlsp <- c("alninc","alnvir","amealn", "corsto","loninv", "menfer","rhoalb", "riblac","rubpar","samrac","shecan","sorsco","spibet","spipyr","symalb","vacmem","vibedu","acegla","betpap", "poptre", "popbal")
+# pheno.term <- pheno.t[,c("tbb", "chillport.z2", "force.z2", "photo.z2", "species", "lab2","population")]
+# pheno.term <- pheno.t[pheno.t$species %in% dlsp, ]
+# pheno.t <- pheno.term[complete.cases(pheno.term), ] # 1780 rows data
+# 
+# 
+# species <- sort(unique(pheno.t$species))
+# species.fact <-as.numeric( as.factor(unique(pheno.t$species)))
+# type <- c("tree", "shrub", "shrub", "shrub", "tree",  "shrub","shrub","tree","tree", "shrub", "shrub","shrub",  "shrub", "shrub", "shrub", "shrub", "shrub","shrub","shrub")
+# mine <- data.frame(species, species.fact, b.force, b.photo, b.chill, type)
+# 
+# 
+# #pdf(file.path( "figures/chill_vs_force_dldf.pdf"), width = 7, height = 8)
+# cf <- ggplot(mine, aes(x= b.chill, y = b.force, col = type)) +
+#   geom_point()+
+#   # ylim (-25, 1) +
+#   # xlim (-30, 0) +
+#   labs( y = "High forcing", x = "High chilling") +
+#   geom_text(aes(label=species),hjust=0.5, vjust= 1) +
+#   theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
+#         panel.background = element_blank(), axis.line = element_line(colour = "black"))
+# #dev.off()
+# 
+# #pdf(file.path( "figures/chill_vs_photo_dldf.pdf"), width = 7, height = 8)
+# cp <- ggplot(mine, aes(x= b.chill, y = b.photo, col = type)) +
+#   geom_point() +
+#   labs (x = "High chilling", y = "Long photoperiod") +
+#   geom_text(aes(label=species),hjust=0.5, vjust= 1) +
+#   theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
+#         panel.background = element_blank(), axis.line = element_line(colour = "black"))
+# 
+# term.bb <- ddply(pheno, c("species"), summarize, mean = mean(tbb, na.rm = TRUE), mean.lat = mean(latbb50, na.rm = TRUE))
+# names(term.bb) <- c("species", "mean","mean.lat")
+# term <- merge(term.bb, mine, by = "species", all =TRUE)
+# term <- term[,c("species","mean","b.force","b.chill","b.photo")]
+# term <- term[complete.cases(term), ]
+# 
+# tf <- ggplot(term, aes(y = b.force, x= mean,col = type)) +
+#   geom_point() +
+#   geom_text(aes(label=species),hjust=0.5, vjust= 1) +
+#   labs(x = "Mean day of budburst", y = "High forcing") +
+#   theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
+#         panel.background = element_blank(), axis.line = element_line(colour = "black"))
+# 
+# tc <- ggplot(term, aes(y = b.chill, x= mean,col = type)) +
+#   geom_point() +
+#   labs(x = "Mean day of budburst", y = "High chilling") +
+#   geom_text(aes(label=species),hjust=0.5, vjust= 1) +
+#   theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
+#         panel.background = element_blank(), axis.line = element_line(colour = "black"))
+# 
+# tp <- ggplot(term, aes(y = b.photo, x= mean,col = type)) +
+#   geom_point() +
+#   labs(x = "Mean day of budburst", y = "Long photoperiod")+
+#   geom_text(aes(label=species),hjust=0.5, vjust= 1) +
+#   theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
+#         panel.background = element_blank(), axis.line = element_line(colour = "black"))
+# 
+# 
+# ################################################################
 # b.force.both <- sumt[grep("b_force", rownames(sumt))]
 # b.photo.both <- sumt[grep("b_photo", rownames(sumt))]; b.photo.both <- b.photo.both[48:94]
 # b.chill.both <- sumt[grep("b_chill", rownames(sumt))]
@@ -669,7 +769,7 @@ write.table(meanzt.table , "output/termDummAll.csv", sep = ",", row.names = T)
 # trees.both = c("ACEPEN", "ACERUB", "ACESAC", "ALNINC", "BETALL", "BETLEN", "BETPAP", "CORCOR", "FAGGRA", "FRANIG", "HAMVIR", "NYSSYL", "POPGRA", "PRUPEN", "QUEALB" , "QUERUB", "QUEVEL", "acegla","betpap", "poptre", "popbal")
 # 
 # pheno.term <- pheno[,c("tbb", "chillport.z2", "force.z2", "photo.z2", "species", "lab2","population")]
-# pheno.t <- pheno.term[complete.cases(pheno.term), ] # 1780 rows data 
+# pheno.t <- pheno.term[complete.cases(pheno.term), ] # 1780 rows data
 # 
 # 
 # species.both <- sort(unique(pheno.t$species))
@@ -711,17 +811,17 @@ write.table(meanzt.table , "output/termDummAll.csv", sep = ",", row.names = T)
 #         panel.background = element_blank(), axis.line = element_line(colour = "black"))
 # #dev.off()
 # 
-# ## Plotting the day to bb with the cues on the y-axis 
+# ## Plotting the day to bb with the cues on the y-axis
 # term.bb.both <- ddply(pheno, c("species"), summarize, mean = mean(tbb, na.rm = TRUE), mean.lat = mean(latbb50, na.rm = TRUE))
 # names(term.bb.both) <- c("species.both", "mean","mean.lat")
 # term.both <- merge(term.bb.both, both, by = "species.both", all =TRUE)
 # term.both <- term.both[,c("species.both","mean","b.force.both","b.chill.both","b.photo.both")]
-# term.both <- term.both[complete.cases(term.both), ] 
+# term.both <- term.both[complete.cases(term.both), ]
 # 
 # tf.both <- ggplot(term.both, aes(y = b.force.both, x= mean,col = type.both)) +
 #   geom_point() +
 #   geom_text(aes(label=species.both),hjust=0.5, vjust= 1) +
-#   labs(x = "Mean day of budburst", y = "High forcing") + 
+#   labs(x = "Mean day of budburst", y = "High forcing") +
 #   theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
 #         panel.background = element_blank(), axis.line = element_line(colour = "black"))
 # 
@@ -751,7 +851,7 @@ write.table(meanzt.table , "output/termDummAll.csv", sep = ",", row.names = T)
 # 
 # plot(pheno.t$tbb , (sumt[grep("b_chill", rownames(sumt)), "mean"]))
 # abline(a = 0, b = 1, lty = "dotted")
-# 
+# # 
 # ##############################################################################
 # # plots of the chill portions
 # # Do we see large differences across sites, or could it just be east/west

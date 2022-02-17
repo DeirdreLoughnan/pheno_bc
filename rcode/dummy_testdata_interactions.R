@@ -37,10 +37,10 @@ require(lme4)
 # <> <> <> <> <> <> <> <> <> <> <> <> <> <> <> <> <> <> <> <>
 
 #Set number of data groups
-nsite = 4 #number of sites with trait data
+nsite = 2 #number of sites with trait data
 nsp = 8 #number of species - 
-nind = 4 
-nChill <- 6 #This many chilling treatment levels 
+nind = 8
+nChill <- 2 #This many chilling treatment levels 
 nPhoto <- 2
 nForce <- 2
 nPhenCombo <- nChill*nPhoto*nForce
@@ -56,21 +56,21 @@ mu_force = -10
 mu_photo = -15
 mu_chill = -14
 
-sigma_a = 3
+sigma_a = 10
 sigma_site = 10
-sigma_force = 1
-sigma_chill = 1
-sigma_photo = 1
-sigma_y = 4
+sigma_force = 10
+sigma_chill = 10
+sigma_photo = 10
+sigma_y = 20
 
 #interactions:
 mu_fp <- 3
 mu_cp <- 2
 mu_fc <- 1
 
-sigma_fp <- 0.2
-sigma_cp <- 0.2
-sigma_fc <- 0.2
+sigma_fp <- 5
+sigma_cp <- 5
+sigma_fc <- 5
 
 mu_fsite <- 1
 mu_csite <- 5
@@ -107,7 +107,8 @@ fake$alpha.photo.sp <- rep(alpha.photo.sp, each = nsite*nPhenCombo*nind)
 alpha.chill.sp <- rnorm(nsp, mu_chill, sigma_chill)
 fake$alpha.chill.sp <- rep(alpha.chill.sp, each =  nsite*nPhenCombo*nind)
 
-alpha.site <- rnorm(nsite, b_site, sigma_site)
+#alpha.site <- rnorm(nsite, b_site, sigma_site)
+alpha.site <- c(0,1,2,3)
 fake$alpha.site <- rep(rep(alpha.site, times = nPhenCombo, each = nPhenCombo*nind))
 
 # adding the interaction effects:
@@ -144,8 +145,16 @@ fake$gen.var <- rnorm(nrow(fake), 0, sigma_y)
 
 fake$photo <- rep(c(0, 1))
 fake$warm <- rep(c(0,1), each = 2)
+#chill.port <- c(20, 40, 60, 80, 100, 120)
 fake$chill<- rep(rep(rnorm(n = nChill, mean = 0, sd = 10), each = nForce*nPhoto), times = nsp*nsite*nind)
+#fake$chill<- rep(rep(chill.port, each = nForce*nPhoto), times = nsp*nsite*nind)
 
+# check to make things are being replicated the same number of times:
+# fake$count <- 1
+# faket <- aggregate(fake ["count"],
+#                            fake[c("sp", "warm")],
+#                            FUN = sum)
+# View(faket) 
 
 # for dummy variable test data
 fake$bb <-  mu_grand + alpha.site[1] + fake$alpha.pheno.sp + fake$alpha.force.sp *  fake$warm + 
@@ -173,6 +182,9 @@ summary(lm(bb_int_site ~  warm + photo + chill + d2 + d3 + d4 + warm * chill + c
 
 mu_grand + alpha.site[1]
 alpha.site
+alpha.fc
+alpha.cp
+alpha.fp
 # The values are very close between trail data and lmer output
 
   # tbb, f/c/p.n, site.n, species, f/c/p.i, species.fact, d2, d3, d4
@@ -189,11 +201,11 @@ datalist <- list( N=nrow(fake),
                     site3 = fake$d3,
                     site4 = fake$d4)
   
-mdl.full <- stan("stan/test_model_interactions_trueprior_tightprior.stan",
+mdl.full <- stan("stan/test_model_interactions_tightpriors.stan",
                    data = datalist,
                    include = FALSE, pars = c("ypred_new","y_hat"),
                    iter = 4000, chains= 4, warmup = 2000)
-save(mdl.full, file = "output/BBDummy_int_tightprior.Rda")
+save(mdl.full, file = "output/BBDummy_int_tightprior_modtest.Rda")
 
 # fix: issues with sigma_y, sigma_fc, sigma_cp
 

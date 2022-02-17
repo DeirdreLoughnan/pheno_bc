@@ -44,8 +44,8 @@ require(lme4)
 #Set number of data groups
 nsite = 4 #number of sites with trait data
 nsp = 8 #number of species - 
-nind = 4 
-nChill <- 6 #This many chilling treatment levels 
+nind = 10 
+nChill <- 5 #This many chilling treatment levels 
 nPhoto <- 2
 nForce <- 2
 nPhenCombo <- nChill*nPhoto*nForce
@@ -87,7 +87,7 @@ sigma_psite <- 0.5
 
 #Make a vector of site names
 sites <- 1:nsite
-site <- rep(rep(sites, times = nPhenCombo, each = nPhenCombo*nind))
+site <- rep(rep(sites, times = nsite, each = nPhenCombo*nind))
 
 #Makle a vector of species names 
 species <- 1:nsp 
@@ -113,7 +113,7 @@ alpha.chill.sp <- rnorm(nsp, mu_chill, sigma_chill)
 fake$alpha.chill.sp <- rep(alpha.chill.sp, each =  nsite*nPhenCombo*nind)
 
 alpha.site <- rnorm(nsite, b_site, sigma_site)
-fake$alpha.site <- rep(rep(alpha.site, times = nPhenCombo, each = nPhenCombo*nind))
+fake$alpha.site <- rep(rep(alpha.site, times = nsite, each = nPhenCombo*nind))
 
 # adding the interaction effects:
 alpha.fc <- rnorm(nsp, mu_fc, sigma_fc)
@@ -171,9 +171,9 @@ fake$bb_int_nochill <-  mu_grand + alpha.site[1] + fake$alpha.pheno.sp + fake$al
 
 # check if works with lmer or brms
 
-summary(lm(bb ~  warm + photo + chill + d2 + d3 + d4, data = fake)) # 
-
-summary(lm(bb_int ~  warm + photo + chill + d2 + d3 + d4 + warm * chill + chill * photo + photo * warm, data = fake)) # 
+ summary(lm(bb ~  warm + photo + chill + d2 + d3 + d4, data = fake)) # 
+# 
+ summary(lm(bb_int ~  warm + photo + chill + d2 + d3 + d4 + warm * chill + chill * photo + photo * warm, data = fake)) # 
 
 mu_grand + alpha.site[1]
 alpha.site
@@ -196,52 +196,115 @@ datalist <- list( N=nrow(fake),
 # stan lmer
 
 # mdl 1: site not included, just species as a random intercepts and slopes and interactions
-mdl1 <-stan_lmer(bb ~ warm + photo + chill +  warm * photo + chill * photo + warm * chill +#main effects
-                              (1| sp) + # random intercepts
-                   (sp|warm) + (sp|photo) + (sp|chill) , #random slopes
-                            data = fake,
-                            chains = 2, cores = 2,iter = 2500, warmup=1500)
-save(mdl1, file="rstanarm_nosite.Rda")
+# mdl1 <-stan_lmer(bb ~ warm + photo + chill +  warm * photo + chill * photo + warm * chill +#main effects
+#                               (1| sp) + # random intercepts
+#                    (sp|warm) + (sp|photo) + (sp|chill) , #random slopes
+#                             data = fake,
+#                             chains = 2, cores = 2,iter = 2500, warmup=1500)
+# save(mdl1, file="rstanarm_nosite.Rda")
 
 # mdl 2: site included as random slope, species as random slope and intercept, interactions for cues
-mdl2 <-stan_lmer(bb ~ warm + photo + chill +  warm * photo + chill * photo + warm * chill +#main effects
-                   (1| sp) + # random intercepts
-                   (sp|warm) + (sp|photo) + (sp|chill) + (site|warm) + (site|photo), #random slopes
-                 data = fake,
-                 chains = 2, cores = 2,iter = 2500, warmup=1500)
-save(mdl2, file="rstanarm_siteRandInt.Rda")
+# error message that can't use site as grouping factor more than once, suggests using || to fix this issue
+# mdl2 <-stan_lmer(bb ~ warm + photo + chill +  warm * photo + chill * photo + warm * chill +#main effects
+#                    (1| sp) + # random intercepts
+#                    (sp||warm) + (sp||photo) + (sp||chill) + (site||warm) + (site||photo) + (site||chill), #random slopes
+#                  data = fake,
+#                  chains = 2, cores = 2,iter = 2500, warmup=1500)
+# save(mdl2, file="rstanarm_siteRandInt.Rda")
 
+# 59 divergent transitions after warmup
 # mdl 3: site included as a dummy variable,  species as a random intercepts and slopes and interactions for cues
-mdl3 <-stan_lmer(bb ~ warm + photo + chill + d2 + d3 + d4
-                          warm*photo + warm*chill +
-                          photo*chill + 
-                        + (1|sp) + # random intercepts
-                          (sp|warm) + (sp|photo) + (sp|chill),   # random slopes
-                        data=fake,
-                chains = 2, cores = 2,iter = 2500, warmup=1500)
-save(mdl3, file="rstanarm_siteDummInt.Rda")
+#In this case sp is used as a grouping factor multiple times and (Intercept) is included multiple times.
+#Consider using || or -1 in your formulas to prevent this from happening.
+# mdl3 <- stan_lmer(bb ~ warm + photo + chill + d2 + d3 + d4 +  
+#                          # warm*photo + warm*chill +
+#                          # photo*chill +
+#                         # + (1|sp) + # random intercepts
+#                           #(warm|sp) + (photo|sp) + (chill|sp),   # random slopes
+#                     ( warm+ photo + chill|sp),
+#                         data=fake,
+#                 chains = 2, cores = 2,iter = 2500, warmup=1500)
+# 
+# mdl3 <- stan_lmer(bb ~ ((warm + photo + chill)|sp) + d2 + d3 + d4+
+#                   warm*photo + warm*chill + photo*chill, # + as.factor(site)
+#                   data=fake,
+#                   chains = 2, cores = 2,iter = 2500, warmup=1500, adapt_delta = 0.99)
+# save(mdl3, file="rstanarm_siteDummInt.Rda")
+
+
+# mdl3b <- stan_lmer(bb ~ ((warm* photo * chill)^2|sp) + d2 + d3 + d4,
+#                   data=fake,
+#                   chains = 2, cores = 2,iter = 2500, warmup=1500)
+
+mdl6 <- stan_lmer(bb ~ ((warm + photo + chill)|sp) + as.factor(site) 
+                    # + warm*photo + warm*chill + photo*chill, 
+                  ,data=fake,
+                  chains = 4, cores = 4,iter = 4000, warmup=3000)
+save(mdl6, file="rstanarm_siteFactNoInt.Rda")
+
+
 
 # mdl 4: site included as a dummy variable,  species as a random intercepts and slopes, and interactions for cues and sites
-mdl4 <-stan_lmer(bb ~ warm + photo + chill + d2 + d3 + d4
-                 warm*photo + warm*chill + photo*chill +  
-                   d2* warm + d3* warm + d4*warm +
-                   d2* chill + d3* chill + d4*chill +
-                   d2* photo + d3* photo + d4*photo
-                   + (1|sp) + # random intercepts
-                   (sp|warm) + (sp|photo) + (sp|chill),   # random slopes
-                 data=fake,
-                 chains = 2, cores = 2,iter = 2500, warmup=1500)
-
-save(mdl4, file="rstanarm_siteDummIntCueSite.Rda")
+# mdl4 <-stan_lmer(bb ~ warm + photo + chill + d2 + d3 + d4 +
+#                  warm*photo + warm*chill + photo*chill +  
+#                    d2* warm + d3* warm + d4*warm +
+#                    d2* chill + d3* chill + d4*chill +
+#                    d2* photo + d3* photo + d4*photo
+#                    + (1|sp) + # random intercepts
+#                    (warm|sp) + (photo|sp) + (chill|sp),   # random slopes
+#                  data=fake,
+#                  chains = 2, cores = 2,iter = 2500, warmup=1500)
+# 
+# save(mdl4, file="rstanarm_siteDummIntCueSite.Rda")
 
 #(photo*chill||genus)
-# sumt <- summary(mdl)$summary
-# 
-# range(sumt[, "n_eff"])
-# range(sumt[, "Rhat"])
-# # 
+#load("output/rstanarm_siteDummInt.Rda")
+# load("output/rstanarm_siteFact.Rda")
+load("output/rstanarm_siteFactIterAdapt.Rda")
+ssm <-  as.shinystan(mdl4)
+launch_shinystan(ssm)
+
+sumt <- summary(mdl4)
+#
+range(sumt[, "n_eff"]) #
+range(sumt[, "Rhat"])
+#
 # pdf("pairs_dummAll.pdf")
-# pairs(mdl, pars = c("mu_grand","mu_force","mu_chill","mu_photo", "b_site2", "b_site3","b_site4", "sigma_a","sigma_force","sigma_chill","sigma_photo","sigma_y"))
+pairs(mdl5, pars = c("(Intercept)","warm","chill","photo", "as.factor(site)2","as.factor(site)3", "as.factor(site)4", "sigma","log-posterior"))
 # dev.off()
+
+# get the values to plot against the fake data:
+temp <- as_tibble(sumt, row.names(sumt))
+
+
+mdl.out <- mdl4 %>%
+  spread_draws(b[(Intercept),sp], sigma) %>%
+  median_qi()
+mdl.out  <- as.data.frame(mdl.out )
+colnames(mdl.out)[colnames(mdl.out) == "(Intercept)"] <- "param"
+
+intSp <- subset(mdl.out, param == "(Intercept)")
+intF <- subset(mdl.out, param == "warm")
+intC <- subset(mdl.out, param == "chill")
+intP <- subset(mdl.out, param == "photo")
+
+par(mfrow = c(2,2))
+plot(alpha.pheno.sp ~ intSp$b, pch =19)
+plot(alpha.force.sp ~ intF$b, pch =19)
+plot(alpha.chill.sp ~ intC$b, pch =19)
+plot(alpha.photo.sp ~ intP$b, pch =19)
+
+
+# load("output/rstanarm_siteFactInt_B.Rda")
+# ssm <-  as.shinystan(mdl3b)
+# launch_shinystan(ssm)
+# 
+# sumb <- summary(mdl3b)
+# #
+# range(sumb[, "n_eff"])
+# range(sumb[, "Rhat"])
+# # #
+# # pdf("pairs_dummAll.pdf")
+# pairs(mdl3, pars = c("(Intercept)","warm","chill","photo", "d2", "d3","d4", "sigma","log-posterior"))
 
 

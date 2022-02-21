@@ -33,6 +33,76 @@ library(dplyr)
 library(plyr)
 require(lme4)
 
+df <- read.csv("input/day.of.bb.DFlynn.chill0.csv", header=TRUE, na.strings=c("","NA"))
+head(df)
+df.chill <- read.csv("input/chilling_values_eastern.csv")
+df.wchill <- merge(df, df.chill, by =c("population","chill"))
+
+dl <- read.csv("input/day.of.bb.DL.csv", header=TRUE, na.strings=c("","NA"))
+head(dl)
+dl.chill <- read.csv("input/chilling_values_Hope_Smithers.csv")
+
+dl.wchill <- merge(dl, dl.chill, by = c("population","chill"))
+dl.wchill$lab3 <- dl.wchill$lab2
+dl.wchill$lab2 <- paste(dl.wchill$species, dl.wchill$population, dl.wchill$rep, sep = "_")
+
+# mergeing the my data with DF
+# pheno <- rbind.fill(dl.wchill, df.wchill)
+pheno <- dl.wchill
+
+pheno$first <- ifelse(pheno$tbb < pheno$latbb1,"t", ifelse (pheno$tbb == pheno$latbb1,"tl", "l"))
+
+head(pheno)
+table(pheno$species, pheno$first)
+#write.csv(pheno, "input/pheno.w5chill.csv")
+
+############################################################
+#convert forcing and photoperiod treatments into binary
+pheno$force.n <- pheno$force
+pheno$force.n[pheno$force.n == "HF"] <- "1"
+pheno$force.n[pheno$force.n == "LF"] <- "0"
+pheno$force.n <- as.numeric(pheno$force.n)
+
+pheno$photo.n <- pheno$photo
+pheno$photo.n[pheno$photo.n == "HP"] <- "1"
+pheno$photo.n[pheno$photo.n == "LP"] <- "0"
+pheno$photo.n <- as.numeric(pheno$photo.n)
+
+# pg 153 of statistical rethinking: we have multiple categories, so we want to use index values as integers
+# Lizzie pointed out that if you just convert it to integers, it is in alphabetical order, but to keep track of the sites, I am having smithers be 1
+pheno$site.n <- pheno$population
+pheno$site.n[pheno$site.n == "sm"] <- "0"
+pheno$site.n[pheno$site.n == "mp"] <- "1"
+pheno$site.n[pheno$site.n == "HF"] <- "2"
+pheno$site.n[pheno$site.n == "SH"] <- "3"
+pheno$site.n <- as.integer(pheno$site.n)
+
+pheno$Chill_portions <- as.numeric(pheno$Chill_portions)
+
+# z scoring values, but since some are binary I will use 2SD as per the Gelmen et al paper
+pheno$force.z2 <- (pheno$force.n-mean(pheno$force.n,na.rm=TRUE))/(sd(pheno$force.n,na.rm=TRUE)*2)
+pheno$photo.z2 <- (pheno$photo.n-mean(pheno$photo.n,na.rm=TRUE))/(sd(pheno$photo.n,na.rm=TRUE)*2)
+pheno$chillport.z2 <- (pheno$Chill_portions-mean(pheno$Chill_portions,na.rm=TRUE))/(sd(pheno$Chill_portions,na.rm=TRUE)*2)
+pheno$utah.z2 <- (pheno$Utah_Model-mean(pheno$Utah_Model,na.rm=TRUE))/(sd(pheno$Utah_Model,na.rm=TRUE)*2)
+
+#going to split it into analyses of terminal bb and lateral bb
+# Starting with the terminal buds:
+pheno.term <- pheno[,c("tbb", "force.n", "photo.n", "site.n", "species", "lab2","Utah_Model","Chill_portions","force.z2", "photo.z2", "chillport.z2", "utah.z2")]
+
+pheno.t <- pheno.term[complete.cases(pheno.term), ] # 1780 rows data 
+
+pheno.t$species <- tolower(pheno.t$species)
+pheno.t$species.fact <- as.numeric(as.factor(pheno.t$species))
+sort(unique(pheno.t$species.fact)) # 47 
+
+nrow(pheno.term) - nrow(pheno.t) # That had no terminal bb, 609
+
+#creating dummy var
+pheno.t <- pheno.t %>%
+  mutate ( d2 = if_else(site.n == 2, 1, 0),
+           d3 = if_else(site.n == 3, 1, 0),
+           d4 = if_else(site.n == 4, 1, 0))
+
 # <> <> <> <> <> <> <> <> <> <> <> <> <> <> <> <> <> <> <> <>
 #building the required tree & dataframe 
 # <> <> <> <> <> <> <> <> <> <> <> <> <> <> <> <> <> <> <> <>
@@ -285,3 +355,62 @@ mdl.phylo <- stan("stan/test_model_phylogeny.stan",
                  seed = 62921
 )
 save(mdl.phylo, file = "output/simPhylo.Rda")
+
+###########################################
+load("output/simPhylo.Rda")
+# # 
+ssm <-  as.shinystan(mdl.phylo)
+launch_shinystan(ssm)
+# #
+ get_variables(mdl.phylo)
+summary(mdl.phylo)$summary[c("mu_grand","mu_force", "mu_chill","mu_photo","a_z","sigma_force","sigma_chill","sigma_photo","sigma_y", "lam_interceptsa","sigma_interceptsa"),"mean"]
+#    
+
+###################################################
+# plotting the output from the western only model onto the phylogeny:
+
+load("output/tbb_ncp_chillportions_zsc_dl.Rda")
+
+tree <- read.tree("input/SBphylo_phenobc.tre")
+
+sumer <- summary(mdl.t)$summary
+
+betaFSp <- data.frame(sumer[grep("b\\_force", rownames(sumer)), "mean"])
+colnames(betaFSp)[colnames(betaFSp) == "sumer.grep..b.._force...rownames.sumer.....mean.."] <- "betaFSp"
+
+betaCSp <- data.frame(sumer[grep("b\\_chill", rownames(sumer)), "mean"])
+colnames(betaCSp)[colnames(betaCSp) == "sumer.grep..b.._chill...rownames.sumer.....mean.."] <- "betaCSp"
+
+betaPSp <- data.frame(sumer[grep("b\\_photo", rownames(sumer)), "mean"]); 
+betaPSp <- as.data.frame(betaPSp[c(20:38),])
+colnames(betaPSp)[colnames(betaPSp) == "betaPSp[c(20:38), ]"] <- "betaPSp"
+
+intSp <- data.frame(sumer[grep("a\\_sp", rownames(sumer)), "mean"])
+colnames(intSp)[colnames(intSp) == "sumer.grep..a.._sp...rownames.sumer.....mean.."] <- "intSp"
+
+phylo.dat <- pheno.t[,c("species","species.fact")]d
+phylo.dat <- phylo.dat[order(phylo.dat$species.fact),]
+
+phylo.dat$count <- 1
+phylo.dat <- aggregate(phylo.dat["count"], phylo.dat[c("species", "species.fact")], FUN = sum);phylo.dat <- phylo.dat[,c("species","species.fact")]
+
+dat.slope <- cbind(phylo.dat, betaFSp, betaCSp, betaPSp, intSp)
+head(dat.slope)
+
+## B) generate a comparative.data object merging data and phylogeny
+databbslopesphy = comparative.data(tree, dat.slope,names.col="species",
+                                   na.omit=TRUE,vcv=TRUE, warn.dropped = TRUE)
+
+phyloplot = databbslopesphy$phy
+x = databbslopesphy$data$betaForceSpMean
+y = databbslopesphy$data$betaChillSpMean
+z = databbslopesphy$data$betaPhotoSpMean
+names(x) = names(y) = names(z) = databbslopesphy$phy$tip.label
+
+pdf(paste("figures/force", files[i], ".pdf", sep = ""), width = 10)
+par(mfrow=c(1,3))
+force <- contMap(phyloplot, x, lwd = 2.5, outline = F,fsize = c(0.8,1))
+chill <- contMap(phyloplot, y, lwd = 2.5, outline = F,fsize = c(0.8,1))
+photo <- contMap(phyloplot, z, lwd = 2.5, outline = F,fsize = c(0.8,1))
+dev.off()
+

@@ -34,14 +34,14 @@ require(lme4)
 #2. change site number, initially try having 3 sites
 # <> <> <> <> <> <> <> <> <> <> <> <> <> <> <> <> <> <> <> <>
 
-nsite = 3
-nsp = 28
+nsite = 2
+nsp = 35
 
 nwarm = 2
 nphoto = 2
 nchill = 5
 
-rep = 10 # within each combination of treatments. 
+rep = 12 # within each combination of treatments. 
 
 (ntot = nsite*nwarm*nphoto*nchill*rep) # 792 rows; 22k rows across species
 
@@ -159,14 +159,14 @@ head(fake)
 values <- as.data.frame(values)
 names(values) <- c("int","b.site","b.force", "b.photo","b.chill1","b.fs","b.ps","b.cs","b.fp","b.fc", "b.pc")
 #summary(lm(bb ~ (site + warm + photo + chillP)^2, data = fake)) # sanity check 
+# 
+# plot(fake$bb ~ fake$chillP)
+# abline(35,-5)
 
-plot(fake$bb ~ fake$chillP)
-abline(35,-5)
-
-fake$count <- 1
-faket <- aggregate(fake ["count"],
-                   fake[c("sp","photo","chillP","warm")],
-                   FUN = sum)
+# fake$count <- 1
+# faket <- aggregate(fake ["count"],
+#                    fake[c("sp","photo","chillP","warm")],
+#                    FUN = sum)
 
 # now fix the levels to 0/1 (not 1/2) as R does
 fake$site <- as.numeric(fake$site)
@@ -201,21 +201,21 @@ datalist <- list( N=nrow(fake),
                   # site3 = as.numeric(fake$site3))
 
 
-datalist$site
+#datalist$site
 
-# mdl.full <- stan("stan/df_noncp.stan",
-#                  data = datalist,
-#                  include = FALSE, pars = c("ypred_new","y_hat"),
-#                  iter = 4000, chains= 4, warmup = 2000)
-# save(mdl.full, file = "output/BBDummy_2chill2site_trueprior.Rda")
-
-mdl.full <- stan("stan/df_interdirect.stan",
+mdl.full <- stan("stan/df_mdl.stan",
                  data = datalist,
                  include = FALSE, pars = c("ypred_new","y_hat"),
                  iter = 4000, chains= 4, warmup = 2000)
-save(mdl.full, file = "output/df_interdirect_plot.Rda")
+save(mdl.full, file = "output/df_mdl_morespp.Rda")
 
-# load("output/df_interdirect.Rda")
+mdl.ind <- stan("stan/df_interdirect.stan",
+                 data = datalist,
+                 include = FALSE, pars = c("ypred_new","y_hat"),
+                 iter = 4000, chains= 4, warmup = 2000)
+save(mdl.ind, file = "output/df_interdirect_morespp.Rda")
+
+#load("output/df_interdirect.Rda")
 # #  load("output/tbb_ncp_chillportions_zsc_dl.Rda")
 # # #
 # ssm <-  as.shinystan(mdl.full)
@@ -238,7 +238,7 @@ slopeFS <- as.data.frame(sum[grep("b_inter_ws", rownames(sum)), ]) ; slopeFS <- 
 slopePS <- as.data.frame(sum[grep("b_inter_ps", rownames(sum)), ]) ; slopePS <- slopePS[c(1:28),]
 slopeCS <- as.data.frame(sum[grep("b_inter_sc1", rownames(sum)), ]) ; slopeCS <- slopeCS[c(1:28),]
 
-pdf("fake_esti_correlations.pdf", height = 10, width = 5)
+pdf("fake_esti_correlations_norspp.pdf", height = 10, width = 5)
 par(mfrow = c(6,2))
 plot(values$int ~ intSp$mean, pch =19)
 plot( values$b.force ~ slopeF$mean, pch = 19)
@@ -252,3 +252,10 @@ plot(values$b.cs ~ slopeCS$mean, pch = 19)
 plot(values$b.ps ~ slopePS$mean, pch = 19)
 plot(values$b.site ~ slopeSite$mean, pch = 19)
 dev.off()
+
+#check that values fall in the intervals:
+b_site_int <- sum[grep("mu_b_site", rownames(sum)), ]
+sigma_b_site <- sum[grep("sigma_b_site", rownames(sum)), ]
+b_intr_sc <- sum[grep("mu_b_inter_sc1", rownames(sum)), ]
+
+sum[c(309:331),]

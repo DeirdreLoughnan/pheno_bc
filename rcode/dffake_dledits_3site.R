@@ -1,6 +1,9 @@
 # Started in April 2016 #
 # Fake data creation by Dan Flynn, updates by Lizzie #
 
+# Feb 28: most of the estimates look fine, but some are producing intervals that do not inlcude the true values.To test whether this was an issue, we increased the number of reps and spp from 10-> 12 and 25-> 35 to see if this would give us better estimates...but they were worse!  Lizzie suggested going back to the DF code and checking that increasing the reps and spp of this code still does give us the true values.
+
+
 rm(list=ls()) 
 options(stringsAsFactors = FALSE)
 options(mc.cores = parallel::detectCores())
@@ -188,74 +191,145 @@ fake$photo[fake$photo==2] <- 1
 #save(list=c("fake"), file = "Fake Budburst.RData")
 
 
+# datalist <- list( N=nrow(fake),
+#                   n_sp = length(unique(fake$sp)),
+#                   n_site = length(unique(fake$site)),
+#                   lday = fake$bb,
+#                   sp = as.numeric(fake$sp),
+#                   chill1 = as.numeric(fake$chill),
+#                   photo = as.numeric(fake$photo),
+#                   warm = as.numeric(fake$warm),
+#                    site = as.numeric(fake$site))
+#                   #,site2 = as.numeric(fake$site2),
+#                   # site3 = as.numeric(fake$site3))
 datalist <- list( N=nrow(fake),
                   n_sp = length(unique(fake$sp)),
                   n_site = length(unique(fake$site)),
-                  lday = fake$bb,
+                  bb = fake$bb,
                   sp = as.numeric(fake$sp),
                   chill1 = as.numeric(fake$chill),
                   photo = as.numeric(fake$photo),
-                  warm = as.numeric(fake$warm),
-                   site = as.numeric(fake$site))
-                  #,site2 = as.numeric(fake$site2),
-                  # site3 = as.numeric(fake$site3))
-
+                  force = as.numeric(fake$warm),
+                  site = as.numeric(fake$site))
+#,site2 = as.numeric(fake$site2),
+# site3 = as.numeric(fake$site3))
 
 #datalist$site
 
-mdl.full <- stan("stan/df_mdl.stan",
-                 data = datalist,
-                 include = FALSE, pars = c("ypred_new","y_hat"),
-                 iter = 4000, chains= 4, warmup = 2000)
-save(mdl.full, file = "output/df_mdl_morespp.Rda")
+# mdl.full <- stan("stan/df_mdl.stan",
+#                  data = datalist,
+#                  include = FALSE, pars = c("ypred_new","y_hat"),
+#                  iter = 4000, chains= 4, warmup = 2000)
+# save(mdl.full, file = "output/df_mdl_morespp.Rda")
 
-mdl.ind <- stan("stan/df_interdirect.stan",
-                 data = datalist,
-                 include = FALSE, pars = c("ypred_new","y_hat"),
-                 iter = 4000, chains= 4, warmup = 2000)
-save(mdl.ind, file = "output/df_interdirect_morespp.Rda")
+mdl.full <- stan("stan/test_model_interactions_dftest.stan",
+data = datalist,
+include = FALSE, pars = c("ypred_new","y_hat"),
+iter = 4000, chains= 4, warmup = 2000)
+save(mdl.full, file = "output/df_mdl_morespp_noncp.Rda")
+
+# mdl.ind <- stan("stan/df_interdirect.stan",
+#                  data = datalist,
+#                  include = FALSE, pars = c("ypred_new","y_hat"),
+#                  iter = 4000, chains= 4, warmup = 2000)
+# save(mdl.ind, file = "output/df_interdirect_morespp.Rda")
+
 
 #load("output/df_interdirect.Rda")
-# #  load("output/tbb_ncp_chillportions_zsc_dl.Rda")
-# # #
+ load("output/df_mdl_morespp.Rda")
+# # #  load("output/tbb_ncp_chillportions_zsc_dl.Rda")
+# # # #
 # ssm <-  as.shinystan(mdl.full)
 # launch_shinystan(ssm)
 # # # 
 sum <- summary(mdl.full)$summary 
-summary(mdl.full)$summary[c("mu_a", "mu_b_warm","mu_b_chill1","mu_b_photo","mu_b_site","mu_b_inter_wp","mu_b_inter_ps","mu_b_inter_wc1","mu_b_inter_pc1","mu_b_inter_sc1","sigma_b_warm","sigma_b_chill1","sigma_b_photo","sigma_b_site","sigma_a","sigma_b_inter_wp","sigma_b_inter_ps","sigma_b_inter_wc1","sigma_b_inter_pc1","sigma_b_inter_sc1", "sigma_y"),"mean"]
+# summary(mdl.full)$summary[c("mu_a", "mu_b_warm","mu_b_chill1","mu_b_photo","mu_b_site","mu_b_inter_wp","mu_b_inter_ps","mu_b_inter_wc1","mu_b_inter_pc1","mu_b_inter_sc1","sigma_b_warm","sigma_b_chill1","sigma_b_photo","sigma_b_site","sigma_a","sigma_b_inter_wp","sigma_b_inter_ps","sigma_b_inter_wc1","sigma_b_inter_pc1","sigma_b_inter_sc1", "sigma_y"),"mean"]
+# 
+# # compare to fake data:
+# 
+intSp <- as.data.frame(sum[grep("a_sp", rownames(sum)), ])
+slopeF <- as.data.frame(sum[grep("b_warm", rownames(sum)), ]); slopeF <- slopeF[c(1:35),]
+slopeC <- as.data.frame(sum[grep("b_chill1", rownames(sum)), ]) ; slopeC <- slopeC[c(1:35),]
+slopeP <- as.data.frame(sum[grep("b_photo", rownames(sum)), ]) ; slopeP <- slopeP[c(1:35),]
+slopeSite <- as.data.frame(sum[grep("b_site", rownames(sum)), ]) ; slopeSite <- slopeSite[c(1:35),]
+slopeFP <- as.data.frame(sum[grep("b_inter_wp", rownames(sum)), ]) ; slopeFP <- slopeFP[c(38:72),]
+slopeFC <- as.data.frame(sum[grep("b_inter_wc1", rownames(sum)), ]) ; slopeFC <- slopeFC[c(38:72),]
+slopeCP <- as.data.frame(sum[grep("b_inter_pc1", rownames(sum)), ]) ; slopeCP <- slopeCP[c(38:72),]
+slopeFS <- as.data.frame(sum[grep("b_inter_ws", rownames(sum)), ]) ; slopeFS <- slopeFS[c(38:72),]
+slopePS <- as.data.frame(sum[grep("b_inter_ps", rownames(sum)), ]) ; slopePS <- slopePS[c(38:72),]
+slopeCS <- as.data.frame(sum[grep("b_inter_sc1", rownames(sum)), ]) ; slopeCS <- slopeCS[c(38:72),]
 
-# compare to fake data:
-
-intSp <- as.data.frame(sum[grep("a_sp", rownames(sum)), ]) 
-slopeF <- as.data.frame(sum[grep("b_warm", rownames(sum)), ]); slopeF <- slopeF[c(1:28),]
-slopeC <- as.data.frame(sum[grep("b_chill1", rownames(sum)), ]) ; slopeC <- slopeC[c(1:28),]
-slopeP <- as.data.frame(sum[grep("b_photo", rownames(sum)), ]) ; slopeP <- slopeP[c(1:28),]
-slopeSite <- as.data.frame(sum[grep("b_site", rownames(sum)), ]) ; slopeSite <- slopeSite[c(1:28),]
-slopeFP <- as.data.frame(sum[grep("b_inter_wp", rownames(sum)), ]) ; slopeFP <- slopeFP[c(1:28),]
-slopeFC <- as.data.frame(sum[grep("b_inter_wc1", rownames(sum)), ]) ; slopeFC <- slopeFC[c(1:28),]
-slopeCP <- as.data.frame(sum[grep("b_inter_pc1", rownames(sum)), ]) ; slopeCP <- slopeCP[c(1:28),]
-slopeFS <- as.data.frame(sum[grep("b_inter_ws", rownames(sum)), ]) ; slopeFS <- slopeFS[c(1:28),]
-slopePS <- as.data.frame(sum[grep("b_inter_ps", rownames(sum)), ]) ; slopePS <- slopePS[c(1:28),]
-slopeCS <- as.data.frame(sum[grep("b_inter_sc1", rownames(sum)), ]) ; slopeCS <- slopeCS[c(1:28),]
-
-pdf("fake_esti_correlations_norspp.pdf", height = 10, width = 5)
+pdf("fake_esti_correlations_35spp.pdf", height = 10, width = 5)
 par(mfrow = c(6,2))
-plot(values$int ~ intSp$mean, pch =19)
-plot( values$b.force ~ slopeF$mean, pch = 19)
-plot(values$b.chill1 ~ slopeC$mean, pch = 19)
-plot(values$b.photo ~ slopeP$mean, pch = 19)
-plot(values$b.fc ~ slopeFC$mean, pch = 19)
-plot(values$b.pc ~ slopeCP$mean, pch = 19)
-plot(values$b.fp ~ slopeFP$mean, pch = 19)
-plot(values$b.fs ~ slopeFS$mean, pch = 19)
-plot(values$b.cs ~ slopeCS$mean, pch = 19)
-plot(values$b.ps ~ slopePS$mean, pch = 19)
-plot(values$b.site ~ slopeSite$mean, pch = 19)
+plot(values$int ~ intSp$mean, pch =19);abline(1,1)
+plot( values$b.force ~ slopeF$mean, pch = 19);abline(1,1)
+plot(values$b.chill1 ~ slopeC$mean, pch = 19);abline(1,1)
+plot(values$b.photo ~ slopeP$mean, pch = 19);abline(1,1)
+plot(values$b.fc ~ slopeFC$mean, pch = 19);abline(1,1)
+plot(values$b.pc ~ slopeCP$mean, pch = 19);abline(1,1)
+plot(values$b.fp ~ slopeFP$mean, pch = 19);abline(1,1)
+plot(values$b.fs ~ slopeFS$mean, pch = 19);abline(1,1)
+plot(values$b.cs ~ slopeCS$mean, pch = 19);abline(1,1)
+plot(values$b.ps ~ slopePS$mean, pch = 19);abline(1,1)
+plot(values$b.site ~ slopeSite$mean, pch = 19);abline(1,1)
 dev.off()
 
-#check that values fall in the intervals:
-b_site_int <- sum[grep("mu_b_site", rownames(sum)), ]
-sigma_b_site <- sum[grep("sigma_b_site", rownames(sum)), ]
-b_intr_sc <- sum[grep("mu_b_inter_sc1", rownames(sum)), ]
+# #check that values fall in the intervals:
+# b_site_int <- sum[grep("mu_b_site", rownames(sum)), ]
+# sigma_b_site <- sum[grep("sigma_b_site", rownames(sum)), ]
+# b_intr_sc <- sum[grep("mu_b_inter_sc1", rownames(sum)), ]
 
-sum[c(309:331),]
+sum[c("mu_a","mu_b_warm","mu_b_chill1","mu_b_photo","mu_b_site","mu_b_inter_wp","mu_b_inter_wc1","mu_b_inter_pc1","mu_b_inter_sc1","mu_b_inter_ws","mu_b_inter_ps","sigma_a","sigma_b_warm","sigma_b_chill1","sigma_b_photo","sigma_b_site","sigma_b_inter_wp","sigma_b_inter_wc1","sigma_b_inter_pc1","sigma_b_inter_sc1","sigma_b_inter_ws","sigma_b_inter_ps","sigma_y"),c(1,5,7)]
+
+# pdf("figures/lnc_prior_post_dist.pdf", width = 15, height = 25)
+# par(mfrow = c(4,4))
+# #plot priors against posterior_lncs
+# h1 <- hist(rnorm(1000, -15,20), col = rgb(1,0,1,1/4))
+# hist(posterior_lnc$muForceSp,add=T,col=rgb(0,0,1,1/4))
+# 
+# h1 <- hist(rnorm(1000, -15,20), col = rgb(1,0,1,1/4))
+# hist(posterior_lnc$muChillSp,add=T,col=rgb(0,0,1,1/4))
+# 
+# h1 <- hist(rnorm(1000, -15,20), col = rgb(1,0,1,1/4))
+# hist(posterior_lnc$muPhotoSp,add=T,col=rgb(0,0,1,1/4))
+# 
+# h1 <- hist(rnorm(1000, 20,5), col = rgb(1,0,1,1/4))
+# hist(posterior_lnc$mu_grand,add=T,col=rgb(0,0,1,1/4))
+# 
+# h1 <- hist(rnorm(1000,40,10), col = rgb(1,0,1,1/4))
+# hist(posterior_lnc$muPhenoSp,add=T,col=rgb(0,0,1,1/4))
+# 
+# h1 <- hist(rnorm(1000, 0,2), col = rgb(1,0,1,1/4))
+# hist(posterior_lnc$betaTraitxForce,add=T,col=rgb(0,0,1,1/4))
+# 
+# h1 <- hist(rnorm(1000, 0,2), col = rgb(1,0,1,1/4))
+# hist(posterior_lnc$betaTraitxChill,col=rgb(0,0,1,1/4),add=T)
+# 
+# h1 <- hist(rnorm(1000, 0,2), col = rgb(1,0,1,1/4))
+# hist(posterior_lnc$betaTraitxPhoto,col=rgb(0,0,1,1/4),add=T)
+# 
+# h1 <- hist(rnorm(1000, 5,2), col = rgb(1,0,1,1/4))
+# hist(posterior_lnc$sigma_sp,col=rgb(0,0,1,1/4),add=T)
+# 
+# h1 <- hist(rnorm(1000,5,2), col = rgb(1,0,1,1/4))
+# hist(posterior_lnc$sigma_study,col=rgb(0,0,1,1/4),add=T)
+# 
+# h1 <- hist(rnorm(1000, 2,2), col = rgb(1,0,1,1/4))
+# hist(posterior_lnc$sigma_traity,col=rgb(0,0,1,1/4),add=T)
+# 
+# h1 <- hist(rnorm(1000, 5,2), col = rgb(1,0,1,1/4))
+# hist(posterior_lnc$sigmaForceSp,col=rgb(0,0,1,1/4),add=T)
+# 
+# h1 <- hist(rnorm(1000, 10,5), col = rgb(1,0,1,1/4))
+# hist(posterior_lnc$sigmaChillSp,col=rgb(0,0,1,1/4),add=T)
+# 
+# h1 <- hist(rnorm(1000, 5,2), col = rgb(1,0,1,1/4))
+# hist(posterior_lnc$sigmaPhotoSp,col=rgb(0,0,1,1/4),add=T)
+# 
+# h1 <- hist(rnorm(1000, 10,5), col = rgb(1,0,1,1/4))
+# hist(posterior_lnc$sigmaPhenoSp,col=rgb(0,0,1,1/4),add=T)
+# 
+# h1 <- hist(rnorm(1000, 10,5), col = rgb(1,0,1,1/4))
+# hist(posterior_lnc$sigmapheno_y,add=T,col=rgb(0,0,1,1/4))
+# dev.off()
+# 

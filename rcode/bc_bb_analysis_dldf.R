@@ -47,13 +47,12 @@ dl.wchill$lab3 <- dl.wchill$lab2
 dl.wchill$lab2 <- paste(dl.wchill$species, dl.wchill$population, dl.wchill$rep, sep = "_")
 
 # mergeing the my data with DF
-#pheno <- rbind.fill(dl.wchill, df.wchill)
-pheno <- dl.wchill
+pheno <- rbind.fill(dl.wchill, df.wchill)
 
 pheno$first <- ifelse(pheno$tbb < pheno$latbb1,"t", ifelse (pheno$tbb == pheno$latbb1,"tl", "l"))
 
 head(pheno)
-table(pheno$species, pheno$first)
+#table(pheno$species, pheno$first)
 #write.csv(pheno, "input/pheno.wchill.midge.csv")
 # 
 # combined the data has 3197 unique samples
@@ -68,7 +67,7 @@ table(pheno$species, pheno$first)
 # pheno$chill.n[pheno$chill.n == "LC"] <- "0"
 # pheno$chill.n <- as.numeric(pheno$chill.n)
 # Trying to run the model with chill portions 
-pheno$Chill_portions <- as.factor(pheno$Chill_portions)
+#pheno$Chill_portions <- as.factor(pheno$Chill_portions)
 
 pheno$force.n <- pheno$force
 pheno$force.n[pheno$force.n == "HF"] <- "1"
@@ -81,92 +80,60 @@ pheno$photo.n[pheno$photo.n == "LP"] <- "0"
 pheno$photo.n <- as.numeric(pheno$photo.n)
 
 pheno$site.n <- pheno$population
-pheno$site.n[pheno$site.n == "sm"] <- "0"
-pheno$site.n[pheno$site.n == "mp"] <- "1"
-# pheno$site.n[pheno$site.n == "HF"] <- "2"
-# pheno$site.n[pheno$site.n == "SH"] <- "3"
+pheno$site.n[pheno$site.n == "sm"] <- "1"
+pheno$site.n[pheno$site.n == "mp"] <- "2"
+pheno$site.n[pheno$site.n == "HF"] <- "3"
+pheno$site.n[pheno$site.n == "SH"] <- "4"
 pheno$site.n <- as.numeric(pheno$site.n)
 
 head(pheno)
+#add dummy/ site level effects:
+pheno <- pheno %>%
+  mutate ( site2 = if_else(site.n == 2, 1, 0),
+           site3 = if_else(site.n == 3, 1, 0),
+           site4 = if_else(site.n == 4, 1, 0))
 
-##### For now I am just going to work with four chilling treatments, mine and the two shorter ones in DF
-pheno <- subset(pheno, chill != "chill2")
+# standardize the 0/1 and standardize sites? 
+pheno$force.z2 <- (pheno$force.n-mean(pheno$force.n,na.rm=TRUE))/(sd(pheno$force.n,na.rm=TRUE)*2)
+pheno$photo.z2 <- (pheno$photo.n-mean(pheno$photo.n,na.rm=TRUE))/(sd(pheno$photo.n,na.rm=TRUE)*2)
+pheno$chillport.z2 <- (pheno$Chill_portions-mean(pheno$Chill_portions,na.rm=TRUE))/(sd(pheno$Chill_portions,na.rm=TRUE)*2)
 
-##### z-score the treatments
-pheno$force.t <- pheno$force
-pheno$force.t[pheno$force.t == "HF"] <- 20
-pheno$force.t[pheno$force.t == "LF"] <- 15
-pheno$force.t <- as.numeric(pheno$force.t)
-
-pheno$photo.t <- pheno$photo
-pheno$photo.t[pheno$photo.t == "HP"] <- 12
-pheno$photo.t[pheno$photo.t == "LP"] <- 8
-pheno$photo.t <- as.numeric(pheno$photo.t)
-
-pheno$Chill_portions <- as.numeric(pheno$Chill_portions)
-
-pheno$force.z <- (pheno$force.t-mean(pheno$force.t,na.rm=TRUE))/sd(pheno$force.t,na.rm=TRUE)
-pheno$photo.z <- (pheno$photo.t-mean(pheno$photo.t,na.rm=TRUE))/sd(pheno$photo.t,na.rm=TRUE)
-pheno$chillport.z <- (pheno$Chill_portions-mean(pheno$Chill_portions,na.rm=TRUE))/sd(pheno$Chill_portions,na.rm=TRUE)
+pheno$site2.z2 <- (pheno$site2-mean(pheno$site2,na.rm=TRUE))/(sd(pheno$site2,na.rm=TRUE)*2)
+pheno$site3.z2 <- (pheno$site3-mean(pheno$site3,na.rm=TRUE))/(sd(pheno$site3,na.rm=TRUE)*2)
+pheno$site4.z2 <- (pheno$site4-mean(pheno$site4,na.rm=TRUE))/(sd(pheno$site4,na.rm=TRUE)*2)
 
 #going to split it into analysis of terminal bb and lateral bb
 # Starting with the terminal buds:
 #pheno.term <- pheno[,c("tbb", "chill.n", "force.n", "photo.n", "site.n", "species", "lab2")]
-pheno.term <- pheno[,c("tbb", "force.n", "photo.n", "site.n", "species", "lab2","Utah_Model","Chill_portions","force.z", "photo.z", "chillport.z")]
-pheno.t <- pheno.term[complete.cases(pheno.term), ] # 1780 rows dl data 
+pheno.term <- pheno[,c("tbb", "force.z2", "photo.z2", "population", "species", "lab2","Utah_Model","Chill_portions","chillport.z2", "site2.z2", "site3.z2","site4.z2")]
+pheno.t <- pheno.term[complete.cases(pheno.term), ] # 3609
 
 pheno.t$species.fact <- as.numeric(as.factor(pheno.t$species))
 sort(unique(pheno.t$species.fact)) # 30 species, 47 with chill0 47 
 
-nrow(pheno.term) - nrow(pheno.t) # 588 
+nrow(pheno.term) - nrow(pheno.t) # 609
 
-#pheno.t$Chill_portions <- as.factor(pheno.t$Chill_portions)
-
-## Things are not working great, so let's take a step back and see what we get with linear models
-# require(lme4)
-# m1 <- lmer(tbb ~ photo.n + force.n + Chill_portions  + (1|species), data = pheno.t)
-# summary(m1)
-
-# datalist <- with(pheno.t,
-#                     list( N=nrow(pheno.t),
-#                           n_sp = length(unique(pheno.t$species.fact)),
-#                           n_site = length(unique(pheno.t$site.n)),
-#                           bb = tbb,
-#                           sp = species.fact,
-#                           chill = Chill_portions,
-#                           photo = photo.n,
-#                           force = force.n,
-#                           site = site.n
-#                     ))
-
-datalist.z <- with(pheno.t,
+datalist.z2 <- with(pheno.t,
                  list( N=nrow(pheno.t),
                        n_sp = length(unique(pheno.t$species.fact)),
-                       n_site = length(unique(pheno.t$site.n)),
-                       bb = tbb,
+                       n_site = length(unique(pheno.t$population)),
+                       lday = tbb,
                        sp = species.fact,
-                       chill = chillport.z,
-                       photo = photo.z,
-                       force = force.z,
-                       site = site.n
-                 ))
-str(datalist)
-unique(datalist.z$chill)
-unique(datalist.z$force)
-# mdl <- stan("stan/bc.bb.inter.stan",
-#             data= datalist
-#             ,iter=2000, chains=4)
-#gives 200 divergent transitions, 41 transitions that exceed max tree depth, chains were not mixed, with low ESS
+                       chill1 = chillport.z2,
+                       photo = photo.z2,
+                       warm = force.z2,
+                       site2 = site2.z2,
+                       site3 = site3.z2,
+                       site4 = site4.z2
+                       ))
 
-# mdl.t <- stan("stan/bc.bb.ncpphoto.ncpinter.newpriors.stan",
-#           data = datalist,
-#           iter = 4000, chains=4, control = list(adapt_delta = 0.99))
-# save(mdl.t, file="output/tbb_ncp_termianlbud.chillportions.Rds")
 
-mdl.t <- stan("stan/bc.bb.ncpphoto.ncpinter.newpriors.stan",
-              data = datalist.z,
-              iter = 4000, chains=4, control = list(adapt_delta = 0.99))
-save(mdl.t, file="output/tbb_ncp_chillportions_zsc_dl.Rda")
+mdl.t <- stan("stan/df_mdl_4sites_again_allint.stan",
+              data = datalist.z2,
+              iter = 4000, chains=4
+              #, control = list(adapt_delta = 0.99)
+              )
+save(mdl.t, file="output/tbb_4sites_fullystandardized.Rda")
 
 
 ## The model no longer has any divergent transitions for the terminal buds!
@@ -177,70 +144,62 @@ save(mdl.t, file="output/tbb_ncp_chillportions_zsc_dl.Rda")
 
 #######################################################################
 
-load("output/tbb_ncp_chillportions_zsc_dl.Rda")
+#load("output/tbb_ncp_chillportions_zsc_dl.Rda")
 
 sumt <- summary(mdl.t)$summary
 mu <- sumt[grep("mu_", rownames(sumt)), ]
 
-ssm <-  as.shinystan(mdl.t)
-launch_shinystan(ssm)
+# ssm <-  as.shinystan(mdl.t)
+# launch_shinystan(ssm)
 
 range(sumt[, "n_eff"])
 range(sumt[, "Rhat"])
-str(post)
-# June 9: poor mixing of the chains for the muForce, and mu_site, no divergent transitions, but low ESS
+
 post <- rstan::extract(mdl.t)
 
 y<-as.numeric(pheno.t$tbb)
 yrep<-post$ypred_new # I want this to be a matrix, which it is, with one element for each data point in y
 
+pdf("yrepvsypred_4site_stand.pdf")
 ppc_dens_overlay(y, yrep[1:50, ])
+dev.off()
 #
-stan_hist(mdl.t)
-
-pairs(mdl.t, pars = c("mu_a","mu_force","mu_chill","mu_photo", "mu_site","mu_inter_fp", "mu_inter_fc",
-                      "mu_inter_fs",
-                      "mu_inter_ps",
-                      "mu_inter_sc"))
+# stan_hist(mdl.t)
+# 
+# pairs(mdl.t, pars = c("mu_a","mu_force","mu_chill","mu_photo", "mu_site","mu_inter_fp", "mu_inter_fc",
+#                       "mu_inter_fs",
+#                       "mu_inter_ps",
+#                       "mu_inter_sc"))
 ########################################################
-library("bayesplot")
-library("ggplot2")
-library("rstanarm")
-
-post3 <- as.matrix(mdl.t, par = c("mu_force", "mu_chill","mu_photo","mu_site", "mu_inter_fp", "mu_inter_fc"))
-
-plot_title <- ggtitle("Posterior distributions",
-                      "with medians and 80% intervals")
-pdf()
-mcmc_areas(post3,
-           pars = c("mu_force","mu_site"),
-           prob = 0.8) + plot_title
-
-mcmc_areas(post3,
-           pars = c("mu_chill"),
-           prob = 0.8) + plot_title
-
-
-plot(density(post$mu_force ), xlim = c(-40, 0)) ; lines(density(rnorm(1000, -30, 35)), col = "red", lwd =2)
-plot(density(post$mu_photo ), xlim = c(-15, 20)) ; abline(v = 0, col = "red")
-plot(density(post$mu_chill ), xlim = c(-15, 20)) ; abline(v = 0, col = "red")
-plot(density(post$mu_site ), xlim = c(-15, 20)) ; abline(v = 0, col = "red")
-
-plot(density(rnorm(1000, -30, 35)), col = "red", xlim = c(-100, 100),  ylim = c(0, 0.3)); lines(density(post$mu_force ), lty = 1)
-
-temp <- summary(mdl.t, pars = c("mu_photo","mu_chill"), prob = c(0.1, 0.8))$summary
-temp
+# library("bayesplot")
+# library("ggplot2")
+# library("rstanarm")
+# 
+# post3 <- as.matrix(mdl.t, par = c("mu_force", "mu_chill","mu_photo","mu_site", "mu_inter_fp", "mu_inter_fc"))
+# 
+# plot_title <- ggtitle("Posterior distributions",
+#                       "with medians and 80% intervals")
+# pdf()
+# mcmc_areas(post3,
+#            pars = c("mu_force","mu_site"),
+#            prob = 0.8) + plot_title
+# 
+# mcmc_areas(post3,
+#            pars = c("mu_chill"),
+#            prob = 0.8) + plot_title
+# 
+# 
+# plot(density(post$mu_force ), xlim = c(-40, 0)) ; lines(density(rnorm(1000, -30, 35)), col = "red", lwd =2)
+# plot(density(post$mu_photo ), xlim = c(-15, 20)) ; abline(v = 0, col = "red")
+# plot(density(post$mu_chill ), xlim = c(-15, 20)) ; abline(v = 0, col = "red")
+# plot(density(post$mu_site ), xlim = c(-15, 20)) ; abline(v = 0, col = "red")
+# 
+# plot(density(rnorm(1000, -30, 35)), col = "red", xlim = c(-100, 100),  ylim = c(0, 0.3)); lines(density(post$mu_force ), lty = 1)
+# 
+# temp <- summary(mdl.t, pars = c("mu_photo","mu_chill"), prob = c(0.1, 0.8))$summary
+# temp
 #####################################################################
 #####################################################################
-fit <- stan_glm(mpg ~ ., data = mtcars)
-posterior <- as.matrix(fit)
-
-test <- as.matrix(post)
-plot_title <- ggtitle("Posterior distributions",
-                      "with medians and 80% intervals")
-mcmc_areas(posterior,
-           pars = c("cyl", "drat", "am", "wt"),
-           prob = 0.8) + plot_title
 # # now running the same model for the lateral buds
 # pheno.50lat <- pheno[, c("latbb50", "chill.n", "force.n", "photo.n", "site.n", "species")]
 # pheno.50l <- pheno.50lat[complete.cases(pheno.50lat), ]
@@ -354,155 +313,154 @@ mcmc_areas(posterior,
 
 ######################################################
 # plotting code taken from buds-master Pheno Budburst analysis.R
-load("output/tbb_ncp_termianlbud_dldf.Rds")
 # load("output/lat1_ncp_dldf.Rds")
 
-col4fig <- c("mean","sd","25%","50%","75%","Rhat")
-col4table <- c("mean","sd","2.5%","50%","97.5%","Rhat")
-
-# manually to get right order
-mu_params <- c("mu_force",
-               "mu_photo",
-               "mu_chill",
-               "mu_site",
-               "mu_inter_fp",
-               "mu_inter_fc",
-               "mu_inter_pc",
-               "mu_inter_fs",
-               "mu_inter_ps",
-               "mu_inter_sc")
-
-meanzt <- sumt[mu_params, col4fig]
-# meanzl <- sum1l[mu_params, col4fig]
-
-rownames(meanzt) = c("Forcing",
-                     "Photoperiod",
-                     "Chilling",
-                     "Site",
-                     "Forcing x Photoperiod",
-                     "Forcing x Chilling",
-                     "Photoperiod x Chilling",
-                     "Forcing x Site",
-                     "Photoperiod x Site",
-                     "Site x Chilling"
-  )
-
-# rownames(meanzl) = c("Forcing",
-  #                    "Photoperiod",
-  #                    "Chilling",
-  #                    "Site",
-  #                    "Forcing x Photoperiod",
-  #                    "Forcing x Chilling",
-  #                    "Photoperiod x Chilling",
-  #                    "Forcing x Site",
-  #                    "Photoperiod x Site",
-  #                    "Site x Chilling"
-  # )
-
-meanzt.table <- sumt[mu_params, col4table]
-row.names(meanzt.table) <- row.names(meanzt)
-head(meanzt.table)
-write.table(meanzt.table , "output/termMdlEstiContChill.csv", sep = ",", row.names = T)
-
-# meanzl.table <- sum1l[mu_params, col4table]
-# row.names(meanzl.table) <- row.names(meanzl)
-# head(meanzl.table)
-#write.table(meanzl.table , "output/lat.mdl.esti.csv", sep = ",", row.names = FALSE)
-
-# Begin by checking to see what cue is most important and whether there are strong correlations between cues:
-df.mean.t <- data.frame(bb.force = sumt[grep("b_force", rownames(sumt)), 1],
-                          bb.photo = sumt[grep("b_photo_ncp", rownames(sumt)), 1],
-                          bb.chill = sumt[grep("b_chill", rownames(sumt)), 1])
-
-# df.mean.l <- data.frame(lat.force = sum1l[grep("b_force", rownames(sumt)), 1],
-#                         lat.photo = sum1l[grep("b_photo_ncp", rownames(sumt)), 1],
-#                         lat.chill = sum1l[grep("b_chill", rownames(sumt)), 1])
-
-df.mean.t[which(df.mean.t$bb.force > df.mean.t$bb.photo), ] # species 11- rho alb
-# df.mean.l[which(df.mean.l$lat.force > df.mean.l$lat.photo), ] #none
-df.mean.t[which(df.mean.t$bb.chill > df.mean.t$bb.force), ] # 14
-# 3, 5,6,8,9,10,12,13,15,17,18,20
-# df.mean.l[which(df.mean.l$lat.chill > df.mean.l$lat.force), ] # 16
-#1,2,5,6,7,8,10,11,12,13,15,16,17,18,19,20
-
-# all correlated
-summary(lm(bb.force~bb.photo, data=df.mean.t))
-summary(lm(bb.force~bb.chill, data=df.mean.t))
-summary(lm(bb.force~bb.photo, data=df.mean.t))
-# summary(lm(lat.force~lat.photo, data=df.mean.l))
-# summary(lm(lat.force~lat.chill, data=df.mean.l))
-# summary(lm(lat.chill~lat.photo, data=df.mean.l))
-
-pdf(file.path( "figures/changes.pheno.pdf"), width = 7, height = 8)
-par(mfrow = c(2,1), mar = c(5, 10, 2, 1))
-# Upper panel: bud burst
-plot(seq(-22, 
-         12,
-         length.out = nrow(meanzt)), 
-     1:nrow(meanzt),
-     type = "n",
-     xlab = "",
-     ylab = "",
-     yaxt = "n")
-
-#legend(x = -20, y = 2, bty="n", legend = "a. Budburst", text.font = 2)
-#rasterImage(bbpng, -20, 1, -16, 4)
-
-axis(2, at = nrow(meanzt):1, labels = rownames(meanzt), las = 1, cex.axis = 0.8)
-points(meanzt[, 'mean'],
-       nrow(meanzt):1,
-       pch = 16,
-       col = "midnightblue")
-arrows(meanzt[, "75%"], nrow(meanzt):1, meanzt[, "25%"], nrow(meanzt):1,
-       len = 0, col = "black")
-abline(v = 0, lty = 3)
-# add advance/delay arrows
-par(xpd=NA)
-arrows(1, 15.5, 6, 15.5, len = 0.1, col = "black")
-legend(5, 16.5, legend = "delay", bty = "n", text.font = 1, cex = 0.75)
-arrows(-1, 15.5, -6, 15.5, len = 0.1, col = "black")
-legend(-12, 16.5, legend = "advance", bty = "n", text.font = 1, cex = 0.75)
-legend(-2, 16.5, legend = "0", bty = "n", text.font = 1, cex = 0.75)
-par(xpd = FALSE)
-
-# par(mar = c(5, 10, 2, 1))
-# # Lower panel: leaf-out
+# col4fig <- c("mean","sd","25%","50%","75%","Rhat")
+# col4table <- c("mean","sd","2.5%","50%","97.5%","Rhat")
+# 
+# # manually to get right order
+# mu_params <- c("mu_force",
+#                "mu_photo",
+#                "mu_chill",
+#                "mu_site",
+#                "mu_inter_fp",
+#                "mu_inter_fc",
+#                "mu_inter_pc",
+#                "mu_inter_fs",
+#                "mu_inter_ps",
+#                "mu_inter_sc")
+# 
+# meanzt <- sumt[mu_params, col4fig]
+# # meanzl <- sum1l[mu_params, col4fig]
+# 
+# rownames(meanzt) = c("Forcing",
+#                      "Photoperiod",
+#                      "Chilling",
+#                      "Site",
+#                      "Forcing x Photoperiod",
+#                      "Forcing x Chilling",
+#                      "Photoperiod x Chilling",
+#                      "Forcing x Site",
+#                      "Photoperiod x Site",
+#                      "Site x Chilling"
+#   )
+# 
+# # rownames(meanzl) = c("Forcing",
+#   #                    "Photoperiod",
+#   #                    "Chilling",
+#   #                    "Site",
+#   #                    "Forcing x Photoperiod",
+#   #                    "Forcing x Chilling",
+#   #                    "Photoperiod x Chilling",
+#   #                    "Forcing x Site",
+#   #                    "Photoperiod x Site",
+#   #                    "Site x Chilling"
+#   # )
+# 
+# meanzt.table <- sumt[mu_params, col4table]
+# row.names(meanzt.table) <- row.names(meanzt)
+# head(meanzt.table)
+# write.table(meanzt.table , "output/termMdlEstiContChill.csv", sep = ",", row.names = T)
+# 
+# # meanzl.table <- sum1l[mu_params, col4table]
+# # row.names(meanzl.table) <- row.names(meanzl)
+# # head(meanzl.table)
+# #write.table(meanzl.table , "output/lat.mdl.esti.csv", sep = ",", row.names = FALSE)
+# 
+# # Begin by checking to see what cue is most important and whether there are strong correlations between cues:
+# df.mean.t <- data.frame(bb.force = sumt[grep("b_force", rownames(sumt)), 1],
+#                           bb.photo = sumt[grep("b_photo_ncp", rownames(sumt)), 1],
+#                           bb.chill = sumt[grep("b_chill", rownames(sumt)), 1])
+# 
+# # df.mean.l <- data.frame(lat.force = sum1l[grep("b_force", rownames(sumt)), 1],
+# #                         lat.photo = sum1l[grep("b_photo_ncp", rownames(sumt)), 1],
+# #                         lat.chill = sum1l[grep("b_chill", rownames(sumt)), 1])
+# 
+# df.mean.t[which(df.mean.t$bb.force > df.mean.t$bb.photo), ] # species 11- rho alb
+# # df.mean.l[which(df.mean.l$lat.force > df.mean.l$lat.photo), ] #none
+# df.mean.t[which(df.mean.t$bb.chill > df.mean.t$bb.force), ] # 14
+# # 3, 5,6,8,9,10,12,13,15,17,18,20
+# # df.mean.l[which(df.mean.l$lat.chill > df.mean.l$lat.force), ] # 16
+# #1,2,5,6,7,8,10,11,12,13,15,16,17,18,19,20
+# 
+# # all correlated
+# summary(lm(bb.force~bb.photo, data=df.mean.t))
+# summary(lm(bb.force~bb.chill, data=df.mean.t))
+# summary(lm(bb.force~bb.photo, data=df.mean.t))
+# # summary(lm(lat.force~lat.photo, data=df.mean.l))
+# # summary(lm(lat.force~lat.chill, data=df.mean.l))
+# # summary(lm(lat.chill~lat.photo, data=df.mean.l))
+# 
+# pdf(file.path( "figures/changes.pheno.pdf"), width = 7, height = 8)
+# par(mfrow = c(2,1), mar = c(5, 10, 2, 1))
+# # Upper panel: bud burst
 # plot(seq(-22, 
-#          12, 
-#          length.out = nrow(meanzl)), 
-#      1:nrow(meanzl),
+#          12,
+#          length.out = nrow(meanzt)), 
+#      1:nrow(meanzt),
 #      type = "n",
-#      xlab = "Model estimate change in day of phenological event",
+#      xlab = "",
 #      ylab = "",
 #      yaxt = "n")
-
-#legend(x = -24, y = 6, bty="n", legend = "b. Leafout", text.font = 2)
-#rasterImage(lopng, -20, 1, -14, 4)
-
-# axis(2, at = nrow(meanzl):1, labels = rownames(meanzl), las = 1, cex.axis = 0.8)
-# points(meanzl[,'mean'],
-#        nrow(meanzl):1,
+# 
+# #legend(x = -20, y = 2, bty="n", legend = "a. Budburst", text.font = 2)
+# #rasterImage(bbpng, -20, 1, -16, 4)
+# 
+# axis(2, at = nrow(meanzt):1, labels = rownames(meanzt), las = 1, cex.axis = 0.8)
+# points(meanzt[, 'mean'],
+#        nrow(meanzt):1,
 #        pch = 16,
 #        col = "midnightblue")
-# arrows(meanzl[,"75%"], nrow(meanzl):1, meanzl[,"25%"], nrow(meanzl):1,
+# arrows(meanzt[, "75%"], nrow(meanzt):1, meanzt[, "25%"], nrow(meanzt):1,
 #        len = 0, col = "black")
 # abline(v = 0, lty = 3)
-
-# add advance/delay arrows
+# # add advance/delay arrows
 # par(xpd=NA)
-# arrows(1, 15.5, 6, 15.5, len=0.1, col = "black")
-# legend(5, 16.5, legend="delay", bty="n", text.font = 1, cex=0.75)
-# arrows(-1, 15.5, -6, 15.5, len=0.1, col = "black")
-# legend(-12, 16.5, legend="advance", bty="n", text.font = 1, cex=0.75)
-# legend(-2, 16.5, legend="0", bty="n", text.font = 1, cex=0.75)
-# par(xpd=FALSE)
-dev.off()
-
-# Comparisons of trees vs shrubs:
-shrubs = c("VIBLAN","RHAFRA","RHOPRI","SPIALB","VACMYR","VIBCAS", "AROMEL","ILEMUC", "KALANG", "LONCAN", "LYOLIG", "alninc","alnvir","amelan", "corsto","loninv", "menfer","rhoalb", "riblac","rubpar","samrac","shecan","sorsco","spibet","spipyr","symalb","vacmem","vibedu")
-trees = c("ACEPEN", "ACERUB", "ACESAC", "ALNINC", "BETALL", "BETLEN", "BETPAP", "CORCOR", "FAGGRA", "FRANIG", "HAMVIR", "NYSSYL", "POPGRA", "PRUPEN", "QUEALB" , "QUERUB", "QUEVEL", "acegla","betpap", "poptre", "popbal")
-
-treeshrub = levels(dx$sp)
-treeshrub[treeshrub %in% shrubs] = 1
-treeshrub[treeshrub %in% trees] = 2
-treeshrub = as.numeric(treeshrub)
+# arrows(1, 15.5, 6, 15.5, len = 0.1, col = "black")
+# legend(5, 16.5, legend = "delay", bty = "n", text.font = 1, cex = 0.75)
+# arrows(-1, 15.5, -6, 15.5, len = 0.1, col = "black")
+# legend(-12, 16.5, legend = "advance", bty = "n", text.font = 1, cex = 0.75)
+# legend(-2, 16.5, legend = "0", bty = "n", text.font = 1, cex = 0.75)
+# par(xpd = FALSE)
+# 
+# # par(mar = c(5, 10, 2, 1))
+# # # Lower panel: leaf-out
+# # plot(seq(-22, 
+# #          12, 
+# #          length.out = nrow(meanzl)), 
+# #      1:nrow(meanzl),
+# #      type = "n",
+# #      xlab = "Model estimate change in day of phenological event",
+# #      ylab = "",
+# #      yaxt = "n")
+# 
+# #legend(x = -24, y = 6, bty="n", legend = "b. Leafout", text.font = 2)
+# #rasterImage(lopng, -20, 1, -14, 4)
+# 
+# # axis(2, at = nrow(meanzl):1, labels = rownames(meanzl), las = 1, cex.axis = 0.8)
+# # points(meanzl[,'mean'],
+# #        nrow(meanzl):1,
+# #        pch = 16,
+# #        col = "midnightblue")
+# # arrows(meanzl[,"75%"], nrow(meanzl):1, meanzl[,"25%"], nrow(meanzl):1,
+# #        len = 0, col = "black")
+# # abline(v = 0, lty = 3)
+# 
+# # add advance/delay arrows
+# # par(xpd=NA)
+# # arrows(1, 15.5, 6, 15.5, len=0.1, col = "black")
+# # legend(5, 16.5, legend="delay", bty="n", text.font = 1, cex=0.75)
+# # arrows(-1, 15.5, -6, 15.5, len=0.1, col = "black")
+# # legend(-12, 16.5, legend="advance", bty="n", text.font = 1, cex=0.75)
+# # legend(-2, 16.5, legend="0", bty="n", text.font = 1, cex=0.75)
+# # par(xpd=FALSE)
+# dev.off()
+# 
+# # Comparisons of trees vs shrubs:
+# shrubs = c("VIBLAN","RHAFRA","RHOPRI","SPIALB","VACMYR","VIBCAS", "AROMEL","ILEMUC", "KALANG", "LONCAN", "LYOLIG", "alninc","alnvir","amelan", "corsto","loninv", "menfer","rhoalb", "riblac","rubpar","samrac","shecan","sorsco","spibet","spipyr","symalb","vacmem","vibedu")
+# trees = c("ACEPEN", "ACERUB", "ACESAC", "ALNINC", "BETALL", "BETLEN", "BETPAP", "CORCOR", "FAGGRA", "FRANIG", "HAMVIR", "NYSSYL", "POPGRA", "PRUPEN", "QUEALB" , "QUERUB", "QUEVEL", "acegla","betpap", "poptre", "popbal")
+# 
+# treeshrub = levels(dx$sp)
+# treeshrub[treeshrub %in% shrubs] = 1
+# treeshrub[treeshrub %in% trees] = 2
+# treeshrub = as.numeric(treeshrub)

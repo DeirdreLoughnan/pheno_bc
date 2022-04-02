@@ -14,7 +14,11 @@
 # the model with no ncp on photo or chilling produced dt, running it for 5000 warmup and 6000 iterations produced only 1 dt but the rhat were bad at 1.13
 
 # next I tried running no ncp on photo and chill, but with a bigger adapt delta, 4000:3000 iterations, there were no dt, but the rhat was really bad at 1.39 and the max tree depth exceeded
-# 
+
+#March 3: running for 6000:5000 iterations and a greater adapt_delta (0.99) did not help; still 1 dt and poor rhat 1.17
+
+# Mdl with 4000:3000 and an increased tree depth and adapt delat produced no dt, but chains did not mix and the rhat were still bad 1.29
+#  
 #library(scales)
 #library(arm)
 library(rstan)
@@ -97,9 +101,11 @@ pheno$photo.z2 <- (pheno$photo.n-mean(pheno$photo.n,na.rm=TRUE))/(sd(pheno$photo
 pheno$chillport.z2 <- (pheno$Chill_portions-mean(pheno$Chill_portions,na.rm=TRUE))/(sd(pheno$Chill_portions,na.rm=TRUE)*2)
 pheno$utah.z2 <- (pheno$Utah_Model-mean(pheno$Utah_Model,na.rm=TRUE))/(sd(pheno$Utah_Model,na.rm=TRUE)*2)
 
+pheno$transect.z2 <- (pheno$transect.n-mean(pheno$transect.n,na.rm=TRUE))/(sd(pheno$transect.n,na.rm=TRUE)*2)
+
 #going to split it into analyses of terminal bb and lateral bb
 # Starting with the terminal buds:
-pheno.term <- pheno[,c("tbb", "force.n", "photo.n", "transect.n", "species", "lab2","Utah_Model","Chill_portions","force.z2", "photo.z2", "chillport.z2", "utah.z2")]
+pheno.term <- pheno[,c("tbb", "force.n", "photo.n", "transect.n", "species", "lab2","Utah_Model","Chill_portions","force.z2", "photo.z2", "chillport.z2", "utah.z2","transect.z2")]
 
 pheno.t <- pheno.term[complete.cases(pheno.term), ] # 1780 rows data 
 pheno.t$species.fact <- as.numeric(as.factor(pheno.t$species))
@@ -113,58 +119,82 @@ datalist_z <- list( N=nrow(pheno.t),
                     Nsite = nrow(pheno.t),
                     n_sp = length(unique(pheno.t$species.fact)),
                     n_site = length(unique(pheno.t$site.n)),
-                    bb = pheno.t$tbb,
+                    lday = pheno.t$tbb,
                     sp = pheno.t$species.fact,
-                    chill = pheno.t$chillport.z2,
+                    chill1 = pheno.t$chillport.z2,
                     photo = pheno.t$photo.z2,
-                    force = pheno.t$force.z2,
-                    site = pheno.t$transect.n)
+                    warm = pheno.t$force.z2,
+                    site = pheno.t$transect.z2)
 
-mdl <- stan("stan/bc.bb.noncp.standardize.old.stan",
+mdl <- stan("stan/lday_site_sp_chill_inter_poola_ncpwp_2chill_sitefixed_standardized.stan",
             data = datalist_z,
-            include = FALSE, pars = c("ypred_new","y_hat"),
-            iter = 6000, warmup = 5000, chains=4,
-            control = list(adapt_delta= 0.99))
-save(mdl, file="output/tbb_cport_stnd_transect_noncp_moreit.Rda")
+            #include = FALSE, pars = c("ypred_new","y_hat"),
+            iter = 2000, warmup = 1000, chains=4
+           , control = list(adapt_delta= 0.99))
+save(mdl, file="output/tbb_cport_stnd_stndsite_ew_adapt.Rda")
 # 
-mdl <- stan("stan/bc.bb.noncp.standardize.old.stan",
-            data = datalist_z,
-            include = FALSE, pars = c("ypred_new","y_hat"),
-            iter = 4000, warmup = 3000, chains=4,
-            control = list(adapt_delta= 0.99, max_treedepth = 15))
-save(mdl, file="output/tbb_cport_stnd_transect_noncpadapt.Rda")
 
-# mdl <- stan("stan/bc.bb.ncpphotochill.ncpinter.standardize.old.stan",
-#               data = datalist_z,
-#             include = FALSE, pars = c("ypred_new","y_hat"),
-#               iter = 4000, warmup = 3000, chains=4)
-# save(mdl, file="output/tbb_cport_stnd_transect_ncpchillphoto.Rda")
+#lday_site_sp_chill_inter_poola_ncpwp_2chill_sitefixed_standardized: 11 div trans, low ess  
 
-# mdl.i <- stan("stan/bc_bb_ncpphoto_ncpinter_standardize_index.stan",
-#               data = datalist_z,
-#               iter = 4000, chains=4)
-# save(mdl.i, file="output/tbb_cport_stnd_index.Rds")
-# 
-# 
-# mdl.d <- stan("stan/bc_bb_ncpphoto_ncpinter_standardize_dummy.stan",
-#               data = datalist_z,
-#               iter = 4000, chains=4)
-# save(mdl.d, file="output/tbb_cport_stnd_dummy.Rds")
+# 2. try running with a greater adapt delta 
 #######################################################################
 
-# load("output/tbb_cport_stnd_transect_ncpchillphoto.Rda")
-# # #  load("output/tbb_ncp_chillportions_zsc_dl.Rda")
-# # # #
+load("output/tbb_cport_stnd_ew_adapt.Rda")
+# # # # #
 # ssm <-  as.shinystan(mdl)
 # launch_shinystan(ssm)
 # # #
 sum <- summary(mdl)$summary 
-summary(mdl)$summary[c("mu_a", "mu_force","mu_chill","mu_photo","mu_site","mu_inter_fp", "mu_inter_fs","mu_inter_ps","mu_inter_fc","mu_inter_pc","mu_inter_sc","sigma_a", "sigma_force","sigma_chill","sigma_photo","sigma_site","sigma_b_inter_fp","sigma_b_inter_fs","sigma_b_inter_ps","sigma_b_inter_fc","sigma_b_inter_pc","sigma_b_inter_sc", "sigma_y"),"mean"]
+range(sum[, "n_eff"])
+range(sum[, "Rhat"])
+
+
+summary(mdl)$summary[c("mu_a",
+                       "mu_b_warm",
+                       "mu_b_photo",
+                       "mu_b_chill1",
+                       "b_site",
+                       "mu_b_inter_wp",
+                       "mu_b_inter_wc1",
+                       "mu_b_inter_pc1",
+                       "mu_b_inter_ws",
+                       "mu_b_inter_ps",
+                       "mu_b_inter_sc1",
+                       "sigma_b_warm",
+                       "sigma_b_photo",
+                       "sigma_b_chill1",
+                       "sigma_a",
+                       "sigma_b_inter_wp",
+                       "sigma_b_inter_wc1",
+                       "sigma_b_inter_pc1",
+                       "sigma_b_inter_ws",
+                       "sigma_b_inter_ps",
+                       "sigma_b_inter_sc1",
+                       "sigma_y"),"mean"]
+
+fit <- mdl
+y_rep <- as.matrix(fit, pars = "y_hat")
+
+y <- pheno.t$tbb
+#ppc_hist(y, y_rep[1:8, ], binwidth = 1)
+
+pdf("yvsypred_ew.pdf")
+ppc_dens_overlay(y, y_rep[1:100, ])
+dev.off()
+
 
 # pairs(mdl, pars = c("mu_a", "mu_force","mu_chill","mu_photo","mu_site","mu_inter_fp", "mu_inter_fs","mu_inter_ps","mu_inter_fc","mu_inter_pc","mu_inter_sc", "lp__"))
 # 
 # pairs(mdl, pars = c("sigma_a", "sigma_force","sigma_chill","sigma_photo","sigma_site","sigma_b_inter_fp","sigma_b_inter_fs","sigma_b_inter_ps","sigma_b_inter_fc","sigma_b_inter_pc","sigma_b_inter_sc", "sigma_y", "lp__"))
 
+summary(mdl)$summary[c("mu_a", "mu_b_warm", "mu_b_photo", "mu_b_chill1", "b_site",
+                            "mu_b_inter_wp","mu_b_inter_wc1","mu_b_inter_pc1","mu_b_inter_ws","mu_b_inter_ps","mu_b_inter_sc1",
+                            "sigma_b_warm","sigma_b_photo", "sigma_b_chill1","sigma_a", "sigma_b_inter_wp", "sigma_b_inter_wc1", "sigma_b_inter_pc1","sigma_b_inter_ws","sigma_b_inter_ps", "sigma_b_inter_sc1", "sigma_y"),c("mean","25%","75%")]
+
+######################################################################
+# let's take a closer look at the interactions and plot the model output against the raw data:
+
+######################################################################
 
 
 # post <- rstan::extract(mdl)

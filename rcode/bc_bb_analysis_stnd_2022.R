@@ -51,17 +51,6 @@ table(pheno$species, pheno$first)
 # 
 # combined the data has 3197 unique samples
 ############################################################
-# Preping the data for the model
-#1. converting species to a factor
-# colnames(pheno)[colnames(pheno) == "day"] <- "tbb"
-# pheno <- pheno %>% separate(treatment, c("chill", "photo","force")); pheno <- as.data.frame(pheno)
-#2. Adding columns of treatments as numeric values
-# pheno$chill.n <- pheno$chill
-# pheno$chill.n[pheno$chill.n == "HC"] <- "1"
-# pheno$chill.n[pheno$chill.n == "LC"] <- "0"
-# pheno$chill.n <- as.numeric(pheno$chill.n)
-# Trying to run the model with chill portions 
-
 
 pheno$force.n <- pheno$force
 pheno$force.n[pheno$force.n == "HF"] <- "1"
@@ -76,15 +65,12 @@ pheno$photo.n <- as.numeric(pheno$photo.n)
 pheno$site.n <- pheno$population
 pheno$site.n[pheno$site.n == "sm"] <- "0"
 pheno$site.n[pheno$site.n == "mp"] <- "1"
-# pheno$site.n[pheno$site.n == "HF"] <- "2"
-# pheno$site.n[pheno$site.n == "SH"] <- "3"
 pheno$site.n <- as.numeric(pheno$site.n)
 
 head(pheno)
 
 #going to split it into analysis of terminal bb and lateral bb
 # Starting with the terminal buds:
-#pheno.term <- pheno[,c("tbb", "chill.n", "force.n", "photo.n", "site.n", "species", "lab2")]
 pheno.term <- pheno[,c("tbb", "force.n", "photo.n", "site.n", "species", "lab2","Utah_Model","Chill_portions")]
 
 pheno.t <- pheno.term[complete.cases(pheno.term), ] # 1780 rows data 
@@ -92,6 +78,7 @@ pheno.t <- pheno.term[complete.cases(pheno.term), ] # 1780 rows data
 pheno.t$force.z2 <- (pheno.t$force.n-mean(pheno.t$force.n,na.rm=TRUE))/(sd(pheno.t$force.n,na.rm=TRUE)*2)
 pheno.t$photo.z2 <- (pheno.t$photo.n-mean(pheno.t$photo.n,na.rm=TRUE))/(sd(pheno.t$photo.n,na.rm=TRUE)*2)
 pheno.t$chillport.z2 <- (pheno.t$Chill_portions-mean(pheno.t$Chill_portions,na.rm=TRUE))/(sd(pheno.t$Chill_portions,na.rm=TRUE)*2)
+pheno.t$site.z2 <- (pheno.t$site.n-mean(pheno.t$site.n,na.rm=TRUE))/(sd(pheno.t$site.n,na.rm=TRUE)*2)
 
 pheno.t$species.fact <- as.numeric(as.factor(pheno.t$species))
 sort(unique(pheno.t$species.fact)) # 19, 30 species, 47 with chill0 47 
@@ -109,20 +96,16 @@ datalist <- with(pheno.t,
                        chill1 = chillport.z2,
                        photo = photo.z2,
                        warm = force.z2,
-                       site = site.n
+                       site = site.z2
                  ))
 
-# mdl <- stan("stan/bc.bb.inter.stan",
-#             data= datalist
-#             ,iter=2000, chains=4)
-#gives 200 divergent transitions, 41 transitions that exceed max tree depth, chains were not mixed, with low ESS
 
-# mdl.t <- stan("stan/lday_site_sp_chill_inter_poola_ncpwp_2chill_sitefixed_standardized.stan", 
-#               data = datalist,
-#               iter = 2000, warmup = 1000, chains=4
-#              # , control = list(adapt_delta = 0.99)
-#               )
-# save(mdl.t, file="output/tbb_ncpint_ncpwp_2chillport_2xstandardized.Rda")
+mdl.t <- stan("stan/lday_site_sp_chill_inter_poola_ncpwp_2chill_sitefixed_standardized.stan",
+              data = datalist,
+              iter = 2000, warmup = 1000, chains=4
+             # , control = list(adapt_delta = 0.99)
+              )
+save(mdl.t, file="output/tbb_ncpint_ncpwp_2chillport_2xstandardized_stndsite.Rda")
 
 #1. running the model with no ncp - 1417 divergent transitions after warmup, 4 transitions exceed max tree depth, Rhat up to 1.06- poor chain mixing, low ESS
 # the sigmas for forcing and photo look smushed, but chilling looks fine, wp kinds smushed, ws badly, ps looks fine, wc and pc look kinda bad, sc looks fine
@@ -173,8 +156,6 @@ mu_params <- c("mu_a",
 meanz_2stnd <- sumt[mu_params, col4table]
 meanz_2stnd
 
-
-
 #########################################################################
 
 # ssm <-  as.shinystan(mdl.t)
@@ -191,23 +172,28 @@ nrow(pheno.50lat) - nrow(pheno.50l)  # a lot of samples did not reach even 50%! 
 pheno.50l$species.fact <- as.numeric(as.factor(pheno.50l$species))
 sort(unique(pheno.50l$species.fact))
 
+pheno.50l$force.z2 <- (pheno.50l$force.n-mean(pheno.50l$force.n,na.rm=TRUE))/(sd(pheno.50l$force.n,na.rm=TRUE)*2)
+pheno.50l$photo.z2 <- (pheno.50l$photo.n-mean(pheno.50l$photo.n,na.rm=TRUE))/(sd(pheno.50l$photo.n,na.rm=TRUE)*2)
+pheno.50l$chillport.z2 <- (pheno.50l$Chill_portions-mean(pheno.50l$Chill_portions,na.rm=TRUE))/(sd(pheno.50l$Chill_portions,na.rm=TRUE)*2)
+pheno.50l$site.z2 <- (pheno.50l$site.n-mean(pheno.50l$site.n,na.rm=TRUE))/(sd(pheno.50l$site.n,na.rm=TRUE)*2)
+
 datalist.50 <- with(pheno.50l,
                list( N = nrow(pheno.50l),
                      n_sp = length(unique(pheno.50l$species.fact)),
                      n_site = length(unique(pheno.50l$site.n)),
                      lday = latbb50,
                      sp = species.fact,
-                     chill1 = Chill_portions,
-                     photo = photo.n,
-                     warm = force.n,
-                     site = site.n
+                     chill1 = chillport.z2,
+                     photo = photo.z2,
+                     warm = force.z2,
+                     site = site.z2
                ))
 mdl.lat50 <- stan("stan/lday_site_sp_chill_inter_poola_ncpwp_2chill_sitefixed_standardized.stan", 
               data = datalist.50,
               iter = 4000, warmup = 3000, chains=4
               # , control = list(adapt_delta = 0.99)
 )
-save(mdl.lat50, file="output/l50_ncpint_ncpwp_2chillport_standardized.Rda")
+save(mdl.lat50, file="output/l50_ncpint_ncpwp_2chillport_standardized_stndsite.Rda")
 
 # sum50l <- summary(mdl.50l)$summary
 # sum50l[grep("mu_",rownames(sum50l)), ]
@@ -228,16 +214,21 @@ nrow(pheno.1lat) - nrow(pheno.1l)
 pheno.1l$species.fact <- as.numeric(as.factor(pheno.1l$species))
 sort(unique(pheno.1l$species.fact))
 
+pheno.1l$force.z2 <- (pheno.1l$force.n-mean(pheno.1l$force.n,na.rm=TRUE))/(sd(pheno.1l$force.n,na.rm=TRUE)*2)
+pheno.1l$photo.z2 <- (pheno.1l$photo.n-mean(pheno.1l$photo.n,na.rm=TRUE))/(sd(pheno.1l$photo.n,na.rm=TRUE)*2)
+pheno.1l$chillport.z2 <- (pheno.1l$Chill_portions-mean(pheno.1l$Chill_portions,na.rm=TRUE))/(sd(pheno.1l$Chill_portions,na.rm=TRUE)*2)
+pheno.1l$site.z2 <- (pheno.1l$site.n-mean(pheno.1l$site.n,na.rm=TRUE))/(sd(pheno.1l$site.n,na.rm=TRUE)*2)
+
 datalist.1 <- with(pheno.1l,
                  list( N = nrow(pheno.1l),
                        n_sp = length(unique(pheno.1l$species.fact)),
                        n_site = length(unique(pheno.1l$site.n)),
                        lday = latbb1,
                        sp = species.fact,
-                       chill1 = Chill_portions,
-                       photo = photo.n,
-                       warm = force.n,
-                       site = site.n
+                       chill1 = chillport.z2,
+                       photo = photo.z2,
+                       warm = force.z2,
+                       site = site.z2
                  ))
 
 # mdl <- stan("stan/bc.bb.inter.stan",
@@ -250,7 +241,7 @@ mdl.1l <- stan("stan/lday_site_sp_chill_inter_poola_ncpwp_2chill_sitefixed_stand
                             iter = 2000, warmup = 1000, chains=4
                             # , control = list(adapt_delta = 0.99)
 )
-save(mdl.1l, file="output/l1_ncpint_ncpwp_2chillport_standardized.Rda")
+save(mdl.1l, file="output/l1_ncpint_ncpwp_2chillport_standardized_stndsite.Rda")
 
 sum1l <- summary(mdl.1l)$summary
 sum1l[grep("mu_",rownames(sum1l)), ]

@@ -1,0 +1,249 @@
+%%% start preambling . . .  %%%
+\documentclass{article}\usepackage[]{graphicx}\usepackage[]{color}
+
+% required 
+\usepackage{Sweave}
+\usepackage{graphicx}
+
+\usepackage[small]{caption}
+\setlength{\captionmargin}{30pt}
+\setlength{\abovecaptionskip}{0pt}
+\setlength{\belowcaptionskip}{10pt}
+
+% optional: muck with spacing
+\topmargin -1.5cm        
+\oddsidemargin 0.5cm   
+\evensidemargin 0.5cm  % same as oddsidemargin but for left-hand pages
+\textwidth 15.59cm
+\textheight 21.94cm 
+% \renewcommand{\baselinestretch}{1.5} % 1.5 lines between lines
+\parindent 0pt		  % sets leading space for paragraphs
+% optional: cute, fancy headers
+%\usepackage{fancyhdr}
+%\pagestyle{fancy}
+
+
+% more optionals! %
+\usepackage[hyphens]{url} % this wraps my URL versus letting it spill across the page, a bad habit LaTeX has
+
+%%% end preambling. %%%
+
+\begin{document}
+\SweaveOpts{concordance=TRUE}
+
+\title{{\huge Phenology:} \\ Tables and Figures}
+\author{Deirdre Loughnan}
+\date{4 February 2021}
+\maketitle 
+
+\section{General Survival and sucess}
+
+At the start of the experiment, 2496 samples went into chilling, 2458 went into forcing and survived the experiment. Of the samples that did die, it was largely due to human error, some species were very brittle, while others fell out of their flasks or were returned to the wrong flask, but these samples were only 1.52%
+In total, 9.5\% of the remaining samples did not bud burst at all.
+Of all the samples, 18.42\% did not have terminal bud burst, most of these were vac mem, followed by rubpar and acegla. 
+
+<<label=table1, echo=FALSE, results=tex >>=
+setwd("~/Documents/github/pheno_bc")
+spwithbb <- read.csv("output/bb.success.ax.trt.csv", head = TRUE)
+library(xtable)
+
+bb_suc <- data.frame(spwithbb, row.names = "Species")
+names(bb_suc) <- c("Proportion Budburst")
+make.bb_suc <- xtable(bb_suc, caption="Proporation of samples with budburst per species")
+print(make.bb_suc,include.rownames=TRUE, caption.placement="top", hline.after=c(-1,0))
+
+
+@
+
+\section{Results:}
+\begin{itemize}
+\item All three cues cause an advance in budburst, but vary in their response when considered together
+\item Forcing is the dominant driver of budburst, closely followed by chilling for both terminal and lateral budburst. 
+\item Forcing has a stronger effect on lateral budburst (-18.52) than terminal budburst (-16.87), but the effect of chilling is slightly weaker at -13.17 for lateral buds and -14.75 for terminal buds
+\item Our nothern site is slightly more advanced
+\item The interaction between high forcing and high chilling shows a delaying effect, the impacts terminal budburst (6.53) more than lateral budburst (4.78)
+\item There is a greater effect of photoperiod at the more Northern site for terminal budburst (-1.40) than lateral (-0.45)
+\end{itemize}
+
+\clearpage
+<<label=table2, echo=FALSE, results=tex >>=
+setwd("~/Documents/github/pheno_bc")
+require(rstan)
+require(xtable)
+load("output/final/tbb_ncpint_ncpwp_2chillport_2xstandardized.Rda")# 
+sumt <- summary(mdl.t)$summary
+
+col4table <- c("mean","sd","25%","75%","Rhat")
+mu_params <- c("mu_a",
+               "mu_b_warm",
+               "mu_b_photo",
+               "mu_b_chill1",
+               "b_site",
+               "mu_b_inter_wp",
+               "mu_b_inter_wc1",
+               "mu_b_inter_pc1",
+               "mu_b_inter_ws",
+               "mu_b_inter_ps",
+               "mu_b_inter_sc1",
+               "sigma_b_warm",
+               "sigma_b_photo",
+               "sigma_b_chill1",
+               "sigma_a",
+               "sigma_b_inter_wp",
+               "sigma_b_inter_wc1",
+               "sigma_b_inter_pc1",
+               "sigma_b_inter_ws",
+               "sigma_b_inter_ps",
+               "sigma_b_inter_sc1",
+               "sigma_y"
+)
+
+meanzt <- sumt[mu_params, col4table]
+
+rownames(meanzt) = c("mu_a",
+               "mu_b_warm",
+               "mu_b_photo",
+               "mu_b_chill1",
+               "b_site",
+               "mu_b_inter_wp",
+               "mu_b_inter_wc1",
+               "mu_b_inter_pc1",
+               "mu_b_inter_ws",
+               "mu_b_inter_ps",
+               "mu_b_inter_sc1",
+               "sigma_b_warm",
+               "sigma_b_photo",
+               "sigma_b_chill1",
+               "sigma_a",
+               "sigma_b_inter_wp",
+               "sigma_b_inter_wc1",
+               "sigma_b_inter_pc1",
+               "sigma_b_inter_ws",
+               "sigma_b_inter_ps",
+               "sigma_b_inter_sc1",
+               "sigma_y"
+  )
+
+
+make.term <- xtable(meanzt, caption="Model estimates for budburst of terminal buds")
+print(make.term,include.rownames=TRUE, caption.placement="top", hline.after=c(-1,0))
+@
+
+\clearpage
+<<label=table3, echo=FALSE, results=tex >>=
+setwd("~/Documents/github/pheno_bc")
+require(rstan)
+require(xtable)
+load("output/final/l50_ncpint_ncpwp_2chillport_standardized.Rda")# 
+sum50 <- summary(mdl.lat50)$summary
+
+meanz50 <- sum50[mu_params, col4table]
+
+rownames(meanz50) = c("mu_a",
+               "mu_b_warm",
+               "mu_b_photo",
+               "mu_b_chill1",
+               "b_site",
+               "mu_b_inter_wp",
+               "mu_b_inter_wc1",
+               "mu_b_inter_pc1",
+               "mu_b_inter_ws",
+               "mu_b_inter_ps",
+               "mu_b_inter_sc1",
+               "sigma_b_warm",
+               "sigma_b_photo",
+               "sigma_b_chill1",
+               "sigma_a",
+               "sigma_b_inter_wp",
+               "sigma_b_inter_wc1",
+               "sigma_b_inter_pc1",
+               "sigma_b_inter_ws",
+               "sigma_b_inter_ps",
+               "sigma_b_inter_sc1",
+               "sigma_y"
+  )
+
+
+make50 <- xtable(meanz50, caption="Model estimates for budburst of 50 percent lateral buds")
+print(make50,include.rownames=TRUE, caption.placement="top", hline.after=c(-1,0))
+@
+
+\clearpage
+<<label=table4, echo=FALSE, results=tex >>=
+setwd("~/Documents/github/pheno_bc")
+require(rstan)
+require(xtable)
+load("output/final/l1_ncpint_ncpwp_2chillport_standardized.Rda")# 
+sum1 <- summary(mdl.1l)$summary
+
+meanz1 <- sum1[mu_params, col4table]
+
+rownames(meanz1) = c("mu_a",
+               "mu_b_warm",
+               "mu_b_photo",
+               "mu_b_chill1",
+               "b_site",
+               "mu_b_inter_wp",
+               "mu_b_inter_wc1",
+               "mu_b_inter_pc1",
+               "mu_b_inter_ws",
+               "mu_b_inter_ps",
+               "mu_b_inter_sc1",
+               "sigma_b_warm",
+               "sigma_b_photo",
+               "sigma_b_chill1",
+               "sigma_a",
+               "sigma_b_inter_wp",
+               "sigma_b_inter_wc1",
+               "sigma_b_inter_pc1",
+               "sigma_b_inter_ws",
+               "sigma_b_inter_ps",
+               "sigma_b_inter_sc1",
+               "sigma_y"
+  )
+
+
+make1 <- xtable(meanz1, caption="Model estimates for budburst of one percent lateral buds")
+print(make1,include.rownames=TRUE, caption.placement="top", hline.after=c(-1,0))
+@
+
+  \clearpage
+<<label=table5, echo=FALSE, results=tex >>=
+setwd("~/Documents/github/pheno_bc")
+require(rstan)
+require(xtable)
+load("output/final/l50_ncpint_ncpwp_2chillport_standardized.Rda")# 
+sum50 <- summary(mdl.lat50)$summary
+
+meanz50 <- sum50[mu_params, col4table]
+
+rownames(meanz50) = c("mu_a",
+               "mu_b_warm",
+               "mu_b_photo",
+               "mu_b_chill1",
+               "b_site",
+               "mu_b_inter_wp",
+               "mu_b_inter_wc1",
+               "mu_b_inter_pc1",
+               "mu_b_inter_ws",
+               "mu_b_inter_ps",
+               "mu_b_inter_sc1",
+               "sigma_b_warm",
+               "sigma_b_photo",
+               "sigma_b_chill1",
+               "sigma_a",
+               "sigma_b_inter_wp",
+               "sigma_b_inter_wc1",
+               "sigma_b_inter_pc1",
+               "sigma_b_inter_ws",
+               "sigma_b_inter_ps",
+               "sigma_b_inter_sc1",
+               "sigma_y"
+  )
+
+
+make50 <- xtable(meanz50, caption="Model estimates for budburst in comparing terminal budburst of the east and west transects")
+print(make50,include.rownames=TRUE, caption.placement="top", hline.after=c(-1,0))
+@
+
+\end{document}

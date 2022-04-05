@@ -128,12 +128,12 @@ datalist.z2 <- with(pheno.t,
                        ))
 
 
-mdl.t <- stan("stan/df_mdl_4sites_again_allint.stan",
+mdl.t <- stan("stan/df_mdl_4sites_again_allint_ncp.stan",
               data = datalist.z2,
               iter = 4000, chains=4
               #, control = list(adapt_delta = 0.99)
               )
-save(mdl.t, file="output/tbb_4sites_fullystandardized.Rda")
+save(mdl.t, file="output/tbb_4sites_fullystandardized_ncp.Rda")
 
 
 ## The model no longer has any divergent transitions for the terminal buds!
@@ -144,16 +144,54 @@ save(mdl.t, file="output/tbb_4sites_fullystandardized.Rda")
 
 #######################################################################
 
-#load("output/tbb_ncp_chillportions_zsc_dl.Rda")
+ load("output/tbb_4sites_fullystandardized_ncp.Rda")
+# 
+ sumt <- summary(mdl.t)$summary
+# mu <- sumt[grep("mu_", rownames(sumt)), ]
 
-sumt <- summary(mdl.t)$summary
-mu <- sumt[grep("mu_", rownames(sumt)), ]
-
-# ssm <-  as.shinystan(mdl.t)
-# launch_shinystan(ssm)
+ssm <-  as.shinystan(mdl.t)
+launch_shinystan(ssm)
 
 range(sumt[, "n_eff"])
 range(sumt[, "Rhat"])
+
+summary(mdl.t)$summary[c("mu_a",
+                       "mu_b_warm",
+                       "mu_b_photo",
+                       "mu_b_chill1",
+                       "b_site2",
+                       "b_site3",
+                       "b_site4",
+                       "mu_b_inter_wp",
+                       "mu_b_inter_wc1",
+                       "mu_b_inter_pc1",
+                       "mu_b_inter_ws2",
+                       "mu_b_inter_ps2",
+                       "mu_b_inter_s2c1",
+                       "mu_b_inter_ws3",
+                       "mu_b_inter_ps3",
+                       "mu_b_inter_s3c1",
+                       "mu_b_inter_ws4",
+                       "mu_b_inter_ps4",
+                       "mu_b_inter_s4c1",
+                       "sigma_b_warm",
+                       "sigma_b_photo",
+                       "sigma_b_chill1",
+                       "sigma_a",
+                       "sigma_b_inter_wp",
+                       "sigma_b_inter_wc1",
+                       "sigma_b_inter_pc1",
+                       "sigma_b_inter_ws2",
+                       "sigma_b_inter_ps2",
+                       "sigma_b_inter_s2c1",
+                       "sigma_b_inter_ws3",
+                       "sigma_b_inter_ps3",
+                       "sigma_b_inter_s3c1",
+                       "sigma_b_inter_ws4",
+                       "sigma_b_inter_ps4",
+                       "sigma_b_inter_s4c1",
+                       "sigma_y"),"mean"]
+
 
 post <- rstan::extract(mdl.t)
 

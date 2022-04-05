@@ -100,12 +100,12 @@ datalist <- with(pheno.t,
                  ))
 
 
-mdl.t <- stan("stan/lday_site_sp_chill_inter_poola_ncpwp_2chill_sitefixed_standardized.stan",
+mdl.t <- stan("stan/lday_site_sp_chill_inter_poola_ncpwp_2chill_sitefixedstnd_standardized.stan",
               data = datalist,
               iter = 2000, warmup = 1000, chains=4
              # , control = list(adapt_delta = 0.99)
               )
-save(mdl.t, file="output/tbb_ncpint_ncpwp_2chillport_2xstandardized_stndsite.Rda")
+save(mdl.t, file="output/tbb_ncpint_ncpwp_2chillport_2xstandardized_2stndsite.Rda")
 
 #1. running the model with no ncp - 1417 divergent transitions after warmup, 4 transitions exceed max tree depth, Rhat up to 1.06- poor chain mixing, low ESS
 # the sigmas for forcing and photo look smushed, but chilling looks fine, wp kinds smushed, ws badly, ps looks fine, wc and pc look kinda bad, sc looks fine
@@ -188,12 +188,12 @@ datalist.50 <- with(pheno.50l,
                      warm = force.z2,
                      site = site.z2
                ))
-mdl.lat50 <- stan("stan/lday_site_sp_chill_inter_poola_ncpwp_2chill_sitefixed_standardized.stan", 
+mdl.lat50 <- stan("stan/lday_site_sp_chill_inter_poola_ncpwp_2chill_sitefixedstnd_standardized.stan", 
               data = datalist.50,
               iter = 4000, warmup = 3000, chains=4
               # , control = list(adapt_delta = 0.99)
 )
-save(mdl.lat50, file="output/l50_ncpint_ncpwp_2chillport_standardized_stndsite.Rda")
+save(mdl.lat50, file="output/l50_ncpint_ncpwp_2chillport_2xstandardized_stndsite.Rda")
 
 # sum50l <- summary(mdl.50l)$summary
 # sum50l[grep("mu_",rownames(sum50l)), ]
@@ -236,12 +236,12 @@ datalist.1 <- with(pheno.1l,
 #             ,iter=2000, chains=4)
 #gives 200 divergent transitions, 41 transitions that exceed max tree depth, chains were not mixed, with low ESS
 
-mdl.1l <- stan("stan/lday_site_sp_chill_inter_poola_ncpwp_2chill_sitefixed_standardized.stan", 
+mdl.1l <- stan("stan/lday_site_sp_chill_inter_poola_ncpwp_2chill_sitefixedstnd_standardized.stan", 
                             data = datalist.1,
                             iter = 2000, warmup = 1000, chains=4
                             # , control = list(adapt_delta = 0.99)
 )
-save(mdl.1l, file="output/l1_ncpint_ncpwp_2chillport_standardized_stndsite.Rda")
+save(mdl.1l, file="output/l1_ncpint_ncpwp_2chillport_2xstandardized_stndsite.Rda")
 
 sum1l <- summary(mdl.1l)$summary
 sum1l[grep("mu_",rownames(sum1l)), ]

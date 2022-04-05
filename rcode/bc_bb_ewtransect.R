@@ -18,6 +18,10 @@
 #March 3: running for 6000:5000 iterations and a greater adapt_delta (0.99) did not help; still 1 dt and poor rhat 1.17
 
 # Mdl with 4000:3000 and an increased tree depth and adapt delat produced no dt, but chains did not mix and the rhat were still bad 1.29
+
+# mdl with cues and site standardized produced 5 divergent transitions and low ess - tried increasing the warmup back up to 4000:300 - 11 divergent transitions - classic banana shape for chilling
+
+# mdl with chilling, forcing, photoperiod, interactions all ncp - 4000:3000 and no increased adapt delta
 #  
 #library(scales)
 #library(arm)
@@ -121,17 +125,24 @@ datalist_z <- list( N=nrow(pheno.t),
                     n_site = length(unique(pheno.t$site.n)),
                     lday = pheno.t$tbb,
                     sp = pheno.t$species.fact,
-                    chill1 = pheno.t$chillport.z2,
+                    chill1 = pheno.t$Chill_portions,
                     photo = pheno.t$photo.z2,
                     warm = pheno.t$force.z2,
                     site = pheno.t$transect.z2)
 
-mdl <- stan("stan/lday_site_sp_chill_inter_poola_ncpwp_2chill_sitefixed_standardized.stan",
+mdl <- stan("stan/lday_site_sp_chill_inter_poola_ncpwp_2chill_sitefixedstnd_standardized.stan",
             data = datalist_z,
             #include = FALSE, pars = c("ypred_new","y_hat"),
-            iter = 2000, warmup = 1000, chains=4
+            iter = 4000, warmup = 3000, chains=4
            , control = list(adapt_delta= 0.99))
 save(mdl, file="output/tbb_cport_stnd_stndsite_ew_adapt.Rda")
+
+mdl.ncp <- stan("stan/bc_pheno_mdl_2sites_standardized_ewtransect.stan",
+            data = datalist_z,
+            #include = FALSE, pars = c("ypred_new","y_hat"),
+            iter = 4000, warmup = 3000, chains=4
+            , control = list(adapt_delta= 0.99))
+save(mdl.ncp, file="output/tbb_cport_stnd_stndsite_ew_allncp.Rda")
 # 
 
 #lday_site_sp_chill_inter_poola_ncpwp_2chill_sitefixed_standardized: 11 div trans, low ess  
@@ -139,7 +150,8 @@ save(mdl, file="output/tbb_cport_stnd_stndsite_ew_adapt.Rda")
 # 2. try running with a greater adapt delta 
 #######################################################################
 
-load("output/tbb_cport_stnd_ew_adapt.Rda")
+# load("output/final/tbb_cport_stnd_ew.Rda")
+#load("output/final/tbb_cport_stnd_stndsite_ew_fullncp.Rda")
 # # # # #
 # ssm <-  as.shinystan(mdl)
 # launch_shinystan(ssm)
@@ -150,6 +162,29 @@ range(sum[, "Rhat"])
 
 
 summary(mdl)$summary[c("mu_a",
+                       "mu_b_warm",
+                       "mu_b_photo",
+                       "mu_b_chill1",
+                       "b_site",
+                       "mu_b_inter_wp",
+                       "mu_b_inter_wc1",
+                       "mu_b_inter_pc1",
+                       "mu_b_inter_ws",
+                       "mu_b_inter_ps",
+                       "mu_b_inter_sc1",
+                       "sigma_b_warm",
+                       "sigma_b_photo",
+                       "sigma_b_chill1",
+                       "sigma_a",
+                       "sigma_b_inter_wp",
+                       "sigma_b_inter_wc1",
+                       "sigma_b_inter_pc1",
+                       "sigma_b_inter_ws",
+                       "sigma_b_inter_ps",
+                       "sigma_b_inter_sc1",
+                       "sigma_y"),"mean"]
+
+summary(mdl.ncp)$summary[c("mu_a",
                        "mu_b_warm",
                        "mu_b_photo",
                        "mu_b_chill1",
@@ -192,7 +227,55 @@ summary(mdl)$summary[c("mu_a", "mu_b_warm", "mu_b_photo", "mu_b_chill1", "b_site
                             "sigma_b_warm","sigma_b_photo", "sigma_b_chill1","sigma_a", "sigma_b_inter_wp", "sigma_b_inter_wc1", "sigma_b_inter_pc1","sigma_b_inter_ws","sigma_b_inter_ps", "sigma_b_inter_sc1", "sigma_y"),c("mean","25%","75%")]
 
 ######################################################################
-# let's take a closer look at the interactions and plot the model output against the raw data:
+# let's take a closer look at the interactions and plot the model output against the raw data:\
+pheno$transect <- as.factor(pheno$transect)
+plot(pheno$Chill_portions ~ pheno$transect)
+
+west <- subset(pheno.t, transect.n == "0")
+east <- subset(pheno.t, transect.n == "1")
+
+#pred <- sum[grep("y_hat", rownames(sum)), 1]
+a_sp = sum[grep("mu_a", rownames(sum)), 1]
+mu_b_warm = sum[grep("mu_b_warm", rownames(sum)), 1]
+mu_b_photo = sum[grep("mu_b_photo", rownames(sum)), 1]
+mu_b_chill1 = sum[grep("mu_b_chill1", rownames(sum)), 1]
+mu_b_inter_ws = sum[grep("mu_b_inter_ws", rownames(sum)), 1]
+mu_b_inter_sc1 = sum[grep("mu_b_inter_sc1", rownames(sum)), 1]
+mu_b_inter_ps = sum[grep("mu_b_inter_ps", rownames(sum)), 1]
+mu_b_inter_pc1 = sum[grep("mu_b_inter_pc1", rownames(sum)), 1]
+mu_b_inter_wp = sum[grep("mu_b_inter_wp", rownames(sum)), 1]
+mu_b_inter_wc1 = sum[grep("mu_b_inter_wc1", rownames(sum)), 1]
+b_site = sum[grep("b_site", rownames(sum)), 1]
+
+west <- subset(pheno.t, transect.n == "0")
+east <- subset(pheno.t, transect.n == "1")
+
+# WEST COAST
+  force <- -0.5080665 # zero forcing
+  photo <- -0.5044652 # zero photo
+  chill1 <- c( -0.3482404,  0.9462697,  0.8463799, -0.7629649,  0.5315452,  0.4316554,0.2985445, -0.4011572,  0.2759381, -0.4061035)
+  west.sites <- unique(west$transect.z2)
+  east.sites <- unique(east$transect.z2)
+  
+  
+# plot first for the west coast
+bb_west = a_sp + b_site * west.sites + mu_b_warm * force + mu_b_photo * photo + mu_b_chill1 * chill1 + 
+  mu_b_inter_wp * (force*photo) + mu_b_inter_ws * (force*west.sites) +mu_b_inter_ps * (photo*west.sites) +
+  mu_b_inter_wc1 * (force*chill1) + mu_b_inter_pc1 * (photo*chill1) +
+  mu_b_inter_sc1 * (chill1*west.sites)
+
+# plot first for the east coast
+bb_east = a_sp + b_site *  east.sites + mu_b_warm * force + mu_b_photo * photo + mu_b_chill1 * chill1 + 
+  mu_b_inter_wp * (force*photo) +mu_b_inter_ws * (force* east.sites) +mu_b_inter_ps * (photo* east.sites) +
+  mu_b_inter_wc1 * (force*chill1) +mu_b_inter_pc1 * (photo*chill1) +
+  mu_b_inter_sc1 * (chill1* east.sites)
+
+plot(0, type = "n",  xlim = c(-1,1), ylim = c(-5,90), xlab = "Chill portions", ylab = "Day of budburst")
+points(west$chillport.z2,west$tbb, col = "maroon")
+points(east$chillport.z2,east$tbb, col = "darkslategray4")
+abline(lm(bb_west ~ chill1), pch =19, col = "darkred", lwd = 3)
+abline(lm(bb_east ~ chill1), pch =19, col = "darkslategray", lwd = 3)
+
 
 ######################################################################
 

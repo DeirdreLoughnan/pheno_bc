@@ -251,6 +251,53 @@ table(pheno$species, pheno$first)
 # 4 species (sorsco, rhoalb, loninv, acegla) bb terminal first
 # 8 bb lateral first (poptre, riblac, samrac, shecan, vacmem, vibedu, symalb, menfer)
 
+################################################################
+# April 6, 2022 - for now working with lateral and terminal bb bc this is most similar to the df data
+# for every unique, label, pop, trt, flask, sp, it is getting the minimum (ie first) day that an obs of 7 or greater was observed
+burstedAll  <- subset(gc, bbch.t >= 7| bbch.l >=7)
+
+allbb <- aggregate(burstedAll["day"],
+                        burstedAll[c("lab2", "population", "treatment", "flask", "species")], 
+                        FUN = min)
+names(allbb)[names(allbb) == "day"] <- "bb"
+length(unique(bursted$lab2))
+length(unique(allbb$lab2))
+
+allbb$treatment <- as.factor(allbb$treatment)
+temp <- strsplit(allbb$treatment, split = ".")
+require(dplyr)
+allbb$force <- as.character(allbb$treatment)
+allbb$force[allbb$force == "LC.HP.HF"] <- "HF"
+allbb$force[allbb$force == "LC.LP.HF"] <- "HF"
+allbb$force[allbb$force == "HC.LP.HF"] <- "HF"
+allbb$force[allbb$force == "HC.HP.HF"] <- "HF"
+
+LC.HP.LF 
+HC.HP.LF HC.LP.LF LC.LP.LF LC.LP.HF HC.HP.HF HC.LP.HF LC.HP.HF
+
+allbb$chill[allbb$chill == "LC.HP.HF"] <- "HF"
+allbb$chill[allbb$chill == "LC.LP.HF"] <- "HF"
+allbb$chill[allbb$chill == "HC.LP.HF"] <- "HF"
+allbb$chill[allbb$chill == "HC.HP.HF"] <- "HF"
+
+allbb$photo[allbb$photo == "LC.HP.HF"] <- "HF"
+allbb$photo[allbb$photo == "LC.LP.HF"] <- "HF"
+allbb$photo[allbb$photo == "HC.LP.HF"] <- "HF"
+allbb$photo[allbb$photo == "HC.HP.HF"] <- "HF"
+
+ HC.LP.HF HC.LP.HF
+
+# split treatments:
+require(stringr)
+allbb$trt <- as.character(as.factor(allbb$treatment))
+
+temp <- str_split_fixed(allbb$trt, ".", 5); head(temp)
+allbb$chill<- temp[,1]
+allbb$photo <- temp[,2]
+allbb$force <- temp[,3]
+
+write.csv(allbb, "dl_allbb.csv",row.names = F)
+
 # making fequncy tables:
 # require(plyr)
 # 

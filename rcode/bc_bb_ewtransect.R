@@ -32,6 +32,7 @@ library(bayesplot)
 library(ggplot2)
 #library(RColorBrewer)
 library(dplyr)
+library(stringr)
 library(plyr)
 #library(tidybayes)
 
@@ -50,14 +51,13 @@ if(length(grep("deirdreloughnan", getwd()) > 0)) {
 # head(pheno)
 # length(unique(pheno$lab2))
 
-df <- read.csv("input/day.of.bb.DFlynn.chill0.csv", header=TRUE, na.strings=c("","NA"))
-head(df)
-df.chill <- read.csv("input/chilling_values_eastern.csv")
-df.wchill <- merge(df, df.chill, by =c("population","chill"))
-df.wchill$transect <- "east"
+dl <- read.csv("input/dl_allbb.csv")
 
-dl <- read.csv("input/day.of.bb.DL.csv", header=TRUE, na.strings=c("","NA"))
-head(dl)
+temp <- str_split_fixed(dl$trt, "_", 3); head(temp)
+dl$chill<- temp[,1]
+dl$photo <- temp[,2]
+dl$force <- temp[,3]
+
 dl.chill <- read.csv("input/chilling_values_Hope_Smithers.csv")
 
 dl.wchill <- merge(dl, dl.chill, by = c("population","chill"))
@@ -65,14 +65,20 @@ dl.wchill$lab3 <- dl.wchill$lab2
 dl.wchill$lab2 <- paste(dl.wchill$species, dl.wchill$population, dl.wchill$rep, sep = "_")
 dl.wchill$transect <- "west"
 
+df <- read.csv("input/df_dxb_prepped_data.csv")
+df.chill <- read.csv("input/chilling_values_eastern.csv")
+df.wchill <- merge(df, df.chill, by =c("population","chill"))
+df.wchill <- df.wchill[, c("population", "chill","force","photo","lab2", "bb","species", "treatment","Chill_portions","Utah_Model")]
+df.wchill$transect <- "east"
+
 # mergeing the my data with DF
 pheno <- rbind.fill(dl.wchill, df.wchill)
 #pheno <- dl
 
-pheno$first <- ifelse(pheno$tbb < pheno$latbb1,"t", ifelse (pheno$tbb == pheno$latbb1,"tl", "l"))
+#pheno$first <- ifelse(pheno$tbb < pheno$latbb1,"t", ifelse (pheno$tbb == pheno$latbb1,"tl", "l"))
 
 head(pheno)
-table(pheno$species, pheno$first)
+#table(pheno$species, pheno$first)
 #write.csv(pheno, "input/pheno.w5chill.csv")
 #pheno <- read.csv("pheno.w5chill.csv")
 ############################################################
@@ -109,7 +115,7 @@ pheno$transect.z2 <- (pheno$transect.n-mean(pheno$transect.n,na.rm=TRUE))/(sd(ph
 
 #going to split it into analyses of terminal bb and lateral bb
 # Starting with the terminal buds:
-pheno.term <- pheno[,c("tbb", "force.n", "photo.n", "transect.n", "species", "lab2","Utah_Model","Chill_portions","force.z2", "photo.z2", "chillport.z2", "utah.z2","transect.z2")]
+pheno.term <- pheno[,c("bb", "force.n", "photo.n", "transect.n", "species", "lab2","Utah_Model","Chill_portions","force.z2", "photo.z2", "chillport.z2", "utah.z2","transect.z2")]
 
 pheno.t <- pheno.term[complete.cases(pheno.term), ] # 1780 rows data 
 pheno.t$species.fact <- as.numeric(as.factor(pheno.t$species))
@@ -123,7 +129,7 @@ datalist_z <- list( N=nrow(pheno.t),
                     Nsite = nrow(pheno.t),
                     n_sp = length(unique(pheno.t$species.fact)),
                     n_site = length(unique(pheno.t$site.n)),
-                    lday = pheno.t$tbb,
+                    lday = pheno.t$bb,
                     sp = pheno.t$species.fact,
                     chill1 = pheno.t$Chill_portions,
                     photo = pheno.t$photo.z2,
@@ -150,11 +156,11 @@ save(mdl.ncp, file="output/tbb_cport_stnd_stndsite_ew_allncp.Rda")
 # 2. try running with a greater adapt delta 
 #######################################################################
 
-# load("output/final/tbb_cport_stnd_ew.Rda")
+load("output/tbb_cport_stnd_stndsite_ew_adapt_4000_3000.Rda")
 #load("output/final/tbb_cport_stnd_stndsite_ew_fullncp.Rda")
 # # # # #
-# ssm <-  as.shinystan(mdl)
-# launch_shinystan(ssm)
+ssm <-  as.shinystan(mdl)
+launch_shinystan(ssm)
 # # #
 sum <- summary(mdl)$summary 
 range(sum[, "n_eff"])

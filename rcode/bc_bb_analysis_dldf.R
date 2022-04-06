@@ -18,6 +18,7 @@ library(shinystan)
 #library(RColorBrewer)
 library(dplyr)
 library(plyr)
+library(stringr)
 
 options(mc.cores = parallel::detectCores())
 
@@ -32,24 +33,36 @@ if(length(grep("deirdreloughnan", getwd()) > 0)) {
 #source('rcode/cleaning/pheno_bb_calc.R')
 # head(pheno)
 # length(unique(pheno$lab2))
+# df <- read.csv("input/lday.csv", header=TRUE, na.strings=c("","NA"))
+# 
+# head(df)
+# df.chill <- read.csv("input/chilling_values_eastern.csv")
+# df$population <- df$site
+# df$population[df$population == "0"] <- "HF"
+# df$population[df$population == "1"] <- "SH"
+# 
+# df.wchill <- merge(df, df.chill, by =c("population","chill"))
 
-df <- read.csv("input/day.of.bb.DFlynn.chill0.csv", header=TRUE, na.strings=c("","NA"))
-head(df)
-df.chill <- read.csv("input/chilling_values_eastern.csv")
-df.wchill <- merge(df, df.chill, by =c("population","chill"))
+dl <- read.csv("input/dl_allbb.csv")
 
-dl <- read.csv("input/day.of.bb.DL.csv", header=TRUE, na.strings=c("","NA"))
-head(dl)
+temp <- str_split_fixed(dl$trt, "_", 3); head(temp)
+dl$chill<- temp[,1]
+dl$photo <- temp[,2]
+dl$force <- temp[,3]
+
 dl.chill <- read.csv("input/chilling_values_Hope_Smithers.csv")
 
 dl.wchill <- merge(dl, dl.chill, by = c("population","chill"))
 dl.wchill$lab3 <- dl.wchill$lab2
 dl.wchill$lab2 <- paste(dl.wchill$species, dl.wchill$population, dl.wchill$rep, sep = "_")
 
+df <- read.csv("input/df_dxb_prepped_data.csv")
+df.chill <- read.csv("input/chilling_values_eastern.csv")
+df.wchill <- merge(df, df.chill, by =c("population","chill"))
+df.wchill <- df.wchill[, c("population", "chill","force","photo","lab2", "bb","species", "treatment","Chill_portions","Utah_Model")]
+ 
 # mergeing the my data with DF
 pheno <- rbind.fill(dl.wchill, df.wchill)
-
-pheno$first <- ifelse(pheno$tbb < pheno$latbb1,"t", ifelse (pheno$tbb == pheno$latbb1,"tl", "l"))
 
 head(pheno)
 #table(pheno$species, pheno$first)
@@ -105,19 +118,20 @@ pheno$site4.z2 <- (pheno$site4-mean(pheno$site4,na.rm=TRUE))/(sd(pheno$site4,na.
 #going to split it into analysis of terminal bb and lateral bb
 # Starting with the terminal buds:
 #pheno.term <- pheno[,c("tbb", "chill.n", "force.n", "photo.n", "site.n", "species", "lab2")]
-pheno.term <- pheno[,c("tbb", "force.z2", "photo.z2", "population", "species", "lab2","Utah_Model","Chill_portions","chillport.z2", "site2.z2", "site3.z2","site4.z2")]
+pheno.term <- pheno[,c("bb", "force.z2", "photo.z2", "population", "species", "lab2","Utah_Model","Chill_portions","chillport.z2", "site2.z2", "site3.z2","site4.z2")]
 pheno.t <- pheno.term[complete.cases(pheno.term), ] # 3609
 
 pheno.t$species.fact <- as.numeric(as.factor(pheno.t$species))
-sort(unique(pheno.t$species.fact)) # 30 species, 47 with chill0 47 
+sort(unique(pheno.t$species.fact)) # 49
 
 nrow(pheno.term) - nrow(pheno.t) # 609
+
 
 datalist.z2 <- with(pheno.t,
                  list( N=nrow(pheno.t),
                        n_sp = length(unique(pheno.t$species.fact)),
                        n_site = length(unique(pheno.t$population)),
-                       lday = tbb,
+                       lday = bb,
                        sp = species.fact,
                        chill1 = chillport.z2,
                        photo = photo.z2,
@@ -130,7 +144,7 @@ datalist.z2 <- with(pheno.t,
 
 mdl.t <- stan("stan/df_mdl_4sites_again_allint_ncp.stan",
               data = datalist.z2,
-              iter = 4000, chains=4
+              iter = 4000, warmup =3000, chains=4
               #, control = list(adapt_delta = 0.99)
               )
 save(mdl.t, file="output/tbb_4sites_fullystandardized_ncp.Rda")

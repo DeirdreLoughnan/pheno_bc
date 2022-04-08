@@ -156,7 +156,7 @@ save(mdl.ncp, file="output/tbb_cport_stnd_stndsite_ew_allncp.Rda")
 # 2. try running with a greater adapt delta 
 #######################################################################
 
-load("output/tbb_cport_stnd_stndsite_ew_adapt_4000_3000.Rda")
+load("output/tbb_cport_stnd_stndsite_ew_adapt.Rda")
 #load("output/final/tbb_cport_stnd_stndsite_ew_fullncp.Rda")
 # # # # #
 ssm <-  as.shinystan(mdl)
@@ -216,7 +216,7 @@ summary(mdl.ncp)$summary[c("mu_a",
 fit <- mdl
 y_rep <- as.matrix(fit, pars = "y_hat")
 
-y <- pheno.t$tbb
+y <- pheno.t$bb
 #ppc_hist(y, y_rep[1:8, ], binwidth = 1)
 
 pdf("yvsypred_ew.pdf")

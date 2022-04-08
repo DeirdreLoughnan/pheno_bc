@@ -13,6 +13,7 @@ library(shinystan)
 #library(RColorBrewer)
 library(dplyr)
 library(plyr)
+library(stringr)
 
 options(mc.cores = parallel::detectCores())
 
@@ -249,9 +250,107 @@ sum1l
 ssm <- as.shinystan(mdl.1l)
 launch_shinystan(ssm)
 
+############################################################################
+#looking at the timing of first budburst regardless of terminal or lateral
+dlall <- read.csv("input/dl_allbb.csv")
+
+temp <- str_split_fixed(dlall$trt, "_", 3); head(temp)
+dlall$chill<- temp[,1]
+dlall$photo <- temp[,2]
+dlall$force <- temp[,3]
+
+dl.chill <- read.csv("input/chilling_values_Hope_Smithers.csv")
+
+dl.wchill <- merge(dlall, dl.chill, by = c("population","chill"))
+dl.wchill$lab3 <- dl.wchill$lab2
+dl.wchill$lab2 <- paste(dl.wchill$species, dl.wchill$population, dl.wchill$rep, sep = "_")
+
+# mergeing the my data with DF
+pheno <- dl.wchill
+
+head(pheno)
+
+pheno$force.n <- pheno$force
+pheno$force.n[pheno$force.n == "HF"] <- "1"
+pheno$force.n[pheno$force.n == "LF"] <- "0"
+pheno$force.n <- as.numeric(pheno$force.n)
+
+pheno$photo.n <- pheno$photo
+pheno$photo.n[pheno$photo.n == "HP"] <- "1"
+pheno$photo.n[pheno$photo.n == "LP"] <- "0"
+pheno$photo.n <- as.numeric(pheno$photo.n)
+
+pheno$site.n <- pheno$population
+pheno$site.n[pheno$site.n == "sm"] <- "1"
+pheno$site.n[pheno$site.n == "mp"] <- "2"
+pheno$site.n <- as.numeric(pheno$site.n)
+
+head(pheno)
+#
+# standardize the 0/1 and standardize sites? 
+pheno$force.z2 <- (pheno$force.n-mean(pheno$force.n,na.rm=TRUE))/(sd(pheno$force.n,na.rm=TRUE)*2)
+pheno$photo.z2 <- (pheno$photo.n-mean(pheno$photo.n,na.rm=TRUE))/(sd(pheno$photo.n,na.rm=TRUE)*2)
+pheno$chillport.z2 <- (pheno$Chill_portions-mean(pheno$Chill_portions,na.rm=TRUE))/(sd(pheno$Chill_portions,na.rm=TRUE)*2)
+
+pheno$site.z2 <- (pheno$site-mean(pheno$site,na.rm=TRUE))/(sd(pheno$site,na.rm=TRUE)*2)
+pheno.all<- pheno[,c("bb", "force.z2", "photo.z2", "population", "species", "lab2","Utah_Model","Chill_portions","chillport.z2", "site.z2")]
+pheno.all <- pheno.all[complete.cases(pheno.all), ] # 3609
+
+pheno.all$species.fact <- as.numeric(as.factor(pheno.all$species))
+sort(unique(pheno.all$species.fact)) # 19, 30 species, 47 with chill0 47 
+
+datalist.all <- with(pheno.all,
+                   list( N = nrow(pheno.all),
+                         n_sp = length(unique(pheno.all$species.fact)),
+                         n_site = length(unique(pheno.all$site.z2)),
+                         lday = bb,
+                         sp = species.fact,
+                         chill1 = chillport.z2,
+                         photo = photo.z2,
+                         warm = force.z2,
+                         site = site.z2
+                   ))
+
+
+mdl.all <- stan("stan/lday_site_sp_chill_inter_poola_ncpwp_2chill_sitefixedstnd_standardized.stan", 
+               data = datalist.all,
+               iter = 2000, warmup = 1000, chains=4
+               # , control = list(adapt_delta = 0.99)
+)
+save(mdl.all, file="output/allbuds_ncpint_ncpwp_2chillport_2xstandardized_stndsite.Rda")
 ## The model no longer has any divergent transitions for the terminal buds!
 #pairs(sm.sum, pars=c("mu_a","mu_force","mu_chill","mu_photo_ncp")) # this gives a lot of warning messages and not the figure i was hoping/expected
+suma <- summary(mdl.all)$summary
+range(sumt[, "n_eff"])
+range(sumt[, "Rhat"])
+col4table <- c("mean","sd","2.5%","50%","97.5%","Rhat")
+# manually to get right order
+mu_params <- c("mu_a",
+               "mu_b_warm",
+               "mu_b_photo",
+               "mu_b_chill1",
+               "b_site",
+               "mu_b_inter_wp",
+               "mu_b_inter_wc1",
+               "mu_b_inter_pc1",
+               "mu_b_inter_ws",
+               "mu_b_inter_ps",
+               "mu_b_inter_sc1",
+               "sigma_b_warm",
+               "sigma_b_photo",
+               "sigma_b_chill1",
+               "sigma_a",
+               "sigma_b_inter_wp",
+               "sigma_b_inter_wc1",
+               "sigma_b_inter_pc1",
+               "sigma_b_inter_ws",
+               "sigma_b_inter_ps",
+               "sigma_b_inter_sc1",
+               "sigma_y"
+)
 
+meanz_all <- suma[mu_params, col4table]
+meanz_all
 ####################################################################
 ### PPC
 

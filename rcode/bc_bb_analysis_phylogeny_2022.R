@@ -14,7 +14,7 @@ library(shinystan)
 library(dplyr)
 library(plyr)
 library(stringr)
-library(phylotools)
+library(phytools)
 
 options(mc.cores = parallel::detectCores())
 
@@ -146,11 +146,13 @@ mdl.phylo <- stan("stan/bc_bb_2sites_standardized_phylogeny.stan",
                   iter = 2000, warmup = 1000, chains=4
                   #, control = list(adapt_delta = 0.99)
 )
-save(mdl.phylo, file="output/dl_phylo_output.Rda")
+save(mdl.phylo, file="output/dl_phylo_output_newpriors.Rda")
 
-load("output/dl_phylo_output.Rda")
-ssm <-  as.shinystan(mdl.phylo)
-launch_shinystan(ssm)
+load("output/final/dl_phylo_output_newpriors.Rda")
+# ssm <-  as.shinystan(mdl.phylo)
+# launch_shinystan(ssm)
+# require(tidybayes)
+# get_variables(mdl.phylo)
 # # #
 sum <- summary(mdl.phylo)$summary 
 range(sum[, "n_eff"])
@@ -192,7 +194,39 @@ meanz_phylo
 
 
 post <- rstan::extract(mdl.phylo)
-h1 <- hist(rbeta(1000, 4,1))
-h2 <- hist(post$mu_a)
-plot(h2, col=rgb(0,0,1,1/4), xlim = c(0, 400))
+
+h1 <- hist(rnorm(1000, 4,3))
+h2 <- hist(post$a_z)
+plot(h2, col=rgb(0,0,1,1/4), xlim = c(0, 50))
 plot(h1, col=rgb(1,0,1,1/4), add = T)
+
+h1 <- hist(rbeta(1000, 1,1))
+h2 <- hist(post$lam_interceptsa)
+plot(h2, col=rgb(0,0,1,1/4), xlim = c(0, 1))
+plot(h1, col=rgb(1,0,1,1/4), add = T)
+
+h1 <- hist(rnorm(1000, 1,10))
+h2 <- hist(post$sigma_interceptsa)
+plot(h2, col=rgb(0,0,1,1/4), xlim = c(0, 50))
+plot(h1, col=rgb(1,0,1,1/4), add = T)
+
+h1 <- hist(rnorm(1000, 0,35))
+h2 <- hist(post$mu_b_chill1)
+plot(h2, col=rgb(0,0,1,1/4), xlim = c(-100, 100))
+plot(h1, col=rgb(1,0,1,1/4), add = T)
+
+h1 <- hist(rnorm(1000, 0,5))
+h2 <- hist(post$b_site)
+plot(h2, col=rgb(0,0,1,1/4), xlim = c(-100, 100))
+plot(h1, col=rgb(1,0,1,1/4), add = T)
+
+h1 <- hist(rnorm(1000, 0,50))
+h2 <- hist(post$b_warm_ncp)
+plot(h2, col=rgb(0,0,1,1/4), xlim = c(-100, 100))
+plot(h1, col=rgb(1,0,1,1/4), add = T)
+
+h1 <- hist(rnorm(1000, 0,10))
+h2 <- hist(post$sigma_b_inter_wc1)
+plot(h2, col=rgb(0,0,1,1/4), xlim = c(-100, 100))
+plot(h1, col=rgb(1,0,1,1/4), add = T)
+

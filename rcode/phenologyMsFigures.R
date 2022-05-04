@@ -103,19 +103,20 @@ dev.off()
 
 ## Replicating Flynn Figure 2:
 
-b.force.both <- sumt[grep("b_force", rownames(sumt))]
+b.force.both <- sumt[grep("b_warm", rownames(sumt))]; b.force.both <- b.force.both[48:94]
 b.photo.both <- sumt[grep("b_photo", rownames(sumt))]; b.photo.both <- b.photo.both[48:94]
-b.chill.both <- sumt[grep("b_chill", rownames(sumt))]
+b.chill.both <- sumt[grep("^b_chill1", rownames(sumt))]
+
 
 shrubs.both = c("VIBLAN","RHAFRA","RHOPRI","SPIALB","VACMYR","VIBCAS", "AROMEL","ILEMUC", "KALANG", "LONCAN", "LYOLIG", "alninc","alnvir","amelan", "corsto","loninv", "menfer","rhoalb", "riblac","rubpar","samrac","shecan","sorsco","spibet","spipyr","symalb","vacmem","vibedu")
-trees.both = c("ACEPEN", "ACERUB", "ACESAC", "ALNINC", "BETALL", "BETLEN", "BETPAP", "CORCOR", "FAGGRA", "FRANIG", "HAMVIR", "NYSSYL", "POPGRA", "PRUPEN", "QUEALB" , "QUERUB", "QUEVEL", "acegla","betpap", "poptre", "popbal")
+trees.both = c("ACEPEN", "ACERUB", "ACESAC", "BETALL", "BETLEN", "CORCOR", "FAGGRA", "FRANIG", "HAMVIR", "NYSSYL", "POPGRA", "PRUPEN", "QUEALB" , "QUERUB", "QUEVEL", "acegla","betpap", "poptre", "popbal")
 
-pheno.term <- pheno[,c("tbb", "chillport.z", "force.z", "photo.z", "species", "lab2","transect")]
+pheno.term <- pheno[,c("bb", "chillport.z2", "force.z2", "photo.z2", "species", "lab2","transect")]
 pheno.t <- pheno.term[complete.cases(pheno.term), ] # 1780 rows data 
 
 
-species.both <- sort(unique(pheno.t$species))
-species.fact.both <-as.numeric( as.factor(unique(pheno.t$species)))
+species.both <- sort(unique(tolower(pheno.t$species)))
+species.fact.both <-as.numeric( as.factor(unique(tolower(pheno.t$species))))
 type.both <- c("tree", "tree", "tree","tree", "shrub", "shrub", "shrub", "tree", "tree", "tree", "tree", "tree",
                "tree", "shrub","shrub","tree","tree", "shrub", "shrub","shrub",  "shrub", "shrub", "shrub", "shrub", "shrub",
                "tree","tree","tree","tree","tree","tree","tree","shrub", "shrub", "shrub", "shrub","shrub", "shrub", "shrub", "shrub","shrub", "shrub", "shrub", "shrub","shrub", "shrub", "shrub")
@@ -136,7 +137,7 @@ cf.both <- ggplot(both, aes(x= b.chill.both, y = b.force.both, col = type.both))
 #pdf(file.path( "figures/chill_vs_photo_dldf.pdf"), width = 7, height = 8)
 cp.both <- ggplot(both, aes(x= b.chill.both, y = b.photo.both, col = type.both)) +
   geom_point() +
-  ylim (-3.5, 1) +
+  ylim (-5.5, 1) +
   xlim (-30, 0) +
   labs (x = "High chilling", y = "Long photoperiod") +
   geom_text(aes(label=species.both),hjust=0.5, vjust= 1) +
@@ -150,26 +151,23 @@ cp.both <- ggplot(both, aes(x= b.chill.both, y = b.photo.both, col = type.both))
 fp.both <- ggplot(both, aes(x= b.force.both, y = b.photo.both, col = type.both)) +
   geom_point() +
   geom_text(aes(label=species.both),hjust=0.5, vjust= 1)+
-  ylim (-3.5, 0.5) +
-  xlim (-22, 0) +
+  ylim (-5.5, 0.5) +
+  xlim (-22, 0.5) +
   labs(x = "High forcing", y = "Long photoperiod") +
   theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
         panel.background = element_blank(), axis.line = element_line(colour = "black"))
 #dev.off()
 
 ## Plotting the day to bb with the cues on the y-axis 
-term.bb.both <- ddply(pheno, c("species"), summarize, mean = mean(tbb, na.rm = TRUE), mean.lat = mean(latbb50, na.rm = TRUE))
-names(term.bb.both) <- c("species.both", "mean","mean.lat")
+pheno$species <- tolower(pheno$species)
+term.bb.both <- ddply(pheno, c("species"), summarize, mean = mean(bb, na.rm = TRUE))
+names(term.bb.both) <- c("species.both", "mean")
+
 term.both <- merge(term.bb.both, both, by = "species.both", all =TRUE)
 term.both <- term.both[,c("species.both","mean","b.force.both","b.chill.both","b.photo.both")]
 term.both <- term.both[complete.cases(term.both), ] 
 
-tf.both <- ggplot(term.both, aes(y = b.force.both, x= mean,col = type.both)) +
-  geom_point() +
-  geom_text(aes(label=species.both),hjust=0.5, vjust= 1) +
-  labs(x = "Mean day of budburst", y = "High forcing") + 
-  theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
-        panel.background = element_blank(), axis.line = element_line(colour = "black"))
+tf.both <-  f
 
 tc.both <- ggplot(term.both, aes(y = b.chill.both, x= mean,col = type.both)) +
   geom_point() +

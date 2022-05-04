@@ -203,9 +203,9 @@ load("output/final/ew_phylo_output_newpriors.Rda")
 ssm <-  as.shinystan(mdl.ewphylo)
 launch_shinystan(ssm)
 # # #
-sum <- summary(mdl.ewphylo)$summary 
-range(sum[, "n_eff"]) # low
-range(sum[, "Rhat"])
+# sum <- summary(mdl.ewphylo)$summary 
+# range(sum[, "n_eff"]) # low
+# range(sum[, "Rhat"])
 
 
 # summary(mdl)$summary[c("a_z",
@@ -270,170 +270,233 @@ dev.off()
 
 
 # pairs(mdl, pars = c("mu_a", "mu_force","mu_chill","mu_photo","mu_site","mu_inter_fp", "mu_inter_fs","mu_inter_ps","mu_inter_fc","mu_inter_pc","mu_inter_sc", "lp__"))
-# 
+#
 # pairs(mdl, pars = c("sigma_a", "sigma_force","sigma_chill","sigma_photo","sigma_site","sigma_b_inter_fp","sigma_b_inter_fs","sigma_b_inter_ps","sigma_b_inter_fc","sigma_b_inter_pc","sigma_b_inter_sc", "sigma_y", "lp__"))
 
 # summary(mdl)$summary[c("mu_a", "mu_b_warm", "mu_b_photo", "mu_b_chill1", "b_site",
 #                             "mu_b_inter_wp","mu_b_inter_wc1","mu_b_inter_pc1","mu_b_inter_ws","mu_b_inter_ps","mu_b_inter_sc1",
 #                             "sigma_b_warm","sigma_b_photo", "sigma_b_chill1","sigma_a", "sigma_b_inter_wp", "sigma_b_inter_wc1", "sigma_b_inter_pc1","sigma_b_inter_ws","sigma_b_inter_ps", "sigma_b_inter_sc1", "sigma_y"),c("mean","25%","75%")]
-# 
+#
 # ######################################################################
-# # let's take a closer look at the interactions and plot the model output against the raw data:\
-# pheno$transect <- as.factor(pheno$transect)
-# 
-# #pred <- sum[grep("y_hat", rownames(sum)), 1]
-# a_sp = sum[grep("mu_a", rownames(sum)), 1]
-# mu_b_warm = sum[grep("mu_b_warm", rownames(sum)), 1]
-# mu_b_photo = sum[grep("mu_b_photo", rownames(sum)), 1]
-# mu_b_chill1 = sum[grep("mu_b_chill1", rownames(sum)), 1]
-# mu_b_inter_ws = sum[grep("mu_b_inter_ws", rownames(sum)), 1]
-# mu_b_inter_sc1 = sum[grep("mu_b_inter_sc1", rownames(sum)), 1]
-# mu_b_inter_ps = sum[grep("mu_b_inter_ps", rownames(sum)), 1]
-# mu_b_inter_pc1 = sum[grep("mu_b_inter_pc1", rownames(sum)), 1]
-# mu_b_inter_wp = sum[grep("mu_b_inter_wp", rownames(sum)), 1]
-# mu_b_inter_wc1 = sum[grep("mu_b_inter_wc1", rownames(sum)), 1]
-# b_site = sum[grep("b_site", rownames(sum)), 1]
-# 
-# ######################################################################
-# ## transect and chilling:
-# west <- subset(pheno.t, transect.n == "0")
-# east <- subset(pheno.t, transect.n == "1")
-# 
-#   force <- -0.5080665 # zero forcing
-#   photo <- -0.5044652 # zero photo
-#   chill1 <- c( -0.3482404,  0.9462697,  0.8463799, -0.7629649,  0.5315452,  0.4316554,0.2985445, -0.4011572,  0.2759381, -0.4061035)
-#   west.sites <- unique(west$transect.z2)
-#   east.sites <- unique(east$transect.z2)
-#   
-# # plot first for the west coast
-# bb_westc = a_sp + b_site * west.sites + mu_b_warm * force + mu_b_photo * photo + mu_b_chill1 * chill1 + 
-#   mu_b_inter_wp * (force*photo) + mu_b_inter_ws * (force*west.sites) +mu_b_inter_ps * (photo*west.sites) +
-#   mu_b_inter_wc1 * (force*chill1) + mu_b_inter_pc1 * (photo*chill1) +
-#   mu_b_inter_sc1 * (chill1*west.sites)
-# 
-# # plot first for the east coast
-# bb_eastc = a_sp + b_site *  east.sites + mu_b_warm * force + mu_b_photo * photo + mu_b_chill1 * chill1 + 
-#   mu_b_inter_wp * (force*photo) +mu_b_inter_ws * (force* east.sites) +mu_b_inter_ps * (photo* east.sites) +
-#   mu_b_inter_wc1 * (force*chill1) +mu_b_inter_pc1 * (photo*chill1) +
-#   mu_b_inter_sc1 * (chill1* east.sites)
-# 
-# pdf("figures/ew_interactions.pdf", width = 10, height = 3.5)
-# par(mfrow = c(1,3))
-# plot(0, type = "n",  xlim = c(-1,1), ylim = c(-5,90), xlab = "Chill portions", ylab = "Day of budburst")
-# points(west$chillport.z2,west$bb, col = "maroon")
-# points(east$chillport.z2,east$bb, col = "darkslategray4")
-# abline(lm(bb_westc ~ chill1), pch =19, col = "darkred", lwd = 3)
-# abline(lm(bb_eastc ~ chill1), pch =19, col = "darkslategray", lwd = 3)
-# 
-# legend("topleft",legend = c(expression("eastern transect"),
-#                             expression("western transect")),
-#        col = c("darkslategray","maroon"),
-#        inset = 0.02, pch = c(21,21 ),  cex = 0.75, bty = "n")
-# ######################################################################
-# ######################################################################
-# ## transect and forcing:
-# west <- subset(pheno.t, transect.n == "0")
-# east <- subset(pheno.t, transect.n == "1")
-# 
-# #force <- unique(pheno.t$force.z2)
-# force <- seq(1:50)
-# photo <- -0.5044652 # zero photo
-# chill1 <- mean( -0.3482404,  0.9462697,  0.8463799, -0.7629649,  0.5315452,  0.4316554,0.2985445, -0.4011572,  0.2759381, -0.4061035)
-# west.sites <- unique(west$transect.z2)
-# east.sites <- unique(east$transect.z2)
-# 
-# # plot first for the west coast
-# bb_westf = a_sp + b_site * west.sites + mu_b_warm * force + mu_b_photo * photo + mu_b_chill1 * chill1 + 
-#   mu_b_inter_wp * (force*photo) + mu_b_inter_ws * (force*west.sites) +mu_b_inter_ps * (photo*west.sites) +
-#   mu_b_inter_wc1 * (force*chill1) + mu_b_inter_pc1 * (photo*chill1) +
-#   mu_b_inter_sc1 * (chill1*west.sites)
-# 
-# # plot first for the east coast
-# bb_eastf = a_sp + b_site *  east.sites + mu_b_warm * force + mu_b_photo * photo + mu_b_chill1 * chill1 + 
-#   mu_b_inter_wp * (force*photo) +mu_b_inter_ws * (force* east.sites) +mu_b_inter_ps * (photo* east.sites) +
-#   mu_b_inter_wc1 * (force*chill1) +mu_b_inter_pc1 * (photo*chill1) +
-#   mu_b_inter_sc1 * (chill1* east.sites)
-# 
-# plot(0, type = "n",  xlim = c(-1,1), ylim = c(-5,90), xlab = "Forcing", ylab = "Day of budburst")
-# points(west$force.z2,west$bb, col = "maroon")
-# points(east$force.z2,east$bb, col = "darkslategray4")
+# let's take a closer look at the interactions and plot the model output against the raw data:\
+pheno$transect <- as.factor(pheno$transect)
+
+#pred <- sum[grep("y_hat", rownames(sum)), 1]
+a_sp = sum[grep("a_z", rownames(sum)), 1]
+mu_b_warm = sum[grep("mu_b_warm", rownames(sum)), 1]
+mu_b_photo = sum[grep("mu_b_photo", rownames(sum)), 1]
+mu_b_chill1 = sum[grep("mu_b_chill1", rownames(sum)), 1]
+mu_b_inter_ws = sum[grep("mu_b_inter_ws", rownames(sum)), 1]
+mu_b_inter_sc1 = sum[grep("mu_b_inter_sc1", rownames(sum)), 1]
+mu_b_inter_ps = sum[grep("mu_b_inter_ps", rownames(sum)), 1]
+mu_b_inter_pc1 = sum[grep("mu_b_inter_pc1", rownames(sum)), 1]
+mu_b_inter_wp = sum[grep("mu_b_inter_wp", rownames(sum)), 1]
+mu_b_inter_wc1 = sum[grep("mu_b_inter_wc1", rownames(sum)), 1]
+b_site = sum[grep("b_site", rownames(sum)), 1]
+
+######################################################################
+## transect and chilling:
+west <- subset(pheno.t, transect.n == "0")
+east <- subset(pheno.t, transect.n == "1")
+
+  force <- -0.5080665 # zero forcing
+  photo <- -0.5044652 # zero photo
+  chill1 <- seq( -1, 1, by = 0.01)
+  west.sites <- unique(west$transect.z2)
+  east.sites <- unique(east$transect.z2)
+
+# plot first for the west coast
+bb_westc <- matrix(NA, ncol = 1, nrow = length(chill1))
+for(k in 1:length(chill1)){
+bb_westc[k] <- a_sp + b_site * west.sites + mu_b_warm * force + mu_b_photo * photo + mu_b_chill1 * chill1[k] +
+  mu_b_inter_wp * (force*photo) + mu_b_inter_ws * (force*west.sites) +mu_b_inter_ps * (photo*west.sites) +
+  mu_b_inter_wc1 * (force*chill1[k]) + mu_b_inter_pc1 * (photo*chill1[k]) +
+  mu_b_inter_sc1 * (chill1[k]*west.sites)
+}
+# plot first for the east coast
+bb_eastc <- matrix(NA, ncol = 1, nrow = length(chill1))
+for(k in 1:length(chill1)){
+bb_eastc [k] <- a_sp + b_site *  east.sites + mu_b_warm * force + mu_b_photo * photo + mu_b_chill1 * chill1[k] +
+  mu_b_inter_wp * (force*photo) +mu_b_inter_ws * (force* east.sites) +mu_b_inter_ps * (photo* east.sites) +
+  mu_b_inter_wc1 * (force*chill1[k]) +mu_b_inter_pc1 * (photo*chill1[k]) +
+  mu_b_inter_sc1 * (chill1[k]* east.sites)
+}
+pdf("figures/ew_interactions.pdf", width = 20, height = 5)
+par(mfrow = c(1,4))
+plot(0, type = "n",  xlim = c(-1,1), ylim = c(-5,90), xlab = "Chill portions", ylab = "Day of budburst")
+points(west$chillport.z2,west$bb, col = "maroon")
+points(east$chillport.z2,east$bb, col = "darkslategray4")
+
+points(bb_westc ~ chill1, type = "l", col = "darkred", lwd = 3)
+points(bb_eastc ~ chill1, type = "l", col = "darkslategray", lwd = 3)
+
+legend("topleft",legend = c(expression("eastern transect"),
+                            expression("western transect")),
+       col = c("darkslategray","maroon"),
+       inset = 0.02, pch = c(21,21 ),  cex = 0.75, bty = "n")
+######################################################################
+######################################################################
+## transect and forcing:
+west <- subset(pheno.t, transect.n == "0")
+east <- subset(pheno.t, transect.n == "1")
+
+#force <- unique(pheno.t$force.z2)
+force <- seq(-1, 1, by = 0.01)
+photo <- -0.5044652 # zero photo
+chill1 <- mean( -0.3482404,  0.9462697,  0.8463799, -0.7629649,  0.5315452,  0.4316554,0.2985445, -0.4011572,  0.2759381, -0.4061035)
+west.sites <- unique(west$transect.z2)
+east.sites <- unique(east$transect.z2)
+
+# plot first for the west coast
+
+bb_westf <- matrix(NA, ncol = 1, nrow = length(force))
+for(k in 1:length(force)){
+  bb_westf[k] <- a_sp + b_site * west.sites + mu_b_warm * force[k] + mu_b_photo * photo + mu_b_chill1 * chill1 +
+    mu_b_inter_wp * (force[k]*photo) + mu_b_inter_ws * (force[k]*west.sites) +mu_b_inter_ps * (photo*west.sites) +
+    mu_b_inter_wc1 * (force[k]*chill1) + mu_b_inter_pc1 * (photo*chill1) +
+    mu_b_inter_sc1 * (chill1*west.sites)
+}
+
+# plot first for the east coast
+bb_eastf <- matrix(NA, ncol = 1, nrow = length(chill1))
+for(k in 1:length(force)){
+bb_eastf[k] <- a_sp + b_site *  east.sites + mu_b_warm * force[k] + mu_b_photo * photo + mu_b_chill1 * chill1 +
+  mu_b_inter_wp * (force[k]*photo) +mu_b_inter_ws * (force[k]* east.sites) +mu_b_inter_ps * (photo* east.sites) +
+  mu_b_inter_wc1 * (force[k]*chill1) +mu_b_inter_pc1 * (photo*chill1) +
+  mu_b_inter_sc1 * (chill1* east.sites)
+}
+
+plot(0, type = "n",  xlim = c(-1,1), ylim = c(-5,90), xlab = "Forcing", ylab = "Day of budburst")
+points(west$force.z2,west$bb, col = "maroon")
+points(east$force.z2,east$bb, col = "darkslategray4")
+
+points(bb_westf ~force, type = "l", col = "darkred", lwd = 3)
+points(bb_eastf ~force, type = "l", col = "darkslategray", lwd = 3)
+
 # abline(lm(bb_westf ~ force), pch =19, col = "darkred", lwd = 3)
 # abline(lm(bb_eastf ~ force), pch =19, col = "darkslategray", lwd = 3)
-# 
-# legend("topleft",legend = c(expression("eastern transect"),
-#                             expression("western transect")),
-#        col = c("darkslategray","maroon"),
-#        inset = 0.02, pch = c(21,21 ),  cex = 0.75, bty = "n")
+
+legend("topleft",legend = c(expression("eastern transect"),
+                            expression("western transect")),
+       col = c("darkslategray","maroon"),
+       inset = 0.02, pch = c(21,21 ),  cex = 0.75, bty = "n")
 # ######################################################################
 # ######################################################################
-# ## transect and photoperiod:
-# west <- subset(pheno.t, transect.n == "0")
-# east <- subset(pheno.t, transect.n == "1")
+## transect and photoperiod:
+west <- subset(pheno.t, transect.n == "0")
+east <- subset(pheno.t, transect.n == "1")
+
+#force <- unique(pheno.t$force.z2)
+force <- -0.5080665 # zero forcing
+photo <- seq(-1,1, by = 0.01)
+chill1 <- mean( -0.3482404,  0.9462697,  0.8463799, -0.7629649,  0.5315452,  0.4316554,0.2985445, -0.4011572,  0.2759381, -0.4061035)
+west.sites <- unique(west$transect.z2)
+east.sites <- unique(east$transect.z2)
+
+# plot first for the west coast
+bb_westp <- matrix(NA, ncol = 1, nrow = length(photo))
+for(k in 1:length(photo)){
+bb_westp [k] <- a_sp + b_site * west.sites + mu_b_warm * force + mu_b_photo * photo[k] + mu_b_chill1 * chill1 +
+  mu_b_inter_wp * (force*photo[k]) + mu_b_inter_ws * (force*west.sites) +mu_b_inter_ps * (photo[k]*west.sites) +
+  mu_b_inter_wc1 * (force*chill1) + mu_b_inter_pc1 * (photo*chill1) +
+  mu_b_inter_sc1 * (chill1*west.sites)
+}
+# plot first for the east coast
+bb_eastp <- matrix(NA, ncol = 1, nrow = length(photo))
+for(k in 1:length(photo)){
+bb_eastp[k] <- a_sp + b_site *  east.sites + mu_b_warm * force + mu_b_photo * photo[k] + mu_b_chill1 * chill1 +
+  mu_b_inter_wp * (force*photo[k]) +mu_b_inter_ws * (force* east.sites) +mu_b_inter_ps * (photo[k] * east.sites) +
+  mu_b_inter_wc1 * (force*chill1) +mu_b_inter_pc1 * (photo[k] * chill1) +
+  mu_b_inter_sc1 * (chill1* east.sites)
+}
+plot(0, type = "n",  xlim = c(-1,1), ylim = c(-5,90), xlab = "Forcing", ylab = "Day of budburst")
+points(west$photo.z2,west$bb, col = "maroon")
+points(east$photo.z2,east$bb, col = "darkslategray4")
+
+points(bb_westp ~ photo, type = "l", col = "darkred", lwd = 3)
+points(bb_eastp ~ photo, type = "l", col = "darkslategray", lwd = 3)
+
+legend("topleft",legend = c(expression("eastern transect"),
+                            expression("western transect")),
+       col = c("darkslategray","maroon"),
+       inset = 0.02, pch = c(21,21 ),  cex = 0.75, bty = "n")
+#####################################################################
+## transect and chilling:
+lfData <- subset(pheno.t, force.n == "0")
+hfData <- subset(pheno.t, force.n == "1")
+
+lf <- unique(lfData$force.z2) # zero forcing
+hf <- unique(hfData$force.z2) # zero forcing
+
+photo <- -0.5044652 # zero photo
+chill1 <- seq( -1, 1, by = 0.01)
+sites <- mean(unique(pheno.t$transect.z2))
+
+
+# plot first for the west coast
+bb_hf_c <- matrix(NA, ncol = 1, nrow = length(chill1))
+for(k in 1:length(chill1)){
+  bb_hf_c[k] <- a_sp + b_site * sites + mu_b_warm * hf + mu_b_photo * photo + mu_b_chill1 * chill1[k] +
+    mu_b_inter_wp * (hf*photo) + mu_b_inter_ws * (hf*sites) +mu_b_inter_ps * (photo*sites) +
+    mu_b_inter_wc1 * (hf*chill1[k]) + mu_b_inter_pc1 * (photo*chill1[k]) +
+    mu_b_inter_sc1 * (chill1[k]*sites)
+}
+
+# plot first for the east coast
+bb_lf_c <- matrix(NA, ncol = 1, nrow = length(chill1))
+for(k in 1:length(chill1)){
+  bb_lf_c [k] <- a_sp + b_site * sites + mu_b_warm * lf + mu_b_photo * photo + mu_b_chill1 * chill1[k] +
+    mu_b_inter_wp * (lf*photo) + mu_b_inter_ws * (lf*sites) +mu_b_inter_ps * (photo*sites) +
+    mu_b_inter_wc1 * (lf*chill1[k]) + mu_b_inter_pc1 * (photo*chill1[k]) +
+    mu_b_inter_sc1 * (chill1[k]*sites)
+}
+#pdf("figures/ew_interactions.pdf", width = 10, height = 3.5)
+plot(0, type = "n",  xlim = c(-1,1), ylim = c(-5,90), xlab = "Chill portions", ylab = "Day of budburst")
+points(lfData$chillport.z2,  lfData$bb, col = "maroon")
+points(hfData$chillport.z2, hfData$bb, col = "darkslategray4")
+
+points(bb_lf_c ~ chill1, type = "l", col = "darkred", lwd = 3)
+points(bb_hf_c ~ chill1, type = "l", col = "darkslategray", lwd = 3)
+
+legend("topleft",legend = c(expression("eastern transect"),
+                            expression("western transect")),
+       col = c("darkslategray","maroon"),
+       inset = 0.02, pch = c(21,21 ),  cex = 0.75, bty = "n")
+dev.off()
+
+# post <- rstan::extract(mdl.ewphylo)
+# # histograms
+# h1 <- hist(rnorm(1000, 4,10))
+# h2 <- hist(post$a_z)
+# plot(h2, col=rgb(0,0,1,1/4), xlim = c(0, 50))
+# plot(h1, col=rgb(1,0,1,1/4), add = T)
 # 
-# #force <- unique(pheno.t$force.z2)
-# force <- -0.5080665 # zero forcing
-# photo <- seq(1:50)
-# chill1 <- mean( -0.3482404,  0.9462697,  0.8463799, -0.7629649,  0.5315452,  0.4316554,0.2985445, -0.4011572,  0.2759381, -0.4061035)
-# west.sites <- unique(west$transect.z2)
-# east.sites <- unique(east$transect.z2)
+# h1 <- hist(rbeta(1000, 1,1))
+# h2 <- hist(post$lam_interceptsa)
+# plot(h2, col=rgb(0,0,1,1/4), xlim = c(0, 1))
+# plot(h1, col=rgb(1,0,1,1/4), add = T)
 # 
-# # plot first for the west coast
-# bb_westp = a_sp + b_site * west.sites + mu_b_warm * force + mu_b_photo * photo + mu_b_chill1 * chill1 + 
-#   mu_b_inter_wp * (force*photo) + mu_b_inter_ws * (force*west.sites) +mu_b_inter_ps * (photo*west.sites) +
-#   mu_b_inter_wc1 * (force*chill1) + mu_b_inter_pc1 * (photo*chill1) +
-#   mu_b_inter_sc1 * (chill1*west.sites)
+# h1 <- hist(rnorm(1000, 1,15))
+# h2 <- hist(post$sigma_interceptsa)
+# plot(h2, col=rgb(0,0,1,1/4), xlim = c(-50, 50))
+# plot(h1, col=rgb(1,0,1,1/4), add = T)
 # 
-# # plot first for the east coast
-# bb_eastp = a_sp + b_site *  east.sites + mu_b_warm * force + mu_b_photo * photo + mu_b_chill1 * chill1 + 
-#   mu_b_inter_wp * (force*photo) +mu_b_inter_ws * (force* east.sites) +mu_b_inter_ps * (photo* east.sites) +
-#   mu_b_inter_wc1 * (force*chill1) +mu_b_inter_pc1 * (photo*chill1) +
-#   mu_b_inter_sc1 * (chill1* east.sites)
+# h1 <- hist(rnorm(1000, 0,35))
+# h2 <- hist(post$mu_b_chill1)
+# plot(h2, col=rgb(0,0,1,1/4), xlim = c(-100, 100))
+# plot(h1, col=rgb(1,0,1,1/4), add = T)
 # 
-# plot(0, type = "n",  xlim = c(-1,1), ylim = c(-5,90), xlab = "Forcing", ylab = "Day of budburst")
-# points(west$photo.z2,west$bb, col = "maroon")
-# points(east$photo.z2,east$bb, col = "darkslategray4")
-# abline(lm(bb_westp ~ photo), pch =19, col = "darkred", lwd = 3)
-# abline(lm(bb_eastp ~ photo), pch =19, col = "darkslategray", lwd = 3)
+# h1 <- hist(rnorm(1000, 0,5))
+# h2 <- hist(post$b_site)
+# plot(h2, col=rgb(0,0,1,1/4), xlim = c(-100, 100))
+# plot(h1, col=rgb(1,0,1,1/4), add = T)
 # 
-# legend("topleft",legend = c(expression("eastern transect"),
-#                             expression("western transect")),
-#        col = c("darkslategray","maroon"),
-#        inset = 0.02, pch = c(21,21 ),  cex = 0.75, bty = "n")
-# dev.off()
-
-post <- rstan::extract(mdl.ewphylo)
-# histograms
-h1 <- hist(rnorm(1000, 4,10))
-h2 <- hist(post$a_z)
-plot(h2, col=rgb(0,0,1,1/4), xlim = c(0, 50))
-plot(h1, col=rgb(1,0,1,1/4), add = T)
-
-h1 <- hist(rbeta(1000, 1,1))
-h2 <- hist(post$lam_interceptsa)
-plot(h2, col=rgb(0,0,1,1/4), xlim = c(0, 1))
-plot(h1, col=rgb(1,0,1,1/4), add = T)
-
-h1 <- hist(rnorm(1000, 1,15))
-h2 <- hist(post$sigma_interceptsa)
-plot(h2, col=rgb(0,0,1,1/4), xlim = c(-50, 50))
-plot(h1, col=rgb(1,0,1,1/4), add = T)
-
-h1 <- hist(rnorm(1000, 0,35))
-h2 <- hist(post$mu_b_chill1)
-plot(h2, col=rgb(0,0,1,1/4), xlim = c(-100, 100))
-plot(h1, col=rgb(1,0,1,1/4), add = T)
-
-h1 <- hist(rnorm(1000, 0,5))
-h2 <- hist(post$b_site)
-plot(h2, col=rgb(0,0,1,1/4), xlim = c(-100, 100))
-plot(h1, col=rgb(1,0,1,1/4), add = T)
-
-h1 <- hist(rnorm(1000, 0,50))
-h2 <- hist(post$b_warm_ncp)
-plot(h2, col=rgb(0,0,1,1/4), xlim = c(-100, 100))
-plot(h1, col=rgb(1,0,1,1/4), add = T)
-
-h1 <- hist(rnorm(1000, 0,10))
-h2 <- hist(post$sigma_b_inter_wc1)
-plot(h2, col=rgb(0,0,1,1/4), xlim = c(-100, 100))
-plot(h1, col=rgb(1,0,1,1/4), add = T)
+# h1 <- hist(rnorm(1000, 0,50))
+# h2 <- hist(post$b_warm_ncp)
+# plot(h2, col=rgb(0,0,1,1/4), xlim = c(-100, 100))
+# plot(h1, col=rgb(1,0,1,1/4), add = T)
+# 
+# h1 <- hist(rnorm(1000, 0,10))
+# h2 <- hist(post$sigma_b_inter_wc1)
+# plot(h2, col=rgb(0,0,1,1/4), xlim = c(-100, 100))
+# plot(h1, col=rgb(1,0,1,1/4), add = T)

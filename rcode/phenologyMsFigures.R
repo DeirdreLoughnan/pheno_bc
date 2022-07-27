@@ -1,14 +1,122 @@
 # Started May 3, 2022 by deirde
 
 # the aim of this code is to generate the model output for my phenology ms
-load("output/final/ew_phylo_output_newpriors.Rda")
+rm(list=ls()) 
+options(stringsAsFactors = FALSE)
 
-sumt <- summary(mdl.ewphylo)$summary 
+library(rstan)
+library(shinystan)
+#library(reshape2)
+#library(bayesplot)
+library(ggplot2)
+library(dplyr)
+library(plyr)
+library(stringr)
+library(phytools)
+
+
+if(length(grep("deirdreloughnan", getwd()) > 0)) { 
+  setwd("~/Documents/github/pheno_bc") 
+}  
+
+#load("output/final/ew_phylo_output_newpriors.Rda")
+dl <- read.csv("input/dl_allbb.csv")
+
+temp <- str_split_fixed(dl$trt, "_", 3); head(temp)
+dl$chill<- temp[,1]
+dl$photo <- temp[,2]
+dl$force <- temp[,3]
+
+dl.chill <- read.csv("input/chilling_values_Hope_Smithers.csv")
+
+dl.wchill <- merge(dl, dl.chill, by = c("population","chill"))
+dl.wchill$lab3 <- dl.wchill$lab2
+dl.wchill$lab2 <- paste(dl.wchill$species, dl.wchill$population, dl.wchill$rep, sep = "_")
+dl.wchill$transect <- "west"
+
+df <- read.csv("input/df_dxb_prepped_data.csv")
+df.chill <- read.csv("input/chilling_values_eastern.csv")
+df.wchill <- merge(df, df.chill, by =c("population","chill"))
+df.wchill <- df.wchill[, c("population", "chill","force","photo","lab2", "bb","species", "treatment","Chill_portions","Utah_Model")]
+df.wchill$transect <- "east"
+
+# mergeing the my data with DF
+pheno <- rbind.fill(dl.wchill, df.wchill)
+
+head(pheno)
+# combined the data has 3197 unique samples
+############################################################
+# Preping the data for the model
+
+pheno$force.n <- pheno$force
+pheno$force.n[pheno$force.n == "HF"] <- "1"
+pheno$force.n[pheno$force.n == "LF"] <- "0"
+pheno$force.n <- as.numeric(pheno$force.n)
+
+pheno$photo.n <- pheno$photo
+pheno$photo.n[pheno$photo.n == "HP"] <- "1"
+pheno$photo.n[pheno$photo.n == "LP"] <- "0"
+pheno$photo.n <- as.numeric(pheno$photo.n)
+
+pheno$site.n <- pheno$population
+pheno$site.n[pheno$site.n == "sm"] <- "1"
+pheno$site.n[pheno$site.n == "mp"] <- "2"
+pheno$site.n[pheno$site.n == "HF"] <- "3"
+pheno$site.n[pheno$site.n == "SH"] <- "4"
+pheno$site.n <- as.numeric(pheno$site.n)
+
+pheno$transect.n <- pheno$transect
+pheno$transect.n[pheno$transect.n == "east"] <- "1"
+pheno$transect.n[pheno$transect.n == "west"] <- "0"
+pheno$transect.n <- as.numeric(pheno$transect.n)
+
+head(pheno)
+#add dummy/ site level effects:
+pheno <- pheno %>%
+  mutate ( site2 = if_else(site.n == 2, 1, 0),
+           site3 = if_else(site.n == 3, 1, 0),
+           site4 = if_else(site.n == 4, 1, 0))
+
+# standardize the 0/1 and standardize sites? 
+pheno$force.z2 <- (pheno$force.n-mean(pheno$force.n,na.rm=TRUE))/(sd(pheno$force.n,na.rm=TRUE)*2)
+pheno$photo.z2 <- (pheno$photo.n-mean(pheno$photo.n,na.rm=TRUE))/(sd(pheno$photo.n,na.rm=TRUE)*2)
+pheno$chillport.z2 <- (pheno$Chill_portions-mean(pheno$Chill_portions,na.rm=TRUE))/(sd(pheno$Chill_portions,na.rm=TRUE)*2)
+
+pheno$site2.z2 <- (pheno$site2-mean(pheno$site2,na.rm=TRUE))/(sd(pheno$site2,na.rm=TRUE)*2)
+pheno$site3.z2 <- (pheno$site3-mean(pheno$site3,na.rm=TRUE))/(sd(pheno$site3,na.rm=TRUE)*2)
+pheno$site4.z2 <- (pheno$site4-mean(pheno$site4,na.rm=TRUE))/(sd(pheno$site4,na.rm=TRUE)*2)
+
+#going to split it into analysis of terminal bb and lateral bb
+# Starting with the terminal buds:
+#pheno.term <- pheno[,c("tbb", "chill.n", "force.n", "photo.n", "site.n", "species", "lab2")]
+pheno.term <- pheno[,c("bb", "force.z2", "photo.z2", "population", "species", "lab2","Utah_Model","Chill_portions","chillport.z2", "site2.z2", "site3.z2","site4.z2")]
+pheno.t <- pheno.term[complete.cases(pheno.term), ] # 3609
+
+pheno.t <- pheno.term[complete.cases(pheno.term$bb), ] # 1780 rows data 
+pheno.t$species <- tolower(pheno.t$species)
+pheno.t$species.fact <- as.numeric(as.factor(pheno.t$species))
+sort(unique(pheno.t$species.fact)) # 49 
+
+# now get the phylogeny and pair it with species names:
+spInfo <- read.csv("input/species_list.csv")
+
+head(pheno.t)
+# change the df to lowercase:
+
+pheno.t <- merge(pheno.t, spInfo, by = "species")
+
+#################################################################
+# load("output/final/ew_phylo_output_newpriors.Rda")
+# sumew <- summary(mdl.ewphylo)$summary 
+
+load("output/final/bb_4sites_phylo.Rda")
+sum <- summary(mdl.4phylo)$summary 
+
+#############################################
 col4fig <- c("mean","sd","25%","50%","75%","Rhat")
 col4table <- c("mean","sd","2.5%","50%","97.5%","Rhat")
 
-# manually to get right order
-mu_params <- c("a_z",
+mu_params_ew <- c("a_z",
                "lam_interceptsa",
                "mu_b_warm",
                "mu_b_photo",
@@ -20,34 +128,98 @@ mu_params <- c("a_z",
                "mu_b_inter_ws",
                "mu_b_inter_ps",
                "mu_b_inter_sc1"
-          
-)
-meanzew <- sumt[mu_params, col4fig]
-
-rownames(meanzew) = c("a_z",
-                      "lam_interceptsa",
-                      "mu_b_warm",
-                      "mu_b_photo",
-                      "mu_b_chill1",
-                      "b_site",
-                      "mu_b_inter_wp",
-                      "mu_b_inter_wc1",
-                      "mu_b_inter_pc1",
-                      "mu_b_inter_ws",
-                      "mu_b_inter_ps",
-                      "mu_b_inter_sc1"
-
 )
 
-meanzew.table <- sumt[mu_params, col4table]
-row.names(meanzew.table) <- row.names(meanzew)
-head(meanzew.table)
+mu_params_4 <- c( "a_z",
+                "lam_interceptsa",
+                "mu_b_warm",
+                "mu_b_photo",
+                "mu_b_chill1",
+                "b_site2",
+                "b_site3",
+                "b_site4",
+                "mu_b_inter_wp",
+                "mu_b_inter_wc1",
+                "mu_b_inter_pc1",
+                "mu_b_inter_ws2",
+                "mu_b_inter_ps2",
+                "mu_b_inter_s2c1",
+                "mu_b_inter_ws3",
+                "mu_b_inter_ps3",
+                "mu_b_inter_s3c1",
+                "mu_b_inter_ws4",
+                "mu_b_inter_ps4",
+                "mu_b_inter_s4c1")
+                # "sigma_b_warm",
+                # "sigma_b_photo",
+                # "sigma_b_chill1",
+                # "sigma_interceptsa",
+                # "sigma_b_inter_wp",
+                # "sigma_b_inter_wc1",
+                # "sigma_b_inter_pc1",
+                # "sigma_b_inter_ws2",
+                # "sigma_b_inter_ps2",
+                # "sigma_b_inter_s2c1",
+                # "sigma_b_inter_ws3",
+                # "sigma_b_inter_ps3",
+                # "sigma_b_inter_s3c1",
+                # "sigma_b_inter_ws4",
+                # "sigma_b_inter_ps4",
+                # "sigma_b_inter_s4c1",
+                # "sigma_y")
+
+#meanzew <- sumew[mu_params_ew, col4fig]
+
+meanz4 <- sum[mu_params_4, col4fig]
+
+# rownames(meanzew) = c("Root trait intercept",
+#                       "Lambda",
+#                       "Forcing",
+#                       "Photoperiod",
+#                       "Chilling",
+#                       "Site",
+#                       "Forcing x photoperiod",
+#                       "Forcing x chilling",
+#                       "Photoperiod x forcing",
+#                       "Forcing x site",
+#                       "Photoperiod x site",
+#                       "Chilling x site")
+
+rownames(meanz4) = c( "Root trait intercept",
+                      "Lambda",
+                      "Forcing",
+                      "Photoperiod",
+                      "Chilling",
+                      "Manning Park",
+                       "Harvard Forest",
+                       "St. Hippolyte",
+                      "Forcing x photoperiod",
+                      "Forcing x chilling",
+                      "Photoperiod x chilling",
+                      "Forcing x Manning Park",
+                      "Photoperiod x Manning Park",
+                      "Chilling x Manning Park",
+                      "Forcing x Harvard Forest",
+                      "Photoperiod x Harvard Forest",
+                      "Chilling x Harvard Forest",
+                      "Forcing x St. Hippolyte",
+                      "Photoperiod x St. Hippolyte",
+                      "Chilling x St. Hippolyte"            
+)
+
+# meanzew.table <- sumew[mu_params_ew, col4table]
+# row.names(meanzew.table) <- row.names(meanzew)
+# head(meanzew.table)
+
+meanz4.table <- sum[mu_params_4, col4table]
+row.names(meanz4.table) <- row.names(meanz4)
+head(meanz4.table)
 #write.table(meanzew.table , "output/term.mdl.esti.dldf.csv", sep = ",", row.names = FALSE)
 
 # Begin by checking to see what cue is most important and whether there are strong correlations between cues:
-df.mean.t <- data.frame(bb.force = sumt[grep("b_warm_ncp", rownames(sumt)), 1],
-                        bb.photo = sumt[grep("b_photo_ncp", rownames(sumt)), 1],
-                        bb.chill = sumt[grep("^b_chill1", rownames(sumt)), 1])
+df.mean.t <- data.frame(bb.force = sum[grep("^b_warm", rownames(sum)), 1],
+                        bb.photo = sum[grep("^b_photo\\[", rownames(sum)), 1],
+                        bb.chill = sum[grep("^b_chill1", rownames(sum)), 1])
 
 df.mean.t[which(df.mean.t$bb.force > df.mean.t$bb.photo), ] # species 25- rho alb
 df.mean.t[which(df.mean.t$bb.chill > df.mean.t$bb.force), ] # 13
@@ -58,7 +230,328 @@ summary(lm(bb.force~bb.photo, data=df.mean.t))
 summary(lm(bb.force~bb.chill, data=df.mean.t))
 summary(lm(bb.force~bb.photo, data=df.mean.t))
 
-pdf(file.path( "figures/changes.pheno.standardized.pdf"), width = 7, height = 8)
+###########################################################################################
+##### 4 site plots ########################################################################
+###########################################################################################
+pdf(file.path( "figures/changes.pheno.4sites.pdf"), width = 7, height = 5)
+par(mfrow = c(1,1), mar = c(5, 10, 2, 1))
+# Upper panel: bud burst
+plot(seq(-15, 
+         15,
+         length.out = nrow(meanz4)), 
+     1:nrow(meanz4),
+     type = "n",
+     xlab = "",
+     ylab = "",
+     yaxt = "n")
+
+#legend(x = -20, y = 2, bty="n", legend = "a. Budburst", text.font = 2)
+#rasterImage(bbpng, -20, 1, -16, 4)
+
+axis(2, at = nrow(meanz4):1, labels = rownames(meanz4), las = 1, cex.axis = 0.8)
+points(meanz4[, 'mean'],
+       nrow(meanz4):1,
+       pch = 16,
+       col = "Darkgreen",
+       cex = 1.5)
+arrows(meanz4[, "75%"], nrow(meanz4):1, meanz4[, "25%"], nrow(meanz4):1,
+       len = 0, col = "black")
+abline(v = 0, lty = 3)
+# add advance/delay arrows
+# par(xpd=NA)
+# arrows(1, 15.5, 6, 15.5, len = 0.1, col = "black")
+# legend(5, 16.5, legend = "delay", bty = "n", text.font = 1, cex = 0.75)
+# arrows(-1, 15.5, -6, 15.5, len = 0.1, col = "black")
+# legend(-12, 16.5, legend = "advance", bty = "n", text.font = 1, cex = 0.75)
+# legend(-2, 16.5, legend = "0", bty = "n", text.font = 1, cex = 0.75)
+# par(xpd = FALSE)
+dev.off()
+
+## Replicating Flynn Figure 2:
+
+b.force.both <- sum[grep("^b_warm", rownames(sum))]
+b.photo.both <- sum[grep("^b_photo\\[", rownames(sum))]
+b.chill.both <- sum[grep("^b_chill1", rownames(sum))]
+
+shrubs.both = c("VIBLAN","RHAFRA","RHOPRI","SPIALB","VACMYR","VIBCAS", "AROMEL","ILEMUC", "KALANG", "LONCAN", "LYOLIG", "alninc","alnvir","amelan", "corsto","loninv", "menfer","rhoalb", "riblac","rubpar","samrac","shecan","sorsco","spibet","spipyr","symalb","vacmem","vibedu")
+trees.both = c("ACEPEN", "ACERUB", "ACESAC", "BETALL", "BETLEN", "CORCOR", "FAGGRA", "FRANIG", "HAMVIR", "NYSSYL", "POPGRA", "PRUPEN", "QUEALB" , "QUERUB", "QUEVEL", "acegla","betpap", "poptre", "popbal")
+
+pheno.term <- pheno[,c("bb", "chillport.z2", "force.z2", "photo.z2", "species", "lab2","transect")]
+
+species.both <- sort(unique(tolower(pheno.t$species)))
+species.fact.both <-as.numeric( as.factor(unique(tolower(pheno.t$species))))
+Type <- c("tree", "tree", "tree","tree", "shrub", "shrub", "shrub", "tree", "tree", "tree", "tree", "tree",
+          "tree", "shrub","shrub","tree","tree", "shrub", "shrub","shrub",  "shrub", "shrub", "shrub", "shrub", "shrub",
+          "tree","tree","tree","tree","tree","tree","tree","shrub", "shrub", "shrub", "shrub","shrub", "shrub", "shrub", "shrub","shrub", "shrub", "shrub", "shrub","shrub", "shrub", "shrub")
+Transect <- c("western","eastern","eastern","eastern","both","western","western","eastern","eastern","eastern","both","eastern","western","eastern","eastern","eastern","eastern","eastern","eastern","western","eastern","western","eastern","both","eastern","western","eastern","eastern","eastern","eastern","eastern","western","eastern","western","western","western","western","western","western","western","western","western","western","eastern","eastern","western","eastern")
+
+#both <- data.frame(species.both, species.fact.both, b.force.both, b.photo.both, b.chill.both, type.both)
+
+both <- data.frame(species.both, Transect, species.fact.both, b.force.both, b.photo.both, b.chill.both, Type)
+
+pdf(file.path( "figures/photo_vs_force_dldf4site.pdf"), width = 5, height = 6)
+ggplot(both, aes(x= b.photo.both, y = b.force.both, col = Type, shape = Transect)) +
+geom_point() +
+ylim (-17, 1) +
+xlim (-7, 0) +
+labs( y = "High forcing", x = "High photoperiod") +
+geom_text(aes(label=species.both),hjust=0.5, vjust= 1, show.legend = F) +
+theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
+      panel.background = element_blank(), axis.line = element_line(colour = "black"))+
+  scale_fill_manual(values=c( "#593d9cff","#cc6a70ff","#eb8055ff","#f9b641ff","#a65c85ff","#7e4e90ff", "cyan4")) + scale_color_manual(values=c( "#593d9cff","#cc6a70ff","#eb8055ff","#f9b641ff","#a65c85ff","#7e4e90ff", "cyan4"))
+dev.off()
+
+color_scheme_set("viridis")
+pdf(file.path( "figures/chill_vs_force_dldf4site.pdf"), width = 5, height = 6)
+ggplot(both, aes(x= b.chill.both, y = b.force.both, col = Type, shape = Transect)) +
+  geom_point() +
+  ylim (-17, 1) +
+  xlim (-35, 0) +
+  labs( y = "High forcing", x = "High chilling") +
+  geom_text(aes(label=species.both),hjust= 0.5, vjust= 1.5, show.legend = F) +
+  theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
+        panel.background = element_blank(), axis.line = element_line(colour = "black")) +
+  scale_fill_manual(values=c( "#593d9cff","#cc6a70ff","#eb8055ff","#f9b641ff","#a65c85ff","#7e4e90ff", "cyan4")) + scale_color_manual(values=c( "#593d9cff","#cc6a70ff","#eb8055ff","#f9b641ff","#a65c85ff","#7e4e90ff", "cyan4"))
+dev.off()
+
+
+pdf(file.path( "figures/chill_vs_photo_dldf4site.pdf"), width = 5, height = 6)
+ggplot(both, aes(x= b.chill.both, y = b.photo.both, col = Type, shape = Transect)) +
+  geom_point() +
+  ylim (-7.5, 0) +
+  xlim (-32,-0) +
+  labs (x = "High chilling", y = "Long photoperiod") +
+  geom_text(aes(label=species.both),hjust=0.5, vjust= 2, show.legend = F) +
+  theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
+        panel.background = element_blank(), axis.line = element_line(colour = "black"))+
+  scale_fill_manual(values=c( "#593d9cff","#cc6a70ff","#eb8055ff","#f9b641ff","#a65c85ff","#7e4e90ff", "cyan4")) + scale_color_manual(values=c( "#593d9cff","#cc6a70ff","#eb8055ff","#f9b641ff","#a65c85ff","#7e4e90ff", "cyan4"))
+#legend.position = "none"
+dev.off()
+
+## Plotting the day to bb with the cues on the y-axis 
+pheno$species <- tolower(pheno$species)
+term.bb.both <- ddply(pheno, c("species"), summarize, mean = mean(bb, na.rm = TRUE))
+names(term.bb.both) <- c("species.both", "mean")
+
+term.both <- merge(term.bb.both, both, by = "species.both", all =TRUE)
+term.both <- term.both[,c("species.both","mean","b.force.both","b.chill.both","b.photo.both")]
+term.both <- term.both[complete.cases(term.both), ] 
+
+pdf(file.path( "figures/force_dobb_dldf4sites.pdf"), width = 5, height = 6)
+tf.both <-  ggplot(term.both, aes(y = b.force.both, x= mean,col = Type, shape = Transect)) +
+  geom_point() +
+  ylim (-17, 0) +
+  xlim (5, 55) +
+  labs(x = "Mean day of budburst", y = "High forcing") +
+  geom_text(aes(label=species.both),hjust=0.5, vjust= 1, show.legend = F) +
+  theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
+        panel.background = element_blank(), axis.line = element_line(colour = "black"))+
+  scale_fill_manual(values=c( "#593d9cff","#cc6a70ff","#eb8055ff","#f9b641ff","#a65c85ff","#7e4e90ff", "cyan4")) + scale_color_manual(values=c( "#593d9cff","#cc6a70ff","#eb8055ff","#f9b641ff","#a65c85ff","#7e4e90ff", "cyan4"))
+tf.both
+dev.off()
+
+pdf(file.path( "figures/chill_dobb_dldf4sites.pdf"), width = 5, height = 6)
+tc.both <- ggplot(term.both, aes(y = b.chill.both, x= mean,col = Type, shape = Transect)) +
+  geom_point() +
+  ylim (-32, -4) +
+  xlim (10, 55) +
+  labs(x = "Mean day of budburst", y = "High chilling") +
+  geom_text(aes(label=species.both),hjust=0.5, vjust= 1, show.legend = F) +
+  theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
+        panel.background = element_blank(), axis.line = element_line(colour = "black"))+
+  scale_fill_manual(values=c( "#593d9cff","#cc6a70ff","#eb8055ff","#f9b641ff","#a65c85ff","#7e4e90ff", "cyan4")) + scale_color_manual(values=c( "#593d9cff","#cc6a70ff","#eb8055ff","#f9b641ff","#a65c85ff","#7e4e90ff", "cyan4"))
+tc.both
+dev.off()
+
+pdf(file.path( "figures/photo_dobb_dldf.pdf"), width = 5, height = 6)
+tp.both <- ggplot(term.both, aes(y = b.photo.both, x= mean,col = Type, shape = Transect)) +
+  geom_point() +
+  ylim (-6.5, -1) +
+  xlim (10, 55) +
+  labs(x = "Mean day of budburst", y = "Long photoperiod")+
+  geom_text(aes(label=species.both),hjust=0.5, vjust= 1, show.legend = F) +
+  theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
+        panel.background = element_blank(), axis.line = element_line(colour = "black"))+
+  scale_fill_manual(values=c( "#593d9cff","#cc6a70ff","#eb8055ff","#f9b641ff","#a65c85ff","#7e4e90ff", "cyan4")) + scale_color_manual(values=c( "#593d9cff","#cc6a70ff","#eb8055ff","#f9b641ff","#a65c85ff","#7e4e90ff", "cyan4"))
+tp.both
+dev.off()
+
+# Let's plot some interactions:
+a_sp = mean(sum[grep("a_sp", rownames(sum)), 1])
+mu_b_warm = sum[grep("mu_b_warm", rownames(sum)), 1]
+mu_b_photo = sum[grep("mu_b_photo", rownames(sum)), 1]
+mu_b_chill1 = sum[grep("mu_b_chill1", rownames(sum)), 1]
+mu_b_inter_pc1 = sum[grep("mu_b_inter_pc1", rownames(sum)), 1]
+mu_b_inter_wp = sum[grep("mu_b_inter_wp", rownames(sum)), 1]
+mu_b_inter_wc1 = sum[grep("mu_b_inter_wc1", rownames(sum)), 1]
+mu_b_inter_ws2 = sum[grep("mu_b_inter_ws2", rownames(sum)), 1]
+mu_b_inter_s2c1 = sum[grep("mu_b_inter_s2c1", rownames(sum)), 1]
+mu_b_inter_ps2 = sum[grep("mu_b_inter_ps2", rownames(sum)), 1]
+mu_b_inter_ws3 = sum[grep("mu_b_inter_ws3", rownames(sum)), 1]
+mu_b_inter_s3c1 = sum[grep("mu_b_inter_s3c1", rownames(sum)), 1]
+mu_b_inter_ps3 = sum[grep("mu_b_inter_ps3", rownames(sum)), 1]
+mu_b_inter_ws4 = sum[grep("mu_b_inter_ws4", rownames(sum)), 1]
+mu_b_inter_s4c1 = sum[grep("mu_b_inter_s4c1", rownames(sum)), 1]
+mu_b_inter_ps4 = sum[grep("mu_b_inter_ps4", rownames(sum)), 1]
+b_site2 = sum[grep("b_site2", rownames(sum)), 1]
+b_site3 = sum[grep("b_site3", rownames(sum)), 1]
+b_site4 = sum[grep("b_site4", rownames(sum)), 1]
+
+# #<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>#
+# # plot the interactions
+# # Warm X chill
+# 
+hfData <- subset(pheno, force == "HF" )
+lfData <- subset(pheno, force == "LF")
+
+# Make the other parameters constant
+hf <- unique(hfData$force.z2)
+lf <- unique(lfData$force.z2)
+photo <- -0.5041133
+siteSM <- 0
+chill1 <- c( -0.7642814, -0.4072595, -0.4023109, -0.3493703,  0.2750890,  0.2977055,  0.4308763,  0.5308110,  0.8457874,  0.9457221)
+
+
+# plot first for the high forcing
+bb_hfc = a_sp + b_site2 * siteSM + b_site3 * siteSM + b_site4 * siteSM + mu_b_warm * hf + mu_b_photo * photo + mu_b_chill1 * chill1 +
+  mu_b_inter_wp * (hf*photo) +
+  mu_b_inter_wc1 * (hf*chill1) + mu_b_inter_pc1 * (photo*chill1) +
+  mu_b_inter_s2c1 * (chill1*siteSM) + mu_b_inter_ws2 * (hf*siteSM) +mu_b_inter_ps2 * (photo*siteSM) +
+  mu_b_inter_s3c1 * (chill1*siteSM) + mu_b_inter_ws3 * (hf*siteSM) +mu_b_inter_ps3 * (photo*siteSM) +
+  mu_b_inter_s4c1 * (chill1*siteSM) + mu_b_inter_ws4 * (hf*siteSM) +mu_b_inter_ps4 * (photo*siteSM)
+
+# plot first for the low forcing
+bb_lfc = a_sp + b_site2 * siteSM + b_site3 * siteSM + b_site4 * siteSM + mu_b_warm * lf + mu_b_photo * photo + mu_b_chill1 * chill1 +
+  mu_b_inter_wp * (lf*photo) +
+  mu_b_inter_wc1 * (lf*chill1) + mu_b_inter_pc1 * (photo*chill1) +
+  mu_b_inter_s2c1 * (chill1*siteSM) + mu_b_inter_ws2 * (lf*siteSM) +mu_b_inter_ps2 * (photo*siteSM) +
+  mu_b_inter_s3c1 * (chill1*siteSM) + mu_b_inter_ws3 * (lf*siteSM) +mu_b_inter_ps3 * (photo*siteSM) +
+  mu_b_inter_s4c1 * (chill1*siteSM) + mu_b_inter_ws4 * (lf*siteSM) +mu_b_inter_ps4 * (photo*siteSM)
+
+pdf("figures/chill_forcing_4sites_interactions.pdf", width =5, height = 5)
+par(mfrow =c (1,1))
+plot(0, type = "n",  xlim = c(-1,1), ylim = c(-5,90), xlab = "z-scored chill portions", ylab = "Day of budburst")
+points(hfData$chillport.z2, hfData$bb, col = "maroon")
+points(lfData$chillport.z2, lfData$bb, col = "darkslategray4")
+abline(lm(bb_hfc ~ chill1), col = "darkred", lwd = 3)
+abline(lm(bb_lfc ~ chill1), col = "darkslategray", lwd = 3)
+
+legend("topright",legend = c(expression("low forcing"),
+                            expression("high forcing")),
+       col = c("darkslategray","maroon"),
+       inset = 0.02, pch = c(19, 19 ),  cex = 1, bty = "n")
+dev.off()
+# #<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>#
+# warm and site3
+hf <- unique(hfData$force.z2)
+lf <- unique(lfData$force.z2)
+photo <- -0.5044652
+site3 <- unique(pheno$site3)
+
+chill1 <- mean( -0.3482404,  0.9462697,  0.8463799, -0.7629649,  0.5315452,  0.4316554,0.2985445, -0.4011572,  0.2759381, -0.4061035)
+
+# plot first for the high forcing
+bb_hfsite3 = a_sp + b_site2 * site3 + b_site3 * site3 + b_site4 * site3 + mu_b_warm * hf + mu_b_photo * photo + mu_b_chill1 * chill1 +
+  mu_b_inter_wp * (hf*photo) +
+  mu_b_inter_wc1 * (hf*chill1) + mu_b_inter_pc1 * (photo*chill1) +
+  mu_b_inter_s2c1 * (chill1*site2) + mu_b_inter_ws2 * (hf*site2) +mu_b_inter_ps2 * (photo*site2) +
+  mu_b_inter_s3c1 * (chill1*site2) + mu_b_inter_ws3 * (hf*site2) +mu_b_inter_ps3 * (photo*site2) +
+  mu_b_inter_s4c1 * (chill1*site2) + mu_b_inter_ws4 * (hf*site2) +mu_b_inter_ps4 * (photo*site2)
+
+# plot first for the low forcing
+bb_lfsite3 = a_sp + b_site2 * site3 + b_site3 * site3 + b_site4 * site3  + mu_b_warm * lf + mu_b_photo * photo + mu_b_chill1 * chill1 +
+  mu_b_inter_wp * (lf*photo) +
+  mu_b_inter_wc1 * (hf*chill1) + mu_b_inter_pc1 * (photo*chill1) +
+  mu_b_inter_s2c1 * (chill1*site2) + mu_b_inter_ws2 * (lf*site2) +mu_b_inter_ps2 * (photo*site2) +
+  mu_b_inter_s3c1 * (chill1*site2) + mu_b_inter_ws3 * (lf*site2) +mu_b_inter_ps3 * (photo*site2) +
+  mu_b_inter_s4c1 * (chill1*site2) + mu_b_inter_ws4 * (lf*site2) +mu_b_inter_ps4 * (photo*site2)
+#
+pdf("figures/Site3_forcing_4sites_interactions.pdf", width =5, height = 5)
+plot(0, type = "n",  xlim = c(-0.5,1.5), ylim = c(-5,90), xlab = "Harvard Forest", ylab = "Day of budburst")
+points(hfData$site3, hfData$bb, col = "maroon")
+points(lfData$site3, lfData$bb, col = "darkslategray4")
+abline(lm(bb_hfsite3 ~ site2), col = "darkred", lwd = 3)
+abline(lm(bb_lfsite3 ~ site2), col = "darkslategray", lwd = 3)
+
+#legend("topleft",legend = c(expression("low forcing"),
+#                            expression("high forcing")),
+#       col = c("darkslategray","maroon"),
+#       inset = 0.02, pch = c(19, 19 ),  cex = 1, bty = "n")
+dev.off()
+# #<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>#
+# # warm and site3 
+# hf <- unique(hfData$force.z2)
+# lf <- unique(lfData$force.z2)
+# photo <- -0.5044652 
+# site3 <- unique(pheno$site3.z2)
+# 
+# chill1 <- mean( -0.3482404,  0.9462697,  0.8463799, -0.7629649,  0.5315452,  0.4316554,0.2985445, -0.4011572,  0.2759381, -0.4061035)
+# 
+# # plot first for the high forcing
+# bb_hfsite3 = a_sp + b_site2 * site3 + b_site3 * site3 + b_site4 * site3 + mu_b_warm * hf + mu_b_photo * photo + mu_b_chill1 * chill1 + 
+#   mu_b_inter_wp * (hf*photo) +
+#   mu_b_inter_wc1 * (hf*chill1) + mu_b_inter_pc1 * (photo*chill1) +
+#   mu_b_inter_s2c1 * (chill1*site3) + mu_b_inter_ws2 * (hf*site3) +mu_b_inter_ps2 * (photo*site3) +
+#   mu_b_inter_s3c1 * (chill1*site3) + mu_b_inter_ws3 * (hf*site3) +mu_b_inter_ps3 * (photo*site3) +
+#   mu_b_inter_s4c1 * (chill1*site3) + mu_b_inter_ws4 * (hf*site3) +mu_b_inter_ps4 * (photo*site3) 
+# 
+# # plot first for the low forcing
+# bb_lfsite3 = a_sp + + b_site2 * site3 + b_site3 * site3 + b_site4 * site3 + mu_b_warm * lf + mu_b_photo * photo + mu_b_chill1 * chill1 + 
+#   mu_b_inter_wp * (lf*photo) +
+#   mu_b_inter_wc1 * (hf*chill1) + mu_b_inter_pc1 * (photo*chill1) +
+#   mu_b_inter_s2c1 * (chill1*site3) + mu_b_inter_ws2 * (lf*site3) +mu_b_inter_ps2 * (photo*site3) +
+#   mu_b_inter_s3c1 * (chill1*site3) + mu_b_inter_ws3 * (lf*site3) +mu_b_inter_ps3 * (photo*site3) +
+#   mu_b_inter_s4c1 * (chill1*site3) + mu_b_inter_ws4 * (lf*site3) +mu_b_inter_ps4 * (photo*site3) 
+# # 
+# plot(0, type = "n",  xlim = c(-1,1), ylim = c(-5,90), xlab = "site3", ylab = "Day of budburst")
+# points(hfData$site3.z2, hfData$bb, col = "maroon")
+# points(lfData$site3.z2, lfData$bb, col = "darkslategray4")
+# abline(lm(bb_hfsite3 ~ site3), col = "darkred", lwd = 3)
+# abline(lm(bb_lfsite3 ~ site3), col = "darkslategray", lwd = 3)
+# 
+# legend("topleft",legend = c(expression("low forcing"),
+#                             expression("high forcing")),
+#        col = c("darkslategray","maroon"),
+#        inset = 0.02, pch = c(21,21 ),  cex = 0.75, bty = "n")
+# 
+# #<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>#
+# # warm and site4 
+# hf <- unique(hfData$force.z2)
+# lf <- unique(lfData$force.z2)
+# photo <- -0.5044652 
+# site4 <- unique(pheno$site4.z2)
+# 
+# chill1 <- mean( -0.3482404,  0.9462697,  0.8463799, -0.7629649,  0.5315452,  0.4316554,0.2985445, -0.4011572,  0.2759381, -0.4061035)
+# 
+# # plot first for the high forcing
+# bb_hfsite4 = a_sp + b_site2 * site4 + b_site3 * site4 + b_site4 * site4  + mu_b_warm * hf + mu_b_photo * photo + mu_b_chill1 * chill1 + 
+#   mu_b_inter_wp * (hf*photo) +
+#   mu_b_inter_wc1 * (hf*chill1) + mu_b_inter_pc1 * (photo*chill1) +
+#   mu_b_inter_s2c1 * (chill1*site4) + mu_b_inter_ws2 * (hf*site4) +mu_b_inter_ps2 * (photo*site4) +
+#   mu_b_inter_s3c1 * (chill1*site4) + mu_b_inter_ws3 * (hf*site4) +mu_b_inter_ps3 * (photo*site4) +
+#   mu_b_inter_s4c1 * (chill1*site4) + mu_b_inter_ws4 * (hf*site4) +mu_b_inter_ps4 * (photo*site4) 
+# 
+# # plot first for the low forcing
+# bb_lfsite4 = a_sp + b_site2 * site4 + b_site3 * site4 + b_site4 * site4 + mu_b_warm * lf + mu_b_photo * photo + mu_b_chill1 * chill1 + 
+#   mu_b_inter_wp * (lf*photo) +
+#   mu_b_inter_wc1 * (hf*chill1) + mu_b_inter_pc1 * (photo*chill1) +
+#   mu_b_inter_s2c1 * (chill1*site4) + mu_b_inter_ws2 * (lf*site4) +mu_b_inter_ps2 * (photo*site4) +
+#   mu_b_inter_s3c1 * (chill1*site4) + mu_b_inter_ws3 * (lf*site4) +mu_b_inter_ps3 * (photo*site4) +
+#   mu_b_inter_s4c1 * (chill1*site4) + mu_b_inter_ws4 * (lf*site4) +mu_b_inter_ps4 * (photo*site4) 
+# # 
+# plot(0, type = "n",  xlim = c(-1,1), ylim = c(-5,90), xlab = "site4", ylab = "Day of budburst")
+# points(hfData$site4.z2, hfData$bb, col = "maroon")
+# points(lfData$site4.z2, lfData$bb, col = "darkslategray4")
+# abline(lm(bb_hfsite4 ~ site4), col = "darkred", lwd = 3)
+# abline(lm(bb_lfsite4 ~ site4), col = "darkslategray", lwd = 3)
+# 
+# legend("topleft",legend = c(expression("low forcing"),
+#                             expression("high forcing")),
+#        col = c("darkslategray","maroon"),
+#        inset = 0.02, pch = c(21,21 ),  cex = 0.75, bty = "n")
+
+##### EW Figures ##########################################################################
+# pdf(file.path( "figures/changes.pheno.ew.pdf"), width = 7, height = 5)
 par(mfrow = c(1,1), mar = c(5, 10, 2, 1))
 # Upper panel: bud burst
 plot(seq(-15, 
@@ -77,7 +570,8 @@ axis(2, at = nrow(meanzew):1, labels = rownames(meanzew), las = 1, cex.axis = 0.
 points(meanzew[, 'mean'],
        nrow(meanzew):1,
        pch = 16,
-       col = "midnightblue")
+       col = "Darkgreen",
+       cex = 1.5)
 arrows(meanzew[, "75%"], nrow(meanzew):1, meanzew[, "25%"], nrow(meanzew):1,
        len = 0, col = "black")
 abline(v = 0, lty = 3)
@@ -91,71 +585,126 @@ legend(-2, 16.5, legend = "0", bty = "n", text.font = 1, cex = 0.75)
 par(xpd = FALSE)
 dev.off()
 
+pdf(file.path( "figures/changes.pheno.4sites.pdf"), width = 7, height = 8)
+par(mfrow = c(1,1), mar = c(5, 10, 2, 1))
+# Upper panel: bud burst
+plot(seq(-15, 
+         15,
+         length.out = nrow(meanz4)), 
+     1:nrow(meanz4),
+     type = "n",
+     xlab = "",
+     ylab = "",
+     yaxt = "n")
+
+#legend(x = -20, y = 2, bty="n", legend = "a. Budburst", text.font = 2)
+#rasterImage(bbpng, -20, 1, -16, 4)
+
+axis(2, at = nrow(meanz4):1, labels = rownames(meanz4), las = 1, cex.axis = 0.8)
+points(meanz4[, 'mean'],
+       nrow(meanz4):1,
+       pch = 16,
+       col = "midnightblue")
+arrows(meanz4[, "75%"], nrow(meanz4):1, meanz4[, "25%"], nrow(meanz4):1,
+       len = 0, col = "black")
+abline(v = 0, lty = 3)
 # add advance/delay arrows
 # par(xpd=NA)
-# arrows(1, 15.5, 6, 15.5, len=0.1, col = "black")
-# legend(5, 16.5, legend="delay", bty="n", text.font = 1, cex=0.75)
-# arrows(-1, 15.5, -6, 15.5, len=0.1, col = "black")
-# legend(-12, 16.5, legend="advance", bty="n", text.font = 1, cex=0.75)
-# legend(-2, 16.5, legend="0", bty="n", text.font = 1, cex=0.75)
-# par(xpd=FALSE)
-
+# arrows(1, 15.5, 6, 15.5, len = 0.1, col = "black")
+# legend(5, 16.5, legend = "delay", bty = "n", text.font = 1, cex = 0.75)
+# arrows(-1, 15.5, -6, 15.5, len = 0.1, col = "black")
+# legend(-12, 16.5, legend = "advance", bty = "n", text.font = 1, cex = 0.75)
+# legend(-2, 16.5, legend = "0", bty = "n", text.font = 1, cex = 0.75)
+# par(xpd = FALSE)
+dev.off()
 
 ## Replicating Flynn Figure 2:
 
-b.force.both <- sumt[grep("b_warm", rownames(sumt))]; b.force.both <- b.force.both[48:94]
-b.photo.both <- sumt[grep("b_photo", rownames(sumt))]; b.photo.both <- b.photo.both[48:94]
-b.chill.both <- sumt[grep("^b_chill1", rownames(sumt))]
+# b.force.both <- sumt[grep("^b_warm", rownames(sumt))]
+# b.photo.both <- sumt[grep("^b_photo\\[", rownames(sumt))]
+# b.chill.both <- sumt[grep("^b_chill1", rownames(sumt))]
 
+b.force.both.ew <- sumew[grep("^b_warm\\[", rownames(sumew))]
+b.photo.both.ew <- sumew[grep("^b_photo\\[", rownames(sumew))]
+b.chill.both.ew <- sumew[grep("^b_chill1", rownames(sumew))]
 
 shrubs.both = c("VIBLAN","RHAFRA","RHOPRI","SPIALB","VACMYR","VIBCAS", "AROMEL","ILEMUC", "KALANG", "LONCAN", "LYOLIG", "alninc","alnvir","amelan", "corsto","loninv", "menfer","rhoalb", "riblac","rubpar","samrac","shecan","sorsco","spibet","spipyr","symalb","vacmem","vibedu")
 trees.both = c("ACEPEN", "ACERUB", "ACESAC", "BETALL", "BETLEN", "CORCOR", "FAGGRA", "FRANIG", "HAMVIR", "NYSSYL", "POPGRA", "PRUPEN", "QUEALB" , "QUERUB", "QUEVEL", "acegla","betpap", "poptre", "popbal")
 
 pheno.term <- pheno[,c("bb", "chillport.z2", "force.z2", "photo.z2", "species", "lab2","transect")]
-pheno.t <- pheno.term[complete.cases(pheno.term), ] # 1780 rows data 
+
+
+#pheno.t <- pheno.term[complete.cases(pheno.term), ] # 1780 rows data 
 
 
 species.both <- sort(unique(tolower(pheno.t$species)))
 species.fact.both <-as.numeric( as.factor(unique(tolower(pheno.t$species))))
-type.both <- c("tree", "tree", "tree","tree", "shrub", "shrub", "shrub", "tree", "tree", "tree", "tree", "tree",
+Type <- c("tree", "tree", "tree","tree", "shrub", "shrub", "shrub", "tree", "tree", "tree", "tree", "tree",
                "tree", "shrub","shrub","tree","tree", "shrub", "shrub","shrub",  "shrub", "shrub", "shrub", "shrub", "shrub",
                "tree","tree","tree","tree","tree","tree","tree","shrub", "shrub", "shrub", "shrub","shrub", "shrub", "shrub", "shrub","shrub", "shrub", "shrub", "shrub","shrub", "shrub", "shrub")
-both <- data.frame(species.both, species.fact.both, b.force.both, b.photo.both, b.chill.both, type.both)
+Transect <- c("western","eastern","eastern","eastern","both","western","western","eastern","eastern","eastern","both","eastern","western","eastern","eastern","eastern","eastern","eastern","eastern","western","eastern","western","eastern","both","eastern","western","eastern","eastern","eastern","eastern","eastern","western","eastern","western","western","western","western","western","western","western","western","western","western","eastern","eastern","western","eastern")
 
+#both <- data.frame(species.both, species.fact.both, b.force.both, b.photo.both, b.chill.both, type.both)
 
-#pdf(file.path( "figures/chill_vs_force_dldf.pdf"), width = 7, height = 8)
-cf.both <- ggplot(both, aes(x= b.chill.both, y = b.force.both, col = type.both)) +
-  geom_point() +
-  ylim (-25, 1) +
-  xlim (-30, 0) +
-  labs( y = "High forcing", x = "High chilling") +
-  geom_text(aes(label=species.both),hjust=0.5, vjust= 1) +
-  theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
-        panel.background = element_blank(), axis.line = element_line(colour = "black"))
+both.ew <- data.frame(species.both, Transect, species.fact.both, b.force.both.ew, b.photo.both.ew, b.chill.both.ew, Type)
+
+pdf(file.path( "figures/chill_vs_force_dldf.pdf"), width = 5, height = 6)
+#cf.both <- 
+  # ggplot(both, aes(x= b.chill.both, y = b.force.both, col = type.both)) +
+  # geom_point() +
+  # #ylim (-25, 1) +
+  # #xlim (-40, 0) +
+  # labs( y = "High forcing", x = "High chilling") +
+  # geom_text(aes(label=species.both),hjust=0.5, vjust= 1) +
+  # theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
+  #       panel.background = element_blank(), axis.line = element_line(colour = "black"))
 #dev.off()
-
-#pdf(file.path( "figures/chill_vs_photo_dldf.pdf"), width = 7, height = 8)
-cp.both <- ggplot(both, aes(x= b.chill.both, y = b.photo.both, col = type.both)) +
-  geom_point() +
-  ylim (-5.5, 1) +
-  xlim (-30, 0) +
-  labs (x = "High chilling", y = "Long photoperiod") +
-  geom_text(aes(label=species.both),hjust=0.5, vjust= 1) +
-  theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
-        panel.background = element_blank(), axis.line = element_line(colour = "black"))
+  color_scheme_set("viridis")
+  ggplot(both.ew, aes(x= b.chill.both.ew, y = b.force.both.ew, col = Type, shape = Transect)) +
+    geom_point() +
+    labs( y = "High forcing", x = "High chilling") +
+    geom_text(aes(label=species.both),hjust= 0.5, vjust= 1.5, show.legend = F) +
+    theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
+          panel.background = element_blank(), axis.line = element_line(colour = "black")) +
+    scale_fill_manual(values=c( "#593d9cff","#cc6a70ff","#eb8055ff","#f9b641ff","#a65c85ff","#7e4e90ff", "cyan4")) + scale_color_manual(values=c( "#593d9cff","#cc6a70ff","#eb8055ff","#f9b641ff","#a65c85ff","#7e4e90ff", "cyan4"))
+dev.off()
+  
+  
+pdf(file.path( "figures/chill_vs_photo_dldf.pdf"), width = 5, height = 6)
+#cp.both <- 
+  # ggplot(both, aes(x= b.chill.both, y = b.photo.both, col = Type) +
+  # geom_point() +
+  # #ylim (-5.5, 1) +
+  # #xlim (-30, 0) +
+  # labs (x = "High chilling", y = "Long photoperiod", color = type.both, shape = Transect) +
+  # geom_text(aes(label=species.both), hjust=0.5, vjust= 1) +
+  # theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
+  #       panel.background = element_blank(), axis.line = element_line(colour = "black"))
 
 #dev.off()
+  
+  ggplot(both.ew, aes(x= b.chill.both.ew, y = b.photo.both.ew, col = Type, shape = Transect)) +
+    geom_point() +
+    ylim (-5.5, -2) +
+    xlim (-30,-2) +
+    labs (x = "High chilling", y = "Long photoperiod") +
+    geom_text(aes(label=species.both),hjust=0.5, vjust= 2, show.legend = F) +
+    theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
+          panel.background = element_blank(), axis.line = element_line(colour = "black"))+
+    scale_fill_manual(values=c( "#593d9cff","#cc6a70ff","#eb8055ff","#f9b641ff","#a65c85ff","#7e4e90ff", "cyan4")) + scale_color_manual(values=c( "#593d9cff","#cc6a70ff","#eb8055ff","#f9b641ff","#a65c85ff","#7e4e90ff", "cyan4"))
 #legend.position = "none"
+  dev.off()
 
 #pdf(file.path( "figures/force_vs_photo_dldf.pdf"), width = 7, height = 8)
-fp.both <- ggplot(both, aes(x= b.force.both, y = b.photo.both, col = type.both)) +
+fp.both <- ggplot(both.ew, aes(x= b.force.both.ew, y = b.photo.both.ew, col = Type)) +
   geom_point() +
-  geom_text(aes(label=species.both),hjust=0.5, vjust= 1)+
-  ylim (-5.5, 0.5) +
+  geom_text(aes(label=species.both),hjust=0.5, vjust= 1, show.legend = F)+
+  ylim (-5.5, -2) +
   xlim (-22, 0.5) +
   labs(x = "High forcing", y = "Long photoperiod") +
   theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
-        panel.background = element_blank(), axis.line = element_line(colour = "black"))
+        panel.background = element_blank(), axis.line = element_line(colour = "black"))+
+  scale_fill_manual(values=c( "#593d9cff","#cc6a70ff","#eb8055ff","#f9b641ff","#a65c85ff","#7e4e90ff", "cyan4")) + scale_color_manual(values=c( "#593d9cff","#cc6a70ff","#eb8055ff","#f9b641ff","#a65c85ff","#7e4e90ff", "cyan4"))
 #dev.off()
 
 ## Plotting the day to bb with the cues on the y-axis 
@@ -163,26 +712,48 @@ pheno$species <- tolower(pheno$species)
 term.bb.both <- ddply(pheno, c("species"), summarize, mean = mean(bb, na.rm = TRUE))
 names(term.bb.both) <- c("species.both", "mean")
 
-term.both <- merge(term.bb.both, both, by = "species.both", all =TRUE)
-term.both <- term.both[,c("species.both","mean","b.force.both","b.chill.both","b.photo.both")]
+term.both <- merge(term.bb.both, both.ew, by = "species.both", all =TRUE)
+term.both <- term.both[,c("species.both","mean","b.force.both.ew","b.chill.both.ew","b.photo.both.ew")]
 term.both <- term.both[complete.cases(term.both), ] 
 
-tf.both <-  f
-
-tc.both <- ggplot(term.both, aes(y = b.chill.both, x= mean,col = type.both)) +
+pdf(file.path( "figures/force_dobb_dldf.pdf"), width = 5, height = 6)
+tf.both <-  ggplot(term.both, aes(y = b.force.both.ew, x= mean,col = Type)) +
   geom_point() +
+  ylim (-13, -4) +
+  xlim (10, 55) +
+  labs(x = "Mean day of budburst", y = "High forcing") +
+  geom_text(aes(label=species.both),hjust=0.5, vjust= 1, show.legend = F) +
+  theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
+        panel.background = element_blank(), axis.line = element_line(colour = "black"))+
+  scale_fill_manual(values=c( "#593d9cff","#cc6a70ff","#eb8055ff","#f9b641ff","#a65c85ff","#7e4e90ff", "cyan4")) + scale_color_manual(values=c( "#593d9cff","#cc6a70ff","#eb8055ff","#f9b641ff","#a65c85ff","#7e4e90ff", "cyan4"))
+tf.both
+dev.off()
+
+pdf(file.path( "figures/chill_dobb_dldf.pdf"), width = 5, height = 6)
+tc.both <- ggplot(term.both, aes(y = b.chill.both.ew, x= mean,col = Type)) +
+  geom_point() +
+  ylim (-27, -4) +
+  xlim (10, 55) +
   labs(x = "Mean day of budburst", y = "High chilling") +
-  geom_text(aes(label=species.both),hjust=0.5, vjust= 1) +
+  geom_text(aes(label=species.both),hjust=0.5, vjust= 1, show.legend = F) +
   theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
-        panel.background = element_blank(), axis.line = element_line(colour = "black"))
+        panel.background = element_blank(), axis.line = element_line(colour = "black"))+
+  scale_fill_manual(values=c( "#593d9cff","#cc6a70ff","#eb8055ff","#f9b641ff","#a65c85ff","#7e4e90ff", "cyan4")) + scale_color_manual(values=c( "#593d9cff","#cc6a70ff","#eb8055ff","#f9b641ff","#a65c85ff","#7e4e90ff", "cyan4"))
+tc.both
+dev.off()
 
-tp.both <- ggplot(term.both, aes(y = b.photo.both, x= mean,col = type.both)) +
+pdf(file.path( "figures/photo_dobb_dldf.pdf"), width = 5, height = 6)
+tp.both <- ggplot(term.both, aes(y = b.photo.both.ew, x= mean,col = Type)) +
   geom_point() +
+  ylim (-5.5, -2) +
+  xlim (10, 55) +
   labs(x = "Mean day of budburst", y = "Long photoperiod")+
-  geom_text(aes(label=species.both),hjust=0.5, vjust= 1) +
+  geom_text(aes(label=species.both),hjust=0.5, vjust= 1, show.legend = F) +
   theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
-        panel.background = element_blank(), axis.line = element_line(colour = "black"))
-
+        panel.background = element_blank(), axis.line = element_line(colour = "black"))+
+  scale_fill_manual(values=c( "#593d9cff","#cc6a70ff","#eb8055ff","#f9b641ff","#a65c85ff","#7e4e90ff", "cyan4")) + scale_color_manual(values=c( "#593d9cff","#cc6a70ff","#eb8055ff","#f9b641ff","#a65c85ff","#7e4e90ff", "cyan4"))
+tp.both
+dev.off()
 ##### General boxplots across treatments:
 # As per Lizzie's July 7 post: I should look at how linear these relationships are
 # Plot raw data (bb~ chill) with the chill effect from the model plotted on top

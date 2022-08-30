@@ -1,4 +1,6 @@
 *.RData
 *.DS_Store
 *.xlsx
+*.log
+*.synctex.gz
 */pheno_data/excel

@@ -1,0 +1,93 @@
+\documentclass{article}
+
+% required 
+\usepackage[hyphens]{url} % this wraps my URL versus letting it spill across the page, a bad habit LaTeX has
+
+\usepackage{Sweave}
+\usepackage{graphicx}
+\usepackage{natbib}
+\usepackage{amsmath}
+\usepackage{textcomp}%amoung other things, it allows degrees C to be added
+\usepackage{float}
+\usepackage[utf8]{inputenc} % allow funny letters in citaions 
+\usepackage[nottoc]{tocbibind} %should add Refences to the table of contents?
+\usepackage{amsmath} % making nice equations 
+\usepackage{listings} % add in stan code
+\usepackage{xcolor}
+\usepackage{capt-of}%alows me to set a caption for code in appendix 
+\usepackage[export]{adjustbox} % adding a box around a map
+\usepackage{lineno}
+\linenumbers
+% recommended! Uncomment the below line and change the path for your computer!
+% \SweaveOpts{prefix.string=/Users/Lizzie/Documents/git/teaching/demoSweave/Fig.s/demoFig, eps=FALSE} 
+%put your Fig.s in one place! Also, note that here 'Fig.s' is the folder and 'demoFig' is what each 
+% Fig. produced will be titled plus its number or label (e.g., demoFig-nqpbetter.pdf')
+% make your captioning look better
+\usepackage[small]{caption}
+
+\usepackage{xr-hyper} %refer to Fig.s in another document
+\usepackage{hyperref}
+
+\setlength{\captionmargin}{30pt}
+\setlength{\abovecaptionskip}{0pt}
+\setlength{\belowcaptionskip}{10pt}
+
+% optional: muck with spacing
+\topmargin -1.5cm        
+\oddsidemargin 0.5cm   
+\evensidemargin 0.5cm  % same as oddsidemargin but for left-hand pages
+\textwidth 15.59cm
+\textheight 21.94cm 
+% \renewcommand{\baselinestretch}{1.5} % 1.5 lines between lines
+\parindent 0pt		  % sets leading space for paragraphs
+% optional: cute, fancy headers
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+\fancyhead[LO]{Draft early 2022}
+\fancyhead[RO]{Temporal Ecology Lab}
+% more optionals! %
+
+\graphicspath{ {./figures/} }% tell latex where to find photos 
+%\externaldocument[supp-]{Synchrony_Manuscript_supp}
+\begin{document}
+\renewcommand{\bibname}{References}%names reference list 
+
+\input{phenologyNAm-concordance} % For RStudio hiccups
+
+
+\title{Cue responses in woody plants of North America}
+\date{\today}
+\author{Deirdre Loughnan$^1$ and E M Wolkovich$^1$}
+\maketitle 
+
+$^1$ Department of Forest and Conservation, Faculty of Forestry, University of British Columbia, 2424 Main Mall
+Vancouver, BC, Canada, V6T 1Z4. \\
+
+Corresponding Author: Deirdre Loughnan, deirdre.loughnan@ubc.ca \\
+
+
+\section{Research questions:}
+
+\begin{enumerate}
+\item How do species in deciduous forests across North America respond to varying chilling, forcing, and photoperiod cues?
+\item Do we see similar trends when we compare species eastern deciduous forests to western deciduous forests communities? 
+\item How do shrub species differ from tree species in their cue use?
+\end{enumerate}
+
+\section{Results}
+
+\begin{enumerate}
+\item General Survival and germination success
+
+\begin{enumerate}
+\item 2496 samples went into chilling
+\item 2458 survived the experiment
+\item 1.52\% mortality
+\item 9.5\% of the remaining samples did not budburst at all
+\item 18.42\% did not have terminal budburst, most of these were vac mem, followed by rubpar and acegla. 
+\end{enumerate}
+
+\end{enumerate}
+
+
+\end{document}

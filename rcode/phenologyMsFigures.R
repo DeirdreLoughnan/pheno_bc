@@ -111,8 +111,8 @@ head(pheno.t)
 pheno.t <- merge(pheno.t, spInfo, by = "species")
 
 #################################################################
-load("output/final/ew_phylo_output_newpriors_allncp.Rda")
-sumew <- summary(mdl.ewphylo)$summary
+# load("output/final/ew_phylo_output_newpriors_allncp.Rda")
+# sumew <- summary(mdl.ewphylo)$summary
 
 load("output/final/bb_4sites_phylo.Rda")
 sum <- summary(mdl.4phylo)$summary 
@@ -121,24 +121,25 @@ sum <- summary(mdl.4phylo)$summary
 col4fig <- c("mean","sd","25%","50%","75%","Rhat")
 col4table <- c("mean","sd","2.5%","50%","97.5%","Rhat")
 
-mu_params_ew <- c("a_z",
-               "lam_interceptsa",
-               "mu_b_warm",
-               "mu_b_photo",
-               "mu_b_chill",
-                "b_site",
-               "mu_b_inter_wp",
-               "mu_b_inter_wc1",
-               "mu_b_inter_pc1",
-               "mu_b_inter_ws",
-               "mu_b_inter_ps",
-               "mu_b_inter_sc1"
-)
-meanzew <- sumew[mu_params_ew, col4fig]
+# mu_params_ew <- c("a_z",
+#                "lam_interceptsa",
+#                "mu_b_warm",
+#                "mu_b_photo",
+#                "mu_b_chill",
+#                 "b_site",
+#                "mu_b_inter_wp",
+#                "mu_b_inter_wc1",
+#                "mu_b_inter_pc1",
+#                "mu_b_inter_ws",
+#                "mu_b_inter_ps",
+#                "mu_b_inter_sc1"
+# )
+# meanzew <- sumew[mu_params_ew, col4fig]
 
 
-mu_params_4 <- c( "a_z",
-                "lam_interceptsa",
+mu_params_4 <- c( 
+               #"a_z",
+               # "lam_interceptsa",
                 "mu_b_warm",
                 "mu_b_photo",
                 "mu_b_chill1",
@@ -178,21 +179,21 @@ mu_params_4 <- c( "a_z",
 
 meanz4 <- sum[mu_params_4, col4fig]
 
-rownames(meanzew) = c("Root trait intercept",
-                      "Lambda",
-                      "Forcing",
-                      "Photoperiod",
-                      "Chilling",
-                      "Site",
-                      "Forcing x photoperiod",
-                      "Forcing x chilling",
-                      "Photoperiod x forcing",
-                      "Forcing x site",
-                      "Photoperiod x site",
-                      "Chilling x site")
+# rownames(meanzew) = c("Root trait intercept",
+#                       "Lambda",
+#                       "Forcing",
+#                       "Photoperiod",
+#                       "Chilling",
+#                       "Transect",
+#                       "Forcing x photoperiod",
+#                       "Forcing x chilling",
+#                       "Photoperiod x chilling",
+#                       "Forcing x transect",
+#                       "Photoperiod x transect",
+#                       "Chilling x transect")
 
-rownames(meanz4) = c( "Root trait intercept",
-                      "Lambda",
+rownames(meanz4) = c( 
+                      #"Root trait intercept", "Lambda",
                       "Forcing",
                       "Photoperiod",
                       "Chilling",
@@ -213,9 +214,9 @@ rownames(meanz4) = c( "Root trait intercept",
                       "Chilling x St. Hippolyte"            
 )
 
-meanzew.table <- sumew[mu_params_ew, col4table]
-row.names(meanzew.table) <- row.names(meanzew)
-head(meanzew.table)
+# meanzew.table <- sumew[mu_params_ew, col4table]
+# row.names(meanzew.table) <- row.names(meanzew)
+# head(meanzew.table)
 
 meanz4.table <- sum[mu_params_4, col4table]
 row.names(meanz4.table) <- row.names(meanz4)
@@ -223,23 +224,23 @@ head(meanz4.table)
 #write.table(meanzew.table , "output/term.mdl.esti.dldf.csv", sep = ",", row.names = FALSE)
 
 # Begin by checking to see what cue is most important and whether there are strong correlations between cues:
-df.mean.t <- data.frame(bb.force = sum[grep("^b_warm", rownames(sum)), 1],
-                        bb.photo = sum[grep("^b_photo\\[", rownames(sum)), 1],
-                        bb.chill = sum[grep("^b_chill1", rownames(sum)), 1])
-
-df.mean.t[which(df.mean.t$bb.force > df.mean.t$bb.photo), ] # species 25- rho alb
-df.mean.t[which(df.mean.t$bb.chill > df.mean.t$bb.force), ] # 13
-
-
-# all correlated
-summary(lm(bb.force~bb.photo, data=df.mean.t))
-summary(lm(bb.force~bb.chill, data=df.mean.t))
-summary(lm(bb.force~bb.photo, data=df.mean.t))
+# df.mean.t <- data.frame(bb.force = sum[grep("^b_warm", rownames(sum)), 1],
+#                         bb.photo = sum[grep("^b_photo\\[", rownames(sum)), 1],
+#                         bb.chill = sum[grep("^b_chill1", rownames(sum)), 1])
+# 
+# df.mean.t[which(df.mean.t$bb.force > df.mean.t$bb.photo), ] # species 25- rho alb
+# df.mean.t[which(df.mean.t$bb.chill > df.mean.t$bb.force), ] # 13
+# 
+# 
+# # all correlated
+# summary(lm(bb.force~bb.photo, data=df.mean.t))
+# summary(lm(bb.force~bb.chill, data=df.mean.t))
+# summary(lm(bb.force~bb.photo, data=df.mean.t))
 
 ###########################################################################################
 ##### 4 site plots ########################################################################
 ###########################################################################################
-pdf(file.path( "figures/changes.pheno.4sites.pdf"), width = 7, height = 5)
+pdf(file.path( "figures/changes_pheno_4sites.pdf"), width = 7, height = 5)
 par(mfrow = c(1,1), mar = c(5, 10, 2, 1))
 # Upper panel: bud burst
 plot(seq(-15, 
@@ -580,13 +581,13 @@ rownames(meanzew) = c(
                       "Site",
                       "Forcing x photoperiod",
                       "Forcing x chilling",
-                      "Photoperiod x forcing",
+                      "Photoperiod x chilling",
                       "Forcing x site",
                       "Photoperiod x site",
                       "Chilling x site")
 
 
-pdf(file.path( "figures/changes_pheno_ew_empty.pdf"), width = 7, height = 5)
+pdf(file.path( "figures/changes_pheno_ewtemp.pdf"), width = 7, height = 5)
 par(mfrow = c(1,1), mar = c(2, 10, 2, 2))
 # Upper panel: bud burst
 plot(seq(-15, 
@@ -938,8 +939,8 @@ for(k in 1:length(chill1)){
 pdf("figures/ew_interactions_chillSite.pdf", width = 5, height = 5)
 par(mfrow = c(1,1))
 plot(0, type = "n",  xlim = c(-1,1), ylim = c(-5,90), xlab = "Chill portions", ylab = "Day of budburst")
-points(west$chillport.z2,west$bb, col = "maroon")
-points(east$chillport.z2,east$bb, col = "darkslategray4")
+# points(west$chillport.z2,west$bb, col = "maroon")
+# points(east$chillport.z2,east$bb, col = "darkslategray4")
 
 points(bb_westc ~ chill1, type = "l", col = "darkred", lwd = 3)
 points(bb_eastc ~ chill1, type = "l", col = "darkslategray", lwd = 3)

@@ -87,7 +87,82 @@ Corresponding Author: Deirdre Loughnan, deirdre.loughnan@ubc.ca \\
 \item 18.42\% did not have terminal budburst, most of these were vac mem, followed by rubpar and acegla. 
 \end{enumerate}
 
+\item Our model found...
+\begin {enumerate}
+\item The root trait was X and lambda was X - meaning...
+\item While all cues did lead to the advance in budburst date, there were strong interactions between cues and between cues and sites.
+\item Strong delaying interaction between forcing and chilling 
+\item Strong delaying interaction between forcing and the two eastern sites
+\item Strong delaying interaction between chilling and the two eastern sites
+\item moderate advancing interaction between photoperiod and our eastern sites
+\end {enumerate}
 \end{enumerate}
 
+\section{Tables and figures}
+
+<<label= tab4Site, echo=FALSE, results=tex >>=
+require(rstan)
+require(xtable)
+
+load("..//output/final/bb_4sites_phylo.Rda")
+
+sum <- summary(mdl.4phylo)$summary 
+
+col4fig <- c("mean","sd","25%","50%","75%","n_eff","Rhat")
+col4table <- c("mean","sd","2.5%","50%","97.5%","n_eff","Rhat")
+
+mu_params_4 <- c(
+                #"a_z","lam_interceptsa",
+                "mu_b_warm", "mu_b_photo", "mu_b_chill1", "b_site2",
+                "b_site3", "b_site4", "mu_b_inter_wp",
+                "mu_b_inter_wc1","mu_b_inter_pc1", "mu_b_inter_ws2",
+                "mu_b_inter_ps2","mu_b_inter_s2c1", "mu_b_inter_ws3",
+                "mu_b_inter_ps3", "mu_b_inter_s3c1", "mu_b_inter_ws4",
+                "mu_b_inter_ps4","mu_b_inter_s4c1")
+
+meanz4 <- sum[mu_params_4, col4fig]
+
+rownames(meanz4) = c( #"Root trait intercept","Lambda",
+                      "Forcing",
+                      "Photoperiod",
+                      "Chilling",
+                      "Manning Park",
+                       "Harvard Forest",
+                       "St. Hippolyte",
+                      "Forcing x photoperiod",
+                      "Forcing x chilling",
+                      "Photoperiod x chilling",
+                      "Forcing x Manning Park",
+                      "Photoperiod x Manning Park",
+                      "Chilling x Manning Park",
+                      "Forcing x Harvard Forest",
+                      "Photoperiod x Harvard Forest",
+                      "Chilling x Harvard Forest",
+                      "Forcing x St. Hippolyte",
+                      "Photoperiod x St. Hippolyte",
+                      "Chilling x St. Hippolyte"            
+)
+
+meanz4.table <- sum[mu_params_4, col4table]
+row.names(meanz4.table) <- row.names(meanz4)
+
+fourSite <- xtable(meanz4.table, caption="Summary output from a phylogenetic mixed-effect model in which species are partially pooled and phylogeny is included on the intercept. The model includes photoperiod, forcing, and site as dummy variables, while the chilling effect is included as continuous chill portions.")
+print(fourSite,include.rownames=TRUE, caption.placement="top", hline.after=c(-1,0))
+
+@
+
+\begin{figure}[h!]
+    \centering
+     \includegraphics[width=\textwidth]{..//figures/changes_pheno_4sites.pdf} 
+    \caption{Estimated responses in budburst date across all bud types. }
+    \label{fig1}
+\end{figure}
+
+\begin{figure}[h!]
+    \centering
+     \includegraphics[width=\textwidth]{..//figures/changes_pheno_4sites.pdf} 
+    \caption{Interaction plots for the western transect. a) The interaction between chill portions and forcing, b) the interaction between photoperiod and chilling, and c) the relationship between forcing and site}
+    \label{fig1}
+\end{figure}
 
 \end{document}

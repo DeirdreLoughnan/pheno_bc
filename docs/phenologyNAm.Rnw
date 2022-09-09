@@ -155,14 +155,35 @@ print(fourSite,include.rownames=TRUE, caption.placement="top", hline.after=c(-1,
     \centering
      \includegraphics[width=\textwidth]{..//figures/changes_pheno_4sites.pdf} 
     \caption{Estimated responses in budburst date across all bud types. }
-    \label{fig1}
+    \label{fig:muplot}
 \end{figure}
 
 \begin{figure}[h!]
     \centering
-     \includegraphics[width=\textwidth]{..//figures/changes_pheno_4sites.pdf} 
+     \includegraphics[width=\textwidth]{..//figures/cueEW.pdf} 
     \caption{Interaction plots for the western transect. a) The interaction between chill portions and forcing, b) the interaction between photoperiod and chilling, and c) the relationship between forcing and site}
-    \label{fig1}
+    \label{fig:cues}
+\end{figure}
+
+\begin{figure}[h!]
+    \centering
+     \includegraphics[width=\textwidth]{..//figures/cueST.pdf} 
+    \caption{Interaction plots for the western transect. a) The interaction between chill portions and forcing, b) the interaction between photoperiod and chilling, and c) the relationship between forcing and site}
+    \label{fig:cues}
+\end{figure}
+
+\begin{figure}[h!]
+    \centering
+     \includegraphics[width=\textwidth]{..//figures/cueSp.pdf} 
+    \caption{Interaction plots for the western transect. a) The interaction between chill portions and forcing, b) the interaction between photoperiod and chilling, and c) the relationship between forcing and site}
+    \label{fig:cues}
+\end{figure}
+
+\begin{figure}[h!]
+    \centering
+     \includegraphics[width=\textwidth]{..//figures/cueCompare.pdf} 
+    \caption{Interaction plots for the western transect. a) The interaction between chill portions and forcing, b) the interaction between photoperiod and chilling, and c) the relationship between forcing and site}
+    \label{fig:cues}
 \end{figure}
 
 \end{document}

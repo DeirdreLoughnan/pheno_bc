@@ -195,7 +195,9 @@ cueEW <- ggplot(data = longCues, aes(x = transect, y = value)) +
   theme(legend.title = element_blank()) +  annotate("text", x = 0.5, y = 10, label = "a)", cex =5)  +
   scale_fill_manual(values = c("#cc6a70ff","#f9b641ff","cyan4"))
   
-  
+pdf("figures/cueEW.pdf", width = 8, height = 5)
+cueEW
+dev.off()
 # + scale_x_discrete(labels = c("primary consumer \n(n = 556)", "primary producer \n(n = 472)", "secondary consumer \n(n = 247)", "tertiary consumer \n(n = 6)"))
 
 #cues  by architecture
@@ -216,14 +218,17 @@ cueST <- ggplot(data = longCues, aes(x = type, y = value)) +
                          shape = c(8)))) +
   theme(legend.title = element_blank()) +  annotate("text", x = 0.75, y = 10, label = "a)", cex =5) + scale_fill_manual(values = c("#cc6a70ff","#f9b641ff","cyan4"))
 
+pdf("figures/cueST.pdf", width = 8, height = 5)
+cueST
+dev.off()
+
 # Cues by species
-cueSp <- ggplot() + 
-  stat_eye(data = longChillInfo, aes(x = species.name, y = value), .width = c(.90, .5), cex = 0.75)+
+chillSp <- ggplot() + 
+  stat_eye(data = longChillInfo, aes(x = species.name, y = value), .width = c(.90, .5), cex = 0.75, fill = "#cc6a70ff")+
   theme_classic() +  
-  theme(axis.text.x = element_text( size=10,
-                                    angle = 78, 
-                                    hjust=1),
-        axis.title=element_text(size=9) ) + # angle of 55 also works
+  theme(axis.title.x=element_blank(),
+        axis.text.x=element_blank(),
+        axis.ticks.x=element_blank() ) + # angle of 55 also works
   #geom_point(data = meanTrophic, aes(x = meanSlope,y = trophic.level, colour = "purple"), shape = 8, size = 3)+
   labs( x = "Transect", y = "Chilling response", main = NA)+ 
   scale_color_identity(name = "Model fit",
@@ -233,3 +238,38 @@ cueSp <- ggplot() +
                          linetype = c(NA),
                          shape = c(8)))) +
   theme(legend.title = element_blank()) +  annotate("text", x = 1, y = 10, label = "a)", cex =5) 
+forceSp <- ggplot() + 
+  stat_eye(data = longForceInfo, aes(x = species.name, y = value), .width = c(.90, .5), cex = 0.75, fill = "#f9b641ff")+
+  theme_classic() +  
+  theme(axis.title.x=element_blank(),
+        axis.text.x=element_blank(),
+        axis.ticks.x=element_blank() ) + # angle of 55 also works
+  #geom_point(data = meanTrophic, aes(x = meanSlope,y = trophic.level, colour = "purple"), shape = 8, size = 3)+
+  labs( x = "Transect", y = "Forcing response", main = NA)+ 
+  scale_color_identity(name = "Model fit",
+                       breaks = c("black"),
+                       labels = c("Model Posterior"),
+                       guide = guide_legend(override.aes = list(
+                         linetype = c(NA),
+                         shape = c(8)))) +
+  theme(legend.title = element_blank()) +  annotate("text", x = 1, y = 10, label = "a)", cex =5) 
+
+photoSp <- ggplot() + 
+  stat_eye(data = longPhotoInfo, aes(x = species.name, y = value), .width = c(.90, .5), cex = 0.75, fill = "cyan4")+
+  theme_classic() +  
+  theme(axis.text.x = element_text( size=10,
+                                    angle = 78, 
+                                    hjust=1),
+        axis.title=element_text(size=9) ) + # angle of 55 also works
+  #geom_point(data = meanTrophic, aes(x = meanSlope,y = trophic.level, colour = "purple"), shape = 8, size = 3)+
+  labs( x = "Transect", y = "Photoperiod response", main = NA)+ 
+  scale_color_identity(name = "Model fit",
+                       breaks = c("black"),
+                       labels = c("Model Posterior"),
+                       guide = guide_legend(override.aes = list(
+                         linetype = c(NA),
+                         shape = c(8)))) +
+  theme(legend.title = element_blank()) +  annotate("text", x = 1, y = 10, label = "a)", cex =5) 
+pdf("figures/cueSp.pdf", height =12, width = 12)
+grid.arrange(chillSp,forceSp, photoSp, nrow = 3)
+dev.off()

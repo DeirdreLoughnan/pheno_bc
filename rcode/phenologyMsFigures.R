@@ -104,7 +104,7 @@ sort(unique(pheno.t$species.fact)) # 49
 
 # now get the phylogeny and pair it with species names:
 spInfo <- read.csv("input/species_list.csv")
-
+head(spInfo)
 head(pheno.t)
 # change the df to lowercase:
 
@@ -120,22 +120,6 @@ sum <- summary(mdl.4phylo)$summary
 #############################################
 col4fig <- c("mean","sd","25%","50%","75%","Rhat")
 col4table <- c("mean","sd","2.5%","50%","97.5%","Rhat")
-
-# mu_params_ew <- c("a_z",
-#                "lam_interceptsa",
-#                "mu_b_warm",
-#                "mu_b_photo",
-#                "mu_b_chill",
-#                 "b_site",
-#                "mu_b_inter_wp",
-#                "mu_b_inter_wc1",
-#                "mu_b_inter_pc1",
-#                "mu_b_inter_ws",
-#                "mu_b_inter_ps",
-#                "mu_b_inter_sc1"
-# )
-# meanzew <- sumew[mu_params_ew, col4fig]
-
 
 mu_params_4 <- c( 
                #"a_z",
@@ -158,39 +142,8 @@ mu_params_4 <- c(
                 "mu_b_inter_ws4",
                 "mu_b_inter_ps4",
                 "mu_b_inter_s4c1")
-                # "sigma_b_warm",
-                # "sigma_b_photo",
-                # "sigma_b_chill1",
-                # "sigma_interceptsa",
-                # "sigma_b_inter_wp",
-                # "sigma_b_inter_wc1",
-                # "sigma_b_inter_pc1",
-                # "sigma_b_inter_ws2",
-                # "sigma_b_inter_ps2",
-                # "sigma_b_inter_s2c1",
-                # "sigma_b_inter_ws3",
-                # "sigma_b_inter_ps3",
-                # "sigma_b_inter_s3c1",
-                # "sigma_b_inter_ws4",
-                # "sigma_b_inter_ps4",
-                # "sigma_b_inter_s4c1",
-                # "sigma_y")
-
 
 meanz4 <- sum[mu_params_4, col4fig]
-
-# rownames(meanzew) = c("Root trait intercept",
-#                       "Lambda",
-#                       "Forcing",
-#                       "Photoperiod",
-#                       "Chilling",
-#                       "Transect",
-#                       "Forcing x photoperiod",
-#                       "Forcing x chilling",
-#                       "Photoperiod x chilling",
-#                       "Forcing x transect",
-#                       "Photoperiod x transect",
-#                       "Chilling x transect")
 
 rownames(meanz4) = c( 
                       #"Root trait intercept", "Lambda",
@@ -214,28 +167,10 @@ rownames(meanz4) = c(
                       "Chilling x St. Hippolyte"            
 )
 
-# meanzew.table <- sumew[mu_params_ew, col4table]
-# row.names(meanzew.table) <- row.names(meanzew)
-# head(meanzew.table)
-
 meanz4.table <- sum[mu_params_4, col4table]
 row.names(meanz4.table) <- row.names(meanz4)
 head(meanz4.table)
 #write.table(meanzew.table , "output/term.mdl.esti.dldf.csv", sep = ",", row.names = FALSE)
-
-# Begin by checking to see what cue is most important and whether there are strong correlations between cues:
-# df.mean.t <- data.frame(bb.force = sum[grep("^b_warm", rownames(sum)), 1],
-#                         bb.photo = sum[grep("^b_photo\\[", rownames(sum)), 1],
-#                         bb.chill = sum[grep("^b_chill1", rownames(sum)), 1])
-# 
-# df.mean.t[which(df.mean.t$bb.force > df.mean.t$bb.photo), ] # species 25- rho alb
-# df.mean.t[which(df.mean.t$bb.chill > df.mean.t$bb.force), ] # 13
-# 
-# 
-# # all correlated
-# summary(lm(bb.force~bb.photo, data=df.mean.t))
-# summary(lm(bb.force~bb.chill, data=df.mean.t))
-# summary(lm(bb.force~bb.photo, data=df.mean.t))
 
 ###########################################################################################
 ##### 4 site plots ########################################################################
@@ -259,93 +194,102 @@ axis(2, at = nrow(meanz4):1, labels = rownames(meanz4), las = 1, cex.axis = 0.8)
 points(meanz4[, 'mean'],
        nrow(meanz4):1,
        pch = 16,
-       col = "Darkgreen",
-       cex = 1.5)
+       col = "cyan4",
+       cex = 2)
 arrows(meanz4[, "75%"], nrow(meanz4):1, meanz4[, "25%"], nrow(meanz4):1,
        len = 0, col = "black")
 abline(v = 0, lty = 3)
-# add advance/delay arrows
-# par(xpd=NA)
-# arrows(1, 15.5, 6, 15.5, len = 0.1, col = "black")
-# legend(5, 16.5, legend = "delay", bty = "n", text.font = 1, cex = 0.75)
-# arrows(-1, 15.5, -6, 15.5, len = 0.1, col = "black")
-# legend(-12, 16.5, legend = "advance", bty = "n", text.font = 1, cex = 0.75)
-# legend(-2, 16.5, legend = "0", bty = "n", text.font = 1, cex = 0.75)
-# par(xpd = FALSE)
+
 dev.off()
 
 ## Replicating Flynn Figure 2:
 
-b.force.both <- sum[grep("^b_warm", rownames(sum))]
-b.photo.both <- sum[grep("^b_photo\\[", rownames(sum))]
-b.chill.both <- sum[grep("^b_chill1", rownames(sum))]
+bForceSp <-  data.frame(sum[grep("^b_warm", rownames(sum)), c("mean","25%", "75%")])
+bChillSp <-  data.frame(sum[grep("^b_chill1", rownames(sum)), c("mean","25%", "75%")])
+bPhotoSp <-  data.frame(sum[grep("^b_photo\\[", rownames(sum)), c("mean","25%", "75%")])
 
-shrubs.both = c("VIBLAN","RHAFRA","RHOPRI","SPIALB","VACMYR","VIBCAS", "AROMEL","ILEMUC", "KALANG", "LONCAN", "LYOLIG", "alninc","alnvir","amelan", "corsto","loninv", "menfer","rhoalb", "riblac","rubpar","samrac","shecan","sorsco","spibet","spipyr","symalb","vacmem","vibedu")
-trees.both = c("ACEPEN", "ACERUB", "ACESAC", "BETALL", "BETLEN", "CORCOR", "FAGGRA", "FRANIG", "HAMVIR", "NYSSYL", "POPGRA", "PRUPEN", "QUEALB" , "QUERUB", "QUEVEL", "acegla","betpap", "poptre", "popbal")
+bForceSp$species <- sort(unique(pheno.t$species))
+bChillSp$species <- sort(unique(pheno.t$species))
+bPhotoSp$species <- sort(unique(pheno.t$species))
 
-pheno.term <- pheno[,c("bb", "chillport.z2", "force.z2", "photo.z2", "species", "lab2","transect")]
 
-species.both <- sort(unique(tolower(pheno.t$species)))
-species.fact.both <-as.numeric( as.factor(unique(tolower(pheno.t$species))))
-Type <- c("tree", "tree", "tree","tree", "shrub", "shrub", "shrub", "tree", "tree", "tree", "tree", "tree",
-          "tree", "shrub","shrub","tree","tree", "shrub", "shrub","shrub",  "shrub", "shrub", "shrub", "shrub", "shrub",
-          "tree","tree","tree","tree","tree","tree","tree","shrub", "shrub", "shrub", "shrub","shrub", "shrub", "shrub", "shrub","shrub", "shrub", "shrub", "shrub","shrub", "shrub", "shrub")
-Transect <- c("western","eastern","eastern","eastern","both","western","western","eastern","eastern","eastern","both","eastern","western","eastern","eastern","eastern","eastern","eastern","eastern","western","eastern","western","eastern","both","eastern","western","eastern","eastern","eastern","eastern","eastern","western","eastern","western","western","western","western","western","western","western","western","western","western","eastern","eastern","western","eastern")
+# shrubs.both = c("VIBLAN","RHAFRA","RHOPRI","SPIALB","VACMYR","VIBCAS", "AROMEL","ILEMUC", "KALANG", "LONCAN", "LYOLIG", "alninc","alnvir","amelan", "corsto","loninv", "menfer","rhoalb", "riblac","rubpar","samrac","shecan","sorsco","spibet","spipyr","symalb","vacmem","vibedu")
+# trees.both = c("ACEPEN", "ACERUB", "ACESAC", "BETALL", "BETLEN", "CORCOR", "FAGGRA", "FRANIG", "HAMVIR", "NYSSYL", "POPGRA", "PRUPEN", "QUEALB" , "QUERUB", "QUEVEL", "acegla","betpap", "poptre", "popbal")
+head(spInfo)
+bForceSp <- merge(bForceSp, spInfo, by = "species", all =T)
+bChillSp <- merge(bChillSp, spInfo, by = "species", all =T)
+bPhotoSp <- merge(bPhotoSp, spInfo, by = "species", all =T)
 
-#both <- data.frame(species.both, species.fact.both, b.force.both, b.photo.both, b.chill.both, type.both)
+names(bForceSp) <- c("species", "bForceMean", "bForce25", "bForce75", "species.name","type","transect")
+names(bChillSp) <- c("species", "bChillMean", "bChill25", "bChill75", "species.name","type","transect")
+names(bPhotoSp) <- c("species", "bPhotoMean", "bPhoto25", "bPhoto75", "species.name","type","transect")
 
-both <- data.frame(species.both, Transect, species.fact.both, b.force.both, b.photo.both, b.chill.both, Type)
+cueOut <- merge(bForceSp, bChillSp, by = c("species", "species.name","type","transect"))
+cueOut <- merge(cueOut, bPhotoSp, by = c("species", "species.name","type","transect"))
 
-pdf(file.path( "figures/photo_vs_force_dldf4site.pdf"), width = 5, height = 6)
-ggplot(both, aes(x= b.photo.both, y = b.force.both, col = Type, shape = Transect)) +
-geom_point() +
+# pdf(file.path( "figures/cueCompare.pdf"), width = 5, height = 6)
+photoForce <-  ggplot(cueOut, aes(x = bPhotoMean, y = bForceMean , col =type, shape = transect)) +
+  geom_point(size = 2) +
+  #guides(color = "none", size = "none") +
 ylim (-17, 1) +
 xlim (-7, 0) +
-labs( y = "High forcing", x = "High photoperiod") +
-geom_text(aes(label=species.both),hjust=0.5, vjust= 1, show.legend = F) +
+labs( y = "High Forcing", x = "Long Photoperiod") +
+geom_text(cueOut, mapping = aes(label= species),hjust=0.5, vjust= 1, show.legend = F) +
+  # geom_bar(stat="identity", color="black", 
+  #          position=position_dodge()) +
+  geom_errorbar(aes(xmin= bPhoto25, xmax = bPhoto75), width= 0) +
+  geom_errorbar(aes(ymin= bForce25, ymax = bForce75), width= 0) +
 theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
-      panel.background = element_blank(), axis.line = element_line(colour = "black"))+
+      panel.background = element_blank(), axis.line = element_line(colour = "black"),
+      legend.position="none")+
   scale_fill_manual(values=c( "#593d9cff","#cc6a70ff","#eb8055ff","#f9b641ff","#a65c85ff","#7e4e90ff", "cyan4")) + scale_color_manual(values=c( "#593d9cff","#cc6a70ff","#eb8055ff","#f9b641ff","#a65c85ff","#7e4e90ff", "cyan4"))
-dev.off()
 
-color_scheme_set("viridis")
-pdf(file.path( "figures/chill_vs_force_dldf4site.pdf"), width = 5, height = 6)
-ggplot(both, aes(x= b.chill.both, y = b.force.both, col = Type, shape = Transect)) +
+
+# color_scheme_set("viridis")
+#pdf(file.path( "figures/chill_vs_force_dldf4site.pdf"), width = 5, height = 6)
+chillForce <- ggplot(cueOut, aes(x= bChillMean, y = bForceMean, col = type, shape = transect)) +
   geom_point() +
   ylim (-17, 1) +
   xlim (-35, 0) +
   labs( y = "High forcing", x = "High chilling") +
-  geom_text(aes(label=species.both),hjust= 0.5, vjust= 1.5, show.legend = F) +
+  geom_text(aes(label=species),hjust= 0.5, vjust= 1.5, show.legend = F) +
+  geom_errorbar(aes(xmin= bChill25, xmax = bChill75), width= 0) +
+  geom_errorbar(aes(ymin= bForce25, ymax = bForce75), width= 0) +
+  theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
+        panel.background = element_blank(), axis.line = element_line(colour = "black"), legend.position="none") +
+  scale_fill_manual(values=c( "#593d9cff","#cc6a70ff","#eb8055ff","#f9b641ff","#a65c85ff","#7e4e90ff", "cyan4")) + scale_color_manual(values=c( "#593d9cff","#cc6a70ff","#eb8055ff","#f9b641ff","#a65c85ff","#7e4e90ff", "cyan4"))
+#dev.off()
+
+#pdf(file.path( "figures/chill_vs_photo_dldf4site.pdf"), width = 5, height = 6)
+chillPhoto <- ggplot(cueOut, aes(y= bChillMean, x = bPhotoMean, col = type, shape = transect)) +
+  geom_point() +
+  xlim (-17, 1) +
+  ylim (-35, 0) +
+  labs( x = "Long Photoperiod", y = "High chilling") +
+  geom_text(aes(label=species),hjust= 0.5, vjust= 1.5, show.legend = F) +
+  geom_errorbar(aes(ymin= bChill25, ymax = bChill75), width= 0) +
+  geom_errorbar(aes(xmin= bPhoto25, xmax = bPhoto75), width= 0) +
   theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
         panel.background = element_blank(), axis.line = element_line(colour = "black")) +
   scale_fill_manual(values=c( "#593d9cff","#cc6a70ff","#eb8055ff","#f9b641ff","#a65c85ff","#7e4e90ff", "cyan4")) + scale_color_manual(values=c( "#593d9cff","#cc6a70ff","#eb8055ff","#f9b641ff","#a65c85ff","#7e4e90ff", "cyan4"))
-dev.off()
 
-
-pdf(file.path( "figures/chill_vs_photo_dldf4site.pdf"), width = 5, height = 6)
-ggplot(both, aes(x= b.chill.both, y = b.photo.both, col = Type, shape = Transect)) +
-  geom_point() +
-  ylim (-7.5, 0) +
-  xlim (-32,-0) +
-  labs (x = "High chilling", y = "Long photoperiod") +
-  geom_text(aes(label=species.both),hjust=0.5, vjust= 2, show.legend = F) +
-  theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
-        panel.background = element_blank(), axis.line = element_line(colour = "black"))+
-  scale_fill_manual(values=c( "#593d9cff","#cc6a70ff","#eb8055ff","#f9b641ff","#a65c85ff","#7e4e90ff", "cyan4")) + scale_color_manual(values=c( "#593d9cff","#cc6a70ff","#eb8055ff","#f9b641ff","#a65c85ff","#7e4e90ff", "cyan4"))
-#legend.position = "none"
+pdf(file.path( "figures/cueCompare.pdf"), width = 12, height = 4)
+grid.arrange(chillForce,photoForce, chillPhoto, ncol = 3)
 dev.off()
 
 ## Plotting the day to bb with the cues on the y-axis 
-pheno$species <- tolower(pheno$species)
-term.bb.both <- ddply(pheno, c("species"), summarize, mean = mean(bb, na.rm = TRUE))
-names(term.bb.both) <- c("species.both", "mean")
+head(pheno)
+phenoInfo <- merge(pheno, spInfo, by = "species")
 
-term.both <- merge(term.bb.both, both, by = "species.both", all =TRUE)
-term.both <- term.both[,c("species.both","mean","b.force.both","b.chill.both","b.photo.both")]
+phenoInfoMean <- ddply(phenoInfo, c("species"), summarize, mean = mean(bb, na.rm = TRUE))
+# names(term.bb.both) <- c("species.both", "mean")
+
+term.both <- merge(phenoInfo, cueOut, by = c("species", "type", "transect"), all =TRUE)
+term.both <- term.both[,c("species","mean","bForceSp","bChillSp","bPhotoSp", "type", "transect")]
 term.both <- term.both[complete.cases(term.both), ] 
 
 pdf(file.path( "figures/force_dobb_dldf4sites.pdf"), width = 5, height = 6)
-tf.both <-  ggplot(term.both, aes(y = b.force.both, x= mean,col = Type, shape = Transect)) +
+tf.both <-  ggplot(term.both, aes(y = bForceSp, x= mean,col = type, shape = transect)) +
   geom_point() +
   ylim (-17, 0) +
   xlim (5, 55) +
@@ -358,7 +302,7 @@ tf.both
 dev.off()
 
 pdf(file.path( "figures/chill_dobb_dldf4sites.pdf"), width = 5, height = 6)
-tc.both <- ggplot(term.both, aes(y = b.chill.both, x= mean,col = Type, shape = Transect)) +
+tc.both <- ggplot(term.both, aes(y = bChillSp, x= mean,col = type, shape = transect)) +
   geom_point() +
   ylim (-32, -4) +
   xlim (10, 55) +
@@ -371,7 +315,7 @@ tc.both
 dev.off()
 
 pdf(file.path( "figures/photo_dobb_dldf.pdf"), width = 5, height = 6)
-tp.both <- ggplot(term.both, aes(y = b.photo.both, x= mean,col = Type, shape = Transect)) +
+tp.both <- ggplot(term.both, aes(y = bPhotoSp, x= mean,col = type, shape = transect)) +
   geom_point() +
   ylim (-6.5, -1) +
   xlim (10, 55) +

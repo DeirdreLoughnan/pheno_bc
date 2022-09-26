@@ -75,21 +75,26 @@ Corresponding Author: Deirdre Loughnan, deirdre.loughnan@ubc.ca \\
 \end{enumerate}
 
 \section{Results}
+<<label=runcode1,  echo=FALSE>>=
+
+source("..//rcode/phenologyMsValues.R")
+@
+getwd()
 
 \begin{enumerate}
-\item General Survival and germination success
+\item General Survival and germination success from the western transect experiment
 
 \begin{enumerate}
-\item 2496 samples went into chilling
-\item 2458 survived the experiment
-\item 1.52\% mortality
-\item 9.5\% of the remaining samples did not budburst at all
-\item 18.42\% did not have terminal budburst, most of these were vac mem, followed by rubpar and acegla. 
+\item \Sexpr{totChill} samples went into chilling
+\item \Sexpr{totExpSurv} survived the experiment
+\item \Sexpr{perNoBB}\% of the remaining samples did not budburst at all
+\item \Sexpr{perNoTerm}\% did not have terminal budburst, most of these were \emph{Vaccinium membranaceum}, \emph{Rubus parviflorus}, and \emph{Ribes lacustre}
 \end{enumerate}
 
 \item Our model found...
 \begin {enumerate}
-\item The root trait was X and lambda was X - meaning...
+\item The root trait was \Sexpr{rootT} (uncertainty interval: \Sexpr{rootTLower}, \Sexpr{rootTUpper}) and lambda was \Sexpr{lamT} (uncertainty interval: \Sexpr{lamTLower}, \Sexpr{lamTUpper}) 
+\item Species cue responses were strongly phylogenetically structured.
 \item While all cues did lead to the advance in budburst date, there were strong interactions between cues and between cues and sites.
 \item Strong delaying interaction between forcing and chilling 
 \item Strong delaying interaction between forcing and the two eastern sites
@@ -185,5 +190,7 @@ print(fourSite,include.rownames=TRUE, caption.placement="top", hline.after=c(-1,
     \caption{Interaction plots for the western transect. a) The interaction between chill portions and forcing, b) the interaction between photoperiod and chilling, and c) the relationship between forcing and site}
     \label{fig:cues}
 \end{figure}
+
+\section{Supplementary Material}
 
 \end{document}

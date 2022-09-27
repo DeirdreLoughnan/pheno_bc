@@ -137,13 +137,13 @@ chillBInterSite4 <- data.frame(fit$b_chill1+fit$b_inter_s4c1)
 
 colnames(chillB) <- unique(pheno.t$species.name)
 
-# site2 <- data.frame(fit[,c("b_site2","b_inter_s2c1")])
-# 
-# site3 <- data.frame(fit$b_site3)
-# 
-# site4 <- data.frame(fit$b_site4)
-# 
-# site <- cbind(site2, site3, site4)
+site2 <- data.frame(fit$b_site2)
+
+site3 <- data.frame(fit$b_site3)
+
+site4 <- data.frame(fit$b_site4)
+
+site <- cbind(site2, site3, site4)
 
 colnames(site) <- c("site2","site3", "site4")
 longsite <- melt(site)
@@ -517,10 +517,90 @@ ggplot() +
 ###########################################
 longCuesInter <- rbind(longForceInterInfo, longChillInterInfo, longPhotoInterInfo)
 
+longChillSub <- longChillInterInfo[,c("species.name","species","type","transect","value", "cue", "Site2Inter", "Site3Inter","Site4Inter" )]
+longerChill <- melt(longChillSub, id = c("species.name","species","type","transect","value", "cue"))
+
+colnames(longerChill) <-  c("species.name","species","type", "transect","value","cue", "site","siteValue")
+
 ggplot() + 
-  stat_eye(data = longCuesInter, aes(x = cue, y = Site2Inter, fill = "#cc6a70ff"), .width = c(.90, .5), cex = 0.75, position = position_dodge(0.9)) +
-  stat_eye(data = longCuesInter, aes(x = cue, y = Site3Inter, fill = "#f9b641ff"), .width = c(.90, .5), cex = 0.75, position = position_dodge(0.9)) +
-  stat_eye(data = longCuesInter, aes(x = cue, y = Site4Inter, fill = "cyan4"), .width = c(.90, .5), cex = 0.75, position = position_dodge(0.9)) +
+  stat_eye(data = longerChill, aes(x = site, y = siteValue, fill = "#cc6a70ff"), .width = c(.90, .5), cex = 0.75 
+                   #, position = position_jitter(width = 1)
+  ) +
+  theme_classic() +   
+  theme(axis.text.x = element_text( size=10,
+                                    #angle = 78, 
+                                    hjust=1),
+        axis.title=element_text(size=9) ) + # angle of 55 also works
+  #geom_point(data = meanTrophic, aes(x = meanSlope,y = trophic.level, colour = "purple"), shape = 8, size = 3)+
+  labs( x = "Cue", y = "Cue response", main = NA) + 
+  scale_color_identity(name = "Model fit",
+                       breaks = c("black"),
+                       labels = c("Model Posterior"),
+                       guide = guide_legend(override.aes = list(
+                         linetype = c(NA),
+                         shape = c(8)))) +
+  theme(legend.position = "none") +  annotate("text", x = 0.5, y = 50, label = "a)", cex =5)  +
+  scale_fill_manual(values = c("#cc6a70ff"))
+
+
+###################################################################\
+longForceSub <- longForceInterInfo[,c("species.name","species","type","transect","value", "cue", "Site2Inter", "Site3Inter","Site4Inter" )]
+longerForce <- melt(longForceSub, id = c("species.name","species","type","transect","value", "cue"))
+
+colnames(longerForce) <-  c("species.name","species","type", "transect","value","cue", "site","siteValue")
+
+ggplot() + 
+  stat_eye(data = longerForce, aes(x = site, y = siteValue, fill = "#f9b641ff"), .width = c(.90, .5), cex = 0.75 
+           #, position = position_jitter(width = 1)
+  ) +
+  theme_classic() +   
+  theme(axis.text.x = element_text( size=10,
+                                    #angle = 78, 
+                                    hjust=1),
+        axis.title=element_text(size=9) ) + # angle of 55 also works
+  #geom_point(data = meanTrophic, aes(x = meanSlope,y = trophic.level, colour = "purple"), shape = 8, size = 3)+
+  labs( x = "Cue", y = "Cue response", main = NA) + 
+  scale_color_identity(name = "Model fit",
+                       breaks = c("black"),
+                       labels = c("Model Posterior"),
+                       guide = guide_legend(override.aes = list(
+                         linetype = c(NA),
+                         shape = c(8)))) +
+  theme(legend.position = "none") +  annotate("text", x = 0.5, y = 50, label = "a)", cex =5)  +
+  scale_fill_manual(values = c("#f9b641ff"))
+#############################################################################
+longPhotoSub <- longPhotoInterInfo[,c("species.name","species","type","transect","value", "cue", "Site2Inter", "Site3Inter","Site4Inter" )]
+longerPhoto <- melt(longPhotoSub, id = c("species.name","species","type","transect","value", "cue"))
+
+colnames(longerPhoto) <-  c("species.name","species","type", "transect","value","cue", "site","siteValue")
+
+ggplot() + 
+  stat_eye(data = longerPhoto, aes(x = site, y = siteValue, fill = "cyan4"), .width = c(.90, .5), cex = 0.75 
+           #, position = position_jitter(width = 1)
+  ) +
+  theme_classic() +   
+  theme(axis.text.x = element_text( size=10,
+                                    #angle = 78, 
+                                    hjust=1),
+        axis.title=element_text(size=9) ) + # angle of 55 also works
+  #geom_point(data = meanTrophic, aes(x = meanSlope,y = trophic.level, colour = "purple"), shape = 8, size = 3)+
+  labs( x = "Cue", y = "Cue response", main = NA) + 
+  scale_color_identity(name = "Model fit",
+                       breaks = c("black"),
+                       labels = c("Model Posterior"),
+                       guide = guide_legend(override.aes = list(
+                         linetype = c(NA),
+                         shape = c(8)))) +
+  theme(legend.position = "none") +  annotate("text", x = 0.5, y = 50, label = "a)", cex =5)  +
+  scale_fill_manual(values = c("cyan4"))
+##################################################################################
+ggplot() + 
+  ggdist::stat_eye(data = longCuesInter, aes(x = cue, y = Site2Inter, fill = "#cc6a70ff"), .width = c(.90, .5), cex = 0.75 
+                   , position = position_dodge(2)) +
+  stat_eye(data = longCuesInter, aes(x = cue, y = Site3Inter, fill = "#f9b641ff"), .width = c(.90, .5), cex = 0.75
+           , position = position_dodge(2)) +
+           
+  stat_eye(data = longCuesInter, aes(x = cue, y = Site4Inter, fill = "cyan4"), .width = c(.90, .5), cex = 0.75, position = position_dodge(2)) +
   theme_classic() +   
   theme(axis.text.x = element_text( size=10,
                                     #angle = 78, 

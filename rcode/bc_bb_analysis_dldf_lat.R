@@ -331,6 +331,124 @@ mdlLat50 <- stan("stan/bc_bb_2sites_standardized_phylogeny.stan",
 save(mdlLat50, file="output/dl_phylo_lat50.Rda")
 
 
-load("output/final/dl_l1.Rda")
 
-sum <- summary(mdl.1l)$summary 
+## Now compare how the 1% vs the 50% does:
+
+load("output/final/dl_phylo_lat1.Rda")
+sum1 <- summary(mdl.1l)$summary 
+
+range(sum1[, "n_eff"])
+range(sum1[, "Rhat"])
+
+# sum1Out <- summary(mdl.1l)$summary[c("mu_grand", "b_z","lam_interceptsa", "lam_interceptsb","sigma_interceptsa", "sigma_interceptsb", "sigma_y"),"mean"]
+
+col4fig <- c("mean","sd","25%","50%","75%","n_eff","Rhat")
+col4table <- c("mean","sd","2.5%","50%","97.5%","n_eff","Rhat")
+
+mu_params_1l <- c(
+  #"a_z","lam_interceptsa",
+  "mu_b_warm", "mu_b_photo", "mu_b_chill1", "b_site", "mu_b_inter_wp",
+  "mu_b_inter_wc1","mu_b_inter_pc1", "mu_b_inter_ws",
+  "mu_b_inter_ps","mu_b_inter_sc1")
+
+meanz1l <- sum1[mu_params_1l, col4fig]
+
+rownames(meanz1l) = c( #"Root trait intercept","Lambda",
+  "Forcing",
+  "Photoperiod",
+  "Chilling",
+  "Manning Park",
+  "Forcing x photoperiod",
+  "Forcing x chilling",
+  "Photoperiod x chilling",
+  "Forcing x Manning Park",
+  "Photoperiod x Manning Park",
+  "Chilling x Manning Park"
+  
+)
+
+
+range(sum1[, "n_eff"])
+range(sum1[, "Rhat"])
+
+# sum1Out <- summary(mdl.1l)$summary[c("mu_grand", "b_z","lam_interceptsa", "lam_interceptsb","sigma_interceptsa", "sigma_interceptsb", "sigma_y"),"mean"]
+# 
+
+#################################################
+load("..//output/final/dl_phylo_lat50.Rda")
+
+sum50 <- summary(mdlLat50)$summary
+
+col4fig <- c("mean","sd","25%","50%","75%","n_eff","Rhat")
+col4table <- c("mean","sd","2.5%","50%","97.5%","n_eff","Rhat")
+
+mu_params_50l <- c(
+  #"a_z","lam_interceptsa",
+  "mu_b_warm", "mu_b_photo", "mu_b_chill1", "b_site", "mu_b_inter_wp",
+  "mu_b_inter_wc1","mu_b_inter_pc1", "mu_b_inter_ws",
+  "mu_b_inter_ps","mu_b_inter_sc1")
+
+meanz50l <- sum50[mu_params_50l, col4fig]
+
+rownames(meanz50l) = c( #"Root trait intercept","Lambda",
+  "Forcing",
+  "Photoperiod",
+  "Chilling",
+  "Manning Park",
+  "Forcing x photoperiod",
+  "Forcing x chilling",
+  "Photoperiod x chilling",
+  "Forcing x Manning Park",
+  "Photoperiod x Manning Park",
+  "Chilling x Manning Park"
+  
+)
+
+pdf("figures/lat1_lat50_muplot.pdf", width = 7, height = 5)
+par(mfrow = c(1,1), mar = c(5, 10, 2, 2))
+# Upper panel: bud burst
+plot(seq(-15, 
+         15,
+         length.out = nrow(meanz50l)), 
+     1:nrow(meanz50l),
+     type = "n",
+     xlab = "Estimated change in budburst day",
+     ylab = "",
+     yaxt = "n"
+     )
+
+#legend(x = -20, y = 2, bty="n", legend = "a. Budburst", text.font = 2)
+#rasterImage(bbpng, -20, 1, -16, 4)
+
+axis(2, at = nrow(meanz50l):1, labels = rownames(meanz50l), las = 1, cex.axis = 0.8)
+points(meanz50l[, 'mean'],
+       nrow(meanz50l):1,
+       pch = 16,
+       col = "#eb8055ff",
+       cex = 1.5)
+arrows(meanz50l[, "75%"], nrow(meanz50l):1, meanz50l[, "25%"], nrow(meanz50l):1,
+       len = 0, col = "#eb8055ff")
+abline(v = 0, lty = 3)
+########################################
+points(meanz1l[, 'mean'],
+       nrow(meanz1l):1,
+       pch = 16,
+       col = "cyan4",
+       cex = 1.5)
+arrows(meanz1l[, "75%"], nrow(meanz1l):1, meanz1l[, "25%"], nrow(meanz1l):1,
+       len = 0, col = "cyan4")
+abline(v = 0, lty = 3)
+
+legend("topright",legend = c( "1st lateral budurst", "50% lateral budburst"),
+      col = c("black", "black", "black", "black","black", "black","black"),
+       pt.bg = c("#eb8055ff", "cyan4"),
+       inset = 0.02, pch = c(21, 21), cex = 1, bty = "n")
+dev.off()
+# add advance/delay arrows
+par(xpd=NA)
+# arrows(1, 15.5, 6, 15.5, len = 0.1, col = "black")
+# legend(5, 16.5, legend = "delay", bty = "n", text.font = 1, cex = 0.75)
+# arrows(-1, 15.5, -6, 15.5, len = 0.1, col = "black")
+# legend(-12, 16.5, legend = "advance", bty = "n", text.font = 1, cex = 0.75)
+# legend(-2, 16.5, legend = "0", bty = "n", text.font = 1, cex = 0.75)
+# par(xpd = FALSE)

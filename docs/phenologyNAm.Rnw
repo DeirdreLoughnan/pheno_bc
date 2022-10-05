@@ -156,10 +156,96 @@ print(fourSite,include.rownames=TRUE, caption.placement="top", hline.after=c(-1,
 
 @
 
+<<label= tab4Site, echo=FALSE, results=tex >>=
+require(rstan)
+require(xtable)
+
+load("..//output/final/dl_phylo_lat1.Rda")
+
+sum1 <- summary(mdlLat1)$summary
+
+col4fig <- c("mean","sd","25%","50%","75%","n_eff","Rhat")
+col4table <- c("mean","sd","2.5%","50%","97.5%","n_eff","Rhat")
+
+mu_params_1l <- c(
+                #"a_z","lam_interceptsa",
+                "mu_b_warm", "mu_b_photo", "mu_b_chill1", "b_site", "mu_b_inter_wp",
+                "mu_b_inter_wc1","mu_b_inter_pc1", "mu_b_inter_ws",
+                "mu_b_inter_ps","mu_b_inter_sc1")
+
+meanz1l <- sum1[mu_params_1l, col4fig]
+
+rownames(meanz1l) = c( #"Root trait intercept","Lambda",
+                      "Forcing",
+                      "Photoperiod",
+                      "Chilling",
+                      "Manning Park",
+                      "Forcing x photoperiod",
+                      "Forcing x chilling",
+                      "Photoperiod x chilling",
+                      "Forcing x Manning Park",
+                      "Photoperiod x Manning Park",
+                      "Chilling x Manning Park"
+
+)
+
+# meanz1l.table <- sum[mu_params_1l, col4table]
+# row.names(meanz1l.table) <- row.names(meanz1l)
+
+onelSite <- xtable(meanz1l, caption="Summary output from a phylogenetic mixed-effect model for the day of budburst of the first lateral bud for western species. In this model, species are partially pooled and phylogeny is included on the intercept. The model includes photoperiod, forcing, and site as dummy variables, while the chilling effect is included as continuous chill portions.")
+print(onelSite,include.rownames=TRUE, caption.placement="top", hline.after=c(-1,0))
+
+@
+
+<<label= tab4Site, echo=FALSE, results=tex >>=
+require(rstan)
+require(xtable)
+
+load("..//output/final/dl_phylo_lat50.Rda")
+
+sum50 <- summary(mdlLat50)$summary
+
+col4fig <- c("mean","sd","25%","50%","75%","n_eff","Rhat")
+col4table <- c("mean","sd","2.5%","50%","97.5%","n_eff","Rhat")
+
+mu_params_50l <- c(
+                #"a_z","lam_interceptsa",
+                "mu_b_warm", "mu_b_photo", "mu_b_chill1", "b_site", "mu_b_inter_wp",
+                "mu_b_inter_wc1","mu_b_inter_pc1", "mu_b_inter_ws",
+                "mu_b_inter_ps","mu_b_inter_sc1")
+
+meanz50l <- sum50[mu_params_50l, col4fig]
+
+rownames(meanz50l) = c( #"Root trait intercept","Lambda",
+                      "Forcing",
+                      "Photoperiod",
+                      "Chilling",
+                      "Manning Park",
+                      "Forcing x photoperiod",
+                      "Forcing x chilling",
+                      "Photoperiod x chilling",
+                      "Forcing x Manning Park",
+                      "Photoperiod x Manning Park",
+                      "Chilling x Manning Park"
+
+)
+
+fiftylSite <- xtable(meanz50l, caption="Summary output from a phylogenetic mixed-effect model for the day of 50 percent lateral budburst of species from our western transect. In this model, species are partially pooled and phylogeny is included on the intercept. The model includes photoperiod, forcing, and site as dummy variables, while the chilling effect is included as continuous chill portions.")
+print(fiftylSite,include.rownames=TRUE, caption.placement="top", hline.after=c(-1,0))
+
+@
+
 \begin{figure}[h!]
     \centering
      \includegraphics[width=\textwidth]{..//figures/changes_pheno_4sites.pdf} 
-    \caption{Estimated responses in budburst date across all bud types. }
+    \caption{Estimated mean responses in budburst date of first bud to varying forcing, chilling, and photoperiod cues for 47 deciduous woody species across North America. Points represent mean budburst dates, while bars depict the 50\% uncertainty interval. Negative responses represent advances budburst, while positive values represent delaying effects.}
+    \label{fig:muplot}
+\end{figure}
+
+\begin{figure}[h!]
+    \centering
+     \includegraphics[width=\textwidth]{..//figures/lat1_lat50_muplot.pdf} 
+    \caption{Estimated mean responses in lateral budburst date to varying environmental cues for 21 deciduous woody species in British Columbia. Points represent mean budburst dates, while bars depict the 50\% uncertainty interval. Negative responses represent advances budburst, while positive values represent delaying effects. }
     \label{fig:muplot}
 \end{figure}
 
@@ -193,4 +279,105 @@ print(fourSite,include.rownames=TRUE, caption.placement="top", hline.after=c(-1,
 
 \section{Supplementary Material}
 
+<<label= meanBBTab, echo=FALSE , results=tex>>=
+# Mean bb dates across all treatments from raw data for 47 species at our two western sites, E.C. Manning Park and Smither B.C., and our two eastern sites, Harvard Forest (HF) USA and St. Hippoltye (SH) Canada.
+
+require(xtable)
+library(tidyr)
+
+dl <- read.csv("..//input/dl_allbb.csv")
+
+temp <- str_split_fixed(dl$trt, "_", 3)
+dl$chill<- temp[,1]
+dl$photo <- temp[,2]
+dl$force <- temp[,3]
+
+dl.chill <- read.csv("..//input/chilling_values_Hope_Smithers.csv")
+
+dl.wchill <- merge(dl, dl.chill, by = c("population","chill"))
+dl.wchill$lab3 <- dl.wchill$lab2
+dl.wchill$lab2 <- paste(dl.wchill$species, dl.wchill$population, dl.wchill$rep, sep = "_")
+dl.wchill$transect <- "west"
+
+df <- read.csv("..//input/df_dxb_prepped_data.csv")
+df.chill <- read.csv("..//input/chilling_values_eastern.csv")
+df.wchill <- merge(df, df.chill, by =c("population","chill"))
+df.wchill <- df.wchill[, c("population", "chill","force","photo","lab2", "bb","species", "treatment","Chill_portions","Utah_Model")]
+df.wchill$transect <- "east"
+
+# # mergeing the my data with DF
+ pheno <- rbind.fill(dl.wchill, df.wchill)
+
+meanBB <- aggregate(pheno["bb"], pheno[c("population", "species")], FUN = mean, na.rm  =T)
+meanBB$bb <- round(meanBB$bb, 0)
+
+meanBBPop <- spread(meanBB, key = population, value = bb)
+meanBBPop$species <- tolower(meanBBPop$species)
+
+spInfo <- read.csv("..//input/species_list.csv")
+spInfo$species.name <- gsub("_"," ", spInfo$species.name)
+
+mdlTab <- merge(meanBBPop, spInfo, by = "species")
+mdlTab <- mdlTab[, c("species.name","HF","SH","mp","sm")]
+
+colnames(mdlTab) <- c("Species" , "Harvard Forest", "St. Hippoltye","Manning Park", "Smithers")
+
+meanBBTab <- xtable(mdlTab, caption="Mean budburst dates across all treatments from raw data for 47 species at our two western sites, E.C. Manning Park and Smither B.C., and our two eastern sites, Harvard Forest (HF) USA and St. Hippoltye (SH) Canada.")
+print(meanBBTab,include.rownames=F, caption.placement="top", hline.after=c(-1,0))
+
+@
+
+
+<<label= chillunitTsb, echo=FALSE , results=tex>>=
+# Chill units from our two western sites, E.C. Manning Park and Smither B.C., and our two eastern sites, Harvard Forest (HF) USA and St. Hippoltye (SH) Canada.
+
+require(xtable)
+library(tidyr)
+
+# dl.chill <- read.csv("..//input/chilling_values_Hope_Smithers.csv")
+# # dl.chill$population[dl.chill$population == "sm"] <- "SM"
+# # dl.chill$population[dl.chill$population == "mp"] <- "MP"
+# 
+# df.chill <- read.csv("..//input/chilling_values_eastern.csv")
+# 
+# chill <- rbind(df.chill, dl.chill)
+# chill$population[chill$population == "sm"] <- "Smithers"
+# chill$population[chill$population == "mp"] <- "Manning Park"
+# chill$population[chill$population == "SH"] <- "St. Hippoltye"
+# chill$population[chill$population == "HF"] <- "Harvard forest"
+# 
+# chill$population <- as.factor(chill$population)
+# chill$chill[chill$chill == "chill0"] <- "Field chilling"
+# chill$chill[chill$chill == "chill1"] <- "Field chilling + 30 d at 4 degree C"
+# chill$chill[chill$chill == "chill2"] <- "Field chilling + 30 d at 1.5 degree C"
+# chill$chill[chill$chill == "HC"] <- "Field chilling + 30 d at 4 degree C"
+# chill$chill[chill$chill == "LC"] <- "Field chilling + 70 d at 4 degree C"
+# 
+# colnames(chill) <- c("Population","Chilling treatment", "Chilling Hours", "Utah Model", "Chill Portions")
+# #chill$population <- toupper(chill$population)
+# 
+# write.csv(chill, "chillUnits.csv", row.names = F)
+#chill <- data.frame(chill)
+
+chill <- read.csv("..//output/chillUnits.csv")
+chillunit <- xtable(chill, caption = "Chill units from our two western sites, E.C. Manning Park and Smither B.C., and our two eastern sites, Harvard Forest (HF) USA and St. Hippoltye (SH) Canada.")
+print(chillunit,include.rownames= F, caption.placement="top", hline.after=c(-1,0))
+@
+
+<<label=table1, echo=FALSE, results=tex >>=
+spwithbb <- read.csv("..//output/bb.success.ax.trt.csv", head = TRUE)
+library(xtable)
+
+spInfo <- read.csv("..//input/species_list.csv")
+spInfo$species.name <- gsub("_"," ", spInfo$species.name)
+colnames(spInfo) <- c("Species name", "Species","Plant type", "transect")
+bb_suc <- merge(spwithbb, spInfo, by = "Species")
+
+bb_suc <- bb_suc[, c("Species name", "Proportion.Budburst","Plant type")]
+names(bb_suc) <- c("Proportion Budburst")
+
+make.bb_suc <- xtable(bb_suc, caption="Proporation of samples with budburst per species")
+print(make.bb_suc,include.rownames=TRUE, caption.placement="top", hline.after=c(-1,0))
+
+@
 \end{document}

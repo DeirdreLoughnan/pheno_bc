@@ -183,7 +183,7 @@ plot(seq(-15,
          length.out = nrow(meanz4)), 
      1:nrow(meanz4),
      type = "n",
-     xlab = "",
+     xlab = "Estimated change in budburst day",
      ylab = "",
      yaxt = "n")
 
@@ -378,18 +378,18 @@ bb_lfc = a_sp + b_site2 * siteSM + b_site3 * siteSM + b_site4 * siteSM + mu_b_wa
   mu_b_inter_s2c1 * (chill1*siteSM) + mu_b_inter_ws2 * (lf*siteSM) +mu_b_inter_ps2 * (photo*siteSM) +
   mu_b_inter_s3c1 * (chill1*siteSM) + mu_b_inter_ws3 * (lf*siteSM) +mu_b_inter_ps3 * (photo*siteSM) +
   mu_b_inter_s4c1 * (chill1*siteSM) + mu_b_inter_ws4 * (lf*siteSM) +mu_b_inter_ps4 * (photo*siteSM)
-
+#"#593d9cff","#cc6a70ff","#eb8055ff","#f9b641ff","#a65c85ff","#7e4e90ff", "cyan4"
 pdf("figures/chill_forcing_4sites_interactions.pdf", width =5, height = 5)
 par(mfrow =c (1,1))
 plot(0, type = "n",  xlim = c(-1,1), ylim = c(-5,90), xlab = "z-scored chill portions", ylab = "Day of budburst")
-points(hfData$chillport.z2, hfData$bb, col = "maroon")
-points(lfData$chillport.z2, lfData$bb, col = "darkslategray4")
-abline(lm(bb_hfc ~ chill1), col = "darkred", lwd = 3)
-abline(lm(bb_lfc ~ chill1), col = "darkslategray", lwd = 3)
+points(hfData$chillport.z2, hfData$bb, bg = "#f9b641ff", pch =21)
+points(lfData$chillport.z2, lfData$bb,  bg = "cyan4", pch = 21)
+abline(lm(bb_hfc ~ chill1), col = "#f9b641ff", lwd = 3)
+abline(lm(bb_lfc ~ chill1), col = "cyan4", lwd = 3)
 
 legend("topright",legend = c(expression("low forcing"),
                             expression("high forcing")),
-       col = c("darkslategray","maroon"),
+       col = c("cyan4","#f9b641ff"),
        inset = 0.02, pch = c(19, 19 ),  cex = 1, bty = "n")
 dev.off()
 # #<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>#
@@ -397,6 +397,7 @@ dev.off()
 hf <- unique(hfData$force.z2)
 lf <- unique(lfData$force.z2)
 photo <- -0.5044652
+site2 <- unique(pheno$site2)
 site3 <- unique(pheno$site3)
 
 chill1 <- mean( -0.3482404,  0.9462697,  0.8463799, -0.7629649,  0.5315452,  0.4316554,0.2985445, -0.4011572,  0.2759381, -0.4061035)
@@ -419,10 +420,10 @@ bb_lfsite3 = a_sp + b_site2 * site3 + b_site3 * site3 + b_site4 * site3  + mu_b_
 #
 pdf("figures/Site3_forcing_4sites_interactions.pdf", width =5, height = 5)
 plot(0, type = "n",  xlim = c(-0.5,1.5), ylim = c(-5,90), xlab = "Harvard Forest", ylab = "Day of budburst")
-points(hfData$site3, hfData$bb, col = "maroon")
-points(lfData$site3, lfData$bb, col = "darkslategray4")
-abline(lm(bb_hfsite3 ~ site2), col = "darkred", lwd = 3)
-abline(lm(bb_lfsite3 ~ site2), col = "darkslategray", lwd = 3)
+points(hfData$site3, hfData$bb, bg = "#f9b641ff", pch =21)
+points(lfData$site3, lfData$bb, bg = "cyan4", pch =21)
+abline(lm(bb_hfsite3 ~ site2), bg = "#f9b641ff", pch =21)
+abline(lm(bb_lfsite3 ~ site2), col = "cyan4", lwd = 3)
 
 #legend("topleft",legend = c(expression("low forcing"),
 #                            expression("high forcing")),
@@ -456,10 +457,10 @@ dev.off()
 #   mu_b_inter_s4c1 * (chill1*site3) + mu_b_inter_ws4 * (lf*site3) +mu_b_inter_ps4 * (photo*site3) 
 # # 
 # plot(0, type = "n",  xlim = c(-1,1), ylim = c(-5,90), xlab = "site3", ylab = "Day of budburst")
-# points(hfData$site3.z2, hfData$bb, col = "maroon")
-# points(lfData$site3.z2, lfData$bb, col = "darkslategray4")
-# abline(lm(bb_hfsite3 ~ site3), col = "darkred", lwd = 3)
-# abline(lm(bb_lfsite3 ~ site3), col = "darkslategray", lwd = 3)
+# points(hfData$site3.z2, hfData$bb, bg = "#f9b641ff", pch =21)
+# points(lfData$site3.z2, lfData$bb, bg = "cyan4", pch =21)
+# abline(lm(bb_hfsite3 ~ site3), col = "#f9b641ff", lwd = 3)
+# abline(lm(bb_lfsite3 ~ site3), col = "cyan4", lwd = 3)
 # 
 # legend("topleft",legend = c(expression("low forcing"),
 #                             expression("high forcing")),
@@ -492,10 +493,10 @@ dev.off()
 #   mu_b_inter_s4c1 * (chill1*site4) + mu_b_inter_ws4 * (lf*site4) +mu_b_inter_ps4 * (photo*site4) 
 # # 
 # plot(0, type = "n",  xlim = c(-1,1), ylim = c(-5,90), xlab = "site4", ylab = "Day of budburst")
-# points(hfData$site4.z2, hfData$bb, col = "maroon")
-# points(lfData$site4.z2, lfData$bb, col = "darkslategray4")
-# abline(lm(bb_hfsite4 ~ site4), col = "darkred", lwd = 3)
-# abline(lm(bb_lfsite4 ~ site4), col = "darkslategray", lwd = 3)
+# points(hfData$site4.z2, hfData$bb, bg = "#f9b641ff", pch =21)
+# points(lfData$site4.z2, lfData$bb, bg = "cyan4", pch = 21)
+# abline(lm(bb_hfsite4 ~ site4), col = "#f9b641ff", lwd = 3)
+# abline(lm(bb_lfsite4 ~ site4), col = "cyan4", lwd = 3)
 # 
 # legend("topleft",legend = c(expression("low forcing"),
 #                             expression("high forcing")),

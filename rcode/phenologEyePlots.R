@@ -12,6 +12,7 @@ require(rstan)
 require(ggbiplot)
 require(gridExtra)
 require(ggplot2)
+require(ggpubr)
 require(bayesplot)
 require(dplyr)
 library(reshape2)
@@ -160,24 +161,34 @@ longChill <- melt(chillB)
 colnames(longChill) <- c("species.name","chillNoSite")
 
 longChillSite2 <- melt(chillBsite2)
-colnames(longChillSite2) <- c("species.name","chillSite2")
+colnames(longChillSite2) <- c("species.name","chillSite")
+longChillSite2$site <- "Manning Park"
 
 longChillSite3 <- melt(chillBsite3)
-colnames(longChillSite3) <- c("species.name","chillSite3")
+colnames(longChillSite3) <- c("species.name","chillSite")
+longChillSite3$site <- "Harvard Forest"
 
 longChillSite4 <- melt(chillBsite4)
-colnames(longChillSite4) <- c("species.name","chillSite4")
+colnames(longChillSite4) <- c("species.name","chillSite")
+longChillSite4$site <- "St. Hippolyte"
 
 longChillSite2Inter <- melt(chillBsite2Inter)
-colnames(longChillSite2Inter) <- c("species.name","chillSite2Inter")
+colnames(longChillSite2Inter) <- c("species.name","chillSiteInter")
+longChillSite2Inter$site <- "Manning Park"
 
 longChillSite3Inter <- melt(chillBsite3Inter)
-colnames(longChillSite3Inter) <- c("species.name","chillSite3Inter")
+colnames(longChillSite3Inter) <- c("species.name","chillSiteInter")
+longChillSite3Inter$site <- "Harvard Forest"
 
 longChillSite4Inter <- melt(chillBsite4Inter)
-colnames(longChillSite4Inter) <- c("species.name","chillSite4Inter")
+colnames(longChillSite4Inter) <- c("species.name","chillSiteInter")
+longChillSite4Inter$site <- "St. Hippolyte"
 
 # add in the needed factors
+
+longChillSite <- rbind(longChillSite2, longChillSite3, longChillSite4)
+
+longChillSiteInter <- rbind(longChillSite2Inter, longChillSite3Inter, longChillSite4Inter)
 
 longChillInfo <- merge(longChill, spInfo, by = "species.name") # slow to run
 #longChillInfo <- merge(longChillInfo, longChillSite2, by = "species.name") # slow to run
@@ -185,6 +196,7 @@ longChillInfo <- merge(longChill, spInfo, by = "species.name") # slow to run
 longChillInfo <- cbind(longChillInfo, longChillSite2[,2], longChillSite3[,2], longChillSite4[,2])
 
 longChillInterInfo <- cbind(longChillInfo, longChillSite2Inter[,2], longChillSite3Inter[,2], longChillSite4Inter[,2])
+
 
 head(longChillInfo)
 colnames(longChillInfo) <- c("species.name","value", "species","type", "transect","Site2", "Site3", "Site4")
@@ -226,24 +238,32 @@ longPhoto <- melt(photoB)
 colnames(longPhoto) <- c("species.name","photoNoSite")
 
 longPhotoSite2 <- melt(photoBsite2)
-colnames(longPhotoSite2) <- c("species.name","photoSite2")
+colnames(longPhotoSite2) <- c("species.name","photoSite")
+longPhotoSite2$site <- "Manning Park"
 
 longPhotoSite3 <- melt(photoBsite3)
-colnames(longPhotoSite3) <- c("species.name","photoSite3")
-
+colnames(longPhotoSite3) <- c("species.name","photoSite")
+longPhotoSite3$site <- "Harvard Forest"
+  
 longPhotoSite4 <- melt(photoBsite4)
-colnames(longPhotoSite4) <- c("species.name","photoSite4")
+colnames(longPhotoSite4) <- c("species.name","photoSite")
+longPhotoSite4$site <- "St. Hippolyte"
 
 longPhotoSite2Inter <- melt(photoBsite2Inter)
-colnames(longPhotoSite2Inter) <- c("species.name","photoSite2Inter")
-
+colnames(longPhotoSite2Inter) <- c("species.name","photoSiteInter")
+longPhotoSite2Inter$site <- "Manning Park"
+  
 longPhotoSite3Inter <- melt(photoBsite3Inter)
-colnames(longPhotoSite3Inter) <- c("species.name","photoSite3Inter")
-
+colnames(longPhotoSite3Inter) <- c("species.name","photoSiteInter")
+longPhotoSite3Inter$site <- "Harvard Forest"
+  
 longPhotoSite4Inter <- melt(photoBsite4Inter)
-colnames(longPhotoSite4Inter) <- c("species.name","photoSite4Inter")
+colnames(longPhotoSite4Inter) <- c("species.name","photoSiteInter")
+longPhotoSite4Inter$site <- "St. Hippolyte"
 
 # add in the needed factors
+longPhotoSite <- rbind(longPhotoSite2, longPhotoSite3, longPhotoSite4)
+longPhotoSiteInter <- rbind(longPhotoSite2Inter, longPhotoSite3Inter, longPhotoSite4Inter)
 
 longPhotoInfo <- merge(longPhoto, spInfo, by = "species.name") # slow to run
 #longPhotoInfo <- merge(longPhotoInfo, longPhotoSite2, by = "species.name") # slow to run
@@ -281,36 +301,45 @@ forceBsite2 <- forceB + site2$fit.b_site2
 forceBsite3 <- forceB + site3$fit.b_site3
 forceBsite4 <- forceB + site4$fit.b_site4
 
-forceBInterSite2 <- data.frame(fit$b_warm+fit$b_inter_s2c1)
-forceBInterSite3 <- data.frame(fit$b_warm+fit$b_inter_s3c1)
-forceBInterSite4 <- data.frame(fit$b_warm+fit$b_inter_s4c1)
+forceBInterSite2 <- data.frame(forceB+fit$b_inter_s2c1)
+forceBInterSite3 <- data.frame(forceB+fit$b_inter_s3c1)
+forceBInterSite4 <- data.frame(forceB+fit$b_inter_s4c1)
 
 forceBsite2Inter <- forceBInterSite2 + site2$fit.b_site2
 forceBsite3Inter <- forceBInterSite3 + site3$fit.b_site3
 forceBsite4Inter <- forceBInterSite4 + site4$fit.b_site4
 
 longForce <- melt(forceB)
-colnames(longForce) <- c("species.name","forceNoSite")
+colnames(longPhotoSite2) <- c("species.name","forceNoSite")
 
+  
 longForceSite2 <- melt(forceBsite2)
-colnames(longForceSite2) <- c("species.name","forceSite2")
+colnames(longForceSite2) <- c("species.name","forceSite")
+longForceSite2$site <- "Manning Park"
 
 longForceSite3 <- melt(forceBsite3)
-colnames(longForceSite3) <- c("species.name","forceSite3")
+colnames(longForceSite3) <- c("species.name","forceSite")
+longForceSite3$site <- "Harvard Forest"
 
 longForceSite4 <- melt(forceBsite4)
-colnames(longForceSite4) <- c("species.name","forceSite4")
+colnames(longForceSite4) <- c("species.name","forceSite")
+longForceSite4$site <- "St. Hippolyte"
 
 longForceSite2Inter <- melt(forceBsite2Inter)
-colnames(longForceSite2Inter) <- c("species.name","forceSite2Inter")
+colnames(longForceSite2Inter) <- c("species.name","forceSiteInter")
+longForceSite2Inter$site <- "Manning Park"
 
 longForceSite3Inter <- melt(forceBsite3Inter)
-colnames(longForceSite3Inter) <- c("species.name","forceSite3Inter")
+colnames(longForceSite3Inter) <- c("species.name","forceSiteInter")
+longForceSite3Inter$site <- "Harvard Forest"
 
 longForceSite4Inter <- melt(forceBsite4Inter)
-colnames(longForceSite4Inter) <- c("species.name","forceSite4Inter")
+colnames(longForceSite4Inter) <- c("species.name","forceSiteInter")
+longForceSite4Inter$site <- "St. Hippolyte"
 
 # add in the needed factors
+longForceSite <- rbind(longForceSite2, longForceSite3, longForceSite4)
+longForceSiteInter <- rbind(longForceSite2Inter, longForceSite3Inter, longForceSite4Inter)
 
 longForceInfo <- merge(longForce, spInfo, by = "species.name") # slow to run
 
@@ -513,7 +542,70 @@ ggplot() +
   theme(legend.title = element_blank()) +  annotate("text", x = 0.5, y = 10, label = "a)", cex =5)  +
   scale_fill_manual(values = c("#cc6a70ff","#f9b641ff","cyan4"))
 
+# How do you jitter the eye plots?
 
+siteChill <- ggplot() + 
+  stat_eye(data = longChillSite, aes(x = site, y = chillSite, fill = "#cc6a70ff"), .width = c(.90, .5), cex = 0.75, position = position_dodge(0.9)) +
+    ylim (-60,30) +
+    theme_classic() +   
+    theme(legend.position = "none") +
+    labs( x = "Site", y = "Chilling response", main = "Site level chilling")+
+  scale_fill_manual(values = c("#cc6a70ff"))
+
+siteForce <- ggplot() + 
+  stat_eye(data = longForceSite, aes(x = site, y = forceSite, fill = "#f9b641ff"), .width = c(.90, .5), cex = 0.75, position = position_dodge(0.9), color = "black") +
+  ylim (-60,30) +
+  theme_classic() +   
+  theme(legend.position = "none") +
+  labs( x = "Site", y = "Forceing response", main = "Site level forcing")+
+  scale_fill_manual(values = c("#f9b641ff"))
+
+sitePhoto <- ggplot() + 
+  stat_eye(data = longPhotoSite, aes(x = site, y = photoSite, fill = "cyan4"), .width = c(.90, .5), cex = 0.75, position = position_dodge(0.9)) +
+  ylim (-60,30) +
+  theme_classic() +   
+  theme(legend.position = "none") +
+  labs( x = "Site", y = "Photoperiod response", main = "Site level photoperiod")+
+  scale_fill_manual(values = c("cyan4"))
+
+pdf("figures/siteCue.pdf", width = 15, height = 5)
+ggarrange(siteChill, siteForce, sitePhoto,
+  labels = c("A", "B", "C"),
+  ncol = 3, nrow = 1)
+dev.off()
+
+
+
+# WIth the interaction:
+siteChillInter <- ggplot() + 
+  stat_eye(data = longChillSiteInter, aes(x = site, y = chillSiteInter, fill = "#cc6a70ff"), .width = c(.90, .5), cex = 0.75, position = position_dodge(0.9)) +
+  ylim (-60,50) +
+  theme_classic() +   
+  theme(legend.position = "none") +
+  labs( x = "Site", y = "Chilling response", main = "Site level chilling with site interactions")+
+  scale_fill_manual(values = c("#cc6a70ff"))
+
+siteForceInter <- ggplot() + 
+  stat_eye(data = longForceSiteInter, aes(x = site, y = forceSiteInter, fill = "#f9b641ff"), .width = c(.90, .5), cex = 0.75, position = position_dodge(0.9), color = "black") +
+  ylim (-60,50) +
+  theme_classic() +   
+  theme(legend.position = "none") +
+  labs( x = "Site", y = "Forceing response", main = "Site level forcing with site interactions")+
+  scale_fill_manual(values = c("#f9b641ff"))
+
+sitePhoto <- ggplot() + 
+  stat_eye(data = longPhotoSiteInter, aes(x = site, y = photoSiteInter, fill = "cyan4"), .width = c(.90, .5), cex = 0.75, position = position_dodge(0.9)) +
+  ylim (-60,50) +
+  theme_classic() +   
+  theme(legend.position = "none") +
+  labs( x = "Site", y = "Photoperiod response", main = "Site level photoperiod with site interactions") +
+  scale_fill_manual(values = c("cyan4"))
+
+pdf("figures/siteCueInter.pdf", width = 15, height = 5)
+ggarrange(siteChill, siteForce, sitePhoto,
+          labels = c("A", "B", "C"),
+          ncol = 3, nrow = 1)
+dev.off()
 ###########################################
 longCuesInter <- rbind(longForceInterInfo, longChillInterInfo, longPhotoInterInfo)
 

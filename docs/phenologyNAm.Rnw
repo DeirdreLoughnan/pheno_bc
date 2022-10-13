@@ -251,10 +251,24 @@ print(fiftylSite,include.rownames=TRUE, caption.placement="top", hline.after=c(-
 
 \begin{figure}[h!]
     \centering
-     \includegraphics[width=\textwidth]{..//figures/cueEW.pdf} 
-    \caption{Interaction plots for the western transect. a) The interaction between chill portions and forcing, b) the interaction between photoperiod and chilling, and c) the relationship between forcing and site}
+     \includegraphics[width=\textwidth]{..//figures/siteCue.pdf} 
+    \caption{Posterior distributions of estimated cue responses with site level effects for individual sites, depicting a) chilling, b) forcing, and c) photoperiod cue responses. Black circles represent the median shift in phenology for a phenological event, while the thinner black line the 90\% quantile interval. The coloured distribution is the the posterior density of the posteriors of the cue responses and site level responses for all species at a given site. The y-axis spans the entire range of the data.}
     \label{fig:cues}
 \end{figure}
+
+\begin{figure}[h!]
+    \centering
+     \includegraphics[width=\textwidth]{..//figures/siteCueInter.pdf} 
+    \caption{Posterior distributions of estimated cue responses with site level effects and site interactions for individual sites, depicting a) chilling, b) forcing, and c) photoperiod cue responses. Black circles represent the median shift in phenology for a phenological event, while the thinner black line the 90\% quantile interval. The coloured distribution is the the posterior density of the posteriors of the cue responses and site level responses for all species at a given site. The y-axis spans the entire range of the data.}
+    \label{fig:cues}
+\end{figure}
+
+% \begin{figure}[h!]
+%     \centering
+%      \includegraphics[width=\textwidth]{..//figures/cueEW.pdf} 
+%     \caption{Interaction plots for the western transect. a) The interaction between chill portions and forcing, b) the interaction between photoperiod and chilling, and c) the relationship between forcing and site}
+%     \label{fig:cues}
+% \end{figure}
 
 \begin{figure}[h!]
     \centering

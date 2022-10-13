@@ -380,7 +380,7 @@ bb_lfc = a_sp + b_site2 * siteSM + b_site3 * siteSM + b_site4 * siteSM + mu_b_wa
   mu_b_inter_s4c1 * (chill1*siteSM) + mu_b_inter_ws4 * (lf*siteSM) +mu_b_inter_ps4 * (photo*siteSM)
 #"#593d9cff","#cc6a70ff","#eb8055ff","#f9b641ff","#a65c85ff","#7e4e90ff", "cyan4"
 pdf("figures/chill_forcing_4sites_interactions.pdf", width =5, height = 5)
-par(mfrow =c (1,1))
+par(mfrow =c (2,2))
 plot(0, type = "n",  xlim = c(-1,1), ylim = c(-5,90), xlab = "z-scored chill portions", ylab = "Day of budburst")
 points(hfData$chillport.z2, hfData$bb, bg = "#f9b641ff", pch =21)
 points(lfData$chillport.z2, lfData$bb,  bg = "cyan4", pch = 21)
@@ -394,42 +394,42 @@ legend("topright",legend = c(expression("low forcing"),
 dev.off()
 # #<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>#
 # warm and site3
-hf <- unique(hfData$force.z2)
-lf <- unique(lfData$force.z2)
-photo <- -0.5044652
-site2 <- unique(pheno$site2)
-site3 <- unique(pheno$site3)
-
-chill1 <- mean( -0.3482404,  0.9462697,  0.8463799, -0.7629649,  0.5315452,  0.4316554,0.2985445, -0.4011572,  0.2759381, -0.4061035)
-
-# plot first for the high forcing
-bb_hfsite3 = a_sp + b_site2 * site3 + b_site3 * site3 + b_site4 * site3 + mu_b_warm * hf + mu_b_photo * photo + mu_b_chill1 * chill1 +
-  mu_b_inter_wp * (hf*photo) +
-  mu_b_inter_wc1 * (hf*chill1) + mu_b_inter_pc1 * (photo*chill1) +
-  mu_b_inter_s2c1 * (chill1*site2) + mu_b_inter_ws2 * (hf*site2) +mu_b_inter_ps2 * (photo*site2) +
-  mu_b_inter_s3c1 * (chill1*site2) + mu_b_inter_ws3 * (hf*site2) +mu_b_inter_ps3 * (photo*site2) +
-  mu_b_inter_s4c1 * (chill1*site2) + mu_b_inter_ws4 * (hf*site2) +mu_b_inter_ps4 * (photo*site2)
-
-# plot first for the low forcing
-bb_lfsite3 = a_sp + b_site2 * site3 + b_site3 * site3 + b_site4 * site3  + mu_b_warm * lf + mu_b_photo * photo + mu_b_chill1 * chill1 +
-  mu_b_inter_wp * (lf*photo) +
-  mu_b_inter_wc1 * (hf*chill1) + mu_b_inter_pc1 * (photo*chill1) +
-  mu_b_inter_s2c1 * (chill1*site2) + mu_b_inter_ws2 * (lf*site2) +mu_b_inter_ps2 * (photo*site2) +
-  mu_b_inter_s3c1 * (chill1*site2) + mu_b_inter_ws3 * (lf*site2) +mu_b_inter_ps3 * (photo*site2) +
-  mu_b_inter_s4c1 * (chill1*site2) + mu_b_inter_ws4 * (lf*site2) +mu_b_inter_ps4 * (photo*site2)
-#
-pdf("figures/Site3_forcing_4sites_interactions.pdf", width =5, height = 5)
-plot(0, type = "n",  xlim = c(-0.5,1.5), ylim = c(-5,90), xlab = "Harvard Forest", ylab = "Day of budburst")
-points(hfData$site3, hfData$bb, bg = "#f9b641ff", pch =21)
-points(lfData$site3, lfData$bb, bg = "cyan4", pch =21)
-abline(lm(bb_hfsite3 ~ site2), bg = "#f9b641ff", pch =21)
-abline(lm(bb_lfsite3 ~ site2), col = "cyan4", lwd = 3)
-
-#legend("topleft",legend = c(expression("low forcing"),
-#                            expression("high forcing")),
-#       col = c("darkslategray","maroon"),
-#       inset = 0.02, pch = c(19, 19 ),  cex = 1, bty = "n")
-dev.off()
+# hf <- unique(hfData$force.z2)
+# lf <- unique(lfData$force.z2)
+# photo <- -0.5044652
+# site2 <- unique(pheno$site2)
+# site3 <- unique(pheno$site3)
+# 
+# chill1 <- mean( -0.3482404,  0.9462697,  0.8463799, -0.7629649,  0.5315452,  0.4316554,0.2985445, -0.4011572,  0.2759381, -0.4061035)
+# 
+# # plot first for the high forcing
+# bb_hfsite3 = a_sp + b_site2 * site3 + b_site3 * site3 + b_site4 * site3 + mu_b_warm * hf + mu_b_photo * photo + mu_b_chill1 * chill1 +
+#   mu_b_inter_wp * (hf*photo) +
+#   mu_b_inter_wc1 * (hf*chill1) + mu_b_inter_pc1 * (photo*chill1) +
+#   mu_b_inter_s2c1 * (chill1*site2) + mu_b_inter_ws2 * (hf*site2) +mu_b_inter_ps2 * (photo*site2) +
+#   mu_b_inter_s3c1 * (chill1*site2) + mu_b_inter_ws3 * (hf*site2) +mu_b_inter_ps3 * (photo*site2) +
+#   mu_b_inter_s4c1 * (chill1*site2) + mu_b_inter_ws4 * (hf*site2) +mu_b_inter_ps4 * (photo*site2)
+# 
+# # plot first for the low forcing
+# bb_lfsite3 = a_sp + b_site2 * site3 + b_site3 * site3 + b_site4 * site3  + mu_b_warm * lf + mu_b_photo * photo + mu_b_chill1 * chill1 +
+#   mu_b_inter_wp * (lf*photo) +
+#   mu_b_inter_wc1 * (hf*chill1) + mu_b_inter_pc1 * (photo*chill1) +
+#   mu_b_inter_s2c1 * (chill1*site2) + mu_b_inter_ws2 * (lf*site2) +mu_b_inter_ps2 * (photo*site2) +
+#   mu_b_inter_s3c1 * (chill1*site2) + mu_b_inter_ws3 * (lf*site2) +mu_b_inter_ps3 * (photo*site2) +
+#   mu_b_inter_s4c1 * (chill1*site2) + mu_b_inter_ws4 * (lf*site2) +mu_b_inter_ps4 * (photo*site2)
+# #
+# pdf("figures/Site3_forcing_4sites_interactions.pdf", width =5, height = 5)
+# plot(0, type = "n",  xlim = c(-0.5,1.5), ylim = c(-5,90), xlab = "Harvard Forest", ylab = "Day of budburst")
+# points(hfData$site3, hfData$bb, bg = "#f9b641ff", pch =21)
+# points(lfData$site3, lfData$bb, bg = "cyan4", pch =21)
+# abline(lm(bb_hfsite3 ~ site2), bg = "#f9b641ff", pch =21)
+# abline(lm(bb_lfsite3 ~ site2), col = "cyan4", lwd = 3)
+# 
+# #legend("topleft",legend = c(expression("low forcing"),
+# #                            expression("high forcing")),
+# #       col = c("darkslategray","maroon"),
+# #       inset = 0.02, pch = c(19, 19 ),  cex = 1, bty = "n")
+# dev.off()
 
 # #<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>#
 # # warm and site3 
@@ -468,40 +468,155 @@ dev.off()
 #        inset = 0.02, pch = c(21,21 ),  cex = 0.75, bty = "n")
 # 
 # #<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>#
-# # warm and site4 
-# hf <- unique(hfData$force.z2)
-# lf <- unique(lfData$force.z2)
-# photo <- -0.5044652 
-# site4 <- unique(pheno$site4.z2)
-# 
-# chill1 <- mean( -0.3482404,  0.9462697,  0.8463799, -0.7629649,  0.5315452,  0.4316554,0.2985445, -0.4011572,  0.2759381, -0.4061035)
-# 
-# # plot first for the high forcing
-# bb_hfsite4 = a_sp + b_site2 * site4 + b_site3 * site4 + b_site4 * site4  + mu_b_warm * hf + mu_b_photo * photo + mu_b_chill1 * chill1 + 
-#   mu_b_inter_wp * (hf*photo) +
-#   mu_b_inter_wc1 * (hf*chill1) + mu_b_inter_pc1 * (photo*chill1) +
-#   mu_b_inter_s2c1 * (chill1*site4) + mu_b_inter_ws2 * (hf*site4) +mu_b_inter_ps2 * (photo*site4) +
-#   mu_b_inter_s3c1 * (chill1*site4) + mu_b_inter_ws3 * (hf*site4) +mu_b_inter_ps3 * (photo*site4) +
-#   mu_b_inter_s4c1 * (chill1*site4) + mu_b_inter_ws4 * (hf*site4) +mu_b_inter_ps4 * (photo*site4) 
-# 
-# # plot first for the low forcing
-# bb_lfsite4 = a_sp + b_site2 * site4 + b_site3 * site4 + b_site4 * site4 + mu_b_warm * lf + mu_b_photo * photo + mu_b_chill1 * chill1 + 
-#   mu_b_inter_wp * (lf*photo) +
-#   mu_b_inter_wc1 * (hf*chill1) + mu_b_inter_pc1 * (photo*chill1) +
-#   mu_b_inter_s2c1 * (chill1*site4) + mu_b_inter_ws2 * (lf*site4) +mu_b_inter_ps2 * (photo*site4) +
-#   mu_b_inter_s3c1 * (chill1*site4) + mu_b_inter_ws3 * (lf*site4) +mu_b_inter_ps3 * (photo*site4) +
-#   mu_b_inter_s4c1 * (chill1*site4) + mu_b_inter_ws4 * (lf*site4) +mu_b_inter_ps4 * (photo*site4) 
-# # 
-# plot(0, type = "n",  xlim = c(-1,1), ylim = c(-5,90), xlab = "site4", ylab = "Day of budburst")
-# points(hfData$site4.z2, hfData$bb, bg = "#f9b641ff", pch =21)
-# points(lfData$site4.z2, lfData$bb, bg = "cyan4", pch = 21)
-# abline(lm(bb_hfsite4 ~ site4), col = "#f9b641ff", lwd = 3)
-# abline(lm(bb_lfsite4 ~ site4), col = "cyan4", lwd = 3)
-# 
-# legend("topleft",legend = c(expression("low forcing"),
-#                             expression("high forcing")),
-#        col = c("darkslategray","maroon"),
-#        inset = 0.02, pch = c(21,21 ),  cex = 0.75, bty = "n")
+# warm and site4
+hf <- unique(hfData$force.z2)
+lf <- unique(lfData$force.z2)
+photo <- -0.5044652
+site4 <- unique(pheno$site4.z2)
+
+chill1 <- mean( -0.3482404,  0.9462697,  0.8463799, -0.7629649,  0.5315452,  0.4316554,0.2985445, -0.4011572,  0.2759381, -0.4061035)
+
+# plot first for the high forcing
+bb_hfsite4 = a_sp + b_site2 * site4 + b_site3 * site4 + b_site4 * site4  + mu_b_warm * hf + mu_b_photo * photo + mu_b_chill1 * chill1 +
+  mu_b_inter_wp * (hf*photo) +
+  mu_b_inter_wc1 * (hf*chill1) + mu_b_inter_pc1 * (photo*chill1) +
+  mu_b_inter_s2c1 * (chill1*site4) + mu_b_inter_ws2 * (hf*site4) +mu_b_inter_ps2 * (photo*site4) +
+  mu_b_inter_s3c1 * (chill1*site4) + mu_b_inter_ws3 * (hf*site4) +mu_b_inter_ps3 * (photo*site4) +
+  mu_b_inter_s4c1 * (chill1*site4) + mu_b_inter_ws4 * (hf*site4) +mu_b_inter_ps4 * (photo*site4)
+
+# plot first for the low forcing
+bb_lfsite4 = a_sp + b_site2 * site4 + b_site3 * site4 + b_site4 * site4 + mu_b_warm * lf + mu_b_photo * photo + mu_b_chill1 * chill1 +
+  mu_b_inter_wp * (lf*photo) +
+  mu_b_inter_wc1 * (hf*chill1) + mu_b_inter_pc1 * (photo*chill1) +
+  mu_b_inter_s2c1 * (chill1*site4) + mu_b_inter_ws2 * (lf*site4) +mu_b_inter_ps2 * (photo*site4) +
+  mu_b_inter_s3c1 * (chill1*site4) + mu_b_inter_ws3 * (lf*site4) +mu_b_inter_ps3 * (photo*site4) +
+  mu_b_inter_s4c1 * (chill1*site4) + mu_b_inter_ws4 * (lf*site4) +mu_b_inter_ps4 * (photo*site4)
+#
+plot(0, type = "n",  xlim = c(-1,1), ylim = c(-5,90), xlab = "site4", ylab = "Day of budburst")
+points(hfData$site4.z2, hfData$bb, bg = "#f9b641ff", pch =21)
+points(lfData$site4.z2, lfData$bb, bg = "cyan4", pch = 21)
+abline(lm(bb_hfsite4 ~ site4), col = "#f9b641ff", lwd = 3)
+abline(lm(bb_lfsite4 ~ site4), col = "cyan4", lwd = 3)
+
+legend("topleft",legend = c(expression("low forcing"),
+                            expression("high forcing")),
+       col = c("cyan4","#f9b641ff"),
+       inset = 0.02, pch = c(19,19 ),  cex = 0.75, bty = "n")
+
+### Site 4 and chill:
+hcData <- subset(pheno, chill == "HC" )
+lcData <- subset(pheno, chill == "LC")
+c1Data <- subset(pheno, chill == "chill1" )
+c2Data <- subset(pheno, chill == "chill2")
+c0Data <- subset(pheno, chill == "chill0" )
+
+
+hc <- unique(hcData$chillport.z2)
+lc <- unique(lcData$chillport.z2)
+c2 <- unique(c2Data$chillport.z2)
+c1 <- unique(c1Data$chillport.z2)
+c0 <- unique(c0Data$chillport.z2)
+
+photo <- -0.5044652
+force <- c( -0.7642814, -0.4072595, -0.4023109, -0.3493703,  0.2750890,  0.2977055,  0.4308763,  0.5308110,  0.8457874,  0.9457221)
+site4 <- unique(pheno$site4.z2)
+
+# plot first for the high forcing
+bb_hcsite4 = a_sp + b_site2 * site4 + b_site3 * site4 + b_site4 * site4  + mu_b_warm * hf + mu_b_photo * photo + mu_b_chill1 * chill1 +
+  mu_b_inter_wp * (hf*photo) +
+  mu_b_inter_wc1 * (hf*chill1) + mu_b_inter_pc1 * (photo*chill1) +
+  mu_b_inter_s2c1 * (chill1*site4) + mu_b_inter_ws2 * (hf*site4) +mu_b_inter_ps2 * (photo*site4) +
+  mu_b_inter_s3c1 * (chill1*site4) + mu_b_inter_ws3 * (hf*site4) +mu_b_inter_ps3 * (photo*site4) +
+  mu_b_inter_s4c1 * (chill1*site4) + mu_b_inter_ws4 * (hf*site4) +mu_b_inter_ps4 * (photo*site4)
+
+# plot first for the low forcing
+bb_lcsite4 = a_sp + b_site2 * site4 + b_site3 * site4 + b_site4 * site4 + mu_b_warm * lf + mu_b_photo * photo + mu_b_chill1 * chill1 +
+  mu_b_inter_wp * (lf*photo) +
+  mu_b_inter_wc1 * (hf*chill1) + mu_b_inter_pc1 * (photo*chill1) +
+  mu_b_inter_s2c1 * (chill1*site4) + mu_b_inter_ws2 * (lf*site4) +mu_b_inter_ps2 * (photo*site4) +
+  mu_b_inter_s3c1 * (chill1*site4) + mu_b_inter_ws3 * (lf*site4) +mu_b_inter_ps3 * (photo*site4) +
+  mu_b_inter_s4c1 * (chill1*site4) + mu_b_inter_ws4 * (lf*site4) +mu_b_inter_ps4 * (photo*site4)
+#
+bb_c0site4 = a_sp + b_site2 * site4 + b_site3 * site4 + b_site4 * site4  + mu_b_warm * c0 + mu_b_photo * photo + mu_b_chill1 * chill1 +
+  mu_b_inter_wp * (c0*photo) +
+  mu_b_inter_wc1 * (c0*chill1) + mu_b_inter_pc1 * (photo*chill1) +
+  mu_b_inter_s2c1 * (chill1*site4) + mu_b_inter_ws2 * (c0*site4) +mu_b_inter_ps2 * (photo*site4) +
+  mu_b_inter_s3c1 * (chill1*site4) + mu_b_inter_ws3 * (c0*site4) +mu_b_inter_ps3 * (photo*site4) +
+  mu_b_inter_s4c1 * (chill1*site4) + mu_b_inter_ws4 * (c0*site4) +mu_b_inter_ps4 * (photo*site4)
+
+bb_c1site4 = a_sp + b_site2 * site4 + b_site3 * site4 + b_site4 * site4  + mu_b_warm * c1 + mu_b_photo * photo + mu_b_chill1 * chill1 +
+  mu_b_inter_wp * (c1*photo) +
+  mu_b_inter_wc1 * (c1*chill1) + mu_b_inter_pc1 * (photo*chill1) +
+  mu_b_inter_s2c1 * (chill1*site4) + mu_b_inter_ws2 * (c1*site4) +mu_b_inter_ps2 * (photo*site4) +
+  mu_b_inter_s3c1 * (chill1*site4) + mu_b_inter_ws3 * (c1*site4) +mu_b_inter_ps3 * (photo*site4) +
+  mu_b_inter_s4c1 * (chill1*site4) + mu_b_inter_ws4 * (c1*site4) +mu_b_inter_ps4 * (photo*site4)
+
+bb_c2site4 = a_sp + b_site2 * site4 + b_site3 * site4 + b_site4 * site4  + mu_b_warm * c2 + mu_b_photo * photo + mu_b_chill1 * chill1 +
+  mu_b_inter_wp * (c2*photo) +
+  mu_b_inter_wc1 * (c2*chill1) + mu_b_inter_pc1 * (photo*chill1) +
+  mu_b_inter_s2c1 * (chill1*site4) + mu_b_inter_ws2 * (c2*site4) +mu_b_inter_ps2 * (photo*site4) +
+  mu_b_inter_s3c1 * (chill1*site4) + mu_b_inter_ws3 * (c2*site4) +mu_b_inter_ps3 * (photo*site4) +
+  mu_b_inter_s4c1 * (chill1*site4) + mu_b_inter_ws4 * (c2*site4) +mu_b_inter_ps4 * (photo*site4)
+
+plot(hcData$site4.z2, hcData$bb, type = "n",  xlim = c(-1,1), ylim = c(-5,90), xlab = "site4", ylab = "Day of budburst")
+points(jitter(hcData$site4.z2, 25), hcData$bb, bg = "#f9b641ff", pch =21)
+points(jitter(lcData$site4.z2, 10), lcData$bb, bg = "cyan4", pch = 21)
+points((c0Data$site4.z2), c0Data$bb, bg = "#a65c85ff", pch =21)
+points(c1Data$site4.z2 ,c1Data$bb, bg = "#7e4e90ff", pch =21)
+points(c2Data$site4.z2, c2Data$bb, bg = "#cc6a70ff", pch =21)
+
+
+abline(lm(bb_hcsite4 ~ site4), col = "#f9b641ff", lwd = 3)
+abline(lm(bb_lcsite4 ~ site4), col = "cyan4", lwd = 3)
+abline(lm(bb_c0site4 ~ site4), col = "#a65c85ff", lwd = 3)
+abline(lm(bb_c1site4 ~ site4), col = "#7e4e90ff", lwd = 3)
+abline(lm(bb_c2site4 ~ site4), col = "#cc6a70ff", lwd = 3)
+
+legend("topleft",legend = c(expression("no chilling"),
+                            expression("30 day - 1.5C"),
+                            expression("21 day - 4 C"),
+                            expression("30 day - 4 C"),
+                            expression("70 day - 4 C")),
+       col = c("#a65c85ff","#cc6a70ff","cyan4","#cc6a70ff", "#f9b641ff"),
+       inset = 0.02, pch = c(19,19 ),  cex = 0.75, bty = "n")
+
+
+### Photo and site 4
+
+# warm and site4
+hf <- unique(hfData$force.z2)
+lf <- unique(lfData$force.z2)
+photo <- -0.5044652
+site4 <- unique(pheno$site4.z2)
+
+chill1 <- mean( -0.3482404,  0.9462697,  0.8463799, -0.7629649,  0.5315452,  0.4316554,0.2985445, -0.4011572,  0.2759381, -0.4061035)
+
+# plot first for the high forcing
+bb_hfsite4 = a_sp + b_site2 * site4 + b_site3 * site4 + b_site4 * site4  + mu_b_warm * hf + mu_b_photo * photo + mu_b_chill1 * chill1 +
+  mu_b_inter_wp * (hf*photo) +
+  mu_b_inter_wc1 * (hf*chill1) + mu_b_inter_pc1 * (photo*chill1) +
+  mu_b_inter_s2c1 * (chill1*site4) + mu_b_inter_ws2 * (hf*site4) +mu_b_inter_ps2 * (photo*site4) +
+  mu_b_inter_s3c1 * (chill1*site4) + mu_b_inter_ws3 * (hf*site4) +mu_b_inter_ps3 * (photo*site4) +
+  mu_b_inter_s4c1 * (chill1*site4) + mu_b_inter_ws4 * (hf*site4) +mu_b_inter_ps4 * (photo*site4)
+
+# plot first for the low forcing
+bb_lfsite4 = a_sp + b_site2 * site4 + b_site3 * site4 + b_site4 * site4 + mu_b_warm * lf + mu_b_photo * photo + mu_b_chill1 * chill1 +
+  mu_b_inter_wp * (lf*photo) +
+  mu_b_inter_wc1 * (hf*chill1) + mu_b_inter_pc1 * (photo*chill1) +
+  mu_b_inter_s2c1 * (chill1*site4) + mu_b_inter_ws2 * (lf*site4) +mu_b_inter_ps2 * (photo*site4) +
+  mu_b_inter_s3c1 * (chill1*site4) + mu_b_inter_ws3 * (lf*site4) +mu_b_inter_ps3 * (photo*site4) +
+  mu_b_inter_s4c1 * (chill1*site4) + mu_b_inter_ws4 * (lf*site4) +mu_b_inter_ps4 * (photo*site4)
+#
+plot(0, type = "n",  xlim = c(-1,1), ylim = c(-5,90), xlab = "site4", ylab = "Day of budburst")
+points(hfData$site4.z2, hfData$bb, bg = "#f9b641ff", pch =21)
+points(lfData$site4.z2, lfData$bb, bg = "cyan4", pch = 21)
+abline(lm(bb_hfsite4 ~ site4), col = "#f9b641ff", lwd = 3)
+abline(lm(bb_lfsite4 ~ site4), col = "cyan4", lwd = 3)
+
+legend("topleft",legend = c(expression("low forcing"),
+                            expression("high forcing")),
+       col = c("cyan4","#f9b641ff"),
+       inset = 0.02, pch = c(19,19 ),  cex = 0.75, bty = "n")
 
 ##### EW Figures ##########################################################################
 

@@ -92,28 +92,30 @@ source("..//rcode/phenologyMsValues.R")
 
 \item General findings...
 \begin {enumerate}
-\item Species cue responses were strongly phylogenetically structured (with a lambda of \Sexpr{lamT} (uncertainty interval: \Sexpr{lamTLower}, \Sexpr{lamTUpper}), with a root trait value of \Sexpr{rootT} (uncertainty interval: \Sexpr{rootTLower}, \Sexpr{rootTUpper}).
-\item While all cues did lead to the advance in budburst date, there were strong interactions between cues and between cues and sites.
-\item Forcing and chilling cues produced a strong delaying effect, with low chilling being offset by hight forcing conditions(Fig. \ref{fig:intrxn} a). 
-\item Similar delaying interactions occurr between forcing and the two eastern sites and between chilling and the two eastern sites. 
+\item Species cue responses were strongly phylogenetically structured (with a lambda of \Sexpr{lamT} (90\% uncertainty interval: \Sexpr{lamTLower}, \Sexpr{lamTUpper}), with a root trait value of \Sexpr{rootT} (90\% uncertainty interval: \Sexpr{rootTLower}, \Sexpr{rootTUpper}).
+\item While all cues did lead to an advance in budburst date, there were strong interactions between cues and between cues and sites.
+\item Forcing and chilling cues produced a strong delaying effect, with low chilling being offset by high forcing conditions(Fig. \ref{fig:intrxn} a). 
+\item Similar delaying interactions occur between forcing and the two eastern sites and between chilling and the two eastern sites. 
 \item As illustrated for our St. Hippolyte site in Fig. \ref{fig:intrxn} b and c), eastern sites has weaker responses to forcing and chilling cues, budbursting earlier than western species in response to both cues.   
 \item The interaction between photoperiod and our eastern sites in contrast support a moderate advancing effect, with longer photoperiods at our eastern sites causing budburst dates to advance (Fig. \ref{fig:intrxn} d).
+\item While there are some differences across sites, they are weak when site effects are accounted for (Fig. \ref{siteCues})
+\item We also did not observe differences across different plant architectures (Fig. \ref{fig:cueST})
+%DLOct14 - this fig:cueST could be rearranged to be more like fig:siteCues so that the cues are beside each other
+%DLOct14 - Also need to compare the uncertainty intervals and double check if they overlap
 \end {enumerate}
 
 \item We found different trends in cue use when comparing the timing of first lateral budburst and 50\% lateral budburst for our western species.
 \begin{enumerate}
 \item  In comparison to our model of the timing of first budburst, the timing of lateral budburst had stronger responses to chilling, with 50\% lateral budburst having almost equivalent responses to forcing and chilling.
 \item However, lateral budburst also experienced a strong interaction between forcing and chilling cues as well as between forcing and photoperiod for the timing of the fist lateral budburst.
-\item Our more southern site in our western transect, Manning Park, showed delayed budburst realtive to our more northern Smithers sites. 
+\item Our more southern site in our western transect, Manning Park, showed delayed budburst relative to our more northern Smithers sites. 
 \item While we do observe weak interactions between photoperiod and Manning Park and chilling and Manning park, a strong advancing interactions occurred between forcing and Manning Park.
 %DLOct14 - I think this needs a figure, but in the supp
 \end{enumerate}
 
-\item While there are some differences across sites, they are moderate.
 
 \item Individual species show more distinct trends - compare the three species in both transects
 
-\item No strong differnces across plant architypes
 
 \end{enumerate}
 
@@ -261,7 +263,7 @@ print(fiftylSite,include.rownames=TRUE, caption.placement="top", hline.after=c(-
 \begin{figure}[h!]
     \centering
      \includegraphics[width=\textwidth]{..//figures/chill_forcing_4sites_interactions.pdf}
-     \caption{Interaction plots of day of budburst of first bud in response a) chill portions and forcing, b) forcing cues for species sampled from St. Hollypte, c) chilling cues for species sampled from St. Hollypte, and d) photoperiod cues and species sampled from St. Hollypte. }
+     \caption{Interaction plots of day of budburst of first bud in response a) chill portions and forcing, b) forcing cues for species sampled from St. Hippolyte, c) chilling cues for species sampled from St. Hippolyte, and d) photoperiod cues and species sampled from St. Hippolyte. }
     \label{fig:intrxn}
 \end{figure}
 
@@ -275,15 +277,8 @@ print(fiftylSite,include.rownames=TRUE, caption.placement="top", hline.after=c(-
 \begin{figure}[h!]
     \centering
      \includegraphics[width=\textwidth]{..//figures/siteCue.pdf} 
-    \caption{Posterior distributions of estimated cue responses with site level effects for individual sites, depicting a) chilling, b) forcing, and c) photoperiod cue responses. Black circles represent the median shift in phenology for a phenological event, while the thinner black line the 90\% quantile interval. The coloured distribution is the the posterior density of the posteriors of the cue responses and site level responses for all species at a given site. The y-axis spans the entire range of the data.}
+    \caption{Posterior distributions of estimated cue responses with site level effects for individual sites, depicting a) chilling, b) forcing, and c) photoperiod cue responses. Black circles represent the median cue response, while the thinner black line the 90\% quantile interval. The coloured distribution is the the posterior density of the posteriors of the cue responses and site level responses for all species at a given site. The y-axis spans the entire range of the data.}
     \label{fig:siteCues}
-\end{figure}
-
-\begin{figure}[h!]
-    \centering
-     \includegraphics[width=\textwidth]{..//figures/siteCueInter.pdf} 
-    \caption{Posterior distributions of estimated cue responses with site level effects and site interacti ons for individual sites, depicting a) chilling, b) forcing, and c) photoperiod cue responses. Black circles represent the median shift in phenology for a phenological event, while the thinner black line the 90\% quantile interval. The coloured distribution is the the posterior density of the posteriors of the cue responses and site level responses for all species at a given site. The y-axis spans the entire range of the data.}
-    \label{fig:siteCueInter}
 \end{figure}
 
 % \begin{figure}[h!]
@@ -296,28 +291,28 @@ print(fiftylSite,include.rownames=TRUE, caption.placement="top", hline.after=c(-
 \begin{figure}[h!]
     \centering
      \includegraphics[width=\textwidth]{..//figures/cueST.pdf} 
-    \caption{Interaction plots for the western transect. a) The interaction between chill portions and forcing, b) the interaction between photoperiod and chilling, and c) the relationship between forcing and site}
+    \caption{Comparisons of posterior distributions for cues estimates between shrub and tree species. Black circles represent the median cue response, while the thinner black line the 90\% quantile interval. The coloured distribution is the the posterior density of the posteriors of the cue responses for all species within a given architectural type. The y-axis spans the entire range of the data.}
     \label{fig:cuesST}
 \end{figure}
 
 \begin{figure}[h!]
     \centering
      \includegraphics[width=\textwidth]{..//figures/cueSp.pdf} 
-    \caption{Interaction plots for the western transect. a) The interaction between chill portions and forcing, b) the interaction between photoperiod and chilling, and c) the relationship between forcing and site}
+    \caption{Species differences in cue estimate posterior distributions, comparing species differences across a) chilling, b) forcing, and c) photoperiod cues. The median cue response is illustrated by the black circle, while the 90\% quantile interval is illustrated by the black line. The coloured distribution depicts the shape of the posterior density for all samples of a given species.}
     \label{fig:cueSP}
 \end{figure}
 
 \begin{figure}[h!]
     \centering
      \includegraphics[width=\textwidth]{..//figures/cueCompare.pdf} 
-    \caption{Interaction plots for the western transect. a) The interaction between chill portions and forcing, b) the interaction between photoperiod and chilling, and c) the relationship between forcing and site}
+    \caption{Species responses to a) warming compared to longer chilling, b) warming compared to longer photoperiods, and c) longer chilling compared to longer photoperiod}
     \label{fig:cueCompare}
 \end{figure}
 
 \section{Supplementary Material}
 
 <<label= meanBBTab, echo=FALSE , results=tex>>=
-# Mean bb dates across all treatments from raw data for 47 species at our two western sites, E.C. Manning Park and Smither B.C., and our two eastern sites, Harvard Forest (HF) USA and St. Hippoltye (SH) Canada.
+# Mean bb dates across all treatments from raw data for 47 species at our two western sites, E.C. Manning Park and Smithers B.C., and our two eastern sites, Harvard Forest (HF) USA and St. Hippolyte(SH) Canada.
 
 require(xtable)
 library(tidyr)
@@ -359,14 +354,14 @@ mdlTab <- mdlTab[, c("species.name","HF","SH","mp","sm")]
 
 colnames(mdlTab) <- c("Species" , "Harvard Forest", "St. Hippoltye","Manning Park", "Smithers")
 
-meanBBTab <- xtable(mdlTab, caption="Mean budburst dates across all treatments from raw data for 47 species at our two western sites, E.C. Manning Park and Smither B.C., and our two eastern sites, Harvard Forest (HF) USA and St. Hippoltye (SH) Canada.")
+meanBBTab <- xtable(mdlTab, caption="Mean budburst dates across all treatments from raw data for 47 species at our two western sites, E.C. Manning Park and Smither B.C., and our two eastern sites, Harvard Forest (HF) USA and St. Hippolyte (SH) Canada.")
 print(meanBBTab,include.rownames=F, caption.placement="top", hline.after=c(-1,0))
 
 @
 
 
-<<label= chillunitTsb, echo=FALSE , results=tex>>=
-# Chill units from our two western sites, E.C. Manning Park and Smither B.C., and our two eastern sites, Harvard Forest (HF) USA and St. Hippoltye (SH) Canada.
+<<label= chillunit, echo=FALSE , results=tex>>=
+# Chill units from our two western sites, E.C. Manning Park and Smithers B.C., and our two eastern sites, Harvard Forest (HF) USA and St. Hippolyte(SH) Canada.
 
 require(xtable)
 library(tidyr)
@@ -397,11 +392,11 @@ library(tidyr)
 #chill <- data.frame(chill)
 
 chill <- read.csv("..//output/chillUnits.csv")
-chillunit <- xtable(chill, caption = "Chill units from our two western sites, E.C. Manning Park and Smither B.C., and our two eastern sites, Harvard Forest (HF) USA and St. Hippoltye (SH) Canada.")
+chillunit <- xtable(chill, caption = "Chill units from our two western sites, E.C. Manning Park and Smithers B.C., and our two eastern sites, Harvard Forest (HF) USA and St. Hippolyte(SH) Canada.")
 print(chillunit,include.rownames= F, caption.placement="top", hline.after=c(-1,0))
 @
 
-<<label=table1, echo=FALSE, results=tex >>=
+<<label=bbSuccess, echo=FALSE, results=tex >>=
 spwithbb <- read.csv("..//output/bb.success.ax.trt.csv", head = TRUE)
 library(xtable)
 
@@ -411,7 +406,7 @@ colnames(spInfo) <- c("Species name", "Species","Plant type", "transect")
 bb_suc <- merge(spwithbb, spInfo, by = "Species")
 
 bb_suc <- bb_suc[, c("Species name", "Proportion.Budburst","Plant type")]
-names(bb_suc) <- c("Species name", "Proportion.Budburst","Plant type")
+names(bb_suc) <- c("Species name", "Proportion budburst","Plant type")
 
 make.bb_suc <- xtable(bb_suc, caption="Proporation of samples with budburst per species")
 print(make.bb_suc,include.rownames=TRUE, caption.placement="top", hline.after=c(-1,0))

@@ -219,6 +219,11 @@ lamT <- round(phylo[2,1],1)
 lamTLower <- as.numeric(round(HPDI(data.frame(fit$lam_interceptsa), prob = 0.90)[1],1))
 lamTUpper <- as.numeric(round(HPDI(data.frame(fit$lam_interceptsa), prob = 0.90)[2],1))
 
+# First to budburst
+phenoBB <- subset(pheno.t, bb >0)
+first <- subset(phenoBB, bb == min(phenoBB$bb))
+
+last <- subset(phenoBB, bb == max(phenoBB$bb))
 #### How different are the lateral vs 50 lat estimates? 
 sum1 <- summary(mdlLat1)$summary
 

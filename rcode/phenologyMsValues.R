@@ -13,6 +13,7 @@ library(dplyr)
 library(plyr)
 library(stringr)
 library(phytools)
+library(rethinking)
 
 
 # if(length(grep("deirdreloughnan", getwd()) > 0)) { 
@@ -117,6 +118,10 @@ pheno.t <- merge(pheno.t, spInfo, by = "species")
 load("..//output/final/bb_4sites_phylo.Rda")
 sum <- summary(mdl.4phylo)$summary 
 
+fit <- rstan::extract(mdl.4phylo)
+
+load("..//output/final/dl_phylo_lat1.Rda")
+load("..//output/final/dl_phylo_lat50.Rda")
 #############################################
 col4fig <- c("mean","sd","25%","50%","75%","Rhat")
 col4table <- c("mean","sd","2.5%","50%","97.5%","Rhat")
@@ -186,7 +191,7 @@ perMort <- round((totExpSurv-totChill)/(totExpSurv)*100, 1)
 
 nobb <- length(unique(pheno$lab2))
 
-perNoBB <- round(((totExpSurv-nobb)/totExpSurv)*100,2)
+perNoBB <- round(((totExpSurv-nobb)/totExpSurv)*100,1)
 
 noTermEnd <- subset(end, bbch.t <7)
 noTerm <- length(unique(noTermEnd$lab2))
@@ -206,9 +211,70 @@ col4table <- c("mean","sd","2.5%","50%","97.5%","Rhat")
 phylo <- sum[lam_params, col4table]
 
 rootT <- round(phylo[1,1],1)
-rootTLower <- round(phylo[1,3],1)
-rootTUpper <- round(phylo[1,5],1)
+
+rootTLower <- as.numeric(round(HPDI(data.frame(fit$a_z), prob = 0.90)[1],1))
+rootTUpper <- as.numeric(round(HPDI(data.frame(fit$a_z), prob = 0.90)[2],1))
 
 lamT <- round(phylo[2,1],1)
-lamTLower <- round(phylo[2,3],1)
-lamTUpper <- round(phylo[2,5],1)
+lamTLower <- as.numeric(round(HPDI(data.frame(fit$lam_interceptsa), prob = 0.90)[1],1))
+lamTUpper <- as.numeric(round(HPDI(data.frame(fit$lam_interceptsa), prob = 0.90)[2],1))
+
+#### How different are the lateral vs 50 lat estimates? 
+sum1 <- summary(mdlLat1)$summary
+
+col4fig <- c("mean","sd","25%","50%","75%","n_eff","Rhat")
+col4table <- c("mean","sd","2.5%","50%","97.5%","n_eff","Rhat")
+
+mu_params_1l <- c(
+  "mu_b_warm", "mu_b_photo", "mu_b_chill1", "b_site","mu_b_inter_wp",
+  "mu_b_inter_wc1","mu_b_inter_pc1", "mu_b_inter_ws",
+  "mu_b_inter_ps","mu_b_inter_sc1")
+
+meanz1l <- sum1[mu_params_1l, col4fig]
+
+rownames(meanz1l) = c( #"Root trait intercept","Lambda",
+  "Forcing",
+  "Photoperiod",
+  "Chilling",
+  "Manning Park",
+  "Forcing x photoperiod",
+  "Forcing x chilling",
+  "Photoperiod x chilling",
+  "Forcing x Manning Park",
+  "Photoperiod x Manning Park",
+  "Chilling x Manning Park"
+  
+  
+)
+
+
+sum50 <- summary(mdlLat50)$summary
+
+col4fig <- c("mean","sd","25%","50%","75%","n_eff","Rhat")
+col4table <- c("mean","sd","2.5%","50%","97.5%","n_eff","Rhat")
+
+mu_params_50l <- c(
+  #"a_z","lam_interceptsa",
+  "mu_b_warm", "mu_b_photo", "mu_b_chill1", "b_site", "mu_b_inter_wp",
+  "mu_b_inter_wc1","mu_b_inter_pc1", "mu_b_inter_ws",
+  "mu_b_inter_ps","mu_b_inter_sc1")
+
+meanz50l <- sum50[mu_params_50l, col4fig]
+
+rownames(meanz50l) = c( #"Root trait intercept","Lambda",
+  "Forcing",
+  "Photoperiod",
+  "Chilling",
+  "Manning Park",
+  "Forcing x photoperiod",
+  "Forcing x chilling",
+  "Photoperiod x chilling",
+  "Forcing x Manning Park",
+  "Photoperiod x Manning Park",
+  "Chilling x Manning Park"
+  
+)
+
+(meanz50l[,1] - meanz1l[,1])/meanz50l[,1]
+
+

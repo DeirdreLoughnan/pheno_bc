@@ -13,6 +13,7 @@ library(dplyr)
 library(plyr)
 library(stringr)
 library(phytools)
+library(ggpubr)
 
 
 if(length(grep("deirdreloughnan", getwd()) > 0)) { 
@@ -240,8 +241,8 @@ geom_text(cueOut, mapping = aes(label= species),hjust=0.5, vjust= 1, show.legend
   geom_errorbar(aes(xmin= bPhoto25, xmax = bPhoto75), width= 0) +
   geom_errorbar(aes(ymin= bForce25, ymax = bForce75), width= 0) +
 theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
-      panel.background = element_blank(), axis.line = element_line(colour = "black"),
-      legend.position="none")+
+      panel.background = element_blank(), axis.line = element_line(colour = "black"), legend.position="none",
+      legend.key=element_rect(fill="white"))  +
   scale_fill_manual(values=c( "#593d9cff","#cc6a70ff","#eb8055ff","#f9b641ff","#a65c85ff","#7e4e90ff", "cyan4")) + scale_color_manual(values=c( "#593d9cff","#cc6a70ff","#eb8055ff","#f9b641ff","#a65c85ff","#7e4e90ff", "cyan4"))
 
 
@@ -256,7 +257,8 @@ chillForce <- ggplot(cueOut, aes(x= bChillMean, y = bForceMean, col = type, shap
   geom_errorbar(aes(xmin= bChill25, xmax = bChill75), width= 0) +
   geom_errorbar(aes(ymin= bForce25, ymax = bForce75), width= 0) +
   theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
-        panel.background = element_blank(), axis.line = element_line(colour = "black"), legend.position="none") +
+        panel.background = element_blank(), axis.line = element_line(colour = "black"), legend.position="none",
+        legend.key=element_rect(fill="white"))  +
   scale_fill_manual(values=c( "#593d9cff","#cc6a70ff","#eb8055ff","#f9b641ff","#a65c85ff","#7e4e90ff", "cyan4")) + scale_color_manual(values=c( "#593d9cff","#cc6a70ff","#eb8055ff","#f9b641ff","#a65c85ff","#7e4e90ff", "cyan4"))
 #dev.off()
 
@@ -270,61 +272,78 @@ chillPhoto <- ggplot(cueOut, aes(y= bChillMean, x = bPhotoMean, col = type, shap
   geom_errorbar(aes(ymin= bChill25, ymax = bChill75), width= 0) +
   geom_errorbar(aes(xmin= bPhoto25, xmax = bPhoto75), width= 0) +
   theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
-        panel.background = element_blank(), axis.line = element_line(colour = "black")) +
+        panel.background = element_blank(), axis.line = element_line(colour = "black"),
+        legend.key=element_rect(fill="white")) +
   scale_fill_manual(values=c( "#593d9cff","#cc6a70ff","#eb8055ff","#f9b641ff","#a65c85ff","#7e4e90ff", "cyan4")) + scale_color_manual(values=c( "#593d9cff","#cc6a70ff","#eb8055ff","#f9b641ff","#a65c85ff","#7e4e90ff", "cyan4"))
 
-pdf(file.path( "figures/cueCompare.pdf"), width = 12, height = 4)
-grid.arrange(chillForce,photoForce, chillPhoto, ncol = 3)
+pdf("figures/cueCompare.pdf", width = 12, height = 4)
+ggarrange(chillForce, photoForce, chillPhoto,
+             labels = c("A", "B", "C"),
+             ncol = 3)
 dev.off()
 
 ## Plotting the day to bb with the cues on the y-axis 
 head(pheno)
-phenoInfo <- merge(pheno, spInfo, by = "species")
+pheno.t$species <- tolower(pheno.t$species)
 
-phenoInfoMean <- ddply(phenoInfo, c("species"), summarize, mean = mean(bb, na.rm = TRUE))
+phenoInfoMean <- ddply(pheno.t, c("species" ), summarize, mean = mean(bb, na.rm = TRUE),
+                       n = n(),
+                       sd = sd(bb, na.rm = T),
+                       se = sd/sqrt(n))
 # names(term.bb.both) <- c("species.both", "mean")
 
-term.both <- merge(phenoInfo, cueOut, by = c("species", "type", "transect"), all =TRUE)
-term.both <- term.both[,c("species","mean","bForceSp","bChillSp","bPhotoSp", "type", "transect")]
-term.both <- term.both[complete.cases(term.both), ] 
+term.both <- merge(phenoInfoMean, cueOut, by = c("species"), all =TRUE)
+term.both <- term.both[,c("species","mean","bForceMean","bChillMean","bPhotoMean", "type", "transect")]
+names(term.both) <- c("species","mean","bForceMean","bChillMean","bPhotoMean", "Type", "Transect")
+#term.both <- term.both[complete.cases(term.both), ] 
 
-pdf(file.path( "figures/force_dobb_dldf4sites.pdf"), width = 5, height = 6)
-tf.both <-  ggplot(term.both, aes(y = bForceSp, x= mean,col = type, shape = transect)) +
+
+tf.both <-  ggplot(term.both, aes(y = bForceMean, x= mean,col = Type, shape = Transect)) +
   geom_point() +
   ylim (-17, 0) +
   xlim (5, 55) +
   labs(x = "Mean day of budburst", y = "High forcing") +
-  geom_text(aes(label=species.both),hjust=0.5, vjust= 1, show.legend = F) +
+  geom_text(aes(label=species),hjust=0.5, vjust= 1, show.legend = F) +
   theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
-        panel.background = element_blank(), axis.line = element_line(colour = "black"))+
+        panel.background = element_blank(), axis.line = element_line(colour = "black"),
+        legend.position = "none")+
   scale_fill_manual(values=c( "#593d9cff","#cc6a70ff","#eb8055ff","#f9b641ff","#a65c85ff","#7e4e90ff", "cyan4")) + scale_color_manual(values=c( "#593d9cff","#cc6a70ff","#eb8055ff","#f9b641ff","#a65c85ff","#7e4e90ff", "cyan4"))
 tf.both
-dev.off()
+#dev.off()
 
-pdf(file.path( "figures/chill_dobb_dldf4sites.pdf"), width = 5, height = 6)
-tc.both <- ggplot(term.both, aes(y = bChillSp, x= mean,col = type, shape = transect)) +
+#pdf(file.path( "figures/chill_dobb_dldf4sites.pdf"), width = 5, height = 6)
+tc.both <- ggplot(term.both, aes(y = bChillMean, x= mean,col = Type, shape = Transect)) +
   geom_point() +
   ylim (-32, -4) +
   xlim (10, 55) +
-  labs(x = "Mean day of budburst", y = "High chilling") +
-  geom_text(aes(label=species.both),hjust=0.5, vjust= 1, show.legend = F) +
+  labs(x = "Mean day of budburst", y = "Chilling") +
+  geom_text(aes(label=species),hjust=0.5, vjust= 1, show.legend = F) +
   theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
-        panel.background = element_blank(), axis.line = element_line(colour = "black"))+
+        panel.background = element_blank(), axis.line = element_line(colour = "black"),
+        legend.position = "none")+
   scale_fill_manual(values=c( "#593d9cff","#cc6a70ff","#eb8055ff","#f9b641ff","#a65c85ff","#7e4e90ff", "cyan4")) + scale_color_manual(values=c( "#593d9cff","#cc6a70ff","#eb8055ff","#f9b641ff","#a65c85ff","#7e4e90ff", "cyan4"))
 tc.both
-dev.off()
+#dev.off()
 
-pdf(file.path( "figures/photo_dobb_dldf.pdf"), width = 5, height = 6)
-tp.both <- ggplot(term.both, aes(y = bPhotoSp, x= mean,col = type, shape = transect)) +
+#pdf(file.path( "figures/photo_dobb_dldf.pdf"), width = 5, height = 6)
+tp.both <- ggplot(term.both, aes(y = bPhotoMean, x= mean,col = Type, shape = Transect)) +
   geom_point() +
   ylim (-6.5, -1) +
   xlim (10, 55) +
   labs(x = "Mean day of budburst", y = "Long photoperiod")+
-  geom_text(aes(label=species.both),hjust=0.5, vjust= 1, show.legend = F) +
+  geom_text(aes(label=species),hjust=0.5, vjust= 1, show.legend = F) +
   theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
-        panel.background = element_blank(), axis.line = element_line(colour = "black"))+
+        panel.background = element_blank(), axis.line = element_line(colour = "black"),
+        legend.key=element_rect(fill="white"))+
   scale_fill_manual(values=c( "#593d9cff","#cc6a70ff","#eb8055ff","#f9b641ff","#a65c85ff","#7e4e90ff", "cyan4")) + scale_color_manual(values=c( "#593d9cff","#cc6a70ff","#eb8055ff","#f9b641ff","#a65c85ff","#7e4e90ff", "cyan4"))
 tp.both
+
+pdf(file.path( "figures/cues_dobb_dldf4sites.pdf"), width = 15, height = 6)
+
+ggarrange (tc.both, tf.both,tp.both,
+           labels = c("A", "B", "C"),
+           ncol = 3, nrow = 1)
+
 dev.off()
 
 # Let's plot some interactions:
@@ -1181,4 +1200,38 @@ legend("topright",legend = c(expression("low forcing"),
        col = c("darkslategray","maroon"),
        inset = 0.02, pch = c(19, 19 ),  cex = 1, bty = "n")
 dev.off()
+
+### Old bb fig:
+b.force.both <- sum[grep("^b_warm", rownames(sum))]
+b.photo.both <- sum[grep("^b_photo\\[", rownames(sum))]
+b.chill.both <- sum[grep("^b_chill1", rownames(sum))]
+
+# shrubs.both = c("VIBLAN","RHAFRA","RHOPRI","SPIALB","VACMYR","VIBCAS", "AROMEL","ILEMUC", "KALANG", "LONCAN", "LYOLIG", "alninc","alnvir","amelan", "corsto","loninv", "menfer","rhoalb", "riblac","rubpar","samrac","shecan","sorsco","spibet","spipyr","symalb","vacmem","vibedu")
+# trees.both = c("ACEPEN", "ACERUB", "ACESAC", "BETALL", "BETLEN", "CORCOR", "FAGGRA", "FRANIG", "HAMVIR", "NYSSYL", "POPGRA", "PRUPEN", "QUEALB" , "QUERUB", "QUEVEL", "acegla","betpap", "poptre", "popbal")
+
+pheno.term <- pheno.t[,c("bb", "chillport.z2", "force.z2", "photo.z2", "species", "lab2","transect")]
+
+species.both <- sort(unique(tolower(pheno.t$species)))
+species.fact.both <-as.numeric( as.factor(unique(tolower(pheno.t$species))))
+Type <- c("tree", "tree", "tree","tree", "shrub", "shrub", "shrub", "tree", "tree", "tree", "tree", "tree",
+          "tree", "shrub","shrub","tree","tree", "shrub", "shrub","shrub",  "shrub", "shrub", "shrub", "shrub", "shrub",
+          "tree","tree","tree","tree","tree","tree","tree","shrub", "shrub", "shrub", "shrub","shrub", "shrub", "shrub", "shrub","shrub", "shrub", "shrub", "shrub","shrub", "shrub", "shrub")
+Transect <- c("western","eastern","eastern","eastern","both","western","western","eastern","eastern","eastern","both","eastern","western","eastern","eastern","eastern","eastern","eastern","eastern","western","eastern","western","eastern","both","eastern","western","eastern","eastern","eastern","eastern","eastern","western","eastern","western","western","western","western","western","western","western","western","western","western","eastern","eastern","western","eastern")
+
+both <- data.frame(species.both, Transect, species.fact.both, b.force.both, b.photo.both, b.chill.both, Type)
+
+pheno.term$species <- tolower(pheno.term$species)
+term.bb.both <- ddply(pheno.term, c("species"), summarize, mean = mean(bb, na.rm = TRUE))
+names(term.bb.both) <- c("species.both", "mean")
+
+term.both <- merge(term.bb.both, both, by = "species.both", all =TRUE)
+term.both <- term.both[,c("species.both","mean","b.force.both","b.chill.both","b.photo.both")]
+
+ggplot(term.both, aes(y = b.force.both, x= mean,col = Type, shape = Transect)) +
+  geom_point()
+
+ggplot(term.both, aes(y = b.chill.both, x= mean,col = Type, shape = Transect)) +
+  geom_point()
+
+
 

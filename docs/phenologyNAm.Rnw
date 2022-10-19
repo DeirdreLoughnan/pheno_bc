@@ -309,6 +309,13 @@ print(fiftylSite,include.rownames=TRUE, caption.placement="top", hline.after=c(-
     \label{fig:cueCompare}
 \end{figure}
 
+\begin{figure}[h!]
+    \centering
+     \includegraphics[width=\textwidth]{..//figures/cues_dobb_dldf4sites.pdf} 
+    \caption{Trends in budburst date in relation to species-level a) chill responses, b) high forcing temperatures, and c) long photoperiod cues}
+    \label{fig:cueCompare}
+\end{figure}
+
 \section{Supplementary Material}
 
 <<label= meanBBTab, echo=FALSE , results=tex>>=

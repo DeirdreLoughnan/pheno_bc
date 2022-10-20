@@ -89,7 +89,7 @@ source("..//rcode/phenologyMsValues.R")
 \item We also had considerable success in the percentage of budburst, with only \Sexpr{perNoBB}\% of the surviving samples exhibiting no budburst at all.
 \item Terminal buds failed to open for \Sexpr{perNoTerm}\% of samples, most of which were \emph{Vaccinium membranaceum}, \emph{Rubus parviflorus}, and \emph{Ribes lacustre}.
 \item Overall budburst was lowest for \emph{Acer glabrum}, \emph{Ribes lacustre}, \emph{Menziesia ferruginea}, \emph{Symphoricarpos albus}. 
-\item Removing these four western species does change several of the model estimates. While most parameter estimates are within 15\% of full model, estimates for the forcing x photoperiod interactions is considerably different, while the estimates and interactions for Manning Park, and the interaction with Manning Park and both chilling and photoperiod are considerably different. 
+\item Removing these four western species does change several of the model estimates. While most parameter estimates are within 15\% of the model with all species, estimates are considerably different for the forcing x photoperiod interactions, the site estimate for Manning Park, and the interaction with Manning Park and both chilling and photoperiod respectively. 
 \end{enumerate}
 
 \item General findings...
@@ -99,35 +99,33 @@ source("..//rcode/phenologyMsValues.R")
 \item Forcing and chilling cues produced a strong delaying effect, with low chilling being offset by high forcing conditions(Fig. \ref{fig:intrxn} a). 
 \item Similar delaying interactions occur between forcing and the two eastern sites and between chilling and the two eastern sites. 
 \item As illustrated for our St. Hippolyte site in Fig. \ref{fig:intrxn} b and c), eastern sites has weaker responses to forcing and chilling cues, budbursting earlier than western species in response to both cues.   
-\item The interaction between photoperiod and our eastern sites in contrast support a moderate advancing effect, with longer photoperiods at our eastern sites causing budburst dates to advance (Fig. \ref{fig:intrxn} d).
-\item While there are some differences across sites, they are weak when site effects are accounted for (Fig. \ref{siteCues})
-\item We also did not observe differences across different plant architectures (Fig. \ref{fig:cueST})
+\item The interaction between photoperiod and our eastern sites in contrast, support a moderate advancing effect, with longer photoperiods at our eastern sites causing budburst dates to advance more (Fig. \ref{fig:intrxn} d).
+\item While there are some differences across cue responses across sites, they are weak when site effects are accounted for (Fig. \ref{fig:siteCues})
+\item We also did not observe differences across different plant architectures, with both shrubs and trees having very similar cue responses (Fig. \ref{fig:cueST})
 %DLOct14 - this fig:cueST could be rearranged to be more like fig:siteCues so that the cues are beside each other
 %DLOct14 - Also need to compare the uncertainty intervals and double check if they overlap
 \end {enumerate}
 
-\item We found different trends in cue use when comparing the timing of first lateral budburst and 50\% lateral budburst for our western species.
+\item We found different trends in cue responses when comparing the timing of first lateral budburst and 50\% lateral budburst for our western species.
 \begin{enumerate}
 \item  In comparison to our model of the timing of first budburst, the timing of lateral budburst had stronger responses to chilling, with 50\% lateral budburst having almost equivalent responses to forcing and chilling.
 \item However, lateral budburst also experienced a strong interaction between forcing and chilling cues as well as between forcing and photoperiod for the timing of the fist lateral budburst.
-\item Our more southern site in our western transect, Manning Park, showed delayed budburst relative to our more northern Smithers sites. 
-\item While we do observe weak interactions between photoperiod and Manning Park and chilling and Manning park, a strong advancing interactions occurred between forcing and Manning Park.
-%DLOct14 - I think this needs a figure, but in the supp
+\item Budburst was delayed for the Manning Park community, budbursting later than those sampled in Smithers b.C.. 
+\item Lateral budburst dates also show weak interactions between photoperiod and Manning Park and chilling and Manning park, but a strong advancing interactions between forcing and Manning Park.
+%DLOct14 - I think there should be an interaction figure for say the 50% lateral bb, but in the supp
 \end{enumerate}
-
 
 \item Individual species show more distinct trends 
 \begin{enumerate}
-\item Across all our focal species, cue responses were strongest for chilling and forcing compared to photoperiod, but species varied in the relative imporatnce of each cue, with thier own unique temporal niche.
-\item Weak trends for each cue, with later budburst in species with stronger responses to high chilling, forcong and photoperiod cues (\ref{fig:cuedobb}) - This should be tested quantitiatively 
-\item understory species, such as Corsto had both weak chilling and forcing cues, while tree speces such as quevel had stroner chilling and forcing cues as well as photoperiod
-\item faggra ahd the strongest photoperiod response, but surprisingly symalb (a shrub had the strongest chilling response).
+\item Across all our focal species, cue responses were strongest for chilling and forcing compared to photoperiod, but species varied in the relative imporatnce of each cue, producing unique temporal niches  (\ref{fig:cuedobb}) 
+\item We do not find strong evidence of generalizable trends in species cue responses across the transects or between tree and shrub species.
+\item While some understory species, such as \emph{Cornus stolonifera} had both weak chilling and forcing cues, others like \emph{Menziesia ferruginea} exhibit strong responses to all three cues (Fig. \ref{fig:cuedobb}.
+\item Tree species similarly to not show strong trends, with \emph(Quercus velutina) having stronger chilling and forcing cues as well as photoperiod as we would predict, but other trees like \emph{Prunus pensylvanica} having consistently weak cue responses (Fig. \ref{fig:cuedobb}.
+\item Our model estimates do support previously identified trends in cue ues, with \emph{Fagus grandifolia} having the strongest photoperiod response, but surprisingly the shrub \emph{Symphoricarpos alba} had the strongest chilling response).
 \end{enumerate}
 
 
 \end{enumerate}
-
-
 
 \section{Tables and figures}
 

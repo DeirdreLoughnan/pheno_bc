@@ -88,6 +88,8 @@ source("..//rcode/phenologyMsValues.R")
 \item Of the \Sexpr{totChill} samples that went into chilling, \Sexpr{totExpSurv} survived the duration of the experiment, with only \Sexpr{perMort}\% percent mortality occurring.
 \item We also had considerable success in the percentage of budburst, with only \Sexpr{perNoBB}\% of the surviving samples exhibiting no budburst at all.
 \item Terminal buds failed to open for \Sexpr{perNoTerm}\% of samples, most of which were \emph{Vaccinium membranaceum}, \emph{Rubus parviflorus}, and \emph{Ribes lacustre}.
+\item Overall budburst was lowest for \emph{Acer glabrum}, \emph{Ribes lacustre}, \emph{Menziesia ferruginea}, \emph{Symphoricarpos albus}. 
+\item Removing these four western species does change several of the model estimates. While most parameter estimates are within 15\% of full model, estimates for the forcing x photoperiod interactions is considerably different, while the estimates and interactions for Manning Park, and the interaction with Manning Park and both chilling and photoperiod are considerably different. 
 \end{enumerate}
 
 \item General findings...
@@ -114,7 +116,13 @@ source("..//rcode/phenologyMsValues.R")
 \end{enumerate}
 
 
-\item Individual species show more distinct trends - compare the three species in both transects
+\item Individual species show more distinct trends 
+\begin{enumerate}
+\item Across all our focal species, cue responses were strongest for chilling and forcing compared to photoperiod, but species varied in the relative imporatnce of each cue, with thier own unique temporal niche.
+\item Weak trends for each cue, with later budburst in species with stronger responses to high chilling, forcong and photoperiod cues (\ref{fig:cuedobb}) - This should be tested quantitiatively 
+\item understory species, such as Corsto had both weak chilling and forcing cues, while tree speces such as quevel had stroner chilling and forcing cues as well as photoperiod
+\item faggra ahd the strongest photoperiod response, but surprisingly symalb (a shrub had the strongest chilling response).
+\end{enumerate}
 
 
 \end{enumerate}
@@ -174,7 +182,7 @@ print(fourSite,include.rownames=TRUE, caption.placement="top", hline.after=c(-1,
 
 @
 
-<<label= tab4Site, echo=FALSE, results=tex >>=
+<<label= tabLat1, echo=FALSE, results=tex >>=
 require(rstan)
 require(xtable)
 
@@ -215,7 +223,7 @@ print(onelSite,include.rownames=TRUE, caption.placement="top", hline.after=c(-1,
 
 @
 
-<<label= tab4Site, echo=FALSE, results=tex >>=
+<<label= tabLat50, echo=FALSE, results=tex >>=
 require(rstan)
 require(xtable)
 
@@ -253,6 +261,56 @@ print(fiftylSite,include.rownames=TRUE, caption.placement="top", hline.after=c(-
 
 @
 
+<<label= tab4Few, echo=FALSE, results=tex >>=
+require(rstan)
+require(xtable)
+
+load("..//output/final/bb_4sites_phylo_few4.Rda")
+
+sum <- summary(mdl.4phylo.4few)$summary 
+
+col4fig <- c("mean","sd","25%","50%","75%","n_eff","Rhat")
+col4table <- c("mean","sd","2.5%","50%","97.5%","n_eff","Rhat")
+
+mu_params_4 <- c(
+                #"a_z","lam_interceptsa",
+                "mu_b_warm", "mu_b_photo", "mu_b_chill1", "b_site2",
+                "b_site3", "b_site4", "mu_b_inter_wp",
+                "mu_b_inter_wc1","mu_b_inter_pc1", "mu_b_inter_ws2",
+                "mu_b_inter_ps2","mu_b_inter_s2c1", "mu_b_inter_ws3",
+                "mu_b_inter_ps3", "mu_b_inter_s3c1", "mu_b_inter_ws4",
+                "mu_b_inter_ps4","mu_b_inter_s4c1")
+
+meanz4 <- sum[mu_params_4, col4fig]
+
+rownames(meanz4) = c( #"Root trait intercept","Lambda",
+                      "Forcing",
+                      "Photoperiod",
+                      "Chilling",
+                      "Manning Park",
+                       "Harvard Forest",
+                       "St. Hippolyte",
+                      "Forcing x photoperiod",
+                      "Forcing x chilling",
+                      "Photoperiod x chilling",
+                      "Forcing x Manning Park",
+                      "Photoperiod x Manning Park",
+                      "Chilling x Manning Park",
+                      "Forcing x Harvard Forest",
+                      "Photoperiod x Harvard Forest",
+                      "Chilling x Harvard Forest",
+                      "Forcing x St. Hippolyte",
+                      "Photoperiod x St. Hippolyte",
+                      "Chilling x St. Hippolyte"            
+)
+
+meanz4.table <- sum[mu_params_4, col4table]
+row.names(meanz4.table) <- row.names(meanz4)
+
+fourFew <- xtable(meanz4.table, caption="Summary output from a phylogenetic mixed-effect model in which the four species with the lowest budburst success was excluded. In this model, speices are partially pooled and phylogeny is included on the intercept. The model includes photoperiod, forcing, and site as dummy variables, while the chilling effect is included as continuous chill portions.")
+print(fourFew,include.rownames=TRUE, caption.placement="top", hline.after=c(-1,0))
+
+@
 \begin{figure}[h!]
     \centering
      \includegraphics[width=\textwidth]{..//figures/changes_pheno_4sites.pdf} 
@@ -313,7 +371,7 @@ print(fiftylSite,include.rownames=TRUE, caption.placement="top", hline.after=c(-
     \centering
      \includegraphics[width=\textwidth]{..//figures/cues_dobb_dldf4sites.pdf} 
     \caption{Trends in budburst date in relation to species-level a) chill responses, b) high forcing temperatures, and c) long photoperiod cues}
-    \label{fig:cueCompare}
+    \label{fig:cuedobb}
 \end{figure}
 
 \section{Supplementary Material}
@@ -416,7 +474,7 @@ bb_suc <- bb_suc[, c("Species name", "Proportion.Budburst","Plant type")]
 names(bb_suc) <- c("Species name", "Proportion budburst","Plant type")
 
 make.bb_suc <- xtable(bb_suc, caption="Proporation of samples with budburst per species")
-print(make.bb_suc,include.rownames=TRUE, caption.placement="top", hline.after=c(-1,0))
+print(make.bb_suc,include.rownames=F, caption.placement="top", hline.after=c(-1,0))
 
 @
 \end{document}

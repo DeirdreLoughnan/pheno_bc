@@ -26,10 +26,9 @@ options(mc.cores = parallel::detectCores())
 
 if(length(grep("deirdreloughnan", getwd()) > 0)) { 
   setwd("~/Documents/github/pheno_bc") 
-}  
-#else{
-#  setwd("~/deirdre/") # for midge
-#}
+}  else{
+ setwd("/home/deirdre/pheno_bc") # for midge
+}
 
 #source('rcode/cleaning/pheno_bb_calc.R')
 # head(pheno)
@@ -131,15 +130,29 @@ tree$tip.label[tree$tip.label=="Nyssa_sylvatica"] <- "Alnus_viridis"
 tree$tip.label[tree$tip.label== "Fagus_grandifolia_var._caroliniana"] <- "Fagus_grandifolia"
 tree$tip.label[tree$tip.label== "Spiraea_alba_var._latifolia"] <- "Spiraea_alba"
 
-phymatch <- data.frame(species.name = tree$tip.label, sppnum = c(1:length(tree$tip.label)))
+# phymatch <- data.frame(species.name = tree$tip.label, sppnum = c(1:length(tree$tip.label)))
+# 
+# d <- merge(pheno.t, phymatch, by="species.name")
+# 
+# d <- d[order(d$sppnum),]
+# nspecies <- max(d$sppnum)
+# #nspecies <- 21
+# cophen_tree <- cophenetic(tree)
+# vcv_tree <- vcv(tree, cor = TRUE)
+lowbb <- c("symalb","riblac","menfer","acegla")
+pheno.t.4few <- pheno.t[!pheno.t$species %in% lowbb, ]
+pheno.t.4few$species.fact <- as.numeric(as.factor(pheno.t.4few$species))
 
-d <- merge(pheno.t, phymatch, by="species.name")
+tree.4few <- drop.tip(tree, c("Acer_glabrum", "Ribes_lacustre", "Menziesia_ferruginea", "Symphoricarpos_albus"))
+phymatch.4few <- data.frame(species.name = tree.4few$tip.label, sppnum = c(1:length(tree.4few$tip.label)))
+
+d <- merge(pheno.t.4few, phymatch.4few, by="species.name")
 
 d <- d[order(d$sppnum),]
 nspecies <- max(d$sppnum)
 #nspecies <- 21
-cophen_tree <- cophenetic(tree)
-vcv_tree <- vcv(tree, cor = TRUE)
+cophen_tree <- cophenetic(tree.4few)
+vcv_tree <- vcv(tree.4few, cor = TRUE)
 
 phypriors <- list( 
   a_z_prior_mu = 4, # true value
@@ -159,10 +172,10 @@ simu_inits <- function(chain_id) {
 
 
 
-datalist.z2 <- with(pheno.t,
-                 list( N=nrow(pheno.t),
-                       n_sp = length(unique(pheno.t$species.fact)),
-                       n_site = length(unique(pheno.t$population)),
+datalist.z2 <- with(pheno.t.4few,
+                 list( N= nrow(pheno.t.4few),
+                       n_sp = length(unique(pheno.t.4few$species.fact)),
+                       n_site = length(unique(pheno.t.4few$population)),
                        lday = bb,
                        sp = species.fact,
                        chill1 = chillport.z2,
@@ -182,13 +195,21 @@ datalist.z2 <- with(pheno.t,
 #               )
 # save(mdl.t, file="output/tbb_4sites_fullystandardized_ncp.Rda")
 
-mdl.4phylo <- stan("stan/df_mdl_4sites_again_allint_ncp_phylogeny.stan",
-              data = datalist.z2,
-              iter = 6000, warmup =3000, chains=4,
-              include = FALSE, pars = c("ypred_new","y_hat")
-              #, control = list(adapt_delta = 0.99)
+# mdl.4phylo <- stan("stan/df_mdl_4sites_again_allint_ncp_phylogeny.stan",
+#               data = datalist.z2,
+#               iter = 6000, warmup =3000, chains=4,
+#               include = FALSE, pars = c("ypred_new","y_hat")
+#               #, control = list(adapt_delta = 0.99)
+# )
+# save(mdl.4phylo, file="output/bb_4sites_phylo.Rda")
+
+mdl.4phylo.4few <- stan("stan/df_mdl_4sites_again_allint_ncp_phylogeny.stan",
+                   data = datalist.z2,
+                   iter = 8000, warmup =4000, chains=4,
+                   include = FALSE, pars = c("ypred_new","y_hat")
+                   #, control = list(adapt_delta = 0.99)
 )
-save(mdl.4phylo, file="output/bb_4sites_phylo.Rda")
+save(mdl.4phylo.4few, file="output/bb_4sites_phylo_few4.Rda")
 
 ## The model no longer has any divergent transitions for the terminal buds!
 #pairs(sm.sum, pars=c("mu_a","mu_force","mu_chill","mu_photo_ncp")) # this gives a lot of warning messages and not the figure i was hoping/expected
@@ -197,59 +218,65 @@ save(mdl.4phylo, file="output/bb_4sites_phylo.Rda")
 # range(sumt[, "Rhat"])
 
 #######################################################################
-
 load("output/final/bb_4sites_phylo.Rda")
-# load("output/bb_4sites_phylo_newpriors.Rda") # this model has one divergent transition, but that is it!
-# 
-sumt <- summary(mdl.4phylo)$summary
+
+sumt <- summary(mdl.4phylo.4few)$summary
+
+
+phylo <- summary(mdl.4phylo)$summary[c(
+  "a_z",
+  "lam_interceptsa",
+  "mu_b_warm",
+  "mu_b_photo",
+  "mu_b_chill1",
+  "b_site2",
+  "b_site3",
+  "b_site4",
+  "mu_b_inter_wp",
+  "mu_b_inter_wc1",
+  "mu_b_inter_pc1",
+  "mu_b_inter_ws2",
+  "mu_b_inter_ps2",
+  "mu_b_inter_s2c1",
+  "mu_b_inter_ws3",
+  "mu_b_inter_ps3",
+  "mu_b_inter_s3c1",
+  "mu_b_inter_ws4",
+  "mu_b_inter_ps4",
+  "mu_b_inter_s4c1",
+  "sigma_b_warm",
+  "sigma_b_photo",
+  "sigma_b_chill1",
+  "sigma_interceptsa",
+  "sigma_b_inter_wp",
+  "sigma_b_inter_wc1",
+  "sigma_b_inter_pc1",
+  "sigma_b_inter_ws2",
+  "sigma_b_inter_ps2",
+  "sigma_b_inter_s2c1",
+  "sigma_b_inter_ws3",
+  "sigma_b_inter_ps3",
+  "sigma_b_inter_s3c1",
+  "sigma_b_inter_ws4",
+  "sigma_b_inter_ps4",
+  "sigma_b_inter_s4c1",
+  "sigma_y"),"mean"]
+
+load("output/final/bb_4sites_phylo_few4.Rda")
+ 
+sumt <- summary(mdl.4phylo.4few)$summary
 # 
 # # mu <- sumt[grep("mu_", rownames(sumt)), ]
-ssm <-  as.shinystan(mdl.4phylo)
-launch_shinystan(ssm)
+# ssm <-  as.shinystan(mdl.4phylo)
+# launch_shinystan(ssm)
 # # ssm <-  as.shinystan(mdl.t)
 # # launch_shinystan(ssm)
 # 
 range(sumt[, "n_eff"])
 range(sumt[, "Rhat"])
 
-# nophylo <- summary(mdl.t)$summary[c("mu_a",
-#                        "mu_b_warm",
-#                        "mu_b_photo",
-#                        "mu_b_chill1",
-#                        "b_site2",
-#                        "b_site3",
-#                        "b_site4",
-#                        "mu_b_inter_wp",
-#                        "mu_b_inter_wc1",
-#                        "mu_b_inter_pc1",
-#                        "mu_b_inter_ws2",
-#                        "mu_b_inter_ps2",
-#                        "mu_b_inter_s2c1",
-#                        "mu_b_inter_ws3",
-#                        "mu_b_inter_ps3",
-#                        "mu_b_inter_s3c1",
-#                        "mu_b_inter_ws4",
-#                        "mu_b_inter_ps4",
-#                        "mu_b_inter_s4c1",
-#                        "sigma_b_warm",
-#                        "sigma_b_photo",
-#                        "sigma_b_chill1",
-#                        "sigma_a",
-#                        "sigma_b_inter_wp",
-#                        "sigma_b_inter_wc1",
-#                        "sigma_b_inter_pc1",
-#                        "sigma_b_inter_ws2",
-#                        "sigma_b_inter_ps2",
-#                        "sigma_b_inter_s2c1",
-#                        "sigma_b_inter_ws3",
-#                        "sigma_b_inter_ps3",
-#                        "sigma_b_inter_s3c1",
-#                        "sigma_b_inter_ws4",
-#                        "sigma_b_inter_ps4",
-#                        "sigma_b_inter_s4c1",
-#                        "sigma_y"),"mean"]
-# 
-phylo <- summary(mdl.4phylo)$summary[c(
+ 
+phylo4Few <- summary(mdl.4phylo.4few)$summary[c(
                                        "a_z",
                                        "lam_interceptsa",
                                     "mu_b_warm",
@@ -288,6 +315,8 @@ phylo <- summary(mdl.4phylo)$summary[c(
                                     "sigma_b_inter_s4c1",
                                     "sigma_y"),"mean"]
 
+# how different are they? 
+diff <- ((phylo - phylo4Few)/phylo) * 100
 # #post <- rstan::extract(mdl.t)
 # post <- rstan::extract(mdl.4phylo)
 # 

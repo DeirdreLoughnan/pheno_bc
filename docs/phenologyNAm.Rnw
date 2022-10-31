@@ -65,67 +65,99 @@ Vancouver, BC, Canada, V6T 1Z4. \\
 
 Corresponding Author: Deirdre Loughnan, deirdre.loughnan@ubc.ca \\
 
-
-\section{Research questions:}
+\section{Analyeses - ranked by DL}
 
 \begin{enumerate}
-\item How do species in deciduous forests across North America respond to varying chilling, forcing, and photoperiod cues?
-\item Do we see similar trends when we compare species eastern deciduous forests to western deciduous forests communities? 
-\item How do shrub species differ from tree species in their cue use?
+\item Species differences in cue use 
+\item Phylogeny
+\item shrubs vs trees - tied into traits (shrubs acquisitive growth, trees conservative)
+\item Cue use - east vs west 
+\item Lateral bud cue use
 \end{enumerate}
 
-\section{Results}
+\section*{Paper 1: Cue responses of western spp in terminal vs lateral budburst
+}
+
+\subsection*{Research questions}
+
+\begin{enumerate}
+\item What is the relative importance of chilling, forcing, and photoperiod cues for budburst phenology in woody plant communities in Western Canada?
+\item How might cue use differ for the timing of first budburst in comparison to individual level, 50\% budburst? 
+\end{enumerate}
+
+\subsection*{Results + figures}
 <<label=runcode1,  echo=FALSE>>=
 
 source("..//rcode/phenologyMsValues.R")
 @
-
-
 \begin{enumerate}
-\item General Survival and germination success from the western transect experiment
 
+\item General Survival and germination success from the western transect experiment
 \begin{enumerate}
 \item Of the \Sexpr{totChill} samples that went into chilling, \Sexpr{totExpSurv} survived the duration of the experiment, with only \Sexpr{perMort}\% percent mortality occurring.
 \item We also had considerable success in the percentage of budburst, with only \Sexpr{perNoBB}\% of the surviving samples exhibiting no budburst at all.
 \item Terminal buds failed to open for \Sexpr{perNoTerm}\% of samples, most of which were \emph{Vaccinium membranaceum}, \emph{Rubus parviflorus}, and \emph{Ribes lacustre}.
-\item Overall budburst was lowest for \emph{Acer glabrum}, \emph{Ribes lacustre}, \emph{Menziesia ferruginea}, \emph{Symphoricarpos albus}. 
-\item Removing these four western species does change several of the model estimates. While most parameter estimates are within 15\% of the model with all species, estimates are considerably different for the forcing x photoperiod interactions, the site estimate for Manning Park, and the interaction with Manning Park and both chilling and photoperiod respectively. 
+\item Overall budburst was lowest for \emph{Acer glabrum}, \emph{Ribes lacustre}, \emph{Menziesia ferruginea}, \emph{Symphoricarpos albus}.
+\item Removing these four western species does change several of the model estimates. While most parameter estimates are within 15\% of the model with all species, estimates are considerably different for the forcing x photoperiod interactions, the site estimate for Manning Park, and the interaction with Manning Park and both chilling and photoperiod respectively.
+%Oct31DL: I did this more to replicate the FLynn approach, but unlike in that analysis, removing these species really changed the results! I know for other ribes sp (Ribes nigra specifically) ideal chilling temps were around -4C, so poor chilling might be an issue.
 \end{enumerate}
 
+\item Comparing lateral to terminal? Or first bb to lateral 50\% (canopy level bb)
+\begin{enumerate}
+\item We found different trends in cue responses when comparing the timing of first lateral budburst and 50\% lateral budburst for our western species.
+\item  In comparison to our model of the timing of first budburst, the timing of lateral budburst had stronger responses to chilling, with 50\% lateral budburst having almost equivalent responses to forcing and chilling.
+\item However, lateral budburst also experienced a strong interaction between forcing and chilling cues as well as between forcing and photoperiod for the timing of the fist lateral budburst.
+\item Budburst was delayed for the Manning Park community, budbursting later than those sampled in Smithers b.C..
+\item Lateral budburst dates also show weak interactions between photoperiod and Manning Park and chilling and Manning park, but a strong advancing interactions between forcing and Manning Park.
+%DLOct14 - I think there should be an interaction figure for say the 50% lateral bb, but in the supp
+\end{enumerate}
+\end{enumerate}
+
+\section*{Paper 2: Species differences in cue use across North America + phylogeny}
+
+\subsection*{Research questions}
+\begin{enumerate}
+\item Are species responses to chilling, forcing and photoperiod cues phylogenetically structured?
+\item How do species in deciduous forests across North America to these varying cues? 
+\item Optional: Do we see differences across shrub and tree species? %Oct31DL: This could also go in the trait paper 
+\end {enumerate}
+
+\subsection{Results + figures }
+
+\begin{enumerate}
 \item General findings...
 \begin {enumerate}
 \item Species cue responses were strongly phylogenetically structured (with a lambda of \Sexpr{lamT} (90\% uncertainty interval: \Sexpr{lamTLower}, \Sexpr{lamTUpper}), with a root trait value of \Sexpr{rootT} (90\% uncertainty interval: \Sexpr{rootTLower}, \Sexpr{rootTUpper}).
 \item While all cues did lead to an advance in budburst date, there were strong interactions between cues and between cues and sites.
-\item Forcing and chilling cues produced a strong delaying effect, with low chilling being offset by high forcing conditions(Fig. \ref{fig:intrxn} a). 
-\item Similar delaying interactions occur between forcing and the two eastern sites and between chilling and the two eastern sites. 
-\item As illustrated for our St. Hippolyte site in Fig. \ref{fig:intrxn} b and c), eastern sites has weaker responses to forcing and chilling cues, budbursting earlier than western species in response to both cues.   
+\item Forcing and chilling cues produced a strong delaying effect, with low chilling being offset by high forcing conditions(Fig. \ref{fig:intrxn} a).
+\item Similar delaying interactions occur between forcing and the two eastern sites and between chilling and the two eastern sites.
+\item As illustrated for our St. Hippolyte site in Fig. \ref{fig:intrxn} b and c), eastern sites has weaker responses to forcing and chilling cues, budbursting earlier than western species in response to both cues.
 \item The interaction between photoperiod and our eastern sites in contrast, support a moderate advancing effect, with longer photoperiods at our eastern sites causing budburst dates to advance more (Fig. \ref{fig:intrxn} d).
 \item While there are some differences across cue responses across sites, they are weak when site effects are accounted for (Fig. \ref{fig:siteCues})
 \item We also did not observe differences across different plant architectures, with both shrubs and trees having very similar cue responses (Fig. \ref{fig:cueST})
 %DLOct14 - this fig:cueST could be rearranged to be more like fig:siteCues so that the cues are beside each other
 %DLOct14 - Also need to compare the uncertainty intervals and double check if they overlap
-\end {enumerate}
-
-\item We found different trends in cue responses when comparing the timing of first lateral budburst and 50\% lateral budburst for our western species.
-\begin{enumerate}
-\item  In comparison to our model of the timing of first budburst, the timing of lateral budburst had stronger responses to chilling, with 50\% lateral budburst having almost equivalent responses to forcing and chilling.
-\item However, lateral budburst also experienced a strong interaction between forcing and chilling cues as well as between forcing and photoperiod for the timing of the fist lateral budburst.
-\item Budburst was delayed for the Manning Park community, budbursting later than those sampled in Smithers b.C.. 
-\item Lateral budburst dates also show weak interactions between photoperiod and Manning Park and chilling and Manning park, but a strong advancing interactions between forcing and Manning Park.
-%DLOct14 - I think there should be an interaction figure for say the 50% lateral bb, but in the supp
 \end{enumerate}
-
-\item Individual species show more distinct trends 
+ \item Individual species show more distinct trends 
 \begin{enumerate}
-\item Across all our focal species, cue responses were strongest for chilling and forcing compared to photoperiod, but species varied in the relative imporatnce of each cue, producing unique temporal niches  (\ref{fig:cuedobb}) 
+\item Across all our focal species, cue responses were strongest for chilling and forcing compared to photoperiod, but species varied in the relative imporatnce of each cue, producing unique temporal niches  (\ref{fig:cuedobb})
 \item We do not find strong evidence of generalizable trends in species cue responses across the transects or between tree and shrub species.
 \item While some understory species, such as \emph{Cornus stolonifera} had both weak chilling and forcing cues, others like \emph{Menziesia ferruginea} exhibit strong responses to all three cues (Fig. \ref{fig:cuedobb}.
 \item Tree species similarly to not show strong trends, with \emph(Quercus velutina) having stronger chilling and forcing cues as well as photoperiod as we would predict, but other trees like \emph{Prunus pensylvanica} having consistently weak cue responses (Fig. \ref{fig:cuedobb}.
 \item Our model estimates do support previously identified trends in cue ues, with \emph{Fagus grandifolia} having the strongest photoperiod response, but surprisingly the shrub \emph{Symphoricarpos alba} had the strongest chilling response).
 \end{enumerate}
 
+\end {enumerate}
 
+\subsection*{Thoughts to be discussed}
+
+\begin{enumerate}
+\item Should I discuss the survival/sucesses of my study and just cite the Flynn study, or present both in the same manner (ie with all 47 spp in the tables, averages of mortality and success across all spp).
+\item Because of the differences in the sampling (ie field chilling), avoid drawing comparisons between east vs west and just purely compare spp?
+\item Comparisons and shrubs vs trees might be fairly confounded with east/west differences, most western spp are shrubs, most eastern spp. are trees. 
 \end{enumerate}
+
+
 
 \section{Tables and figures}
 
@@ -135,7 +167,7 @@ require(xtable)
 
 load("..//output/final/bb_4sites_phylo.Rda")
 
-sum <- summary(mdl.4phylo)$summary 
+sum <- summary(mdl.4phylo)$summary
 
 col4fig <- c("mean","sd","25%","50%","75%","n_eff","Rhat")
 col4table <- c("mean","sd","2.5%","50%","97.5%","n_eff","Rhat")
@@ -169,7 +201,7 @@ rownames(meanz4) = c( #"Root trait intercept","Lambda",
                       "Chilling x Harvard Forest",
                       "Forcing x St. Hippolyte",
                       "Photoperiod x St. Hippolyte",
-                      "Chilling x St. Hippolyte"            
+                      "Chilling x St. Hippolyte"
 )
 
 meanz4.table <- sum[mu_params_4, col4table]
@@ -209,7 +241,7 @@ rownames(meanz1l) = c( #"Root trait intercept","Lambda",
                       "Forcing x Manning Park",
                       "Photoperiod x Manning Park",
                       "Chilling x Manning Park"
-                      
+
 
 )
 
@@ -265,7 +297,7 @@ require(xtable)
 
 load("..//output/final/bb_4sites_phylo_few4.Rda")
 
-sum <- summary(mdl.4phylo.4few)$summary 
+sum <- summary(mdl.4phylo.4few)$summary
 
 col4fig <- c("mean","sd","25%","50%","75%","n_eff","Rhat")
 col4table <- c("mean","sd","2.5%","50%","97.5%","n_eff","Rhat")
@@ -299,7 +331,7 @@ rownames(meanz4) = c( #"Root trait intercept","Lambda",
                       "Chilling x Harvard Forest",
                       "Forcing x St. Hippolyte",
                       "Photoperiod x St. Hippolyte",
-                      "Chilling x St. Hippolyte"            
+                      "Chilling x St. Hippolyte"
 )
 
 meanz4.table <- sum[mu_params_4, col4table]
@@ -311,7 +343,7 @@ print(fourFew,include.rownames=TRUE, caption.placement="top", hline.after=c(-1,0
 @
 \begin{figure}[h!]
     \centering
-     \includegraphics[width=\textwidth]{..//figures/changes_pheno_4sites.pdf} 
+     \includegraphics[width=\textwidth]{..//figures/changes_pheno_4sites.pdf}
     \caption{Estimated mean responses in budburst date of first bud to varying forcing, chilling, and photoperiod cues for 47 deciduous woody species across North America. Points represent mean budburst dates, while bars depict the 50\% uncertainty interval. Negative responses represent advances budburst, while positive values represent delaying effects.}
     \label{fig:muplot}
 \end{figure}
@@ -325,49 +357,49 @@ print(fourFew,include.rownames=TRUE, caption.placement="top", hline.after=c(-1,0
 
 \begin{figure}[h!]
     \centering
-     \includegraphics[width=\textwidth]{..//figures/lat1_lat50_muplot.pdf} 
+     \includegraphics[width=\textwidth]{..//figures/lat1_lat50_muplot.pdf}
     \caption{Estimated mean responses in lateral budburst date to varying environmental cues for 21 deciduous woody species in British Columbia. Points represent mean budburst dates, while bars depict the 50\% uncertainty interval. Negative responses represent advances budburst, while positive values represent delaying effects. }
     \label{fig:muplotLat}
 \end{figure}
 
 \begin{figure}[h!]
     \centering
-     \includegraphics[width=\textwidth]{..//figures/siteCue.pdf} 
+     \includegraphics[width=\textwidth]{..//figures/siteCue.pdf}
     \caption{Posterior distributions of estimated cue responses with site level effects for individual sites, depicting a) chilling, b) forcing, and c) photoperiod cue responses. Black circles represent the median cue response, while the thinner black line the 90\% quantile interval. The coloured distribution is the the posterior density of the posteriors of the cue responses and site level responses for all species at a given site. The y-axis spans the entire range of the data.}
     \label{fig:siteCues}
 \end{figure}
 
 % \begin{figure}[h!]
 %     \centering
-%      \includegraphics[width=\textwidth]{..//figures/cueEW.pdf} 
+%      \includegraphics[width=\textwidth]{..//figures/cueEW.pdf}
 %     \caption{Interaction plots for the western transect. a) The interaction between chill portions and forcing, b) the interaction between photoperiod and chilling, and c) the relationship between forcing and site}
 %     \label{fig:cues}
 % \end{figure}
 
 \begin{figure}[h!]
     \centering
-     \includegraphics[width=\textwidth]{..//figures/cueST.pdf} 
+     \includegraphics[width=\textwidth]{..//figures/cueST.pdf}
     \caption{Comparisons of posterior distributions for cues estimates between shrub and tree species. Black circles represent the median cue response, while the thinner black line the 90\% quantile interval. The coloured distribution is the the posterior density of the posteriors of the cue responses for all species within a given architectural type. The y-axis spans the entire range of the data.}
     \label{fig:cuesST}
 \end{figure}
 
 \begin{figure}[h!]
     \centering
-     \includegraphics[width=\textwidth]{..//figures/cueSp.pdf} 
+     \includegraphics[width=\textwidth]{..//figures/cueSp.pdf}
     \caption{Species differences in cue estimate posterior distributions, comparing species differences across a) chilling, b) forcing, and c) photoperiod cues. The median cue response is illustrated by the black circle, while the 90\% quantile interval is illustrated by the black line. The coloured distribution depicts the shape of the posterior density for all samples of a given species.}
     \label{fig:cueSP}
 \end{figure}
 
 \begin{figure}[h!]
     \centering
-     \includegraphics[width=\textwidth]{..//figures/cueCompare.pdf} 
+     \includegraphics[width=\textwidth]{..//figures/cueCompare.pdf}
     \caption{Species responses to a) warming compared to longer chilling, b) warming compared to longer photoperiods, and c) longer chilling compared to longer photoperiod}
     \label{fig:cueCompare}
 \end{figure}
 
 \begin{figure}[h!]
     \centering
-     \includegraphics[width=\textwidth]{..//figures/cues_dobb_dldf4sites.pdf} 
+     \includegraphics[width=\textwidth]{..//figures/cues_dobb_dldf4sites.pdf}
     \caption{Trends in budburst date in relation to species-level a) chill responses, b) high forcing temperatures, and c) long photoperiod cues}
     \label{fig:cuedobb}
 \end{figure}
@@ -432,25 +464,25 @@ library(tidyr)
 # dl.chill <- read.csv("..//input/chilling_values_Hope_Smithers.csv")
 # # dl.chill$population[dl.chill$population == "sm"] <- "SM"
 # # dl.chill$population[dl.chill$population == "mp"] <- "MP"
-# 
+#
 # df.chill <- read.csv("..//input/chilling_values_eastern.csv")
-# 
+#
 # chill <- rbind(df.chill, dl.chill)
 # chill$population[chill$population == "sm"] <- "Smithers"
 # chill$population[chill$population == "mp"] <- "Manning Park"
 # chill$population[chill$population == "SH"] <- "St. Hippoltye"
 # chill$population[chill$population == "HF"] <- "Harvard forest"
-# 
+#
 # chill$population <- as.factor(chill$population)
 # chill$chill[chill$chill == "chill0"] <- "Field chilling"
 # chill$chill[chill$chill == "chill1"] <- "Field chilling + 30 d at 4 degree C"
 # chill$chill[chill$chill == "chill2"] <- "Field chilling + 30 d at 1.5 degree C"
 # chill$chill[chill$chill == "HC"] <- "Field chilling + 30 d at 4 degree C"
 # chill$chill[chill$chill == "LC"] <- "Field chilling + 70 d at 4 degree C"
-# 
+#
 # colnames(chill) <- c("Population","Chilling treatment", "Chilling Hours", "Utah Model", "Chill Portions")
 # #chill$population <- toupper(chill$population)
-# 
+#
 # write.csv(chill, "chillUnits.csv", row.names = F)
 #chill <- data.frame(chill)
 

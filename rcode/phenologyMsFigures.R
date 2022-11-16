@@ -176,6 +176,7 @@ head(meanz4.table)
 ###########################################################################################
 ##### 4 site plots ########################################################################
 ###########################################################################################
+
 pdf(file.path( "figures/changes_pheno_4sites.pdf"), width = 7, height = 5)
 par(mfrow = c(1,1), mar = c(5, 10, 2, 1))
 # Upper panel: bud burst
@@ -265,7 +266,7 @@ chillForce <- ggplot(cueOut, aes(x= bChillMean, y = bForceMean, col = type, shap
 #pdf(file.path( "figures/chill_vs_photo_dldf4site.pdf"), width = 5, height = 6)
 chillPhoto <- ggplot(cueOut, aes(y= bChillMean, x = bPhotoMean, col = type, shape = transect)) +
   geom_point() +
-  xlim (-17, 1) +
+  xlim (-7, 1) +
   ylim (-35, 0) +
   labs( x = "Long Photoperiod", y = "High chilling") +
   geom_text(aes(label=species),hjust= 0.5, vjust= 1.5, show.legend = F) +
@@ -287,18 +288,18 @@ head(pheno)
 pheno.t$species <- tolower(pheno.t$species)
 
 phenoInfoMean <- ddply(pheno.t, c("species" ), summarize, mean = mean(bb, na.rm = TRUE),
-                       n = n(),
-                       sd = sd(bb, na.rm = T),
-                       se = sd/sqrt(n))
+                      # n = n(),
+                       sd = sd(bb, na.rm = T))
+                       #se = sd/sqrt(n))
 # names(term.bb.both) <- c("species.both", "mean")
 
 term.both <- merge(phenoInfoMean, cueOut, by = c("species"), all =TRUE)
 term.both <- term.both[,c("species","mean","bForceMean","bChillMean","bPhotoMean", "type", "transect")]
-names(term.both) <- c("species","mean","bForceMean","bChillMean","bPhotoMean", "Type", "Transect")
+names(term.both) <- c("species","mean","bForceMean","bChillMean","bPhotoMean", "type", "transect")
 #term.both <- term.both[complete.cases(term.both), ] 
 
 
-tf.both <-  ggplot(term.both, aes(y = bForceMean, x= mean,col = Type, shape = Transect)) +
+tf.both <-  ggplot(term.both, aes(y = bForceMean, x= mean,col = type, shape = transect)) +
   geom_point() +
   ylim (-17, 0) +
   xlim (5, 55) +
@@ -312,7 +313,7 @@ tf.both
 #dev.off()
 
 #pdf(file.path( "figures/chill_dobb_dldf4sites.pdf"), width = 5, height = 6)
-tc.both <- ggplot(term.both, aes(y = bChillMean, x= mean,col = Type, shape = Transect)) +
+tc.both <- ggplot(term.both, aes(y = bChillMean, x= mean,col = type, shape = transect)) +
   geom_point() +
   ylim (-32, -4) +
   xlim (10, 55) +
@@ -326,7 +327,7 @@ tc.both
 #dev.off()
 
 #pdf(file.path( "figures/photo_dobb_dldf.pdf"), width = 5, height = 6)
-tp.both <- ggplot(term.both, aes(y = bPhotoMean, x= mean,col = Type, shape = Transect)) +
+tp.both <- ggplot(term.both, aes(y = bPhotoMean, x= mean,col = type, shape = transect)) +
   geom_point() +
   ylim (-6.5, -1) +
   xlim (10, 55) +
@@ -401,8 +402,8 @@ bb_lfc = a_sp + b_site2 * siteSM + b_site3 * siteSM + b_site4 * siteSM + mu_b_wa
 pdf("figures/chill_forcing_4sites_interactions.pdf", width =12, height = 12)
 par(mfrow =c (2,2), mar = c(5.1, 5.1, 4.1, 2.1))
 plot(0, type = "n",  xlim = c(-1,1), ylim = c(-5,90), xlab = "Z-scored chill portions", ylab = "Day of budburst", cex.lab = 2)
-points(hfData$chillport.z2, hfData$bb, bg = "#f9b641ff", pch =21, cex = 2.5)
-points(lfData$chillport.z2, lfData$bb,  bg = "cyan4", pch = 21, cex = 2.5)
+# points(hfData$chillport.z2, hfData$bb, bg = "#f9b641ff", pch =21, cex = 2.5)
+# points(lfData$chillport.z2, lfData$bb,  bg = "cyan4", pch = 21, cex = 2.5)
 abline(lm(bb_hfc ~ chill1), col = "#f9b641ff", lwd = 3)
 abline(lm(bb_lfc ~ chill1), col = "cyan4", lwd = 3)
 
@@ -491,12 +492,15 @@ legend("topright",legend = c(expression("low forcing"),
 hf <- unique(hfData$force.z2)
 lf <- unique(lfData$force.z2)
 photo <- -0.5044652
+
+site2 <- unique(pheno$site2.z2)
+site3 <- unique(pheno$site3.z2)
 site4 <- unique(pheno$site4.z2)
 
 chill1 <- mean( -0.3482404,  0.9462697,  0.8463799, -0.7629649,  0.5315452,  0.4316554,0.2985445, -0.4011572,  0.2759381, -0.4061035)
 
 # plot first for the high forcing
-bb_hfsite4 = a_sp + b_site2 * site4 + b_site3 * site4 + b_site4 * site4  + mu_b_warm * hf + mu_b_photo * photo + mu_b_chill1 * chill1 +
+bb_hfsite4 = a_sp + b_site2 * 0 + b_site3 * 0 + b_site4 * site4  + mu_b_warm * hf + mu_b_photo * photo + mu_b_chill1 * chill1 +
   mu_b_inter_wp * (hf*photo) +
   mu_b_inter_wc1 * (hf*chill1) + mu_b_inter_pc1 * (photo*chill1) +
   mu_b_inter_s2c1 * (chill1*site4) + mu_b_inter_ws2 * (hf*site4) +mu_b_inter_ps2 * (photo*site4) +
@@ -504,23 +508,85 @@ bb_hfsite4 = a_sp + b_site2 * site4 + b_site3 * site4 + b_site4 * site4  + mu_b_
   mu_b_inter_s4c1 * (chill1*site4) + mu_b_inter_ws4 * (hf*site4) +mu_b_inter_ps4 * (photo*site4)
 
 # plot first for the low forcing
-bb_lfsite4 = a_sp + b_site2 * site4 + b_site3 * site4 + b_site4 * site4 + mu_b_warm * lf + mu_b_photo * photo + mu_b_chill1 * chill1 +
+bb_lfsite4 = a_sp + b_site2 * 0 + b_site3 * 0 + b_site4 * site4 + mu_b_warm * lf + mu_b_photo * photo + mu_b_chill1 * chill1 +
   mu_b_inter_wp * (lf*photo) +
   mu_b_inter_wc1 * (lf*chill1) + mu_b_inter_pc1 * (photo*chill1) +
   mu_b_inter_s2c1 * (chill1*site4) + mu_b_inter_ws2 * (lf*site4) +mu_b_inter_ps2 * (photo*site4) +
   mu_b_inter_s3c1 * (chill1*site4) + mu_b_inter_ws3 * (lf*site4) +mu_b_inter_ps3 * (photo*site4) +
   mu_b_inter_s4c1 * (chill1*site4) + mu_b_inter_ws4 * (lf*site4) +mu_b_inter_ps4 * (photo*site4)
 #
-plot(0, type = "n",  xlim = c(-1,1), ylim = c(-5,90), xlab = "St. Hippolyte", ylab = "Day of budburst", cex.lab = 2)
-points(hfData$site4.z2, hfData$bb, bg = "#f9b641ff", pch =21, cex = 2.5)
-points(lfData$site4.z2, lfData$bb, bg = "cyan4", pch = 21, cex = 2.5)
-abline(lm(bb_hfsite4 ~ site4), col = "#f9b641ff", lwd = 3)
-abline(lm(bb_lfsite4 ~ site4), col = "cyan4", lwd = 3)
 
-legend("topleft",legend = c(expression("low forcing"),
-                            expression("high forcing")),
-       col = c("cyan4","#f9b641ff"),
-       inset = 0.02, pch = c(19,19 ),  cex = 1.25, bty = "n")
+# Manning park trends
+bb_hfsite2 = a_sp + b_site2 * site2 + b_site3 * 0 + b_site4 * 0  + mu_b_warm * hf + mu_b_photo * photo + mu_b_chill1 * chill1 +
+  mu_b_inter_wp * (hf*photo) +
+  mu_b_inter_wc1 * (hf*chill1) + mu_b_inter_pc1 * (photo*chill1) +
+  mu_b_inter_s2c1 * (chill1*site2) + mu_b_inter_ws2 * (hf*site2) +mu_b_inter_ps2 * (photo*site2) +
+  mu_b_inter_s3c1 * (chill1*site2) + mu_b_inter_ws3 * (hf*site2) +mu_b_inter_ps3 * (photo*site2) +
+  mu_b_inter_s4c1 * (chill1*site2) + mu_b_inter_ws4 * (hf*site2) +mu_b_inter_ps4 * (photo*site2)
+
+# plot first for the low forcing
+bb_lfsite2 = a_sp + b_site2 * site2 + b_site3 * 0 + b_site4 * 0 + mu_b_warm * lf + mu_b_photo * photo + mu_b_chill1 * chill1 +
+  mu_b_inter_wp * (lf*photo) +
+  mu_b_inter_wc1 * (lf*chill1) + mu_b_inter_pc1 * (photo*chill1) +
+  mu_b_inter_s2c1 * (chill1*site2) + mu_b_inter_ws2 * (lf*site2) +mu_b_inter_ps2 * (photo*site2) +
+  mu_b_inter_s3c1 * (chill1*site2) + mu_b_inter_ws3 * (lf*site2) +mu_b_inter_ps3 * (photo*site2) +
+  mu_b_inter_s4c1 * (chill1*site2) + mu_b_inter_ws4 * (lf*site2) +mu_b_inter_ps4 * (photo*site2)
+
+# Smithers park trends
+bb_hfsite1 = a_sp + b_site2 * 0 + b_site3 * 0 + b_site4 * 0  + mu_b_warm * hf + mu_b_photo * photo + mu_b_chill1 * chill1 +
+  mu_b_inter_wp * (hf*photo) +
+  mu_b_inter_wc1 * (hf*chill1) + mu_b_inter_pc1 * (photo*chill1) +
+  mu_b_inter_s2c1 * (chill1*site2) + mu_b_inter_ws2 * (hf*site2) +mu_b_inter_ps2 * (photo*site2) +
+  mu_b_inter_s3c1 * (chill1*site2) + mu_b_inter_ws3 * (hf*site2) +mu_b_inter_ps3 * (photo*site2) +
+  mu_b_inter_s4c1 * (chill1*site2) + mu_b_inter_ws4 * (hf*site2) +mu_b_inter_ps4 * (photo*site2)
+
+# plot first for the low forcing
+bb_lfsite1 = a_sp + b_site2 * 0 + b_site3 * 0 + b_site4 * 0 + mu_b_warm * lf + mu_b_photo * photo + mu_b_chill1 * chill1 +
+  mu_b_inter_wp * (lf*photo) +
+  mu_b_inter_wc1 * (lf*chill1) + mu_b_inter_pc1 * (photo*chill1) +
+  mu_b_inter_s2c1 * (chill1*site2) + mu_b_inter_ws2 * (lf*site2) +mu_b_inter_ps2 * (photo*site2) +
+  mu_b_inter_s3c1 * (chill1*site2) + mu_b_inter_ws3 * (lf*site2) +mu_b_inter_ps3 * (photo*site2) +
+  mu_b_inter_s4c1 * (chill1*site2) + mu_b_inter_ws4 * (lf*site2) +mu_b_inter_ps4 * (photo*site2)
+
+# HarvardForest trends
+bb_hfsite3 = a_sp + b_site2 * site2 + b_site3 * 0 + b_site4 * 0  + mu_b_warm * hf + mu_b_photo * photo + mu_b_chill1 * chill1 +
+  mu_b_inter_wp * (hf*photo) +
+  mu_b_inter_wc1 * (hf*chill1) + mu_b_inter_pc1 * (photo*chill1) +
+  mu_b_inter_s2c1 * (chill1*site2) + mu_b_inter_ws2 * (hf*site2) +mu_b_inter_ps2 * (photo*site2) +
+  mu_b_inter_s3c1 * (chill1*site2) + mu_b_inter_ws3 * (hf*site2) +mu_b_inter_ps3 * (photo*site2) +
+  mu_b_inter_s4c1 * (chill1*site2) + mu_b_inter_ws4 * (hf*site2) +mu_b_inter_ps4 * (photo*site2)
+
+# plot first for the low forcing
+bb_lfsite3 = a_sp + b_site2 * site2 + b_site3 * 0 + b_site4 * 0 + mu_b_warm * lf + mu_b_photo * photo + mu_b_chill1 * chill1 +
+  mu_b_inter_wp * (lf*photo) +
+  mu_b_inter_wc1 * (lf*chill1) + mu_b_inter_pc1 * (photo*chill1) +
+  mu_b_inter_s2c1 * (chill1*site2) + mu_b_inter_ws2 * (lf*site2) +mu_b_inter_ps2 * (photo*site2) +
+  mu_b_inter_s3c1 * (chill1*site2) + mu_b_inter_ws3 * (lf*site2) +mu_b_inter_ps3 * (photo*site2) +
+  mu_b_inter_s4c1 * (chill1*site2) + mu_b_inter_ws4 * (lf*site2) +mu_b_inter_ps4 * (photo*site2)
+
+plot(0, type = "n",  xlim = c(-1,1), ylim = c(-5,90), xlab = "St. Hippolyte", ylab = "Day of budburst", cex.lab = 2)
+# points(hfData$site4.z2, hfData$bb, bg = "#f9b641ff", pch =21, cex = 2.5)
+#points(lfData$site4.z2, lfData$bb, bg = "cyan4", pch = 21, cex = 2.5)
+abline(lm(bb_hfsite4 ~ site4), col = "cyan4", lwd = 3, lty =1)
+abline(lm(bb_lfsite4 ~ site4), col = "cyan4", lwd = 3, lty =2)
+
+abline(lm(bb_hfsite2 ~ site2), col = "#f9b641ff", lwd = 3, lty =1)
+abline(lm(bb_lfsite2 ~ site2), col = "#f9b641ff", lwd = 3, lty =2)
+
+abline(lm(bb_hfsite3 ~ site3), col =  "#a65c85ff", lwd = 3, lty =1)
+abline(lm(bb_lfsite3 ~ site3), col =  "#a65c85ff", lwd = 3, lty =2)
+
+# abline(lm(bb_hfsite1 ~ site2), col = "deeppink3", lwd = 3, lty =1)
+# abline(lm(bb_lfsite1 ~ site2), col = "deeppink3", lwd = 3, lty =2)
+
+
+legend("topleft",legend = c(expression("St. Hippolyte"),
+                            expression("Harvard Forest"),
+                            expression("Manning Park"),
+                            expression("high forcing"),
+                            expression("low forcing")),
+       col = c("cyan4", "#a65c85ff","#f9b641ff", "black", "black" ),
+       inset = 0.02, lty = c(1,1,1,1,2 ), lwd =2,  cex = 1.1, bty = "n")
 
 ### Site 4 and chill:
 hcData <- subset(pheno, chill == "HC" )
@@ -539,7 +605,10 @@ c0 <- unique(c0Data$chillport.z2)
 photo <- -0.5044652
 force <- c( -0.7642814, -0.4072595, -0.4023109, -0.3493703,  0.2750890,  0.2977055,  0.4308763,  0.5308110,  0.8457874,  0.9457221)
 site4 <- unique(pheno$site4.z2)
+site3 <- unique(pheno$site3.z2)
+site2 <- unique(pheno$site2.z2)
 
+#Site 4
 # plot first for the high forcing
 bb_hcsite4 = a_sp + b_site2 * site4 + b_site3 * site4 + b_site4 * site4  + mu_b_warm * hf + mu_b_photo * photo + mu_b_chill1 * chill1 +
   mu_b_inter_wp * (hf*photo) +
@@ -577,27 +646,112 @@ bb_c2site4 = a_sp + b_site2 * site4 + b_site3 * site4 + b_site4 * site4  + mu_b_
   mu_b_inter_s3c1 * (chill1*site4) + mu_b_inter_ws3 * (c2*site4) +mu_b_inter_ps3 * (photo*site4) +
   mu_b_inter_s4c1 * (chill1*site4) + mu_b_inter_ws4 * (c2*site4) +mu_b_inter_ps4 * (photo*site4)
 
+#Site 3
+# plot first for the high forcing
+bb_hcsite3 = a_sp + b_site2 * 0 + b_site3 * site3 + b_site4 * 0  + mu_b_warm * hf + mu_b_photo * photo + mu_b_chill1 * chill1 +
+  mu_b_inter_wp * (hf*photo) +
+  mu_b_inter_wc1 * (hf*chill1) + mu_b_inter_pc1 * (photo*chill1) +
+  mu_b_inter_s2c1 * (chill1*site3) + mu_b_inter_ws2 * (hf*site3) +mu_b_inter_ps2 * (photo*site3) +
+  mu_b_inter_s3c1 * (chill1*site3) + mu_b_inter_ws3 * (hf*site3) +mu_b_inter_ps3 * (photo*site3) +
+  mu_b_inter_s4c1 * (chill1*site3) + mu_b_inter_ws4 * (hf*site3) +mu_b_inter_ps4 * (photo*site3)
+
+# plot first for the low forcing
+bb_lcsite3 = a_sp + b_site2 * 0 + b_site3 * site3 + b_site4 * 0 + mu_b_warm * lf + mu_b_photo * photo + mu_b_chill1 * chill1 +
+  mu_b_inter_wp * (lf*photo) +
+  mu_b_inter_wc1 * (hf*chill1) + mu_b_inter_pc1 * (photo*chill1) +
+  mu_b_inter_s2c1 * (chill1*site3) + mu_b_inter_ws2 * (lf*site3) +mu_b_inter_ps2 * (photo*site3) +
+  mu_b_inter_s3c1 * (chill1*site3) + mu_b_inter_ws3 * (lf*site3) +mu_b_inter_ps3 * (photo*site3) +
+  mu_b_inter_s4c1 * (chill1*site3) + mu_b_inter_ws4 * (lf*site3) +mu_b_inter_ps4 * (photo*site3)
+#
+bb_c0site3 = a_sp + b_site2 * 0 + b_site3 * site3 + b_site4 * 0  + mu_b_warm * c0 + mu_b_photo * photo + mu_b_chill1 * chill1 +
+  mu_b_inter_wp * (c0*photo) +
+  mu_b_inter_wc1 * (c0*chill1) + mu_b_inter_pc1 * (photo*chill1) +
+  mu_b_inter_s2c1 * (chill1*site3) + mu_b_inter_ws2 * (c0*site3) +mu_b_inter_ps2 * (photo*site3) +
+  mu_b_inter_s3c1 * (chill1*site3) + mu_b_inter_ws3 * (c0*site3) +mu_b_inter_ps3 * (photo*site3) +
+  mu_b_inter_s4c1 * (chill1*site3) + mu_b_inter_ws4 * (c0*site3) +mu_b_inter_ps4 * (photo*site3)
+
+bb_c1site3 = a_sp + b_site2 * 0 + b_site3 * site3 + b_site4 * 0  + mu_b_warm * c1 + mu_b_photo * photo + mu_b_chill1 * chill1 +
+  mu_b_inter_wp * (c1*photo) +
+  mu_b_inter_wc1 * (c1*chill1) + mu_b_inter_pc1 * (photo*chill1) +
+  mu_b_inter_s2c1 * (chill1*site3) + mu_b_inter_ws2 * (c1*site3) +mu_b_inter_ps2 * (photo*site3) +
+  mu_b_inter_s3c1 * (chill1*site3) + mu_b_inter_ws3 * (c1*site3) +mu_b_inter_ps3 * (photo*site3) +
+  mu_b_inter_s4c1 * (chill1*site3) + mu_b_inter_ws4 * (c1*site3) +mu_b_inter_ps4 * (photo*site3)
+
+bb_c2site3 = a_sp + b_site2 * 0 + b_site3 * site3 + b_site4 * 0  + mu_b_warm * c2 + mu_b_photo * photo + mu_b_chill1 * chill1 +
+  mu_b_inter_wp * (c2*photo) +
+  mu_b_inter_wc1 * (c2*chill1) + mu_b_inter_pc1 * (photo*chill1) +
+  mu_b_inter_s2c1 * (chill1*site3) + mu_b_inter_ws2 * (c2*site3) +mu_b_inter_ps2 * (photo*site3) +
+  mu_b_inter_s3c1 * (chill1*site3) + mu_b_inter_ws3 * (c2*site3) +mu_b_inter_ps3 * (photo*site3) +
+  mu_b_inter_s4c1 * (chill1*site3) + mu_b_inter_ws4 * (c2*site3) +mu_b_inter_ps4 * (photo*site3)
+
+## Site 2
+bb_hcsite2 = a_sp + b_site2 * site2 + b_site3 * 0 + b_site4 * 0  + mu_b_warm * hf + mu_b_photo * photo + mu_b_chill1 * chill1 +
+  mu_b_inter_wp * (hf*photo) +
+  mu_b_inter_wc1 * (hf*chill1) + mu_b_inter_pc1 * (photo*chill1) +
+  mu_b_inter_s2c1 * (chill1*site2) + mu_b_inter_ws2 * (hf*site2) +mu_b_inter_ps2 * (photo*site2) +
+  mu_b_inter_s3c1 * (chill1*site2) + mu_b_inter_ws3 * (hf*site2) +mu_b_inter_ps3 * (photo*site2) +
+  mu_b_inter_s4c1 * (chill1*site2) + mu_b_inter_ws4 * (hf*site2) +mu_b_inter_ps4 * (photo*site2)
+
+# plot first for the low forcing
+bb_lcsite2 = a_sp + b_site2 * site2 + b_site3 * 0 + b_site4 * 0 + mu_b_warm * lf + mu_b_photo * photo + mu_b_chill1 * chill1 +
+  mu_b_inter_wp * (lf*photo) +
+  mu_b_inter_wc1 * (hf*chill1) + mu_b_inter_pc1 * (photo*chill1) +
+  mu_b_inter_s2c1 * (chill1*site2) + mu_b_inter_ws2 * (lf*site2) +mu_b_inter_ps2 * (photo*site2) +
+  mu_b_inter_s3c1 * (chill1*site2) + mu_b_inter_ws3 * (lf*site2) +mu_b_inter_ps3 * (photo*site2) +
+  mu_b_inter_s4c1 * (chill1*site2) + mu_b_inter_ws4 * (lf*site2) +mu_b_inter_ps4 * (photo*site2)
+#
+bb_c0site2 = a_sp + b_site2 * site2 + b_site3 * 0 + b_site4 * 0  + mu_b_warm * c0 + mu_b_photo * photo + mu_b_chill1 * chill1 +
+  mu_b_inter_wp * (c0*photo) +
+  mu_b_inter_wc1 * (c0*chill1) + mu_b_inter_pc1 * (photo*chill1) +
+  mu_b_inter_s2c1 * (chill1*site2) + mu_b_inter_ws2 * (c0*site2) +mu_b_inter_ps2 * (photo*site2) +
+  mu_b_inter_s3c1 * (chill1*site2) + mu_b_inter_ws3 * (c0*site2) +mu_b_inter_ps3 * (photo*site2) +
+  mu_b_inter_s4c1 * (chill1*site2) + mu_b_inter_ws4 * (c0*site2) +mu_b_inter_ps4 * (photo*site2)
+
+bb_c1site2 = a_sp + b_site2 * site2 + b_site3 * 0 + b_site4 * 0  + mu_b_warm * c1 + mu_b_photo * photo + mu_b_chill1 * chill1 +
+  mu_b_inter_wp * (c1*photo) +
+  mu_b_inter_wc1 * (c1*chill1) + mu_b_inter_pc1 * (photo*chill1) +
+  mu_b_inter_s2c1 * (chill1*site2) + mu_b_inter_ws2 * (c1*site2) +mu_b_inter_ps2 * (photo*site2) +
+  mu_b_inter_s3c1 * (chill1*site2) + mu_b_inter_ws3 * (c1*site2) +mu_b_inter_ps3 * (photo*site2) +
+  mu_b_inter_s4c1 * (chill1*site2) + mu_b_inter_ws4 * (c1*site2) +mu_b_inter_ps4 * (photo*site2)
+
+bb_c2site2 = a_sp + b_site2 * site2 + b_site3 * 0 + b_site4 * 0  + mu_b_warm * c2 + mu_b_photo * photo + mu_b_chill1 * chill1 +
+  mu_b_inter_wp * (c2*photo) +
+  mu_b_inter_wc1 * (c2*chill1) + mu_b_inter_pc1 * (photo*chill1) +
+  mu_b_inter_s2c1 * (chill1*site2) + mu_b_inter_ws2 * (c2*site2) +mu_b_inter_ps2 * (photo*site2) +
+  mu_b_inter_s3c1 * (chill1*site2) + mu_b_inter_ws3 * (c2*site2) +mu_b_inter_ps3 * (photo*site2) +
+  mu_b_inter_s4c1 * (chill1*site2) + mu_b_inter_ws4 * (c2*site2) +mu_b_inter_ps4 * (photo*site2)
+
+
 plot(hcData$site4.z2, hcData$bb, type = "n",  xlim = c(-1,1), ylim = c(-5,90), xlab = "St. Hippolyte", ylab = "Day of budburst", cex.lab = 2)
-points(jitter(hcData$site4.z2, 10), hcData$bb, bg = "#f9b641ff", pch =21, cex = 2.5)
-points(jitter(lcData$site4.z2, 8), lcData$bb, bg = "cyan4", pch = 21, cex = 2.5)
-points((c0Data$site4.z2), c0Data$bb, bg = "#a65c85ff", pch =21, cex = 2.5)
-points(c1Data$site4.z2 ,c1Data$bb, bg = "#7e4e90ff", pch =21, cex = 2.5)
-points(c2Data$site4.z2, c2Data$bb, bg = "#cc6a70ff", pch =21, cex = 2.5)
+# points(jitter(hcData$site4.z2, 10), hcData$bb, bg = "#f9b641ff", pch =21, cex = 2.5)
+# points(jitter(lcData$site4.z2, 8), lcData$bb, bg = "cyan4", pch = 21, cex = 2.5)
+# points((c0Data$site4.z2), c0Data$bb, bg = "#a65c85ff", pch =21, cex = 2.5)
+# points(c1Data$site4.z2 ,c1Data$bb, bg = "#7e4e90ff", pch =21, cex = 2.5)
+# points(c2Data$site4.z2, c2Data$bb, bg = "#cc6a70ff", pch =21, cex = 2.5)
 
+# abline(lm(bb_hcsite4 ~ site4), col = "#f9b641ff", lwd = 3)
+# abline(lm(bb_lcsite4 ~ site4), col = "cyan4", lwd = 3)
+abline(lm(bb_c0site4 ~ site4), col = "#a65c85ff", lwd = 3, lty = 1)
+abline(lm(bb_c1site4 ~ site4), col = "#a65c85ff", lwd = 3, lty = 2)
+abline(lm(bb_c2site4 ~ site4), col = "#a65c85ff", lwd = 3, lty = 3)
 
-abline(lm(bb_hcsite4 ~ site4), col = "#f9b641ff", lwd = 3)
-abline(lm(bb_lcsite4 ~ site4), col = "cyan4", lwd = 3)
-abline(lm(bb_c0site4 ~ site4), col = "#a65c85ff", lwd = 3)
-abline(lm(bb_c1site4 ~ site4), col = "#7e4e90ff", lwd = 3)
-abline(lm(bb_c2site4 ~ site4), col = "#cc6a70ff", lwd = 3)
+abline(lm(bb_c0site3 ~ site3), col = "#f9b641ff", lwd = 3, lty = 1)
+abline(lm(bb_c1site3 ~ site3), col = "#f9b641ff", lwd = 3, lty = 2)
+abline(lm(bb_c2site3 ~ site3), col = "#f9b641ff", lwd = 3, lty = 3)
 
-legend("topleft",legend = c(expression("no chilling"),
-                            expression("30 day - 1.5C"),
-                            expression("21 day - 4 C"),
-                            expression("30 day - 4 C"),
-                            expression("70 day - 4 C")),
-       col = c("#a65c85ff","#cc6a70ff","cyan4","#cc6a70ff", "#f9b641ff"),
-       inset = 0.02, pch = c(19,19 ), bty = "n",  cex = 1.25)
+abline(lm(bb_hcsite2 ~ site2), col = "cyan4", lwd = 3, lty = 6)
+abline(lm(bb_lcsite2 ~ site2), col = "cyan4", lwd = 3, lty = 1)
+
+legend("topleft",legend = c(expression("St. Hippolyte"),
+                            expression("Harvard Forest"),
+                            expression("Manning Park"),
+                            expression("c0"),
+                            expression("c1"),
+                            expression("c2"),
+                             expression("hc"),
+                             expression("lc")),
+       col = c("#a65c85ff","#f9b641ff", "cyan4", "black", "black", "black", "black", "black" ),
+       inset = 0.02, lty = c(1,1,1,1,2, 1,6 ), lwd =2,  cex = 1.1, bty = "n")
 
 
 ### Photo and site 4
@@ -608,11 +762,14 @@ hp <- unique(hpData$photo.z2)
 lp <- unique(lpData$force.z2)
 force <- -0.5044652
 site4 <- unique(pheno$site4.z2)
+site3 <- unique(pheno$site3.z2)
+site2 <- unique(pheno$site2.z2)
+
 
 chill1 <- mean( -0.3482404,  0.9462697,  0.8463799, -0.7629649,  0.5315452,  0.4316554,0.2985445, -0.4011572,  0.2759381, -0.4061035)
 
 # plot first for the high forcing
-bb_hpsite4 = a_sp + b_site2 * site4 + b_site3 * site4 + b_site4 * site4  + mu_b_warm * hp + mu_b_photo * photo + mu_b_chill1 * chill1 +
+bb_hpsite4 = a_sp + b_site2 * 0 + b_site3 * 0 + b_site4 * site4  + mu_b_warm * hp + mu_b_photo * photo + mu_b_chill1 * chill1 +
   mu_b_inter_wp * (hp*photo) +
   mu_b_inter_wc1 * (hp*chill1) + mu_b_inter_pc1 * (photo*chill1) +
   mu_b_inter_s2c1 * (chill1*site4) + mu_b_inter_ws2 * (hp*site4) +mu_b_inter_ps2 * (photo*site4) +
@@ -620,23 +777,67 @@ bb_hpsite4 = a_sp + b_site2 * site4 + b_site3 * site4 + b_site4 * site4  + mu_b_
   mu_b_inter_s4c1 * (chill1*site4) + mu_b_inter_ws4 * (hp*site4) +mu_b_inter_ps4 * (photo*site4)
 
 # plot first for the low forcing
-bb_lpsite4 = a_sp + b_site2 * site4 + b_site3 * site4 + b_site4 * site4 + mu_b_warm * lp + mu_b_photo * photo + mu_b_chill1 * chill1 +
+bb_lpsite4 = a_sp + b_site2 * 0 + b_site3 * 0 + b_site4 * site4 + mu_b_warm * lp + mu_b_photo * photo + mu_b_chill1 * chill1 +
   mu_b_inter_wp * (lp*photo) +
   mu_b_inter_wc1 * (lp*chill1) + mu_b_inter_pc1 * (photo*chill1) +
   mu_b_inter_s2c1 * (chill1*site4) + mu_b_inter_ws2 * (lp*site4) +mu_b_inter_ps2 * (photo*site4) +
   mu_b_inter_s3c1 * (chill1*site4) + mu_b_inter_ws3 * (lp*site4) +mu_b_inter_ps3 * (photo*site4) +
   mu_b_inter_s4c1 * (chill1*site4) + mu_b_inter_ws4 * (lp*site4) +mu_b_inter_ps4 * (photo*site4)
 #
-plot(0, type = "n",  xlim = c(-1,1), ylim = c(-5,90), xlab = "St. Hippolyte", ylab = "Day of budburst", cex.lab = 2)
-points(hpData$site4.z2, hpData$bb, bg = "#f9b641ff", pch =21, cex = 2.5)
-points(lpData$site4.z2, lpData$bb, bg = "cyan4", pch = 21, cex = 2.5)
-abline(lm(bb_hpsite4 ~ site4), col = "#f9b641ff", lwd = 3)
-abline(lm(bb_lpsite4 ~ site4), col = "cyan4", lwd = 3)
+# site 3
+bb_hpsite3 = a_sp + b_site2 * 0 + b_site3 * site3 + b_site4 * 0  + mu_b_warm * hp + mu_b_photo * photo + mu_b_chill1 * chill1 +
+  mu_b_inter_wp * (hp*photo) +
+  mu_b_inter_wc1 * (hp*chill1) + mu_b_inter_pc1 * (photo*chill1) +
+  mu_b_inter_s2c1 * (chill1*site3) + mu_b_inter_ws2 * (hp*site3) +mu_b_inter_ps2 * (photo*site3) +
+  mu_b_inter_s3c1 * (chill1*site3) + mu_b_inter_ws3 * (hp*site3) +mu_b_inter_ps3 * (photo*site3) +
+  mu_b_inter_s4c1 * (chill1*site3) + mu_b_inter_ws4 * (hp*site3) +mu_b_inter_ps4 * (photo*site3)
 
-legend("topleft",legend = c(expression("short photoperiod"),
-                            expression("long photoperiod")),
-       col = c("cyan4","#f9b641ff"),
-       inset = 0.02, pch = c(19,19 ),  cex = 1.25, bty = "n")
+# plot first for the low forcing
+bb_lpsite3 = a_sp + b_site2 * 0 + b_site3 * site3 + b_site4 * 0 + mu_b_warm * lp + mu_b_photo * photo + mu_b_chill1 * chill1 +
+  mu_b_inter_wp * (lp*photo) +
+  mu_b_inter_wc1 * (lp*chill1) + mu_b_inter_pc1 * (photo*chill1) +
+  mu_b_inter_s2c1 * (chill1*site3) + mu_b_inter_ws2 * (lp*site3) +mu_b_inter_ps2 * (photo*site3) +
+  mu_b_inter_s3c1 * (chill1*site3) + mu_b_inter_ws3 * (lp*site3) +mu_b_inter_ps3 * (photo*site3) +
+  mu_b_inter_s4c1 * (chill1*site3) + mu_b_inter_ws4 * (lp*site3) +mu_b_inter_ps4 * (photo*site3)
+#
+#Site 2
+bb_hpsite2 = a_sp + b_site2 * site2 + b_site3 * 0 + b_site4 * 0 + mu_b_warm * hp + mu_b_photo * photo + mu_b_chill1 * chill1 +
+  mu_b_inter_wp * (hp*photo) +
+  mu_b_inter_wc1 * (hp*chill1) + mu_b_inter_pc1 * (photo*chill1) +
+  mu_b_inter_s2c1 * (chill1*site2) + mu_b_inter_ws2 * (hp*site2) +mu_b_inter_ps2 * (photo*site2) +
+  mu_b_inter_s3c1 * (chill1*site2) + mu_b_inter_ws3 * (hp*site2) +mu_b_inter_ps3 * (photo*site2) +
+  mu_b_inter_s4c1 * (chill1*site2) + mu_b_inter_ws4 * (hp*site2) +mu_b_inter_ps4 * (photo*site2)
+
+# plot first for the low forcing
+bb_lpsite2 = a_sp + b_site2 * site2 + b_site3 * 0 + b_site4 * 0 + mu_b_warm * lp + mu_b_photo * photo + mu_b_chill1 * chill1 +
+  mu_b_inter_wp * (lp*photo) +
+  mu_b_inter_wc1 * (lp*chill1) + mu_b_inter_pc1 * (photo*chill1) +
+  mu_b_inter_s2c1 * (chill1*site2) + mu_b_inter_ws2 * (lp*site2) +mu_b_inter_ps2 * (photo*site2) +
+  mu_b_inter_s3c1 * (chill1*site2) + mu_b_inter_ws3 * (lp*site2) +mu_b_inter_ps3 * (photo*site2) +
+  mu_b_inter_s4c1 * (chill1*site2) + mu_b_inter_ws4 * (lp*site2) +mu_b_inter_ps4 * (photo*site2)
+#
+plot(0, type = "n",  xlim = c(-1,1), ylim = c(-5,90), xlab = "St. Hippolyte", ylab = "Day of budburst", cex.lab = 2)
+# points(hpData$site4.z2, hpData$bb, bg = "#f9b641ff", pch =21, cex = 2.5)
+# points(lpData$site4.z2, lpData$bb, bg = "cyan4", pch = 21, cex = 2.5)
+
+abline(lm(bb_hpsite2 ~ site2), col = "#f9b641ff", lwd = 3)
+abline(lm(bb_lpsite2 ~ site2), col = "#f9b641ff", lwd = 3, lty =2)
+
+abline(lm(bb_hpsite4 ~ site4), col = "cyan4", lwd = 3)
+abline(lm(bb_lpsite4 ~ site4), col = "cyan4", lwd = 3, lty =2)
+
+abline(lm(bb_hpsite3 ~ site3), col = "#a65c85ff", lwd = 3)
+abline(lm(bb_lpsite3 ~ site3), col = "#a65c85ff", lwd = 3, lty =2)
+
+legend("topleft",legend = c(expression("St. Hippolyte"),
+                            expression("Harvard Forest"),
+                            expression("Manning Park"),
+                            expression("high forcing"),
+                            expression("low forcing")),
+       col = c("cyan4", "#a65c85ff","#f9b641ff", "black", "black" ),
+       inset = 0.02, lty = c(1,1,1,1,2 ), lwd =2,  cex = 1.1, bty = "n")
+
+
 dev.off()
 ##### EW Figures ##########################################################################
 
@@ -1200,38 +1401,4 @@ legend("topright",legend = c(expression("low forcing"),
        col = c("darkslategray","maroon"),
        inset = 0.02, pch = c(19, 19 ),  cex = 1, bty = "n")
 dev.off()
-
-### Old bb fig:
-b.force.both <- sum[grep("^b_warm", rownames(sum))]
-b.photo.both <- sum[grep("^b_photo\\[", rownames(sum))]
-b.chill.both <- sum[grep("^b_chill1", rownames(sum))]
-
-# shrubs.both = c("VIBLAN","RHAFRA","RHOPRI","SPIALB","VACMYR","VIBCAS", "AROMEL","ILEMUC", "KALANG", "LONCAN", "LYOLIG", "alninc","alnvir","amelan", "corsto","loninv", "menfer","rhoalb", "riblac","rubpar","samrac","shecan","sorsco","spibet","spipyr","symalb","vacmem","vibedu")
-# trees.both = c("ACEPEN", "ACERUB", "ACESAC", "BETALL", "BETLEN", "CORCOR", "FAGGRA", "FRANIG", "HAMVIR", "NYSSYL", "POPGRA", "PRUPEN", "QUEALB" , "QUERUB", "QUEVEL", "acegla","betpap", "poptre", "popbal")
-
-pheno.term <- pheno.t[,c("bb", "chillport.z2", "force.z2", "photo.z2", "species", "lab2","transect")]
-
-species.both <- sort(unique(tolower(pheno.t$species)))
-species.fact.both <-as.numeric( as.factor(unique(tolower(pheno.t$species))))
-Type <- c("tree", "tree", "tree","tree", "shrub", "shrub", "shrub", "tree", "tree", "tree", "tree", "tree",
-          "tree", "shrub","shrub","tree","tree", "shrub", "shrub","shrub",  "shrub", "shrub", "shrub", "shrub", "shrub",
-          "tree","tree","tree","tree","tree","tree","tree","shrub", "shrub", "shrub", "shrub","shrub", "shrub", "shrub", "shrub","shrub", "shrub", "shrub", "shrub","shrub", "shrub", "shrub")
-Transect <- c("western","eastern","eastern","eastern","both","western","western","eastern","eastern","eastern","both","eastern","western","eastern","eastern","eastern","eastern","eastern","eastern","western","eastern","western","eastern","both","eastern","western","eastern","eastern","eastern","eastern","eastern","western","eastern","western","western","western","western","western","western","western","western","western","western","eastern","eastern","western","eastern")
-
-both <- data.frame(species.both, Transect, species.fact.both, b.force.both, b.photo.both, b.chill.both, Type)
-
-pheno.term$species <- tolower(pheno.term$species)
-term.bb.both <- ddply(pheno.term, c("species"), summarize, mean = mean(bb, na.rm = TRUE))
-names(term.bb.both) <- c("species.both", "mean")
-
-term.both <- merge(term.bb.both, both, by = "species.both", all =TRUE)
-term.both <- term.both[,c("species.both","mean","b.force.both","b.chill.both","b.photo.both")]
-
-ggplot(term.both, aes(y = b.force.both, x= mean,col = Type, shape = Transect)) +
-  geom_point()
-
-ggplot(term.both, aes(y = b.chill.both, x= mean,col = Type, shape = Transect)) +
-  geom_point()
-
-
 

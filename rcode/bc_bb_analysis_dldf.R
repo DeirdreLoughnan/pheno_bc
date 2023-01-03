@@ -12,10 +12,10 @@ options(stringsAsFactors = FALSE)
 #library(arm)
 library(rstan)
 library(shinystan)
-#library(reshape2)
-#library(bayesplot)
-#library(ggplot2)
-#library(RColorBrewer)
+library(reshape2)
+library(bayesplot)
+library(ggplot2)
+library(RColorBrewer)
 library(dplyr)
 library(plyr)
 library(stringr)
@@ -92,6 +92,24 @@ pheno <- pheno %>%
   mutate ( site2 = if_else(site.n == 2, 1, 0),
            site3 = if_else(site.n == 3, 1, 0),
            site4 = if_else(site.n == 4, 1, 0))
+# pheno$site2 <- ifelse(pheno$site.n == "2", "1", pheno$site.n)
+# pheno$site2 <- ifelse(pheno$site.n == c("1"), "0", pheno$site2)
+# pheno$site2 <- ifelse(pheno$site.n == c("3"), "0", pheno$site2)
+# pheno$site2 <- ifelse(pheno$site.n == c("4"), "0", pheno$site2)
+# 
+# pheno$site3 <- ifelse(pheno$site.n == "3", "1", pheno$site.n)
+# pheno$site3 <- ifelse(pheno$site.n == c("1"), "0", pheno$site3)
+# pheno$site3 <- ifelse(pheno$site.n == c("2"), "0", pheno$site3)
+# pheno$site3 <- ifelse(pheno$site.n == c("4"), "0", pheno$site3)
+# 
+# pheno$site4 <- ifelse(pheno$site.n == "4", "1", pheno$site.n)
+# pheno$site4 <- ifelse(pheno$site.n == c("1"), "0", pheno$site4)
+# pheno$site4 <- ifelse(pheno$site.n == c("2"), "0", pheno$site4)
+# pheno$site4 <- ifelse(pheno$site.n == c("3"), "0", pheno$site4)
+# 
+# pheno$site2 <- as.numeric(pheno$site2)
+# pheno$site3 <- as.numeric(pheno$site3)
+# pheno$site4 <- as.numeric(pheno$site4)
 
 # standardize the 0/1 and standardize sites? 
 pheno$force.z2 <- (pheno$force.n-mean(pheno$force.n,na.rm=TRUE))/(sd(pheno$force.n,na.rm=TRUE)*2)
@@ -126,7 +144,7 @@ head(tree$tip.label)
 length(tree$tip.label) #47
 
 tree$tip.label[tree$tip.label=="Cornus_asperifolia"] <- "Cornus_stolonifera"
-tree$tip.label[tree$tip.label=="Nyssa_sylvatica"] <- "Alnus_viridis"
+tree$tip.label[tree$tip.label=="Alnus_alnobetula"] <- "Alnus_viridis"
 tree$tip.label[tree$tip.label== "Fagus_grandifolia_var._caroliniana"] <- "Fagus_grandifolia"
 tree$tip.label[tree$tip.label== "Spiraea_alba_var._latifolia"] <- "Spiraea_alba"
 
@@ -195,21 +213,29 @@ datalist.z2 <- with(pheno.t.4few,
 #               )
 # save(mdl.t, file="output/tbb_4sites_fullystandardized_ncp.Rda")
 
-# mdl.4phylo <- stan("stan/df_mdl_4sites_again_allint_ncp_phylogeny.stan",
-#               data = datalist.z2,
-#               iter = 6000, warmup =3000, chains=4,
-#               include = FALSE, pars = c("ypred_new","y_hat")
-#               #, control = list(adapt_delta = 0.99)
-# )
-# save(mdl.4phylo, file="output/bb_4sites_phylo.Rda")
-
-mdl.4phylo.4few <- stan("stan/df_mdl_4sites_again_allint_ncp_phylogeny.stan",
-                   data = datalist.z2,
-                   iter = 8000, warmup =4000, chains=4,
-                   include = FALSE, pars = c("ypred_new","y_hat")
-                   #, control = list(adapt_delta = 0.99)
+mdl.4phylo <- stan("stan/df_mdl_4sites_again_allint_ncp_phylogeny.stan",
+              data = datalist.z2,
+              iter = 6000, warmup =3000, chains=4,
+              include = FALSE, pars = c("ypred_new","y_hat")
+              #, control = list(adapt_delta = 0.99)
 )
-save(mdl.4phylo.4few, file="output/bb_4sites_phylo_few4.Rda")
+save(mdl.4phylo, file="output/bb_4sites_phylo.Rda")
+
+# mdl.4phyloSlope <- stan("stan/df_mdl_4sites_phylointslopes.stan",
+#                    data = datalist.z2,
+#                    iter = 6000, warmup =3000, chains=4,
+#                    include = FALSE, pars = c("ypred_new","y_hat")
+#                    #, control = list(adapt_delta = 0.99)
+# )
+#save(mdl.4phylo, file="output/bb_4sites_phylo.Rda")
+
+# mdl.4phylo.4few <- stan("stan/df_mdl_4sites_again_allint_ncp_phylogeny.stan",
+#                    data = datalist.z2,
+#                    iter = 8000, warmup =4000, chains=4,
+#                    include = FALSE, pars = c("ypred_new","y_hat")
+#                    #, control = list(adapt_delta = 0.99)
+# )
+# save(mdl.4phylo.4few, file="output/bb_4sites_phylo_few4.Rda")
 
 ## The model no longer has any divergent transitions for the terminal buds!
 #pairs(sm.sum, pars=c("mu_a","mu_force","mu_chill","mu_photo_ncp")) # this gives a lot of warning messages and not the figure i was hoping/expected

@@ -14,16 +14,18 @@ require(gridExtra)
 require(ggplot2)
 require(ggpubr)
 require(bayesplot)
+require(plyr)
 require(dplyr)
 library(reshape2)
 library(viridis)
 library(bayesplot)
-library(tidybayes)# for arranging plots 
+#library(tidybayes)# for arranging plots 
 library(patchwork) # another way of arranging plots 
 # library(rethinking)
 require(cowplot)
 require(plotrix)
 require(stringr)
+
 
 
 if(length(grep("deirdreloughnan", getwd()) > 0)) { 
@@ -126,7 +128,9 @@ pheno.t <- merge(pheno.t, spInfo, by = "species")
 
 # now load the stan output:
 
-load("output/final/bb_4sites_phylo.Rda")
+#load("output/final/bb_4sites_phylo.Rda")
+
+load("output/bb_4sites_phylo_newpriors.Rda")
 sum <- summary(mdl.4phylo)$summary 
 
 fit <- rstan::extract(mdl.4phylo)
@@ -310,7 +314,7 @@ forceBsite3Inter <- forceBInterSite3 + site3$fit.b_site3
 forceBsite4Inter <- forceBInterSite4 + site4$fit.b_site4
 
 longForce <- melt(forceB)
-colnames(longPhotoSite2) <- c("species.name","forceNoSite")
+colnames(longForce) <- c("species.name","forceNoSite")
 
   
 longForceSite2 <- melt(forceBsite2)
@@ -409,13 +413,50 @@ cueST <- ggplot(data = longCues, aes(x = type, y = value)) +
                          shape = c(8)))) +
   theme(legend.title = element_blank()) +  annotate("text", x = 0.75, y = 10, label = "a)", cex =5) + scale_fill_manual(values = c("#cc6a70ff","#f9b641ff","cyan4"))
 
+cueST2 <- ggplot(data = longCues, aes(x = cue, y = value)) + 
+  stat_eye( .width = c(.90, .5), cex = 0.75, aes(fill = type), position = position_dodge(0.9))+
+  theme_classic() +  
+  theme(axis.text.x = element_text( size=10,
+                                    #angle = 78, 
+                                    hjust=1),
+        axis.title=element_text(size=9) ) + # angle of 55 also works
+  #geom_point(data = meanTrophic, aes(x = meanSlope,y = trophic.level, colour = "purple"), shape = 8, size = 3)+
+  labs( x = "Plant type", y = "Cue response", main = NA)+ 
+  scale_color_identity(name = "Model fit",
+                       breaks = c("black"),
+                       labels = c("Model Posterior"),
+                       guide = guide_legend(override.aes = list(
+                         linetype = c(NA),
+                         shape = c(8)))) +
+  theme(legend.title = element_blank()) +  annotate("text", x = 0.75, y = 10, label = "a)", cex =5) + scale_fill_manual(values = c("#cc6a70ff","cyan4"))
+
 pdf("figures/cueST.pdf", width = 8, height = 5)
 cueST
 dev.off()
 
+pdf("figures/cueST2.pdf", width = 8, height = 5)
+cueST2
+dev.off()
+
+head(meanz4)
 # Cues by species
+
+# want them to be ordered by tree 
+tree <- read.tree("input/SBphylo_phenobc.tre")
+length(tree$tip.label) #47
+
+tree$tip.label[tree$tip.label=="Cornus_asperifolia"] <- "Cornus_stolonifera"
+tree$tip.label[tree$tip.label=="Rhamnus_arguta"] <- "Rhamnus_frangula"
+tree$tip.label[tree$tip.label=="Alnus_alnobetula"] <- "Alnus_viridis"
+tree$tip.label[tree$tip.label== "Fagus_grandifolia_var._caroliniana"] <- "Fagus_grandifolia"
+tree$tip.label[tree$tip.label== "Spiraea_alba_var._latifolia"] <- "Spiraea_alba"
+
+
+spOrder <- tree$tip.label
+
 chillSp <- ggplot() + 
-  stat_eye(data = longChillInfo, aes(x = species.name, y = value), .width = c(.90, .5), cex = 0.75, fill = "#cc6a70ff")+
+  stat_eye(data = longChillInfo, aes(x = factor(species.name, level = spOrder), y = value), .width = c(.90, .5), cex = 0.75, fill = "#cc6a70ff") +
+  geom_hline(yintercept = sum[3,1], linetype="dashed") +
   theme_classic() +  
   theme(axis.title.x=element_blank(),
         axis.text.x=element_blank(),
@@ -429,8 +470,11 @@ chillSp <- ggplot() +
                          linetype = c(NA),
                          shape = c(8)))) +
   theme(legend.title = element_blank()) +  annotate("text", x = 1, y = 10, label = "a)", cex =5) 
+
+
 forceSp <- ggplot() + 
-  stat_eye(data = longForceInfo, aes(x = species.name, y = value), .width = c(.90, .5), cex = 0.75, fill = "#f9b641ff")+
+  stat_eye(data = longForceInfo, aes(x = factor(species.name, level = spOrder), y = value), .width = c(.90, .5), cex = 0.75, fill = "#f9b641ff") +
+  geom_hline(yintercept = sum[2,1], linetype="dashed") +
   theme_classic() +  
   theme(axis.title.x=element_blank(),
         axis.text.x=element_blank(),
@@ -446,7 +490,8 @@ forceSp <- ggplot() +
   theme(legend.title = element_blank()) +  annotate("text", x = 1, y = 10, label = "a)", cex =5) 
 
 photoSp <- ggplot() + 
-  stat_eye(data = longPhotoInfo, aes(x = species.name, y = value), .width = c(.90, .5), cex = 0.75, fill = "cyan4")+
+  stat_eye(data = longPhotoInfo, aes(x = factor(species.name, level = spOrder), y = value), .width = c(.90, .5), cex = 0.75, fill = "cyan4")+
+  geom_hline(yintercept = sum[4,1], linetype="dashed") +
   theme_classic() +  
   theme(axis.text.x = element_text( size=10,
                                     angle = 78, 
@@ -461,10 +506,14 @@ photoSp <- ggplot() +
                          linetype = c(NA),
                          shape = c(8)))) +
   theme(legend.title = element_blank()) +  annotate("text", x = 1, y = 10, label = "a)", cex =5) 
-pdf("figures/cueSp.pdf", height =12, width = 12)
-grid.arrange(chillSp,forceSp, photoSp, nrow = 3)
-dev.off()
 
+# pdf("figures/cueSp.pdf", height =12, width = 12)
+# grid.arrange(chillSp,forceSp, photoSp, nrow = 3)
+# dev.off()
+
+pdf("figures/cueSp.pdf", height =12, width = 12)
+plot_grid(chillSp,forceSp, photoSp, nrow = 3, align = "v", rel_heights = c(1/4, 1/4, 1.2/3))
+dev.off()
 ##### Site specific plots:
 #site 2
 cueEWSite2 <- ggplot(data = longCues, aes(x = cue, y = Site2)) + 

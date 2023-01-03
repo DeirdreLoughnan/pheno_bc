@@ -1,0 +1,183 @@
+\documentclass{article}
+
+% required 
+\usepackage[hyphens]{url} % this wraps my URL versus letting it spill across the page, a bad habit LaTeX has
+
+\usepackage{Sweave}
+\usepackage{graphicx}
+\usepackage{natbib}
+\usepackage{amsmath}
+\usepackage{textcomp}%amoung other things, it allows degrees C to be added
+\usepackage{float}
+\usepackage[utf8]{inputenc} % allow funny letters in citaions 
+\usepackage[nottoc]{tocbibind} %should add Refences to the table of contents?
+\usepackage{amsmath} % making nice equations 
+\usepackage{listings} % add in stan code
+\usepackage{xcolor}
+\usepackage{capt-of}%alows me to set a caption for code in appendix 
+\usepackage[export]{adjustbox} % adding a box around a map
+\usepackage{lineno}
+\linenumbers
+% recommended! Uncomment the below line and change the path for your computer!
+% \SweaveOpts{prefix.string=/Users/Lizzie/Documents/git/teaching/demoSweave/Fig.s/demoFig, eps=FALSE} 
+%put your Fig.s in one place! Also, note that here 'Fig.s' is the folder and 'demoFig' is what each 
+% Fig. produced will be titled plus its number or label (e.g., demoFig-nqpbetter.pdf')
+% make your captioning look better
+\usepackage[small]{caption}
+
+\usepackage{xr-hyper} %refer to Fig.s in another document
+\usepackage{hyperref}
+
+\setlength{\captionmargin}{30pt}
+\setlength{\abovecaptionskip}{0pt}
+\setlength{\belowcaptionskip}{10pt}
+
+% optional: muck with spacing
+\topmargin -1.5cm        
+\oddsidemargin 0.5cm   
+\evensidemargin 0.5cm  % same as oddsidemargin but for left-hand pages
+\textwidth 15.59cm
+\textheight 21.94cm 
+% \renewcommand{\baselinestretch}{1.5} % 1.5 lines between lines
+\parindent 0pt		  % sets leading space for paragraphs
+% optional: cute, fancy headers
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+\fancyhead[LO]{Draft early 2022}
+\fancyhead[RO]{Temporal Ecology Lab}
+% more optionals! %
+
+\graphicspath{ {./figures/} }% tell latex where to find photos 
+%\externaldocument[supp-]{Synchrony_Manuscript_supp}
+\begin{document}
+\renewcommand{\bibname}{References}%names reference list 
+
+\SweaveOpts{concordance=TRUE} % For RStudio hiccups
+
+
+\title{Supplementary Material - Species differences in cue responses in woody plants of North America}
+\date{\today}
+\author{Deirdre Loughnan$^1$ and E M Wolkovich$^1$}
+\maketitle 
+
+\begin{figure}[h!]
+    \centering
+     \includegraphics[width=\textwidth]{..//figures/changes_pheno_4sites.pdf}
+    \caption{Estimated mean responses in budburst date of first bud to varying forcing, chilling, and photoperiod cues for 47 deciduous woody species across North America. Points represent mean budburst dates, while bars depict the 50\% uncertainty interval. Negative responses represent advances budburst, while positive values represent delaying effects.}
+    \label{fig:muplot}
+\end{figure}
+
+\begin{figure}[h!]
+    \centering
+     \includegraphics[width=\textwidth]{..//figures/chill_forcing_4sites_interactions.pdf}
+     \caption{Interaction plots of day of budburst of first bud in response a) chill portions and forcing, b) forcing cues, c) chilling cues, and d) photoperiod cues and species sampled from St. Hippolyte, Harvard Forest, and Manning park. }
+    \label{fig:intrxn}
+\end{figure}
+%I am working on making these plots with data for 2 spp, one site & cue as well, but for the simplicity of the visualization, I removed the data for now
+
+<<label= meanBBTab, echo=FALSE , results=tex>>=
+# Mean bb dates across all treatments from raw data for 47 species at our two western sites, E.C. Manning Park and Smithers B.C., and our two eastern sites, Harvard Forest (HF) USA and St. Hippolyte(SH) Canada.
+
+require(xtable)
+#library(tidyr)
+require(reshape2)
+require(stringr)
+require(plyr)
+
+dl <- read.csv("..//input/dl_allbb.csv")
+
+temp <- str_split_fixed(dl$trt, "_", 3)
+dl$chill<- temp[,1]
+dl$photo <- temp[,2]
+dl$force <- temp[,3]
+
+dl.chill <- read.csv("..//input/chilling_values_Hope_Smithers.csv")
+
+dl.wchill <- merge(dl, dl.chill, by = c("population","chill"))
+dl.wchill$lab3 <- dl.wchill$lab2
+dl.wchill$lab2 <- paste(dl.wchill$species, dl.wchill$population, dl.wchill$rep, sep = "_")
+dl.wchill$transect <- "west"
+
+df <- read.csv("..//input/df_dxb_prepped_data.csv")
+df.chill <- read.csv("..//input/chilling_values_eastern.csv")
+df.wchill <- merge(df, df.chill, by =c("population","chill"))
+df.wchill <- df.wchill[, c("population", "chill","force","photo","lab2", "bb","species", "treatment","Chill_portions","Utah_Model")]
+df.wchill$transect <- "east"
+
+# # mergeing the my data with DF
+ pheno <- rbind.fill(dl.wchill, df.wchill)
+
+meanBB <- aggregate(pheno["bb"], pheno[c("population", "species")], FUN = mean, na.rm  =T)
+meanBB$bb <- round(meanBB$bb, 0)
+
+meanBBPop <- dcast(meanBB, species ~ population, value.var = "bb")
+meanBBPop$species <- tolower(meanBBPop$species)
+
+spInfo <- read.csv("..//input/species_list.csv")
+spInfo$species.name <- gsub("_"," ", spInfo$species.name)
+
+mdlTab <- merge(meanBBPop, spInfo, by = "species")
+mdlTab <- mdlTab[, c("species.name","HF","SH","mp","sm")]
+
+colnames(mdlTab) <- c("Species" , "Harvard Forest", "St. Hippoltye","Manning Park", "Smithers")
+
+meanBBTab <- xtable(mdlTab, caption="Mean budburst dates across all treatments from raw data for 47 species at our two western sites, E.C. Manning Park and Smithers B.C., and our two eastern sites, Harvard Forest (HF) USA and St. Hippolyte (SH) Canada.")
+print(meanBBTab,include.rownames=F, caption.placement="top", hline.after=c(-1,0))
+
+@
+
+
+<<label= chillunit, echo=FALSE , results=tex>>=
+# Chill units from our two western sites, E.C. Manning Park and Smithers B.C., and our two eastern sites, Harvard Forest (HF) USA and St. Hippolyte(SH) Canada.
+
+require(xtable)
+#library(tidyr)
+
+# dl.chill <- read.csv("..//input/chilling_values_Hope_Smithers.csv")
+# # dl.chill$population[dl.chill$population == "sm"] <- "SM"
+# # dl.chill$population[dl.chill$population == "mp"] <- "MP"
+#
+# df.chill <- read.csv("..//input/chilling_values_eastern.csv")
+#
+# chill <- rbind(df.chill, dl.chill)
+# chill$population[chill$population == "sm"] <- "Smithers"
+# chill$population[chill$population == "mp"] <- "Manning Park"
+# chill$population[chill$population == "SH"] <- "St. Hippoltye"
+# chill$population[chill$population == "HF"] <- "Harvard forest"
+#
+# chill$population <- as.factor(chill$population)
+# chill$chill[chill$chill == "chill0"] <- "Field chilling"
+# chill$chill[chill$chill == "chill1"] <- "Field chilling + 30 d at 4 degree C"
+# chill$chill[chill$chill == "chill2"] <- "Field chilling + 30 d at 1.5 degree C"
+# chill$chill[chill$chill == "HC"] <- "Field chilling + 30 d at 4 degree C"
+# chill$chill[chill$chill == "LC"] <- "Field chilling + 70 d at 4 degree C"
+#
+# colnames(chill) <- c("Population","Chilling treatment", "Chilling Hours", "Utah Model", "Chill Portions")
+# #chill$population <- toupper(chill$population)
+#
+# write.csv(chill, "chillUnits.csv", row.names = F)
+#chill <- data.frame(chill)
+
+chill <- read.csv("..//output/chillUnits.csv")
+chillunit <- xtable(chill, caption = "Chill units from our two western sites, E.C. Manning Park and Smithers B.C., and our two eastern sites, Harvard Forest (HF) USA and St. Hippolyte(SH) Canada.")
+print(chillunit,include.rownames= F, caption.placement="top", hline.after=c(-1,0))
+@
+
+<<label=bbSuccess, echo=FALSE, results=tex >>=
+spwithbb <- read.csv("..//output/bb.success.ax.trt.csv", head = TRUE)
+library(xtable)
+
+spInfo <- read.csv("..//input/species_list.csv")
+spInfo$species.name <- gsub("_"," ", spInfo$species.name)
+colnames(spInfo) <- c("Species name", "Species","Plant type", "transect")
+bb_suc <- merge(spwithbb, spInfo, by = "Species")
+
+bb_suc <- bb_suc[, c("Species name", "Proportion.Budburst","Plant type")]
+names(bb_suc) <- c("Species name", "Proportion budburst","Plant type")
+
+make.bb_suc <- xtable(bb_suc, caption="Proportion of samples with budburst per species")
+print(make.bb_suc,include.rownames=F, caption.placement="top", hline.after=c(-1,0))
+
+@
+
+\end{document}

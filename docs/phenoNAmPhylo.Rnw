@@ -183,7 +183,7 @@ print(fourSite,include.rownames=TRUE, caption.placement="top", hline.after=c(-1,
 
 \begin{figure}[h!]
     \centering
-     \includegraphics[width=\textwidth]{..//figures/siteCue.pdf}
+     \includegraphics[width=\textwidth]{..//figures/site4CueGrouped.pdf}
     \caption{Posterior distributions of estimated cue responses with site level effects for individual sites, depicting a) chilling, b) forcing, and c) photoperiod cue responses. Black circles represent the median cue response, while the thinner black line the 90\% quantile interval. The coloured distribution is the the posterior density of the posteriors of the cue responses and site level responses for all species at a given site. The y-axis spans the entire range of the data.}
     \label{fig:siteCues}
 \end{figure}

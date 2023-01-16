@@ -7,15 +7,14 @@
 # the aim of this code is to generate the model output for my phenology ms
 rm(list=ls()) 
 options(stringsAsFactors = FALSE)
-
+require(stringr)
 require(rstan)
+require(plyr)
+require(dplyr)
 require(ggbiplot)
 require(gridExtra)
 require(ggplot2)
-require(ggpubr)
 require(bayesplot)
-require(plyr)
-require(dplyr)
 library(reshape2)
 library(viridis)
 library(bayesplot)
@@ -24,7 +23,7 @@ library(patchwork) # another way of arranging plots
 # library(rethinking)
 require(cowplot)
 require(plotrix)
-require(stringr)
+require(ggpubr)
 
 
 
@@ -55,7 +54,7 @@ df.wchill$transect <- "east"
 # mergeing the my data with DF
 pheno <- rbind.fill(dl.wchill, df.wchill)
 
-head(pheno)
+#head(pheno)
 # combined the data has 3197 unique samples
 ############################################################
 # Preping the data for the model
@@ -89,6 +88,25 @@ pheno <- pheno %>%
            site3 = if_else(site.n == 3, 1, 0),
            site4 = if_else(site.n == 4, 1, 0))
 
+# pheno$site2 <- ifelse(pheno$site.n == "2", "1", pheno$site.n)
+# pheno$site2 <- ifelse(pheno$site.n == c("1"), "0", pheno$site2)
+# pheno$site2 <- ifelse(pheno$site.n == c("3"), "0", pheno$site2)
+# pheno$site2 <- ifelse(pheno$site.n == c("4"), "0", pheno$site2)
+# 
+# pheno$site3 <- ifelse(pheno$site.n == "3", "1", pheno$site.n)
+# pheno$site3 <- ifelse(pheno$site.n == c("1"), "0", pheno$site3)
+# pheno$site3 <- ifelse(pheno$site.n == c("2"), "0", pheno$site3)
+# pheno$site3 <- ifelse(pheno$site.n == c("4"), "0", pheno$site3)
+# 
+# pheno$site4 <- ifelse(pheno$site.n == "4", "1", pheno$site.n)
+# pheno$site4 <- ifelse(pheno$site.n == c("1"), "0", pheno$site4)
+# pheno$site4 <- ifelse(pheno$site.n == c("2"), "0", pheno$site4)
+# pheno$site4 <- ifelse(pheno$site.n == c("3"), "0", pheno$site4)
+
+pheno$site2 <- as.numeric(pheno$site2)
+pheno$site3 <- as.numeric(pheno$site3)
+pheno$site4 <- as.numeric(pheno$site4)
+
 # standardize the 0/1 and standardize sites? 
 pheno$force.z2 <- (pheno$force.n-mean(pheno$force.n,na.rm=TRUE))/(sd(pheno$force.n,na.rm=TRUE)*2)
 pheno$photo.z2 <- (pheno$photo.n-mean(pheno$photo.n,na.rm=TRUE))/(sd(pheno$photo.n,na.rm=TRUE)*2)
@@ -112,7 +130,7 @@ pheno.t <- pheno.term[complete.cases(pheno.term), ] # 3609
 pheno.t <- pheno.term[complete.cases(pheno.term$bb), ] # 1780 rows data 
 pheno.t$species <- tolower(pheno.t$species)
 pheno.t$species.fact <- as.numeric(as.factor(pheno.t$species))
-sort(unique(pheno.t$species.fact)) # 49 
+sort(unique(pheno.t$species.fact)) # 47
 
 # now get the phylogeny and pair it with species names:
 spInfo <- read.csv("input/species_list.csv")
@@ -143,9 +161,7 @@ chillBInterSite4 <- data.frame(fit$b_chill1+fit$b_inter_s4c1)
 colnames(chillB) <- unique(pheno.t$species.name)
 
 site2 <- data.frame(fit$b_site2)
-
 site3 <- data.frame(fit$b_site3)
-
 site4 <- data.frame(fit$b_site4)
 
 site <- cbind(site2, site3, site4)
@@ -153,6 +169,7 @@ site <- cbind(site2, site3, site4)
 colnames(site) <- c("site2","site3", "site4")
 longsite <- melt(site)
 
+chillBsite1 <- chillB
 chillBsite2 <- chillB + site2$fit.b_site2
 chillBsite3 <- chillB + site3$fit.b_site3
 chillBsite4 <- chillB + site4$fit.b_site4
@@ -163,6 +180,10 @@ chillBsite4Inter <- chillBInterSite4 + site4$fit.b_site4
 
 longChill <- melt(chillB)
 colnames(longChill) <- c("species.name","chillNoSite")
+
+longChillSite1 <- melt(chillB)
+colnames(longChillSite1) <- c("species.name","chillSite")
+longChillSite1$site <- "Smithers"
 
 longChillSite2 <- melt(chillBsite2)
 colnames(longChillSite2) <- c("species.name","chillSite")
@@ -190,22 +211,23 @@ longChillSite4Inter$site <- "St. Hippolyte"
 
 # add in the needed factors
 
-longChillSite <- rbind(longChillSite2, longChillSite3, longChillSite4)
+longChillSite <- rbind(longChillSite1, longChillSite2, longChillSite3, longChillSite4)
 
 longChillSiteInter <- rbind(longChillSite2Inter, longChillSite3Inter, longChillSite4Inter)
 
 longChillInfo <- merge(longChill, spInfo, by = "species.name") # slow to run
 #longChillInfo <- merge(longChillInfo, longChillSite2, by = "species.name") # slow to run
 
-longChillInfo <- cbind(longChillInfo, longChillSite2[,2], longChillSite3[,2], longChillSite4[,2])
+longChillInfo <- cbind(longChillInfo, longChillSite1[,2], longChillSite2[,2], longChillSite3[,2], longChillSite4[,2])
 
 longChillInterInfo <- cbind(longChillInfo, longChillSite2Inter[,2], longChillSite3Inter[,2], longChillSite4Inter[,2])
 
-
+longChillInfo$cue <- "Chilling"
+longChillInterInfo$cue <- "Chilling"
 head(longChillInfo)
-colnames(longChillInfo) <- c("species.name","value", "species","type", "transect","Site2", "Site3", "Site4")
+colnames(longChillInfo) <- c("species.name","value", "species","type", "transect","Site1","Site2", "Site3", "Site4", "cue")
 
-colnames(longChillInterInfo) <- c("species.name","value", "species","type", "transect","Site2", "Site3", "Site4","Site2Inter", "Site3Inter", "Site4Inter")
+colnames(longChillInterInfo) <- c("species.name","value", "species","type", "transect","Site1","Site2", "Site3", "Site4","cue","Site2Inter", "Site3Inter", "Site4Inter","cue")
 
 head(longChillInfo)
 head(longChillInterInfo)
@@ -213,8 +235,7 @@ head(longChillInterInfo)
 # Now make the eye plots:
 unique(longChillInfo$transect)
 
-longChillInfo$cue <- "Chilling"
-longChillInterInfo$cue <- "Chilling"
+
 
 ###################################################################
 # Photoperiod:
@@ -225,6 +246,7 @@ longPhoto <- melt(photoB)
 
 colnames(longPhoto) <- c("species.name","value")
 
+photoBsite1 <- photoB 
 photoBsite2 <- photoB + site2$fit.b_site2
 photoBsite3 <- photoB + site3$fit.b_site3
 photoBsite4 <- photoB + site4$fit.b_site4
@@ -240,6 +262,10 @@ photoBsite4Inter <- photoBInterSite4 + site4$fit.b_site4
 
 longPhoto <- melt(photoB)
 colnames(longPhoto) <- c("species.name","photoNoSite")
+
+longPhotoSite1 <- melt(photoBsite1)
+colnames(longPhotoSite1) <- c("species.name","photoSite")
+longPhotoSite1$site <- "Smithers"
 
 longPhotoSite2 <- melt(photoBsite2)
 colnames(longPhotoSite2) <- c("species.name","photoSite")
@@ -266,31 +292,32 @@ colnames(longPhotoSite4Inter) <- c("species.name","photoSiteInter")
 longPhotoSite4Inter$site <- "St. Hippolyte"
 
 # add in the needed factors
-longPhotoSite <- rbind(longPhotoSite2, longPhotoSite3, longPhotoSite4)
+longPhotoSite <- rbind(longPhotoSite1, longPhotoSite2, longPhotoSite3, longPhotoSite4)
 longPhotoSiteInter <- rbind(longPhotoSite2Inter, longPhotoSite3Inter, longPhotoSite4Inter)
 
 longPhotoInfo <- merge(longPhoto, spInfo, by = "species.name") # slow to run
 #longPhotoInfo <- merge(longPhotoInfo, longPhotoSite2, by = "species.name") # slow to run
 
-longPhotoInfo <- cbind(longPhotoInfo, longPhotoSite2[,2], longPhotoSite3[,2], longPhotoSite4[,2])
+longPhotoInfo <- cbind(longPhotoInfo, longPhotoSite1[,2], longPhotoSite2[,2], longPhotoSite3[,2], longPhotoSite4[,2])
 
 longPhotoInterInfo <- cbind(longPhotoInfo, longPhotoSite2Inter[,2], longPhotoSite3Inter[,2], longPhotoSite4Inter[,2])
 
-head(longPhotoInfo)
-colnames(longPhotoInfo) <- c("species.name","value", "species","type", "transect","Site2", "Site3", "Site4")
 
-colnames(longPhotoInterInfo) <- c("species.name","value", "species","type", "transect","Site2", "Site3", "Site4","Site2Inter", "Site3Inter", "Site4Inter")
+longPhotoInfo$cue <- "Photoperiod"
+longPhotoInterInfo$cue <- "Photoperiod"
+
+head(longPhotoInfo)
+colnames(longPhotoInfo) <- c("species.name","value", "species","type", "transect","Site1","Site2", "Site3", "Site4")
+
+colnames(longPhotoInterInfo) <- c("species.name","value", "species","type", "transect","Site1","Site2", "Site3", "Site4","Site2Inter", "Site3Inter", "Site4Inter")
 
 head(longPhotoInfo)
 head(longPhotoInterInfo)
 
-colnames(longPhotoInfo) <- c("species.name","value", "species","type", "transect","Site2", "Site3", "Site4")
 
 
 #longPhotoInfo <- merge(longPhoto, spInfo, by = "species.name") # slow to run
 
-longPhotoInfo$cue <- "Photoperiod"
-longPhotoInterInfo$cue <- "Photoperiod"
 
 ###################################################################
 # Forcing:
@@ -301,6 +328,7 @@ longForce <- melt(forceB)
 
 colnames(longForce) <- c("species.name","value")
 
+forceBsite1 <- forceB 
 forceBsite2 <- forceB + site2$fit.b_site2
 forceBsite3 <- forceB + site3$fit.b_site3
 forceBsite4 <- forceB + site4$fit.b_site4
@@ -316,7 +344,10 @@ forceBsite4Inter <- forceBInterSite4 + site4$fit.b_site4
 longForce <- melt(forceB)
 colnames(longForce) <- c("species.name","forceNoSite")
 
-  
+longForceSite1 <- melt(forceBsite1)
+colnames(longForceSite1) <- c("species.name","forceSite")
+longForceSite1$site <- "Smithers"
+
 longForceSite2 <- melt(forceBsite2)
 colnames(longForceSite2) <- c("species.name","forceSite")
 longForceSite2$site <- "Manning Park"
@@ -342,31 +373,31 @@ colnames(longForceSite4Inter) <- c("species.name","forceSiteInter")
 longForceSite4Inter$site <- "St. Hippolyte"
 
 # add in the needed factors
-longForceSite <- rbind(longForceSite2, longForceSite3, longForceSite4)
+longForceSite <- rbind(longForceSite1, longForceSite2, longForceSite3, longForceSite4)
 longForceSiteInter <- rbind(longForceSite2Inter, longForceSite3Inter, longForceSite4Inter)
 
 longForceInfo <- merge(longForce, spInfo, by = "species.name") # slow to run
 
-longForceInfo <- cbind(longForceInfo, longForceSite2[,2], longForceSite3[,2], longForceSite4[,2])
+longForceInfo <- cbind(longForceInfo, longForceSite1[,2], longForceSite2[,2], longForceSite3[,2], longForceSite4[,2])
 
 longForceInterInfo <- cbind(longForceInfo, longForceSite2Inter[,2], longForceSite3Inter[,2], longForceSite4Inter[,2])
 
-head(longForceInfo)
-colnames(longForceInfo) <- c("species.name","value", "species","type", "transect","Site2", "Site3", "Site4")
+longForceInfo$cue <- "Forcing"
+longForceInterInfo$cue <- "Forcing"
 
-colnames(longForceInterInfo) <- c("species.name","value", "species","type", "transect","Site2", "Site3", "Site4","Site2Inter", "Site3Inter", "Site4Inter")
+head(longForceInfo)
+colnames(longForceInfo) <- c("species.name","value", "species","type", "transect","Site1","Site2", "Site3", "Site4","cue")
+
+colnames(longForceInterInfo) <- c("species.name","value", "species","type", "transect","Site1","Site2", "Site3", "Site4","Site2Inter", "Site3Inter", "Site4Inter","cue")
 
 head(longForceInfo)
 head(longForceInterInfo)
 
-colnames(longForceInfo) <- c("species.name","value", "species","type", "transect","Site2", "Site3", "Site4")
 
 head(longForceInfo)
 # Now make the eye plots:
 unique(longForceInfo$transect)
 
-longForceInfo$cue <- "Forcing"
-longForceInterInfo$cue <- "Forcing"
 
 ###################################################################
 longCues <- rbind(longForceInfo, longChillInfo, longPhotoInfo)
@@ -438,7 +469,7 @@ pdf("figures/cueST2.pdf", width = 8, height = 5)
 cueST2
 dev.off()
 
-head(meanz4)
+#head(meanz4)
 # Cues by species
 
 # want them to be ordered by tree 
@@ -454,11 +485,14 @@ tree$tip.label[tree$tip.label== "Spiraea_alba_var._latifolia"] <- "Spiraea_alba"
 
 spOrder <- tree$tip.label
 
+longChillInfo$mean <- rowMeans(longChillInfo[,c("Site1","Site2","Site3","Site4")], na.rm=TRUE)
+
 chillSp <- ggplot() + 
-  stat_eye(data = longChillInfo, aes(x = factor(species.name, level = spOrder), y = value), .width = c(.90, .5), cex = 0.75, fill = "#cc6a70ff") +
+  stat_eye(data = longChillInfo, aes(x = factor(species.name, level = spOrder), y = mean), .width = c(.90, .5), cex = 0.75, fill = "#cc6a70ff") +
   geom_hline(yintercept = sum[3,1], linetype="dashed") +
   theme_classic() +  
   theme(axis.title.x=element_blank(),
+        axis.title.y=element_text(size = 12),
         axis.text.x=element_blank(),
         axis.ticks.x=element_blank() ) + # angle of 55 also works
   #geom_point(data = meanTrophic, aes(x = meanSlope,y = trophic.level, colour = "purple"), shape = 8, size = 3)+
@@ -471,12 +505,14 @@ chillSp <- ggplot() +
                          shape = c(8)))) +
   theme(legend.title = element_blank()) +  annotate("text", x = 1, y = 10, label = "a)", cex =5) 
 
+longForceInfo$mean <- rowMeans(longForceInfo[,c("Site1","Site2","Site3","Site4")], na.rm=TRUE)
 
 forceSp <- ggplot() + 
-  stat_eye(data = longForceInfo, aes(x = factor(species.name, level = spOrder), y = value), .width = c(.90, .5), cex = 0.75, fill = "#f9b641ff") +
+  stat_eye(data = longForceInfo, aes(x = factor(species.name, level = spOrder), y = mean), .width = c(.90, .5), cex = 0.75, fill = "#f9b641ff") +
   geom_hline(yintercept = sum[2,1], linetype="dashed") +
   theme_classic() +  
   theme(axis.title.x=element_blank(),
+        axis.title.y=element_text(size = 12),
         axis.text.x=element_blank(),
         axis.ticks.x=element_blank() ) + # angle of 55 also works
   #geom_point(data = meanTrophic, aes(x = meanSlope,y = trophic.level, colour = "purple"), shape = 8, size = 3)+
@@ -487,16 +523,18 @@ forceSp <- ggplot() +
                        guide = guide_legend(override.aes = list(
                          linetype = c(NA),
                          shape = c(8)))) +
-  theme(legend.title = element_blank()) +  annotate("text", x = 1, y = 10, label = "a)", cex =5) 
+  theme(legend.title = element_blank()) +  annotate("text", x = 1, y = 10, label = "b)", cex =5) 
 
+longPhotoInfo$mean <- rowMeans(longPhotoInfo[,c("Site1","Site2","Site3","Site4")], na.rm=TRUE)
 photoSp <- ggplot() + 
-  stat_eye(data = longPhotoInfo, aes(x = factor(species.name, level = spOrder), y = value), .width = c(.90, .5), cex = 0.75, fill = "cyan4")+
+  stat_eye(data = longPhotoInfo, aes(x = factor(species.name, level = spOrder), y = mean), .width = c(.90, .5), cex = 0.75, fill = "cyan4")+
   geom_hline(yintercept = sum[4,1], linetype="dashed") +
   theme_classic() +  
   theme(axis.text.x = element_text( size=10,
                                     angle = 78, 
                                     hjust=1),
-        axis.title=element_text(size=9) ) + # angle of 55 also works
+        axis.title.y=element_text(size = 12),
+        axis.title=element_text(size=15) ) + # angle of 55 also works
   #geom_point(data = meanTrophic, aes(x = meanSlope,y = trophic.level, colour = "purple"), shape = 8, size = 3)+
   labs( x = "Transect", y = "Photoperiod response", main = NA)+ 
   scale_color_identity(name = "Model fit",
@@ -505,7 +543,7 @@ photoSp <- ggplot() +
                        guide = guide_legend(override.aes = list(
                          linetype = c(NA),
                          shape = c(8)))) +
-  theme(legend.title = element_blank()) +  annotate("text", x = 1, y = 10, label = "a)", cex =5) 
+  theme(legend.title = element_blank()) +  annotate("text", x = 1, y = 10, label = "c)", cex =5) 
 
 # pdf("figures/cueSp.pdf", height =12, width = 12)
 # grid.arrange(chillSp,forceSp, photoSp, nrow = 3)
@@ -516,80 +554,80 @@ plot_grid(chillSp,forceSp, photoSp, nrow = 3, align = "v", rel_heights = c(1/4, 
 dev.off()
 ##### Site specific plots:
 #site 2
-cueEWSite2 <- ggplot(data = longCues, aes(x = cue, y = Site2)) + 
-  stat_eye( .width = c(.90, .5), cex = 0.75, aes(fill = transect), position = position_dodge(0.9)) +
-  theme_classic() +   
-  theme(axis.text.x = element_text( size=10,
-                                    #angle = 78, 
-                                    hjust=1),
-        axis.title=element_text(size=9) ) + # angle of 55 also works
-  #geom_point(data = meanTrophic, aes(x = meanSlope,y = trophic.level, colour = "purple"), shape = 8, size = 3)+
-  labs( x = "Transect", y = "Cue response", main = NA)+ 
-  scale_color_identity(name = "Model fit",
-                       breaks = c("black"),
-                       labels = c("Model Posterior"),
-                       guide = guide_legend(override.aes = list(
-                         linetype = c(NA),
-                         shape = c(8)))) +
-  theme(legend.title = element_blank()) +  annotate("text", x = 0.5, y = 10, label = "a)", cex =5)  +
-  scale_fill_manual(values = c("#cc6a70ff","#f9b641ff","cyan4"))
-
-cueEWSite3 <- ggplot(data = longCues, aes(x = cue, y = Site3)) + 
-  stat_eye( .width = c(.90, .5), cex = 0.75, aes(fill = transect), position = position_dodge(0.9)) +
-  theme_classic() +   
-  theme(axis.text.x = element_text( size=10,
-                                    #angle = 78, 
-                                    hjust=1),
-        axis.title=element_text(size=9) ) + # angle of 55 also works
-  #geom_point(data = meanTrophic, aes(x = meanSlope,y = trophic.level, colour = "purple"), shape = 8, size = 3)+
-  labs( x = "Transect", y = "Cue response", main = NA)+ 
-  scale_color_identity(name = "Model fit",
-                       breaks = c("black"),
-                       labels = c("Model Posterior"),
-                       guide = guide_legend(override.aes = list(
-                         linetype = c(NA),
-                         shape = c(8)))) +
-  theme(legend.title = element_blank()) +  annotate("text", x = 0.5, y = 10, label = "a)", cex =5)  +
-  scale_fill_manual(values = c("#cc6a70ff","#f9b641ff","cyan4"))
-
-cueEWSite4 <- ggplot(data = longCues, aes(x = cue, y = Site4)) + 
-  stat_eye( .width = c(.90, .5), cex = 0.75, aes(fill = transect), position = position_dodge(0.9)) +
-  theme_classic() +   
-  theme(axis.text.x = element_text( size=10,
-                                    #angle = 78, 
-                                    hjust=1),
-        axis.title=element_text(size=9) ) + # angle of 55 also works
-  #geom_point(data = meanTrophic, aes(x = meanSlope,y = trophic.level, colour = "purple"), shape = 8, size = 3)+
-  labs( x = "Transect", y = "Cue response", main = NA)+ 
-  scale_color_identity(name = "Model fit",
-                       breaks = c("black"),
-                       labels = c("Model Posterior"),
-                       guide = guide_legend(override.aes = list(
-                         linetype = c(NA),
-                         shape = c(8)))) +
-  theme(legend.title = element_blank()) +  annotate("text", x = 0.5, y = 10, label = "a)", cex =5)  +
-  scale_fill_manual(values = c("#cc6a70ff","#f9b641ff","cyan4"))
-
-
-ggplot() + 
-  stat_eye(data = longCues, aes(x = cue, y = Site2, fill = "#cc6a70ff"), .width = c(.90, .5), cex = 0.75, position = position_dodge(0.9)) +
-  stat_eye(data = longCues, aes(x = cue, y = Site3, fill = "#f9b641ff"), .width = c(.90, .5), cex = 0.75, position = position_dodge(0.9)) +
-  stat_eye(data = longCues, aes(x = cue, y = Site4, fill = "cyan4"), .width = c(.90, .5), cex = 0.75, position = position_dodge(0.9)) +
-  theme_classic() +   
-  theme(axis.text.x = element_text( size=10,
-                                    #angle = 78, 
-                                    hjust=1),
-        axis.title=element_text(size=9) ) + # angle of 55 also works
-  #geom_point(data = meanTrophic, aes(x = meanSlope,y = trophic.level, colour = "purple"), shape = 8, size = 3)+
-  labs( x = "Cue", y = "Cue response", main = NA)+ 
-  scale_color_identity(name = "Model fit",
-                       breaks = c("black"),
-                       labels = c("Model Posterior"),
-                       guide = guide_legend(override.aes = list(
-                         linetype = c(NA),
-                         shape = c(8)))) +
-  theme(legend.title = element_blank()) +  annotate("text", x = 0.5, y = 10, label = "a)", cex =5)  +
-  scale_fill_manual(values = c("#cc6a70ff","#f9b641ff","cyan4"))
+# cueEWSite2 <- ggplot(data = longCues, aes(x = cue, y = Site2)) + 
+#   stat_eye( .width = c(.90, .5), cex = 0.75, aes(fill = transect), position = position_dodge(0.9)) +
+#   theme_classic() +   
+#   theme(axis.text.x = element_text( size=10,
+#                                     #angle = 78, 
+#                                     hjust=1),
+#         axis.title=element_text(size=9) ) + # angle of 55 also works
+#   #geom_point(data = meanTrophic, aes(x = meanSlope,y = trophic.level, colour = "purple"), shape = 8, size = 3)+
+#   labs( x = "Transect", y = "Cue response", main = NA)+ 
+#   scale_color_identity(name = "Model fit",
+#                        breaks = c("black"),
+#                        labels = c("Model Posterior"),
+#                        guide = guide_legend(override.aes = list(
+#                          linetype = c(NA),
+#                          shape = c(8)))) +
+#   theme(legend.title = element_blank()) +  annotate("text", x = 0.5, y = 10, label = "a)", cex =5)  +
+#   scale_fill_manual(values = c("#cc6a70ff","#f9b641ff","cyan4"))
+# 
+# cueEWSite3 <- ggplot(data = longCues, aes(x = cue, y = Site3)) + 
+#   stat_eye( .width = c(.90, .5), cex = 0.75, aes(fill = transect), position = position_dodge(0.9)) +
+#   theme_classic() +   
+#   theme(axis.text.x = element_text( size=10,
+#                                     #angle = 78, 
+#                                     hjust=1),
+#         axis.title=element_text(size=9) ) + # angle of 55 also works
+#   #geom_point(data = meanTrophic, aes(x = meanSlope,y = trophic.level, colour = "purple"), shape = 8, size = 3)+
+#   labs( x = "Transect", y = "Cue response", main = NA)+ 
+#   scale_color_identity(name = "Model fit",
+#                        breaks = c("black"),
+#                        labels = c("Model Posterior"),
+#                        guide = guide_legend(override.aes = list(
+#                          linetype = c(NA),
+#                          shape = c(8)))) +
+#   theme(legend.title = element_blank()) +  annotate("text", x = 0.5, y = 10, label = "a)", cex =5)  +
+#   scale_fill_manual(values = c("#cc6a70ff","#f9b641ff","cyan4"))
+# 
+# cueEWSite4 <- ggplot(data = longCues, aes(x = cue, y = Site4)) + 
+#   stat_eye( .width = c(.90, .5), cex = 0.75, aes(fill = transect), position = position_dodge(0.9)) +
+#   theme_classic() +   
+#   theme(axis.text.x = element_text( size=10,
+#                                     #angle = 78, 
+#                                     hjust=1),
+#         axis.title=element_text(size=9) ) + # angle of 55 also works
+#   #geom_point(data = meanTrophic, aes(x = meanSlope,y = trophic.level, colour = "purple"), shape = 8, size = 3)+
+#   labs( x = "Transect", y = "Cue response", main = NA)+ 
+#   scale_color_identity(name = "Model fit",
+#                        breaks = c("black"),
+#                        labels = c("Model Posterior"),
+#                        guide = guide_legend(override.aes = list(
+#                          linetype = c(NA),
+#                          shape = c(8)))) +
+#   theme(legend.title = element_blank()) +  annotate("text", x = 0.5, y = 10, label = "a)", cex =5)  +
+#   scale_fill_manual(values = c("#cc6a70ff","#f9b641ff","cyan4"))
+# 
+# 
+# ggplot() + 
+#   stat_eye(data = longCues, aes(x = cue, y = Site2, fill = "#cc6a70ff"), .width = c(.90, .5), cex = 0.75, position = position_dodge(0.9)) +
+#   stat_eye(data = longCues, aes(x = cue, y = Site3, fill = "#f9b641ff"), .width = c(.90, .5), cex = 0.75, position = position_dodge(0.9)) +
+#   stat_eye(data = longCues, aes(x = cue, y = Site4, fill = "cyan4"), .width = c(.90, .5), cex = 0.75, position = position_dodge(0.9)) +
+#   theme_classic() +   
+#   theme(axis.text.x = element_text( size=10,
+#                                     #angle = 78, 
+#                                     hjust=1),
+#         axis.title=element_text(size=9) ) + # angle of 55 also works
+#   #geom_point(data = meanTrophic, aes(x = meanSlope,y = trophic.level, colour = "purple"), shape = 8, size = 3)+
+#   labs( x = "Cue", y = "Cue response", main = NA)+ 
+#   scale_color_identity(name = "Model fit",
+#                        breaks = c("black"),
+#                        labels = c("Model Posterior"),
+#                        guide = guide_legend(override.aes = list(
+#                          linetype = c(NA),
+#                          shape = c(8)))) +
+#   theme(legend.title = element_blank()) +  annotate("text", x = 0.5, y = 10, label = "a)", cex =5)  +
+#   scale_fill_manual(values = c("#cc6a70ff","#f9b641ff","cyan4"))
 
 # How do you jitter the eye plots?
 
@@ -617,13 +655,60 @@ sitePhoto <- ggplot() +
   labs( x = "Site", y = "Photoperiod response", main = "Site level photoperiod")+
   scale_fill_manual(values = c("cyan4"))
 
-pdf("figures/siteCue.pdf", width = 15, height = 5)
+pdf("figures/site4Cue.pdf", width = 15, height = 5)
 ggarrange(siteChill, siteForce, sitePhoto,
   labels = c("A", "B", "C"),
   ncol = 3, nrow = 1)
 dev.off()
 
+####################################
+# Make the dataset long
+longForceInfo <- longForceInfo[, c("species.name","species","type","transect","Site1","Site2","Site3","Site4","cue")]
+longF <- melt(longForceInfo, id = c("species.name","species","type","transect", "cue"))
+names(longF)<- c("species.name","species","type","transect","cue","site","value")
 
+longChillInfo <- longChillInfo[, c("species.name","species","type","transect","Site1","Site2","Site3","Site4","cue")]
+longC <- melt(longChillInfo, id = c("species.name","species","type","transect", "cue"))
+names(longC)<- c("species.name","species","type","transect","cue","site","value")
+
+longPhotoInfo <- longPhotoInfo[, c("species.name","species","type","transect","Site1","Site2","Site3","Site4","cue")]
+longP <- melt(longPhotoInfo, id = c("species.name","species","type","transect", "cue"))
+names(longP)<- c("species.name","species","type","transect","cue","site","value")
+
+longest <- rbind(longC, longF, longP)
+
+longest$site <- as.character(longest$site)
+longest$site[which(longest$site == "Site1")] <- "Smithers"
+longest$site[which(longest$site == "Site2")] <- "Manning Park"
+longest$site[which(longest$site == "Site3")] <- "Harvard Forest"
+longest$site[which(longest$site == "Site4")] <- "St. Hippolyte"
+longest$site <- as.factor(longest$site)
+
+siteOrder <- c("Smithers","Manning Park","Harvard Forest", "St. Hippolyte")
+  
+pdf("figures/site4CueGrouped.pdf", width = 12, height =4)
+ggplot() + 
+  stat_eye(data = longest, aes(x = factor(site, level = siteOrder), y = value, fill = cue), .width = c(.90, .5), cex = 0.75, position = position_dodge(0.9)) +
+  ylim (-45,10) +
+  theme_classic() +   
+  theme(legend.position = "right", 
+        axis.text.x = element_text( size= 12),
+        axis.text.y = element_text( size= 12),
+        axis.title=element_text(size = 15)) +
+  labs( x = "Site", y = "Cue response", main = NA)+
+  theme(legend.title = element_blank()) +  annotate("text", x = 0.5, y = 9, label = "a)", cex =5) + scale_fill_manual(values = c("#cc6a70ff","cyan4", "#f9b641ff"))
+dev.off()
+
++ # angle of 55 also works
+  #geom_point(data = meanTrophic, aes(x = meanSlope,y = trophic.level, colour = "purple"), shape = 8, size = 3)+
+  labs( x = "Plant type", y = "Cue response", main = NA)+ 
+  scale_color_identity(name = "Model fit",
+                       breaks = c("black"),
+                       labels = c("Model Posterior"),
+                       guide = guide_legend(override.aes = list(
+                         linetype = c(NA),
+                         shape = c(8)))) +
+  theme(legend.title = element_blank()) +  annotate("text", x = 0.75, y = 10, label = "a)", cex =5) + scale_fill_manual(values = c("#cc6a70ff","cyan4", "#f9b641ff"))
 
 # WIth the interaction:
 siteChillInter <- ggplot() + 

@@ -13,43 +13,21 @@ if(length(grep("deirdreloughnan", getwd()) > 0)) {
   setwd("~/Documents/github/pheno_bc") 
 }  
 
-load("output/final/bb_4sites_phylo_mini.Rda")
+load("output/bb_4sites_phylo_contin.Rda")
 
-fit <- mdl.4phyloMini
+fit <- mdl.4phylo
 fit.sum <- summary(fit)$summary
 
 sp<-c("alninc","betpap")
 sp.num<-c(5,11) # sp fact no.
 tempforecast<-c(1,2,3,4,5,6,7)
 
-getspest.bb <- function(fit, sprtemp, daylength, chill, warmspring, warmwinter,
-                        daylengthwarmspr, daylengthwarmwin, daylengthwarmsprwin){
-  
-  listofdraws <- rstan::extract(fit)
-  
-  avgbb <- listofdraws$a_sp[,sp.num[s]] + listofdraws$b_warm[,sp.num[s]]*sprtemp +
-    listofdraws$b_photo[,sp.num[s]]*daylength + listofdraws$b_chill[,sp.num[s]]*chill
-  
-  warmsprbb <- listofdraws$a_sp[,sp.num[s]] + listofdraws$b_warm[,sp.num[s]]*(sprtemp+warmspring) +
-    listofdraws$b_photo[,sp.num[s]]*(daylength + daylengthwarmspr) + listofdraws$b_chill[,sp.num[s]]*chill
-  
-  warmwinbb <- listofdraws$a_sp[,sp.num[s]] + listofdraws$b_warm[,sp.num[s]]*sprtemp +
-    listofdraws$b_photo[,sp.num[s]]*(daylength + daylengthwarmwin) + listofdraws$b_chill[,sp.num[s]]*(chill+warmwinter)
-  
-  warmsprwinbb <- listofdraws$a_sp[,sp.num[s]] + listofdraws$b_warm[,sp.num[s]]*(sprtemp+warmspring) +
-    listofdraws$b_photo[,sp.num[s]]*(daylength + daylengthwarmsprwin) + listofdraws$b_chill[,sp.num[s]]*(chill+warmwinter)
-  
-  yebbest <- list(avgbb, warmsprbb, warmwinbb, warmsprwinbb)
-  return(yebbest)
-}
-
-figname <- paste("tempforecasttwospp",min(tempforecast),max(tempforecast),"degwarm.pdf", sep="_")
-
 ###################################################################
 # get the climate data:
 chillsm<-read.csv("input/smithersChilling.csv")
 chillmp<-read.csv("input/manningparkChilling.csv")
 
+# just do both from 1975
 tempsm<-read.csv("input/smithersDaily_1943_2018.csv"); tempsm <- tempsm[tempsm$year>1974,]
 tempmp<-read.csv("input/hopeDaily_1975_2018.csv")
 
@@ -71,35 +49,58 @@ bbdoyAlninc <- as.integer(mean(phenoAlninc$bb))
 bbdoyBetpap <- as.integer(mean(phenoBetpap$bb))
 
 # Start with a plot for Smithers
-daylengthbbdoyAI <- daylength(latSM, bbdoyAlninc)#$Daylength
-chillportAI <- mean(chillsm$Chill_portions)
-chillAI<-mean(chillsm$Utah_Model)/240
+daylengthbbdoySMAI <- daylength(latSM, (bbdoyAlninc+59))#$Daylength + julian march 
+daylengthbbdoySMBP <- daylength(latSM, (bbdoyBetpap+59))
+chillportSM <- mean(chillsm$Chill_portions)
+chillSM<-mean(chillsm$Utah_Model)/240
 
-daylengthbbdoyBP <- daylength(latSM, bbdoyBetpap)#$Daylength
-chillportBP <- mean(chillsm$Chill_portions)
-chillBP <-mean(chillsm$Utah_Model)/240
+daylengthbbdoyMPAI <- daylength(latMP, (bbdoyAlninc+59))#$Daylength + julian march 
+daylengthbbdoyMPBP <- daylength(latMP, (bbdoyBetpap+59))
+chillportMP <- mean(chillmp$Chill_portions)
+chillMP<-mean(chillmp$Utah_Model)/240
 
 #########################################################################
+# Let's start with a simple simulation of Alninc in Smithers:
+
 predicts <- as.data.frame(matrix(NA,ncol=5,nrow=7))
 predicts.25per <- as.data.frame(matrix(NA,ncol=5,nrow=7))
 predicts.75per <- as.data.frame(matrix(NA,ncol=5,nrow=7))
 
-#ad hoc adj daylength
-predicts.wdl <- as.data.frame(matrix(NA,ncol=5,nrow=7))
-predicts.25per.wdl <- as.data.frame(matrix(NA,ncol=5,nrow=7))
-predicts.75per.wdl <- as.data.frame(matrix(NA,ncol=5,nrow=7))
+#ad hoc adj daylength -leaving this for now
+# predicts.wdl <- as.data.frame(matrix(NA,ncol=5,nrow=7))
+# predicts.25per.wdl <- as.data.frame(matrix(NA,ncol=5,nrow=7))
+# predicts.75per.wdl <- as.data.frame(matrix(NA,ncol=5,nrow=7))
 
 colnames(predicts)<-colnames(predicts.25per) <-colnames(predicts.75per) <-
-  colnames(predicts.wdl)<-colnames(predicts.25per.wdl) <-colnames(predicts.75per.wdl) <- c("warming","nowarm","sprwarm","winwarm","bothwarm")
+  #colnames(predicts.wdl)<-colnames(predicts.25per.wdl) <-colnames(predicts.75per.wdl) <- 
+  c("warming","nowarm","sprwarm","winwarm","bothwarm")
 
-#for (j in 1:length(tempforecast)){
-photo.forplotAI <- daylengthbbdoyAI
-warmspring <-tempforecast[2]
-warmwinterAI <- mean(chillsm$Chill_portions)-chillportAI
+  listofdraws <- rstan::extract(fit)
+  
+  s<-1
+  avgbb <- listofdraws$a_sp[,sp.num[s]] + listofdraws$b_warm[,sp.num[s]]*sprtempSM +
+    listofdraws$b_photo[,sp.num[s]]*daylengthbbdoySMAI + listofdraws$b_chill[,sp.num[s]]*chillportSM
+  
+  warmsprbb <- listofdraws$a_sp[,sp.num[s]] + listofdraws$b_warm[,sp.num[s]]*(sprtempSM + tempforecast[j]) +
+    listofdraws$b_photo[,sp.num[s]]*(daylength + daylengthbbdoySMAI) + listofdraws$b_chill[,sp.num[s]]*chillportSM
+  
+  warmwinbb <- listofdraws$a_sp[,sp.num[s]] + listofdraws$b_warm[,sp.num[s]]*sprtempSM +
+    listofdraws$b_photo[,sp.num[s]]*(daylength + daylengthbbdoySMAI) + listofdraws$b_chill[,sp.num[s]]*(chillportSM - (chillportSM/2))
+  
+  warmsprwinbb <- listofdraws$a_sp[,sp.num[s]] + listofdraws$b_warm[,sp.num[s]]*(sprtempSM + tempforecast[j]) +
+    listofdraws$b_photo[,sp.num[s]]*(daylength + daylengthbbdoySMAI) + listofdraws$b_chill[,sp.num[s]]*(chillportSM - (chillportSM/2))
+  
+  yebbest <- list(avgbb, warmsprbb, warmwinbb, warmsprwinbb)
+  return(yebbest)
+}
 
-s<-1
-j<-2
-bbposteriors <- getspest.bb(fit, sprtempSM, daylengthbbdoyAI, chillportAI, warmspring, warmwinterAI, 0, 0, 0)
+
+photo.forplotAI <- daylengthbbdoySMAI
+warmspring <-tempforecast[j]
+warmwinterAI <- mean(chillsm$Chill_portions)-chillportSM
+
+# zeros are bc not altering daylength
+bbposteriors <- getspest.bb(fit, sprtempSM, daylengthbbdoySMAI, chillportSM, warmspring, warmwinterAI, 0, 0, 0)
 
 meanz <- unlist(lapply(bbposteriors, mean))
 
@@ -110,23 +111,24 @@ quant75per <- unlist(lapply(bbposteriors, function(x) quantile(x,  c(0.75))))
 daychange.springwarm<-meanz[2]-meanz[1]
 daychange.wintwarm<-meanz[3]-meanz[1]
 daychange.bothwarm<-meanz[4]-meanz[1]
-daylengthchange.springwarm<-daylength(latSM,bbdoyAlninc+daychange.springwarm)-daylengthbbdoyAI
-daylengthchange.wintwarm<- daylength(latSM,bbdoyAlninc+daychange.wintwarm)-daylengthbbdoyAI
-daylengthchange.bothwarm<-daylength(latSM,bbdoyAlninc+daychange.bothwarm)-daylengthbbdoyAI
+daylengthchange.springwarm<-daylength(latSM,bbdoyAlninc+daychange.springwarm)-daylengthbbdoySMAI
+daylengthchange.wintwarm<- daylength(latSM,bbdoyAlninc+daychange.wintwarm)-daylengthbbdoySMAI
+daylengthchange.bothwarm<-daylength(latSM,bbdoyAlninc+daychange.bothwarm)-daylengthbbdoySMAI
 
-bbposteriors.wdaylength <- getspest.bb(fit, sprtempSM, daylengthbbdoyAI, chillportAI, warmspring, warmwinterAI, daylengthchange.springwarm, daylengthchange.wintwarm, daylengthchange.bothwarm)
+bbposteriors.wdaylength <- getspest.bb(fit, sprtempSM, daylengthbbdoySMAI, chillportSM, warmspring, warmwinterAI, daylengthchange.springwarm, daylengthchange.wintwarm, daylengthchange.bothwarm)
 
-predicts[j,]<-c(warmspring,meanz,chillportAI,warmwinterAI)
+predicts[j,]<-c(warmspring,meanz,chillportSM,warmwinterAI)
 predicts.25per[j,]<-c(warmspring,quant25per)
 predicts.75per[j,]<-c(warmspring,quant75per)
 
-predicts<-rbind(c(0,predicts$nowarm[1:4],chillportAI,0),predicts)
-predicts<-predicts[,-2]
-predicts.25per<-rbind(c(0,predicts.25per$nowarm[1:4]),predicts.25per)
-predicts.25per<-predicts.25per[,-2]
-predicts.75per<-rbind(c(0,predicts.75per$nowarm[1:4]),predicts.75per)
-predicts.75per<-predicts.75per[,-2]
+# predicts<-rbind(c(0,predicts$nowarm[1:4],chillportSM,0),predicts)
+# predicts<-predicts[,-2]
+# predicts.25per<-rbind(c(0,predicts.25per$nowarm[1:4]),predicts.25per)
+# predicts.25per<-predicts.25per[,-2]
+# predicts.75per<-rbind(c(0,predicts.75per$nowarm[1:4]),predicts.75per)
+# predicts.75per<-predicts.75per[,-2]
 
+}
 predicts$lat<-latSM
 predicts$lon<-longSM
 predicts.25per$lat<-latSM

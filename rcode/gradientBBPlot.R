@@ -1,6 +1,8 @@
 # started Feb 15, 2023 by Deirdre 
 
 # Aim of this code is to make a cool figure that estimates BB from set conditions and them ranks the early to late bb individuals; do the cues responses similarly vary?
+rm(list=ls())
+options(stringsAsFactors = FALSE)
 
 # the set cues will be: 12h photoperiod, 20C, high chill - 75/10
 require(rstan)
@@ -20,30 +22,38 @@ sum <- summary(mdl.4phyloMini)$summary
 
 post <- rstan::extract(mdl.4phyloMini)
 
-a_sp = mean(sum[grep("a_sp", rownames(sum)), 1])
-mu_b_warm = sum[grep("b_warm", rownames(sum)), 1]
-mu_b_photo = sum[grep("mu_b_photo", rownames(sum)), 1]
-mu_b_chill1 = sum[grep("mu_b_chill1", rownames(sum)), 1]
-mu_b_inter_pc1 = sum[grep("mu_b_inter_pc1", rownames(sum)), 1]
-mu_b_inter_wp = sum[grep("mu_b_inter_wp", rownames(sum)), 1]
-mu_b_inter_wc1 = sum[grep("mu_b_inter_wc1", rownames(sum)), 1]
-mu_b_inter_ws2 = sum[grep("mu_b_inter_ws2", rownames(sum)), 1]
-mu_b_inter_s2c1 = sum[grep("mu_b_inter_s2c1", rownames(sum)), 1]
-mu_b_inter_ps2 = sum[grep("mu_b_inter_ps2", rownames(sum)), 1]
-mu_b_inter_ws3 = sum[grep("mu_b_inter_ws3", rownames(sum)), 1]
-mu_b_inter_s3c1 = sum[grep("mu_b_inter_s3c1", rownames(sum)), 1]
-mu_b_inter_ps3 = sum[grep("mu_b_inter_ps3", rownames(sum)), 1]
-mu_b_inter_ws4 = sum[grep("mu_b_inter_ws4", rownames(sum)), 1]
-mu_b_inter_s4c1 = sum[grep("mu_b_inter_s4c1", rownames(sum)), 1]
-mu_b_inter_ps4 = sum[grep("mu_b_inter_ps4", rownames(sum)), 1]
+# a_sp = mean(sum[grep("a_sp", rownames(sum)), 1])
+# mu_b_warm = sum[grep("b_warm", rownames(sum)), 1]
+# mu_b_photo = sum[grep("mu_b_photo", rownames(sum)), 1]
+# mu_b_chill1 = sum[grep("mu_b_chill1", rownames(sum)), 1]
+# mu_b_inter_pc1 = sum[grep("mu_b_inter_pc1", rownames(sum)), 1]
+# mu_b_inter_wp = sum[grep("mu_b_inter_wp", rownames(sum)), 1]
+# mu_b_inter_wc1 = sum[grep("mu_b_inter_wc1", rownames(sum)), 1]
+# mu_b_inter_ws2 = sum[grep("mu_b_inter_ws2", rownames(sum)), 1]
+# mu_b_inter_s2c1 = sum[grep("mu_b_inter_s2c1", rownames(sum)), 1]
+# mu_b_inter_ps2 = sum[grep("mu_b_inter_ps2", rownames(sum)), 1]
+# mu_b_inter_ws3 = sum[grep("mu_b_inter_ws3", rownames(sum)), 1]
+# mu_b_inter_s3c1 = sum[grep("mu_b_inter_s3c1", rownames(sum)), 1]
+# mu_b_inter_ps3 = sum[grep("mu_b_inter_ps3", rownames(sum)), 1]
+# mu_b_inter_ws4 = sum[grep("mu_b_inter_ws4", rownames(sum)), 1]
+# mu_b_inter_s4c1 = sum[grep("mu_b_inter_s4c1", rownames(sum)), 1]
+# mu_b_inter_ps4 = sum[grep("mu_b_inter_ps4", rownames(sum)), 1]
 
-b_site2 = sum[grep("b_site2", rownames(sum)), 1]
-b_site3 = sum[grep("b_site3", rownames(sum)), 1]
-b_site4 = sum[grep("b_site4", rownames(sum)), 1]
+# b_site2 = sum[grep("b_site2", rownames(sum)), 1]
+# b_site3 = sum[grep("b_site3", rownames(sum)), 1]
+# b_site4 = sum[grep("b_site4", rownames(sum)), 1]
 
 b_photo = sum[grep("b_photo", rownames(sum)), 1]
 b_chill = sum[grep("b_chill", rownames(sum)), 1]
 b_force = sum[grep("b_warm", rownames(sum)), 1]
+
+b_photo25 = sum[grep("b_photo", rownames(sum)), "25%"]
+b_chill25 = sum[grep("b_chill", rownames(sum)), "25%"]
+b_force25 = sum[grep("b_warm", rownames(sum)), "25%"]
+
+b_photo75 = sum[grep("b_photo", rownames(sum)), "75%"]
+b_chill75 = sum[grep("b_chill", rownames(sum)), "75%"]
+b_force75 = sum[grep("b_warm", rownames(sum)), "75%"]
 
 b_photo2.5 = sum[grep("b_photo", rownames(sum)), "2.5%"]
 b_chill2.5 = sum[grep("b_chill", rownames(sum)), "2.5%"]
@@ -55,10 +65,10 @@ b_force97.5 = sum[grep("b_warm", rownames(sum)), "97.5%"]
 
 
 
-par(mfrow = c(1,3))
-plot(spInfo$meanBB ~ spInfo$chill, xlab = "Chilling response", ylab = "Estimated budburst"); abline(lm(meanBB~chill, spInfo))
-plot(spInfo$meanBB ~ spInfo$force, xlab = "Forcing response", ylab = "Estimated budburst"); abline(lm(meanBB~force, spInfo))
-plot(spInfo$meanBB ~ spInfo$photo, xlab = "Photoperiod response", ylab = "Estimated budburst"); abline(lm(meanBB~photo, spInfo))
+# par(mfrow = c(1,3))
+# plot(spInfo$meanBB ~ spInfo$chill, xlab = "Chilling response", ylab = "Estimated budburst"); abline(lm(meanBB~chill, spInfo))
+# plot(spInfo$meanBB ~ spInfo$force, xlab = "Forcing response", ylab = "Estimated budburst"); abline(lm(meanBB~force, spInfo))
+# plot(spInfo$meanBB ~ spInfo$photo, xlab = "Photoperiod response", ylab = "Estimated budburst"); abline(lm(meanBB~photo, spInfo))
 
 # #<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>#
 # I think what we want is a loop that goes through each iteration of the posteriors and calculates the bb, but using 20 for forcing, 12 for photoperiod, 75 (75/10 when rescaled), and smithers to start
@@ -105,16 +115,26 @@ spInfo$force97.5 <- b_force97.5[2:48]
 spInfo$chill97.5 <- b_chill97.5[2:48]
 spInfo$photo97.5 <- b_photo97.5[50:96]
 
+spInfo$force25 <- b_force25[2:48]
+spInfo$chill25 <- b_chill25[2:48]
+spInfo$photo25 <- b_photo25[50:96]
+
+spInfo$force75 <- b_force75[2:48]
+spInfo$chill75 <- b_chill75[2:48]
+spInfo$photo75 <- b_photo75[50:96]
+
 quantile2575 <- function(x){
-  returnQuanilte <- quantile(x, prob = c(0.975, 0.0275))
+  returnQuanilte <- quantile(x, prob = c(0.75, 0.25))
   return(returnQuanilte)
 }
 
 bb_quan <- apply(m, 2, quantile2575)
 bb_t <- t(bb_quan)
 bb_df <- data.frame(bb_t)
-colnames(bb_df)[colnames(bb_df) == "X97.5."] <- "bb25"
-colnames(bb_df)[colnames(bb_df) == "X2.75."] <- "bb75"
+colnames(bb_df)[colnames(bb_df) == "X75."] <- "bb25"
+colnames(bb_df)[colnames(bb_df) == "X25."] <- "bb75"
+# colnames(bb_df)[colnames(bb_df) == "X97.5."] <- "bb25"
+# colnames(bb_df)[colnames(bb_df) == "X2.75."] <- "bb75"
 
 spInfo <- cbind(spInfo, bb_df)
 
@@ -130,6 +150,8 @@ names(long) <- c("species.name", "value")
 long <- merge(long,spInfo, by = "species.name")
 spOrderData <- spInfo[order(spInfo$meanBB),]
 spOrder <- as.factor(spOrderData$species.name)
+
+long <- long[order(long$species),]
 # longPhotoInfo$mean <- rowMeans(longPhotoInfo[,c("Site1","Site2","Site3","Site4")], na.rm=TRUE)
 
 bChill <- data.frame(post$b_chill1[1:1000,])
@@ -157,11 +179,11 @@ names(longPhoto) <- c("species.name", "photo")
 long <- cbind(long, longPhoto$photo)
 
 data <- long[order(long$meanBB),]
-
-data$species.name <- factor(data$species.name, levels=unique(data$species.name) )
+# 
+# data$species.name <- factor(data$species.name, levels=unique(data$species.name) )
 #data <- transform(data, variable=reorder(species.name, -meanBB) ) 
 
-names(data) <- c("species.name","value","species","type","transect","meanBB", "spMeanForce", "spMeanChill", "spMeanPhoto",'force2.5',"chill2.5","photo2.5","force97.5", "chill97.5","photo97.5","bb2.5","bb97.5", "spacing","chill", "force","photo")
+names(data) <- c("species.name","value","species","type","transect","meanBB", "spMeanForce", "spMeanChill", "spMeanPhoto","force2.5","chill2.5","photo2.5","force97.5", "chill97.5","photo97.5","force25","chill25","photo25","force75", "chill75","photo75","bb25","bb75", "chill", "force","photo")
 ####### Old plot not spaced out ####################3
 
 bbSp <- ggplot() + 
@@ -510,9 +532,10 @@ overlappingE <- c("aromel","vibcas","betlen","lyolig","rhopri")
 spMiniE <- east[!east$species %in% overlappingE,]
 spTopE <- east[east$species %in% overlappingE,]
 
-bbSpaceE <- ggplot(data = dataEast, aes(x = meanBB, y = value)) + 
-  geom_violin( aes( group = species.name, width =1, fill = type)) +
-  #geom_hline(yintercept = sum[4,1], linetype="dashed") +
+bbSpaceE <- ggplot() + 
+  geom_violin(dataEast, mapping=aes(x = meanBB, y = value, group = species.name, width =1, fill = type)) +
+  geom_point(east, mapping= aes(x = meanBB, y = meanBB)) +
+  geom_pointrange(data = east,aes(x = meanBB, y = meanBB, ymin=bb25, ymax = bb75)) +
   theme_classic() +  
   theme(axis.text.x = element_text( size=10,
                                     angle = 78, 
@@ -530,9 +553,10 @@ bbSpaceE <- ggplot(data = dataEast, aes(x = meanBB, y = value)) +
   annotate("text", x = spTopE[5,5], y = 3, label = spTopE[5,2], cex = 3, angle = 78) +
   scale_fill_manual(values = c("mediumpurple2","mediumpurple2"))
 
-chillSpaceE <- ggplot(data = dataEast, aes(x = meanBB, y = chill)) + 
-  geom_violin( aes( group = species.name, width =1.5, fill = type)) +
-  #geom_hline(yintercept = sum[4,1], linetype="dashed") +
+chillSpaceE <- ggplot() + 
+  geom_violin(dataEast, mapping=aes(x = meanBB, y = chill, group = species.name, width =1, fill = type)) +
+  geom_point(east, mapping= aes(x = meanBB, y = chill)) +
+  geom_pointrange(data = east, aes(x = meanBB, y = chill, ymin=chill25, ymax = chill75)) +
   theme_classic() +  
   theme(axis.text.x = element_text( size=10,
                                     angle = 78, 
@@ -550,9 +574,10 @@ chillSpaceE <- ggplot(data = dataEast, aes(x = meanBB, y = chill)) +
   annotate("text", x = spTopE[5,5], y = -42.5, label = spTopE[5,2], cex = 3, angle = 78) +
   scale_fill_manual(values = c("#cc6a70ff","#cc6a70ff"))
 
-forceSpaceE <- ggplot(data = dataEast, aes(x = meanBB, y = force)) + 
-  geom_violin( aes( group = species.name, width = 1, fill = type)) +
-  #geom_hline(yintercept = sum[4,1], linetype="dashed") +
+forceSpaceE <-ggplot() + 
+  geom_violin(dataEast, mapping=aes(x = meanBB, y = force, group = species.name, width =1, fill = type)) +
+  geom_point(east, mapping= aes(x = meanBB, y = force)) +
+  geom_pointrange(data = east,aes(x = meanBB, y = force, ymin=force25, ymax = force75)) +
   theme_classic() +  
   theme(axis.text.x = element_text( size=10,
                                     angle = 78, 
@@ -571,9 +596,10 @@ forceSpaceE <- ggplot(data = dataEast, aes(x = meanBB, y = force)) +
   scale_fill_manual(values = c("#f9b641ff","#f9b641ff"))
 
 
-photoSpaceE <- ggplot(data = dataEast, aes(x = meanBB, y = photo)) + 
-  geom_violin( aes( group = species.name, width =1, fill = type)) +
-  #geom_hline(yintercept = sum[4,1], linetype="dashed") +
+photoSpaceE <- ggplot() + 
+  geom_violin(dataEast, mapping=aes(x = meanBB, y = photo, group = species.name, width =1, fill = type)) +
+  geom_point(east, mapping= aes(x = meanBB, y = photo)) +
+  geom_pointrange(data = east,aes(x = meanBB, y = photo, ymin=photo25, ymax = photo75)) +
   theme_classic() +  
   theme(axis.text.x = element_text( size=10,
                                     angle = 78, 
@@ -676,9 +702,10 @@ overlappingW <- c("spialb","betpap","popbal")
 spMiniW <- west[!west$species %in% overlappingW,]
 spTopW <- west[west$species %in% overlappingW,]
 
-bbSpaceW <- ggplot(data = dataWest, aes(x = meanBB, y = value)) + 
-  geom_violin( aes( group = species.name, width =1, fill = type)) +
-  #geom_hline(yintercept = sum[4,1], linetype="dashed") +
+bbSpaceW <-  ggplot() + 
+  geom_violin(dataWest, mapping=aes(x = meanBB, y = value, group = species.name, width =1, fill = type)) +
+  geom_point(west, mapping= aes(x = meanBB, y = meanBB)) +
+  geom_pointrange(data = west,aes(x = meanBB, y = meanBB, ymin=bb25, ymax = bb75)) +
   theme_classic() +  
   theme(axis.text.x = element_text( size=10,
                                     angle = 78, 
@@ -688,15 +715,16 @@ bbSpaceW <- ggplot(data = dataWest, aes(x = meanBB, y = value)) +
         legend.position = "none") + 
   scale_x_continuous( breaks = spMiniW$meanBB, labels = spMiniW$species,limits = c(15,68)) +
   labs( x = "Species", y = "Estimated budburst", main = NA) +
-  theme(legend.title = element_blank()) +  annotate("text", x = 15, y = 80, label = "d)", cex =5) +
+  theme(legend.title = element_blank()) +  annotate("text", x = 15, y = 80, label = "a)", cex =5) +
   annotate("text", x = spTopW[1,5], y = 3.5, label = spTopW[1,2], cex = 3, angle = 78) +
   annotate("text", x = spTopW[2,5], y = 3.5, label = spTopW[2,2], cex = 3, angle = 78) +
   annotate("text", x = spTopW[3,5], y = 3, label = spTopW[3,2], cex = 3, angle = 78) +
   scale_fill_manual(values = c("mediumpurple2","mediumpurple2"))
 
-chillSpaceW <- ggplot(data = dataWest, aes(x = meanBB, y = chill)) + 
-  geom_violin( aes( group = species.name, width =1.5, fill = type)) +
-  #geom_hline(yintercept = sum[4,1], linetype="dashed") +
+chillSpaceW <-  ggplot() + 
+  geom_violin(dataWest, mapping=aes(x = meanBB, y = chill, group = species.name, width =1, fill = type)) +
+  geom_point(west, mapping= aes(x = meanBB, y = chill)) +
+  geom_pointrange(data = west, aes(x = meanBB, y = chill, ymin=chill25, ymax = chill75)) +
   theme_classic() +  
   theme(axis.text.x = element_text( size=10,
                                     angle = 78, 
@@ -706,15 +734,16 @@ chillSpaceW <- ggplot(data = dataWest, aes(x = meanBB, y = chill)) +
         legend.position = "none") + 
   scale_x_continuous( breaks = spMiniW$meanBB, labels = spMiniW$species,limits = c(15,68)) +
   labs( x = "Species", y = "Chilling response", main = NA) +
-  theme(legend.title = element_blank()) +  annotate("text", x = 15, y = 10, label = "d)", cex =5) +
-  annotate("text", x = spTopW[1,5], y =-42.5, label = spTopW[1,2], cex = 3, angle = 78) +
-  annotate("text", x = spTopW[2,5], y = -42.5, label = spTopW[2,2], cex = 3, angle = 78) +
-  annotate("text", x = spTopW[3,5], y = -42.5, label = spTopW[3,2], cex = 3, angle = 78) +
+  theme(legend.title = element_blank()) +  annotate("text", x = 15, y = 10, label = "b)", cex =5) +
+  annotate("text", x = spTopW[1,5], y =-42, label = spTopW[1,2], cex = 3, angle = 78) +
+  annotate("text", x = spTopW[2,5], y = -42, label = spTopW[2,2], cex = 3, angle = 78) +
+  annotate("text", x = spTopW[3,5], y = -42, label = spTopW[3,2], cex = 3, angle = 78) +
   scale_fill_manual(values = c("#cc6a70ff","#cc6a70ff"))
 
-forceSpaceW <- ggplot(data = dataWest, aes(x = meanBB, y = force)) + 
-  geom_violin( aes( group = species.name, width = 1, fill = type)) +
-  #geom_hline(yintercept = sum[4,1], linetype="dashed") +
+forceSpaceW <- ggplot() + 
+  geom_violin(dataWest, mapping=aes(x = meanBB, y = force, group = species.name, width =1, fill = type)) +
+  geom_point(west, mapping= aes(x = meanBB, y = force)) +
+  geom_pointrange(data = west,aes(x = meanBB, y = force, ymin=force25, ymax = force75)) +
   theme_classic() +  
   theme(axis.text.x = element_text( size=10,
                                     angle = 78, 
@@ -722,20 +751,18 @@ forceSpaceW <- ggplot(data = dataWest, aes(x = meanBB, y = force)) +
         axis.title.y=element_text(size = 12),
         axis.title=element_text(size=15),
         legend.position = "none") + 
-  scale_x_continuous( breaks = spMiniW$meanBB, labels = spMiniW$species,limits = c(23,70)) +
+  scale_x_continuous( breaks = spMiniW$meanBB, labels = spMiniW$species,limits = c(15,68)) +
   labs( x = "Species", y = "Forcing response", main = NA) +
-  theme(legend.title = element_blank()) +  annotate("text", x = 1, y = 4, label = "d)", cex =5) +
-  annotate("text", x = spTopE[1,5], y = -25.5, label = spTopE[1,2], cex = 3, angle = 78) +
-  annotate("text", x = spTopE[2,5], y = -25.5, label = spTopE[2,2], cex = 3, angle = 78) +
-  annotate("text", x = spTopE[3,5], y = -25.5, label = spTopE[3,2], cex = 3, angle = 78) +
-  annotate("text", x = 40, y = -25.5, label = spTopE[4,2], cex = 3, angle = 78) +
-  annotate("text", x = spTopE[5,5], y = -25.5, label = spTopE[5,2], cex = 3, angle = 78) +
+  theme(legend.title = element_blank()) +  annotate("text", x = 15, y = 4, label = "c)", cex =5) +
+  annotate("text", x = spTopW[1,5], y = -23, label = spTopW[1,2], cex = 3, angle = 78) +
+  annotate("text", x = spTopW[2,5], y = -23, label = spTopW[2,2], cex = 3, angle = 78) +
+  annotate("text", x = spTopW[3,5], y = -23.5, label = spTopW[3,2], cex = 3, angle = 78) +
   scale_fill_manual(values = c("#f9b641ff","#f9b641ff"))
 
-
-photoSpaceW <- ggplot(data = dataWest, aes(x = meanBB, y = photo)) + 
-  geom_violin( aes( group = species.name, width =1, fill = type)) +
-  #geom_hline(yintercept = sum[4,1], linetype="dashed") +
+photoSpaceW <- ggplot() + 
+  geom_violin(dataWest, mapping=aes(x = meanBB, y = photo, group = species.name, width =1, fill = type)) +
+  geom_point(west, mapping= aes(x = meanBB, y = photo)) +
+  geom_pointrange(data = west,aes(x = meanBB, y = photo, ymin=photo25, ymax = photo75)) +
   theme_classic() +  
   theme(axis.text.x = element_text( size=10,
                                     angle = 78, 
@@ -743,14 +770,12 @@ photoSpaceW <- ggplot(data = dataWest, aes(x = meanBB, y = photo)) +
         axis.title.y=element_text(size = 12),
         axis.title=element_text(size=15),
         legend.position = "none") + 
-  scale_x_continuous( breaks = spMiniW$meanBB, labels = spMiniW$species,limits = c(23,70)) +
+  scale_x_continuous( breaks = spMiniW$meanBB, labels = spMiniW$species,limits = c(15,70)) +
   labs( x = "Species", y = "Photoperiod response", main = NA) +
-  theme(legend.title = element_blank()) +  annotate("text", x = 1, y = 4, label = "d)", cex =5) +
-  annotate("text", x = spTopE[1,5], y = -12.8, label = spTopE[1,2], cex = 3, angle = 78) +
-  annotate("text", x = spTopE[2,5], y = -13, label = spTopE[2,2], cex = 3, angle = 78) +
-  annotate("text", x = spTopE[3,5], y = -13, label = spTopE[3,2], cex = 3, angle = 78) +
-  annotate("text", x = 40, y = -13, label = spTopE[4,2], cex = 3, angle = 78) +
-  annotate("text", x = spTopE[5,5], y = -13, label = spTopE[5,2], cex = 3, angle = 78) +
+  theme(legend.title = element_blank()) +  annotate("text", x = 15, y = 4, label = "d)", cex =5) +
+  annotate("text", x = spTopW[1,5], y = -10.9, label = spTopW[1,2], cex = 3, angle = 78) +
+  annotate("text", x = spTopW[2,5], y = -10.9, label = spTopW[2,2], cex = 3, angle = 78) +
+  annotate("text", x = spTopW[3,5], y = -11.2, label = spTopW[3,2], cex = 3, angle = 78) +
   scale_fill_manual(values = c("cyan4","cyan4"))
 
 pdf("figures/4violinWestern.pdf", width = 10, height =20)

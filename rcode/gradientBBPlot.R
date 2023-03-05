@@ -128,16 +128,27 @@ quantile2575 <- function(x){
   return(returnQuanilte)
 }
 
+quantile97.52.5 <- function(x){
+  returnQuanilte <- quantile(x, prob = c(0.975, 0.025))
+  return(returnQuanilte)
+}
+
 bb_quan <- apply(m, 2, quantile2575)
 bb_t <- t(bb_quan)
 bb_df <- data.frame(bb_t)
 colnames(bb_df)[colnames(bb_df) == "X75."] <- "bb25"
 colnames(bb_df)[colnames(bb_df) == "X25."] <- "bb75"
+
+bb_quan9725 <- apply(m, 2, quantile97.52.5)
+bb_t9725 <- t(bb_quan9725)
+bb_df9725 <- data.frame(bb_t9725)
+colnames(bb_df9725)[colnames(bb_df9725) == "X97.5."] <- "bb97.5"
+colnames(bb_df9725)[colnames(bb_df9725) == "X2.5."] <- "bb2.5"
 # colnames(bb_df)[colnames(bb_df) == "X97.5."] <- "bb25"
 # colnames(bb_df)[colnames(bb_df) == "X2.75."] <- "bb75"
 
 spInfo <- cbind(spInfo, bb_df)
-
+spInfo <- cbind(spInfo, bb_df9725)
 spInfo$value <- spInfo$meanBB
 
 
@@ -535,7 +546,7 @@ spTopE <- east[east$species %in% overlappingE,]
 bbSpaceE <- ggplot() + 
   geom_violin(dataEast, mapping=aes(x = meanBB, y = value, group = species.name, width =1, fill = type)) +
   geom_point(east, mapping= aes(x = meanBB, y = meanBB)) +
-  geom_pointrange(data = east,aes(x = meanBB, y = meanBB, ymin=bb25, ymax = bb75)) +
+  geom_linerange(data = east,aes(x = meanBB, y = meanBB, ymin=bb2.5, ymax = bb97.5) ) +
   theme_classic() +  
   theme(axis.text.x = element_text( size=10,
                                     angle = 78, 
@@ -556,7 +567,7 @@ bbSpaceE <- ggplot() +
 chillSpaceE <- ggplot() + 
   geom_violin(dataEast, mapping=aes(x = meanBB, y = chill, group = species.name, width =1, fill = type)) +
   geom_point(east, mapping= aes(x = meanBB, y = chill)) +
-  geom_pointrange(data = east, aes(x = meanBB, y = chill, ymin=chill25, ymax = chill75)) +
+  geom_linerange(data = east, aes(x = meanBB, y = chill, ymin=chill2.5, ymax = chill97.5)) +
   theme_classic() +  
   theme(axis.text.x = element_text( size=10,
                                     angle = 78, 
@@ -577,7 +588,7 @@ chillSpaceE <- ggplot() +
 forceSpaceE <-ggplot() + 
   geom_violin(dataEast, mapping=aes(x = meanBB, y = force, group = species.name, width =1, fill = type)) +
   geom_point(east, mapping= aes(x = meanBB, y = force)) +
-  geom_pointrange(data = east,aes(x = meanBB, y = force, ymin=force25, ymax = force75)) +
+  geom_linerange(data = east,aes(x = meanBB, y = force, ymin=force2.5, ymax = force97.5)) +
   theme_classic() +  
   theme(axis.text.x = element_text( size=10,
                                     angle = 78, 
@@ -599,7 +610,7 @@ forceSpaceE <-ggplot() +
 photoSpaceE <- ggplot() + 
   geom_violin(dataEast, mapping=aes(x = meanBB, y = photo, group = species.name, width =1, fill = type)) +
   geom_point(east, mapping= aes(x = meanBB, y = photo)) +
-  geom_pointrange(data = east,aes(x = meanBB, y = photo, ymin=photo25, ymax = photo75)) +
+  geom_linerange(data = east,aes(x = meanBB, y = photo, ymin=photo2.5, ymax = photo97.5)) +
   theme_classic() +  
   theme(axis.text.x = element_text( size=10,
                                     angle = 78, 
@@ -617,7 +628,7 @@ photoSpaceE <- ggplot() +
   annotate("text", x = spTopE[5,5], y = -13, label = spTopE[5,2], cex = 3, angle = 78) +
   scale_fill_manual(values = c("cyan4","cyan4"))
  
-pdf("figures/4violinEastern.pdf", width = 10, height =20)
+pdf("figures/4violinEastern2575.pdf", width = 10, height =20)
 plot_grid(bbSpaceE, chillSpaceE,forceSpaceE, photoSpaceE, nrow = 4, align = "v")
 dev.off()
 
@@ -705,7 +716,7 @@ spTopW <- west[west$species %in% overlappingW,]
 bbSpaceW <-  ggplot() + 
   geom_violin(dataWest, mapping=aes(x = meanBB, y = value, group = species.name, width =1, fill = type)) +
   geom_point(west, mapping= aes(x = meanBB, y = meanBB)) +
-  geom_pointrange(data = west,aes(x = meanBB, y = meanBB, ymin=bb25, ymax = bb75)) +
+  geom_linerange(data = west,aes(x = meanBB, y = meanBB, ymin=bb2.5, ymax = bb97.5)) +
   theme_classic() +  
   theme(axis.text.x = element_text( size=10,
                                     angle = 78, 
@@ -724,7 +735,7 @@ bbSpaceW <-  ggplot() +
 chillSpaceW <-  ggplot() + 
   geom_violin(dataWest, mapping=aes(x = meanBB, y = chill, group = species.name, width =1, fill = type)) +
   geom_point(west, mapping= aes(x = meanBB, y = chill)) +
-  geom_pointrange(data = west, aes(x = meanBB, y = chill, ymin=chill25, ymax = chill75)) +
+  geom_linerange(data = west, aes(x = meanBB, y = chill, ymin=chill2.5, ymax = chill97.5)) +
   theme_classic() +  
   theme(axis.text.x = element_text( size=10,
                                     angle = 78, 
@@ -743,7 +754,7 @@ chillSpaceW <-  ggplot() +
 forceSpaceW <- ggplot() + 
   geom_violin(dataWest, mapping=aes(x = meanBB, y = force, group = species.name, width =1, fill = type)) +
   geom_point(west, mapping= aes(x = meanBB, y = force)) +
-  geom_pointrange(data = west,aes(x = meanBB, y = force, ymin=force25, ymax = force75)) +
+  geom_linerange(data = west,aes(x = meanBB, y = force, ymin=force2.5, ymax = force97.5)) +
   theme_classic() +  
   theme(axis.text.x = element_text( size=10,
                                     angle = 78, 
@@ -762,7 +773,7 @@ forceSpaceW <- ggplot() +
 photoSpaceW <- ggplot() + 
   geom_violin(dataWest, mapping=aes(x = meanBB, y = photo, group = species.name, width =1, fill = type)) +
   geom_point(west, mapping= aes(x = meanBB, y = photo)) +
-  geom_pointrange(data = west,aes(x = meanBB, y = photo, ymin=photo25, ymax = photo75)) +
+  geom_linerange(data = west,aes(x = meanBB, y = photo, ymin=photo2.5, ymax = photo97.5)) +
   theme_classic() +  
   theme(axis.text.x = element_text( size=10,
                                     angle = 78, 
@@ -778,6 +789,6 @@ photoSpaceW <- ggplot() +
   annotate("text", x = spTopW[3,5], y = -11.2, label = spTopW[3,2], cex = 3, angle = 78) +
   scale_fill_manual(values = c("cyan4","cyan4"))
 
-pdf("figures/4violinWestern.pdf", width = 10, height =20)
+pdf("figures/4violinWestern9725.pdf", width = 10, height =20)
 plot_grid(bbSpaceW, chillSpaceW,forceSpaceW, photoSpaceW, nrow = 4, align = "v")
 dev.off()

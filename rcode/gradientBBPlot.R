@@ -574,7 +574,8 @@ bbSpaceE <- ggplot() +
         legend.position = "none") + 
   scale_x_continuous( breaks = spMiniE$meanBB, labels = spMiniE$species,limits = c(23,70)) +
   labs( x = "Species", y = "Estimated budburst", main = NA) +
-  theme(legend.title = element_blank()) +  annotate("text", x = 1, y = 4, label = "d)", cex =5) +
+  theme(legend.title = element_blank()) +  annotate("text", x = 23, y = 80, label = "a)", cex =5) +
+  annotate("text", x =40, y = 80, label = "Eastern transect", cex =5) +
   annotate("text", x = spTopE[1,5], y = -0.2, label = spTopE[1,2], cex = 3, angle = 78) +
   annotate("text", x = spTopE[2,5], y = -0.2, label = spTopE[2,2], cex = 3, angle = 78) +
   annotate("text", x = spTopE[3,5], y = -0.2, label = spTopE[3,2], cex = 3, angle = 78) +
@@ -597,10 +598,12 @@ aSpaceE<-  ggplot() +
         legend.position = "none") + 
   scale_x_continuous( breaks = spMiniE$meanBB, labels = spMiniE$species,limits = c(23,70)) +
   labs( x = "Species", y = "Species intercept", main = NA) +
-  theme(legend.title = element_blank()) +  annotate("text", x = 23, y = 60, label = "b)", cex =5) +
+  theme(legend.title = element_blank()) +  annotate("text", x = 23, y = 60, label = "c)", cex =5) +
   annotate("text", x = spTopE[1,5], y = -4, label = spTopE[1,2], cex = 3, angle = 78) +
   annotate("text", x = spTopE[2,5], y = -4, label = spTopE[2,2], cex = 3, angle = 78) +
   annotate("text", x = spTopE[3,5], y = -4, label = spTopE[3,2], cex = 3, angle = 78) +
+  annotate("text", x = 40, y = -4, label = spTopE[4,2], cex = 3, angle = 78) +
+  annotate("text", x = spTopE[5,5], y = -4, label = spTopE[5,2], cex = 3, angle = 78) +
   scale_fill_manual(values = c("darkolivegreen4","darkolivegreen4"))
 
 chillSpaceE <- ggplot() + 
@@ -617,10 +620,11 @@ chillSpaceE <- ggplot() +
         legend.position = "none") + 
   scale_x_continuous( breaks = spMiniE$meanBB, labels = spMiniE$species,limits = c(23,70)) +
   labs( x = "Species", y = "Chilling response", main = NA) +
-  theme(legend.title = element_blank()) +  annotate("text", x = 1, y = 4, label = "c)", cex =5) +
+  theme(legend.title = element_blank()) +  annotate("text", x = 23, y = 10, label = "a)", cex =5) +
+  annotate("text", x = 45, y = 10, label = "Eastern transect", cex =5) +
   annotate("text", x = spTopE[1,5], y = -43.7, label = spTopE[1,2], cex = 3, angle = 78) +
   annotate("text", x = spTopE[2,5], y = -43.7, label = spTopE[2,2], cex = 3, angle = 78) +
-  annotate("text", x = spTopE[3,5], y = --43.7, label = spTopE[3,2], cex = 3, angle = 78) +
+  annotate("text", x = spTopE[3,5], y = -43.7, label = spTopE[3,2], cex = 3, angle = 78) +
   annotate("text", x = 40, y = -43.7, label = spTopE[4,2], cex = 3, angle = 78) +
   annotate("text", x = spTopE[5,5], y = -43.7, label = spTopE[5,2], cex = 3, angle = 78) +
   scale_fill_manual(values = c("#cc6a70ff","#cc6a70ff"))
@@ -639,7 +643,7 @@ forceSpaceE <-ggplot() +
         legend.position = "none") + 
   scale_x_continuous( breaks = spMiniE$meanBB, labels = spMiniE$species,limits = c(23,70)) +
   labs( x = "Species", y = "Forcing response", main = NA) +
-  theme(legend.title = element_blank()) +  annotate("text", x = 1, y = 4, label = "d)", cex =5) +
+  theme(legend.title = element_blank()) +  annotate("text", x = 23, y = 10, label = "c)", cex =5) +
   annotate("text", x = spTopE[1,5], y = -29.5, label = spTopE[1,2], cex = 3, angle = 78) +
   annotate("text", x = spTopE[2,5], y = -29.5, label = spTopE[2,2], cex = 3, angle = 78) +
   annotate("text", x = spTopE[3,5], y = -29.5, label = spTopE[3,2], cex = 3, angle = 78) +
@@ -662,7 +666,7 @@ photoSpaceE <- ggplot() +
         legend.position = "none") + 
   scale_x_continuous( breaks = spMiniE$meanBB, labels = spMiniE$species,limits = c(23,70)) +
   labs( x = "Species", y = "Photoperiod response", main = NA) +
-  theme(legend.title = element_blank()) +  annotate("text", x = 1, y = 4, label = "e)", cex =5) +
+  theme(legend.title = element_blank()) +  annotate("text", x = 23, y = 10, label = "e)", cex =5) +
   annotate("text", x = spTopE[1,5], y = -14.5, label = spTopE[1,2], cex = 3, angle = 78) +
   annotate("text", x = spTopE[2,5], y = -14.5, label = spTopE[2,2], cex = 3, angle = 78) +
   annotate("text", x = spTopE[3,5], y = -14.5, label = spTopE[3,2], cex = 3, angle = 78) +
@@ -769,7 +773,8 @@ bbSpaceW <-  ggplot() +
         legend.position = "none") + 
   scale_x_continuous( breaks = spMiniW$meanBB, labels = spMiniW$species,limits = c(15,68)) +
   labs( x = "Species", y = "Estimated budburst", main = NA) +
-  theme(legend.title = element_blank()) +  annotate("text", x = 15, y = 80, label = "a)", cex =5) +
+  annotate("text", x =40, y = 80, label = "Western transect", cex =5) +
+  theme(legend.title = element_blank()) +  annotate("text", x = 15, y = 80, label = "b)", cex =5) +
   annotate("text", x = spTopW[1,5], y = -0.2, label = spTopW[1,2], cex = 3, angle = 78) +
   annotate("text", x = spTopW[2,5], y =-0.2, label = spTopW[2,2], cex = 3, angle = 78) +
   annotate("text", x = spTopW[3,5], y = -0.2, label = spTopW[3,2], cex = 3, angle = 78) +
@@ -790,7 +795,7 @@ aSpaceW <-  ggplot() +
         legend.position = "none") + 
   scale_x_continuous( breaks = spMiniW$meanBB, labels = spMiniW$species,limits = c(15,68)) +
   labs( x = "Species", y = "Species intercept", main = NA) +
-  theme(legend.title = element_blank()) +  annotate("text", x = 15, y = 60, label = "b)", cex =5) +
+  theme(legend.title = element_blank()) +  annotate("text", x = 15, y = 60, label = "d)", cex =5) +
   annotate("text", x = spTopW[1,5], y = -4, label = spTopW[1,2], cex = 3, angle = 78) +
   annotate("text", x = spTopW[2,5], y = -4, label = spTopW[2,2], cex = 3, angle = 78) +
   annotate("text", x = spTopW[3,5], y = -4, label = spTopW[3,2], cex = 3, angle = 78) +
@@ -811,7 +816,8 @@ chillSpaceW <-  ggplot() +
         legend.position = "none") + 
   scale_x_continuous( breaks = spMiniW$meanBB, labels = spMiniW$species,limits = c(15,68)) +
   labs( x = "Species", y = "Chilling response", main = NA) +
-  theme(legend.title = element_blank()) +  annotate("text", x = 15, y = 10, label = "c)", cex =5) +
+  theme(legend.title = element_blank()) +  annotate("text", x = 15, y = 10, label = "b)", cex =5) +
+  annotate("text", x = 38, y = 10, label = "Western transect", cex =5) +
   annotate("text", x = spTopW[1,5], y =-43.7, label = spTopW[1,2], cex = 3, angle = 78) +
   annotate("text", x = spTopW[2,5], y = -43.7, label = spTopW[2,2], cex = 3, angle = 78) +
   annotate("text", x = spTopW[3,5], y = -43.7, label = spTopW[3,2], cex = 3, angle = 78) +
@@ -831,7 +837,7 @@ forceSpaceW <- ggplot() +
         legend.position = "none") + 
   scale_x_continuous( breaks = spMiniW$meanBB, labels = spMiniW$species,limits = c(15,68)) +
   labs( x = "Species", y = "Forcing response", main = NA) +
-  theme(legend.title = element_blank()) +  annotate("text", x = 15, y = 4, label = "d)", cex =5) +
+  theme(legend.title = element_blank()) +  annotate("text", x = 15, y = 10, label = "d)", cex =5) +
   annotate("text", x = spTopW[1,5], y = -29.5, label = spTopW[1,2], cex = 3, angle = 78) +
   annotate("text", x = spTopW[2,5], y = -29.5, label = spTopW[2,2], cex = 3, angle = 78) +
   annotate("text", x = spTopW[3,5], y = -29.5, label = spTopW[3,2], cex = 3, angle = 78) +
@@ -851,12 +857,22 @@ photoSpaceW <- ggplot() +
         legend.position = "none") + 
   scale_x_continuous( breaks = spMiniW$meanBB, labels = spMiniW$species,limits = c(15,70)) +
   labs( x = "Species", y = "Photoperiod response", main = NA) +
-  theme(legend.title = element_blank()) +  annotate("text", x = 15, y = 4, label = "e)", cex =5) +
+  theme(legend.title = element_blank()) +  annotate("text", x = 15, y = 10, label = "f)", cex =5) +
   annotate("text", x = spTopW[1,5], y = -14.5, label = spTopW[1,2], cex = 3, angle = 78) +
   annotate("text", x = spTopW[2,5], y = -14.5, label = spTopW[2,2], cex = 3, angle = 78) +
   annotate("text", x = spTopW[3,5], y = -14.5, label = spTopW[3,2], cex = 3, angle = 78) +
   scale_fill_manual(values = c("cyan4","cyan4"))
 
-pdf("figures/4violinWestern9725.pdf", width = 10, height =24)
-plot_grid(bbSpaceW, aSpaceW,chillSpaceW,forceSpaceW, photoSpaceW, nrow = 5, align = "v")
+# pdf("figures/4violinWestern9725.pdf", width = 10, height =24)
+# plot_grid(bbSpaceW, aSpaceW,chillSpaceW,forceSpaceW, photoSpaceW, nrow = 5, align = "v")
+# dev.off()
+
+#Making better figures for the MS:
+
+pdf("figures/violinBetaAlphaEW.pdf", width = 12, height = 8)
+plot_grid(bbSpaceE, bbSpaceW, aSpaceE, aSpaceW, nrow = 2, ncol = 2, align = "v")
+dev.off()
+
+pdf("figures/violinCFPEW.pdf", width = 12, height = 16)
+plot_grid(chillSpaceE, chillSpaceW, forceSpaceE, forceSpaceW, photoSpaceE, photoSpaceW, nrow = 3, ncol = 2, align = "v")
 dev.off()

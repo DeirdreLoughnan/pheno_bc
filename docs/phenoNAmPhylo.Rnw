@@ -99,63 +99,58 @@ source("..//rcode/phenologyMsValues.R")
 \item Cue responses and interactions...
 \begin {enumerate}
 \item Species budburst = strongly phylogenetically structured ($\lambda$ of \Sexpr{lamT} (90\% uncertainty interval: \Sexpr{lamTLower}, \Sexpr{lamTUpper}), root trait value of \Sexpr{rootT} (90\% uncertainty interval: \Sexpr{rootTLower}, \Sexpr{rootTUpper}).
-\item All cues did lead to an advance in budburst date
-\item Strong interactions between cues and between cues and sites.
-\item Forcing and chilling = strong delaying effect = low chilling offset by high forcing (Fig. S2 a).
+\item All cues did lead to an advance in budburst date, chilling being strongest and photoperiod weakest
+\item But strong interactions between cues and between cues and sites.
+\item Forcing X chilling = strong delaying effect = low chilling offset by high forcing (Fig. S2 a).
 \end{enumerate}
 
-\item Differences across sites...
+\item Differences across sites....
 \begin{enumerate}
-\item delaying interactions between:
+\item Did find differences across sites --- Manning park = delayed relative to Smithers, Harvard Forest & St. Hippolyte = advanced
+\item but confounded by site by cue interactions --- not as clearly divided across transects
+%Start with eastern pops 
 \begin{enumerate}
-\item forcing and St.Hippolyte ($b_{forcexsite3}$)
-\item forcing and Harvard forest ($b_{forcexsite4}$)
-\item chilling by St. Hippolyte ($b_{chillxsite3}$) 
-\item chilling by Harvard forest ($b_{chillxsite4}$)
+\item Eastern transect: delaying interaction with chilling and forcing ($b_{forcexsiteX}$)
+\item Led to earlier bb eastern spp under high forcing (Fig. S2b)
+\item But under low forcing, Harvard Forest had later bb than other populations (Fig. S2b)
+\item St. Hippolyte = strongest response to high chilling, while Harvard forest slight delay with hight chilling (Fig. S2c)
+\item All eastern spp bb earlier with longer photoperiod, no real trend with short photoperiod (Fig. S2d)
+\end{enumerate}
+% western spp
+\begin{enumerate}
+\item extent forcing = divergent effects bb at Manning park --- later bb under low forcing, advanced with high forcing
+\item Low chilling = slight advance in bb, but high chilling later bb --- counter our expectations
+\item Manning park later than Smithers under longer photoperiods, but earlier undre shorter photoperiod conditions.
+\end{enumerate}
 \end{enumerate}
 
-\item Unique site by cue responses:
+
+\item Species differences....
 \begin{enumerate}
-\item St. Hippolyte = earlier budburst than our western sites ---  high forcing leading to earlier budburst
-\item Harvard Forest = later budburst than Smithers at low forcing--- but more responsive to high forcing = earlier budburst
-\item Manning park (surprisingly) = earlier budburst at low forcing, but delayed w/ high forcing 
+\item Individual species show more distinct differences in their timing of bb - ranging from \Sexpr{minBB} to \Sexpr{maxBB}
+\item Across all species, relative importance of cue = varied = unique temporal niches  (Fig. \ref{fig:cueSp})
+\item But fail to find strong parallels in gradients of bb with cue responses (Fig. \ref{fig:betaAlphaGrad} and Fig. Fig. \ref{fig:cueGrad})
+\item Species level differences (intercept) explain considerable portion of bb (Fig. \ref{fig:betaAlphaGrad})
+\item Only found weak gradients in chilling and forcing with later bb  (Fig. \ref{fig:cueGrad})
 \end{enumerate}
 
-\item All sites--- low chilling = advances budburst
 \begin{enumerate}
-\item strongest response for St. Hippolyte --- advanced budburst at high chilling
-\item Chilling at both Harvard forest and Manning park had delayed budburst relative to Smithers.
-\item Suggests latitudinal differences may shape chilling cue responses
+\item Differences no due to plant architecture --- shrubs and trees = very similar responses overall (Fig. \ref{fig:cueST2})
+\item While some understory species, e.g. \emph{Cornus stolonifera} fit predicted profile --- weak chilling and forcing cues---- others don't --- e.g. \emph{Menziesia ferruginea} = strong responses all 3 cues (Fig. \ref{fig:cueSp}.
+% %Nov15DL: Menfer does have a different floral structure compared to other species, with both the floral and leaf buds clustered together. But there was nothing strickenly odd about the plant, nothing noted in Pojar plant guides to indicate unique ecology, based on web of science searches there is a fungus-root association in alpine populations, but there are no publications with phenology
+\item Tree species = no strong trends, but e.g. \emph{Quercus velutina} = stronger chilling and photoperiod cues as predicted, and \emph{Fagus grandifolia} = strongest photoperiod responsebut others like \emph{Prunus pensylvanica} 
+\iten But some surprising spp responses, e.g. \emph{Symphoricarpos alba} had the strongest chilling response
+have consistently weak cue responses (Fig. \ref{fig:cueSp}.
 \end{enumerate}
 
-\item  photoperiod by site interactions differed with transect
-\begin{enumerate}
-\item Interaction with eastern sites support a moderate advancing effect --- longer photoperiods = budburst dates to advance more, negligible response under short photoperiods
-\item Manning park = opposite and stronger responses: with short photoperiod = earlier budburst relative to Smithers and long photoperiods = slightly delayed budburst. (Fig. S2 d).
-\end{enumerate}
 
-\item Differences in cue responses across sites are weak when site effects are accounted for (Fig. \ref{fig:siteCues})
-\item Did not observe differences across different plant architectures, with both shrubs and trees having very similar cue responses (Fig. \ref{fig:cueST})
-
-%DLOct14 - Also need to compare the uncertainty intervals and double check if they overlap
-\end{enumerate}
- \item Individual species show more distinct trends 
-\begin{enumerate}
-\item Across all species, cue responses = strongest for chilling and forcing versus photoperiod, but relative importance of cue = varied across species = unique temporal niches  (\ref{fig:cueSp})
-\item No strong evidence of generalizable trends in cue responses across the transects or between tree and shrub species.
-\item But some understory species, e.g. \emph{Cornus stolonifera} do fit profile of both weak chilling and forcing cues, but others e.g. \emph{Menziesia ferruginea} exhibit strong responses to all three cues (Fig. \ref{fig:cueSp}.
-%Nov15DL: Menfer does have a different floral structure compared to other species, with both the floral and leaf buds clustered together. But there was nothing strickenly odd about the plant, nothing noted in Pojar plant guides to indicate unique ecology, based on web of science searches there is a fungus-root association in alpine populations, but there are no publications with phenology
-\item Tree species = no strong trends, but e.g. \emph{Quercus velutina} = stronger chilling and forcing cues as well as photoperiod as predicted, but others like \emph{Prunus pensylvanica} have consistently weak cue responses (Fig. \ref{fig:cueSp}.
-\item Estimates do support commonly observed trends, e.g. \emph{Fagus grandifolia} = strongest photoperiod response, but the shrub \emph{Symphoricarpos alba} had the strongest chilling response ---surprisingly.
-\end{enumerate}
-
-\item Species budburst did show a considerable gradient across our assemblage of species, but this was not well explained by variation in trait responses (Fig. \ref{fig:betaAlphaGrad} and \ref{fig:cueGrad}.
-\begin{enumerate}
-\item Substantial portion of species budburst date is explained by species-level differences (Fig. \ref{fig:betaAlphaGrad} c and d)
-\item We do see slight gradients iwth later species having stronger chilling and forcing responses, especially in the western transect
-\item But no real trend with photoperiod
-\end{enumerate}
-\end {enumerate}
+% \item Species budburst did show a considerable gradient across our assemblage of species, but this was not well explained by variation in trait responses (Fig. \ref{fig:betaAlphaGrad} and \ref{fig:cueGrad}.
+% \begin{enumerate}
+% \item Substantial portion of species budburst date is explained by species-level differences (Fig. \ref{fig:betaAlphaGrad} c and d)
+% \item We do see slight gradients iwth later species having stronger chilling and forcing responses, especially in the western transect
+% \item But no real trend with photoperiod
+% \end{enumerate}
+% \end {enumerate}
 
 
 \section{Tables and figures}

@@ -78,7 +78,7 @@ Corresponding Author: Deirdre Loughnan, deirdre.loughnan@ubc.ca \\
 \item muplot in supp
 \item Spp plot add a line with the overall estimate mean to each and think of ways to group (along x axis)… maybe by clade and then color by east/west? Or order by pt 1 and color by clade (especially as you have a convincing east/west comparison plot already)?
 \item Not sure you  need Fig 7-8?
-\item overall message: see a lot of spp differences, but not a lot of site level differences - even with the biases introudced by our differences in winter chilling and collection methods
+\item overall message: see a lot of spp differences, but not a lot of site level differences - even with the biases introucded by our differences in winter chilling and collection methods
 
 \end{enumerate}
 
@@ -138,7 +138,7 @@ source("..//rcode/phenologyMsValues.R")
 \begin{enumerate}
 \item While some understory species, e.g. \emph{Cornus stolonifera} fit predicted profile --- weak chilling and forcing cues---- others don't --- e.g. \emph{Menziesia ferruginea} = strong responses all 3 cues (Fig. \ref{fig:cueSp}.
 % %Nov15DL: Menfer does have a different floral structure compared to other species, with both the floral and leaf buds clustered together. But there was nothing strickenly odd about the plant, nothing noted in Pojar plant guides to indicate unique ecology, based on web of science searches there is a fungus-root association in alpine populations, but there are no publications with phenology
-\item Tree species = no strong trends, but e.g. \emph{Quercus velutina} = stronger chilling and photoperiod cues as predicted, and \emph{Fagus grandifolia} = strongest photoperiod responsebut others like \emph{Prunus pensylvanica}
+\item Tree species = no strong trends, but e.g. \emph{Quercus velutina} = stronger chilling and photoperiod cues as predicted, and \emph{Fagus grandifolia} = strongest photoperiod response but others like \emph{Prunus pensylvanica}
 \item But some surprising spp responses, e.g. \emph{Symphoricarpos alba} had the strongest chilling response
 have consistently weak cue responses (Fig. \ref{fig:cueSp}.
 \end{enumerate}

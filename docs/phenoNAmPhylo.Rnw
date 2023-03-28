@@ -93,9 +93,9 @@ source("..//rcode/phenologyMsValues.R")
 \begin{enumerate}
 \item Overall: Low forcing, chilling, and shorter photoperiods resulted in later budburst dates than higher temperature and longer photoperiod treatments across all sites (Fig. \ref{fig:intrxn}b-d)
 \item Between the two transects eastern budburst dates were consistently earlier (Fig. \ref{fig:intrxn}). 
-\item Forcing at eastern lower latitude site = slightly later bb than high latitude site --- but western sites only differed slightly at low forcing (Fig. \ref{fig:intrxn}b)
-\item This latitudinal effect was not found for chilling --- chilling responses = similar for high and low chilling in eastern transect, but much later for field only chilling (no chilling) treatment --- but eestern transect = strong difference between high and low chilling and not sites (Fig. \ref{fig:intrxn}c).
-\item Photoperiod effects = greatest in eastern populations and weak in western populations --- low latitude site had slightly later bb in eastern transect, but neglibile difference in the west. (Fig. \ref{fig:intrxn}d)
+\item Lower latitude site in eastern transect was less responsive to forcing = slightly later bb than high latitude site --- but western sites only differed slightly under low forcing (Fig. \ref{fig:intrxn}b)
+\item This latitudinal effect was not found for chilling --- chilling responses = similar for high and low chilling in eastern transect, but much later for field only chilling (no chilling) treatment --- but western transect = strong difference between high and low chilling and not sites (Fig. \ref{fig:intrxn}c).
+\item Photoperiod effects = greatest in eastern populations and weak in western populations --- low latitude site had slightly later bb in eastern transect, but negligible difference in the west. (Fig. \ref{fig:intrxn}d)
 \end{enumerate}
 
 %Manning park = delayed relative to Smithers, Harvard Forest \& St. Hippolyte = more advanced than Smithers
@@ -118,9 +118,9 @@ source("..//rcode/phenologyMsValues.R")
 
 %\item Species differences....
 % \begin{enumerate}
-\item Individual species show distinct differences in their timing of bb and realtive importance of cues.
+\item Individual species show distinct differences in their timing of bb and relative importance of cues.
 \begin{enumerate}
-\item Both chilling and forcing varied with budburst, with later bbing species having stronger responses to each cue respectively (Fig. \ref{fig:cueGrad}).
+\item Both chilling and forcing responses varied with budburst, with later bbing species having stronger responses to each cue respectively (Fig. \ref{fig:cueGrad}).
 \item But gradients were not as strong as expected (Fig. \ref{fig:betaAlphaGrad} and Fig. \ref{fig:cueGrad})
 \item Species level differences (intercept) explain considerable portion of bb, explaining \Sexpr{diffBAWest}\% of the estimated bb for western species and \Sexpr{diffBAEast}\% of the estimated bb for eastern species (Fig. \ref{fig:betaAlphaGrad})
 \end{enumerate}
@@ -132,7 +132,7 @@ source("..//rcode/phenologyMsValues.R")
 \item But other shrub species do not --- e.g. \emph{Menziesia ferruginea} and \emph{Symphoricarpos alba} = latest bb, but also higher chill and forcing cue estimates (Fig. S2).
 % %Nov15DL: Menfer does have a different floral structure compared to other species, with both the floral and leaf buds clustered together. But there was nothing strickenly odd about the plant, nothing noted in Pojar plant guides to indicate unique ecology, based on web of science searches there is a fungus-root association in alpine populations, but there are no publications with phenology
 \item Tree species = no strong trends, but e.g. \emph{Quercus velutina} = stronger chilling and photoperiod cues as predicted, and \emph{Fagus grandifolia} = strongest photoperiod response % but others like \emph{Prunus pensylvanica}
-\item Unexpected spp responses are partially due to having stronger cue responses, but also driven by large spp intercpets --- suggests other factors that species archictural growth driving diff cue responses 
+\item Unexpected spp responses are partially due to having stronger cue responses, but also driven by large spp intercepts --- suggests factors other than species architectural growth driving diff cue responses 
 \end{enumerate}
 % \end{enumerate}
 
@@ -243,7 +243,7 @@ print(fourSite,include.rownames=TRUE, caption.placement="top", hline.after=c(-1,
 
 \begin{figure}[h!]
     \centering
-     \includegraphics[width=\textwidth]{..//figures/dotBetaAlpha.pdf}
+     \includegraphics[width=\textwidth]{..//figures/dotBetaAlphaLong2.pdf}
     \caption{Estimated budburst, shown in blue, and species intercepts, shown in red, ranked by budburst dates for both the eastern (a) and western (b) transects.}
     \label{fig:betaAlphaGrad}
 \end{figure}

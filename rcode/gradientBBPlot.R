@@ -880,11 +880,11 @@ dev.off()
 # Making lizzie's other suggested plot - 2 connected dots:
 
 meanPtW <- aggregate(dataWest[c("meanBB", "Int")], dataWest[c("species.name","type","transect")], FUN = mean)
-
+names(meanPtW) <- c("species.name","type","transect","Budburst","Intercept")
 dotW <- ggplot(meanPtW) +
-  geom_point(aes(y= meanBB, x = meanBB), col = "cyan4", size = 8) +
-  geom_point(aes(y= Int, x = meanBB), col = "#CC6677", size = 8) +
-  geom_segment(aes(x = meanBB, y = Int, xend = meanBB, yend = meanBB), data = meanPtW, col = "black") +
+  geom_point(aes(y= Budburst, x = Budburst, colour = "Budburst"), size = 8) +
+  geom_point(aes(y= Intercept, x = Budburst, colour = "Intercept"), size = 8) +
+  geom_segment(aes(x = Budburst, y = Intercept, xend = Budburst, yend = Budburst), data = meanPtW, col = "black") +
   theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
         panel.background = element_blank(), axis.line = element_line(colour = "black"),
         legend.key=element_rect(fill="white")) +
@@ -892,24 +892,27 @@ dotW <- ggplot(meanPtW) +
   theme(axis.text.x = element_text( size=15,
                                     angle = 78, 
                                     hjust=1),
-        axis.title.y=element_text(size = 15),
-        axis.title=element_text(size=15),
+        axis.text.y=element_text(size = 15),
+        axis.title=element_text(size=20),
         legend.position = "none") + 
   scale_x_continuous( breaks = spMiniW$meanBB, labels = spMiniW$species,limits = c(15,68)) +
   labs( x = "Species", y = "Estimated parameter", main = NA) +
-  theme(legend.title = element_blank()) +  annotate("text", x = 28, y = 74, label = "b)      Western transect", cex =8) +
+  theme(legend.title = element_blank()) +  annotate("text", x = 19.5, y = 74, label = "b)      Western transect", cex =8) +
   annotate("text", x = spTopW[1,5], y = 0, label = spTopW[1,2], cex = 5, angle = 78) +
   annotate("text", x = spTopW[2,5], y = 0, label = spTopW[2,2], cex = 5, angle = 78) +
   annotate("text", x = spTopW[3,5], y = 0, label = spTopW[3,2], cex = 5, angle = 78) +
-  scale_fill_manual(values = c("darkolivegreen4","darkolivegreen4"))
+  scale_color_manual(values = c("cyan4", "#CC6677"))
 
 #### Eastern plot
 meanPtE <- aggregate(dataEast[c("meanBB", "Int")], dataEast[c("species.name","type","transect")], FUN = mean)
+names(meanPtE) <- c("species.name","type","transect","Budburst","Intercept")
+
+
 
 dotE <- ggplot(meanPtE) +
-  geom_point(aes(y= meanBB, x = meanBB), col = "cyan4", size = 8) +
-  geom_point(aes(y= Int, x = meanBB), col = "#CC6677", size = 8) +
-  geom_segment(aes(x = meanBB, y = Int, xend = meanBB, yend = meanBB), data = meanPtE, col = "black") +
+  geom_point(aes(y= Budburst, x = Budburst, colour = "Budburst"), size = 8) +
+  geom_point(aes(y= Intercept, x = Budburst, colour = "Intercept"), size = 8) +
+  geom_segment(aes(x = Budburst, y = Intercept, xend = Budburst, yend = Budburst), data = meanPtE, col = "black") +
   theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
         panel.background = element_blank(), axis.line = element_line(colour = "black"),
         legend.key=element_rect(fill="white")) +
@@ -917,19 +920,19 @@ dotE <- ggplot(meanPtE) +
   theme(axis.text.x = element_text( size=15,
                                     angle = 78, 
                                     hjust=1),
-        axis.title.y=element_text(size = 15),
-        axis.title=element_text(size=15),
-        legend.position = "none") + 
+        axis.text.y=element_text(size = 15),
+        axis.title=element_text(size=20)
+        ) +
   scale_x_continuous( breaks = spMiniE$meanBB, labels = spMiniE$species,limits = c(15,68)) +
   labs( x = "Species", y = "Estimated parameter", main = NA) +
-  theme(legend.title = element_blank()) +  annotate("text", x = 28, y = 74, label = "a)      Eastern transect", cex =8) +annotate("text", x = spTopE[1,5], y = 0, label = spTopE[1,2], cex = 5, angle = 78) +
+  theme(legend.title = element_blank(), legend.text = element_text(size =25), legend.position = "top") +  annotate("text", x = 19, y = 74, label = "a)      Eastern transect", cex =8) +annotate("text", x = spTopE[1,5], y = 0, label = spTopE[1,2], cex = 5, angle = 78) +
   annotate("text", x = spTopE[2,5], y = 0, label = spTopE[2,2], cex = 5, angle = 78) +
   annotate("text", x = spTopE[3,5], y = 0, label = spTopE[3,2], cex = 5, angle = 78) +
   annotate("text", x = 38, y = 0, label = spTopE[4,2], cex = 5, angle = 78) +
   annotate("text", x = spTopE[5,5], y = 0, label = spTopE[5,2], cex = 5, angle = 78) +
-  scale_fill_manual(values = c("darkolivegreen4","darkolivegreen4"))
+  scale_color_manual(values = c("cyan4", "#CC6677"))
 
-pdf("..//figures/dotBetaAlpha.pdf", width = 15, height = 5)
-plot_grid(dotE, dotW, nrow = 1, ncol = 2, align = "v")
+pdf("..//figures/dotBetaAlphaLong2.pdf", width = 15, height = 10)
+plot_grid(dotE, dotW, nrow = 2, ncol = 1, align = "v")
 dev.off()
 

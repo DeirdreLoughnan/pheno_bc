@@ -65,24 +65,6 @@ Vancouver, BC, Canada, V6T 1Z4. \\
 
 Corresponding Author: Deirdre Loughnan, deirdre.loughnan@ubc.ca \\
 
-\section*{General thoughts}
-\begin{enumerate}
-\item “Producing unique temporal niches” — cool, can you expand on this at all? Maybe finally make up some ‘control’ environmental conditions and plot the species via that (pt 1)
-\item Control environment: average conditions perhaps - mean winter chilling, spring temps, 12/12 photoperiod
-\item Group results: "cue interactions", "diff across sites", "spp differences"
-\item Stronger photoperiod cues Eastern sites - defense agains false spring events?
-\item Site by forcing: bc of chilling? Positive at SH - where there was more chilling therefore needing less forcing, but negative at other sites (MP and HF) - less clear
-\item move interaction plots to supp
-\item Figure changes:
-\item fig:siteCues - plot on same fig so cue differences pop
-\item muplot in supp
-\item Spp plot add a line with the overall estimate mean to each and think of ways to group (along x axis)… maybe by clade and then color by east/west? Or order by pt 1 and color by clade (especially as you have a convincing east/west comparison plot already)?
-\item Not sure you  need Fig 7-8?
-\item overall message: see a lot of spp differences, but not a lot of site level differences - even with the biases introucded by our differences in winter chilling and collection methods
-
-\section*{Comments from Florum presentation}
-
-\end{enumerate}
 
 \section*{Research questions}
 \begin{enumerate}
@@ -109,14 +91,11 @@ source("..//rcode/phenologyMsValues.R")
 
 \item Populations differed in their their overall budburst dates, but interacted with cues --- effects were clearly divided between eastern and western populations.
 \begin{enumerate}
-\item Eastern budburst dates were consistently earlier in response to each of our three cues (Fig. S2). 
-\item Low forcing resulted in later budburst dates than high forcing (Fig. S2b)
-\item Our two eastern populations differ --- forcing at lower latitude sites = slightly later bb than high latitude sites --- but western sites were similar under high forcing and only slight diff low forcing (Fig. S2b)
-\item Across all populations low chilling = later bb, but no differences with latitude within the western and eastern populations (Fig. S2c)
-\item Within eastern populations, chilling responses were similar for both high and low chilling, but substantially different from field only chilling (no chilling) treatment (Fig. S2c)
-\item Strong difference in bb western population between high and low chilling, but no difference with sites (Fig. S2c).
-\item Budburst dates were earlier under longer photoperiods --- difference = greatest in eastern populations and weak in western populations. 
-\item In eastern, low latitude site had slightly later bb, but this trend was neglibile in the western populations.
+\item Overall: Low forcing, chilling, and shorter photoperiods resulted in later budburst dates than higher temperature and longer photoperiod treatments across all sites (Fig. \ref{fig:intrxn}b-d)
+\item Between the two transects eastern budburst dates were consistently earlier (Fig. \ref{fig:intrxn}). 
+\item Forcing at eastern lower latitude site = slightly later bb than high latitude site --- but western sites only differed slightly at low forcing (Fig. \ref{fig:intrxn}b)
+\item This latitudinal effect was not found for chilling --- chilling responses = similar for high and low chilling in eastern transect, but much later for field only chilling (no chilling) treatment --- but eestern transect = strong difference between high and low chilling and not sites (Fig. \ref{fig:intrxn}c).
+\item Photoperiod effects = greatest in eastern populations and weak in western populations --- low latitude site had slightly later bb in eastern transect, but neglibile difference in the west. (Fig. \ref{fig:intrxn}d)
 \end{enumerate}
 
 %Manning park = delayed relative to Smithers, Harvard Forest \& St. Hippolyte = more advanced than Smithers
@@ -143,17 +122,17 @@ source("..//rcode/phenologyMsValues.R")
 \begin{enumerate}
 \item Both chilling and forcing varied with budburst, with later bbing species having stronger responses to each cue respectively (Fig. \ref{fig:cueGrad}).
 \item But gradients were not as strong as expected (Fig. \ref{fig:betaAlphaGrad} and Fig. \ref{fig:cueGrad})
-\item Species level differences (intercept) explain considerable portion of bb (Fig. \ref{fig:betaAlphaGrad})
+\item Species level differences (intercept) explain considerable portion of bb, explaining \Sexpr{diffBAWest}\% of the estimated bb for western species and \Sexpr{diffBAEast}\% of the estimated bb for eastern species (Fig. \ref{fig:betaAlphaGrad})
 \end{enumerate}
 % \end{enumerate}
 
 \item Species differences are not due to plant architecture --- shrubs and trees = very similar responses overall (Fig. \ref{fig:cueST})
 \begin{enumerate}
 \item Many of our earliest bb species are shrub species, e.g. \emph{Cornus stolonifera} --- fits our predicted profile of weak chilling and forcing cues
-\item But shrub species don't --- e.g. \emph{Menziesia ferruginea} and \emph{Symphoricarpos alba} = latest bb (Fig. \ref{fig:cueSp}.
+\item But other shrub species do not --- e.g. \emph{Menziesia ferruginea} and \emph{Symphoricarpos alba} = latest bb, but also higher chill and forcing cue estimates (Fig. S2).
 % %Nov15DL: Menfer does have a different floral structure compared to other species, with both the floral and leaf buds clustered together. But there was nothing strickenly odd about the plant, nothing noted in Pojar plant guides to indicate unique ecology, based on web of science searches there is a fungus-root association in alpine populations, but there are no publications with phenology
-\item Tree species = no strong trends, but e.g. \emph{Quercus velutina} = stronger chilling and photoperiod cues as predicted, and \emph{Fagus grandifolia} = strongest photoperiod response but others like \emph{Prunus pensylvanica}
-\item Unexpected spp responses are partially due to having stronger cue responses, but also driven by large spp intercpets too
+\item Tree species = no strong trends, but e.g. \emph{Quercus velutina} = stronger chilling and photoperiod cues as predicted, and \emph{Fagus grandifolia} = strongest photoperiod response % but others like \emph{Prunus pensylvanica}
+\item Unexpected spp responses are partially due to having stronger cue responses, but also driven by large spp intercpets --- suggests other factors that species archictural growth driving diff cue responses 
 \end{enumerate}
 % \end{enumerate}
 
@@ -228,6 +207,13 @@ print(fourSite,include.rownames=TRUE, caption.placement="top", hline.after=c(-1,
 
 \begin{figure}[h!]
     \centering
+     \includegraphics[width=\textwidth]{..//figures/intrxnBarplots.pdf}
+     \caption{Interaction plots of day of budburst of first bud in response chill portions and forcing (a), forcing cues(b), chilling cues (c), and photoperiod cues (d) and species sampled from St. Hippolyte, Harvard Forest, Manning park, and Smithers. }
+    \label{fig:intrxn}
+\end{figure}
+
+\begin{figure}[h!]
+    \centering
      \includegraphics[width=\textwidth]{..//figures/site4CueGrouped.pdf}
     \caption{Posterior distributions of estimated cue responses with site level effects for individual sites, depicting a) chilling, b) forcing, and c) photoperiod cue responses. Black circles represent the median cue response, while the thinner black line the 90\% quantile interval. The coloured distribution is the the posterior density of the posteriors of the cue responses and site level responses for all species at a given site. The y-axis spans the entire range of the data.}
     \label{fig:siteCues}
@@ -245,22 +231,29 @@ print(fourSite,include.rownames=TRUE, caption.placement="top", hline.after=c(-1,
      \includegraphics[width=\textwidth]{..//figures/cueST2.pdf}
     \caption{Comparisons of posterior distributions for cues estimates between shrub and tree species. Black circles represent the median cue response, while the thinner black line the 90\% quantile interval. The coloured distribution is the the posterior density of the posteriors of the cue responses for all species within a given architectural type. The y-axis spans the entire range of the data.}
     \label{fig:cueST}
-\end{figure}
+    \end{figure}
+% 
+% %DL20Mar I think we can cut this figure, but add the dashed lines to Fig 4
+% \begin{figure}[h!]
+%     \centering
+%      \includegraphics[width=\textwidth]{..//figures/cueSp.pdf}
+%     \caption{Species differences in cue estimate posterior distributions, comparing species differences across a) chilling, b) forcing, and c) photoperiod cues. The median cue response is illustrated by the black circle, while the 90\% quantile interval is illustrated by the black line. The coloured distribution depicts the shape of the posterior density for all samples of a given species. Species are ordered alphabetically}
+%     \label{fig:cueSp}
+% \end{figure}
 
-%DL20Mar I think we can cut this figure, but add the dashed lines to Fig 4
 \begin{figure}[h!]
     \centering
-     \includegraphics[width=\textwidth]{..//figures/cueSp.pdf}
-    \caption{Species differences in cue estimate posterior distributions, comparing species differences across a) chilling, b) forcing, and c) photoperiod cues. The median cue response is illustrated by the black circle, while the 90\% quantile interval is illustrated by the black line. The coloured distribution depicts the shape of the posterior density for all samples of a given species. Species are ordered alphabetically}
-    \label{fig:cueSp}
-\end{figure}
-
-\begin{figure}[h!]
-    \centering
-     \includegraphics[width=\textwidth]{..//figures/violinBetaAlphaEW.pdf}
-    \caption{Estimated budburst (a, b) and species intercepts (c, d) ranked by budburst dates for both the eastern (a, c) and western (b, d) transects.}
+     \includegraphics[width=\textwidth]{..//figures/dotBetaAlpha.pdf}
+    \caption{Estimated budburst, shown in blue, and species intercepts, shown in red, ranked by budburst dates for both the eastern (a) and western (b) transects.}
     \label{fig:betaAlphaGrad}
 \end{figure}
+
+% \begin{figure}[h!]
+%     \centering
+%      \includegraphics[width=\textwidth]{..//figures/violinBetaAlphaEW.pdf}
+%     \caption{Estimated budburst (a, b) and species intercepts (c, d) ranked by budburst dates for both the eastern (a, c) and western (b, d) transects.}
+%     \label{fig:betaAlphaGrad}
+% \end{figure}
 
 \begin{figure}[h!]
     \centering

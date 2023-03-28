@@ -879,12 +879,57 @@ dev.off()
 
 # Making lizzie's other suggested plot - 2 connected dots:
 
-meanPt <- aggregate(dataWest[c("meanBB", "Int")], dataWest[c("species.name","type","transect")], FUN = mean)
+meanPtW <- aggregate(dataWest[c("meanBB", "Int")], dataWest[c("species.name","type","transect")], FUN = mean)
 
-ggplot(meanPt) +
-  geom_point(aes(y= meanBB, x = species.name), col = "cyan4", size = 2) +
-  geom_point(aes(y= Int, x = species.name), col = "#CC6677", size = 2) +
+dotW <- ggplot(meanPtW) +
+  geom_point(aes(y= meanBB, x = meanBB), col = "cyan4", size = 8) +
+  geom_point(aes(y= Int, x = meanBB), col = "#CC6677", size = 8) +
+  geom_segment(aes(x = meanBB, y = Int, xend = meanBB, yend = meanBB), data = meanPtW, col = "black") +
   theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
         panel.background = element_blank(), axis.line = element_line(colour = "black"),
-        legend.key=element_rect(fill="white")) # removed grey boxes around legends
+        legend.key=element_rect(fill="white")) +
+  ylim(-5,75) +
+  theme(axis.text.x = element_text( size=15,
+                                    angle = 78, 
+                                    hjust=1),
+        axis.title.y=element_text(size = 15),
+        axis.title=element_text(size=15),
+        legend.position = "none") + 
+  scale_x_continuous( breaks = spMiniW$meanBB, labels = spMiniW$species,limits = c(15,68)) +
+  labs( x = "Species", y = "Estimated parameter", main = NA) +
+  theme(legend.title = element_blank()) +  annotate("text", x = 28, y = 74, label = "b)      Western transect", cex =8) +
+  annotate("text", x = spTopW[1,5], y = 0, label = spTopW[1,2], cex = 5, angle = 78) +
+  annotate("text", x = spTopW[2,5], y = 0, label = spTopW[2,2], cex = 5, angle = 78) +
+  annotate("text", x = spTopW[3,5], y = 0, label = spTopW[3,2], cex = 5, angle = 78) +
+  scale_fill_manual(values = c("darkolivegreen4","darkolivegreen4"))
+
+#### Eastern plot
+meanPtE <- aggregate(dataEast[c("meanBB", "Int")], dataEast[c("species.name","type","transect")], FUN = mean)
+
+dotE <- ggplot(meanPtE) +
+  geom_point(aes(y= meanBB, x = meanBB), col = "cyan4", size = 8) +
+  geom_point(aes(y= Int, x = meanBB), col = "#CC6677", size = 8) +
+  geom_segment(aes(x = meanBB, y = Int, xend = meanBB, yend = meanBB), data = meanPtE, col = "black") +
+  theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
+        panel.background = element_blank(), axis.line = element_line(colour = "black"),
+        legend.key=element_rect(fill="white")) +
+  ylim(-5,75) +
+  theme(axis.text.x = element_text( size=15,
+                                    angle = 78, 
+                                    hjust=1),
+        axis.title.y=element_text(size = 15),
+        axis.title=element_text(size=15),
+        legend.position = "none") + 
+  scale_x_continuous( breaks = spMiniE$meanBB, labels = spMiniE$species,limits = c(15,68)) +
+  labs( x = "Species", y = "Estimated parameter", main = NA) +
+  theme(legend.title = element_blank()) +  annotate("text", x = 28, y = 74, label = "a)      Eastern transect", cex =8) +annotate("text", x = spTopE[1,5], y = 0, label = spTopE[1,2], cex = 5, angle = 78) +
+  annotate("text", x = spTopE[2,5], y = 0, label = spTopE[2,2], cex = 5, angle = 78) +
+  annotate("text", x = spTopE[3,5], y = 0, label = spTopE[3,2], cex = 5, angle = 78) +
+  annotate("text", x = 38, y = 0, label = spTopE[4,2], cex = 5, angle = 78) +
+  annotate("text", x = spTopE[5,5], y = 0, label = spTopE[5,2], cex = 5, angle = 78) +
+  scale_fill_manual(values = c("darkolivegreen4","darkolivegreen4"))
+
+pdf("..//figures/dotBetaAlpha.pdf", width = 15, height = 5)
+plot_grid(dotE, dotW, nrow = 1, ncol = 2, align = "v")
+dev.off()
 

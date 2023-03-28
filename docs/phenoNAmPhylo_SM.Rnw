@@ -67,13 +67,14 @@
     \label{fig:muplot}
 \end{figure}
 
+
+%DL20Mar I think we can cut this figure, but add the dashed lines to Fig 4
 \begin{figure}[h!]
     \centering
-     \includegraphics[width=\textwidth]{..//figures/intrxnBarplots.pdf}
-     \caption{Interaction plots of day of budburst of first bud in response chill portions and forcing (a), forcing cues(b), chilling cues (c), and photoperiod cues (d) and species sampled from St. Hippolyte, Harvard Forest, Manning park, and Smithers. }
-    \label{fig:intrxn}
+     \includegraphics[width=\textwidth]{..//figures/cueSp.pdf}
+    \caption{Species differences in cue estimate posterior distributions, comparing species differences across a) chilling, b) forcing, and c) photoperiod cues. The median cue response is illustrated by the black circle, while the 90\% quantile interval is illustrated by the black line. The coloured distribution depicts the shape of the posterior density for all samples of a given species. Species are ordered alphabetically}
+    \label{fig:cueSp}
 \end{figure}
-%I am working on making these plots with data for 2 spp, one site & cue as well, but for the simplicity of the visualization, I removed the data for now
 
 \begin{figure}[h!]
     \centering

@@ -876,3 +876,15 @@ dev.off()
 pdf("figures/violinCFPEW.pdf", width = 12, height = 16)
 plot_grid(chillSpaceE, chillSpaceW, forceSpaceE, forceSpaceW, photoSpaceE, photoSpaceW, nrow = 3, ncol = 2, align = "v")
 dev.off()
+
+# Making lizzie's other suggested plot - 2 connected dots:
+
+meanPt <- aggregate(dataWest[c("meanBB", "Int")], dataWest[c("species.name","type","transect")], FUN = mean)
+
+ggplot(meanPt) +
+  geom_point(aes(y= meanBB, x = species.name), col = "cyan4", size = 2) +
+  geom_point(aes(y= Int, x = species.name), col = "#CC6677", size = 2) +
+  theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
+        panel.background = element_blank(), axis.line = element_line(colour = "black"),
+        legend.key=element_rect(fill="white")) # removed grey boxes around legends
+

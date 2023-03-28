@@ -80,6 +80,8 @@ Corresponding Author: Deirdre Loughnan, deirdre.loughnan@ubc.ca \\
 \item Not sure you  need Fig 7-8?
 \item overall message: see a lot of spp differences, but not a lot of site level differences - even with the biases introucded by our differences in winter chilling and collection methods
 
+\section*{Comments from Florum presentation}
+
 \end{enumerate}
 
 \section*{Research questions}
@@ -105,44 +107,55 @@ source("..//rcode/phenologyMsValues.R")
 \item Forcing by chilling = strong delaying effect = low chilling offset by high forcing (Fig. S2 a).
 \end{enumerate}
 
-\item Sites differed in their their overall budburst dates, but interacted with cues --- effects not clearly divided by two transects
-%Manning park = delayed relative to Smithers, Harvard Forest \& St. Hippolyte = more advanced than Smithers
-% %Start with eastern pops 
+\item Populations differed in their their overall budburst dates, but interacted with cues --- effects were clearly divided between eastern and western populations.
 \begin{enumerate}
-\item Both populations in eastern transect were more advanced than Smithers, with differing cue responses across sites.
-\begin{enumerate}
-\item Delaying interaction with chilling and forcing ($b_{forcexsite}$) = earlier bb under high forcing (Fig. S2b), while Harvard Forest had later bb under low forcing (Fig. S2b)
-\item St. Hippolyte = strongest response to high chilling, while Harvard forest had a slight delay with high chilling (Fig. S2c)
-\item All eastern spp bb earlier with longer photoperiod, no real trend with short photoperiod (Fig. S2)
-\end{enumerate}
-% % western spp
-\item The relative relationship of western populations did not follow expectations...
-\begin{enumerate}
-\item Forcing had a divergent effect on Manning bb --- later bb under low forcing, advanced with high forcing (Fig. S2b)
-\item Low chilling = slight advance in bb, but high chilling later bb --- counter our expectations (Fig. S2c)
-\item Manning park later than Smithers under longer photoperiods, but earlier under shorter photoperiod conditions  (Fig. S2d)
-\end{enumerate}
+\item Eastern budburst dates were consistently earlier in response to each of our three cues (Fig. S2). 
+\item Low forcing resulted in later budburst dates than high forcing (Fig. S2b)
+\item Our two eastern populations differ --- forcing at lower latitude sites = slightly later bb than high latitude sites --- but western sites were similar under high forcing and only slight diff low forcing (Fig. S2b)
+\item Across all populations low chilling = later bb, but no differences with latitude within the western and eastern populations (Fig. S2c)
+\item Within eastern populations, chilling responses were similar for both high and low chilling, but substantially different from field only chilling (no chilling) treatment (Fig. S2c)
+\item Strong difference in bb western population between high and low chilling, but no difference with sites (Fig. S2c).
+\item Budburst dates were earlier under longer photoperiods --- difference = greatest in eastern populations and weak in western populations. 
+\item In eastern, low latitude site had slightly later bb, but this trend was neglibile in the western populations.
 \end{enumerate}
 
-\item Species differences....
+%Manning park = delayed relative to Smithers, Harvard Forest \& St. Hippolyte = more advanced than Smithers
+% %Start with eastern pops 
+% \begin{enumerate}
+% \item Both populations in eastern transect were more advanced than Smithers, with differing cue responses across sites.
+% \begin{enumerate}
+% \item Delaying interaction with chilling and forcing ($b_{forcexsite}$) = earlier bb under high forcing (Fig. S2b), while Harvard Forest had later bb under low forcing (Fig. S2b)
+% \item St. Hippolyte = strongest response to high chilling, while Harvard forest had a slight delay with high chilling (Fig. S2c)
+% \item All eastern spp bb earlier with longer photoperiod, no real trend with short photoperiod (Fig. S2)
+% \end{enumerate}
+% % % western spp
+% \item The relative relationship of western populations did not follow expectations...
+% \begin{enumerate}
+% \item Forcing had a divergent effect on Manning bb --- later bb under low forcing, advanced with high forcing (Fig. S2b)
+% \item Low chilling = slight advance in bb, but high chilling later bb --- counter our expectations (Fig. S2c)
+% \item Manning park later than Smithers under longer photoperiods, but earlier under shorter photoperiod conditions  (Fig. S2d)
+% \end{enumerate}
+% \end{enumerate}
+
+%\item Species differences....
+% \begin{enumerate}
+\item Individual species show distinct differences in their timing of bb and realtive importance of cues.
 \begin{enumerate}
-\item Individual species show more distinct differences in their timing of bb.
-\begin{enumerate}
-\item Across all species, relative importance of cue = varied = unique temporal niches  (Fig. \ref{fig:cueSp})
-\item But fail to find strong parallels in gradients of bb with cue responses (Fig. \ref{fig:betaAlphaGrad} and Fig. Fig. \ref{fig:cueGrad})
+\item Both chilling and forcing varied with budburst, with later bbing species having stronger responses to each cue respectively (Fig. \ref{fig:cueGrad}).
+\item But gradients were not as strong as expected (Fig. \ref{fig:betaAlphaGrad} and Fig. \ref{fig:cueGrad})
 \item Species level differences (intercept) explain considerable portion of bb (Fig. \ref{fig:betaAlphaGrad})
-\item Only found weak gradients in chilling and forcing with later bb  (Fig. \ref{fig:cueGrad})
 \end{enumerate}
+% \end{enumerate}
 
 \item Species differences are not due to plant architecture --- shrubs and trees = very similar responses overall (Fig. \ref{fig:cueST})
 \begin{enumerate}
-\item While some understory species, e.g. \emph{Cornus stolonifera} fit predicted profile --- weak chilling and forcing cues---- others don't --- e.g. \emph{Menziesia ferruginea} = strong responses all 3 cues (Fig. \ref{fig:cueSp}.
+\item Many of our earliest bb species are shrub species, e.g. \emph{Cornus stolonifera} --- fits our predicted profile of weak chilling and forcing cues
+\item But shrub species don't --- e.g. \emph{Menziesia ferruginea} and \emph{Symphoricarpos alba} = latest bb (Fig. \ref{fig:cueSp}.
 % %Nov15DL: Menfer does have a different floral structure compared to other species, with both the floral and leaf buds clustered together. But there was nothing strickenly odd about the plant, nothing noted in Pojar plant guides to indicate unique ecology, based on web of science searches there is a fungus-root association in alpine populations, but there are no publications with phenology
 \item Tree species = no strong trends, but e.g. \emph{Quercus velutina} = stronger chilling and photoperiod cues as predicted, and \emph{Fagus grandifolia} = strongest photoperiod response but others like \emph{Prunus pensylvanica}
-\item But some surprising spp responses, e.g. \emph{Symphoricarpos alba} had the strongest chilling response
-have consistently weak cue responses (Fig. \ref{fig:cueSp}.
+\item Unexpected spp responses are partially due to having stronger cue responses, but also driven by large spp intercpets too
 \end{enumerate}
-\end{enumerate}
+% \end{enumerate}
 
 % \item Species budburst did show a considerable gradient across our assemblage of species, but this was not well explained by variation in trait responses (Fig. \ref{fig:betaAlphaGrad} and \ref{fig:cueGrad}.
 % \begin{enumerate}
@@ -152,6 +165,13 @@ have consistently weak cue responses (Fig. \ref{fig:cueSp}.
 % \end{enumerate}
  \end {enumerate}
 
+\section*{Discussion}
+
+\begin{enumerate}
+\item Across all species, relative importance of cue = varied = unique temporal niches  (Fig. \ref{fig:cueSp})
+\item Large portion of bb due to spp differences - need more research to understand this, if not cues what causes it? Could introduce traits and foreshadow the third chapter
+\item The experimental design (which is impressive) combined with your models means that most other things some models would assign to the intercept are assigned to site, species, chill, force etc. here... and still the intercept is big. Wow!! 
+\end{enumerate}
 
 \section{Tables and figures}
 
@@ -231,7 +251,7 @@ print(fourSite,include.rownames=TRUE, caption.placement="top", hline.after=c(-1,
 \begin{figure}[h!]
     \centering
      \includegraphics[width=\textwidth]{..//figures/cueSp.pdf}
-    \caption{Species differences in cue estimate posterior distributions, comparing species differences across a) chilling, b) forcing, and c) photoperiod cues. The median cue response is illustrated by the black circle, while the 90\% quantile interval is illustrated by the black line. The coloured distribution depicts the shape of the posterior density for all samples of a given species.}
+    \caption{Species differences in cue estimate posterior distributions, comparing species differences across a) chilling, b) forcing, and c) photoperiod cues. The median cue response is illustrated by the black circle, while the 90\% quantile interval is illustrated by the black line. The coloured distribution depicts the shape of the posterior density for all samples of a given species. Species are ordered alphabetically}
     \label{fig:cueSp}
 \end{figure}
 

@@ -10,22 +10,20 @@ options(stringsAsFactors = FALSE)
 require(stringr)
 require(rstan)
 require(plyr)
-require(dplyr)
 require(ggbiplot)
 require(gridExtra)
 require(ggplot2)
-require(bayesplot)
 library(reshape2)
 library(viridis)
-library(bayesplot)
 #library(tidybayes)# for arranging plots 
 library(patchwork) # another way of arranging plots 
 # library(rethinking)
 require(cowplot)
 require(plotrix)
+
 require(ggpubr)
-
-
+require(dplyr)
+require(bayesplot)
 
 if(length(grep("deirdreloughnan", getwd()) > 0)) { 
   setwd("~/Documents/github/pheno_bc") 
@@ -148,10 +146,10 @@ pheno.t <- merge(pheno.t, spInfo, by = "species")
 
 #load("output/final/bb_4sites_phylo.Rda")
 
-load("output/bb_4sites_phylo_newpriors.Rda")
-sum <- summary(mdl.4phylo)$summary 
+load("output/bb_4sites_phylo_mini.Rda")
+sum <- summary(mdl.4phyloMini)$summary 
 
-fit <- rstan::extract(mdl.4phylo)
+fit <- rstan::extract(mdl.4phyloMini)
 
 chillB <- data.frame(fit$b_chill1)
 chillBInterSite2 <- data.frame(fit$b_chill1+fit$b_inter_s2c1)
@@ -227,7 +225,7 @@ longChillInterInfo$cue <- "Chilling"
 head(longChillInfo)
 colnames(longChillInfo) <- c("species.name","value", "species","type", "transect","Site1","Site2", "Site3", "Site4", "cue")
 
-colnames(longChillInterInfo) <- c("species.name","value", "species","type", "transect","Site1","Site2", "Site3", "Site4","cue","Site2Inter", "Site3Inter", "Site4Inter","cue")
+colnames(longChillInterInfo) <- c("species.name","value", "species","type", "transect","Site1","Site2", "Site3", "Site4","cue","Site2Inter", "Site3Inter", "Site4Inter")
 
 head(longChillInfo)
 head(longChillInterInfo)
@@ -307,9 +305,9 @@ longPhotoInfo$cue <- "Photoperiod"
 longPhotoInterInfo$cue <- "Photoperiod"
 
 head(longPhotoInfo)
-colnames(longPhotoInfo) <- c("species.name","value", "species","type", "transect","Site1","Site2", "Site3", "Site4")
+colnames(longPhotoInfo) <- c("species.name","value", "species","type", "transect","Site1","Site2", "Site3", "Site4","cue")
 
-colnames(longPhotoInterInfo) <- c("species.name","value", "species","type", "transect","Site1","Site2", "Site3", "Site4","Site2Inter", "Site3Inter", "Site4Inter")
+colnames(longPhotoInterInfo) <- c("species.name","value", "species","type", "transect","Site1","Site2", "Site3", "Site4","Site2Inter", "Site3Inter", "Site4Inter","cue")
 
 head(longPhotoInfo)
 head(longPhotoInterInfo)
@@ -446,24 +444,19 @@ cueST <- ggplot(data = longCues, aes(x = type, y = value)) +
 
 cueST2 <- ggplot(data = longCues, aes(x = cue, y = value)) + 
   stat_eye( .width = c(.90, .5), cex = 0.75, aes(fill = type), position = position_dodge(0.9))+
-  theme_classic() +  
-  theme(axis.text.x = element_text( size=10,
+  theme_classic()+
+  ylim(-40,5) +
+  theme(axis.text.x = element_text( size=15,
                                     #angle = 78, 
                                     hjust=1),
-        axis.title=element_text(size=9) ) + # angle of 55 also works
+        axis.title=element_text(size=12) ) + # angle of 55 also works
   #geom_point(data = meanTrophic, aes(x = meanSlope,y = trophic.level, colour = "purple"), shape = 8, size = 3)+
   labs( x = "Plant type", y = "Cue response", main = NA)+ 
-  scale_color_identity(name = "Model fit",
-                       breaks = c("black"),
-                       labels = c("Model Posterior"),
-                       guide = guide_legend(override.aes = list(
-                         linetype = c(NA),
-                         shape = c(8)))) +
-  theme(legend.title = element_blank()) +  annotate("text", x = 0.75, y = 10, label = "a)", cex =5) + scale_fill_manual(values = c("#cc6a70ff","cyan4"))
+  theme(legend.title = element_blank()) +  scale_fill_manual(values = c("#cc6a70ff","cyan4"))
 
-pdf("figures/cueST.pdf", width = 8, height = 5)
-cueST
-dev.off()
+# pdf("figures/cueST.pdf", width = 8, height = 5)
+# cueST
+# dev.off()
 
 pdf("figures/cueST2.pdf", width = 8, height = 5)
 cueST2
@@ -526,6 +519,7 @@ forceSp <- ggplot() +
   theme(legend.title = element_blank()) +  annotate("text", x = 1, y = 10, label = "b)", cex =5) 
 
 longPhotoInfo$mean <- rowMeans(longPhotoInfo[,c("Site1","Site2","Site3","Site4")], na.rm=TRUE)
+
 photoSp <- ggplot() + 
   stat_eye(data = longPhotoInfo, aes(x = factor(species.name, level = spOrder), y = mean), .width = c(.90, .5), cex = 0.75, fill = "cyan4")+
   geom_hline(yintercept = sum[4,1], linetype="dashed") +
@@ -630,36 +624,50 @@ dev.off()
 #   scale_fill_manual(values = c("#cc6a70ff","#f9b641ff","cyan4"))
 
 # How do you jitter the eye plots?
+siteOrder <- c("Smithers","Manning Park", "St. Hippolyte","Harvard Forest")
 
 siteChill <- ggplot() + 
-  stat_eye(data = longChillSite, aes(x = site, y = chillSite, fill = "#cc6a70ff"), .width = c(.90, .5), cex = 0.75, position = position_dodge(0.9)) +
+  stat_eye(data = longChillSite, aes(x = factor(site, level = siteOrder), y = chillSite, fill = "#cc6a70ff"), .width = c(.90, .5), cex = 0.75, position = position_dodge(0.9)) +
     ylim (-60,30) +
     theme_classic() +   
-    theme(legend.position = "none") +
-    labs( x = "Site", y = "Chilling response", main = "Site level chilling")+
+    theme(legend.position = "none",
+          axis.title = element_text( size=15),
+          axis.text.y = element_text( size=15),
+          axis.text.x = element_text( size=15,
+          angle = 78, 
+          hjust=1)) +  
+  annotate("text", x = 0.85, y = 25, label = "a)", cex =8) +
+  labs( x = "Site", y = "Chilling response", main = "Site level chilling", cex = 5)+
   scale_fill_manual(values = c("#cc6a70ff"))
 
 siteForce <- ggplot() + 
-  stat_eye(data = longForceSite, aes(x = site, y = forceSite, fill = "#f9b641ff"), .width = c(.90, .5), cex = 0.75, position = position_dodge(0.9), color = "black") +
+  stat_eye(data = longForceSite, aes(x = factor(site, level = siteOrder), y = forceSite, fill = "#f9b641ff"), .width = c(.90, .5), cex = 0.75, position = position_dodge(0.9), color = "black") +
   ylim (-60,30) +
   theme_classic() +   
-  theme(legend.position = "none") +
-  labs( x = "Site", y = "Forceing response", main = "Site level forcing")+
+  theme(legend.position = "none", 
+        axis.title = element_text( size=15),
+        axis.text.y = element_text( size=15),
+        axis.text.x = element_text( size=15, angle = 78,  hjust=1))+  
+  annotate("text", x = 0.85, y = 25, label = "b)", cex =8) +
+  labs( x = "Site", y = "Forceing response", main = "Site level forcing", cex = 5)+
   scale_fill_manual(values = c("#f9b641ff"))
 
 sitePhoto <- ggplot() + 
-  stat_eye(data = longPhotoSite, aes(x = site, y = photoSite, fill = "cyan4"), .width = c(.90, .5), cex = 0.75, position = position_dodge(0.9)) +
+  stat_eye(data = longPhotoSite, aes(x = factor(site, level = siteOrder), y = photoSite, fill = "cyan4"), .width = c(.90, .5), cex = 0.75, position = position_dodge(0.9)) +
   ylim (-60,30) +
   theme_classic() +   
-  theme(legend.position = "none") +
-  labs( x = "Site", y = "Photoperiod response", main = "Site level photoperiod")+
+  theme(legend.position = "none", 
+        axis.title = element_text( size=15),
+        axis.text.y = element_text( size=15),
+        axis.text.x = element_text( size=15, angle = 78, hjust=1)) +  
+  annotate("text", x = 0.85, y = 25, label = "c)", cex =8) +
+  labs( x = "Site", y = "Photoperiod response", main = "Site level photoperiod", cex = 5)+
   scale_fill_manual(values = c("cyan4"))
 
-pdf("figures/site4Cue.pdf", width = 15, height = 5)
-ggarrange(siteChill, siteForce, sitePhoto,
-  labels = c("A", "B", "C"),
-  ncol = 3, nrow = 1)
+pdf("figures/site4Cue.pdf", width = 15, height = 6)
+plot_grid(siteChill, siteForce, sitePhoto, ncol = 3, nrow = 1)
 dev.off()
+
 
 ####################################
 # Make the dataset long
@@ -684,11 +692,27 @@ longest$site[which(longest$site == "Site3")] <- "Harvard Forest"
 longest$site[which(longest$site == "Site4")] <- "St. Hippolyte"
 longest$site <- as.factor(longest$site)
 
-siteOrder <- c("Smithers","Manning Park","Harvard Forest", "St. Hippolyte")
-  
+siteOrder <- c("Smithers","Manning Park", "St. Hippolyte","Harvard Forest")
+
+
 pdf("figures/site4CueGrouped.pdf", width = 12, height =4)
 ggplot() + 
-  stat_eye(data = longest, aes(x = factor(site, level = siteOrder), y = value, fill = cue), .width = c(.90, .5), cex = 0.75, position = position_dodge(0.9)) +
+  stat_eye(data = longest, aes(x = as.factor(cue), y = value, fill = factor(site, level = siteOrder)), .width = c(.90, .5), cex = 0.75, position = position_dodge(0.9)) +
+  ylim (-45,10) +
+  theme_classic() +   
+  theme(legend.position = "right", 
+        legend.title = element_blank(),
+        axis.text.x = element_text( size= 18),
+        axis.text.y = element_text( size= 12),
+        axis.title=element_text(size = 18)) +
+  labs( x = "Treatment cue", y = "Cue response", main = NA)+
+  scale_fill_manual(values = c("#cc6a70ff","cyan4", "#f9b641ff", "orchid4"))
+dev.off()
+
+
+pdf("figures/site4CueGrouped.pdf", width = 12, height =4)
+ggplot() + 
+  stat_eye(data = longest, aes(x = factor(site, level = siteOrder), y = value, fill = cue, group = cue), .width = c(.90, .5), cex = 0.75, position = position_dodge(0.9)) +
   ylim (-45,10) +
   theme_classic() +   
   theme(legend.position = "right", 
@@ -699,16 +723,16 @@ ggplot() +
   theme(legend.title = element_blank()) +  annotate("text", x = 0.5, y = 9, label = "a)", cex =5) + scale_fill_manual(values = c("#cc6a70ff","cyan4", "#f9b641ff"))
 dev.off()
 
-+ # angle of 55 also works
-  #geom_point(data = meanTrophic, aes(x = meanSlope,y = trophic.level, colour = "purple"), shape = 8, size = 3)+
-  labs( x = "Plant type", y = "Cue response", main = NA)+ 
-  scale_color_identity(name = "Model fit",
-                       breaks = c("black"),
-                       labels = c("Model Posterior"),
-                       guide = guide_legend(override.aes = list(
-                         linetype = c(NA),
-                         shape = c(8)))) +
-  theme(legend.title = element_blank()) +  annotate("text", x = 0.75, y = 10, label = "a)", cex =5) + scale_fill_manual(values = c("#cc6a70ff","cyan4", "#f9b641ff"))
+# + # angle of 55 also works
+#   #geom_point(data = meanTrophic, aes(x = meanSlope,y = trophic.level, colour = "purple"), shape = 8, size = 3)+
+#   labs( x = "Plant type", y = "Cue response", main = NA)+ 
+#   scale_color_identity(name = "Model fit",
+#                        breaks = c("black"),
+#                        labels = c("Model Posterior"),
+#                        guide = guide_legend(override.aes = list(
+#                          linetype = c(NA),
+#                          shape = c(8)))) +
+#   theme(legend.title = element_blank()) +  annotate("text", x = 0.75, y = 10, label = "a)", cex =5) + scale_fill_manual(values = c("#cc6a70ff","cyan4", "#f9b641ff"))
 
 # WIth the interaction:
 siteChillInter <- ggplot() + 
@@ -842,3 +866,108 @@ ggplot() +
                          shape = c(8)))) +
   theme(legend.title = element_blank()) +  annotate("text", x = 0.5, y = 10, label = "a)", cex =5)  +
   scale_fill_manual(values = c("#cc6a70ff","#f9b641ff","cyan4"))
+
+
+### Histograms of shrub vs tree
+col1 <- rgb(204 / 255, 102 / 255, 119 / 255, alpha = 0.8)
+col2 <- rgb(68 / 255, 170 / 255, 153 / 255, alpha = 0.6)
+
+treeLongC <- subset(longChillInfo, type == "tree")
+shrubLongC <- subset(longChillInfo, type == "shrub")
+
+xmin = -(mean(treeLongC$value)) + quantile(treeLongC$value, c(0.9))
+xmax = (mean(treeLongC$value) + quantile(treeLongC$value, c(0.9)))
+
+tempTC <- treeLongC[treeLongC$value < xmin & treeLongC$value > xmax, ]
+
+xmin = -(mean(shrubLongC$value)) + quantile(treeLongC$value, c(0.9))
+xmax = (mean(shrubLongC$value) + quantile(treeLongC$value, c(0.9)))
+tempSC <- shrubLongC[shrubLongC$value < xmin & shrubLongC$value > xmax, ]
+
+
+### Forcing 
+treeLongF <- subset(longForceInfo, type == "tree")
+shrubLongF <- subset(longForceInfo, type == "shrub")
+
+xmin = -(mean(treeLongF$value)) + quantile(treeLongF$value, c(0.9))
+xmax = (mean(treeLongF$value) + quantile(treeLongF$value, c(0.9)))
+
+tempTF <- treeLongF[treeLongF$value < xmin & treeLongF$value > xmax, ]
+
+xmin = -(mean(shrubLongF$value)) + quantile(shrubLongF$value, c(0.9))
+xmax = (mean(shrubLongF$value) + quantile(shrubLongF$value, c(0.9)))
+tempSF <- shrubLongF[shrubLongF$value < xmin & shrubLongF$value > xmax, ]
+
+### Photoperiod
+treeLongP <- subset(longPhotoInfo, type == "tree")
+shrubLongP <- subset(longPhotoInfo, type == "shrub")
+
+xmin = -(mean(treeLongP$value)) + quantile(treeLongP$value, c(0.9))
+xmax = (mean(treeLongP$value) + quantile(treeLongP$value, c(0.9)))
+
+tempTP <- treeLongP[treeLongP$value < xmin & treeLongP$value > xmax, ]
+
+xmin = -(mean(shrubLongP$value)) + quantile(shrubLongP$value, c(0.9))
+xmax = (mean(shrubLongP$value) + quantile(shrubLongP$value, c(0.9)))
+tempSP <- shrubLongP[shrubLongP$value < xmin & shrubLongP$value > xmax, ]
+
+
+pdf("figures/fullHistogramST.pdf", width =12, height = 6)
+par(mfrow = c(1,3))
+hist(shrubLongC$value, col = col1, xlab = "Cue Response", main = NA, ylab = "Frequency", cex.main =2, cex.lab = 2, cex.axis = 1.75, ylim = c(0, 125000))
+hist(treeLongC$value, col = col2, add = T)
+title(main = "Chilling", adj = 0, cex.main = 2)
+text(-50, 120000, label = "a)", cex = 2)
+
+hist(shrubLongF$value, col = col1, xlab = "Cue Response", main = NA, ylab = "Frequency", cex.main =2, cex.lab = 2, cex.axis = 1.75, ylim = c(0, 75000))
+hist(treeLongF$value, col = col2, add = T)
+title(main = "Forcing", adj = 0, cex.main = 2)
+text(-25, 72000, label = "b)", cex = 2)
+
+hist(shrubLongP$value, col = col1, xlab = "Cue Response", main = NA, ylab = "Frequency", cex.main =2, cex.lab = 2, cex.axis = 1.75, ylim = c(0, 125000))
+hist(treeLongP$value, col = col2, add = T)
+title(main = "Photoperiod", adj = 0, cex.main = 2)
+text(-12, 120000, label = "c)", cex = 2)
+
+legend("topright", c("Shrubs", "Trees"), col = c( col1, col2), bty = "n", pt.cex =3, pch = 19, cex = 2)
+
+dev.off()
+
+pdf("figures/fullHistogramSTNorm.pdf", width =12, height = 6)
+par(mfrow = c(1,3), mar = c(5.1, 5.1, 4.1, 2.1))
+hist(shrubLongC$value, col = col1, xlab = NA, main = NA, ylab = "Normalized frequency", cex.main =2, cex.lab = 2.5, cex.axis = 1.75, prob = T,ylim = c(0, 0.125))
+hist(treeLongC$value, col = col2, add = T, prob = T)
+title(main = "Chilling", adj = 0, cex.main = 2)
+text(-48, 0.123, label = "a)", cex = 2)
+abline(v =mean(shrubLongC$value), col = "#CC6677", lwd = 3)
+abline(v =mean(treeLongC$value), col = "cyan4", lwd = 3)
+
+par(mar = c(5.1, 4.1, 4.1, 2.1))
+hist(shrubLongF$value, col = col1, xlab = "Cue Response", main = NA, ylab = NA, cex.main =2, cex.lab = 2.5, cex.axis = 1.75, prob = T,ylim = c(0, 0.125))
+hist(treeLongF$value, col = col2, add = T, prob = T)
+title(main = "Forcing", adj = 0, cex.main = 2)
+text(-25, 0.123, label = "b)", cex = 2)
+abline(v =mean(shrubLongF$value), col = "#CC6677", lwd = 3)
+abline(v =mean(treeLongF$value), col = "cyan4", lwd = 3)
+
+hist(shrubLongP$value, col = col1, xlab = NA, main = NA, ylab = NA, cex.main =2, cex.lab = 2, cex.axis = 1.75, prob = T,ylim = c(0, 0.4))
+hist(treeLongP$value, col = col2, add = T, prob = T)
+title(main = "Photoperiod", adj = 0, cex.main = 2)
+text(-12, 0.4, label = "c)", cex = 2)
+abline(v =mean(shrubLongP$value), col = "#CC6677", lwd = 3)
+abline(v =mean(treeLongP$value), col = "cyan4", lwd = 3)
+
+legend("topright", c("Shrubs", "Trees"), col = c( col1, col2), bty = "n", pt.cex =3, pch = 19, cex = 2)
+dev.off()
+
+# now fig just showing 90%
+hist(tempSC$value, col = col1, xlab = "Cue Response", main = NA, ylab = "Frequency", cex.main =2, cex.lab = 2, cex.axis = 1.75)
+hist(tempTC$value, add = T,col = col2)
+title(main = "Chilling", adj = 0, cex.main = 2)
+
+hist(tempT$value, col = col1, xlab = "Cue Response", main = NA, ylab = "Frequency", cex.main =2, cex.lab = 2, cex.axis = 1.75, ylim = c(0, 45000))
+hist(tempS$value, add = T,col = col2)
+title(main = "Forcing", adj = 0, cex.main = 2)
+text(-10, 0.06, label = "e)", cex = 2)
+legend("topright", c("Non-interacting", "Interacting"), col = c( col1.sp, col4.sp), bty = "n", pt.cex =2, pch = 19, cex = 1.45, inset = c(-0.03, 0))
+dev.off()

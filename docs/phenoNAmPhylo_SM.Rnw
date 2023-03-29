@@ -72,9 +72,23 @@
 \begin{figure}[h!]
     \centering
      \includegraphics[width=\textwidth]{..//figures/cueSp.pdf}
-    \caption{Species differences in cue estimate posterior distributions, comparing species differences across a) chilling, b) forcing, and c) photoperiod cues. The median cue response is illustrated by the black circle, while the 90\% quantile interval is illustrated by the black line. The coloured distribution depicts the shape of the posterior density for all samples of a given species. Species are ordered alphabetically}
+    \caption{Species differences in cue estimate posterior distributions, comparing species differences across chilling (a), forcing (b), and photoperiod (c) cues. Species are ordered according to their phylogenetic relatedness. The median cue response is illustrated by the black circle, while the 90\% quantile interval is illustrated by the black line. The coloured distribution depicts the shape of the posterior density for all samples of a given species. Species are ordered alphabetically}
     \label{fig:cueSp}
 \end{figure}
+
+\begin{figure}[h!]
+    \centering
+     \includegraphics[width=\textwidth]{..//figures/cueST2.pdf}
+    \caption{Comparisons of posterior distributions for cues estimates between shrub and tree species. Black circles represent the median cue response, while the thinner black line the 90\% quantile interval. The coloured distribution is the the posterior density of the posteriors of the cue responses for all species within a given architectural type. The y-axis spans the entire range of the data.}
+    \label{fig:cueST}
+    \end{figure}
+    
+    \begin{figure}[h!]
+    \centering
+     \includegraphics[width=\textwidth]{..//figures/fullHistogramSTNorm.pdf}
+    \caption{Comparisons of posterior distributions for cues estimates between shrub and tree species. Black circles represent the median cue response, while the thinner black line the 90\% quantile interval. The coloured distribution is the the posterior density of the posteriors of the cue responses for all species within a given architectural type. The y-axis spans the entire range of the data.}
+    \label{fig:cueST}
+    \end{figure}
 
 \begin{figure}[h!]
     \centering

@@ -226,12 +226,12 @@ print(fourSite,include.rownames=TRUE, caption.placement="top", hline.after=c(-1,
 %     \label{fig:cues}
 % \end{figure}
 
-\begin{figure}[h!]
-    \centering
-     \includegraphics[width=\textwidth]{..//figures/cueST2.pdf}
-    \caption{Comparisons of posterior distributions for cues estimates between shrub and tree species. Black circles represent the median cue response, while the thinner black line the 90\% quantile interval. The coloured distribution is the the posterior density of the posteriors of the cue responses for all species within a given architectural type. The y-axis spans the entire range of the data.}
-    \label{fig:cueST}
-    \end{figure}
+% \begin{figure}[h!]
+%     \centering
+%      \includegraphics[width=\textwidth]{..//figures/cueST2.pdf}
+%     \caption{Comparisons of posterior distributions for cues estimates between shrub and tree species. Black circles represent the median cue response, while the thinner black line the 90\% quantile interval. The coloured distribution is the the posterior density of the posteriors of the cue responses for all species within a given architectural type. The y-axis spans the entire range of the data.}
+%     \label{fig:cueST}
+%     \end{figure}
 % 
 % %DL20Mar I think we can cut this figure, but add the dashed lines to Fig 4
 % \begin{figure}[h!]

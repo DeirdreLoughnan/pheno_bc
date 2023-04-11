@@ -140,8 +140,8 @@ sum <- summary(mdl.4phyloMini)$summary
 
 fit <- rstan::extract(mdl.4phyloMini)
 
-load("..//output/final/dl_phylo_lat1.Rda")
-load("..//output/final/dl_phylo_lat50.Rda")
+# load("..//output/final/dl_phylo_lat1.Rda")
+# load("..//output/final/dl_phylo_lat50.Rda")
 #############################################
 col4fig <- c("mean","sd","25%","50%","75%","Rhat")
 col4table <- c("mean","sd","2.5%","50%","97.5%","Rhat")
@@ -168,7 +168,7 @@ mu_params_4 <- c(
                 "mu_b_inter_ps4",
                 "mu_b_inter_s4c1")
 
-meanz4 <- sum[mu_params_4, col4fig]
+meanz4 <- sum[mu_params_4, col4table]
 
 rownames(meanz4) = c( 
                       #"Root trait intercept", "Lambda",
@@ -196,6 +196,71 @@ meanz4.table <- sum[mu_params_4, col4table]
 row.names(meanz4.table) <- row.names(meanz4)
 head(meanz4.table)
 #write.table(meanzew.table , "output/term.mdl.esti.dldf.csv", sep = ",", row.names = FALSE)
+
+# call table values:
+
+chillCue <- round(meanz4["Chilling",1],1)
+chillCue2.5 <- round(meanz4["Chilling",3],1)
+chillCue97.5 <- round(meanz4["Chilling",5],1)
+
+photoCue <- round(meanz4["Photoperiod",1],1)
+photoCue2.5 <- round(meanz4["Photoperiod",3],1)
+photoCue97.5 <- round(meanz4["Photoperiod",5],1)
+
+intrxnCF <- round(meanz4["Forcing x chilling",1],1)
+intrxnCF2.5 <- round(meanz4["Forcing x chilling",3],1)
+intrxnCF97.5 <- round(meanz4["Forcing x chilling",5],1)
+
+siteHF <- round(meanz4["Harvard Forest",1],1)
+siteHF2.5 <- round(meanz4["Harvard Forest",3],1)
+siteHF97.5 <- round(meanz4["Harvard Forest",5],1)
+
+siteSH <- round(meanz4["St. Hippolyte",1],1)
+siteSH2.5 <- round(meanz4["St. Hippolyte",3],1)
+siteSH97.5 <- round(meanz4["St. Hippolyte",5],1)
+
+siteMP <- round(meanz4["Manning Park",1],1)
+siteMP2.5 <- round(meanz4["Manning Park",3],1)
+siteMP97.5 <- round(meanz4["Manning Park",5],1)
+
+forceHF <- round(meanz4["Forcing x Harvard Forest",1],1)
+forceHF2.5 <- round(meanz4["Forcing x Harvard Forest",3],1)
+forceHF97.5 <- round(meanz4["Forcing x Harvard Forest",5],1)
+
+forceSH <- round(meanz4["Forcing x St. Hippolyte",1],1)
+forceSH2.5 <- round(meanz4["Forcing x St. Hippolyte",3],1)
+forceSH97.5 <- round(meanz4["Forcing x St. Hippolyte",5],1)
+forceHF <- round(meanz4["Forcing x Harvard Forest",1],1)
+forceHF2.5 <- round(meanz4["Forcing x Harvard Forest",3],1)
+forceHF97.5 <- round(meanz4["Forcing x Harvard Forest",5],1)
+
+forceSH <- round(meanz4["Forcing x St. Hippolyte",1],1)
+forceSH2.5 <- round(meanz4["Forcing x St. Hippolyte",3],1)
+forceSH97.5 <- round(meanz4["Forcing x St. Hippolyte",5],1)
+
+chillHF <- round(meanz4["Chilling x Harvard Forest",1],1)
+chillHF2.5 <- round(meanz4["Chilling x Harvard Forest",3],1)
+chillHF97.5 <- round(meanz4["Chilling x Harvard Forest",5],1)
+
+chillSH <- round(meanz4["Chilling x St. Hippolyte",1],1)
+chillSH2.5 <- round(meanz4["Chilling x St. Hippolyte",3],1)
+chillSH97.5 <- round(meanz4["Chilling x St. Hippolyte",5],1)
+
+chillMP <- round(meanz4["Chilling x Manning Park",1],1)
+chillMP2.5 <- round(meanz4["Chilling x Manning Park",3],1)
+chillMP97.5 <- round(meanz4["Chilling x Manning Park",5],1)
+
+photoHF <- round(meanz4["Photoperiod x Harvard Forest",1],1)
+photoHF2.5 <- round(meanz4["Photoperiod x Harvard Forest",3],1)
+photoHF97.5 <- round(meanz4["Photoperiod x Harvard Forest",5],1)
+
+photoSH <- round(meanz4["Photoperiod x St. Hippolyte",1],1)
+photoSH2.5 <- round(meanz4["Photoperiod x St. Hippolyte",3],1)
+photoSH97.5 <- round(meanz4["Photoperiod x St. Hippolyte",5],1)
+
+photoMP <- round(meanz4["Photoperiod x Manning Park",1],1)
+photoMP2.5 <- round(meanz4["Photoperiod x Manning Park",3],1)
+photoMP97.5 <- round(meanz4["Photoperiod x Manning Park",5],1)
 
 # General survival values:
 
@@ -255,62 +320,62 @@ first <- subset(phenoBB, bb == min(phenoBB$bb))
 
 last <- subset(phenoBB, bb == max(phenoBB$bb))
 #### How different are the lateral vs 50 lat estimates? 
-sum1 <- summary(mdlLat1)$summary
-
-col4fig <- c("mean","sd","25%","50%","75%","n_eff","Rhat")
-col4table <- c("mean","sd","2.5%","50%","97.5%","n_eff","Rhat")
-
-mu_params_1l <- c(
-  "mu_b_warm", "mu_b_photo", "mu_b_chill1", "b_site","mu_b_inter_wp",
-  "mu_b_inter_wc1","mu_b_inter_pc1", "mu_b_inter_ws",
-  "mu_b_inter_ps","mu_b_inter_sc1")
-
-meanz1l <- sum1[mu_params_1l, col4fig]
-
-rownames(meanz1l) = c( #"Root trait intercept","Lambda",
-  "Forcing",
-  "Photoperiod",
-  "Chilling",
-  "Manning Park",
-  "Forcing x photoperiod",
-  "Forcing x chilling",
-  "Photoperiod x chilling",
-  "Forcing x Manning Park",
-  "Photoperiod x Manning Park",
-  "Chilling x Manning Park"
-  
-  
-)
-
-
-sum50 <- summary(mdlLat50)$summary
-
-col4fig <- c("mean","sd","25%","50%","75%","n_eff","Rhat")
-col4table <- c("mean","sd","2.5%","50%","97.5%","n_eff","Rhat")
-
-mu_params_50l <- c(
-  #"a_z","lam_interceptsa",
-  "mu_b_warm", "mu_b_photo", "mu_b_chill1", "b_site", "mu_b_inter_wp",
-  "mu_b_inter_wc1","mu_b_inter_pc1", "mu_b_inter_ws",
-  "mu_b_inter_ps","mu_b_inter_sc1")
-
-meanz50l <- sum50[mu_params_50l, col4fig]
-
-rownames(meanz50l) = c( #"Root trait intercept","Lambda",
-  "Forcing",
-  "Photoperiod",
-  "Chilling",
-  "Manning Park",
-  "Forcing x photoperiod",
-  "Forcing x chilling",
-  "Photoperiod x chilling",
-  "Forcing x Manning Park",
-  "Photoperiod x Manning Park",
-  "Chilling x Manning Park"
-  
-)
-
-(meanz50l[,1] - meanz1l[,1])/meanz50l[,1]
+# sum1 <- summary(mdlLat1)$summary
+# 
+# col4fig <- c("mean","sd","25%","50%","75%","n_eff","Rhat")
+# col4table <- c("mean","sd","2.5%","50%","97.5%","n_eff","Rhat")
+# 
+# mu_params_1l <- c(
+#   "mu_b_warm", "mu_b_photo", "mu_b_chill1", "b_site","mu_b_inter_wp",
+#   "mu_b_inter_wc1","mu_b_inter_pc1", "mu_b_inter_ws",
+#   "mu_b_inter_ps","mu_b_inter_sc1")
+# 
+# meanz1l <- sum1[mu_params_1l, col4fig]
+# 
+# rownames(meanz1l) = c( #"Root trait intercept","Lambda",
+#   "Forcing",
+#   "Photoperiod",
+#   "Chilling",
+#   "Manning Park",
+#   "Forcing x photoperiod",
+#   "Forcing x chilling",
+#   "Photoperiod x chilling",
+#   "Forcing x Manning Park",
+#   "Photoperiod x Manning Park",
+#   "Chilling x Manning Park"
+#   
+#   
+# )
+# 
+# 
+# sum50 <- summary(mdlLat50)$summary
+# 
+# col4fig <- c("mean","sd","25%","50%","75%","n_eff","Rhat")
+# col4table <- c("mean","sd","2.5%","50%","97.5%","n_eff","Rhat")
+# 
+# mu_params_50l <- c(
+#   #"a_z","lam_interceptsa",
+#   "mu_b_warm", "mu_b_photo", "mu_b_chill1", "b_site", "mu_b_inter_wp",
+#   "mu_b_inter_wc1","mu_b_inter_pc1", "mu_b_inter_ws",
+#   "mu_b_inter_ps","mu_b_inter_sc1")
+# 
+# meanz50l <- sum50[mu_params_50l, col4fig]
+# 
+# rownames(meanz50l) = c( #"Root trait intercept","Lambda",
+#   "Forcing",
+#   "Photoperiod",
+#   "Chilling",
+#   "Manning Park",
+#   "Forcing x photoperiod",
+#   "Forcing x chilling",
+#   "Photoperiod x chilling",
+#   "Forcing x Manning Park",
+#   "Photoperiod x Manning Park",
+#   "Chilling x Manning Park"
+#   
+# )
+# 
+# (meanz50l[,1] - meanz1l[,1])/meanz50l[,1]
 
 ###################################
 
@@ -323,19 +388,19 @@ b_chill = sum[grep("b_chill1\\[", rownames(sum)), 1]
 b_force = sum[grep("b_warm\\[", rownames(sum)), 1]
 
 b_photo25 = sum[grep("b_photo\\[", rownames(sum)), "25%"]
-b_chill25 = sum[grep("b_chill\\[", rownames(sum)), "25%"]
+b_chill25 = sum[grep("b_chill1\\[", rownames(sum)), "25%"]
 b_force25 = sum[grep("b_warm\\[", rownames(sum)), "25%"]
 
 b_photo75 = sum[grep("b_photo\\[", rownames(sum)), "75%"]
-b_chill75 = sum[grep("b_chill\\[", rownames(sum)), "75%"]
+b_chill75 = sum[grep("b_chill1\\[", rownames(sum)), "75%"]
 b_force75 = sum[grep("b_warm\\[", rownames(sum)), "75%"]
 
 b_photo2.5 = sum[grep("b_photo\\[", rownames(sum)), "2.5%"]
-b_chill2.5 = sum[grep("b_chill\\[", rownames(sum)), "2.5%"]
+b_chill2.5 = sum[grep("b_chill1\\[", rownames(sum)), "2.5%"]
 b_force2.5 = sum[grep("b_warm\\[", rownames(sum)), "2.5%"]
 
 b_photo97.5 = sum[grep("b_photo\\[", rownames(sum)), "97.5%"]
-b_chill97.5 = sum[grep("b_chill\\[", rownames(sum)), "97.5%"]
+b_chill97.5 = sum[grep("b_chill1\\[", rownames(sum)), "97.5%"]
 b_force97.5 = sum[grep("b_warm\\[", rownames(sum)), "97.5%"]
 
 photo <- -0.5041133 #8 h photo
@@ -358,6 +423,32 @@ for(sp in 1:47){
   }
 }
 
+#manning park
+# mp <- matrix(nrow = 1000, ncol = 47)
+# for(sp in 1:47){
+#   for (it in 1:nrow(mp)){
+#     mp[it,sp] <- post$a_sp[it,sp]+ post$b_site2[it] * 1 + post$b_site3[it] * siteSM + post$b_site4[it] * siteSM +
+#       post$b_warm[it,sp] * force + post$b_photo[it, sp] * photo + post$b_chill[it,sp] * chill +
+#       post$b_inter_wp[it,sp] * (force*photo) + post$b_inter_wc1[it,sp] * (force*chill) + post$b_inter_pc1[it,sp] * (photo*chill) +
+#       post$b_inter_s2c1[it,sp] * (chill*1) + post$b_inter_ws2[it,sp] * (force*1) + post$b_inter_ps2[it,sp] * (photo*1) +
+#       post$b_inter_s3c1[it,sp] * (chill*siteSM) + post$b_inter_ws3[it,sp] * (force*siteSM) + post$b_inter_ps3[it,sp] * (photo*siteSM) +
+#       post$b_inter_s4c1[it,sp] * (chill*siteSM) + post$b_inter_ws4[it,sp] * (force*siteSM) + post$b_inter_ps4[it,sp] * (photo*siteSM)
+#   }
+# }
+# 
+# #manning park
+# hf <- matrix(nrow = 1000, ncol = 47)
+# for(sp in 1:47){
+#   for (it in 1:nrow(mp)){
+#     mp[it,sp] <- post$a_sp[it,sp]+ post$b_site2[it] * siteSM + post$b_site3[it] * 1 + post$b_site4[it] * siteSM +
+#       post$b_warm[it,sp] * force + post$b_photo[it, sp] * photo + post$b_chill[it,sp] * chill +
+#       post$b_inter_wp[it,sp] * (force*photo) + post$b_inter_wc1[it,sp] * (force*chill) + post$b_inter_pc1[it,sp] * (photo*chill) +
+#       post$b_inter_s2c1[it,sp] * (chill*siteSM) + post$b_inter_ws2[it,sp] * (force*siteSM) + post$b_inter_ps2[it,sp] * (photo*siteSM) +
+#       post$b_inter_s3c1[it,sp] * (chill*siteSM) + post$b_inter_ws3[it,sp] * (force*siteSM) + post$b_inter_ps3[it,sp] * (photo*siteSM) +
+#       post$b_inter_s4c1[it,sp] * (chill*siteSM) + post$b_inter_ws4[it,sp] * (force*siteSM) + post$b_inter_ps4[it,sp] * (photo*siteSM)
+#   }
+# }
+# 
 
 # now get the order of diff spp bb that I can use to order the figure
 #spInfo <- read.csv("..//input/species_list.csv")
@@ -391,7 +482,7 @@ spInfo$force75 <- b_force75
 spInfo$chill75 <- b_chill75
 spInfo$photo75 <- b_photo75
 
-spInfo$photo75 <- fit$
+
 
 east <- subset(spInfo, transect != "west")
 eastSp <- unique(east$species.name)
@@ -429,62 +520,62 @@ eastMean <- mean(E$meanBB)
 W <- subset(spInfo, transect != "east")
 westMean <- mean(W$meanBB)
 
-siteChillNoHigh
-eC <- round(mean(c(siteChillNoHigh[1,1],siteChillNoHigh[2,1],siteChillNoHigh[7,1],siteChillNoHigh[8,1])),1)
-wC <- round(mean(c(siteChillNoHigh[3,1],siteChillNoHigh[4,1],siteChillNoHigh[5,1],siteChillNoHigh[6,1])),1)
-
-eC2.5 <-round( mean(c(siteChillNoHigh[1,3],siteChillNoHigh[2,3],siteChillNoHigh[7,3],siteChillNoHigh[8,3])),1)
-wC2.5 <- round(mean(c(siteChillNoHigh[3,3],siteChillNoHigh[4,3],siteChillNoHigh[5,3],siteChillNoHigh[6,3])),1)
-
-eC97.5 <- round(mean(c(siteChillNoHigh[1,4],siteChillNoHigh[2,4],siteChillNoHigh[7,4],siteChillNoHigh[8,4])),1)
-wC97.5 <- round(mean(c(siteChillNoHigh[3,4],siteChillNoHigh[4,4],siteChillNoHigh[5,4],siteChillNoHigh[6,4])),1)
-
-siteForce
-eF <- round(mean(c(siteForce[1,1],siteForce[2,1],siteForce[7,1],siteForce[8,1])),1)
-wF <- round(mean(c(siteForce[3,1],siteForce[4,1],siteForce[5,1],siteForce[6,1])),1)
-
-eF2.5 <- round(mean(c(siteForce[1,3],siteForce[2,3],siteForce[7,3],siteForce[8,3])),1)
-wF2.5 <- round(mean(c(siteForce[3,3],siteForce[4,3],siteForce[5,3],siteForce[6,3])),1)
-
-eF97.5 <- round(mean(c(siteForce[1,4],siteForce[2,4],siteForce[7,4],siteForce[8,4])),1)
-wF97.5 <- round(mean(c(siteForce[3,4],siteForce[4,4],siteForce[5,4],siteForce[6,4])),1)
-
-sitePhoto <- sitePhoto[order(sitePhoto$site),]
-eP <- round(mean(c(sitePhoto[1,1],sitePhoto[2,1],sitePhoto[7,1],sitePhoto[8,1])),1)
-wP <- round(mean(c(sitePhoto[3,1],sitePhoto[4,1],sitePhoto[5,1],sitePhoto[6,1])),1)
-
-eP2.5 <- round(mean(c(sitePhoto[1,3],sitePhoto[2,3],sitePhoto[7,3],sitePhoto[8,3])),1)
-wP2.5 <- round(mean(c(sitePhoto[3,3],sitePhoto[4,3],sitePhoto[5,3],sitePhoto[6,3])),1)
-
-eP97.5 <- round(mean(c(sitePhoto[1,4],sitePhoto[2,4],sitePhoto[7,4],sitePhoto[8,4])),1)
-wP97.5 <- round(mean(c(sitePhoto[3,4],sitePhoto[4,4],sitePhoto[5,4],sitePhoto[6,4])),1)
-
-# 1. lower lat in eastern diff from western in their forcing
-# eastern
-hfF <- round(mean(c(siteForce[1,1],siteForce[2,1])),1)
-shF <- round(mean(c(siteForce[7,1],siteForce[8,1])),1)
-
-hfF2.5 <- round(mean(c(siteForce[1,3],siteForce[2,3])),1)
-shF2.5 <- round(mean(c(siteForce[7,3],siteForce[8,3])),1)
-
-hfF97.5 <- round(mean(c(siteForce[1,4],siteForce[2,4])),1)
-shF97.5 <- round(mean(c(siteForce[7,4],siteForce[8,4])),1)
-
-# western:
-mpF <- round(mean(c(siteForce[3,1],siteForce[4,1])),1)
-smF <- round(mean(c(siteForce[5,1],siteForce[6,1])),1)
-
-mpF2.5 <- round(mean(c(siteForce[3,3],siteForce[4,3])),1)
-smF2.5 <- round(mean(c(siteForce[5,3],siteForce[6,3])),1)
-
-mpF97.5 <- round(mean(c(siteForce[3,4],siteForce[4,4])),1)
-smF97.5 <- round(mean(c(siteForce[5,4],siteForce[5,4])),1)
-
-
-
-a_sp95 <- round(quantile(fit$a_sp, c(0.05)) ,2)
-a_sp95 <- round(quantile(fit$a_sp, c(0.95)) ,2)
-
+# siteChillNoHigh
+# eC <- round(mean(c(siteChillNoHigh[1,1],siteChillNoHigh[2,1],siteChillNoHigh[7,1],siteChillNoHigh[8,1])),1)
+# wC <- round(mean(c(siteChillNoHigh[3,1],siteChillNoHigh[4,1],siteChillNoHigh[5,1],siteChillNoHigh[6,1])),1)
+# 
+# eC2.5 <-round( mean(c(siteChillNoHigh[1,3],siteChillNoHigh[2,3],siteChillNoHigh[7,3],siteChillNoHigh[8,3])),1)
+# wC2.5 <- round(mean(c(siteChillNoHigh[3,3],siteChillNoHigh[4,3],siteChillNoHigh[5,3],siteChillNoHigh[6,3])),1)
+# 
+# eC97.5 <- round(mean(c(siteChillNoHigh[1,4],siteChillNoHigh[2,4],siteChillNoHigh[7,4],siteChillNoHigh[8,4])),1)
+# wC97.5 <- round(mean(c(siteChillNoHigh[3,4],siteChillNoHigh[4,4],siteChillNoHigh[5,4],siteChillNoHigh[6,4])),1)
+# 
+# siteForce
+# eF <- round(mean(c(siteForce[1,1],siteForce[2,1],siteForce[7,1],siteForce[8,1])),1)
+# wF <- round(mean(c(siteForce[3,1],siteForce[4,1],siteForce[5,1],siteForce[6,1])),1)
+# 
+# eF2.5 <- round(mean(c(siteForce[1,3],siteForce[2,3],siteForce[7,3],siteForce[8,3])),1)
+# wF2.5 <- round(mean(c(siteForce[3,3],siteForce[4,3],siteForce[5,3],siteForce[6,3])),1)
+# 
+# eF97.5 <- round(mean(c(siteForce[1,4],siteForce[2,4],siteForce[7,4],siteForce[8,4])),1)
+# wF97.5 <- round(mean(c(siteForce[3,4],siteForce[4,4],siteForce[5,4],siteForce[6,4])),1)
+# 
+# sitePhoto <- sitePhoto[order(sitePhoto$site),]
+# eP <- round(mean(c(sitePhoto[1,1],sitePhoto[2,1],sitePhoto[7,1],sitePhoto[8,1])),1)
+# wP <- round(mean(c(sitePhoto[3,1],sitePhoto[4,1],sitePhoto[5,1],sitePhoto[6,1])),1)
+# 
+# eP2.5 <- round(mean(c(sitePhoto[1,3],sitePhoto[2,3],sitePhoto[7,3],sitePhoto[8,3])),1)
+# wP2.5 <- round(mean(c(sitePhoto[3,3],sitePhoto[4,3],sitePhoto[5,3],sitePhoto[6,3])),1)
+# 
+# eP97.5 <- round(mean(c(sitePhoto[1,4],sitePhoto[2,4],sitePhoto[7,4],sitePhoto[8,4])),1)
+# wP97.5 <- round(mean(c(sitePhoto[3,4],sitePhoto[4,4],sitePhoto[5,4],sitePhoto[6,4])),1)
+# 
+# # 1. lower lat in eastern diff from western in their forcing
+# # eastern
+# hfF <- round(mean(c(siteForce[1,1],siteForce[2,1])),1)
+# shF <- round(mean(c(siteForce[7,1],siteForce[8,1])),1)
+# 
+# hfF2.5 <- round(mean(c(siteForce[1,3],siteForce[2,3])),1)
+# shF2.5 <- round(mean(c(siteForce[7,3],siteForce[8,3])),1)
+# 
+# hfF97.5 <- round(mean(c(siteForce[1,4],siteForce[2,4])),1)
+# shF97.5 <- round(mean(c(siteForce[7,4],siteForce[8,4])),1)
+# 
+# # western:
+# mpF <- round(mean(c(siteForce[3,1],siteForce[4,1])),1)
+# smF <- round(mean(c(siteForce[5,1],siteForce[6,1])),1)
+# 
+# mpF2.5 <- round(mean(c(siteForce[3,3],siteForce[4,3])),1)
+# smF2.5 <- round(mean(c(siteForce[5,3],siteForce[6,3])),1)
+# 
+# mpF97.5 <- round(mean(c(siteForce[3,4],siteForce[4,4])),1)
+# smF97.5 <- round(mean(c(siteForce[5,4],siteForce[5,4])),1)
+# 
+# 
+# 
+# a_sp95 <- round(quantile(fit$a_sp, c(0.05)) ,2)
+# a_sp95 <- round(quantile(fit$a_sp, c(0.95)) ,2)
+# 
 
 
 # Shrub vs tree values in the main text:
@@ -526,3 +617,15 @@ treeMeanPhoto97.5 <- typeValues[2,10]
 # eastTranVal <- aggregate(eastData[c("force","chill","photo","force2.5","chill2.5","photo2.5", "force97.5","chill97.5","photo97.5")], eastData[c("type")], FUN = mean)
 # 
 # bothTranVal <- aggregate(bothData[c("force","chill","photo","force2.5","chill2.5","photo2.5", "force97.5","chill97.5","photo97.5")], bothData[c("type")], FUN = mean)
+
+tempC <- aggregate(pheno["bb"], pheno[c("transect","chill")], FUN = mean);tempC
+
+tempF <- aggregate(pheno["bb"], pheno[c("transect","force")], FUN = mean);tempF
+
+tempP <- aggregate(pheno["bb"], pheno[c("transect","photo")], FUN = mean);tempP
+
+tempCS <- aggregate(pheno["bb"], pheno[c("population","chill")], FUN = mean);tempCS
+
+tempFS <- aggregate(pheno["bb"], pheno[c("population","force")], FUN = mean);tempFS
+
+tempPS <- aggregate(pheno["bb"], pheno[c("population","photo")], FUN = mean);tempPS

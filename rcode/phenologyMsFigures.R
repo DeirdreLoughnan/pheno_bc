@@ -371,6 +371,7 @@ dev.off()
 
 # Let's plot some interactions:
 a_sp = colMeans(sum[grep("a_sp", rownames(sum)), c("mean","se_mean","2.5%", "97.5%")])
+# a_z = (sum[grep("a_z", rownames(sum)), c("mean","se_mean","2.5%", "97.5%")])
 mu_b_warm = sum[grep("mu_b_warm", rownames(sum)), c("mean","se_mean","2.5%", "97.5%")]
 mu_b_photo = sum[grep("mu_b_photo", rownames(sum)), c("mean","se_mean","2.5%", "97.5%")]
 mu_b_chill1 = sum[grep("mu_b_chill1", rownames(sum)), c("mean","se_mean","2.5%", "97.5%")]
@@ -406,7 +407,8 @@ chill1 <- c( -2, -1, -0.7642814, -0.4072595, -0.4023109, -0.3493703,  0.2750890,
 
 
 # plot first for the high forcing
-bb_hfc = a_sp[1] + b_site2[1] * siteSM + b_site3[1] * siteSM + b_site4[1] * siteSM + mu_b_warm[1] * hf + mu_b_photo[1] * photo + mu_b_chill1[1] * chill1 +
+bb_hfc = a_sp[1] + b_site2[1] * siteSM + b_site3[1] * siteSM + b_site4[1] * siteSM + mu_b_warm[1] * hf + 
+  mu_b_photo[1] * photo + mu_b_chill1[1] * chill1 +
   mu_b_inter_wp[1] * (hf*photo) +
   mu_b_inter_wc1[1] * (hf*chill1) + mu_b_inter_pc1[1] * (photo*chill1) +
   mu_b_inter_s2c1[1] * (chill1*siteSM) + mu_b_inter_ws2[1] * (hf*siteSM) +mu_b_inter_ps2[1] * (photo*siteSM) +
@@ -414,7 +416,7 @@ bb_hfc = a_sp[1] + b_site2[1] * siteSM + b_site3[1] * siteSM + b_site4[1] * site
   mu_b_inter_s4c1[1] * (chill1*siteSM) + mu_b_inter_ws4[1] * (hf*siteSM) +mu_b_inter_ps4[1] * (photo*siteSM)
 
 # plot first for the low forcing
-bb_lfc = a_sp[1] + b_site2[1] * siteSM + b_site3[1] * siteSM + b_site4[1] * siteSM + mu_b_warm[1] * lf + mu_b_photo[1] * photo + mu_b_chill1[1] * chill1 +
+bb_lfc = a_sp[1]  + b_site2[1] * siteSM + b_site3[1] * siteSM + b_site4[1] * siteSM + mu_b_warm[1] * lf + mu_b_photo[1] * photo + mu_b_chill1[1] * chill1 +
   mu_b_inter_wp[1] * (lf*photo) +
   mu_b_inter_wc1[1] * (lf*chill1) + mu_b_inter_pc1[1] * (photo*chill1) +
   mu_b_inter_s2c1[1] * (chill1*siteSM) + mu_b_inter_ws2[1] * (lf*siteSM) +mu_b_inter_ps2[1] * (photo*siteSM) +
@@ -440,7 +442,7 @@ intCF <- data.frame(bb_hfc = c(bb_hfc), bb_lfc = c(bb_lfc), chill = c(chill1))
 intrxnCF <- ggplot(intCF, aes(x= chill, group =1)) +
   geom_line(aes(y = bb_hfc, col = "#CC6677"), size =1.5) +
   geom_line(aes(y = bb_lfc, col = "cyan4"), size = 1.5) +
-  #xlim (-1.5,1.5) + +
+  xlim (-2.3,2) + 
   xlab("Z-scored chill portions") + ylab("Estimated day of budburst") +
   theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
         panel.background = element_blank(), axis.line = element_line(colour = "black"),
@@ -448,7 +450,7 @@ intrxnCF <- ggplot(intCF, aes(x= chill, group =1)) +
   theme(legend.key=element_blank(), legend.position=c(.8,.85),legend.text = element_text(size = 15)) +
   #scale_fill_manual( labels = c("Low force", "High force")) 
   scale_colour_discrete(labels=c("High forcing","Low forcing"), name = "") +
-  theme(legend.title = element_blank()) +  annotate("text", x = -2.1, y = 75, label = "a)", cex = 10) 
+  theme(legend.title = element_blank()) +  annotate("text", x = -2.3, y = 90, label = "a)", cex = 10) 
 
 # #<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>#
 
@@ -540,7 +542,7 @@ site4 <- unique(pheno$site4.z2)
 chill1 <- mean( -0.3482404,  0.9462697,  0.8463799, -0.7629649,  0.5315452,  0.4316554,0.2985445, -0.4011572,  0.2759381, -0.4061035)
 
 # plot first for the high forcing - site = 1 is the second value (site4[2])
-bb_hfsite4 = a_sp[1:4] + b_site2[1:4] * site2[2] + b_site3[1:4] * site3[1] + b_site4[1:4] * site4[2]  + mu_b_warm[1:4] * hf + mu_b_photo[1:4] * photo + mu_b_chill1[1:4] * chill1 +
+bb_hfsite4 = a_sp[1:4]   + b_site2[1:4] * site2[2] + b_site3[1:4] * site3[1] + b_site4[1:4] * site4[2]  + mu_b_warm[1:4] * hf + mu_b_photo[1:4] * photo + mu_b_chill1[1:4] * chill1 +
   mu_b_inter_wp[1:4] * (hf*photo) +
   mu_b_inter_wc1[1:4] * (hf*chill1) + mu_b_inter_pc1[1:4] * (photo*chill1) +
   mu_b_inter_s2c1[1:4] * (chill1*site2[2]) + mu_b_inter_ws2[1:4] * (hf*site2[2]) +mu_b_inter_ps2[1:4] * (photo*site2[2]) +
@@ -651,13 +653,13 @@ siteFPoint <- ggplot() +
   geom_pointrange(siteForce, mapping = aes(x = factor(site, level = siteOrder), y = mean, ymin=X2.5., ymax=X97.5., col = force),
                  position=position_dodge(width=0.5), size =1.25) +
   xlab("Population") + ylab("Estimated day of budburst") +
-  ylim(0,60) +
+  ylim(0,80) +
   theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
         panel.background = element_blank(), axis.line = element_line(colour = "black"),
         axis.text = element_text(size = 15), axis.title = element_text(size = 20)) +
   scale_color_manual(values = c("cyan4", "#CC6677"), labels = c("High forcing", "Low forcing"), name = "") +
   theme(legend.key=element_blank(), legend.position=c(.9,.85),legend.text = element_text(size = 15)) +
-  theme(legend.title = element_blank()) +  annotate("text", x = 0.6, y = 60, label = "b)", cex = 10) 
+  theme(legend.title = element_blank()) +  annotate("text", x = 0.6, y = 80, label = "b)", cex = 10) 
 
 # plot(0, type = "n",  xlim = c(-1,1), ylim = c(-5,90), xlab = "Site", ylab = "Day of budburst", cex.lab = 2)
 # # points(hfData$site4.z2, hfData$bb, bg = "#f9b641ff", pch =21, cex = 2.5)
@@ -728,21 +730,21 @@ bb_lc0site4 = a_sp[1:4] + b_site2[1:4] * site2[2] + b_site3[1:4] * site3[1] + b_
 
 # site 3: Harvard forest
 
-bb_hc2site3 = a_sp[1:4] + b_site2[1:4] * site2[2] + b_site3[1:4] * site3[2] + b_site4[1:4] * site4[1]  + mu_b_warm[1:4] * force + mu_b_photo[1:4] * photo + mu_b_chill1[1:4] * c2[1] +
+bb_hc2site3 = a_sp[1:4]  + b_site2[1:4] * site2[2] + b_site3[1:4] * site3[2] + b_site4[1:4] * site4[1]  + mu_b_warm[1:4] * force + mu_b_photo[1:4] * photo + mu_b_chill1[1:4] * c2[1] +
   mu_b_inter_wp[1:4] * (force*photo) +
   mu_b_inter_wc1[1:4] * (force*c2[1]) + mu_b_inter_pc1[1:4] * (photo*c2[1]) +
   mu_b_inter_s2c1[1:4] * (c2[1]*site2[2]) + mu_b_inter_ws2[1:4] * (force*site2[2]) +mu_b_inter_ps2[1:4] * (photo*site2[2]) +
   mu_b_inter_s3c1[1:4] * (c2[1]*site3[1]) + mu_b_inter_ws3[1:4] * (force*site3[1]) +mu_b_inter_ps3[1:4] * (photo*site3[1]) +
   mu_b_inter_s4c1[1:4] * (c2[1]*site4[2]) + mu_b_inter_ws4[1:4] * (force*site4[2]) +mu_b_inter_ps4[1:4] * (photo*site4[2])
 
-bb_hc1site3 = a_sp[1:4] + b_site2[1:4] * site2[2] + b_site3[1:4] * site3[2] + b_site4[1:4] * site4[1]  + mu_b_warm[1:4] * force + mu_b_photo[1:4] * photo + mu_b_chill1[1:4] * c1[1] +
+bb_hc1site3 = a_sp[1:4]  + b_site2[1:4] * site2[2] + b_site3[1:4] * site3[2] + b_site4[1:4] * site4[1]  + mu_b_warm[1:4] * force + mu_b_photo[1:4] * photo + mu_b_chill1[1:4] * c1[1] +
   mu_b_inter_wp[1:4] * (force*photo) +
   mu_b_inter_wc1[1:4] * (force*c1[1]) + mu_b_inter_pc1[1:4] * (photo*c1[1]) +
   mu_b_inter_s2c1[1:4] * (c1[1]*site2[2]) + mu_b_inter_ws2[1:4] * (force*site2[2]) +mu_b_inter_ps2[1:4] * (photo*site2[2]) +
   mu_b_inter_s3c1[1:4] * (c1[1]*site3[1]) + mu_b_inter_ws3[1:4] * (force*site3[1]) +mu_b_inter_ps3[1:4] * (photo*site3[1]) +
   mu_b_inter_s4c1[1:4] * (c1[1]*site4[2]) + mu_b_inter_ws4[1:4] * (force*site4[2]) +mu_b_inter_ps4[1:4] * (photo*site4[2])
 
-bb_lc0site3 = a_sp[1:4] + b_site2[1:4] * site2[2] + b_site3[1:4] * site3[2] + b_site4[1:4] * site4[1]  + mu_b_warm[1:4] * force + mu_b_photo[1:4] * photo + mu_b_chill1[1:4] * c0[1] +
+bb_lc0site3 = a_sp[1:4]  + b_site2[1:4] * site2[2] + b_site3[1:4] * site3[2] + b_site4[1:4] * site4[1]  + mu_b_warm[1:4] * force + mu_b_photo[1:4] * photo + mu_b_chill1[1:4] * c0[1] +
   mu_b_inter_wp[1:4] * (force*photo) +
   mu_b_inter_wc1[1:4] * (force*c0[1]) + mu_b_inter_pc1[1:4] * (photo*c0[1]) +
   mu_b_inter_s2c1[1:4] * (c0[1]*site2[2]) + mu_b_inter_ws2[1:4] * (force*site2[2]) + mu_b_inter_ps2[1:4] * (photo*site2[2]) +
@@ -753,7 +755,7 @@ bb_lc0site3 = a_sp[1:4] + b_site2[1:4] * site2[2] + b_site3[1:4] * site3[2] + b_
 
 #Site 2 Manning park
 # plot first for the high chill
-bb_hcsite2 = a_sp[1:4] + b_site2[1:4] * site2[1] + b_site3[1:4] * site3[1] + b_site4[1:4] * site4[1]  + mu_b_warm[1:4] * force + mu_b_photo[1:4] * photo + mu_b_chill1[1:4] * hc[1] +
+bb_hcsite2 = a_sp[1:4]  + b_site2[1:4] * site2[1] + b_site3[1:4] * site3[1] + b_site4[1:4] * site4[1]  + mu_b_warm[1:4] * force + mu_b_photo[1:4] * photo + mu_b_chill1[1:4] * hc[1] +
   mu_b_inter_wp[1:4] * (force*photo) +
   mu_b_inter_wc1[1:4]* (force*hc[1]) + mu_b_inter_pc1[1:4] * (photo*hc[1]) +
   mu_b_inter_s2c1[1:4] * (hc[1]*site2[1]) + mu_b_inter_ws2[1:4] * (force*site2[1]) +mu_b_inter_ps2[1:4] * (photo*site2[1]) +
@@ -774,7 +776,7 @@ bb_hcsite1 = a_sp[1:4] + b_site2[1:4] * site2[2] + b_site3[1:4] * site3[1] + b_s
   mu_b_inter_s3c1[1:4] * (hc[2]*site3[1]) + mu_b_inter_ws3[1:4] * (force*site3[1]) + mu_b_inter_ps3[1:4] * (photo*site3[1]) +
   mu_b_inter_s4c1[1:4] * (hc[2]*site4[1]) + mu_b_inter_ws4[1:4] * (force*site4[1]) + mu_b_inter_ps4[1:4] * (photo*site4[1])
 
-bb_lcsite1 = a_sp[1:4] + b_site2[1:4] * site2[2] + b_site3[1:4] * site3[1] + b_site4[1:4] * site4[1]  + mu_b_warm[1:4] * force + mu_b_photo[1:4] * photo + mu_b_chill1[1:4] * lc[2] +
+bb_lcsite1 = a_sp[1:4]+ b_site2[1:4] * site2[2] + b_site3[1:4] * site3[1] + b_site4[1:4] * site4[1]  + mu_b_warm[1:4] * force + mu_b_photo[1:4] * photo + mu_b_chill1[1:4] * lc[2] +
   mu_b_inter_wp[1:4] * (force*photo) +
   mu_b_inter_wc1[1:4] * (force*lc[2]) + mu_b_inter_pc1[1:4] * (photo*lc[2]) +
   mu_b_inter_s2c1[1:4] * (lc[2]*site2[2]) + mu_b_inter_ws2[1:4] * (force*site2[2]) +mu_b_inter_ps2[1:4] * (photo*site2[2]) +
@@ -813,7 +815,7 @@ siteCPoint <- ggplot() +
   geom_pointrange(siteChill, mapping = aes(x = factor(site, level = siteOrder), y = mean, ymin=X2.5., ymax=X97.5., col = chill),
                   position=position_dodge(width=0.5), size = 1.25) +
   xlab("Population") + ylab("Estimated day of budburst") +
-  ylim(0,60) +
+  ylim(0,80) +
   theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
         panel.background = element_blank(), axis.line = element_line(colour = "black"),
         axis.text = element_text(size = 15), axis.title = element_text(size = 20)) +
@@ -827,7 +829,7 @@ siteCPoint <- ggplot() +
                                                          "High chill - West",
                                                          "Low chill - West"), name = "") +
   theme(legend.key=element_blank(), legend.position=c(.8,.85),legend.text = element_text(size = 15)) +
-  theme(legend.title = element_blank()) +  annotate("text", x = 0.6, y = 60, label = "c)", cex = 10) 
+  theme(legend.title = element_blank()) +  annotate("text", x = 0.6, y = 80, label = "c)", cex = 10) 
 
 
 # remove the low chill:
@@ -843,7 +845,7 @@ siteCPointNH <- ggplot() +
   geom_pointrange(siteChillNoHigh, mapping = aes(x = factor(site, level = siteOrder), y = mean, ymin=X2.5., ymax=X97.5., col = chill),
                   position=position_dodge(width=0.5), size = 1.25) +
   xlab("Population") + ylab("Estimated day of budburst") +
-  ylim(0,60) +
+  ylim(0,80) +
   theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
         panel.background = element_blank(), axis.line = element_line(colour = "black"),
         axis.text = element_text(size = 15), axis.title = element_text(size = 20)) +
@@ -855,7 +857,7 @@ siteCPointNH <- ggplot() +
                                                          "High chill - West",
                                                          "Low chill - West"), name = "") +
   theme(legend.key=element_blank(), legend.position=c(.8,.85),legend.text = element_text(size = 15)) +
-  theme(legend.title = element_blank()) +  annotate("text", x = 0.6, y = 60, label = "c)", cex = 10) 
+  theme(legend.title = element_blank()) +  annotate("text", x = 0.6, y = 80, label = "c)", cex = 10) 
 
 
 # plot(hcData$site4.z2, hcData$bb, type = "n",  xlim = c(-1,1), ylim = c(-5,90), xlab = "Site", ylab = "Day of budburst", cex.lab = 2)
@@ -985,21 +987,21 @@ sitePPoint <- ggplot() +
   geom_pointrange(sitePhoto, mapping = aes(x = factor(site, level = siteOrder), y = mean, ymin=X2.5., ymax=X97.5., col = photo),
                   position=position_dodge(width=0.5), size =1.25) +
   xlab("Population") + ylab("Estimated day of budburst") +
-  ylim(0,60) +
+  ylim(0,80) +
   theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
         panel.background = element_blank(), axis.line = element_line(colour = "black"),
         axis.text = element_text(size = 15), axis.title = element_text(size = 20)) +
   scale_color_manual(values = c("cyan4", "#CC6677"), labels = c("Long photoperiod", "Short photoperiod"), name = "") +
   theme(legend.key=element_blank(), legend.position=c(.8,.85),legend.text = element_text(size = 15)) +
-  theme(legend.title = element_blank()) +  annotate("text", x = 0.6, y = 60, label = "d)", cex = 10) 
+  theme(legend.title = element_blank()) +  annotate("text", x = 0.6, y = 80, label = "d)", cex = 10) 
 
 
-pdf("figures/intrxnBarplots.pdf", height =12, width = 15)
+pdf("..//figures/intrxnPlotsApril11.pdf", height =12, width = 15)
 plot_grid(intrxnCF, siteFPoint, siteCPoint, sitePPoint, nrow = 2, ncol = 2, align = "v")
 dev.off()
 
 
-pdf("figures/intrxnPlots4Chill.pdf", height =12, width = 15)
+pdf("..//figures/intrxnPlots4ChillApril11.pdf", height =12, width = 15)
 plot_grid(intrxnCF, siteFPoint, siteCPointNH, sitePPoint, nrow = 2, ncol = 2, align = "v")
 dev.off()
 ##################################
@@ -1418,7 +1420,7 @@ shrubMean <- colMeans(shrub[,c(4,5,6)])
 # 
 # #dev.off();#system(paste("open", file.path(figpath, "Fig2_4panel.pdf"), "-a /Applications/Preview.app"))
 
-a_sp = sumew[grep("a_z", rownames(sumew)), 1]
+a_sp = sumew[grep("a_sp", rownames(sumew)), 1]
 mu_b_warm = sumew[grep("mu_b_warm", rownames(sumew)), 1]
 mu_b_photo = sumew[grep("mu_b_photo", rownames(sumew)), 1]
 mu_b_chill1 = sumew[grep("mu_b_chill", rownames(sumew)), 1]

@@ -65,6 +65,12 @@ Vancouver, BC, Canada, V6T 1Z4. \\
 
 Corresponding Author: Deirdre Loughnan, deirdre.loughnan@ubc.ca \\
 
+\section*{To-do:}
+
+\begin{enumerate}
+\item add means and UI 90 for interactions
+\end{enumerate}
+\section*{Introduction}
 
 \section*{Research questions}
 \begin{enumerate}
@@ -84,18 +90,22 @@ source("..//rcode/phenologyMsValues.R")
 \begin {enumerate}
 \item On average, species budburst on the \Sexpr{meanBB} day after the start of forcing, but ranged from \Sexpr{minBB} for \emph{Aronia melanocarpa} to \Sexpr{maxBB} for \emph{Quercus velutina}
 \item Species budburst = strongly phylogenetically structured ($\lambda$ of \Sexpr{lamT} (\Sexpr{lamTLower}, \Sexpr{lamTUpper}), root trait value of \Sexpr{rootT} (\Sexpr{rootTLower}, \Sexpr{rootTUpper}).
-\item All cues did lead to an advance in budburst date, chilling being strongest and photoperiod weakest
+\item All cues did lead to an advance in budburst date, chilling being strongest (\Sexpr{chillCue}, \Sexpr{chillCue2.5}, \Sexpr{chillCue97.5}) and photoperiod weakest (\Sexpr{photoCue}, \Sexpr{photoCue2.5}, \Sexpr{photoCue97.5})
 \item But strong interactions between cues and between cues and sites.
-\item Forcing by chilling = strong delaying effect = low chilling offset by high forcing (Fig. S2 a).
+\item Forcing by chilling (\Sexpr{intrxnCF}, \Sexpr{intrxnCF2.5}, \Sexpr{intrxnCF97.5}) = strong delaying effect = low chilling offset by high forcing (Fig. S2 a).
 \end{enumerate}
 
 \item Populations differed in their their overall budburst dates, but interacted with cues --- effects were clearly divided between eastern and western populations.
 \begin{enumerate}
 \item Overall: Low forcing, chilling, and shorter photoperiods resulted in later budburst dates than higher temperature and longer photoperiod treatments across all sites (Fig. \ref{fig:intrxn}b-d)
-\item Between the two transects eastern budburst dates were consistently earlier (Fig. \ref{fig:intrxn}). 
-\item Lower latitude site in eastern transect was less responsive to forcing = slightly later bb than high latitude site --- but western sites only differed slightly under low forcing (Fig. \ref{fig:intrxn}b)
-\item This latitudinal effect was not found for chilling --- chilling responses = similar for high and low chilling in eastern transect, but much later for field only chilling (no chilling) treatment --- but western transect = strong difference between high and low chilling and not sites (Fig. \ref{fig:intrxn}c).
-\item Photoperiod effects = greatest in eastern populations and weak in western populations --- low latitude site had slightly later bb in eastern transect, but negligible difference in the west. (Fig. \ref{fig:intrxn}d)
+\item Between the two transects eastern budburst dates were consistently earlier, as reflected by the negative sites estiamtes for both our eastern sites (\Sexpr{siteHF}, \Sexpr{siteHF2.5}, \Sexpr{siteHF97.5} and \Sexpr{siteSH}, \Sexpr{siteSH2.5}, \Sexpr{siteSH97.5} for Harvard Forest and St. Hippolyte respectively), while our western sites produced a postive response (\Sexpr{siteMP}, \Sexpr{siteMP2.5}, \Sexpr{siteMP97.5})  (Fig. \ref{fig:intrxn}). 
+% add the mean and UI, either from the model or by averaging the site level posteriors
+\item Lower latitude site in eastern transect was less responsive to forcing \Sexpr{forceHF}, \Sexpr{forceHF2.5}, \Sexpr{forceHF97.5}) = slightly later bb than high latitude site \Sexpr{forceSH}, \Sexpr{forceSH2.5}, \Sexpr{forceSH97.5}) --- but western sites only differed slightly under low forcing (Fig. \ref{fig:intrxn}b) 
+% add values and show that they are significant
+\item This latitudinal effect was not found for chilling --- chilling responses were similar across the eastern transects (\Sexpr{chillHF}, \Sexpr{forceHF2.5}, \Sexpr{forceHF97.5} for Harvard Forest and \Sexpr{chillSH}, \Sexpr{chillSH2.5}, \Sexpr{chillSH97.5} for St. Hippolyte) = prodcuing much later bb for field only chilling (no chilling) treatment than the high chilling treatment --- western transect = advances in bb with greater chilling but not the 95\% uncertainty interval crosses zero (\Sexpr{chillMP}, \Sexpr{chillMP2.5}, \Sexpr{chillMP97.5}) (Fig. \ref{fig:intrxn}c).
+% focus on just the low chill and high chill treatments only, having the zero chill = too much!
+\item Photoperiod effects = greatest in eastern populations and weak in western populations --- low latitude site had slightly later bb in eastern transect (\Sexpr{photoHF}, \Sexpr{photoHF2.5}, \Sexpr{photoHF97.5} for Harvard Forest and \Sexpr{photoSH}, \Sexpr{photoSH2.5}, \Sexpr{photoSH97.5} for St. Hippolyte), but negligible photoperiod response in the west, with estimates 95\% uncertianty interval spanning zero (\Sexpr{photoMP}, \Sexpr{photoMP2.5}, \Sexpr{photoMP97.5}). (Fig. \ref{fig:intrxn}d)
+%add the interaction values - confirm you're adjusting for photoperiod differences between the treatments, photothermo covaries only in eastern experiment 
 \end{enumerate}
 
 %Manning park = delayed relative to Smithers, Harvard Forest \& St. Hippolyte = more advanced than Smithers
@@ -207,7 +217,7 @@ print(fourSite,include.rownames=TRUE, caption.placement="top", hline.after=c(-1,
 
 \begin{figure}[h!]
     \centering
-     \includegraphics[width=\textwidth]{..//figures/intrxnBarplots.pdf}
+     \includegraphics[width=\textwidth]{..//figures/intrxnPlots4ChillApril11.pdf}
      \caption{Interaction plots of day of budburst of first bud in response chill portions and forcing (a), forcing cues(b), chilling cues (c), and photoperiod cues (d) and species sampled from St. Hippolyte, Harvard Forest, Manning park, and Smithers. }
     \label{fig:intrxn}
 \end{figure}

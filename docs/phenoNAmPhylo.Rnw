@@ -65,19 +65,58 @@ Vancouver, BC, Canada, V6T 1Z4. \\
 
 Corresponding Author: Deirdre Loughnan, deirdre.loughnan@ubc.ca \\
 
-\section*{To-do:}
+
+\section*{Introduction}
 
 \begin{enumerate}
-\item add means and UI 90 for interactions
+\item Plant phenology is changing with climate change:
+\begin{enumerate}
+\item Timing of spring bb is changing with anthropogenic climate change 
+\item Important to understand and predict these changes as spring phenology determines---growing season length, carbon cycle, species interactions
+\item But responses are species specific and highly variable
 \end{enumerate}
-\section*{Introduction}
+
+\item Variation in bb phenology:
+\begin{enumerate}
+\item Decades of work has been devoted to understanding how environmental cues shape phenology and what drives the high variation in budburst we observe
+\item Understory spp tend to bb earlier than canopy species, likely in response to overarching differences in traits, but also environmental cues. 
+\item But few studies have explored how cue use may differ acoss populations of the same species and the role of local adapation.
+\end{enumerate}
+
+\item Cues that shape bb
+\begin{enumerate}
+\item Decades of work has demonstrated the importance of three cues for bb:
+\begin{enumerate}
+\item Forcing: spring temperatures
+\item Photoperiod/daylength
+\item Chilling: winter length and temperatures
+\end{enumerate}
+\item But these cues interact---forcing can offset low chilling---photoperiod offsets weak forcing (Heide1993, Chuine2000, Caffarra2011, Flynn2018 )
+\end{enumerate}
+
+\item Understanding species specific responses to cues is critical for predicting future climate change impacts across forest communities and for the species within them.
+\begin{enumerate}
+\item As winter and spring temperatures increase with climate change = faster accumulation of chilling and forcing (Guy2014) 
+\item Spp with strong photoperiod cues would be limited in their ability to advance (Korner2010)
+\item Potential to alter species coexistence and synchrony on trophic interactions
+\end{enumerate}
+
+\item In this study we:
+\begin{enumerate}
+\item Combined results from two growth chamber studies of woody plant phenological cues
+\item Data from four population, from eastern to western North America and a range of 4-6$^{\circ}$ latitude
+\item Allows us to detect general trends in how bb of N Am. woody plants respond to forcing, chilling, photoperiod 
+\item But also community specific responses---detect differences between Western and Eastern forest communities, and at different latitudes
+\end{enumerate}
+
+\item Important to consider not just spp but communities as a whole---understand role phenology in shaping spp assemblages, community dynamics, and ecoystem services (Cleland2007).
 
 \section*{Research questions}
 \begin{enumerate}
 \item Are species responses to chilling, forcing and photoperiod cues phylogenetically structured?
-\item How do species in deciduous forests across North America to these varying cues? 
+\item How do species in deciduous forests communities across North America respond differently to varying cues? 
 \end {enumerate}
-
+\end{enumerate}
 <<label=runcode1,  echo=FALSE>>=
 
 source("..//rcode/phenologyMsValues.R")
@@ -157,6 +196,18 @@ source("..//rcode/phenologyMsValues.R")
 \section*{Discussion}
 
 \begin{enumerate}
+\item Summarize overall findings/main take aways
+\begin{enumerate}
+\item All cues did lead to earlier bb, but with complex interactions
+\end{enumerate}
+
+\item Differences between the western and eastern populations
+\begin{enumerate}
+\item Across our populations, did find differences between cue responses in western species versus eastern species.
+\end{enumerate}
+\end{enumerate}
+
+\begin{enumerate}
 \item Across all species, relative importance of cue = varied = unique temporal niches  (Fig. \ref{fig:cueSp})
 \item Large portion of bb due to spp differences - need more research to understand this, if not cues what causes it? Could introduce traits and foreshadow the third chapter
 \item The experimental design (which is impressive) combined with your models means that most other things some models would assign to the intercept are assigned to site, species, chill, force etc. here... and still the intercept is big. Wow!! 
@@ -217,7 +268,7 @@ print(fourSite,include.rownames=TRUE, caption.placement="top", hline.after=c(-1,
 
 \begin{figure}[h!]
     \centering
-     \includegraphics[width=\textwidth]{..//figures/intrxnPlots4ChillApril11.pdf}
+     \includegraphics[width=\textwidth]{..//figures/intrxnPlots4Chill.pdf}
      \caption{Interaction plots of day of budburst of first bud in response chill portions and forcing (a), forcing cues(b), chilling cues (c), and photoperiod cues (d) and species sampled from St. Hippolyte, Harvard Forest, Manning park, and Smithers. }
     \label{fig:intrxn}
 \end{figure}

@@ -1,7 +1,7 @@
 # Started May 3, 2022 by deirde
 
 # the aim of this code is to generate the model output for my phenology ms
-# rm(list=ls()) 
+# rm(list=ls())
 # options(stringsAsFactors = FALSE)
 
 library(rstan)
@@ -50,8 +50,18 @@ head(pheno)
 # Preping the data for the model
 
 pheno$force.n <- pheno$force
-pheno$force.n[pheno$force.n == "HF"] <- "1"
-pheno$force.n[pheno$force.n == "LF"] <- "0"
+# pheno$force.n[pheno$force.n == "HF"] <- "1"
+# pheno$force.n[pheno$force.n == "LF"] <- "0"
+# pheno$force.n <- as.numeric(pheno$force.n)
+pheno$force.n[pheno$force.n == "HF" & pheno$population == "mp"] <- "15"
+pheno$force.n[pheno$force.n == "HF" & pheno$population == "sm"] <- "15"
+pheno$force.n[pheno$force.n == "LF" & pheno$population == "mp"] <- "10"
+pheno$force.n[pheno$force.n == "LF" & pheno$population == "sm"] <- "10"
+
+pheno$force.n[pheno$force.n == "HF" & pheno$population == "HF"] <- "13.33"
+pheno$force.n[pheno$force.n == "HF" & pheno$population == "SH"] <- "13.33"
+pheno$force.n[pheno$force.n == "LF" & pheno$population == "HF"] <- "8.33"
+pheno$force.n[pheno$force.n == "LF" & pheno$population == "SH"] <- "8.33"
 pheno$force.n <- as.numeric(pheno$force.n)
 
 pheno$photo.n <- pheno$photo
@@ -130,15 +140,14 @@ spInfo <- read.csv("..//input/species_list.csv")
 
 pheno.t <- merge(pheno.t, spInfo, by = "species")
 
-
 #################################################################
 # load("output/final/ew_phylo_output_newpriors_allncp.Rda")
 # sumew <- summary(mdl.ewphylo)$summary
 
-load("..//output/final/bb_4sites_phylo_mini.Rda")
-sum <- summary(mdl.4phyloMini)$summary 
+load("..//output/bb_4sites_phylo_contphotothermo_zscored_Apr19.Rda")
+sum <- summary(mdl.4phyloContWP)$summary 
 
-fit <- rstan::extract(mdl.4phyloMini)
+fit <- rstan::extract(mdl.4phyloContWP)
 
 # load("..//output/final/dl_phylo_lat1.Rda")
 # load("..//output/final/dl_phylo_lat50.Rda")

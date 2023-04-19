@@ -17,10 +17,13 @@ if(length(grep("deirdreloughnan", getwd()) > 0)) {
   setwd("/home/deirdre/pheno_bc") # for midge
 }
 
-load("output/bb_4sites_phylo_mini.Rda")
-sum <- summary(mdl.4phyloMini)$summary 
+# load("output/bb_4sites_phylo_mini.Rda")
+# sum <- summary(mdl.4phyloMini)$summary 
 
-post <- rstan::extract(mdl.4phyloMini)
+load("output/bb_4sites_phylo_contphotothermo_zscored_Apr19.Rda")
+sum <- summary(mdl.4phyloContWP)$summary 
+
+post <- rstan::extract(mdl.4phyloContWP)
 
  # a_sp = mean(sum[grep("a_sp", rownames(sum)), 1])
 # mu_b_warm = sum[grep("b_warm", rownames(sum)), 1]
@@ -47,25 +50,25 @@ a_sp = (sum[grep("a_sp", rownames(sum)), 1])
 a_sp97.5 = (sum[grep("a_sp", rownames(sum)), "97.5%"])
 a_sp2.5 = (sum[grep("a_sp", rownames(sum)), "2.5%"])
 
-b_photo = sum[grep("b_photo", rownames(sum)), 1]
-b_chill = sum[grep("b_chill", rownames(sum)), 1]
-b_force = sum[grep("b_warm", rownames(sum)), 1]
+b_photo = sum[grep("b_photo\\[", rownames(sum)), 1]
+b_chill = sum[grep("b_chill1\\[", rownames(sum)), 1]
+b_force = sum[grep("b_warm\\[", rownames(sum)), 1]
 
-b_photo25 = sum[grep("b_photo", rownames(sum)), "25%"]
-b_chill25 = sum[grep("b_chill", rownames(sum)), "25%"]
-b_force25 = sum[grep("b_warm", rownames(sum)), "25%"]
+b_photo25 = sum[grep("b_photo\\[", rownames(sum)), "25%"]
+b_chill25 = sum[grep("b_chill1\\[", rownames(sum)), "25%"]
+b_force25 = sum[grep("b_warm\\[", rownames(sum)), "25%"]
 
-b_photo75 = sum[grep("b_photo", rownames(sum)), "75%"]
-b_chill75 = sum[grep("b_chill", rownames(sum)), "75%"]
-b_force75 = sum[grep("b_warm", rownames(sum)), "75%"]
+b_photo75 = sum[grep("b_photo\\[", rownames(sum)), "75%"]
+b_chill75 = sum[grep("b_chill1\\[", rownames(sum)), "75%"]
+b_force75 = sum[grep("b_warm\\[", rownames(sum)), "75%"]
 
-b_photo2.5 = sum[grep("b_photo", rownames(sum)), "2.5%"]
-b_chill2.5 = sum[grep("b_chill", rownames(sum)), "2.5%"]
-b_force2.5 = sum[grep("b_warm", rownames(sum)), "2.5%"]
+b_photo2.5 = sum[grep("b_photo\\[", rownames(sum)), "2.5%"]
+b_chill2.5 = sum[grep("b_chill1\\[", rownames(sum)), "2.5%"]
+b_force2.5 = sum[grep("b_warm\\[", rownames(sum)), "2.5%"]
 
-b_photo97.5 = sum[grep("b_photo", rownames(sum)), "97.5%"]
-b_chill97.5 = sum[grep("b_chill", rownames(sum)), "97.5%"]
-b_force97.5 = sum[grep("b_warm", rownames(sum)), "97.5%"]
+b_photo97.5 = sum[grep("b_photo\\[", rownames(sum)), "97.5%"]
+b_chill97.5 = sum[grep("b_chill1\\[", rownames(sum)), "97.5%"]
+b_force97.5 = sum[grep("b_warm\\[", rownames(sum)), "97.5%"]
 
 
 
@@ -111,25 +114,25 @@ spInfo$Int <- a_sp
 spInfo$Int2.5 <- a_sp2.5
 spInfo$Int97.5 <- a_sp97.5
 
-spInfo$force <- b_force[2:48]
-spInfo$chill <- b_chill[2:48]
-spInfo$photo <- b_photo[50:96]
+spInfo$force <- b_force
+spInfo$chill <- b_chill
+spInfo$photo <- b_photo
 
-spInfo$force2.5 <- b_force2.5[2:48]
-spInfo$chill2.5 <- b_chill2.5[2:48]
-spInfo$photo2.5 <- b_photo2.5[50:96]
+spInfo$force2.5 <- b_force2.5
+spInfo$chill2.5 <- b_chill2.5
+spInfo$photo2.5 <- b_photo2.5
 
-spInfo$force97.5 <- b_force97.5[2:48]
-spInfo$chill97.5 <- b_chill97.5[2:48]
-spInfo$photo97.5 <- b_photo97.5[50:96]
+spInfo$force97.5 <- b_force97.5
+spInfo$chill97.5 <- b_chill97.5
+spInfo$photo97.5 <- b_photo97.5
 
-spInfo$force25 <- b_force25[2:48]
-spInfo$chill25 <- b_chill25[2:48]
-spInfo$photo25 <- b_photo25[50:96]
+spInfo$force25 <- b_force25
+spInfo$chill25 <- b_chill25
+spInfo$photo25 <- b_photo25
 
-spInfo$force75 <- b_force75[2:48]
-spInfo$chill75 <- b_chill75[2:48]
-spInfo$photo75 <- b_photo75[50:96]
+spInfo$force75 <- b_force75
+spInfo$chill75 <- b_chill75
+spInfo$photo75 <- b_photo75
 
 quantile2575 <- function(x){
   returnQuanilte <- quantile(x, prob = c(0.75, 0.25))
@@ -209,9 +212,348 @@ data <- long[order(long$meanBB),]
 # data$species.name <- factor(data$species.name, levels=unique(data$species.name) )
 #data <- transform(data, variable=reorder(species.name, -meanBB) ) 
 
-names(data) <- c("species.name","value","species","type","transect","meanBB", "Int","Int2.5","Int97.5","spMeanForce", "spMeanChill", "spMeanPhoto","force2.5","chill2.5","photo2.5","force97.5", "chill97.5","photo97.5","force25","chill25","photo25","force75", "chill75","photo75","bb25","bb75","bb2.5","bb97.5", "spacing","chill", "force","photo","intercept")
+names(data) <- c("species.name","value","species","type","transect","meanBB", "Int","Int2.5","Int97.5","spMeanForce", "spMeanChill", "spMeanPhoto","force2.5","chill2.5","photo2.5","force97.5", "chill97.5","photo97.5","force25","chill25","photo25","force75", "chill75","photo75","bb25","bb75","bb97.5","bb2.5", "spacing","chill", "force","photo","intercept")
 
-### Adding intercept
+#####################################################################
+## Eastern spp only #################################################
+
+east <- subset(spInfo, transect != "west")
+eastSp <- unique(east$species.name)
+
+dataEast <- data[data$species.name %in% eastSp, ]
+
+overlappingE <- c("aromel","betlen", "betpap", "lyolig","faggra", "betall")
+spMiniE <- east[!east$species %in% overlappingE,]
+spTopE <- east[east$species %in% overlappingE,]
+
+bbSpaceE <- ggplot() + 
+  geom_violin(dataEast, mapping=aes(x = meanBB, y = value, group = species.name, width =1, fill = type)) +
+  geom_point(east, mapping= aes(x = meanBB, y = meanBB)) +
+  geom_linerange(data = east,aes(x = meanBB, y = meanBB, ymin=bb2.5, ymax = bb97.5) ) +
+  theme_classic() +  
+  ylim(-2,80) +
+  theme(axis.text.x = element_text( size=10,
+                                    angle = 78, 
+                                    hjust=1),
+        axis.title.y=element_text(size = 12),
+        axis.title=element_text(size=15),
+        legend.position = "none") + 
+  scale_x_continuous( breaks = spMiniE$meanBB, labels = spMiniE$species,limits = c(19,60)) +
+  labs( x = "Species", y = "Estimated budburst", main = NA) +
+  theme(legend.title = element_blank()) +  annotate("text", x = 19, y = 80, label = "a)", cex =5) +
+  annotate("text", x =40, y = 80, label = "Eastern transect", cex =5) +
+  annotate("text", x = spTopE[1,5], y = -0.2, label = spTopE[1,2], cex = 3, angle = 78) +
+  annotate("text", x = spTopE[2,5], y = -0.2, label = spTopE[2,2], cex = 3, angle = 78) +
+  annotate("text", x = spTopE[3,5], y = -0.2, label = spTopE[3,2], cex = 3, angle = 78) +
+  annotate("text", x = spTopE[4,5], y = -0.2, label = spTopE[4,2], cex = 3, angle = 78) +
+  annotate("text", x = spTopE[5,5], y = -0.2, label = spTopE[5,2], cex = 3, angle = 78) +
+  annotate("text", x = spTopE[6,5], y = -0.2, label = spTopE[6,2], cex = 3, angle = 78) +
+  scale_fill_manual(values = c("mediumpurple2","mediumpurple2"))
+
+# intercept
+aSpaceE<-  ggplot() + 
+  geom_violin(dataEast, mapping=aes(x = meanBB, y = intercept, group = species.name, width =1, fill = type)) +
+  geom_point(east, mapping= aes(x = meanBB, y = Int)) +
+  geom_linerange(data = east,aes(x = meanBB, y = Int, ymin=Int2.5, ymax = Int97.5)) +
+  theme_classic() +  
+  ylim(-5,65) +
+  theme(axis.text.x = element_text( size=10,
+                                    angle = 78, 
+                                    hjust=1),
+        axis.title.y=element_text(size = 12),
+        axis.title=element_text(size=15),
+        legend.position = "none") + 
+  scale_x_continuous( breaks = spMiniE$meanBB, labels = spMiniE$species,limits = c(19,60)) +
+  labs( x = "Species", y = "Species intercept", main = NA) +
+  theme(legend.title = element_blank()) +  annotate("text", x = 19, y = 60, label = "c)", cex =5) +
+  annotate("text", x = spTopE[1,5], y = -4, label = spTopE[1,2], cex = 3, angle = 78) +
+  annotate("text", x = spTopE[2,5], y = -4, label = spTopE[2,2], cex = 3, angle = 78) +
+  annotate("text", x = spTopE[3,5], y = -4, label = spTopE[3,2], cex = 3, angle = 78) +
+  annotate("text", x = spTopE[4,5], y = -4, label = spTopE[4,2], cex = 3, angle = 78) +
+  annotate("text", x = spTopE[5,5], y = -4, label = spTopE[5,2], cex = 3, angle = 78) +
+  annotate("text", x = spTopE[6,5], y = 4, label = spTopE[6,2], cex = 3, angle = 78) +
+  scale_fill_manual(values = c("darkolivegreen4","darkolivegreen4"))
+
+chillSpaceE <- ggplot() + 
+  geom_violin(dataEast, mapping=aes(x = meanBB, y = chill, group = species.name, width =1, fill = type)) +
+  geom_point(east, mapping= aes(x = meanBB, y = chill)) +
+  geom_linerange(data = east, aes(x = meanBB, y = chill, ymin=chill2.5, ymax = chill97.5)) +
+  theme_classic() +  
+  ylim(-25,10) +
+  theme(axis.text.x = element_text( size=10,
+                                    angle = 78, 
+                                    hjust=1),
+        axis.title.y=element_text(size = 12),
+        axis.title=element_text(size=15),
+        legend.position = "none") + 
+  scale_x_continuous( breaks = spMiniE$meanBB, labels = spMiniE$species,limits = c(19,60)) +
+  labs( x = "Species", y = "Chilling response", main = NA) +
+  theme(legend.title = element_blank()) +  annotate("text", x = 19, y = 10, label = "a)", cex =5) +
+  annotate("text", x = 45, y = 10, label = "Eastern transect", cex =5) +
+  annotate("text", x = spTopE[1,5], y = -24.5, label = spTopE[1,2], cex = 3, angle = 78) +
+  annotate("text", x = spTopE[2,5], y = -24.5, label = spTopE[2,2], cex = 3, angle = 78) +
+  annotate("text", x = spTopE[3,5], y = -24.5, label = spTopE[3,2], cex = 3, angle = 78) +
+  annotate("text", x = spTopE[4,5], y = -24.5, label = spTopE[4,2], cex = 3, angle = 78) +
+  annotate("text", x = spTopE[5,5], y = -24.5, label = spTopE[5,2], cex = 3, angle = 78) +
+  annotate("text", x = spTopE[6,5], y = -24.5, label = spTopE[6,2], cex = 3, angle = 78) +
+  scale_fill_manual(values = c("#cc6a70ff","#cc6a70ff"))
+
+forceSpaceE <- ggplot() + 
+  geom_violin(dataEast, mapping=aes(x = meanBB, y = force, group = species.name, width =1, fill = type)) +
+  geom_point(east, mapping= aes(x = meanBB, y = force)) +
+  geom_linerange(data = east,aes(x = meanBB, y = force, ymin=force2.5, ymax = force97.5)) +
+  theme_classic() +  
+  ylim(-25,10) +
+  theme(axis.text.x = element_text( size=10,
+                                    angle = 78, 
+                                    hjust=1),
+        axis.title.y=element_text(size = 12),
+        axis.title=element_text(size=15),
+        legend.position = "none") + 
+  scale_x_continuous( breaks = spMiniE$meanBB, labels = spMiniE$species,limits = c(19,60)) +
+  labs( x = "Species", y = "Forcing response", main = NA) +
+  theme(legend.title = element_blank()) +  annotate("text", x = 19, y = 10, label = "c)", cex =5) +
+  annotate("text", x = spTopE[1,5], y = -24.5, label = spTopE[1,2], cex = 3, angle = 78) +
+  annotate("text", x = spTopE[2,5], y = -24.5, label = spTopE[2,2], cex = 3, angle = 78) +
+  annotate("text", x = spTopE[3,5], y = -24.5, label = spTopE[3,2], cex = 3, angle = 78) +
+  annotate("text", x =  spTopE[4,5], y = -24.5, label = spTopE[4,2], cex = 3, angle = 78) +
+  annotate("text", x = spTopE[5,5], y = -24.5, label = spTopE[5,2], cex = 3, angle = 78) +
+  scale_fill_manual(values = c("#f9b641ff","#f9b641ff"))
+
+
+photoSpaceE <- ggplot() + 
+  geom_violin(dataEast, mapping=aes(x = meanBB, y = photo, group = species.name, width =1, fill = type)) +
+  geom_point(east, mapping= aes(x = meanBB, y = photo)) +
+  geom_linerange(data = east,aes(x = meanBB, y = photo, ymin=photo2.5, ymax = photo97.5)) +
+  theme_classic() +  
+  ylim(-25,10) +
+  theme(axis.text.x = element_text( size=10,
+                                    angle = 78, 
+                                    hjust=1),
+        axis.title.y=element_text(size = 12),
+        axis.title=element_text(size=15),
+        legend.position = "none") + 
+  scale_x_continuous( breaks = spMiniE$meanBB, labels = spMiniE$species,limits = c(19,60)) +
+  labs( x = "Species", y = "Photoperiod response", main = NA) +
+  theme(legend.title = element_blank()) +  annotate("text", x = 19, y = 10, label = "e)", cex =5) +
+  annotate("text", x = spTopE[1,5], y = -24.5, label = spTopE[1,2], cex = 3, angle = 78) +
+  annotate("text", x = spTopE[2,5], y = -24.5, label = spTopE[2,2], cex = 3, angle = 78) +
+  annotate("text", x = spTopE[3,5], y = -24.5, label = spTopE[3,2], cex = 3, angle = 78) +
+  annotate("text", x =  spTopE[4,5], y = -24.5, label = spTopE[4,2], cex = 3, angle = 78) +
+  annotate("text", x = spTopE[5,5], y = -24.5, label = spTopE[5,2], cex = 3, angle = 78) +
+  scale_fill_manual(values = c("cyan4","cyan4"))
+ 
+pdf("figures/4violinEastern2575PT.pdf", width = 10, height =24)
+plot_grid(bbSpaceE, aSpaceE,chillSpaceE,forceSpaceE, photoSpaceE, nrow = 5, align = "v")
+dev.off()
+
+
+#####################################################################
+## Western spp only #################################################
+
+west <- subset(spInfo, transect != "east")
+westSp <- unique(west$species.name)
+
+dataWest <- data[data$species.name %in% westSp, ]
+
+
+overlappingW <- c("spialb","betpap","popbal","rhoalb","shecan","alninc")
+spMiniW <- west[!west$species %in% overlappingW,]
+spTopW <- west[west$species %in% overlappingW,]
+
+bbSpaceW <-  ggplot() + 
+  geom_violin(dataWest, mapping=aes(x = meanBB, y = value, group = species.name, width =1, fill = type)) +
+  geom_point(west, mapping= aes(x = meanBB, y = meanBB)) +
+  geom_linerange(data = west,aes(x = meanBB, y = meanBB, ymin=bb2.5, ymax = bb97.5)) +
+  theme_classic() +  
+  ylim(-2,60) +
+  theme(axis.text.x = element_text( size=10,
+                                    angle = 78, 
+                                    hjust=1),
+        axis.title.y=element_text(size = 12),
+        axis.title=element_text(size=15),
+        legend.position = "none") + 
+  scale_x_continuous( breaks = spMiniW$meanBB, labels = spMiniW$species,limits = c(12,60)) +
+  labs( x = "Species", y = "Estimated budburst", main = NA) +
+  annotate("text", x = 40, y = 60, label = "Western transect", cex =5) +
+  theme(legend.title = element_blank()) +  annotate("text", x = 12, y = 60, label = "b)", cex =5) +
+  annotate("text", x = spTopW[1,5], y = -1.5, label = spTopW[1,2], cex = 3, angle = 78) +
+  annotate("text", x = spTopW[2,5], y =-1.5, label = spTopW[2,2], cex = 3, angle = 78) +
+  annotate("text", x = spTopW[3,5], y = -1.5, label = spTopW[3,2], cex = 3, angle = 78) +
+  annotate("text", x = spTopW[4,5], y = -1.5, label = spTopW[4,2], cex = 3, angle = 78) +
+  annotate("text", x = spTopW[5,5], y = -1.5, label = spTopW[5,2], cex = 3, angle = 78) +
+  annotate("text", x = spTopW[6,5], y = -1.5, label = spTopW[6,2], cex = 3, angle = 78) +
+  scale_fill_manual(values = c("mediumpurple2","mediumpurple2"))
+
+# intercept
+aSpaceW <-  ggplot() + 
+  geom_violin(dataWest, mapping=aes(x = meanBB, y = intercept, group = species.name, width =1, fill = type)) +
+  geom_point(west, mapping= aes(x = meanBB, y = Int)) +
+  geom_linerange(data = west,aes(x = meanBB, y = Int, ymin=Int2.5, ymax = Int97.5)) +
+  theme_classic() + 
+  ylim(-2,60)+
+  theme(axis.text.x = element_text( size=10,
+                                    angle = 78, 
+                                    hjust=1),
+        axis.title.y=element_text(size = 12),
+        axis.title=element_text(size=15),
+        legend.position = "none") + 
+  scale_x_continuous( breaks = spMiniW$meanBB, labels = spMiniW$species,limits = c(10,60)) +
+  labs( x = "Species", y = "Species intercept", main = NA) +
+  theme(legend.title = element_blank()) +  annotate("text", x = 10, y = 60, label = "d)", cex =5) +
+  annotate("text", x = spTopW[1,5], y = -1.5, label = spTopW[1,2], cex = 3, angle = 78) +
+  annotate("text", x = spTopW[2,5], y = -1.5, label = spTopW[2,2], cex = 3, angle = 78) +
+  annotate("text", x = spTopW[3,5], y = -1.5, label = spTopW[3,2], cex = 3, angle = 78) +
+  annotate("text", x = spTopW[4,5], y = -1.5, label = spTopW[4,2], cex = 3, angle = 78) +
+  annotate("text", x = spTopW[5,5], y = -1.5, label = spTopW[5,2], cex = 3, angle = 78) +
+  annotate("text", x = spTopW[6,5], y = -1.5, label = spTopW[6,2], cex = 3, angle = 78) +
+  scale_fill_manual(values = c("darkolivegreen4","darkolivegreen4"))
+
+
+chillSpaceW <-  ggplot() + 
+  geom_violin(dataWest, mapping=aes(x = meanBB, y = chill, group = species.name, width =1, fill = type)) +
+  geom_point(west, mapping= aes(x = meanBB, y = chill)) +
+  geom_linerange(data = west, aes(x = meanBB, y = chill, ymin=chill2.5, ymax = chill97.5)) +
+  theme_classic() +  
+  ylim(-25,10) +
+  theme(axis.text.x = element_text( size=10,
+                                    angle = 78, 
+                                    hjust=1),
+        axis.title.y=element_text(size = 12),
+        axis.title=element_text(size=15),
+        legend.position = "none") + 
+  scale_x_continuous( breaks = spMiniW$meanBB, labels = spMiniW$species,limits = c(10,60)) +
+  labs( x = "Species", y = "Chilling response", main = NA) +
+  theme(legend.title = element_blank()) +  annotate("text", x = 10, y = 10, label = "b)", cex =5) +
+  annotate("text", x = 38, y = 10, label = "Western transect", cex =5) +
+  annotate("text", x = spTopW[1,5], y = -24.5, label = spTopW[1,2], cex = 3, angle = 78) +
+  annotate("text", x = spTopW[2,5], y = -24.5, label = spTopW[2,2], cex = 3, angle = 78) +
+  annotate("text", x = spTopW[3,5], y = -24.5, label = spTopW[3,2], cex = 3, angle = 78) +
+  annotate("text", x = spTopW[4,5], y = -24.5, label = spTopW[4,2], cex = 3, angle = 78) +
+  annotate("text", x = spTopW[5,5], y = -24.5, label = spTopW[5,2], cex = 3, angle = 78) +
+  annotate("text", x = spTopW[6,5], y = -24.5, label = spTopW[6,2], cex = 3, angle = 78) +
+  scale_fill_manual(values = c("#cc6a70ff","#cc6a70ff"))
+
+forceSpaceW <- ggplot() + 
+  geom_violin(dataWest, mapping=aes(x = meanBB, y = force, group = species.name, width =1, fill = type)) +
+  geom_point(west, mapping= aes(x = meanBB, y = force)) +
+  geom_linerange(data = west,aes(x = meanBB, y = force, ymin=force2.5, ymax = force97.5)) +
+  theme_classic() +  
+  ylim(-25,10) +
+  theme(axis.text.x = element_text( size=10,
+                                    angle = 78, 
+                                    hjust=1),
+        axis.title.y=element_text(size = 12),
+        axis.title=element_text(size=15),
+        legend.position = "none") + 
+  scale_x_continuous( breaks = spMiniW$meanBB, labels = spMiniW$species,limits = c(10,60)) +
+  labs( x = "Species", y = "Forcing response", main = NA) +
+  theme(legend.title = element_blank()) +  annotate("text", x = 10, y = 10, label = "d)", cex =5) +
+  annotate("text", x = spTopW[1,5], y = -24.5, label = spTopW[1,2], cex = 3, angle = 78) +
+  annotate("text", x = spTopW[2,5], y = -24.5, label = spTopW[2,2], cex = 3, angle = 78) +
+  annotate("text", x = spTopW[3,5], y = -24.5, label = spTopW[3,2], cex = 3, angle = 78) +
+  annotate("text", x = spTopW[4,5], y = -24.5, label = spTopW[4,2], cex = 3, angle = 78) +
+  annotate("text", x = spTopW[5,5], y = -24.5, label = spTopW[5,2], cex = 3, angle = 78) +
+  annotate("text", x = spTopW[6,5], y = -24.5, label = spTopW[6,2], cex = 3, angle = 78) +
+  scale_fill_manual(values = c("#f9b641ff","#f9b641ff"))
+
+photoSpaceW <- ggplot() + 
+  geom_violin(dataWest, mapping=aes(x = meanBB, y = photo, group = species.name, width =1, fill = type)) +
+  geom_point(west, mapping= aes(x = meanBB, y = photo)) +
+  geom_linerange(data = west,aes(x = meanBB, y = photo, ymin=photo2.5, ymax = photo97.5)) +
+  theme_classic() +  
+  ylim(-25,10) +
+  theme(axis.text.x = element_text( size=10,
+                                    angle = 78, 
+                                    hjust=1),
+        axis.title.y=element_text(size = 12),
+        axis.title=element_text(size=15),
+        legend.position = "none") + 
+  scale_x_continuous( breaks = spMiniW$meanBB, labels = spMiniW$species,limits = c(10,60)) +
+  labs( x = "Species", y = "Photoperiod response", main = NA) +
+  theme(legend.title = element_blank()) +  annotate("text", x = 10, y = 10, label = "f)", cex =5) +
+  annotate("text", x = spTopW[1,5], y = -24.5, label = spTopW[1,2], cex = 3, angle = 78) +
+  annotate("text", x = spTopW[2,5], y = -24.5, label = spTopW[2,2], cex = 3, angle = 78) +
+  annotate("text", x = spTopW[3,5], y = -24.5, label = spTopW[3,2], cex = 3, angle = 78) +
+  annotate("text", x = spTopW[4,5], y = -24.5, label = spTopW[4,2], cex = 3, angle = 78) +
+  annotate("text", x = spTopW[5,5], y = -24.5, label = spTopW[5,2], cex = 3, angle = 78) +
+  annotate("text", x = spTopW[6,5], y = -24.5, label = spTopW[6,2], cex = 3, angle = 78) +
+  scale_fill_manual(values = c("cyan4","cyan4"))
+
+# pdf("figures/4violinWestern9725.pdf", width = 10, height =24)
+# plot_grid(bbSpaceW, aSpaceW,chillSpaceW,forceSpaceW, photoSpaceW, nrow = 5, align = "v")
+# dev.off()
+
+#Making better figures for the MS:
+
+pdf("figures/violinBetaAlphaEW.pdf", width = 16, height = 8)
+plot_grid(bbSpaceE, bbSpaceW, aSpaceE, aSpaceW, nrow = 2, ncol = 2, align = "v")
+dev.off()
+
+pdf("figures/violinCFPEW.pdf", width = 16, height = 16)
+plot_grid(chillSpaceE, chillSpaceW, forceSpaceE, forceSpaceW, photoSpaceE, photoSpaceW, nrow = 3, ncol = 2, align = "v")
+dev.off()
+
+# Making lizzie's other suggested plot - 2 connected dots:
+
+meanPtW <- aggregate(dataWest[c("meanBB", "Int")], dataWest[c("species.name","type","transect")], FUN = mean)
+names(meanPtW) <- c("species.name","type","transect","Budburst","Intercept")
+
+dotW <- ggplot(meanPtW) +
+  geom_point(aes(y= Budburst, x = Budburst, colour = "Budburst"), size = 5) +
+  geom_point(aes(y= Intercept, x = Budburst, colour = "Intercept"), size = 5) +
+  geom_segment(aes(x = Budburst, y = Intercept, xend = Budburst, yend = Budburst), data = meanPtW, col = "black") +
+  theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
+        panel.background = element_blank(), axis.line = element_line(colour = "black"),
+        legend.key=element_rect(fill="white")) +
+  ylim(-5,60) +
+  theme(axis.text.x = element_text( size=15,
+                                    angle = 78, 
+                                    hjust=1),
+        axis.text.y=element_text(size = 15),
+        axis.title=element_text(size=20),
+        legend.position = "none") + 
+  scale_x_continuous( breaks = spMiniW$meanBB, labels = spMiniW$species,limits = c(10,60)) +
+  labs( x = "Species", y = "Estimated parameter", main = NA) +
+  theme(legend.title = element_blank()) +  annotate("text", x = 15, y = 60, label = "b)      Western transect", cex =8) +
+  annotate("text", x = spTopW[1,5], y = 0, label = spTopW[1,2], cex = 5, angle = 78) +
+  annotate("text", x = spTopW[2,5], y = 0, label = spTopW[2,2], cex = 5, angle = 78) +
+  annotate("text", x = spTopW[3,5], y = 0, label = spTopW[3,2], cex = 5, angle = 78) +
+  scale_color_manual(values = c("cyan4", "#CC6677"))
+
+#### Eastern plot
+meanPtE <- aggregate(dataEast[c("meanBB", "Int")], dataEast[c("species.name","type","transect")], FUN = mean)
+names(meanPtE) <- c("species.name","type","transect","Budburst","Intercept")
+
+dotE <- ggplot(meanPtE) +
+  geom_point(aes(y= Budburst, x = Budburst, colour = "Budburst"), size = 5) +
+  geom_point(aes(y= Intercept, x = Budburst, colour = "Intercept"), size = 5) +
+  geom_segment(aes(x = Budburst, y = Intercept, xend = Budburst, yend = Budburst), data = meanPtE, col = "black") +
+  theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
+        panel.background = element_blank(), axis.line = element_line(colour = "black"),
+        legend.key=element_rect(fill="white")) +
+  ylim(-5,75) +
+  theme(axis.text.x = element_text( size=15,
+                                    angle = 78, 
+                                    hjust=1),
+        axis.text.y=element_text(size = 15),
+        axis.title=element_text(size=20)
+        ) +
+  scale_x_continuous( breaks = spMiniE$meanBB, labels = spMiniE$species,limits = c(10,60)) +
+  labs( x = "Species", y = "Estimated parameter", main = NA) +
+  theme(legend.title = element_blank(), legend.text = element_text(size =25), legend.position = "top") +  annotate("text", x = 15, y = 60, label = "a)      Eastern transect", cex =8) +annotate("text", x = spTopE[1,5], y = 0, label = spTopE[1,2], cex = 5, angle = 78) +
+  annotate("text", x = spTopE[2,5], y = 0, label = spTopE[2,2], cex = 5, angle = 78) +
+  annotate("text", x = spTopE[3,5], y = 0, label = spTopE[3,2], cex = 5, angle = 78) +
+  annotate("text", x = 38, y = 0, label = spTopE[4,2], cex = 5, angle = 78) +
+  annotate("text", x = spTopE[5,5], y = 0, label = spTopE[5,2], cex = 5, angle = 78) +
+  scale_color_manual(values = c("cyan4", "#CC6677"))
+
+pdf("figures/dotBetaAlphaLong2.pdf", width = 16, height = 16)
+plot_grid(dotE, dotW, nrow = 2, ncol = 1, align = "v")
+dev.off()
+
+#############################################
+# old plots
 ####### Old plot not spaced out ####################3
 
 bbSp <- ggplot() + 
@@ -318,7 +660,7 @@ dev.off()
 #   theme(legend.title = element_blank()) +  annotate("text", x = 1, y = 80, label = "a)", cex =5) + 
 #   scale_x_continuous( breaks = spInfo$meanBB, labels = spInfo$species,limits = c(17.2,68)) +
 #   annotate("text", x = 1, y = 80, label = "a)", cex =5)
- 
+
 overlapping <- c("aromel","prupen","vacmyr","spialb","ilemuc", "vibcas","betpap","betlen","symalb","acerub","lyolig","rhopri")
 spMini <- spInfo[!spInfo$species %in% overlapping,]
 spTop <- spInfo[spInfo$species %in% overlapping,]
@@ -379,18 +721,18 @@ chillSpace <- ggplot() +
   annotate("text", x = spTop[11,5], y = -36.5, label = spTop[11,2], cex = 3, angle = 78) +
   annotate("text", x = spTop[12,5], y = -36.5, label = spTop[12,2], cex = 3, angle = 78) 
 
-  # stat_eye(data = data, aes(x = meanBB, y = chill), .width = c(.90, .5), cex = 0.75, fill = "cyan4") +
-  # #geom_hline(yintercept = sum[4,1], linetype="dashed") +
-  # theme_classic() +  
-  # xlim (15,80) +
-  # theme(axis.text.x = element_text( size=10,
-  #                                   angle = 78, 
-  #                                   hjust=1),
-  #       axis.title.y=element_text(size = 12),
-  #       axis.title=element_text(size=15) ) + # angle of 55 also works
-  # #geom_point(data = meanTrophic, aes(x = meanSlope,y = trophic.level, colour = "purple"), shape = 8, size = 3)+
-  # labs( x = "Species", y = "Estimated budburst", main = NA) +
-  # theme(legend.title = element_blank()) +  annotate("text", x = 1, y = 10, label = "b)", cex =5) 
+# stat_eye(data = data, aes(x = meanBB, y = chill), .width = c(.90, .5), cex = 0.75, fill = "cyan4") +
+# #geom_hline(yintercept = sum[4,1], linetype="dashed") +
+# theme_classic() +  
+# xlim (15,80) +
+# theme(axis.text.x = element_text( size=10,
+#                                   angle = 78, 
+#                                   hjust=1),
+#       axis.title.y=element_text(size = 12),
+#       axis.title=element_text(size=15) ) + # angle of 55 also works
+# #geom_point(data = meanTrophic, aes(x = meanSlope,y = trophic.level, colour = "purple"), shape = 8, size = 3)+
+# labs( x = "Species", y = "Estimated budburst", main = NA) +
+# theme(legend.title = element_blank()) +  annotate("text", x = 1, y = 10, label = "b)", cex =5) 
 
 #
 forceSpace <- ggplot() + 
@@ -438,8 +780,8 @@ forceSpace <- ggplot() +
 
 # Photoperiod
 
- photoSpace <- ggplot() + 
-geom_point(data = spInfo, aes(x = meanBB, y = photo)) +
+photoSpace <- ggplot() + 
+  geom_point(data = spInfo, aes(x = meanBB, y = photo)) +
   #geom_hline(yintercept = sum[4,1], linetype="dashed") +
   geom_pointrange(data = spInfo,aes(x = meanBB, y = photo, ymin=photo2.5, ymax = photo97.5)) +
   # xlim (15,80) +
@@ -480,13 +822,6 @@ pdf("figures/4panelSpace.pdf", width = 10, height =20)
 plot_grid(bbSpace, chillSpace,forceSpace, photoSpace, nrow = 4, align = "v")
 dev.off()
 
-#####################################################################
-## Eastern spp only #################################################
-
-east <- subset(spInfo, transect != "west")
-eastSp <- unique(east$species.name)
-
-dataEast <- data[data$species.name %in% eastSp, ]
 
 bbSpE <- ggplot() + 
   stat_eye(data = dataEast, aes(x = fct_reorder(.f = species.name, .x = value, .fun = mean, na.rm = T), y = value), .width = c(.90, .5), cex = 0.75, fill = "mediumpurple2") +
@@ -541,152 +876,6 @@ pdf("figures/4panelEastern.pdf", width = 10, height =20)
 plot_grid(bbSpE, chillSpE,forceSpE, photoSpE, nrow = 4, align = "v", rel_heights = c(1/4, 1/4, 1/4,1.2/3))
 dev.off()
 
-#### Get the violin plots to be spaced #########################
-
-# this seems promising
-# ggplot() + 
-#   geom_violin(data = dataEast, aes(x = meanBB, y = photo, group = species.name, width =1)) +
-#   #geom_hline(yintercept = sum[4,1], linetype="dashed") +
-#   theme_classic() +  
-#   theme(axis.text.x = element_text( size=10,
-#                                     angle = 78, 
-#                                     hjust=1),
-#         axis.title.y=element_text(size = 12),
-#         axis.title=element_text(size=15) ) + 
-#   scale_x_continuous( breaks = east$meanBB, labels = east$species.name,limits = c(17.2,68)) +
-#   labs( x = "Species", y = "Photoperiod response", main = NA) +
-#   theme(legend.title = element_blank()) +  annotate("text", x = 1, y = 4, label = "d)", cex =5) 
-overlappingE <- c("aromel","vibcas","betlen","lyolig","rhopri")
-spMiniE <- east[!east$species %in% overlappingE,]
-spTopE <- east[east$species %in% overlappingE,]
-
-bbSpaceE <- ggplot() + 
-  geom_violin(dataEast, mapping=aes(x = meanBB, y = value, group = species.name, width =1, fill = type)) +
-  geom_point(east, mapping= aes(x = meanBB, y = meanBB)) +
-  geom_linerange(data = east,aes(x = meanBB, y = meanBB, ymin=bb2.5, ymax = bb97.5) ) +
-  theme_classic() +  
-  ylim(-1,80) +
-  theme(axis.text.x = element_text( size=10,
-                                    angle = 78, 
-                                    hjust=1),
-        axis.title.y=element_text(size = 12),
-        axis.title=element_text(size=15),
-        legend.position = "none") + 
-  scale_x_continuous( breaks = spMiniE$meanBB, labels = spMiniE$species,limits = c(23,70)) +
-  labs( x = "Species", y = "Estimated budburst", main = NA) +
-  theme(legend.title = element_blank()) +  annotate("text", x = 23, y = 80, label = "a)", cex =5) +
-  annotate("text", x =40, y = 80, label = "Eastern transect", cex =5) +
-  annotate("text", x = spTopE[1,5], y = -0.2, label = spTopE[1,2], cex = 3, angle = 78) +
-  annotate("text", x = spTopE[2,5], y = -0.2, label = spTopE[2,2], cex = 3, angle = 78) +
-  annotate("text", x = spTopE[3,5], y = -0.2, label = spTopE[3,2], cex = 3, angle = 78) +
-  annotate("text", x = 40, y = -0.2, label = spTopE[4,2], cex = 3, angle = 78) +
-  annotate("text", x = spTopE[5,5], y = -0.2, label = spTopE[5,2], cex = 3, angle = 78) +
-  scale_fill_manual(values = c("mediumpurple2","mediumpurple2"))
-
-# intercept
-aSpaceE<-  ggplot() + 
-  geom_violin(dataEast, mapping=aes(x = meanBB, y = intercept, group = species.name, width =1, fill = type)) +
-  geom_point(east, mapping= aes(x = meanBB, y = Int)) +
-  geom_linerange(data = east,aes(x = meanBB, y = Int, ymin=Int2.5, ymax = Int97.5)) +
-  theme_classic() +  
-  ylim(-5,60)+
-  theme(axis.text.x = element_text( size=10,
-                                    angle = 78, 
-                                    hjust=1),
-        axis.title.y=element_text(size = 12),
-        axis.title=element_text(size=15),
-        legend.position = "none") + 
-  scale_x_continuous( breaks = spMiniE$meanBB, labels = spMiniE$species,limits = c(23,70)) +
-  labs( x = "Species", y = "Species intercept", main = NA) +
-  theme(legend.title = element_blank()) +  annotate("text", x = 23, y = 60, label = "c)", cex =5) +
-  annotate("text", x = spTopE[1,5], y = -4, label = spTopE[1,2], cex = 3, angle = 78) +
-  annotate("text", x = spTopE[2,5], y = -4, label = spTopE[2,2], cex = 3, angle = 78) +
-  annotate("text", x = spTopE[3,5], y = -4, label = spTopE[3,2], cex = 3, angle = 78) +
-  annotate("text", x = 40, y = -4, label = spTopE[4,2], cex = 3, angle = 78) +
-  annotate("text", x = spTopE[5,5], y = -4, label = spTopE[5,2], cex = 3, angle = 78) +
-  scale_fill_manual(values = c("darkolivegreen4","darkolivegreen4"))
-
-chillSpaceE <- ggplot() + 
-  geom_violin(dataEast, mapping=aes(x = meanBB, y = chill, group = species.name, width =1, fill = type)) +
-  geom_point(east, mapping= aes(x = meanBB, y = chill)) +
-  geom_linerange(data = east, aes(x = meanBB, y = chill, ymin=chill2.5, ymax = chill97.5)) +
-  theme_classic() +  
-  ylim(-45,10) +
-  theme(axis.text.x = element_text( size=10,
-                                    angle = 78, 
-                                    hjust=1),
-        axis.title.y=element_text(size = 12),
-        axis.title=element_text(size=15),
-        legend.position = "none") + 
-  scale_x_continuous( breaks = spMiniE$meanBB, labels = spMiniE$species,limits = c(23,70)) +
-  labs( x = "Species", y = "Chilling response", main = NA) +
-  theme(legend.title = element_blank()) +  annotate("text", x = 23, y = 10, label = "a)", cex =5) +
-  annotate("text", x = 45, y = 10, label = "Eastern transect", cex =5) +
-  annotate("text", x = spTopE[1,5], y = -43.7, label = spTopE[1,2], cex = 3, angle = 78) +
-  annotate("text", x = spTopE[2,5], y = -43.7, label = spTopE[2,2], cex = 3, angle = 78) +
-  annotate("text", x = spTopE[3,5], y = -43.7, label = spTopE[3,2], cex = 3, angle = 78) +
-  annotate("text", x = 40, y = -43.7, label = spTopE[4,2], cex = 3, angle = 78) +
-  annotate("text", x = spTopE[5,5], y = -43.7, label = spTopE[5,2], cex = 3, angle = 78) +
-  scale_fill_manual(values = c("#cc6a70ff","#cc6a70ff"))
-
-forceSpaceE <-ggplot() + 
-  geom_violin(dataEast, mapping=aes(x = meanBB, y = force, group = species.name, width =1, fill = type)) +
-  geom_point(east, mapping= aes(x = meanBB, y = force)) +
-  geom_linerange(data = east,aes(x = meanBB, y = force, ymin=force2.5, ymax = force97.5)) +
-  theme_classic() +  
-  ylim(-30,10) +
-  theme(axis.text.x = element_text( size=10,
-                                    angle = 78, 
-                                    hjust=1),
-        axis.title.y=element_text(size = 12),
-        axis.title=element_text(size=15),
-        legend.position = "none") + 
-  scale_x_continuous( breaks = spMiniE$meanBB, labels = spMiniE$species,limits = c(23,70)) +
-  labs( x = "Species", y = "Forcing response", main = NA) +
-  theme(legend.title = element_blank()) +  annotate("text", x = 23, y = 10, label = "c)", cex =5) +
-  annotate("text", x = spTopE[1,5], y = -29.5, label = spTopE[1,2], cex = 3, angle = 78) +
-  annotate("text", x = spTopE[2,5], y = -29.5, label = spTopE[2,2], cex = 3, angle = 78) +
-  annotate("text", x = spTopE[3,5], y = -29.5, label = spTopE[3,2], cex = 3, angle = 78) +
-  annotate("text", x = 40, y = -29.5, label = spTopE[4,2], cex = 3, angle = 78) +
-  annotate("text", x = spTopE[5,5], y = -29.5, label = spTopE[5,2], cex = 3, angle = 78) +
-  scale_fill_manual(values = c("#f9b641ff","#f9b641ff"))
-
-
-photoSpaceE <- ggplot() + 
-  geom_violin(dataEast, mapping=aes(x = meanBB, y = photo, group = species.name, width =1, fill = type)) +
-  geom_point(east, mapping= aes(x = meanBB, y = photo)) +
-  geom_linerange(data = east,aes(x = meanBB, y = photo, ymin=photo2.5, ymax = photo97.5)) +
-  theme_classic() +  
-  ylim(-15,10) +
-  theme(axis.text.x = element_text( size=10,
-                                    angle = 78, 
-                                    hjust=1),
-        axis.title.y=element_text(size = 12),
-        axis.title=element_text(size=15),
-        legend.position = "none") + 
-  scale_x_continuous( breaks = spMiniE$meanBB, labels = spMiniE$species,limits = c(23,70)) +
-  labs( x = "Species", y = "Photoperiod response", main = NA) +
-  theme(legend.title = element_blank()) +  annotate("text", x = 23, y = 10, label = "e)", cex =5) +
-  annotate("text", x = spTopE[1,5], y = -14.5, label = spTopE[1,2], cex = 3, angle = 78) +
-  annotate("text", x = spTopE[2,5], y = -14.5, label = spTopE[2,2], cex = 3, angle = 78) +
-  annotate("text", x = spTopE[3,5], y = -14.5, label = spTopE[3,2], cex = 3, angle = 78) +
-  annotate("text", x = 40, y = -14.5, label = spTopE[4,2], cex = 3, angle = 78) +
-  annotate("text", x = spTopE[5,5], y = -14.5, label = spTopE[5,2], cex = 3, angle = 78) +
-  scale_fill_manual(values = c("cyan4","cyan4"))
- 
-pdf("figures/4violinEastern2575.pdf", width = 10, height =24)
-plot_grid(bbSpaceE, aSpaceE,chillSpaceE,forceSpaceE, photoSpaceE, nrow = 5, align = "v")
-dev.off()
-
-
-#####################################################################
-## Western spp only #################################################
-
-west <- subset(spInfo, transect != "east")
-westSp <- unique(west$species.name)
-
-dataWest <- data[data$species.name %in% westSp, ]
-
 bbSpW <- ggplot() + 
   stat_eye(data = dataWest, aes(x = fct_reorder(.f = species.name, .x = value, .fun = mean, na.rm = T), y = value), .width = c(.90, .5), cex = 0.75, fill = "mediumpurple2") +
   #geom_hline(yintercept = sum[4,1], linetype="dashed") +
@@ -739,200 +928,3 @@ photoSpW <- ggplot() +
 pdf("figures/4panelWestern.pdf", width = 10, height =20)
 plot_grid(bbSpW, chillSpW,forceSpW, photoSpW, nrow = 4, align = "v", rel_heights = c(1/4, 1/4, 1/4,1.2/3))
 dev.off()
-
-#### Get the violin plots to be spaced #########################
-
-# this seems promising
-# ggplot() + 
-#   geom_violin(data = dataEast, aes(x = meanBB, y = photo, group = species.name, width =1)) +
-#   #geom_hline(yintercept = sum[4,1], linetype="dashed") +
-#   theme_classic() +  
-#   theme(axis.text.x = element_text( size=10,
-#                                     angle = 78, 
-#                                     hjust=1),
-#         axis.title.y=element_text(size = 12),
-#         axis.title=element_text(size=15) ) + 
-#   scale_x_continuous( breaks = east$meanBB, labels = east$species.name,limits = c(17.2,68)) +
-#   labs( x = "Species", y = "Photoperiod response", main = NA) +
-#   theme(legend.title = element_blank()) +  annotate("text", x = 1, y = 4, label = "d)", cex =5) 
-overlappingW <- c("spialb","betpap","popbal")
-spMiniW <- west[!west$species %in% overlappingW,]
-spTopW <- west[west$species %in% overlappingW,]
-
-bbSpaceW <-  ggplot() + 
-  geom_violin(dataWest, mapping=aes(x = meanBB, y = value, group = species.name, width =1, fill = type)) +
-  geom_point(west, mapping= aes(x = meanBB, y = meanBB)) +
-  geom_linerange(data = west,aes(x = meanBB, y = meanBB, ymin=bb2.5, ymax = bb97.5)) +
-  theme_classic() +  
-  ylim(-1,80) +
-  theme(axis.text.x = element_text( size=10,
-                                    angle = 78, 
-                                    hjust=1),
-        axis.title.y=element_text(size = 12),
-        axis.title=element_text(size=15),
-        legend.position = "none") + 
-  scale_x_continuous( breaks = spMiniW$meanBB, labels = spMiniW$species,limits = c(15,68)) +
-  labs( x = "Species", y = "Estimated budburst", main = NA) +
-  annotate("text", x =40, y = 80, label = "Western transect", cex =5) +
-  theme(legend.title = element_blank()) +  annotate("text", x = 15, y = 80, label = "b)", cex =5) +
-  annotate("text", x = spTopW[1,5], y = -0.2, label = spTopW[1,2], cex = 3, angle = 78) +
-  annotate("text", x = spTopW[2,5], y =-0.2, label = spTopW[2,2], cex = 3, angle = 78) +
-  annotate("text", x = spTopW[3,5], y = -0.2, label = spTopW[3,2], cex = 3, angle = 78) +
-  scale_fill_manual(values = c("mediumpurple2","mediumpurple2"))
-
-# intercept
-aSpaceW <-  ggplot() + 
-  geom_violin(dataWest, mapping=aes(x = meanBB, y = intercept, group = species.name, width =1, fill = type)) +
-  geom_point(west, mapping= aes(x = meanBB, y = Int)) +
-  geom_linerange(data = west,aes(x = meanBB, y = Int, ymin=Int2.5, ymax = Int97.5)) +
-  theme_classic() + 
-  ylim(-5,60)+
-  theme(axis.text.x = element_text( size=10,
-                                    angle = 78, 
-                                    hjust=1),
-        axis.title.y=element_text(size = 12),
-        axis.title=element_text(size=15),
-        legend.position = "none") + 
-  scale_x_continuous( breaks = spMiniW$meanBB, labels = spMiniW$species,limits = c(15,68)) +
-  labs( x = "Species", y = "Species intercept", main = NA) +
-  theme(legend.title = element_blank()) +  annotate("text", x = 15, y = 60, label = "d)", cex =5) +
-  annotate("text", x = spTopW[1,5], y = -4, label = spTopW[1,2], cex = 3, angle = 78) +
-  annotate("text", x = spTopW[2,5], y = -4, label = spTopW[2,2], cex = 3, angle = 78) +
-  annotate("text", x = spTopW[3,5], y = -4, label = spTopW[3,2], cex = 3, angle = 78) +
-  scale_fill_manual(values = c("darkolivegreen4","darkolivegreen4"))
-
-
-chillSpaceW <-  ggplot() + 
-  geom_violin(dataWest, mapping=aes(x = meanBB, y = chill, group = species.name, width =1, fill = type)) +
-  geom_point(west, mapping= aes(x = meanBB, y = chill)) +
-  geom_linerange(data = west, aes(x = meanBB, y = chill, ymin=chill2.5, ymax = chill97.5)) +
-  theme_classic() +  
-  ylim(-45,10) +
-  theme(axis.text.x = element_text( size=10,
-                                    angle = 78, 
-                                    hjust=1),
-        axis.title.y=element_text(size = 12),
-        axis.title=element_text(size=15),
-        legend.position = "none") + 
-  scale_x_continuous( breaks = spMiniW$meanBB, labels = spMiniW$species,limits = c(15,68)) +
-  labs( x = "Species", y = "Chilling response", main = NA) +
-  theme(legend.title = element_blank()) +  annotate("text", x = 15, y = 10, label = "b)", cex =5) +
-  annotate("text", x = 38, y = 10, label = "Western transect", cex =5) +
-  annotate("text", x = spTopW[1,5], y =-43.7, label = spTopW[1,2], cex = 3, angle = 78) +
-  annotate("text", x = spTopW[2,5], y = -43.7, label = spTopW[2,2], cex = 3, angle = 78) +
-  annotate("text", x = spTopW[3,5], y = -43.7, label = spTopW[3,2], cex = 3, angle = 78) +
-  scale_fill_manual(values = c("#cc6a70ff","#cc6a70ff"))
-
-forceSpaceW <- ggplot() + 
-  geom_violin(dataWest, mapping=aes(x = meanBB, y = force, group = species.name, width =1, fill = type)) +
-  geom_point(west, mapping= aes(x = meanBB, y = force)) +
-  geom_linerange(data = west,aes(x = meanBB, y = force, ymin=force2.5, ymax = force97.5)) +
-  theme_classic() +  
-  ylim(-30,10) +
-  theme(axis.text.x = element_text( size=10,
-                                    angle = 78, 
-                                    hjust=1),
-        axis.title.y=element_text(size = 12),
-        axis.title=element_text(size=15),
-        legend.position = "none") + 
-  scale_x_continuous( breaks = spMiniW$meanBB, labels = spMiniW$species,limits = c(15,68)) +
-  labs( x = "Species", y = "Forcing response", main = NA) +
-  theme(legend.title = element_blank()) +  annotate("text", x = 15, y = 10, label = "d)", cex =5) +
-  annotate("text", x = spTopW[1,5], y = -29.5, label = spTopW[1,2], cex = 3, angle = 78) +
-  annotate("text", x = spTopW[2,5], y = -29.5, label = spTopW[2,2], cex = 3, angle = 78) +
-  annotate("text", x = spTopW[3,5], y = -29.5, label = spTopW[3,2], cex = 3, angle = 78) +
-  scale_fill_manual(values = c("#f9b641ff","#f9b641ff"))
-
-photoSpaceW <- ggplot() + 
-  geom_violin(dataWest, mapping=aes(x = meanBB, y = photo, group = species.name, width =1, fill = type)) +
-  geom_point(west, mapping= aes(x = meanBB, y = photo)) +
-  geom_linerange(data = west,aes(x = meanBB, y = photo, ymin=photo2.5, ymax = photo97.5)) +
-  theme_classic() +  
-  ylim(-15,10) +
-  theme(axis.text.x = element_text( size=10,
-                                    angle = 78, 
-                                    hjust=1),
-        axis.title.y=element_text(size = 12),
-        axis.title=element_text(size=15),
-        legend.position = "none") + 
-  scale_x_continuous( breaks = spMiniW$meanBB, labels = spMiniW$species,limits = c(15,70)) +
-  labs( x = "Species", y = "Photoperiod response", main = NA) +
-  theme(legend.title = element_blank()) +  annotate("text", x = 15, y = 10, label = "f)", cex =5) +
-  annotate("text", x = spTopW[1,5], y = -14.5, label = spTopW[1,2], cex = 3, angle = 78) +
-  annotate("text", x = spTopW[2,5], y = -14.5, label = spTopW[2,2], cex = 3, angle = 78) +
-  annotate("text", x = spTopW[3,5], y = -14.5, label = spTopW[3,2], cex = 3, angle = 78) +
-  scale_fill_manual(values = c("cyan4","cyan4"))
-
-# pdf("figures/4violinWestern9725.pdf", width = 10, height =24)
-# plot_grid(bbSpaceW, aSpaceW,chillSpaceW,forceSpaceW, photoSpaceW, nrow = 5, align = "v")
-# dev.off()
-
-#Making better figures for the MS:
-
-pdf("figures/violinBetaAlphaEW.pdf", width = 12, height = 8)
-plot_grid(bbSpaceE, bbSpaceW, aSpaceE, aSpaceW, nrow = 2, ncol = 2, align = "v")
-dev.off()
-
-pdf("figures/violinCFPEW.pdf", width = 12, height = 16)
-plot_grid(chillSpaceE, chillSpaceW, forceSpaceE, forceSpaceW, photoSpaceE, photoSpaceW, nrow = 3, ncol = 2, align = "v")
-dev.off()
-
-# Making lizzie's other suggested plot - 2 connected dots:
-
-meanPtW <- aggregate(dataWest[c("meanBB", "Int")], dataWest[c("species.name","type","transect")], FUN = mean)
-names(meanPtW) <- c("species.name","type","transect","Budburst","Intercept")
-dotW <- ggplot(meanPtW) +
-  geom_point(aes(y= Budburst, x = Budburst, colour = "Budburst"), size = 8) +
-  geom_point(aes(y= Intercept, x = Budburst, colour = "Intercept"), size = 8) +
-  geom_segment(aes(x = Budburst, y = Intercept, xend = Budburst, yend = Budburst), data = meanPtW, col = "black") +
-  theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
-        panel.background = element_blank(), axis.line = element_line(colour = "black"),
-        legend.key=element_rect(fill="white")) +
-  ylim(-5,75) +
-  theme(axis.text.x = element_text( size=15,
-                                    angle = 78, 
-                                    hjust=1),
-        axis.text.y=element_text(size = 15),
-        axis.title=element_text(size=20),
-        legend.position = "none") + 
-  scale_x_continuous( breaks = spMiniW$meanBB, labels = spMiniW$species,limits = c(15,68)) +
-  labs( x = "Species", y = "Estimated parameter", main = NA) +
-  theme(legend.title = element_blank()) +  annotate("text", x = 19.5, y = 74, label = "b)      Western transect", cex =8) +
-  annotate("text", x = spTopW[1,5], y = 0, label = spTopW[1,2], cex = 5, angle = 78) +
-  annotate("text", x = spTopW[2,5], y = 0, label = spTopW[2,2], cex = 5, angle = 78) +
-  annotate("text", x = spTopW[3,5], y = 0, label = spTopW[3,2], cex = 5, angle = 78) +
-  scale_color_manual(values = c("cyan4", "#CC6677"))
-
-#### Eastern plot
-meanPtE <- aggregate(dataEast[c("meanBB", "Int")], dataEast[c("species.name","type","transect")], FUN = mean)
-names(meanPtE) <- c("species.name","type","transect","Budburst","Intercept")
-
-
-
-dotE <- ggplot(meanPtE) +
-  geom_point(aes(y= Budburst, x = Budburst, colour = "Budburst"), size = 8) +
-  geom_point(aes(y= Intercept, x = Budburst, colour = "Intercept"), size = 8) +
-  geom_segment(aes(x = Budburst, y = Intercept, xend = Budburst, yend = Budburst), data = meanPtE, col = "black") +
-  theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
-        panel.background = element_blank(), axis.line = element_line(colour = "black"),
-        legend.key=element_rect(fill="white")) +
-  ylim(-5,75) +
-  theme(axis.text.x = element_text( size=15,
-                                    angle = 78, 
-                                    hjust=1),
-        axis.text.y=element_text(size = 15),
-        axis.title=element_text(size=20)
-        ) +
-  scale_x_continuous( breaks = spMiniE$meanBB, labels = spMiniE$species,limits = c(15,68)) +
-  labs( x = "Species", y = "Estimated parameter", main = NA) +
-  theme(legend.title = element_blank(), legend.text = element_text(size =25), legend.position = "top") +  annotate("text", x = 19, y = 74, label = "a)      Eastern transect", cex =8) +annotate("text", x = spTopE[1,5], y = 0, label = spTopE[1,2], cex = 5, angle = 78) +
-  annotate("text", x = spTopE[2,5], y = 0, label = spTopE[2,2], cex = 5, angle = 78) +
-  annotate("text", x = spTopE[3,5], y = 0, label = spTopE[3,2], cex = 5, angle = 78) +
-  annotate("text", x = 38, y = 0, label = spTopE[4,2], cex = 5, angle = 78) +
-  annotate("text", x = spTopE[5,5], y = 0, label = spTopE[5,2], cex = 5, angle = 78) +
-  scale_color_manual(values = c("cyan4", "#CC6677"))
-
-pdf("..//figures/dotBetaAlphaLong2.pdf", width = 15, height = 10)
-plot_grid(dotE, dotW, nrow = 2, ncol = 1, align = "v")
-dev.off()
-

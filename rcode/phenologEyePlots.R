@@ -146,10 +146,12 @@ pheno.t <- merge(pheno.t, spInfo, by = "species")
 
 #load("output/final/bb_4sites_phylo.Rda")
 
-load("output/bb_4sites_phylo_mini.Rda")
-sum <- summary(mdl.4phyloMini)$summary 
-
-fit <- rstan::extract(mdl.4phyloMini)
+#load("output/bb_4sites_phylo_mini.Rda")
+load("output/bb_4sites_phylo_contphotothermo_zscored_Apr19.Rda")
+# sum <- summary(mdl.4phyloMini)$summary 
+sum <- summary(mdl.4phyloContWP)$summary 
+# fit <- rstan::extract(mdl.4phyloMini)
+fit <- rstan::extract(mdl.4phyloContWp)
 
 chillB <- data.frame(fit$b_chill1)
 chillBInterSite2 <- data.frame(fit$b_chill1+fit$b_inter_s2c1)
@@ -445,7 +447,7 @@ cueST <- ggplot(data = longCues, aes(x = type, y = value)) +
 cueST2 <- ggplot(data = longCues, aes(x = cue, y = value)) + 
   stat_eye( .width = c(.90, .5), cex = 0.75, aes(fill = type), position = position_dodge(0.9))+
   theme_classic()+
-  ylim(-40,5) +
+ # ylim(-40,5) +
   theme(axis.text.x = element_text( size=15,
                                     #angle = 78, 
                                     hjust=1),
@@ -458,7 +460,7 @@ cueST2 <- ggplot(data = longCues, aes(x = cue, y = value)) +
 # cueST
 # dev.off()
 
-pdf("figures/cueST2.pdf", width = 8, height = 5)
+pdf("figures/cueST2April19.pdf", width = 8, height = 5)
 cueST2
 dev.off()
 
@@ -543,7 +545,7 @@ photoSp <- ggplot() +
 # grid.arrange(chillSp,forceSp, photoSp, nrow = 3)
 # dev.off()
 
-pdf("figures/cueSp.pdf", height =12, width = 12)
+pdf("figures/cueSpApril19.pdf", height =12, width = 12)
 plot_grid(chillSp,forceSp, photoSp, nrow = 3, align = "v", rel_heights = c(1/4, 1/4, 1.2/3))
 dev.off()
 ##### Site specific plots:
@@ -695,10 +697,10 @@ longest$site <- as.factor(longest$site)
 siteOrder <- c("Smithers","Manning Park", "St. Hippolyte","Harvard Forest")
 
 
-pdf("figures/site4CueGrouped.pdf", width = 12, height =4)
+pdf("figures/site4CueGroupedApril19.pdf", width = 12, height =4)
 ggplot() + 
   stat_eye(data = longest, aes(x = as.factor(cue), y = value, fill = factor(site, level = siteOrder)), .width = c(.90, .5), cex = 0.75, position = position_dodge(0.9)) +
-  ylim (-45,10) +
+  ylim (-30,10) +
   theme_classic() +   
   theme(legend.position = "right", 
         legend.title = element_blank(),
@@ -872,8 +874,8 @@ ggplot() +
 col1 <- rgb(204 / 255, 102 / 255, 119 / 255, alpha = 0.8)
 col2 <- rgb(68 / 255, 170 / 255, 153 / 255, alpha = 0.6)
 
-treeLongC <- subset(longChillInfo, type == "tree")
-shrubLongC <- subset(longChillInfo, type == "shrub")
+treeLongC <- subset(longC, type == "tree")
+shrubLongC <- subset(longC, type == "shrub")
 
 xmin = -(mean(treeLongC$value)) + quantile(treeLongC$value, c(0.9))
 xmax = (mean(treeLongC$value) + quantile(treeLongC$value, c(0.9)))
@@ -886,8 +888,8 @@ tempSC <- shrubLongC[shrubLongC$value < xmin & shrubLongC$value > xmax, ]
 
 
 ### Forcing 
-treeLongF <- subset(longForceInfo, type == "tree")
-shrubLongF <- subset(longForceInfo, type == "shrub")
+treeLongF <- subset(longF, type == "tree")
+shrubLongF <- subset(longF, type == "shrub")
 
 xmin = -(mean(treeLongF$value)) + quantile(treeLongF$value, c(0.9))
 xmax = (mean(treeLongF$value) + quantile(treeLongF$value, c(0.9)))
@@ -899,8 +901,8 @@ xmax = (mean(shrubLongF$value) + quantile(shrubLongF$value, c(0.9)))
 tempSF <- shrubLongF[shrubLongF$value < xmin & shrubLongF$value > xmax, ]
 
 ### Photoperiod
-treeLongP <- subset(longPhotoInfo, type == "tree")
-shrubLongP <- subset(longPhotoInfo, type == "shrub")
+treeLongP <- subset(longP, type == "tree")
+shrubLongP <- subset(longP, type == "shrub")
 
 xmin = -(mean(treeLongP$value)) + quantile(treeLongP$value, c(0.9))
 xmax = (mean(treeLongP$value) + quantile(treeLongP$value, c(0.9)))
@@ -912,7 +914,7 @@ xmax = (mean(shrubLongP$value) + quantile(shrubLongP$value, c(0.9)))
 tempSP <- shrubLongP[shrubLongP$value < xmin & shrubLongP$value > xmax, ]
 
 
-pdf("figures/fullHistogramST.pdf", width =12, height = 6)
+pdf("figures/fullHistogramSTApril19.pdf", width =12, height = 6)
 par(mfrow = c(1,3))
 hist(shrubLongC$value, col = col1, xlab = "Cue Response", main = NA, ylab = "Frequency", cex.main =2, cex.lab = 2, cex.axis = 1.75, ylim = c(0, 125000))
 hist(treeLongC$value, col = col2, add = T)
@@ -933,7 +935,7 @@ legend("topright", c("Shrubs", "Trees"), col = c( col1, col2), bty = "n", pt.cex
 
 dev.off()
 
-pdf("figures/fullHistogramSTNorm.pdf", width =12, height = 6)
+pdf("figures/fullHistogramSTNormApril19.pdf", width =12, height = 6)
 par(mfrow = c(1,3), mar = c(5.1, 5.1, 4.1, 2.1))
 hist(shrubLongC$value, col = col1, xlab = NA, main = NA, ylab = "Normalized frequency", cex.main =2, cex.lab = 2.5, cex.axis = 1.75, prob = T,ylim = c(0, 0.125))
 hist(treeLongC$value, col = col2, add = T, prob = T)

@@ -21,7 +21,7 @@ library(rethinking)
 # }  
 
 #load("output/final/ew_phylo_output_newpriors.Rda")
-dl <- read.csv("..//input/dl_allbb.csv")
+dl <- read.csv("..//input/dl_allbb_mini.csv")
 
 temp <- str_split_fixed(dl$trt, "_", 3); head(temp)
 dl$chill<- temp[,1]
@@ -48,7 +48,7 @@ head(pheno)
 # combined the data has 3197 unique samples
 ############################################################
 # Preping the data for the model
-
+pheno <- subset(pheno, chill != "chill2")
 pheno$force.n <- pheno$force
 # pheno$force.n[pheno$force.n == "HF"] <- "1"
 # pheno$force.n[pheno$force.n == "LF"] <- "0"
@@ -144,10 +144,14 @@ pheno.t <- merge(pheno.t, spInfo, by = "species")
 # load("output/final/ew_phylo_output_newpriors_allncp.Rda")
 # sumew <- summary(mdl.ewphylo)$summary
 
-load("..//output/bb_4sites_phylo_contphotothermo_zscored_Apr19.Rda")
-sum <- summary(mdl.4phyloContWP)$summary 
+#load("..//output/bb_4sites_phylo_contphotothermo_zscored_Apr19.Rda")
+load("..//output/bb_phylo_contphotothermo_2zscoredMay13.Rda")
 
-fit <- rstan::extract(mdl.4phyloContWP)
+sum <- summary(mdl.2z)$summary
+fit <- rstan::extract(mdl.2z)
+
+# sum <- summary(mdl.4phyloContWP)$summary 
+# fit <- rstan::extract(mdl.4phyloContWP)
 
 # load("..//output/final/dl_phylo_lat1.Rda")
 # load("..//output/final/dl_phylo_lat50.Rda")

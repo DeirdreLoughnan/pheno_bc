@@ -29,7 +29,7 @@ if(length(grep("deirdreloughnan", getwd()) > 0)) {
   setwd("~/Documents/github/pheno_bc") 
 }  
 
-dl <- read.csv("input/dl_allbb.csv")
+dl <- read.csv("input/dl_allbb_mini.csv")
 
 temp <- str_split_fixed(dl$trt, "_", 3); head(temp)
 dl$chill<- temp[,1]
@@ -56,6 +56,7 @@ pheno <- rbind.fill(dl.wchill, df.wchill)
 # combined the data has 3197 unique samples
 ############################################################
 # Preping the data for the model
+pheno <- subset(pheno, chill != "chill2")
 
 pheno$force.n <- pheno$force
 pheno$force.n[pheno$force.n == "HF"] <- "1"
@@ -147,11 +148,15 @@ pheno.t <- merge(pheno.t, spInfo, by = "species")
 #load("output/final/bb_4sites_phylo.Rda")
 
 #load("output/bb_4sites_phylo_mini.Rda")
-load("output/bb_4sites_phylo_contphotothermo_zscored_Apr19.Rda")
+#load("output/bb_4sites_phylo_contphotothermo_zscored_.Rda")
+load("output/bb_phylo_contphotothermo_2zscoredMay13.Rda")
+sum <- summary(mdl.2z)$summary
+fit <- rstan::extract(mdl.2z)
+
 # sum <- summary(mdl.4phyloMini)$summary 
-sum <- summary(mdl.4phyloContWP)$summary 
+# sum <- summary(mdl.4phyloContWP)$summary 
 # fit <- rstan::extract(mdl.4phyloMini)
-fit <- rstan::extract(mdl.4phyloContWp)
+# fit <- rstan::extract(mdl.4phyloContWp)
 
 chillB <- data.frame(fit$b_chill1)
 chillBInterSite2 <- data.frame(fit$b_chill1+fit$b_inter_s2c1)
@@ -448,10 +453,10 @@ cueST2 <- ggplot(data = longCues, aes(x = cue, y = value)) +
   stat_eye( .width = c(.90, .5), cex = 0.75, aes(fill = type), position = position_dodge(0.9))+
   theme_classic()+
  # ylim(-40,5) +
-  theme(axis.text.x = element_text( size=15,
+  theme(axis.text.x = element_text( size=12,
                                     #angle = 78, 
                                     hjust=1),
-        axis.title=element_text(size=12) ) + # angle of 55 also works
+        axis.title=element_text(size=15) ) + # angle of 55 also works
   #geom_point(data = meanTrophic, aes(x = meanSlope,y = trophic.level, colour = "purple"), shape = 8, size = 3)+
   labs( x = "Plant type", y = "Cue response", main = NA)+ 
   theme(legend.title = element_blank()) +  scale_fill_manual(values = c("#cc6a70ff","cyan4"))
@@ -460,7 +465,7 @@ cueST2 <- ggplot(data = longCues, aes(x = cue, y = value)) +
 # cueST
 # dev.off()
 
-pdf("figures/cueST2April19.pdf", width = 8, height = 5)
+pdf("figures/cueST28Chill.pdf", width = 8, height = 5)
 cueST2
 dev.off()
 
@@ -479,12 +484,13 @@ tree$tip.label[tree$tip.label== "Spiraea_alba_var._latifolia"] <- "Spiraea_alba"
 
 
 spOrder <- tree$tip.label
-
+spOrder <- gsub("_"," ", spOrder)
 longChillInfo$mean <- rowMeans(longChillInfo[,c("Site1","Site2","Site3","Site4")], na.rm=TRUE)
+longChillInfo$species.name <- gsub("_"," ", longChillInfo$species.name)
 
 chillSp <- ggplot() + 
-  stat_eye(data = longChillInfo, aes(x = factor(species.name, level = spOrder), y = mean), .width = c(.90, .5), cex = 0.75, fill = "#cc6a70ff") +
-  geom_hline(yintercept = sum[3,1], linetype="dashed") +
+  stat_eye(data = longChillInfo, aes(x = factor(species.name, level = spOrder), y = value), .width = c(.90, .5), cex = 0.75, fill = "#cc6a70ff") +
+  geom_hline(yintercept = sum["mu_b_chill1",1], linetype="dashed") +
   theme_classic() +  
   theme(axis.title.x=element_blank(),
         axis.title.y=element_text(size = 12),
@@ -501,10 +507,11 @@ chillSp <- ggplot() +
   theme(legend.title = element_blank()) +  annotate("text", x = 1, y = 10, label = "a)", cex =5) 
 
 longForceInfo$mean <- rowMeans(longForceInfo[,c("Site1","Site2","Site3","Site4")], na.rm=TRUE)
+longForceInfo$species.name <- gsub("_"," ", longForceInfo$species.name)
 
 forceSp <- ggplot() + 
-  stat_eye(data = longForceInfo, aes(x = factor(species.name, level = spOrder), y = mean), .width = c(.90, .5), cex = 0.75, fill = "#f9b641ff") +
-  geom_hline(yintercept = sum[2,1], linetype="dashed") +
+  stat_eye(data = longForceInfo, aes(x = factor(species.name, level = spOrder), y = value), .width = c(.90, .5), cex = 0.75, fill = "#f9b641ff") +
+  geom_hline(yintercept = sum["mu_b_warm",1], linetype="dashed") +
   theme_classic() +  
   theme(axis.title.x=element_blank(),
         axis.title.y=element_text(size = 12),
@@ -521,10 +528,11 @@ forceSp <- ggplot() +
   theme(legend.title = element_blank()) +  annotate("text", x = 1, y = 10, label = "b)", cex =5) 
 
 longPhotoInfo$mean <- rowMeans(longPhotoInfo[,c("Site1","Site2","Site3","Site4")], na.rm=TRUE)
+longPhotoInfo$species.name <- gsub("_"," ", longPhotoInfo$species.name)
 
 photoSp <- ggplot() + 
-  stat_eye(data = longPhotoInfo, aes(x = factor(species.name, level = spOrder), y = mean), .width = c(.90, .5), cex = 0.75, fill = "cyan4")+
-  geom_hline(yintercept = sum[4,1], linetype="dashed") +
+  stat_eye(data = longPhotoInfo, aes(x = factor(species.name, level = spOrder), y = value), .width = c(.90, .5), cex = 0.75, fill = "cyan4")+
+  geom_hline(yintercept = sum["mu_b_photo",1], linetype="dashed") +
   theme_classic() +  
   theme(axis.text.x = element_text( size=10,
                                     angle = 78, 
@@ -532,7 +540,7 @@ photoSp <- ggplot() +
         axis.title.y=element_text(size = 12),
         axis.title=element_text(size=15) ) + # angle of 55 also works
   #geom_point(data = meanTrophic, aes(x = meanSlope,y = trophic.level, colour = "purple"), shape = 8, size = 3)+
-  labs( x = "Transect", y = "Photoperiod response", main = NA)+ 
+  labs( x = "Species", y = "Photoperiod response", main = NA)+ 
   scale_color_identity(name = "Model fit",
                        breaks = c("black"),
                        labels = c("Model Posterior"),
@@ -545,7 +553,7 @@ photoSp <- ggplot() +
 # grid.arrange(chillSp,forceSp, photoSp, nrow = 3)
 # dev.off()
 
-pdf("figures/cueSpApril19.pdf", height =12, width = 12)
+pdf("figures/cueSp8Chill.pdf", height =12, width = 12)
 plot_grid(chillSp,forceSp, photoSp, nrow = 3, align = "v", rel_heights = c(1/4, 1/4, 1.2/3))
 dev.off()
 ##### Site specific plots:
@@ -697,14 +705,14 @@ longest$site <- as.factor(longest$site)
 siteOrder <- c("Smithers","Manning Park", "St. Hippolyte","Harvard Forest")
 
 
-pdf("figures/site4CueGroupedApril19.pdf", width = 12, height =4)
+pdf("figures/site4CueGrouped8Chill.pdf", width = 12, height =4)
 ggplot() + 
   stat_eye(data = longest, aes(x = as.factor(cue), y = value, fill = factor(site, level = siteOrder)), .width = c(.90, .5), cex = 0.75, position = position_dodge(0.9)) +
-  ylim (-30,10) +
+  ylim (-40,10) +
   theme_classic() +   
   theme(legend.position = "right", 
         legend.title = element_blank(),
-        axis.text.x = element_text( size= 18),
+        axis.text.x = element_text( size= 16),
         axis.text.y = element_text( size= 12),
         axis.title=element_text(size = 18)) +
   labs( x = "Treatment cue", y = "Cue response", main = NA)+
@@ -914,7 +922,7 @@ xmax = (mean(shrubLongP$value) + quantile(shrubLongP$value, c(0.9)))
 tempSP <- shrubLongP[shrubLongP$value < xmin & shrubLongP$value > xmax, ]
 
 
-pdf("figures/fullHistogramSTApril19.pdf", width =12, height = 6)
+pdf("figures/fullHistogramST8Chill.pdf", width =12, height = 6)
 par(mfrow = c(1,3))
 hist(shrubLongC$value, col = col1, xlab = "Cue Response", main = NA, ylab = "Frequency", cex.main =2, cex.lab = 2, cex.axis = 1.75, ylim = c(0, 125000))
 hist(treeLongC$value, col = col2, add = T)
@@ -935,7 +943,7 @@ legend("topright", c("Shrubs", "Trees"), col = c( col1, col2), bty = "n", pt.cex
 
 dev.off()
 
-pdf("figures/fullHistogramSTNormApril19.pdf", width =12, height = 6)
+pdf("figures/fullHistogramSTNorm8Chill.pdf", width =12, height = 6)
 par(mfrow = c(1,3), mar = c(5.1, 5.1, 4.1, 2.1))
 hist(shrubLongC$value, col = col1, xlab = NA, main = NA, ylab = "Normalized frequency", cex.main =2, cex.lab = 2.5, cex.axis = 1.75, prob = T,ylim = c(0, 0.125))
 hist(treeLongC$value, col = col2, add = T, prob = T)

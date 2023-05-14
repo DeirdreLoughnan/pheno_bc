@@ -220,25 +220,60 @@ source("..//rcode/phenologyMsValues.R")
 require(rstan)
 require(xtable)
 
-load("..//output/bb_4sites_phylo_contphotothermo_zscored_Apr19.Rda")
+load("..//output/bb_phylo_contphotothermo_2zscoredMay13.Rda")
 
-sum <- summary(mdl.4phyloContWP)$summary
+sum <- summary(mdl.2z)$summary
 
 col4fig <- c("mean","sd","25%","50%","75%","n_eff","Rhat")
 col4table <- c("mean","sd","2.5%","50%","97.5%","n_eff","Rhat")
 
 mu_params_4 <- c(
+  "mu_b_warm",
+  "mu_b_photo",
+  "mu_b_chill1",
+  "b_site2",
+  "b_site3",
+  "b_site4",
+  "mu_b_inter_wp",
+  "mu_b_inter_wc1",
+  "mu_b_inter_pc1",
+  "mu_b_inter_ws2",
+  "mu_b_inter_ps2",
+  "mu_b_inter_s2c1",
+  "mu_b_inter_ws3",
+  "mu_b_inter_ps3",
+  "mu_b_inter_s3c1",
+  "mu_b_inter_ws4",
+  "mu_b_inter_ps4",
+  "mu_b_inter_s4c1")
+  # "sigma_b_warm",
+  # "sigma_b_photo",
+  # "sigma_b_chill1",
+  # "sigma_interceptsa",
+  # "sigma_b_inter_wp",
+  # "sigma_b_inter_wc1",
+  # "sigma_b_inter_pc1",
+  # "sigma_b_inter_ws2",
+  # "sigma_b_inter_ps2",
+  # "sigma_b_inter_s2c1",
+  # "sigma_b_inter_ws3",
+  # "sigma_b_inter_ps3",
+  # "sigma_b_inter_s3c1",
+  # "sigma_b_inter_ws4",
+  # "sigma_b_inter_ps4",
+  # "sigma_b_inter_s4c1",
+  # "sigma_y")
                 #"a_z","lam_interceptsa",
-                "mu_b_warm", "mu_b_photo", "mu_b_chill1", "b_site2",
-                "b_site3", "b_site4", "mu_b_inter_wp",
-                "mu_b_inter_wc1","mu_b_inter_pc1", "mu_b_inter_ws2",
-                "mu_b_inter_ps2","mu_b_inter_s2c1", "mu_b_inter_ws3",
-                "mu_b_inter_ps3", "mu_b_inter_s3c1", "mu_b_inter_ws4",
-                "mu_b_inter_ps4","mu_b_inter_s4c1")
+                # "mu_b_warm", "mu_b_photo", "mu_b_chill1", "b_site2",
+                # "b_site3", "b_site4", "mu_b_inter_wp",
+                # "mu_b_inter_wc1","mu_b_inter_pc1", "mu_b_inter_ws2",
+                # "mu_b_inter_ps2","mu_b_inter_s2c1", "mu_b_inter_ws3",
+                # "mu_b_inter_ps3", "mu_b_inter_s3c1", "mu_b_inter_ws4",
+                # "mu_b_inter_ps4","mu_b_inter_s4c1")
 
-meanz4 <- sum[mu_params_4, col4fig]
+meanz4 <- sum[mu_params_4, col4table]
 
-rownames(meanz4) = c( #"Root trait intercept","Lambda",
+rownames(meanz4) = c( 
                       "Forcing",
                       "Photoperiod",
                       "Chilling",
@@ -267,61 +302,17 @@ print(fourSite,include.rownames=TRUE, caption.placement="top", hline.after=c(-1,
 
 @
 
-<<label= tabNoPhoto, echo=FALSE, results=tex >>=
-require(rstan)
-require(xtable)
-
-load("..//output/bb_4sites_noPhoto.Rda")
-
-sum <- summary(mdl.noPhoto)$summary
-
-col4fig <- c("mean","sd","25%","50%","75%","n_eff","Rhat")
-col4table <- c("mean","sd","2.5%","50%","97.5%","n_eff","Rhat")
-
-mu_params_4 <- c(
-                #"a_z","lam_interceptsa",
-                "mu_b_warm",  "mu_b_chill1", "b_site2",
-                "b_site3", "b_site4", 
-                "mu_b_inter_wc1", "mu_b_inter_ws2",
-               "mu_b_inter_s2c1", "mu_b_inter_ws3",
-                 "mu_b_inter_s3c1", "mu_b_inter_ws4",
-                "mu_b_inter_s4c1")
-
-meanz4 <- sum[mu_params_4, col4fig]
-
-rownames(meanz4) = c( #"Root trait intercept","Lambda",
-                      "Forcing",
-                      "Chilling",
-                      "Manning Park",
-                       "Harvard Forest",
-                       "St. Hippolyte",
-                      "Forcing x chilling",
-                        "Forcing x Manning Park",
-                       "Chilling x Manning Park",
-                      "Forcing x Harvard Forest",
-                      "Chilling x Harvard Forest",
-                      "Forcing x St. Hippolyte",
-                      "Chilling x St. Hippolyte"
-)
-
-meanz4.table <- sum[mu_params_4, col4table]
-row.names(meanz4.table) <- row.names(meanz4)
-
-noPhoto <- xtable(meanz4.table, caption="Summary output from a phylogenetic mixed-effect model for only a 12h photoperiod treatment. The model includes site as dummy variables, while the forcing and chilling effect is included as continuous.")
-print(noPhoto,include.rownames=TRUE, caption.placement="top", hline.after=c(-1,0))
-
-@
 
 \begin{figure}[h!]
     \centering
-     \includegraphics[width=\textwidth]{..//figures/intrxnPlots4ChillApril19.pdf}
+     \includegraphics[width=\textwidth]{..//figures/intrxnPlots8Chill.pdf}
      \caption{Interaction plots of day of budburst of first bud in response chill portions and forcing (a), forcing cues(b), chilling cues (c), and photoperiod cues (d) and species sampled from St. Hippolyte, Harvard Forest, Manning park, and Smithers. }
     \label{fig:intrxn}
 \end{figure}
 
 \begin{figure}[h!]
     \centering
-     \includegraphics[width=\textwidth]{..//figures/site4CueGroupedApril19.pdf}
+     \includegraphics[width=\textwidth]{..//figures/site4CueGrouped8Chill.pdf}
     \caption{Posterior distributions of estimated cue responses with site level effects for individual sites, depicting a) chilling, b) forcing, and c) photoperiod cue responses. Black circles represent the median cue response, while the thinner black line the 90\% quantile interval. The coloured distribution is the the posterior density of the posteriors of the cue responses and site level responses for all species at a given site. The y-axis spans the entire range of the data.}
     \label{fig:siteCues}
 \end{figure}
@@ -350,7 +341,7 @@ print(noPhoto,include.rownames=TRUE, caption.placement="top", hline.after=c(-1,0
 
 \begin{figure}[h!]
     \centering
-     \includegraphics[width=\textwidth]{..//figures/dotBetaAlphaLong2.pdf}
+     \includegraphics[width=\textwidth]{..//figures/dotBetaAlphaLong.pdf}
     \caption{Estimated budburst, shown in blue, and species intercepts, shown in red, ranked by budburst dates for both the eastern (a) and western (b) transects.}
     \label{fig:betaAlphaGrad}
 \end{figure}

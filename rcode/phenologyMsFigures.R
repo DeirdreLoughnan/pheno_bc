@@ -23,7 +23,7 @@ if(length(grep("deirdreloughnan", getwd()) > 0)) {
 }  
 
 #load("output/final/ew_phylo_output_newpriors.Rda")
-dl <- read.csv("input/dl_allbb.csv")
+dl <- read.csv("input/dl_allbb_mini.csv")
 
 temp <- str_split_fixed(dl$trt, "_", 3); head(temp)
 dl$chill<- temp[,1]
@@ -50,6 +50,7 @@ head(pheno)
 # combined the data has 3197 unique samples
 ############################################################
 # Preping the data for the model
+pheno <- subset(pheno, chill != "chill2")
 
 # pheno$force.n <- pheno$force
 # pheno$force.n[pheno$force.n == "HF"] <- "1"
@@ -152,11 +153,12 @@ pheno.t <- merge(pheno.t, spInfo, by = "species")
 # sumew <- summary(mdl.ewphylo)$summary
 
 #load("output/final/bb_4sites_phylo_mini.Rda")
-load("output/bb_4sites_phylo_contphotothermo_zscored_Apr19.Rda")
-sum <- summary(mdl.4phyloContWP)$summary
-post <- rstan::extract(mdl.4phyloContWP)
-# sum <- summary(mdl.4phyloMini)$summary
-# post <- rstan::extract(mdl.4phyloMini)
+#load("output/bb_4sites_phylo_contphotothermo_zscored_Apr19.Rda")
+load("output/bb_phylo_contphotothermo_2zscoredMay13.Rda")
+# sum <- summary(mdl.4phyloContWP)$summary
+# post <- rstan::extract(mdl.4phyloContWP)
+sum <- summary(mdl.2z)$summary
+post <- rstan::extract(mdl.2z)
 #############################################
 col4fig <- c("mean","sd","25%","50%","75%","Rhat")
 col4table <- c("mean","sd","2.5%","50%","97.5%","Rhat")
@@ -216,11 +218,11 @@ rownames(meanz4m) = c(
 ##### 4 site plots ########################################################################
 ###########################################################################################
 
-pdf(file.path( "figures/changes_pheno_4sitesApril19.pdf"), width = 7, height = 5)
+pdf(file.path( "figures/changes_pheno_4sitesMay13.pdf"), width = 7, height = 5)
 par(mfrow = c(1,1), mar = c(5, 10, 2, 1))
 # Upper panel: bud burst
-plot(seq(-10, 
-         10,
+plot(seq(-20, 
+         20,
          length.out = nrow(meanz4m)), 
      1:nrow(meanz4m),
      type = "n",
@@ -388,7 +390,7 @@ dev.off()
 
 # Let's plot some interactions:
 a_sp = colMeans(sum[grep("a_sp", rownames(sum)), c("mean","se_mean","2.5%", "97.5%")])
-# a_z = (sum[grep("a_z", rownames(sum)), c("mean","se_mean","2.5%", "97.5%")])
+a_z = (sum[grep("a_z", rownames(sum)), c("mean","se_mean","2.5%", "97.5%")])
 mu_b_warm = sum[grep("mu_b_warm", rownames(sum)), c("mean","se_mean","2.5%", "97.5%")]
 mu_b_photo = sum[grep("mu_b_photo", rownames(sum)), c("mean","se_mean","2.5%", "97.5%")]
 mu_b_chill1 = sum[grep("mu_b_chill1", rownames(sum)), c("mean","se_mean","2.5%", "97.5%")]
@@ -418,7 +420,7 @@ lfData <- subset(pheno, force == "LF"& population == "sm")
 # Make the other parameters constant
 hf <- unique(hfData$force.z2)
 lf <- unique(lfData$force.z2)
-photo <- -0.5041133
+photo <- -0.5033863
 siteSM <- 0
 chill1 <- seq( -5, 5, by = 0.01)
   
@@ -461,7 +463,7 @@ intCF <- data.frame(bb_hfc = c(bb_hfc), bb_lfc = c(bb_lfc), chill = c(chill1))
 intrxnCF <- ggplot(intCF, aes(x= chill, group =1)) +
   geom_line(aes(y = bb_hfc, col = "#CC6677"), size =1.5) +
   geom_line(aes(y = bb_lfc, col = "cyan4"), size = 1.5) +
-  xlim (-5,5) + 
+  xlim (-5.5,5.5) + 
   xlab("Z-scored chill portions") + ylab("Estimated day of budburst") +
   theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
         panel.background = element_blank(), axis.line = element_line(colour = "black"),
@@ -470,19 +472,7 @@ intrxnCF <- ggplot(intCF, aes(x= chill, group =1)) +
   #scale_fill_manual( labels = c("Low force", "High force")) +
   scale_color_manual(values = c("cyan4", "#CC6677"), labels = c("High forcing", "Low forcing"), name = "") +
   #scale_colour_discrete(labels=c("High forcing","Low forcing"), name = "") +
-  theme(legend.title = element_blank()) +  annotate("text", x = -4.8, y = 90, label = "a)", cex = 10) 
-
-ggplot() +
-  geom_pointrange(siteForce, mapping = aes(x = factor(site, level = siteOrder), y = mean, ymin=X2.5., ymax=X97.5., col = force),
-                  position=position_dodge(width=0.5), size =1.25) +
-  xlab("Population") + ylab("Estimated day of budburst") +
-  ylim(0,50) +
-  theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
-        panel.background = element_blank(), axis.line = element_line(colour = "black"),
-        axis.text = element_text(size = 15), axis.title = element_text(size = 20)) +
-  scale_color_manual(values = c("cyan4", "#CC6677"), labels = c("High forcing", "Low forcing"), name = "") +
-  theme(legend.key=element_blank(), legend.position=c(.83,.85),legend.text = element_text(size = 15)) +
-  theme(legend.title = element_blank()) +  annotate("text", x = 0.6, y = 50, label = "b)", cex = 10) 
+  theme(legend.title = element_blank()) +  annotate("text", x = -5.4, y = 125, label = "a)", cex = 10) 
 
 
 # #<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>#
@@ -491,7 +481,7 @@ ggplot() +
 # warm and site4
 hf <- unique(hfData$force.z2)
 lf <- unique(lfData$force.z2)
-photo <- -0.5044652
+photo <- -0.5033863
 
 site2 <- unique(pheno$site2.z2)
 site3 <- unique(pheno$site3.z2)
@@ -595,11 +585,11 @@ c0Data <- subset(pheno, chill == "chill0" )
 
 hc <- unique(hcData$chillport.z2)
 lc <- unique(lcData$chillport.z2)
-c2 <- unique(c2Data$chillport.z2)
+# c2 <- unique(c2Data$chillport.z2)
 c1 <- unique(c1Data$chillport.z2)
 c0 <- unique(c0Data$chillport.z2)
 
-photo <- -0.5044652
+photo <- -0.5033863
 force <- mean(c( -0.7642814, -0.4072595, -0.4023109, -0.3493703,  0.2750890,  0.2977055,  0.4308763,  0.5308110,  0.8457874,  0.9457221))
 site4 <- unique(pheno$site4.z2)
 site3 <- unique(pheno$site3.z2)
@@ -607,16 +597,16 @@ site2 <- unique(pheno$site2.z2)
 
 #Site 4
 # plot first for the high chill
-bb_hc2site4 = a_sp[1:4] + b_site2[1:4] * site2[2] + b_site3[1:4] * site3[1] + b_site4[1:4] * site4[2]  + mu_b_warm[1:4] * force + mu_b_photo[1:4] * photo + mu_b_chill1[1:4] * c2[2] +
-  mu_b_inter_wp[1:4] * (force*photo) +
-  mu_b_inter_wc1[1:4] * (force*c2[2]) + mu_b_inter_pc1[1:4] * (photo*c2[2]) +
-  mu_b_inter_s2c1[1:4] * (c2[2]*site2[2]) + mu_b_inter_ws2[1:4] * (force*site2[2]) +mu_b_inter_ps2[1:4] * (photo*site2[2]) +
-  mu_b_inter_s3c1[1:4] * (c2[2]*site3[1]) + mu_b_inter_ws3[1:4] * (force*site3[1]) +mu_b_inter_ps3[1:4] * (photo*site3[1]) +
-  mu_b_inter_s4c1[1:4] * (c2[2]*site4[2]) + mu_b_inter_ws4[1:4] * (force*site4[2]) +mu_b_inter_ps4[1:4] * (photo*site4[2])
+# bb_hc2site4 = a_sp[1:4] + b_site2[1:4] * site2[2] + b_site3[1:4] * site3[1] + b_site4[1:4] * site4[2]  + mu_b_warm[1:4] * force + mu_b_photo[1:4] * photo + mu_b_chill1[1:4] * c2[2] +
+#   mu_b_inter_wp[1:4] * (force*photo) +
+#   mu_b_inter_wc1[1:4] * (force*c2[2]) + mu_b_inter_pc1[1:4] * (photo*c2[2]) +
+#   mu_b_inter_s2c1[1:4] * (c2[2]*site2[2]) + mu_b_inter_ws2[1:4] * (force*site2[2]) +mu_b_inter_ps2[1:4] * (photo*site2[2]) +
+#   mu_b_inter_s3c1[1:4] * (c2[2]*site3[1]) + mu_b_inter_ws3[1:4] * (force*site3[1]) +mu_b_inter_ps3[1:4] * (photo*site3[1]) +
+#   mu_b_inter_s4c1[1:4] * (c2[2]*site4[2]) + mu_b_inter_ws4[1:4] * (force*site4[2]) +mu_b_inter_ps4[1:4] * (photo*site4[2])
 
 bb_hc1site4 = a_sp[1:4] + b_site2[1:4] * site2[2] + b_site3[1:4] * site3[1] + b_site4[1:4] * site4[2]  + mu_b_warm[1:4] * force + mu_b_photo[1:4] * photo + mu_b_chill1[1:4] * c1[2] +
   mu_b_inter_wp[1:4] * (force*photo) +
-  mu_b_inter_wc1[1:4] * (force*c1[2]) + mu_b_inter_pc1[1:4] * (photo*c2[2]) +
+  mu_b_inter_wc1[1:4] * (force*c1[2]) + mu_b_inter_pc1[1:4] * (photo*c1[2]) +
   mu_b_inter_s2c1[1:4] * (c1[2]*site2[2]) + mu_b_inter_ws2[1:4] * (force*site2[2]) +mu_b_inter_ps2[1:4] * (photo*site2[2]) +
   mu_b_inter_s3c1[1:4] * (c1[2]*site3[1]) + mu_b_inter_ws3[1:4] * (force*site3[1]) +mu_b_inter_ps3[1:4] * (photo*site3[1]) +
   mu_b_inter_s4c1[1:4] * (c1[2]*site4[2]) + mu_b_inter_ws4[1:4] * (force*site4[2]) +mu_b_inter_ps4[1:4] * (photo*site4[2])
@@ -630,12 +620,12 @@ bb_lc0site4 = a_sp[1:4] + b_site2[1:4] * site2[2] + b_site3[1:4] * site3[1] + b_
 
 # site 3: Harvard forest
 
-bb_hc2site3 = a_sp[1:4]  + b_site2[1:4] * site2[2] + b_site3[1:4] * site3[2] + b_site4[1:4] * site4[1]  + mu_b_warm[1:4] * force + mu_b_photo[1:4] * photo + mu_b_chill1[1:4] * c2[1] +
-  mu_b_inter_wp[1:4] * (force*photo) +
-  mu_b_inter_wc1[1:4] * (force*c2[1]) + mu_b_inter_pc1[1:4] * (photo*c2[1]) +
-  mu_b_inter_s2c1[1:4] * (c2[1]*site2[2]) + mu_b_inter_ws2[1:4] * (force*site2[2]) +mu_b_inter_ps2[1:4] * (photo*site2[2]) +
-  mu_b_inter_s3c1[1:4] * (c2[1]*site3[1]) + mu_b_inter_ws3[1:4] * (force*site3[1]) +mu_b_inter_ps3[1:4] * (photo*site3[1]) +
-  mu_b_inter_s4c1[1:4] * (c2[1]*site4[2]) + mu_b_inter_ws4[1:4] * (force*site4[2]) +mu_b_inter_ps4[1:4] * (photo*site4[2])
+# bb_hc2site3 = a_sp[1:4]  + b_site2[1:4] * site2[2] + b_site3[1:4] * site3[2] + b_site4[1:4] * site4[1]  + mu_b_warm[1:4] * force + mu_b_photo[1:4] * photo + mu_b_chill1[1:4] * c2[1] +
+#   mu_b_inter_wp[1:4] * (force*photo) +
+#   mu_b_inter_wc1[1:4] * (force*c2[1]) + mu_b_inter_pc1[1:4] * (photo*c2[1]) +
+#   mu_b_inter_s2c1[1:4] * (c2[1]*site2[2]) + mu_b_inter_ws2[1:4] * (force*site2[2]) +mu_b_inter_ps2[1:4] * (photo*site2[2]) +
+#   mu_b_inter_s3c1[1:4] * (c2[1]*site3[1]) + mu_b_inter_ws3[1:4] * (force*site3[1]) +mu_b_inter_ps3[1:4] * (photo*site3[1]) +
+#   mu_b_inter_s4c1[1:4] * (c2[1]*site4[2]) + mu_b_inter_ws4[1:4] * (force*site4[2]) +mu_b_inter_ps4[1:4] * (photo*site4[2])
 
 bb_hc1site3 = a_sp[1:4]  + b_site2[1:4] * site2[2] + b_site3[1:4] * site3[2] + b_site4[1:4] * site4[1]  + mu_b_warm[1:4] * force + mu_b_photo[1:4] * photo + mu_b_chill1[1:4] * c1[1] +
   mu_b_inter_wp[1:4] * (force*photo) +
@@ -683,8 +673,8 @@ bb_lcsite1 = a_sp[1:4]+ b_site2[1:4] * site2[2] + b_site3[1:4] * site3[1] + b_si
   mu_b_inter_s3c1[1:4] * (lc[2]*site3[1]) + mu_b_inter_ws3[1:4] * (force*site3[1]) +mu_b_inter_ps3[1:4] * (photo*site3[1]) +
   mu_b_inter_s4c1[1:4] * (lc[2]*site4[1]) + mu_b_inter_ws4[1:4] * (force*site4[1]) +mu_b_inter_ps4[1:4] * (photo*site4[1])
 
-tempChill <- rbind(bb_hc2site4,bb_hc1site4,bb_lc0site4,bb_hc2site3,bb_hc1site3,bb_lc0site3,bb_hcsite2,bb_lcsite2,bb_hcsite1,bb_lcsite1)
-siteChill <- data.frame(tempChill , chill = c("Eastern - High Chill", "Eastern - Low Chill","Eastern - No CHill","Eastern - High Chill", "Eastern - Low Chill","Eastern - No CHill", "Western - High Chill","Western - Low Chill", "Western - High Chill","Western - Low Chill"), site = c("St.Hippolyte","St.Hippolyte","St.Hippolyte", "Harvard forest", "Harvard forest", "Harvard forest","Manning park","Manning park","Smithers","Smithers"), col = c("#593d9cff", "cyan4","salmon2","#593d9cff", "cyan4","salmon2","#CC6677","#f9b641ff","#CC6677","#f9b641ff"))
+tempChill <- rbind(bb_hc1site4,bb_lc0site4,bb_hc1site3,bb_lc0site3,bb_hcsite2,bb_lcsite2,bb_hcsite1,bb_lcsite1) #bb_hc2site4,bb_hc2site3,)
+siteChill <- data.frame(tempChill , chill = c("Eastern - High Chill", "Eastern - Low Chill","Eastern - High Chill", "Eastern - Low Chill","Western - High Chill","Western - Low Chill", "Western - High Chill","Western - Low Chill"), site = c("St.Hippolyte","St.Hippolyte", "Harvard forest", "Harvard forest","Manning park","Manning park","Smithers","Smithers"), col = c("#593d9cff", "cyan4","#593d9cff", "cyan4","#CC6677","#f9b641ff","#CC6677","#f9b641ff"))
 
 siteChill <- siteChill[order(siteChill$site),]
 
@@ -695,17 +685,17 @@ siteCPoint <- ggplot() +
   geom_pointrange(siteChill, mapping = aes(x = factor(site, level = siteOrder), y = mean, ymin=X2.5., ymax=X97.5., col = chill),
                   position=position_dodge(width=0.5), size = 1.25) +
   xlab("Population") + ylab("Estimated day of budburst") +
-  ylim(0,50) +
+  #ylim(0,50) +
   theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
         panel.background = element_blank(), axis.line = element_line(colour = "black"),
         axis.text = element_text(size = 15), axis.title = element_text(size = 20)) +
   scale_color_manual(values = c("cyan4", 
-                                "salmon2",
-                                "orchid4", 
+                               # "salmon2",
                                 "#CC6677",
+                               "orchid4",
                                 "#f9b641ff"), labels = c("High chill - East",
                                                          "Low chill - East",
-                                                         "No chill - East",
+                                                        # "No chill - East",
                                                          "High chill - West",
                                                          "Low chill - West"), name = "") +
   theme(legend.key=element_blank(), legend.position=c(.8,.85),legend.text = element_text(size = 15)) +
@@ -714,30 +704,30 @@ siteCPoint <- ggplot() +
 
 # remove the low chill:
 
-tempChillNoHigh <- rbind(bb_hc2site4,bb_lc0site4,bb_hc2site3,bb_lc0site3,bb_hcsite2,bb_lcsite2,bb_hcsite1,bb_lcsite1)
-siteChillNoHigh <- data.frame(tempChillNoHigh , chill = c("Eastern - High Chill","Eastern - No Chill","Eastern - High Chill", "Eastern - No Chill", "Western - High Chill","Western - Low Chill", "Western - High Chill","Western - Low Chill"), site = c("St.Hippolyte","St.Hippolyte", "Harvard forest",  "Harvard forest","Manning park","Manning park","Smithers","Smithers"), col = c("#593d9cff", "cyan4","#593d9cff", "cyan4","#CC6677","#f9b641ff","#CC6677","#f9b641ff"))
-
-siteChillNoHigh <- siteChillNoHigh[order(siteChillNoHigh$site),]
-
-siteOrder <- c("Smithers", "Manning park", "Harvard forest", "St.Hippolyte")
-
-siteCPointNH <- ggplot() +
-  geom_pointrange(siteChillNoHigh, mapping = aes(x = factor(site, level = siteOrder), y = mean, ymin=X2.5., ymax=X97.5., col = chill),
-                  position=position_dodge(width=0.5), size = 1.25) +
-  xlab("Population") + ylab("Estimated day of budburst") +
-  ylim(0,50) +
-  theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
-        panel.background = element_blank(), axis.line = element_line(colour = "black"),
-        axis.text = element_text(size = 15), axis.title = element_text(size = 20)) +
-  scale_color_manual(values = c("cyan4", 
-                                "orchid4", 
-                                "#CC6677",
-                                "#f9b641ff"), labels = c("High chill - East",
-                                                         "Low chill - East",
-                                                         "High chill - West",
-                                                         "Low chill - West"), name = "") +
-  theme(legend.key=element_blank(), legend.position=c(.8,.85),legend.text = element_text(size = 15)) +
-  theme(legend.title = element_blank()) +  annotate("text", x = 0.6, y = 50, label = "c)", cex = 10) 
+# tempChillNoHigh <- rbind(bb_hc2site4,bb_lc0site4,bb_hc2site3,bb_lc0site3,bb_hcsite2,bb_lcsite2,bb_hcsite1,bb_lcsite1)
+# siteChillNoHigh <- data.frame(tempChillNoHigh , chill = c("Eastern - High Chill","Eastern - No Chill","Eastern - High Chill", "Eastern - No Chill", "Western - High Chill","Western - Low Chill", "Western - High Chill","Western - Low Chill"), site = c("St.Hippolyte","St.Hippolyte", "Harvard forest",  "Harvard forest","Manning park","Manning park","Smithers","Smithers"), col = c("#593d9cff", "cyan4","#593d9cff", "cyan4","#CC6677","#f9b641ff","#CC6677","#f9b641ff"))
+# 
+# siteChillNoHigh <- siteChillNoHigh[order(siteChillNoHigh$site),]
+# 
+# siteOrder <- c("Smithers", "Manning park", "Harvard forest", "St.Hippolyte")
+# 
+# siteCPointNH <- ggplot() +
+#   geom_pointrange(siteChillNoHigh, mapping = aes(x = factor(site, level = siteOrder), y = mean, ymin=X2.5., ymax=X97.5., col = chill),
+#                   position=position_dodge(width=0.5), size = 1.25) +
+#   xlab("Population") + ylab("Estimated day of budburst") +
+#   ylim(0,50) +
+#   theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
+#         panel.background = element_blank(), axis.line = element_line(colour = "black"),
+#         axis.text = element_text(size = 15), axis.title = element_text(size = 20)) +
+#   scale_color_manual(values = c("cyan4", 
+#                                 "orchid4", 
+#                                 "#CC6677",
+#                                 "#f9b641ff"), labels = c("High chill - East",
+#                                                          "Low chill - East",
+#                                                          "High chill - West",
+#                                                          "Low chill - West"), name = "") +
+#   theme(legend.key=element_blank(), legend.position=c(.8,.85),legend.text = element_text(size = 15)) +
+#   theme(legend.title = element_blank()) +  annotate("text", x = 0.6, y = 50, label = "c)", cex = 10) 
 
 
 # plot(hcData$site4.z2, hcData$bb, type = "n",  xlim = c(-1,1), ylim = c(-5,90), xlab = "Site", ylab = "Day of budburst", cex.lab = 2)
@@ -778,7 +768,7 @@ lpData <- subset(pheno, photo == "LP")
 
 hp <- unique(hpData$photo.z2)
 lp <- unique(lpData$photo.z2)
-force <- -0.5044652
+force <- -0.5033863
 site4 <- unique(pheno$site4.z2)
 site3 <- unique(pheno$site3.z2)
 site2 <- unique(pheno$site2.z2)
@@ -858,13 +848,13 @@ sitePPoint <- ggplot() +
   geom_pointrange(sitePhoto, mapping = aes(x = factor(site, level = siteOrder), y = mean, ymin=X2.5., ymax=X97.5., col = photo),
                   position=position_dodge(width=0.5), size =1.25) +
   xlab("Population") + ylab("Estimated day of budburst") +
-  ylim(0,50) +
+  ylim(0,55) +
   theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
         panel.background = element_blank(), axis.line = element_line(colour = "black"),
         axis.text = element_text(size = 15), axis.title = element_text(size = 20)) +
   scale_color_manual(values = c("cyan4", "#CC6677"), labels = c("Long photoperiod", "Short photoperiod"), name = "") +
   theme(legend.key=element_blank(), legend.position=c(.8,.85),legend.text = element_text(size = 15)) +
-  theme(legend.title = element_blank()) +  annotate("text", x = 0.6, y = 50, label = "d)", cex = 10) 
+  theme(legend.title = element_blank()) +  annotate("text", x = 0.6, y = 55, label = "d)", cex = 10) 
 
 
 # pdf("figures/intrxnPlotsApril19.pdf", height =12, width = 15)
@@ -872,7 +862,7 @@ sitePPoint <- ggplot() +
 # dev.off()
 
 
-pdf("figures/intrxnPlots4ChillApril19.pdf", height =12, width = 15)
+pdf("figures/intrxnPlots4ChillMay13.pdf", height =12, width = 15)
 plot_grid(intrxnCF, siteFPoint, siteCPointNH, sitePPoint, nrow = 2, ncol = 2, align = "v")
 dev.off()
 ##################################

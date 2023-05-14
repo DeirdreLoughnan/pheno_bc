@@ -20,10 +20,13 @@ if(length(grep("deirdreloughnan", getwd()) > 0)) {
 # load("output/bb_4sites_phylo_mini.Rda")
 # sum <- summary(mdl.4phyloMini)$summary 
 
-load("output/bb_4sites_phylo_contphotothermo_zscored_Apr19.Rda")
-sum <- summary(mdl.4phyloContWP)$summary 
+#load("output/bb_4sites_phylo_contphotothermo_zscored_Apr19.Rda")
+load("output/bb_phylo_contphotothermo_2zscoredMay13.Rda")
+sum <- summary(mdl.2z)$summary
+post <- rstan::extract(mdl.2z)
 
-post <- rstan::extract(mdl.4phyloContWP)
+# sum <- summary(mdl.4phyloContWP)$summary 
+# post <- rstan::extract(mdl.4phyloContWP)
 
  # a_sp = mean(sum[grep("a_sp", rownames(sum)), 1])
 # mu_b_warm = sum[grep("b_warm", rownames(sum)), 1]
@@ -82,10 +85,10 @@ b_force97.5 = sum[grep("b_warm\\[", rownames(sum)), "97.5%"]
 # 
 
 #If we are using the old model, we will use the z-scored values for the parameters
-photo <- -0.5041133 #8 h photo
+photo <- -0.5033863 #8 h photo
 siteSM <- 0
-force <- -0.5077191 #15 C trt
-chill <- -0.4023109 # 5/15
+force <- -0.3568628 #5/15 C trt
+chill <- -0.3546922 # low chill
 
 m <- matrix(nrow = 1000, ncol = 47)
 
@@ -222,7 +225,7 @@ eastSp <- unique(east$species.name)
 
 dataEast <- data[data$species.name %in% eastSp, ]
 
-overlappingE <- c("aromel","betlen", "betpap", "lyolig","faggra", "betall")
+overlappingE <- c("aromel","betlen", "betpap", "lyolig","faggra", "betall", "prupen","poptre")
 spMiniE <- east[!east$species %in% overlappingE,]
 spTopE <- east[east$species %in% overlappingE,]
 
@@ -231,16 +234,16 @@ bbSpaceE <- ggplot() +
   geom_point(east, mapping= aes(x = meanBB, y = meanBB)) +
   geom_linerange(data = east,aes(x = meanBB, y = meanBB, ymin=bb2.5, ymax = bb97.5) ) +
   theme_classic() +  
-  ylim(-2,80) +
+ ylim(-3,80) +
   theme(axis.text.x = element_text( size=10,
                                     angle = 78, 
                                     hjust=1),
         axis.title.y=element_text(size = 12),
         axis.title=element_text(size=15),
         legend.position = "none") + 
-  scale_x_continuous( breaks = spMiniE$meanBB, labels = spMiniE$species,limits = c(19,60)) +
+  scale_x_continuous( breaks = spMiniE$meanBB, labels = spMiniE$species,limits = c(23,65)) +
   labs( x = "Species", y = "Estimated budburst", main = NA) +
-  theme(legend.title = element_blank()) +  annotate("text", x = 19, y = 80, label = "a)", cex =5) +
+  theme(legend.title = element_blank()) +  annotate("text", x = 23, y = 80, label = "a)", cex =5) +
   annotate("text", x =40, y = 80, label = "Eastern transect", cex =5) +
   annotate("text", x = spTopE[1,5], y = -0.2, label = spTopE[1,2], cex = 3, angle = 78) +
   annotate("text", x = spTopE[2,5], y = -0.2, label = spTopE[2,2], cex = 3, angle = 78) +
@@ -248,6 +251,8 @@ bbSpaceE <- ggplot() +
   annotate("text", x = spTopE[4,5], y = -0.2, label = spTopE[4,2], cex = 3, angle = 78) +
   annotate("text", x = spTopE[5,5], y = -0.2, label = spTopE[5,2], cex = 3, angle = 78) +
   annotate("text", x = spTopE[6,5], y = -0.2, label = spTopE[6,2], cex = 3, angle = 78) +
+  annotate("text", x = spTopE[7,5], y = -0.2, label = spTopE[7,2], cex = 3, angle = 78) +
+  annotate("text", x = spTopE[8,5], y = -0.2, label = spTopE[8,2], cex = 3, angle = 78) +
   scale_fill_manual(values = c("mediumpurple2","mediumpurple2"))
 
 # intercept
@@ -256,22 +261,24 @@ aSpaceE<-  ggplot() +
   geom_point(east, mapping= aes(x = meanBB, y = Int)) +
   geom_linerange(data = east,aes(x = meanBB, y = Int, ymin=Int2.5, ymax = Int97.5)) +
   theme_classic() +  
-  ylim(-5,65) +
+  ylim(-6,65) +
   theme(axis.text.x = element_text( size=10,
                                     angle = 78, 
                                     hjust=1),
         axis.title.y=element_text(size = 12),
         axis.title=element_text(size=15),
         legend.position = "none") + 
-  scale_x_continuous( breaks = spMiniE$meanBB, labels = spMiniE$species,limits = c(19,60)) +
+  scale_x_continuous( breaks = spMiniE$meanBB, labels = spMiniE$species,limits = c(23,65)) +
   labs( x = "Species", y = "Species intercept", main = NA) +
-  theme(legend.title = element_blank()) +  annotate("text", x = 19, y = 60, label = "c)", cex =5) +
+  theme(legend.title = element_blank()) +  annotate("text", x = 23, y = 60, label = "c)", cex =5) +
   annotate("text", x = spTopE[1,5], y = -4, label = spTopE[1,2], cex = 3, angle = 78) +
   annotate("text", x = spTopE[2,5], y = -4, label = spTopE[2,2], cex = 3, angle = 78) +
   annotate("text", x = spTopE[3,5], y = -4, label = spTopE[3,2], cex = 3, angle = 78) +
   annotate("text", x = spTopE[4,5], y = -4, label = spTopE[4,2], cex = 3, angle = 78) +
   annotate("text", x = spTopE[5,5], y = -4, label = spTopE[5,2], cex = 3, angle = 78) +
-  annotate("text", x = spTopE[6,5], y = 4, label = spTopE[6,2], cex = 3, angle = 78) +
+  annotate("text", x = spTopE[6,5], y = -4, label = spTopE[6,2], cex = 3, angle = 78) +
+  annotate("text", x = spTopE[7,5], y = -4, label = spTopE[7,2], cex = 3, angle = 78) +
+  annotate("text", x = spTopE[8,5], y = -4, label = spTopE[8,2], cex = 3, angle = 78) +
   scale_fill_manual(values = c("darkolivegreen4","darkolivegreen4"))
 
 chillSpaceE <- ggplot() + 
@@ -279,23 +286,23 @@ chillSpaceE <- ggplot() +
   geom_point(east, mapping= aes(x = meanBB, y = chill)) +
   geom_linerange(data = east, aes(x = meanBB, y = chill, ymin=chill2.5, ymax = chill97.5)) +
   theme_classic() +  
-  ylim(-25,10) +
+  ylim(-45,15) +
   theme(axis.text.x = element_text( size=10,
                                     angle = 78, 
                                     hjust=1),
         axis.title.y=element_text(size = 12),
         axis.title=element_text(size=15),
         legend.position = "none") + 
-  scale_x_continuous( breaks = spMiniE$meanBB, labels = spMiniE$species,limits = c(19,60)) +
+  scale_x_continuous( breaks = spMiniE$meanBB, labels = spMiniE$species,limits = c(23,65)) +
   labs( x = "Species", y = "Chilling response", main = NA) +
-  theme(legend.title = element_blank()) +  annotate("text", x = 19, y = 10, label = "a)", cex =5) +
-  annotate("text", x = 45, y = 10, label = "Eastern transect", cex =5) +
-  annotate("text", x = spTopE[1,5], y = -24.5, label = spTopE[1,2], cex = 3, angle = 78) +
-  annotate("text", x = spTopE[2,5], y = -24.5, label = spTopE[2,2], cex = 3, angle = 78) +
-  annotate("text", x = spTopE[3,5], y = -24.5, label = spTopE[3,2], cex = 3, angle = 78) +
-  annotate("text", x = spTopE[4,5], y = -24.5, label = spTopE[4,2], cex = 3, angle = 78) +
-  annotate("text", x = spTopE[5,5], y = -24.5, label = spTopE[5,2], cex = 3, angle = 78) +
-  annotate("text", x = spTopE[6,5], y = -24.5, label = spTopE[6,2], cex = 3, angle = 78) +
+  theme(legend.title = element_blank()) +  annotate("text", x =23, y = 15, label = "a)", cex =5) +
+  annotate("text", x = 45, y = 15, label = "Eastern transect", cex =5) +
+  annotate("text", x = spTopE[1,5], y = -44.5, label = spTopE[1,2], cex = 3, angle = 78) +
+  annotate("text", x = spTopE[2,5], y = -44.5, label = spTopE[2,2], cex = 3, angle = 78) +
+  annotate("text", x = spTopE[3,5], y = -44.5, label = spTopE[3,2], cex = 3, angle = 78) +
+  annotate("text", x = spTopE[4,5], y = -44.5, label = spTopE[4,2], cex = 3, angle = 78) +
+  annotate("text", x = spTopE[5,5], y = -44.5, label = spTopE[5,2], cex = 3, angle = 78) +
+  annotate("text", x = spTopE[6,5], y = -44.5, label = spTopE[6,2], cex = 3, angle = 78) +
   scale_fill_manual(values = c("#cc6a70ff","#cc6a70ff"))
 
 forceSpaceE <- ggplot() + 
@@ -310,14 +317,16 @@ forceSpaceE <- ggplot() +
         axis.title.y=element_text(size = 12),
         axis.title=element_text(size=15),
         legend.position = "none") + 
-  scale_x_continuous( breaks = spMiniE$meanBB, labels = spMiniE$species,limits = c(19,60)) +
+  scale_x_continuous( breaks = spMiniE$meanBB, labels = spMiniE$species,limits = c(23,65)) +
   labs( x = "Species", y = "Forcing response", main = NA) +
-  theme(legend.title = element_blank()) +  annotate("text", x = 19, y = 10, label = "c)", cex =5) +
+  theme(legend.title = element_blank()) +  annotate("text", x = 23, y = 10, label = "c)", cex =5) +
   annotate("text", x = spTopE[1,5], y = -24.5, label = spTopE[1,2], cex = 3, angle = 78) +
   annotate("text", x = spTopE[2,5], y = -24.5, label = spTopE[2,2], cex = 3, angle = 78) +
   annotate("text", x = spTopE[3,5], y = -24.5, label = spTopE[3,2], cex = 3, angle = 78) +
   annotate("text", x =  spTopE[4,5], y = -24.5, label = spTopE[4,2], cex = 3, angle = 78) +
   annotate("text", x = spTopE[5,5], y = -24.5, label = spTopE[5,2], cex = 3, angle = 78) +
+  annotate("text", x = spTopE[5,5], y = -44.5, label = spTopE[5,2], cex = 3, angle = 78) +
+  annotate("text", x = spTopE[6,5], y = -44.5, label = spTopE[6,2], cex = 3, angle = 78) +
   scale_fill_manual(values = c("#f9b641ff","#f9b641ff"))
 
 
@@ -333,9 +342,9 @@ photoSpaceE <- ggplot() +
         axis.title.y=element_text(size = 12),
         axis.title=element_text(size=15),
         legend.position = "none") + 
-  scale_x_continuous( breaks = spMiniE$meanBB, labels = spMiniE$species,limits = c(19,60)) +
+  scale_x_continuous( breaks = spMiniE$meanBB, labels = spMiniE$species,limits = c(23,65)) +
   labs( x = "Species", y = "Photoperiod response", main = NA) +
-  theme(legend.title = element_blank()) +  annotate("text", x = 19, y = 10, label = "e)", cex =5) +
+  theme(legend.title = element_blank()) +  annotate("text", x = 23, y = 10, label = "e)", cex =5) +
   annotate("text", x = spTopE[1,5], y = -24.5, label = spTopE[1,2], cex = 3, angle = 78) +
   annotate("text", x = spTopE[2,5], y = -24.5, label = spTopE[2,2], cex = 3, angle = 78) +
   annotate("text", x = spTopE[3,5], y = -24.5, label = spTopE[3,2], cex = 3, angle = 78) +
@@ -357,7 +366,7 @@ westSp <- unique(west$species.name)
 dataWest <- data[data$species.name %in% westSp, ]
 
 
-overlappingW <- c("spialb","betpap","popbal","rhoalb","shecan","alninc")
+overlappingW <- c("spialb","betpap","popbal","rhoalb","alninc")
 spMiniW <- west[!west$species %in% overlappingW,]
 spTopW <- west[west$species %in% overlappingW,]
 
@@ -366,17 +375,17 @@ bbSpaceW <-  ggplot() +
   geom_point(west, mapping= aes(x = meanBB, y = meanBB)) +
   geom_linerange(data = west,aes(x = meanBB, y = meanBB, ymin=bb2.5, ymax = bb97.5)) +
   theme_classic() +  
-  ylim(-2,60) +
+  ylim(-5,70) +
   theme(axis.text.x = element_text( size=10,
                                     angle = 78, 
                                     hjust=1),
         axis.title.y=element_text(size = 12),
         axis.title=element_text(size=15),
         legend.position = "none") + 
-  scale_x_continuous( breaks = spMiniW$meanBB, labels = spMiniW$species,limits = c(12,60)) +
+  scale_x_continuous( breaks = spMiniW$meanBB, labels = spMiniW$species,limits = c(15,62)) +
   labs( x = "Species", y = "Estimated budburst", main = NA) +
-  annotate("text", x = 40, y = 60, label = "Western transect", cex =5) +
-  theme(legend.title = element_blank()) +  annotate("text", x = 12, y = 60, label = "b)", cex =5) +
+  annotate("text", x = 40, y = 70, label = "Western transect", cex =5) +
+  theme(legend.title = element_blank()) +  annotate("text", x = 15, y = 70, label = "b)", cex =5) +
   annotate("text", x = spTopW[1,5], y = -1.5, label = spTopW[1,2], cex = 3, angle = 78) +
   annotate("text", x = spTopW[2,5], y =-1.5, label = spTopW[2,2], cex = 3, angle = 78) +
   annotate("text", x = spTopW[3,5], y = -1.5, label = spTopW[3,2], cex = 3, angle = 78) +
@@ -391,16 +400,16 @@ aSpaceW <-  ggplot() +
   geom_point(west, mapping= aes(x = meanBB, y = Int)) +
   geom_linerange(data = west,aes(x = meanBB, y = Int, ymin=Int2.5, ymax = Int97.5)) +
   theme_classic() + 
-  ylim(-2,60)+
+  ylim(-5,60)+
   theme(axis.text.x = element_text( size=10,
                                     angle = 78, 
                                     hjust=1),
         axis.title.y=element_text(size = 12),
         axis.title=element_text(size=15),
         legend.position = "none") + 
-  scale_x_continuous( breaks = spMiniW$meanBB, labels = spMiniW$species,limits = c(10,60)) +
+  scale_x_continuous( breaks = spMiniW$meanBB, labels = spMiniW$species,limits = c(15,62)) +
   labs( x = "Species", y = "Species intercept", main = NA) +
-  theme(legend.title = element_blank()) +  annotate("text", x = 10, y = 60, label = "d)", cex =5) +
+  theme(legend.title = element_blank()) +  annotate("text", x = 15, y = 60, label = "d)", cex =5) +
   annotate("text", x = spTopW[1,5], y = -1.5, label = spTopW[1,2], cex = 3, angle = 78) +
   annotate("text", x = spTopW[2,5], y = -1.5, label = spTopW[2,2], cex = 3, angle = 78) +
   annotate("text", x = spTopW[3,5], y = -1.5, label = spTopW[3,2], cex = 3, angle = 78) +
@@ -415,23 +424,23 @@ chillSpaceW <-  ggplot() +
   geom_point(west, mapping= aes(x = meanBB, y = chill)) +
   geom_linerange(data = west, aes(x = meanBB, y = chill, ymin=chill2.5, ymax = chill97.5)) +
   theme_classic() +  
-  ylim(-25,10) +
+  ylim(-45,10) +
   theme(axis.text.x = element_text( size=10,
                                     angle = 78, 
                                     hjust=1),
         axis.title.y=element_text(size = 12),
         axis.title=element_text(size=15),
         legend.position = "none") + 
-  scale_x_continuous( breaks = spMiniW$meanBB, labels = spMiniW$species,limits = c(10,60)) +
+  scale_x_continuous( breaks = spMiniW$meanBB, labels = spMiniW$species,limits = c(15,62)) +
   labs( x = "Species", y = "Chilling response", main = NA) +
-  theme(legend.title = element_blank()) +  annotate("text", x = 10, y = 10, label = "b)", cex =5) +
+  theme(legend.title = element_blank()) +  annotate("text", x = 15, y = 10, label = "b)", cex =5) +
   annotate("text", x = 38, y = 10, label = "Western transect", cex =5) +
-  annotate("text", x = spTopW[1,5], y = -24.5, label = spTopW[1,2], cex = 3, angle = 78) +
-  annotate("text", x = spTopW[2,5], y = -24.5, label = spTopW[2,2], cex = 3, angle = 78) +
-  annotate("text", x = spTopW[3,5], y = -24.5, label = spTopW[3,2], cex = 3, angle = 78) +
-  annotate("text", x = spTopW[4,5], y = -24.5, label = spTopW[4,2], cex = 3, angle = 78) +
-  annotate("text", x = spTopW[5,5], y = -24.5, label = spTopW[5,2], cex = 3, angle = 78) +
-  annotate("text", x = spTopW[6,5], y = -24.5, label = spTopW[6,2], cex = 3, angle = 78) +
+  annotate("text", x = spTopW[1,5], y = -44.5, label = spTopW[1,2], cex = 3, angle = 78) +
+  annotate("text", x = spTopW[2,5], y = -44.5, label = spTopW[2,2], cex = 3, angle = 78) +
+  annotate("text", x = spTopW[3,5], y = -44.5, label = spTopW[3,2], cex = 3, angle = 78) +
+  annotate("text", x = spTopW[4,5], y = -44.5, label = spTopW[4,2], cex = 3, angle = 78) +
+  annotate("text", x = spTopW[5,5], y = -44.5, label = spTopW[5,2], cex = 3, angle = 78) +
+  annotate("text", x = spTopW[6,5], y = -44.5, label = spTopW[6,2], cex = 3, angle = 78) +
   scale_fill_manual(values = c("#cc6a70ff","#cc6a70ff"))
 
 forceSpaceW <- ggplot() + 
@@ -446,9 +455,9 @@ forceSpaceW <- ggplot() +
         axis.title.y=element_text(size = 12),
         axis.title=element_text(size=15),
         legend.position = "none") + 
-  scale_x_continuous( breaks = spMiniW$meanBB, labels = spMiniW$species,limits = c(10,60)) +
+  scale_x_continuous( breaks = spMiniW$meanBB, labels = spMiniW$species,limits = c(15,62)) +
   labs( x = "Species", y = "Forcing response", main = NA) +
-  theme(legend.title = element_blank()) +  annotate("text", x = 10, y = 10, label = "d)", cex =5) +
+  theme(legend.title = element_blank()) +  annotate("text", x = 15, y = 10, label = "d)", cex =5) +
   annotate("text", x = spTopW[1,5], y = -24.5, label = spTopW[1,2], cex = 3, angle = 78) +
   annotate("text", x = spTopW[2,5], y = -24.5, label = spTopW[2,2], cex = 3, angle = 78) +
   annotate("text", x = spTopW[3,5], y = -24.5, label = spTopW[3,2], cex = 3, angle = 78) +
@@ -469,9 +478,9 @@ photoSpaceW <- ggplot() +
         axis.title.y=element_text(size = 12),
         axis.title=element_text(size=15),
         legend.position = "none") + 
-  scale_x_continuous( breaks = spMiniW$meanBB, labels = spMiniW$species,limits = c(10,60)) +
+  scale_x_continuous( breaks = spMiniW$meanBB, labels = spMiniW$species,limits = c(15,62)) +
   labs( x = "Species", y = "Photoperiod response", main = NA) +
-  theme(legend.title = element_blank()) +  annotate("text", x = 10, y = 10, label = "f)", cex =5) +
+  theme(legend.title = element_blank()) +  annotate("text", x = 15, y = 10, label = "f)", cex =5) +
   annotate("text", x = spTopW[1,5], y = -24.5, label = spTopW[1,2], cex = 3, angle = 78) +
   annotate("text", x = spTopW[2,5], y = -24.5, label = spTopW[2,2], cex = 3, angle = 78) +
   annotate("text", x = spTopW[3,5], y = -24.5, label = spTopW[3,2], cex = 3, angle = 78) +
@@ -506,19 +515,21 @@ dotW <- ggplot(meanPtW) +
   theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
         panel.background = element_blank(), axis.line = element_line(colour = "black"),
         legend.key=element_rect(fill="white")) +
-  ylim(-5,60) +
+  ylim(-1.5,65) +
   theme(axis.text.x = element_text( size=15,
                                     angle = 78, 
                                     hjust=1),
         axis.text.y=element_text(size = 15),
         axis.title=element_text(size=20),
         legend.position = "none") + 
-  scale_x_continuous( breaks = spMiniW$meanBB, labels = spMiniW$species,limits = c(10,60)) +
+  scale_x_continuous( breaks = spMiniW$meanBB, labels = spMiniW$species,limits = c(15,62)) +
   labs( x = "Species", y = "Estimated parameter", main = NA) +
-  theme(legend.title = element_blank()) +  annotate("text", x = 15, y = 60, label = "b)      Western transect", cex =8) +
-  annotate("text", x = spTopW[1,5], y = 0, label = spTopW[1,2], cex = 5, angle = 78) +
-  annotate("text", x = spTopW[2,5], y = 0, label = spTopW[2,2], cex = 5, angle = 78) +
-  annotate("text", x = spTopW[3,5], y = 0, label = spTopW[3,2], cex = 5, angle = 78) +
+  theme(legend.title = element_blank()) +  annotate("text", x = 18, y = 60, label = "b)      Western transect", cex =8) +
+  annotate("text", x = spTopW[1,5], y = -1, label = spTopW[1,2], cex = 5, angle = 78) +
+  annotate("text", x = spTopW[2,5], y = -1, label = spTopW[2,2], cex = 5, angle = 78) +
+  annotate("text", x = spTopW[3,5], y = -1, label = spTopW[3,2], cex = 5, angle = 78) +
+  annotate("text", x = spTopW[4,5], y = -1, label = spTopW[4,2], cex = 5, angle = 78) +
+  annotate("text", x = spTopW[5,5], y = -1, label = spTopW[5,2], cex = 5, angle = 78) +
   scale_color_manual(values = c("cyan4", "#CC6677"))
 
 #### Eastern plot
@@ -532,23 +543,28 @@ dotE <- ggplot(meanPtE) +
   theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
         panel.background = element_blank(), axis.line = element_line(colour = "black"),
         legend.key=element_rect(fill="white")) +
-  ylim(-5,75) +
+  ylim(-1.5,65) +
   theme(axis.text.x = element_text( size=15,
                                     angle = 78, 
                                     hjust=1),
         axis.text.y=element_text(size = 15),
         axis.title=element_text(size=20)
         ) +
-  scale_x_continuous( breaks = spMiniE$meanBB, labels = spMiniE$species,limits = c(10,60)) +
+  scale_x_continuous( breaks = spMiniE$meanBB, labels = spMiniE$species,limits = c(24,64)) +
   labs( x = "Species", y = "Estimated parameter", main = NA) +
-  theme(legend.title = element_blank(), legend.text = element_text(size =25), legend.position = "top") +  annotate("text", x = 15, y = 60, label = "a)      Eastern transect", cex =8) +annotate("text", x = spTopE[1,5], y = 0, label = spTopE[1,2], cex = 5, angle = 78) +
-  annotate("text", x = spTopE[2,5], y = 0, label = spTopE[2,2], cex = 5, angle = 78) +
-  annotate("text", x = spTopE[3,5], y = 0, label = spTopE[3,2], cex = 5, angle = 78) +
-  annotate("text", x = 38, y = 0, label = spTopE[4,2], cex = 5, angle = 78) +
-  annotate("text", x = spTopE[5,5], y = 0, label = spTopE[5,2], cex = 5, angle = 78) +
+  theme(legend.title = element_blank(), legend.text = element_text(size =25), legend.position = "top") +  annotate("text", x = 29, y = 60, label = "a)      Eastern transect", cex =8) +
+  annotate("text", x = spTopE[1,5], y = -1, label = spTopE[1,2], cex = 5, angle = 78) +
+  annotate("text", x = spTopE[2,5], y = -1, label = spTopE[2,2], cex = 5, angle = 78) +
+  annotate("text", x = spTopE[3,5], y = -1, label = spTopE[3,2], cex = 5, angle = 78) +
+  annotate("text", x = spTopE[4,5], y = -1, label = spTopE[4,2], cex = 5, angle = 78) +
+ # annotate("text", x = 38, y = 0, label = spTopE[4,2], cex = 5, angle = 78) +
+  annotate("text", x = spTopE[5,5], y = -1, label = spTopE[5,2], cex = 5, angle = 78) +
+  annotate("text", x = spTopE[6,5], y = -1, label = spTopE[6,2], cex = 5, angle = 78) +
+  annotate("text", x = spTopE[7,5], y = -1, label = spTopE[7,2], cex = 5, angle = 78) +
+  annotate("text", x = spTopE[8,5], y = -1, label = spTopE[8,2], cex = 5, angle = 78) +
   scale_color_manual(values = c("cyan4", "#CC6677"))
 
-pdf("figures/dotBetaAlphaLong2.pdf", width = 16, height = 16)
+pdf("figures/dotBetaAlphaLong.pdf", width = 12, height = 16)
 plot_grid(dotE, dotW, nrow = 2, ncol = 1, align = "v")
 dev.off()
 

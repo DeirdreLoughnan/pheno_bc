@@ -944,3 +944,148 @@ photoSpW <- ggplot() +
 pdf("figures/4panelWestern.pdf", width = 10, height =20)
 plot_grid(bbSpW, chillSpW,forceSpW, photoSpW, nrow = 4, align = "v", rel_heights = c(1/4, 1/4, 1/4,1.2/3))
 dev.off()
+
+#########################################################
+###### Remake fig but with dots and bars ################
+
+chillPtW <- aggregate(dataWest[c("meanBB", "Int","chill","force","photo","chill25","chill75","force25","force75","photo25","photo75")], dataWest[c("species.name","type","transect")], FUN = mean)
+names(chillPtW) <- c("species.name","type","transect","Budburst","Intercept","Chilling","Forcing","Photoperiod","chill25","chill75","force25","force75","photo25","photo75")
+
+
+chilldotW <- ggplot(chillPtW,aes(y= Chilling, x = Budburst, colour = "#cc6a70ff"), size = 7) +
+  geom_point(size =5, colour = "#cc6a70ff") +
+  geom_errorbar(aes(ymin= chill25, ymax = chill75,xmin= Budburst, xmax = Budburst), width= 0, size = 1, colour = "#cc6a70ff") +
+  theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
+        panel.background = element_blank(), axis.line = element_line(colour = "black"), legend.position = "none") + ylim(-40,5) +
+  theme(axis.text.x = element_text( size = 17,angle = 78,  hjust=1),
+        axis.text.y=element_text(size = 15),
+        axis.title=element_text(size=20),
+        legend.position = "none") + 
+  scale_x_continuous( breaks = spMiniW$meanBB, labels = spMiniW$species,limits = c(15,62)) +
+  labs( x = "Species", y = "Chilling response", main = NA) +
+  theme(legend.title = element_blank()) +  annotate("text", x = 15, y = 2, label = "b)", cex =10) +
+  annotate("text", x = 38, y = 3, label = "Western transect", cex =10) +
+  annotate("text", x = spTopW[1,5], y = -37, label = spTopW[1,2], cex = 6, angle = 78) +
+  annotate("text", x = spTopW[2,5], y = -37, label = spTopW[2,2], cex = 6, angle = 78) +
+  annotate("text", x = spTopW[3,5], y = -37, label = spTopW[3,2], cex = 6, angle = 78) +
+  annotate("text", x = spTopW[4,5], y = -37, label = spTopW[4,2], cex = 6, angle = 78) +
+  annotate("text", x = spTopW[5,5], y = -37, label = spTopW[5,2], cex = 6, angle = 78) +
+  annotate("text", x = spTopW[6,5], y = -37, label = spTopW[6,2], cex = 6, angle = 78) +
+  scale_fill_manual(values = c("#cc6a70ff","#cc6a70ff"))
+chilldotW
+
+forcedotW <- ggplot(chillPtW,aes(y= Forcing, x = Budburst, colour = "#f9b641ff"), size = 7) +
+  geom_point(size = 5,color = "#f9b641ff") +
+  geom_errorbar(aes(ymin= force25, ymax = force75,xmin= Budburst, xmax = Budburst),color = "#f9b641ff", width= 0, size =1) +
+  theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
+        panel.background = element_blank(), axis.line = element_line(colour = "black"), legend.position = "none") + ylim(-25,5) +
+  theme(axis.text.x = element_text( size = 17,angle = 78,  hjust=1),
+        axis.text.y=element_text(size = 15),
+        axis.title=element_text(size=20),
+        legend.position = "none") + 
+  scale_x_continuous( breaks = spMiniW$meanBB, labels = spMiniW$species,limits = c(15,62)) +
+  labs( x = "Species", y = "Forceing response", main = NA) +
+  theme(legend.title = element_blank()) +  annotate("text", x = 15, y = 5, label = "d)", cex =10) +
+  # annotate("text", x = 38, y = 10, label = "Western transect", cex =5) +
+  annotate("text", x = spTopW[1,5], y = -23, label = spTopW[1,2], cex = 6, angle = 78) +
+  annotate("text", x = spTopW[2,5], y = -23, label = spTopW[2,2], cex = 6, angle = 78) +
+  annotate("text", x = spTopW[3,5], y = -23, label = spTopW[3,2], cex = 6, angle = 78) +
+  annotate("text", x = spTopW[4,5], y = -23, label = spTopW[4,2], cex = 6, angle = 78) +
+  annotate("text", x = spTopW[5,5], y = -23, label = spTopW[5,2], cex = 6, angle = 78) +
+  annotate("text", x = spTopW[6,5], y = -23, label = spTopW[6,2], cex = 6, angle = 78) +
+  scale_fill_manual(values = c("#f9b641ff","#f9b641ff"))
+forcedotW
+
+photodotW <- ggplot(chillPtW,aes(y= Photoperiod, x = Budburst, colour = "Photoperiod"), size = 7) +
+  geom_point(size = 5, color = "cyan4") +
+  geom_errorbar(aes(ymin= photo25, ymax = photo75,xmin= Budburst, xmax = Budburst), width= 0, size = 1, color = "cyan4") +
+  theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
+        panel.background = element_blank(), axis.line = element_line(colour = "black"), legend.position = "none") + ylim(-10,0) +
+  theme(axis.text.x = element_text( size = 17,angle = 78,  hjust=1),
+        axis.text.y=element_text(size = 15),
+        axis.title=element_text(size=20),
+        legend.position = "none") + 
+  scale_x_continuous( breaks = spMiniW$meanBB, labels = spMiniW$species,limits = c(15,62)) +
+  labs( x = "Species", y = "Photoperiod response", main = NA) +
+  theme(legend.title = element_blank()) +  annotate("text", x = 15, y = 0, label = "f)", cex =10) +
+  # annotate("text", x = 38, y = 10, label = "Western transect", cex =5) +
+  annotate("text", x = spTopW[1,5], y = -9.3, label = spTopW[1,2], cex = 6, angle = 78) +
+  annotate("text", x = spTopW[2,5], y = -9.3, label = spTopW[2,2], cex = 6, angle = 78) +
+  annotate("text", x = spTopW[3,5], y = -9.3, label = spTopW[3,2], cex = 6, angle = 78) +
+  annotate("text", x = spTopW[4,5], y = -9.3, label = spTopW[4,2], cex = 6, angle = 78) +
+  annotate("text", x = spTopW[5,5], y = -9.3, label = spTopW[5,2], cex = 6, angle = 78) +
+  annotate("text", x = spTopW[6,5], y = -9.3, label = spTopW[6,2], cex = 6, angle = 78) +
+  scale_fill_manual(values = c("cyan4","cyan4"))
+photodotW
+
+chillPtE <- aggregate(dataEast[c("meanBB", "Int","chill","force","photo","chill25","chill75","force25","force75","photo25","photo75")], dataEast[c("species.name","type","transect")], FUN = mean)
+names(chillPtE) <- c("species.name","type","transect","Budburst","Intercept","Chilling","Forcing","Photoperiod","chill25","chill75","force25","force75","photo25","photo75")
+
+
+chilldotE <- ggplot(chillPtE,aes(y= Chilling, x = Budburst, colour = "#cc6a70ff"), size = 7) +
+  geom_point(size = 5, colour = "#cc6a70ff") +
+  geom_errorbar(aes(ymin= chill25, ymax = chill75,xmin= Budburst, xmax = Budburst), width= 0, size = 1, colour = "#cc6a70ff") +
+  theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
+        panel.background = element_blank(), axis.line = element_line(colour = "black"), legend.position = "none") + ylim(-45,0) +
+  theme(axis.text.x = element_text( size = 17,angle = 78,  hjust=1),
+        axis.text.y=element_text(size = 15),
+        axis.title=element_text(size=20),
+        legend.position = "none") + 
+  scale_x_continuous( breaks = spMiniE$meanBB, labels = spMiniE$species,limits = c(23,65)) +
+  labs( x = "Species", y = "Chilling response", main = NA) +
+  theme(legend.title = element_blank()) +  annotate("text", x =23, y = 0, label = "a)", cex =10) +
+  annotate("text", x = 45, y = 0, label = "Eastern transect", cex = 10) +
+  annotate("text", x = spTopE[1,5], y = -41, label = spTopE[1,2], cex = 6, angle = 78) +
+  annotate("text", x = spTopE[2,5], y = -41, label = spTopE[2,2], cex = 6, angle = 78) +
+  annotate("text", x = spTopE[3,5], y = -41, label = spTopE[3,2], cex = 6, angle = 78) +
+  annotate("text", x = spTopE[4,5], y = -41, label = spTopE[4,2], cex = 6, angle = 78) +
+  annotate("text", x = spTopE[5,5], y = -41, label = spTopE[5,2], cex = 6, angle = 78) +
+  annotate("text", x = spTopE[6,5], y = -41, label = spTopE[6,2], cex = 6, angle = 78) +
+  scale_fill_manual(values = c("#cc6a70ff","#cc6a70ff"))
+chilldotE
+
+forcedotE <- ggplot(chillPtE,aes(y= Forcing, x = Budburst, colour = "#f9b641ff"), size = 7) +
+  geom_point(size = 5,color = "#f9b641ff") +
+  geom_errorbar(aes(ymin= force25, ymax = force75,xmin= Budburst, xmax = Budburst),color = "#f9b641ff", width= 0, size = 1) +
+  theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
+        panel.background = element_blank(), axis.line = element_line(colour = "black"), legend.position = "none") +  ylim(-25,0) +
+  theme(axis.text.x = element_text( size=17,angle = 78,  hjust=1),
+        axis.text.y=element_text(size = 15),
+        axis.title=element_text(size=20),
+        legend.position = "none") + 
+  scale_x_continuous( breaks = spMiniE$meanBB, labels = spMiniE$species,limits = c(23,65)) +
+  labs( x = "Species", y = "Forcing response", main = NA) +
+  theme(legend.title = element_blank()) +  annotate("text", x = 23, y = 0, label = "c)", cex =10) +
+  annotate("text", x = spTopE[1,5], y = -22.5, label = spTopE[1,2], cex = 6, angle = 78) +
+  annotate("text", x = spTopE[2,5], y = -22.5, label = spTopE[2,2], cex = 6, angle = 78) +
+  annotate("text", x = spTopE[3,5], y = -22.5, label = spTopE[3,2], cex = 6, angle = 78) +
+  annotate("text", x =  spTopE[4,5], y = -22.5, label = spTopE[4,2], cex = 6, angle = 78) +
+  annotate("text", x = spTopE[5,5], y = -22.5, label = spTopE[5,2], cex = 6, angle = 78) +
+  annotate("text", x = spTopE[6,5], y = -22.5, label = spTopE[6,2], cex = 6, angle = 78) +
+  scale_fill_manual(values = c("#f9b641ff","#f9b641ff"))
+forcedotE
+
+photodotE <- ggplot(chillPtE,aes(y= Photoperiod, x = Budburst, colour = "Photoperiod"), size = 7) +
+  geom_point(size = 5, color = "cyan4") +
+  geom_errorbar(aes(ymin= photo25, ymax = photo75,xmin= Budburst, xmax = Budburst), width= 0, size = 1, color = "cyan4") +
+  theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
+        panel.background = element_blank(), axis.line = element_line(colour = "black"), legend.position = "none") +  ylim(-10,0) +
+  theme(axis.text.x = element_text( size=17,angle = 78,  hjust=1),
+        axis.text.y=element_text(size = 15),
+        axis.title=element_text(size=20),
+        legend.position = "none") + 
+  scale_x_continuous( breaks = spMiniE$meanBB, labels = spMiniE$species,limits = c(23,65)) +
+  labs( x = "Species", y = "Forcing response", main = NA) +
+  theme(legend.title = element_blank()) +  annotate("text", x = 23, y = 0, label = "e)", cex =10) +
+  annotate("text", x = spTopE[1,5], y = -9.3, label = spTopE[1,2], cex = 6, angle = 78) +
+  annotate("text", x = spTopE[2,5], y = -9.3, label = spTopE[2,2], cex = 6, angle = 78) +
+  annotate("text", x = spTopE[3,5], y = -9.3, label = spTopE[3,2], cex = 6, angle = 78) +
+  annotate("text", x =  spTopE[4,5], y = -9.3, label = spTopE[4,2], cex = 6, angle = 78) +
+  annotate("text", x = spTopE[5,5], y = -9.3, label = spTopE[5,2], cex = 6, angle = 78) +
+  annotate("text", x = spTopE[6,5], y = -9.3, label = spTopE[6,2], cex = 6, angle = 78) +
+  scale_fill_manual(values = c("#f9b641ff","#f9b641ff"))
+photodotE
+
+pdf("..//figures/dotCFPEW.pdf", width = 20, height = 16)
+plot_grid(chilldotE, chilldotW, forcedotE, forcedotW, photodotE, photodotW, nrow = 3, ncol = 2, align = "v")
+dev.off()

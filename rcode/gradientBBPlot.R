@@ -325,8 +325,9 @@ forceSpaceE <- ggplot() +
   annotate("text", x = spTopE[3,5], y = -24.5, label = spTopE[3,2], cex = 3, angle = 78) +
   annotate("text", x =  spTopE[4,5], y = -24.5, label = spTopE[4,2], cex = 3, angle = 78) +
   annotate("text", x = spTopE[5,5], y = -24.5, label = spTopE[5,2], cex = 3, angle = 78) +
-  annotate("text", x = spTopE[5,5], y = -44.5, label = spTopE[5,2], cex = 3, angle = 78) +
-  annotate("text", x = spTopE[6,5], y = -44.5, label = spTopE[6,2], cex = 3, angle = 78) +
+  annotate("text", x = spTopE[6,5], y = -24.5, label = spTopE[6,2], cex = 3, angle = 78) +
+  annotate("text", x = spTopE[7,5], y = -24.5, label = spTopE[7,2], cex = 3, angle = 78) +
+  annotate("text", x = spTopE[8,5], y = -24.5, label = spTopE[8,2], cex = 3, angle = 78) +
   scale_fill_manual(values = c("#f9b641ff","#f9b641ff"))
 
 
@@ -1074,7 +1075,7 @@ photodotE <- ggplot(chillPtE,aes(y= Photoperiod, x = Budburst, colour = "Photope
         axis.text.y=element_text(size = 15),
         axis.title=element_text(size=20),
         legend.position = "none") + 
-  scale_x_continuous( breaks = spMiniE$meanBB, labels = spMiniE$species,limits = c(23,65)) +
+  scale_x_continuous( breaks = spMiniE$meanBB, labels = spMiniE$species,limits = c(23,75)) +
   labs( x = "Species", y = "Forcing response", main = NA) +
   theme(legend.title = element_blank()) +  annotate("text", x = 23, y = 0, label = "e)", cex =10) +
   annotate("text", x = spTopE[1,5], y = -9.3, label = spTopE[1,2], cex = 6, angle = 78) +

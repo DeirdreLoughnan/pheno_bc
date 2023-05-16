@@ -48,9 +48,12 @@
 % more optionals! %
 
 \graphicspath{ {./figures/} }% tell latex where to find photos 
-%\externaldocument[supp-]{Synchrony_Manuscript_supp}
+\externaldocument[main-]{phenoNAmPhylo}
 \begin{document}
+
 \renewcommand{\bibname}{References}%names reference list 
+\renewcommand{\thetable}{S\arabic{table}}
+\renewcommand{\thefigure}{S\arabic{figure}}
 
 \SweaveOpts{concordance=TRUE} % For RStudio hiccups
 
@@ -63,7 +66,7 @@
 \begin{figure}[!ht]
     \centering
      \includegraphics[width=\textwidth]{..//figures/changes_pheno_4sites8Chill.pdf}
-    \caption{Estimated mean responses in budburst date of first bud to varying forcing, chilling, and photoperiod cues for 47 deciduous woody species across North America. Points represent mean budburst dates, while bars depict the 95\% uncertainty interval. Negative responses represent advances budburst, while positive values represent delaying effects. }
+    \caption{Estimated mean responses in budburst date of first bud to varying forcing, chilling, and photoperiod cues for 47 deciduous woody species across North America. Points represent mean posterior estimate, while bars depict the 95\% uncertainty interval. Negative responses represent advances budburst, while positive values represent delaying effects. }
     \label{fig:muplot}
 \end{figure}
 
@@ -72,7 +75,7 @@
 \begin{figure}[h!]
     \centering
      \includegraphics[width=\textwidth]{..//figures/cueSp8Chill.pdf}
-    \caption{Species differences in cue estimate posterior distributions, comparing species differences across chilling (a), forcing (b), and photoperiod (c) cues. Species are ordered according to their phylogenetic relatedness. The median cue response is illustrated by the black circle, while the 90\% quantile interval is illustrated by the black line. The coloured distribution depicts the shape of the posterior density for all samples of a given species. Species are ordered alphabetically}
+    \caption{Species differences in cue estimate posterior distributions, comparing species differences across chilling (a), forcing (b), and photoperiod (c) cues. Species are ordered according to their phylogenetic relatedness. The median cue response is illustrated by the black circle, while the 90\% quantile interval is illustrated by the black line. The coloured distribution depicts the shape of the posterior density for all samples of a given species. Species are ordered alphabetically, with differing y-axes to best depict species differences.}
     \label{fig:cueSp}
 \end{figure}
 
@@ -143,7 +146,7 @@ mdlTab <- mdlTab[, c("species.name","HF","SH","mp","sm")]
 
 colnames(mdlTab) <- c("Species" , "Harvard Forest", "St. Hippoltye","Manning Park", "Smithers")
 
-meanBBTab <- xtable(mdlTab, caption="Mean budburst dates across all treatments from raw data for 47 species at our two western sites, E.C. Manning Park and Smithers B.C., and our two eastern sites, Harvard Forest (HF) USA and St. Hippolyte (SH) Canada.")
+meanBBTab <- xtable(mdlTab, caption="Mean budburst dates across all treatments from raw data for 47 species at our two western sites, E.C. Manning Park (MP) and Smithers B.C.(SM) Canada, and our two eastern sites, Harvard Forest (HF) USA and St. Hippolyte (SH) Canada.")
 print(meanBBTab,include.rownames=F, caption.placement="top", hline.after=c(-1,0))
 
 @
@@ -181,7 +184,7 @@ require(xtable)
 #chill <- data.frame(chill)
 
 chill <- read.csv("..//output/chillUnits.csv")
-chillunit <- xtable(chill, caption = "Chill units from our two western sites, E.C. Manning Park and Smithers B.C., and our two eastern sites, Harvard Forest (HF) USA and St. Hippolyte(SH) Canada.")
+chillunit <- xtable(chill, caption = "Chill units from our two western sites, E.C. Manning Park (MP) and Smithers B.C.(SM) Canada, and our two eastern sites, Harvard Forest (HF) USA and St. Hippolyte(SH) Canada.")
 print(chillunit,include.rownames= F, caption.placement="top", hline.after=c(-1,0))
 @
 
@@ -197,7 +200,7 @@ bb_suc <- merge(spwithbb, spInfo, by = "Species")
 bb_suc <- bb_suc[, c("Species name", "Proportion.Budburst","Plant type")]
 names(bb_suc) <- c("Species name", "Proportion budburst","Plant type")
 
-make.bb_suc <- xtable(bb_suc, caption="Proportion of samples with budburst per species")
+make.bb_suc <- xtable(bb_suc, caption="Proportion of samples per species for which budburst was observed.")
 print(make.bb_suc,include.rownames=F, caption.placement="top", hline.after=c(-1,0))
 
 @

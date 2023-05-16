@@ -305,10 +305,10 @@ temp <- aggregate(noTermEnd["count"], noTermEnd[c("species")], FUN = sum)
 # what is the min and max average bb?
 meanBBData <- aggregate(pheno.t["bb"], pheno.t[c("species")], FUN = mean)
 
-minBB <- round(min(meanBBData$bb), 1)
-maxBB <- round(max(meanBBData$bb), 1)
+minBB <- round(min(meanBBData$bb), 0)
+maxBB <- round(max(meanBBData$bb), 0)
 
-meanBB <- round(mean(meanBBData$bb),1)
+meanBB <- round(mean(meanBBData$bb),0)
 # What are teh lambda values?
 lam_params <- c( 
   "a_z",

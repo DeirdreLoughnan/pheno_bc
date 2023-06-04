@@ -13,7 +13,7 @@ library(ggplot2)
 library(plyr)
 library(stringr)
 library(phytools)
-library(rethinking)
+
 
 
 # if(length(grep("deirdreloughnan", getwd()) > 0)) { 
@@ -69,7 +69,7 @@ pheno$photo.n[pheno$photo.n == "HP"] <- "1"
 pheno$photo.n[pheno$photo.n == "LP"] <- "0"
 pheno$photo.n <- as.numeric(pheno$photo.n)
 
-pheno$site.n <- pheno$population
+pheno$site.n <- as.character(pheno$population)
 pheno$site.n[pheno$site.n == "sm"] <- "1"
 pheno$site.n[pheno$site.n == "mp"] <- "2"
 pheno$site.n[pheno$site.n == "HF"] <- "3"
@@ -130,7 +130,7 @@ pheno.t <- pheno.term[complete.cases(pheno.term), ] # 3609
 pheno.t <- pheno.term[complete.cases(pheno.term$bb), ] # 1780 rows data 
 pheno.t$species <- tolower(pheno.t$species)
 pheno.t$species.fact <- as.numeric(as.factor(pheno.t$species))
-sort(unique(pheno.t$species.fact)) # 49 
+#sort(unique(pheno.t$species.fact)) # 49 
 
 # now get the phylogeny and pair it with species names:
 spInfo <- read.csv("..//input/species_list.csv")
@@ -213,65 +213,101 @@ head(meanz4.table)
 # call table values:
 
 chillCue <- round(meanz4["Chilling",1],1)
+chillCueU <- round(quantile(fit$mu_b_chill1, c(0.95)),1)
+chillCueL <- round(quantile(fit$mu_b_chill1, c(0.05)),1)
+
 chillCue2.5 <- round(meanz4["Chilling",3],1)
 chillCue97.5 <- round(meanz4["Chilling",5],1)
 
 photoCue <- round(meanz4["Photoperiod",1],1)
+photoCueU <- round(quantile(fit$mu_b_photo, c(0.95)),1)
+photoCueL <- round(quantile(fit$mu_b_photo, c(0.05)),1)
 photoCue2.5 <- round(meanz4["Photoperiod",3],1)
 photoCue97.5 <- round(meanz4["Photoperiod",5],1)
 
+forceCue <- round(meanz4["Forcing",1],1)
+forceCueU <- round(quantile(fit$mu_b_warm, c(0.95)),1)
+forceCueL <- round(quantile(fit$mu_b_warm, c(0.05)),1)
+
 intrxnCF <- round(meanz4["Forcing x chilling",1],1)
+intrxnCFU <- round(quantile(fit$mu_b_inter_wc1, c(0.95)),1)
+intrxnCFL <- round(quantile(fit$mu_b_inter_wc1, c(0.05)),1)
 intrxnCF2.5 <- round(meanz4["Forcing x chilling",3],1)
 intrxnCF97.5 <- round(meanz4["Forcing x chilling",5],1)
 
 siteHF <- round(meanz4["Harvard Forest",1],1)
+siteHFU <- round(quantile(fit$b_site3, c(0.95)),1)
+siteHFL <- round(quantile(fit$b_site3, c(0.05)),1)
 siteHF2.5 <- round(meanz4["Harvard Forest",3],1)
 siteHF97.5 <- round(meanz4["Harvard Forest",5],1)
 
 siteSH <- round(meanz4["St. Hippolyte",1],1)
+siteSHU <- round(quantile(fit$b_site4, c(0.95)),1)
+siteSHL <- round(quantile(fit$b_site4, c(0.05)),1)
 siteSH2.5 <- round(meanz4["St. Hippolyte",3],1)
 siteSH97.5 <- round(meanz4["St. Hippolyte",5],1)
 
 siteMP <- round(meanz4["Manning Park",1],1)
+siteMPU <- round(quantile(fit$b_site2, c(0.95)),1)
+siteMPL <- round(quantile(fit$b_site2, c(0.05)),1)
 siteMP2.5 <- round(meanz4["Manning Park",3],1)
 siteMP97.5 <- round(meanz4["Manning Park",5],1)
 
 forceHF <- round(meanz4["Forcing x Harvard Forest",1],1)
+forceHFU <- round(quantile(fit$mu_b_inter_ws3, c(0.95)),1)
+forceHFL <- round(quantile(fit$mu_b_inter_ws3, c(0.05)),1)
 forceHF2.5 <- round(meanz4["Forcing x Harvard Forest",3],1)
 forceHF97.5 <- round(meanz4["Forcing x Harvard Forest",5],1)
 
 forceSH <- round(meanz4["Forcing x St. Hippolyte",1],1)
+forceSHU <- round(quantile(fit$mu_b_inter_ws4, c(0.95)),1)
+forceSHL <- round(quantile(fit$mu_b_inter_ws4, c(0.05)),1)
 forceSH2.5 <- round(meanz4["Forcing x St. Hippolyte",3],1)
 forceSH97.5 <- round(meanz4["Forcing x St. Hippolyte",5],1)
-forceHF <- round(meanz4["Forcing x Harvard Forest",1],1)
-forceHF2.5 <- round(meanz4["Forcing x Harvard Forest",3],1)
-forceHF97.5 <- round(meanz4["Forcing x Harvard Forest",5],1)
 
-forceSH <- round(meanz4["Forcing x St. Hippolyte",1],1)
-forceSH2.5 <- round(meanz4["Forcing x St. Hippolyte",3],1)
-forceSH97.5 <- round(meanz4["Forcing x St. Hippolyte",5],1)
+forceMP <- round(meanz4["Forcing x Manning Park",1],1)
+forceMPU <- round(quantile(fit$mu_b_inter_ws2, c(0.95)),1)
+forceMPL <- round(quantile(fit$mu_b_inter_ws2, c(0.05)),1)
+forceMP2.5 <- round(meanz4["Forcing x Manning Park",3],1)
+forceMP97.5 <- round(meanz4["Forcing x Manning Park",5],1)
+
+# forceSH <- round(meanz4["Forcing x St. Hippolyte",1],1)
+# forceSH2.5 <- round(meanz4["Forcing x St. Hippolyte",3],1)
+# forceSH97.5 <- round(meanz4["Forcing x St. Hippolyte",5],1)
 
 chillHF <- round(meanz4["Chilling x Harvard Forest",1],1)
+chillHFU <- round(quantile(fit$mu_b_inter_s3c1, c(0.95)),1)
+chillHFL <- round(quantile(fit$mu_b_inter_s3c1, c(0.05)),1)
 chillHF2.5 <- round(meanz4["Chilling x Harvard Forest",3],1)
 chillHF97.5 <- round(meanz4["Chilling x Harvard Forest",5],1)
 
 chillSH <- round(meanz4["Chilling x St. Hippolyte",1],1)
+chillSHU <- round(quantile(fit$mu_b_inter_s4c1, c(0.95)),1)
+chillSHL <- round(quantile(fit$mu_b_inter_s4c1, c(0.05)),1)
 chillSH2.5 <- round(meanz4["Chilling x St. Hippolyte",3],1)
 chillSH97.5 <- round(meanz4["Chilling x St. Hippolyte",5],1)
 
 chillMP <- round(meanz4["Chilling x Manning Park",1],1)
+chillMPU <- round(quantile(fit$mu_b_inter_s2c1, c(0.95)),1)
+chillMPL <- round(quantile(fit$mu_b_inter_s2c1, c(0.05)),1)
 chillMP2.5 <- round(meanz4["Chilling x Manning Park",3],1)
 chillMP97.5 <- round(meanz4["Chilling x Manning Park",5],1)
 
 photoHF <- round(meanz4["Photoperiod x Harvard Forest",1],1)
+photoHFU <- round(quantile(fit$mu_b_inter_ps3, c(0.95)),1)
+photoHFL <- round(quantile(fit$mu_b_inter_ps3, c(0.05)),1)
 photoHF2.5 <- round(meanz4["Photoperiod x Harvard Forest",3],1)
 photoHF97.5 <- round(meanz4["Photoperiod x Harvard Forest",5],1)
 
 photoSH <- round(meanz4["Photoperiod x St. Hippolyte",1],1)
+photoSHU <- round(quantile(fit$mu_b_inter_ps4, c(0.95)),1)
+photoSHL <- round(quantile(fit$mu_b_inter_ps4, c(0.05)),1)
 photoSH2.5 <- round(meanz4["Photoperiod x St. Hippolyte",3],1)
 photoSH97.5 <- round(meanz4["Photoperiod x St. Hippolyte",5],1)
 
 photoMP <- round(meanz4["Photoperiod x Manning Park",1],1)
+photoMPU <- round(quantile(fit$mu_b_inter_ps2, c(0.95)),1)
+photoMPL <- round(quantile(fit$mu_b_inter_ps2, c(0.05)),1)
 photoMP2.5 <- round(meanz4["Photoperiod x Manning Park",3],1)
 photoMP97.5 <- round(meanz4["Photoperiod x Manning Park",5],1)
 
@@ -320,12 +356,19 @@ phylo <- sum[lam_params, col4table]
 
 rootT <- round(phylo[1,1],1)
 
-rootTLower <- as.numeric(round(HPDI(data.frame(fit$a_z), prob = 0.90)[1],1))
-rootTUpper <- as.numeric(round(HPDI(data.frame(fit$a_z), prob = 0.90)[2],1))
+rootTLower  <- round(quantile(fit$a_z, c(0.95)),1)
+rootTUpper <- round(quantile(fit$a_z, c(0.05)) ,1)
+
+# rootTLower <- as.numeric(round(HPDI(data.frame(fit$a_z), prob = 0.90)[1],1))
+# rootTUpper <- as.numeric(round(HPDI(data.frame(fit$a_z), prob = 0.90)[2],1))
 
 lamT <- round(phylo[2,1],1)
-lamTLower <- as.numeric(round(HPDI(data.frame(fit$lam_interceptsa), prob = 0.90)[1],1))
-lamTUpper <- as.numeric(round(HPDI(data.frame(fit$lam_interceptsa), prob = 0.90)[2],1))
+
+lamTLower <- round(quantile(fit$lam_interceptsa, c(0.95)),1)
+lamTUpper <- round(quantile(fit$lam_interceptsa, c(0.05)),1) 
+
+# lamTLower <- as.numeric(round(HPDI(data.frame(fit$lam_interceptsa), prob = 0.90)[1],1))
+# lamTUpper <- as.numeric(round(HPDI(data.frame(fit$lam_interceptsa), prob = 0.90)[2],1))
 
 # First to budburst
 phenoBB <- subset(pheno.t, bb >0)
@@ -393,6 +436,9 @@ last <- subset(phenoBB, bb == max(phenoBB$bb))
 ###################################
 
 a_sp = (sum[grep("a_sp", rownames(sum)), 1])
+a_spU = round(quantile(fit$a_sp, c(0.95)),1)
+a_spL = round(quantile(fit$a_sp, c(0.05)),1)
+
 a_sp97.5 = (sum[grep("a_sp", rownames(sum)), "97.5%"])
 a_sp2.5 = (sum[grep("a_sp", rownames(sum)), "2.5%"])
 
@@ -415,6 +461,71 @@ b_force2.5 = sum[grep("b_warm\\[", rownames(sum)), "2.5%"]
 b_photo97.5 = sum[grep("b_photo\\[", rownames(sum)), "97.5%"]
 b_chill97.5 = sum[grep("b_chill1\\[", rownames(sum)), "97.5%"]
 b_force97.5 = sum[grep("b_warm\\[", rownames(sum)), "97.5%"]
+
+a_sp5 <- vector()
+for(i in 1:ncol(fit$a_sp)){
+  quantU <- round(quantile(fit$a_sp[,i], c(0.05)),1)
+  a_sp5 <- rbind(a_sp5, quantU)
+}
+colnames(a_sp5) <- c("Int5")
+
+a_sp95 <- vector()
+for(i in 1:ncol(fit$a_sp)){
+  quantU <- round(quantile(fit$a_sp[,i], c(0.95)),1)
+  a_sp95 <- rbind(a_sp95, quantU)
+}
+colnames(a_sp95) <- c("Int95")
+
+b_chill5 <- vector()
+for(i in 1:ncol(fit$b_chill1)){
+  quantU <- round(quantile(fit$b_chill1[,i], c(0.05)),1)
+  b_chill5 <- rbind(b_chill5, quantU)
+}
+colnames(b_chill5) <- c("chill5")
+
+b_chill95 <- vector()
+for(i in 1:ncol(fit$b_chill1)){
+  quantU <- round(quantile(fit$b_chill1[,i], c(0.95)),1)
+  b_chill95 <- rbind(b_chill95, quantU)
+}
+colnames(b_chill95) <- c("chill95")
+
+b_force5 <- vector()
+for(i in 1:ncol(fit$b_force)){
+  quantU <- round(quantile(fit$b_force[,i], c(0.05)),1)
+  b_force5 <- rbind(b_force5, quantU)
+}
+colnames(b_force5) <- c("force5")
+
+b_force95 <- vector()
+for(i in 1:ncol(fit$b_force)){
+  quantU <- round(quantile(fit$b_force[,i], c(0.95)),1)
+  b_force95 <- rbind(b_force95, quantU)
+}
+colnames(b_force95) <- c("force95")
+
+b_photo5 <- vector()
+for(i in 1:ncol(fit$b_photo)){
+  quantU <- round(quantile(fit$b_photo[,i], c(0.05)),1)
+  b_photo5 <- rbind(b_photo5, quantU)
+}
+colnames(b_photo5) <- c("photo5")
+
+b_photo95 <- vector()
+for(i in 1:ncol(fit$b_photo)){
+  quantU <- round(quantile(fit$b_photo[,i], c(0.95)),1)
+  b_photo95 <- rbind(b_photo95, quantU)
+}
+colnames(b_photo95) <- c("photo95")
+
+# b_photo5 <- quantile(fit$mu_b_photo, c(0.05))
+# b_chill5 <- quantile(fit$mu_b_chill1, c(0.05))
+# b_force5 <- quantile(fit$mu_b_warm, c(0.05))
+# 
+# b_photo95 <- quantile(fit$mu_b_photo, c(0.95))
+# b_chill95 <- quantile(fit$mu_b_chill1, c(0.95))
+# b_force95 <- quantile(fit$mu_b_warm, c(0.95))
+
 
 photo <- -0.5041133 #8 h photo
 siteSM <- 0
@@ -474,6 +585,9 @@ colnames(m) <- spInfo$species.name
 spInfo$Int <- a_sp
 spInfo$Int2.5 <- a_sp2.5
 spInfo$Int97.5 <- a_sp97.5
+spInfo$Int5 <- a_sp5
+spInfo$Int95 <- a_sp95
+
 
 spInfo$force <- b_force
 spInfo$chill <- b_chill
@@ -495,6 +609,13 @@ spInfo$force75 <- b_force75
 spInfo$chill75 <- b_chill75
 spInfo$photo75 <- b_photo75
 
+spInfo$force5 <- b_force5
+spInfo$chill5 <- b_chill5
+spInfo$photo5 <- b_photo5
+
+spInfo$force95 <- b_force95
+spInfo$chill95 <- b_chill95
+spInfo$photo95 <- b_photo95
 
 
 east <- subset(spInfo, transect != "west")
@@ -593,32 +714,44 @@ westMean <- mean(W$meanBB)
 
 # Shrub vs tree values in the main text:
 
-typeValues <- aggregate(spInfo[c("force","chill","photo","force2.5","chill2.5","photo2.5", "force97.5","chill97.5","photo97.5")], spInfo[c("type")], FUN = mean)
+typeValues <- aggregate(spInfo[c("force","chill","photo","force2.5","chill2.5","photo2.5", "force97.5","chill97.5","photo97.5","force5","chill5","photo5", "force95","chill95","photo95")], spInfo[c("type")], FUN = mean)
 
-shrubMeanForce <- typeValues[1,2]
-shrubMeanForce2.5 <- typeValues[1,5]
-shrubMeanForce97.5 <- typeValues[1,8]
+shrubMeanForce <- typeValues[1,"force"]
+shrubMeanForce2.5 <- typeValues[1,"force2.5"]
+shrubMeanForce97.5 <- typeValues[1,"force97.5"]
+shrubMeanForce5 <- typeValues[1,"force5"]
+shrubMeanForce95 <- typeValues[1,"force95"]
 
-shrubMeanChill <- typeValues[1,3]
+shrubMeanChill <- typeValues[1,"chill"]
 shrubMeanChill2.5 <- typeValues[1,6]
 shrubMeanChill97.5 <- typeValues[1,9]
+shrubMeanChill5 <- typeValues[1,"chill5"]
+shrubMeanChill95 <- typeValues[1,"chill95"]
 
-shrubMeanPhoto <- typeValues[1,4]
+shrubMeanPhoto <- typeValues[1,"photo"]
 shrubMeanPhoto2.5 <- typeValues[1,7]
 shrubMeanPhoto97.5 <- typeValues[1,10]
+shrubMeanPhoto5 <- typeValues[1,"photo5"]
+shrubMeanPhoto95 <- typeValues[1,"photo95"]
 
 # trees
 treeMeanForce <- typeValues[2,2]
 treeMeanForce2.5 <- typeValues[2,5]
 treeMeanForce97.5 <- typeValues[2,8]
+treeMeanForce5 <- typeValues[2,"force5"]
+treeMeanForce95 <- typeValues[2,"force95"]
 
 treeMeanChill <- typeValues[2,3]
 treeMeanChill2.5 <- typeValues[2,6]
 treeMeanChill97.5 <- typeValues[2,9]
+treeMeanChill5 <- typeValues[2,"chill5"]
+treeMeanChill95 <- typeValues[2,"chill95"]
 
 treeMeanPhoto <- typeValues[2,4]
 treeMeanPhoto2.5 <- typeValues[2,7]
 treeMeanPhoto97.5 <- typeValues[2,10]
+treeMeanPhoto5 <- typeValues[2,"photo5"]
+treeMeanPhoto95 <- typeValues[2,"photo95"]
 
 # look at the tree shrub divide within transects:
 # westData <- subset(spInfo, transect != "east")

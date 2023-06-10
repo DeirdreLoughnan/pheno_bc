@@ -708,7 +708,7 @@ siteOrder <- c("Smithers","Manning Park", "St. Hippolyte","Harvard Forest")
 pdf("figures/site4CueGrouped8Chill.pdf", width = 12, height =4)
 ggplot() + 
   stat_eye(data = longest, aes(x = as.factor(cue), y = value, fill = factor(site, level = siteOrder)), .width = c(.90, .5), cex = 0.75, position = position_dodge(0.9)) +
-  ylim (-40,10) +
+#  ylim (-40,10) +
   theme_classic() +   
   theme(legend.position = "right", 
         legend.title = element_blank(),
@@ -716,10 +716,20 @@ ggplot() +
         axis.text.y = element_text( size= 12),
         axis.title=element_text(size = 18)) +
   labs( x = "Treatment cue", y = "Cue response", main = NA)+
-  scale_fill_manual(values = c("#cc6a70ff","cyan4", "#f9b641ff", "orchid4"))
+  scale_fill_manual(values = c("Smithers" = "deepskyblue3",
+                              "Manning Park" = "palegreen4", 
+                              "St. Hippolyte"="darkorchid3", 
+                              "Harvard Forest" = "tomato3"))
 dev.off()
 
-
+# "bb_hpsite3" ="darkred",
+# "bb_hpsite4"="darkorchid4",
+# "bb_hpsite1"="deepskyblue3",
+# "bb_hpsite2"= "forestgreen",
+# "bb_lpsite1"="deepskyblue1",
+# "bb_lpsite2"="palegreen3",
+# "bb_lpsite3"="tomato1",
+# "bb_lpsite4"="darkorchid1"
 pdf("figures/site4CueGrouped.pdf", width = 12, height =4)
 ggplot() + 
   stat_eye(data = longest, aes(x = factor(site, level = siteOrder), y = value, fill = cue, group = cue), .width = c(.90, .5), cex = 0.75, position = position_dodge(0.9)) +

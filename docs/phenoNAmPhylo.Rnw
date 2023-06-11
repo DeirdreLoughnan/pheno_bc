@@ -116,6 +116,7 @@ Corresponding Author: Deirdre Loughnan, deirdre.loughnan@ubc.ca \\
 \section{Methods}
 
 %emw1Jun2023 -- 'estimated for Smithers under a short photoperiod,' 'under low chilling conditions and short photoperiods' -- instead of stuff like this,  you should soon set a relevant level to be your intercept and define it in the methods. ... I think Smithers/low force/low photo/low chill is fine, but if you keep explaining it we'll confuse readers. 
+% I suggest we just say in the methods, we focus on results within 90% intervals to represent meaningful differences ... then use some common language here that is easier to read than the 'the 95\% uncertainty interval crosses zero' 
 
 \section*{Research questions}
 \begin{enumerate}
@@ -141,16 +142,11 @@ source("..//rcode/phenologyMsValues.R")
 % Fig 3 makes a point that is important for the field of phenology -- these cues don't explain so much. I think this is super impt! But it will not be a great message to push heavily, so I would probably set up the text so this point comes last in the results. Again, update the axes as suggested for Fig 4 (but different Y axis here)
 % We should focus on 90% intervals for when to discuss effects so update all figure to show 50% intervals and add some way to see 90% also but not draw the eye (thinner line or such). 
 
-% DL: notes to self:
-% add units
-
-
-% across species, site level and then species - my logic was to go from broad general trends (across North America) then the across the site, and finally about the specific spp within the sites.
-
-% re-work text so Fig 2 (cues) becomes fig 1 and the overall cue figure shows up first in your text
-% 1. Move Fig 4 earlier to fig 3 (2) make better axes (as suggested in committee meeting) (3) add a 'earlier' and 'later' arrow to the Y axes
-% Fig 3 (1) set up the text so this point comes last in the results (2) update the axes as suggested for Fig 4 (but different Y axis here)
-%  90% intervals for when to discuss effects so update all figure to show 50% intervals and add some way to see 90% also but not draw the eye (thinner line or such). 
+% DL: Things to still fix:
+% the table - change the UI to be 90% too
+% Fig 4 move the earlier arrow to the upper right corner? I felt one was enough, but let me know if you think both an earlier and later arrow is needed. 
+% Fig 5 make the points bigger
+%  my logic for structuring it across species, site level and then species was to go from broad general trends (across North America) then the across the site, and finally about the specific spp within the sites.
 
 
 \subsection*{Results + figures }
@@ -159,30 +155,30 @@ source("..//rcode/phenologyMsValues.R")
 \item Cue responses and interactions... 
 \begin {enumerate}
 \item On average, species budburst \Sexpr{meanBB} days after the start of forcing, but some species budburst as early as day \Sexpr{minBB} for \emph{Aronia melanocarpa} and as late as day \Sexpr{maxBB} for \emph{Quercus velutina}
-\item Species budburst = strongly phylogenetically structured ($\lambda$ of \Sexpr{lamT}, UI: \Sexpr{lamTLower}, \Sexpr{lamTUpper}, root trait value of \Sexpr{rootT}, UI: \Sexpr{rootTLower}, \Sexpr{rootTUpper}.
-\item All cues did lead to an advance in budburst date, chilling being strongest (\Sexpr{chillCue}, UI: \Sexpr{chillCueL}, \Sexpr{chillCueU}) and photoperiod weakest (\Sexpr{photoCue}, UI: \Sexpr{photoCueL}, \Sexpr{photoCueU})
-\item But with interactions between cues and between cues and sites.
-\item Forcing by chilling (\Sexpr{intrxnCF}, UI: \Sexpr{intrxnCFL}, \Sexpr{intrxnCFU}) = delaying effect = low chilling offset by high forcing (Fig. \ref{supp-fig:cueSp} a).
+\item Species budburst = strongly phylogenetically structured ($\lambda$ of \Sexpr{lamT}, UI: \Sexpr{lamTLower}, \Sexpr{lamTUpper}, root trait value of \Sexpr{rootT}, UI: \Sexpr{rootTLower}, \Sexpr{rootTUpper}).
+\item All cues did lead to an advance in budburst date, chilling being strongest (\Sexpr{chillCue}, UI: \Sexpr{chillCueL}, \Sexpr{chillCueU}) and photoperiod weakest (\Sexpr{photoCue}, UI: \Sexpr{photoCueL}, \Sexpr{photoCueU}, Fig. \ref{fig:siteCues})
+\item But interactions between cues and between cues and sites .
+\item Forcing by chilling (\Sexpr{intrxnCF}, UI: \Sexpr{intrxnCFL}, \Sexpr{intrxnCFU}) = delaying effect = low chilling offset by high forcing (Fig. \ref{fig:intrxnCF}).
 \end{enumerate}
 
 %emw1Jun2023 -- new paragraph suggested to transition better and break things up more:
 \item Transition between overall and sites with message: overall, site effects were small compared to differences between cues
 \begin{enumerate}
-\item Across species, we observed considerable overlap in the cue responses of our four sites (Fig. \ref{fig:siteCue})
-\item Overall: Low forcing, chilling, and shorter photoperiods resulted in later budburst dates than higher temperature and longer photoperiod treatments across all sites (Fig. \ref{fig:intrxn}a-c)
+\item Across all species, we observed considerable overlap in the cue responses of our four sites (Fig. \ref{fig:siteCues})
+\item Overall: Low forcing, chilling, and shorter photoperiods resulted in later estimated budburst dates than higher temperature and longer photoperiod treatments across all sites (Fig. \ref{fig:intrxn3}a-c)
 \item However, populations differed in their their overall budburst dates ... Between the two transects eastern budburst dates were consistently earlier%, as reflected by the negative sites estiamtes for both our eastern sites 
-(\Sexpr{siteHF}, UI: \Sexpr{siteHFL}, \Sexpr{siteHFU} and \Sexpr{siteSH}, UI: \Sexpr{siteSHU}, \Sexpr{siteSHL} for Harvard Forest and St. Hippolyte respectively). Western sites produced a positive response (\Sexpr{siteMP}, UI:\Sexpr{siteMPL}, \Sexpr{siteMPU}), with similar estimates of budburst dates between the two sites  (Fig. \ref{fig:intrxn}). %emw1Jun2023 -- for now I suggest you give MORE info than less parethetically, both via text to explain it to me and ref supp figs; so write out in the () exactly what you're reporting here -- is it the site-effect as shown in Supp Fig 1? Or a composite? Or?
+(\Sexpr{siteHF}, UI: \Sexpr{siteHFL}, \Sexpr{siteHFU} and \Sexpr{siteSH}, UI: \Sexpr{siteSHU}, \Sexpr{siteSHL} for Harvard Forest and St. Hippolyte respectively). Budburst of individuals from Manning park had a delayed response (\Sexpr{siteMP}, UI:\Sexpr{siteMPL}, \Sexpr{siteMPU}), although both western sites were similar in the estimated day of budburst across treatments  (producing highly overlapping bars between the high cue treatments across populations, Fig. \ref{fig:intrxn3}).
 \end{enumerate}
 
 
-\item Site effects were generally divided between eastern and western populations. %emw1Jun2023 -- come up with a terminology now and stick with it -- maybe populations are within eastern and western transects seems what you have and works, so here I would say either 'populations within eastern and western transects' or -- more simply -- 'eastern and western transects'
+\item Site effects were generally divided between populations in eastern and western transects. %emw1Jun2023 -- come up with a terminology now and stick with it -- maybe populations are within eastern and western transects seems what you have and works, so here I would say either 'populations within eastern and western transects' or -- more simply -- 'eastern and western transects'
+%DLJun8: When I presented this work at Florum, Jenn was concerned that two populations are not really a transect, we could stick with transect and see if reviewers feel the same.
 \begin{enumerate}
 % add the mean and UI, either from the model or by averaging the site level posteriors
-\item Lower latitude site in eastern transect was less responsive to forcing \Sexpr{forceHF}, UI: \Sexpr{forceHFL}, \Sexpr{forceHFU}) = slightly later bb than high latitude site \Sexpr{forceSH}, UI: \Sexpr{forceSHL}, \Sexpr{forceSHU}) --- but budburst estimates under western sites advanced more under high forcing conditions (Fig. \ref{fig:intrxn}b) %emw1Jun2023 -- should this be a 'but'? I can't tell ... 
+\item Lower latitude site in eastern transect was less responsive to forcing (\Sexpr{forceHF}, UI: \Sexpr{forceHFL}, \Sexpr{forceHFU}) = slightly later bb than high latitude site (\Sexpr{forceSH}, UI: \Sexpr{forceSHL}, \Sexpr{forceSHU}) --- but budburst for our low latitude western sites advanced more under high forcing conditions (\Sexpr{forceMP}, UI: \Sexpr{forceMPL}, \Sexpr{forceMPU}).
 % add values and show that they are significant
-\item This latitudinal effect was not found for chilling --- chilling responses were similar across the eastern transects (\Sexpr{chillHF}, UI: \Sexpr{chillHFL}, \Sexpr{chillHFU} for Harvard Forest and \Sexpr{chillSH}, UI: \Sexpr{chillSHL}, \Sexpr{chillSHU} for St. Hippolyte) = prodcuing later bb for the low chilling treatment than the high chilling treatment --- western transect = advances in bb with greater chilling but not the 95\% uncertainty interval crosses zero (\Sexpr{chillMP}, UI: \Sexpr{chillMPL}, \Sexpr{chillMPU}) (Fig. \ref{fig:intrxn}c). %emw1Jun2023 -- We prefer 90% intervals in the lab -- you likely don't have enough samples for 95% so change throughout. Then I suggest we just say in the methods, we focus on results within 90% intervals to represent meaningful differences ... then use some common language here that is easier to read than the 'the 95\% uncertainty interval crosses zero' .. honestly -- the two intervals here are BIG -- if they are similarly big for 90% I would just say this does not happen. 
-% focus on just the low chill and high chill treatments only, having the zero chill = too much!
-\item Photoperiod effects = greatest in eastern populations and weak in western populations --- low latitude site had slightly later bb in eastern transect (\Sexpr{photoHF}, UI: \Sexpr{photoHFL}, \Sexpr{photoHFU} for Harvard Forest and \Sexpr{photoSH}, UI: \Sexpr{photoSHL}, \Sexpr{photoSHU} for St. Hippolyte), but negligible photoperiod response in the west, with estimates 95\% uncertainty interval spanning zero (\Sexpr{photoMP}, UI:\Sexpr{photoMPL}, \Sexpr{photoMPU}). (Fig. \ref{fig:intrxn}d)
+\item This latitudinal effect was not found for chilling --- chilling responses were similar across the eastern transects (\Sexpr{chillHF}, UI: \Sexpr{chillHFL}, \Sexpr{chillHFU} for Harvard Forest and \Sexpr{chillSH}, UI: \Sexpr{chillSHL}, \Sexpr{chillSHU} for St. Hippolyte) = prodcuing later bb for the low chilling treatment than the high chilling treatment --- western transect = showed no differences in their budburst responses to greater chilling (\Sexpr{chillMP}, UI: \Sexpr{chillMPL}, \Sexpr{chillMPU}) (Fig. \ref{fig:intrxn3}b). 
+\item After adjusting for the covariation in photoperiod and forcing temperatures in the eastern species' responses, photoperiod effects = greatest in eastern populations, but low latitude site had slightly later bb in the eastern transect (\Sexpr{photoSH}, \Sexpr{photoSHL}, \Sexpr{photoSHU} for St. Hippolyte and \Sexpr{photoHF}, \Sexpr{photoHFL}, \Sexpr{photoHFU} for Harvard Forest); while photoperiod effects were negligible in Manning Park (\Sexpr{photoMP}, \Sexpr{photoMPL}, \Sexpr{photoMPU}). 
 %add the interaction values - confirm you're adjusting for photoperiod differences between the treatments, photothermo covaries only in eastern experiment 
 \end{enumerate}
 
@@ -209,18 +205,19 @@ source("..//rcode/phenologyMsValues.R")
 \item Individual species show distinct differences in their timing of bb and relative importance of cues.
 \begin{enumerate}
 \item Both chilling and forcing responses varied with budburst, with later bbing species having slightly stronger responses to each cue respectively (Fig. \ref{fig:cueGrad}).
-\item But gradients were not as strong as expected (Fig. \ref{fig:betaAlphaGrad} and Fig. \ref{fig:cueGrad})  %emw1Jun2023 -- while working up results if you want to mention expectations please put them in [] so I know what the expectation was
-\item Species level differences (intercept) explain considerable portion of bb, explaining \Sexpr{diffBAWest}\% of the estimated bb for western species and \Sexpr{diffBAEast}\% of the estimated bb for eastern species (Fig. \ref{fig:betaAlphaGrad})  %emw1Jun2023 -- move all the stuff comparing intercepts to cues (which is cool as I said above!) to a short paragraph at the end of the results. 
-\end{enumerate}
-% \end{enumerate}
-
-\item Species differences are not due to plant architecture --- shrubs and trees = very similar responses overall (Fig. \ref{supp-fig:cueST})
-\begin{enumerate}
+\item But these differences are not due to plant architecture --- shrubs and trees = very similar responses overall (Fig. \ref{supp-fig:cueST})
 \item Many of our earliest bb species are shrub species, e.g. \emph{Cornus stolonifera} --- fits our predicted profile of weak chilling and forcing cues
 \item But other shrub species do not --- e.g. \emph{Menziesia ferruginea} and \emph{Symphoricarpos alba} = latest bb, but also higher chill and forcing cue estimates (Fig. \ref{supp-fig:cueST}).
 % %Nov15DL: Menfer does have a different floral structure compared to other species, with both the floral and leaf buds clustered together. But there was nothing strickenly odd about the plant, nothing noted in Pojar plant guides to indicate unique ecology, based on web of science searches there is a fungus-root association in alpine populations, but there are no publications with phenology
 \item Tree species = no strong trends, but e.g. \emph{Quercus velutina} = stronger chilling and photoperiod cues as predicted, and \emph{Fagus grandifolia} = strongest photoperiod response % but others like \emph{Prunus pensylvanica}
-\item Unexpected spp responses are partially due to having stronger cue responses, but also driven by large spp intercepts --- suggests factors other than species architectural growth driving diff cue responses 
+\end{enumerate}
+
+\item Results show the relative importance of phenological cues and variation across species, but the gradients were not strong 
+\begin{enumerate}
+\item We observed relatively weak gradients in species cue responses across the period of budburst (Fig. \ref{fig:cueGrad})
+\item Species level differences (intercept) explain considerable portion of bb (Fig. \ref{fig:betaAlphaGrad}) 
+\item For our western species, \Sexpr{diffBAWest}\% of the estimated bb was due to species level differences, while \Sexpr{diffBAEast}\% of the estimated bb of eastern species was due to species (Fig. \ref{fig:betaAlphaGrad}).  
+\item Suggests factors other than species cues and architectural growth driving budburst.
 \end{enumerate}
 % \end{enumerate}
 
@@ -247,7 +244,7 @@ source("..//rcode/phenologyMsValues.R")
 % \end{enumerate}
 
 \begin{enumerate}
-\item Across all species, relative importance of cue = varied = unique temporal niches  (Fig. \ref{fig:cueSp})  %emw1Jun2023 -- you have cool figures and info on this! 
+\item Across all species, relative importance of cue = varied = unique temporal niches  (Fig. \ref{supp-fig:cueSp})  %emw1Jun2023 -- you have cool figures and info on this! 
 \item Large portion of bb due to spp differences - need more research to understand this, if not cues what causes it? Could introduce traits and foreshadow the third chapter  %emw1Jun2023 -- need to format results and discussion so this is a minor but important (and provocative/interesting) point 
 \item The experimental design (which is impressive) combined with your models means that most other things some models would assign to the intercept are assigned to site, species, chill, force etc. here... and still the intercept is big. Wow!! 
 \end{enumerate}
@@ -384,6 +381,12 @@ print(fourSite,include.rownames=TRUE, caption.placement="top", hline.after=c(-1,
 %     \caption{Species differences in cue estimate posterior distributions, comparing species differences across a) chilling, b) forcing, and c) photoperiod cues. The median cue response is illustrated by the black circle, while the 90\% quantile interval is illustrated by the black line. The coloured distribution depicts the shape of the posterior density for all samples of a given species. Species are ordered alphabetically}
 %     \label{fig:cueSp}
 % \end{figure}
+\begin{figure}[h!]
+    \centering
+     \includegraphics[width=\textwidth]{..//figures/dotCFPEWSizeColor.pdf}
+    \caption{Estimated species' chilling (a,b), forcing (c,d) and photoperiod (e,f) cue responses ranked by increasing estimated budburst dates for both the eastern (a, c, e) and western (b, d, f) transects. Cues are plotted on differing y-axis to better depict species differences.}
+    \label{fig:cueGrad}
+\end{figure}
 
 \begin{figure}[h!]
     \centering
@@ -399,12 +402,7 @@ print(fourSite,include.rownames=TRUE, caption.placement="top", hline.after=c(-1,
 %     \label{fig:betaAlphaGrad}
 % \end{figure}
 
-\begin{figure}[h!]
-    \centering
-     \includegraphics[width=\textwidth]{..//figures/dotCFPEWSizeColor.pdf}
-    \caption{Estimated species' chilling (a,b), forcing (c,d) and photoperiod (e,f) cue responses ranked by increasing estimated budburst dates for both the eastern (a, c, e) and western (b, d, f) transects. Cues are plotted on differing y-axis to better depict species differences.}
-    \label{fig:cueGrad}
-\end{figure}
+
 % \begin{figure}[h!]
 %     \centering
 %      \includegraphics[width=\textwidth]{..//figures/violinCFPEW.pdf}

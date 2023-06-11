@@ -75,59 +75,31 @@ b_force = sum[grep("b_warm\\[", rownames(sum)), 1]
 
 a_sp5 <- vector()
 for(i in 1:ncol(post$a_sp)){
-  quantU <- round(quantile(post$a_sp[,i], c(0.05)),1)
+  quantU <- round(quantile(post$a_sp[,i], c(0.05, 0.95, 0.25, 0.75)),1)
   a_sp5 <- rbind(a_sp5, quantU)
 }
-colnames(a_sp5) <- c("Int5")
-
-a_sp95 <- vector()
-for(i in 1:ncol(post$a_sp)){
-  quantU <- round(quantile(post$a_sp[,i], c(0.95)),1)
-  a_sp95 <- rbind(a_sp95, quantU)
-}
-colnames(a_sp95) <- c("Int95")
+colnames(a_sp5) <- c("Int5","Int95","Int25","Int75")
 
 b_chill5 <- vector()
 for(i in 1:ncol(post$b_chill1)){
-  quantU <- round(quantile(post$b_chill1[,i], c(0.05)),1)
+  quantU <- round(quantile(post$b_chill1[,i], c(0.05, 0.95, 0.25, 0.75)),1)
   b_chill5 <- rbind(b_chill5, quantU)
 }
-colnames(b_chill5) <- c("chill5")
-
-b_chill95 <- vector()
-for(i in 1:ncol(post$b_chill1)){
-  quantU <- round(quantile(post$b_chill1[,i], c(0.95)),1)
-  b_chill95 <- rbind(b_chill95, quantU)
-}
-colnames(b_chill95) <- c("chill95")
+colnames(b_chill5) <- c("chill5","chill95","chill25","chill75")
 
 b_force5 <- vector()
 for(i in 1:ncol(post$b_warm)){
-  quantU <- round(quantile(post$b_warm[,i], c(0.05)),1)
+  quantU <- round(quantile(post$b_warm[,i], c(0.05, 0.95, 0.25, 0.75)),1)
   b_force5 <- rbind(b_force5, quantU)
 }
-colnames(b_force5) <- c("force5")
-
-b_force95 <- vector()
-for(i in 1:ncol(post$b_warm)){
-  quantU <- round(quantile(post$b_warm[,i], c(0.95)),1)
-  b_force95 <- rbind(b_force95, quantU)
-}
-colnames(b_force95) <- c("force95")
+colnames(b_force5) <- c("force5","force95","force25","force75")
 
 b_photo5 <- vector()
 for(i in 1:ncol(post$b_photo)){
-  quantU <- round(quantile(post$b_photo[,i], c(0.05)),1)
+  quantU <- round(quantile(post$b_photo[,i], c(0.05, 0.95, 0.25, 0.75)),1)
   b_photo5 <- rbind(b_photo5, quantU)
 }
-colnames(b_photo5) <- c("photo5")
-
-b_photo95 <- vector()
-for(i in 1:ncol(post$b_photo)){
-  quantU <- round(quantile(post$b_photo[,i], c(0.95)),1)
-  b_photo95 <- rbind(b_photo95, quantU)
-}
-colnames(b_photo95) <- c("photo95")
+colnames(b_photo5) <- c("photo5","photo95","photo25","photo75")
 
 
 # par(mfrow = c(1,3))
@@ -167,11 +139,7 @@ spInfo$meanBB <- colMeans(m)
 colnames(m) <- spInfo$species.name
 
 spInfo$Int <- a_sp
-# spInfo$Int2.5 <- a_sp2.5
-# spInfo$Int97.5 <- a_sp97.5
-spInfo$Int5 <- a_sp5
-spInfo$Int95 <- a_sp95
-
+spInfo <- cbind(spInfo, a_sp5,b_force5, b_chill5,b_photo5)
 
 spInfo$force <- b_force
 spInfo$chill <- b_chill
@@ -193,24 +161,16 @@ spInfo$photo <- b_photo
 # spInfo$chill75 <- b_chill75
 # spInfo$photo75 <- b_photo75
 
-spInfo$force5 <- b_force5
-spInfo$chill5 <- b_chill5
-spInfo$photo5 <- b_photo5
-
-spInfo$force95 <- b_force95
-spInfo$chill95 <- b_chill95
-spInfo$photo95 <- b_photo95
-
 
 quantile595 <- function(x){
   returnQuanilte <- quantile(x, prob = c(0.05, 0.95))
   return(returnQuanilte)
 }
 
-# quantile97.52.5 <- function(x){
-#   returnQuanilte <- quantile(x, prob = c(0.975, 0.025))
-#   return(returnQuanilte)
-# }
+quantile75.25 <- function(x){
+  returnQuanilte <- quantile(x, prob = c(0.75, 0.25))
+  return(returnQuanilte)
+}
 
 bb_quan <- apply(m, 2, quantile595)
 bb_t <- t(bb_quan)
@@ -218,17 +178,17 @@ bb_df <- data.frame(bb_t)
 colnames(bb_df)[colnames(bb_df) == "X5."] <- "bb5"
 colnames(bb_df)[colnames(bb_df) == "X95."] <- "bb95"
 
-# bb_quan9725 <- apply(m, 2, quantile97.52.5)
-# bb_t9725 <- t(bb_quan9725)
-# bb_df9725 <- data.frame(bb_t9725)
-# colnames(bb_df9725)[colnames(bb_df9725) == "X97.5."] <- "bb97.5"
-# colnames(bb_df9725)[colnames(bb_df9725) == "X2.5."] <- "bb2.5"
-# colnames(bb_df)[colnames(bb_df) == "X97.5."] <- "bb25"
-# colnames(bb_df)[colnames(bb_df) == "X2.75."] <- "bb75"
+bb_quan75.25 <- apply(m, 2, quantile75.25)
+bb_t75.25 <- t(bb_quan75.25)
+bb_df75.25 <- data.frame(bb_t75.25)
+colnames(bb_df75.25)[colnames(bb_df75.25) == "X75."] <- "bb75"
+colnames(bb_df75.25)[colnames(bb_df75.25) == "X25."] <- "bb25"
+colnames(bb_df)[colnames(bb_df) == "X25."] <- "bb25"
+colnames(bb_df)[colnames(bb_df) == "X75."] <- "bb75"
 
 
 spInfo <- cbind(spInfo, bb_df)
-#spInfo <- cbind(spInfo, bb_df9725)
+spInfo <- cbind(spInfo, bb_df75.25)
 spInfo$value <- spInfo$meanBB
 
 
@@ -280,7 +240,7 @@ data <- long[order(long$meanBB),]
 # data$species.name <- factor(data$species.name, levels=unique(data$species.name) )
 #data <- transform(data, variable=reorder(species.name, -meanBB) ) 
 
-names(data) <- c("species.name","value","species","type","transect","meanBB", "Int","Int5","Int95","spMeanForce", "spMeanChill", "spMeanPhoto","force5","chill5","photo5","force95", "chill95","photo95","bb5","bb90", "spacing","chill", "force","photo","intercept")
+names(data) <- c("species.name","value","species","type","transect","meanBB", "Int","Int5","Int95","Int25","Int75","spMeanForce", "spMeanChill", "spMeanPhoto","force5","force95","force25","force75","chill5", "chill95", "chill25", "chill75","photo5", "photo95", "photo25", "photo75","bb5","bb95","bb25","bb75", "spacing","chill", "force","photo","intercept")
 
 #####################################################################
 ## Eastern spp only #################################################
@@ -1006,12 +966,13 @@ spTop <- spInfo[spInfo$species %in% overlapping,]
 #########################################################
 ###### Remake fig but with dots and bars ################
 
-chillPtW <- aggregate(dataWest[c("meanBB", "Int","chill","force","photo","chill5","chill95","force5","force95","photo5","photo95")], dataWest[c("species.name","type","transect")], FUN = mean)
-names(chillPtW) <- c("species.name","type","transect","Budburst","Intercept","Chilling","Forcing","Photoperiod","chill5","chill95","force5","force95","photo5","photo95")
+chillPtW <- aggregate(dataWest[c("meanBB", "Int","chill","force","photo","chill5","chill95","chill25","chill75","force5","force95","force25","force75","photo5","photo95","photo25","photo75")], dataWest[c("species.name","type","transect")], FUN = mean)
+names(chillPtW) <- c("species.name","type","transect","Budburst","Intercept","Chilling","Forcing","Photoperiod","chill5","chill95","chill25","chill75","force5","force95","force25","force75","photo5","photo95","photo25","photo75")
 
 
 chilldotW <- ggplot(chillPtW,aes(y= Chilling, x = Budburst, colour = "#cc6a70ff"), size = 7) + geom_point(size =7, colour = "maroon") +
-  geom_errorbar(aes(ymin= chill5, ymax = chill95,xmin= Budburst, xmax = Budburst), width= 0, size = 1, colour = "maroon") +
+  geom_errorbar(aes(ymin= chill5, ymax = chill95,xmin= Budburst, xmax = Budburst), width= 0, size = 0.5, colour = "maroon")+
+  geom_errorbar(aes(ymin= chill25, ymax = chill75,xmin= Budburst, xmax = Budburst), width= 0, size = 1.5, colour = "maroon") +
   theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
         panel.background = element_blank(), axis.line = element_line(colour = "black"), legend.position = "none") + ylim(-40,5) +
   theme(axis.text.x = element_text( size = 17,angle = 78,  hjust=1),
@@ -1035,7 +996,8 @@ chilldotW
 
 forcedotW <- ggplot(chillPtW,aes(y= Forcing, x = Budburst), size = 7) +
   geom_point(size = 7,color = "orange3") +
-  geom_errorbar(aes(ymin= force5, ymax = force95,xmin= Budburst, xmax = Budburst),color = "orange3", width= 0, size =1) +
+  geom_errorbar(aes(ymin= force5, ymax = force95,xmin= Budburst, xmax = Budburst),color = "orange3", width= 0, size =0.5) +
+  geom_errorbar(aes(ymin= force25, ymax = force75,xmin= Budburst, xmax = Budburst),color = "orange3", width= 0, size =1.5) +
   theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
         panel.background = element_blank(), axis.line = element_line(colour = "black"), legend.position = "none") + ylim(-25,5) +
   theme(axis.text.x = element_text( size = 17,angle = 78,  hjust=1),
@@ -1058,8 +1020,9 @@ forcedotW
 
 photodotW <- ggplot(chillPtW,aes(y= Photoperiod, x = Budburst, colour = "Photoperiod"), size = 7) +
   geom_point(size = 7, color = "steelblue4") +
-  geom_errorbar(aes(ymin= photo5, ymax = photo95,xmin= Budburst, xmax = Budburst), width= 0, size = 1, color = "steelblue4") +
-  theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
+  geom_errorbar(aes(ymin= photo5, ymax = photo95,xmin= Budburst, xmax = Budburst), width= 0, size = 0.5, color = "steelblue4") +
+  geom_errorbar(aes(ymin= photo25, ymax = photo75,xmin= Budburst, xmax = Budburst),color = "steelblue4", width= 0, size =1.5) +
+    theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
         panel.background = element_blank(), axis.line = element_line(colour = "black"), legend.position = "none") + ylim(-10,0) +
   theme(axis.text.x = element_text( size = 17,angle = 78,  hjust=1),
         axis.text.y=element_text(size = 15),
@@ -1079,13 +1042,13 @@ photodotW <- ggplot(chillPtW,aes(y= Photoperiod, x = Budburst, colour = "Photope
   annotate("text", x = 15, y = -8, label = "Earlier", cex =5) 
 photodotW
 
-chillPtE <- aggregate(dataEast[c("meanBB", "Int","chill","force","photo","chill5","chill95","force5","force95","photo5","photo95")], dataEast[c("species.name","type","transect")], FUN = mean)
-names(chillPtE) <- c("species.name","type","transect","Budburst","Intercept","Chilling","Forcing","Photoperiod","chill5","chill95","force5","force95","photo5","photo95")
+chillPtE <- aggregate(dataEast[c("meanBB", "Int","chill","force","photo","chill5","chill95","chill25","chill75","force5","force95","force25","force75","photo5","photo95","photo25","photo75")], dataEast[c("species.name","type","transect")], FUN = mean)
+names(chillPtE) <- c("species.name","type","transect","Budburst","Intercept","Chilling","Forcing","Photoperiod","chill5","chill95","chill25","chill75","force5","force95","force25","force75","photo5","photo95","photo25","photo75")
 
 
 chilldotE <- ggplot(chillPtE,aes(y= Chilling, x = Budburst, colour = "#cc6a70ff"), size = 7) +
   geom_point(size = 7, colour = "#cc6a70ff") +
-  geom_errorbar(aes(ymin= chill5, ymax = chill95,xmin= Budburst, xmax = Budburst), width= 0, size = 1, colour = "#cc6a70ff") +
+  geom_errorbar(aes(ymin= chill5, ymax = chill95,xmin= Budburst, xmax = Budburst), width= 0, size = 0.5, colour = "#cc6a70ff") + geom_errorbar(aes(ymin= chill25, ymax = chill75,xmin= Budburst, xmax = Budburst), width= 0, size = 1.5, colour = "#cc6a70ff") +
   theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
         panel.background = element_blank(), axis.line = element_line(colour = "black"), legend.position = "none") + ylim(-45,0) +
   theme(axis.text.x = element_text( size = 17,angle = 78,  hjust=1),
@@ -1112,7 +1075,8 @@ chilldotE
 
 forcedotE <- ggplot(chillPtE,aes(y= Forcing, x = Budburst, colour = "#f9b641ff"), size = 7) +
   geom_point(size = 7,color = "#f9b641ff") +
-  geom_errorbar(aes(ymin= force5, ymax = force95,xmin= Budburst, xmax = Budburst),color = "#f9b641ff", width= 0, size = 1) +
+  geom_errorbar(aes(ymin= force5, ymax = force95,xmin= Budburst, xmax = Budburst),color = "#f9b641ff", width= 0, size = 0.5) +
+  geom_errorbar(aes(ymin= force25, ymax = force75,xmin= Budburst, xmax = Budburst),color = "#f9b641ff", width= 0, size = 1.5) +
   theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
         panel.background = element_blank(), axis.line = element_line(colour = "black"), legend.position = "none") +  ylim(-25,0) +
   theme(axis.text.x = element_text( size=17,angle = 78,  hjust=1),
@@ -1139,7 +1103,8 @@ forcedotE
 
 photodotE <- ggplot(chillPtE,aes(y= Photoperiod, x = Budburst, colour = "Photoperiod"), size = 7) +
   geom_point(size = 7, color = "cyan4") +
-  geom_errorbar(aes(ymin= photo5, ymax = photo95,xmin= Budburst, xmax = Budburst), width= 0, size = 1, color = "cyan4")+
+  geom_errorbar(aes(ymin= photo5, ymax = photo95,xmin= Budburst, xmax = Budburst), width= 0, size = 0.5, color = "cyan4") +
+  geom_errorbar(aes(ymin= photo25, ymax = photo75,xmin= Budburst, xmax = Budburst), width= 0, size = 1.5, color = "cyan4") +
   geom_segment(aes(x = 23, y = -5, xend =23 , yend = -7),
                arrow = arrow(length = unit(0.5, "cm")), col = "black") +
 theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),

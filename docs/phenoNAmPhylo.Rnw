@@ -43,7 +43,7 @@
 % optional: cute, fancy headers
 \usepackage{fancyhdr}
 \pagestyle{fancy}
-\fancyhead[LO]{Draft early 2022}
+\fancyhead[LO]{Draft summer 2023}
 \fancyhead[RO]{Temporal Ecology Lab}
 % more optionals! %
 
@@ -149,8 +149,18 @@ source("..//rcode/phenologyMsValues.R")
 %  my logic for structuring it across species, site level and then species was to go from broad general trends (across North America) then the across the site, and finally about the specific spp within the sites.
 
 
+% emw13Jun: Notes in addition to below
+% Love the updated figures and results!  This means I picked up on a lot of small things we should fix now. A little tedious, but we have to do it someday and better to do now to make sure it's all correct before we write up further.
+% I think most of the colors are really nice, but I did catch a few places we are not consistent and could be, and places where more than colors would be good.
+% Fig 3 (sites) I would do one symbol for eastern sites and one for western and then fainter (higher transparency) for lower treatments; this way the figure will work in black and white and you can simplify the legend (just show four symbols then: east high treatment, east low treatment etc.)
+% Fig 3 (sites): you give the estimated day of BB but it seems more natural to have plotted each cue without the intercept, no? For example, for forcing smithers would be -9.55 and then Manning -9.55 + -1.76 ... I guess this way you show the intercept also, but I would just report the averages in the text and focus on the cue diffs here in this fig. I think readers will find that more natural too, and then you can simplify the caption. 
+% Could we just say 'sites' and skip populations and transects? I started wondering if 'western sites' and 'eastern sites' would work instead of transects (or 'east versus west') ... the less jargon the better!
+% Speaking of which I would try to avoid getting stuck in 'cue response' land and aim for 'responses' when possible. You also write 'forcing cue' etc. a lot -- why not just 'forcing'?
+
+
 \subsection*{Results + figures }
 % all UI are 90%
+% emw13Jun: Nice!
 \begin{enumerate}
 \item Cue responses and interactions... 
 \begin {enumerate}
@@ -168,9 +178,10 @@ source("..//rcode/phenologyMsValues.R")
 \item Overall: Low forcing, chilling, and shorter photoperiods resulted in later estimated budburst dates than higher temperature and longer photoperiod treatments across all sites (Fig. \ref{fig:intrxn3}a-c)
 \item However, populations differed in their their overall budburst dates ... Between the two transects eastern budburst dates were consistently earlier%, as reflected by the negative sites estiamtes for both our eastern sites 
 (\Sexpr{siteHF}, UI: \Sexpr{siteHFL}, \Sexpr{siteHFU} and \Sexpr{siteSH}, UI: \Sexpr{siteSHU}, \Sexpr{siteSHL} for Harvard Forest and St. Hippolyte respectively). Budburst of individuals from Manning park had a delayed response (\Sexpr{siteMP}, UI:\Sexpr{siteMPL}, \Sexpr{siteMPU}), although both western sites were similar in the estimated day of budburst across treatments  (producing highly overlapping bars between the high cue treatments across populations, Fig. \ref{fig:intrxn3}).
+% emw13Jun: I would report the mean for each transect with UI and then you could write more simply. Something like: However, populations differed in their their overall budburst dates ... Between the two transects eastern budburst dates were consistently earlier (mean +/- UI for eastern sites versus mean +/- UI for western sites, see also Table ID for model output)
 \end{enumerate}
 
-
+% emw13Jun: Looking at the current numbers these all seem to overlap a lot -- no? If so I would delete everything below and add something like the following to the end of the last paragraph (but tell me if I am missing something): Cue responses were similar across sites and transects (Fig 3, Table ID for model output). 
 \item Site effects were generally divided between populations in eastern and western transects. %emw1Jun2023 -- come up with a terminology now and stick with it -- maybe populations are within eastern and western transects seems what you have and works, so here I would say either 'populations within eastern and western transects' or -- more simply -- 'eastern and western transects'
 %DLJun8: When I presented this work at Florum, Jenn was concerned that two populations are not really a transect, we could stick with transect and see if reviewers feel the same.
 \begin{enumerate}

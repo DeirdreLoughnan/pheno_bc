@@ -709,9 +709,8 @@ siteForce$temp <- rownames(siteForce)
 siteOrder <- c("Smithers", "Manning park", "St.Hippolyte", "Harvard forest")
 
 siteFPoint <- ggplot()  +
-  geom_pointrange(siteForce, mapping = aes(x = factor(site, level = siteOrder), y = mean, ymin=lower1, ymax=upper1, col = temp), size =0.55,
-                  position=position_dodge(width=0.5))+
-  geom_linerange( siteForce, mapping = aes(x = factor(site, level = siteOrder), ymin = lower2, ymax=upper2, col = temp), size =1.25, position=position_dodge(width=0.5))+
+  geom_pointrange(siteForce, mapping = aes(x = factor(site, level = siteOrder), y = mean, ymin=lower1, ymax=upper1, col = temp, shape = tempSite), size =0.55, position=position_dodge(width=0.5)) +
+  geom_linerange( siteForce, mapping = aes(x = factor(site, level = siteOrder), ymin = lower2, ymax=upper2, col = temp), size =1.25, position=position_dodge(width=0.5)) +
   xlab("Population") + ylab("Estimated day of budburst") +
   #ylim(0,50) +
   theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
@@ -719,19 +718,19 @@ siteFPoint <- ggplot()  +
         axis.text = element_text(size = 15), axis.title = element_text(size = 20),axis.text.x = element_text( size= 15,angle = 55, hjust=1)) +
   # scale_color_manual(values = c("cyan4", "#CC6677"), labels = c("High forcing", "Low forcing"), name = "") +
   scale_color_manual(values = c(
-    "bb_hfsite1"="deepskyblue3",
-    "bb_lfsite1"="deepskyblue1",
+    "bb_hfsite1"="forestgreen",
+    "bb_lfsite1"="palegreen3",
     "bb_hfsite2"= "forestgreen",
     "bb_lfsite2"="palegreen3",
     "bb_hfsite4"="darkorchid4",
     "bb_lfsite4"="darkorchid1",
-    "bb_hfsite3" ="darkred",
-    "bb_lfsite3"="tomato1"
-     ), labels = c("Smithers - High forcing", "Smithers - Low forcing","Manning Park - High forcing", "Manning Park - Low forcing", "St. Hippolyte - High forcing", "St. Hippolyte - Low forcing","Harvard Forest - High forcing", "Harvard Forest - Low forcing"), name = "") +theme(legend.position = "none") +  annotate("text", x = 1.5, y = 75, label = "a) Forcing", cex = 10) 
+    "bb_hfsite3" ="darkorchid4",
+    "bb_lfsite3"="darkorchid1"
+  ), labels = c("Smithers - High forcing", "Smithers - Low forcing","Manning Park - High forcing", "Manning Park - Low forcing", "St. Hippolyte - High forcing", "St. Hippolyte - Low forcing","Harvard Forest - High forcing", "Harvard Forest - Low forcing"), name = "") +theme(legend.position = "none") +  annotate("text", x = 1.5, y = 75, label = "a) Forcing", cex = 10) + scale_shape_manual(values = c("low forcing Smithers" = 0,  "high forcing Smithers" = 15,  "low forcing Manning park" = 0, "high forcing Manning park" = 15,  "low forcing Harvard forest" = 2, "high forcing Harvard forest" = 17,  "high forcing St.Hippolyte" = 17, "low forcing St.Hippolyte" = 2 ), breaks = c("low forcing Smithers", "high forcing Manning park"), label = c("Western", "Eastern"))
 siteFPoint
   # theme(legend.key=element_blank(), legend.position=c(.83,.85),legend.text = element_text(size = 15)) +
   # theme(legend.title = element_blank()) +  annotate("text", x = 0.6, y = 50, label = "b)", cex = 10) 
-siteFPoint
+
 # siteForce$force_pop <- paste(siteForce$force, siteForce$site, sep = "_")
 # siteForce$col <- "black"
 # siteForce$col[which(siteForce$force_pop == "18")] <- 1978
@@ -928,7 +927,7 @@ siteCPoint <- ggplot() +
     "bb_lc0site4"="darkorchid1",
     "bb_hc1site3" ="darkred",
     "bb_lc0site3"="tomato1"
-  ), labels = c("Smithers - High  chill", "Smithers - Low  chill","Manning Park - High  chill", "Manning Park - Low  chill", "St. Hippolyte - High  chill", "St. Hippolyte - Low  chill","Harvard Forest - High  chill", "Harvard Forest - Low chill")) + theme(legend.position = "none") +  annotate("text", x = 1.5, y = 80, label = "b) Chilling", cex = 10) 
+  ), labels = c("Smithers - High  chill", "Smithers - Low  chill","Manning Park - High  chill", "Manning Park - Low  chill", "St. Hippolyte - High  chill", "St. Hippolyte - Low  chill","Harvard Forest - High  chill", "Harvard Forest - Low chill")) + theme(legend.position = "none") +  annotate("text", x = 1.5, y = 80, label = "b) Chilling", cex = 10) + scale_shape_manual(values = c("low forcing Smithers" = 0,  "high forcing Smithers" = 15,  "low forcing Manning park" = 0, "high forcing Manning park" = 15,  "low forcing Harvard forest" = 2, "high forcing Harvard forest" = 17,  "high forcing St.Hippolyte" = 17, "low forcing St.Hippolyte" = 2 ), breaks = c("low forcing Smithers", "high forcing Manning park"), label = c("Western", "Eastern"))
 siteCPoint
   # ggplot() +
   # geom_pointrange(siteChill, mapping = aes(x = factor(site, level = siteOrder), y = mean, ymin=lower, ymax=upper, col = col),

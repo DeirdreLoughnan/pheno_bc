@@ -140,6 +140,22 @@ spInfo <- read.csv("..//input/species_list.csv")
 
 pheno.t <- merge(pheno.t, spInfo, by = "species")
 
+head(pheno.t)
+
+westSite <- c("sm", "mp")
+westPheno <- pheno.t[pheno.t$population %in% westSite, ]
+
+meanBBWest <- round(mean(westPheno$bb), 1)
+meanBBWestU <- round(quantile(westPheno$bb, c(0.95)),1)
+meanBBWestL <- round(quantile(westPheno$bb, c(0.05)),1)
+
+eastSite <- c("HF", "SH")
+eastPheno <- pheno.t[pheno.t$population %in% eastSite, ]
+
+meanBBEast <- round(mean(eastPheno$bb), 1)
+meanBBEastU <- round(quantile(eastPheno$bb, c(0.95)),1)
+meanBBEastL <- round(quantile(eastPheno$bb, c(0.05)),1)
+
 #################################################################
 # load("output/final/ew_phylo_output_newpriors_allncp.Rda")
 # sumew <- summary(mdl.ewphylo)$summary
@@ -775,3 +791,6 @@ tempCS <- aggregate(pheno["bb"], pheno[c("population","chill")], FUN = mean);tem
 tempFS <- aggregate(pheno["bb"], pheno[c("population","force")], FUN = mean);tempFS
 
 tempPS <- aggregate(pheno["bb"], pheno[c("population","photo")], FUN = mean);tempPS
+
+west <- subset(spInfo, transect != "east")
+westAgg <- aggregate(west[c("force","chill","photo","force2.5","chill2.5","photo2.5", "force97.5","chill97.5","photo97.5","force5","chill5","photo5", "force95","chill95","photo95")], west[c("type")], FUN = mean)

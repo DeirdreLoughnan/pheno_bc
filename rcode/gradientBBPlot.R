@@ -240,7 +240,7 @@ data <- long[order(long$meanBB),]
 # data$species.name <- factor(data$species.name, levels=unique(data$species.name) )
 #data <- transform(data, variable=reorder(species.name, -meanBB) ) 
 
-names(data) <- c("species.name","value","species","type","transect","meanBB", "Int","Int5","Int95","Int25","Int75","spMeanForce", "spMeanChill", "spMeanPhoto","force5","force95","force25","force75","chill5", "chill95", "chill25", "chill75","photo5", "photo95", "photo25", "photo75","bb5","bb95","bb25","bb75", "spacing","chill", "force","photo","intercept")
+names(data) <- c("species.name","value","species","type","transect","meanBB", "Int","Int5","Int95","Int25","Int75","force5","force95","force25","force75","chill5", "chill95", "chill25", "chill75","photo5", "photo95", "photo25", "photo75","spMeanForce", "spMeanChill", "spMeanPhoto","bb5","bb95","bb25","bb75", "spacing","chill", "force","photo","intercept")
 
 #####################################################################
 ## Eastern spp only #################################################
@@ -582,9 +582,9 @@ dotE <- ggplot(meanPtE) +
   annotate("text", x = spTopE[8,5], y = -1, label = spTopE[8,2], cex = 5, angle = 78) +
   scale_color_manual(values = c("forestgreen","orange3"))
 
-pdf("figures/dotBetaAlphaLongColor.pdf", width = 12, height = 16)
-plot_grid(dotE, dotW, nrow = 2, ncol = 1, align = "v")
-dev.off()
+# pdf("figures/dotBetaAlphaLongColor.pdf", width = 12, height = 16)
+# plot_grid(dotE, dotW, nrow = 2, ncol = 1, align = "v")
+# dev.off()
 
 #############################################
 # old plots
@@ -967,20 +967,22 @@ spTop <- spInfo[spInfo$species %in% overlapping,]
 ###### Remake fig but with dots and bars ################
 
 chillPtW <- aggregate(dataWest[c("meanBB", "Int","chill","force","photo","chill5","chill95","chill25","chill75","force5","force95","force25","force75","photo5","photo95","photo25","photo75")], dataWest[c("species.name","type","transect")], FUN = mean)
-names(chillPtW) <- c("species.name","type","transect","Budburst","Intercept","Chilling","Forcing","Photoperiod","chill5","chill95","chill25","chill75","force5","force95","force25","force75","photo5","photo95","photo25","photo75")
+# names(chillPtW) <- c("species.name","type","transect","Budburst","Intercept","Int5", "Int95", "Int25", "Int75","chill5","chill95","chill25","chill75","force5","force95","force25","force75","photo5","photo95","photo25","photo75")
 
 
-chilldotW <- ggplot(chillPtW,aes(y= Chilling, x = Budburst, colour = "#cc6a70ff"), size = 7) + geom_point(size =7, colour = "maroon") +
-  geom_errorbar(aes(ymin= chill5, ymax = chill95,xmin= Budburst, xmax = Budburst), width= 0, size = 0.5, colour = "maroon")+
-  geom_errorbar(aes(ymin= chill25, ymax = chill75,xmin= Budburst, xmax = Budburst), width= 0, size = 1.5, colour = "maroon") +
+chilldotW <- ggplot(chillPtW,aes(y= chill, x = meanBB, colour = "#cc6a70ff"), size = 7) + geom_point(size =7, colour = "maroon") +
+  geom_errorbar(aes(ymin= chill5, ymax = chill95,xmin= meanBB, xmax = meanBB), width= 0, size = 0.5, colour = "maroon")+
+  geom_errorbar(aes(ymin= chill25, ymax = chill75,xmin= meanBB, xmax = meanBB), width= 0, size = 1.5, colour = "maroon") +
   theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
         panel.background = element_blank(), axis.line = element_line(colour = "black"), legend.position = "none") + ylim(-40,5) +
   theme(axis.text.x = element_text( size = 17,angle = 78,  hjust=1),
         axis.text.y=element_text(size = 15),
-        axis.title=element_text(size=20),
+        axis.title=element_text(size= 17),
         legend.position = "none") + 
   scale_x_continuous( breaks = spMiniW$meanBB, labels = spMiniW$species,limits = c(15,62)) +
-  labs( x = "Species ranked by predicted budburst date", y = "Chilling response (days/chill portion)", main = NA) +
+  labs( x = "Species ranked by predicted budburst date", y = 
+         "Chill response (days/standardized unit)"# "Days per standardized chill portion"
+        , main = NA) +
   theme(legend.title = element_blank()) +  annotate("text", x = 15, y = 2, label = "b)", cex =10) +
   annotate("text", x = 38, y = 3, label = "Western transect", cex =10) +
   annotate("text", x = spTopW[1,5], y = -37, label = spTopW[1,2], cex = 6, angle = 78) +
@@ -989,23 +991,26 @@ chilldotW <- ggplot(chillPtW,aes(y= Chilling, x = Budburst, colour = "#cc6a70ff"
   annotate("text", x = spTopW[4,5], y = -37, label = spTopW[4,2], cex = 6, angle = 78) +
   annotate("text", x = spTopW[5,5], y = -37, label = spTopW[5,2], cex = 6, angle = 78) +
   annotate("text", x = spTopW[6,5], y = -37, label = spTopW[6,2], cex = 6, angle = 78) +
-  scale_fill_manual(values = c("maroon","maroon"))+ geom_segment(aes(x = 15, y = -23, xend =15 , yend = -30),
-                                                                 arrow = arrow(length = unit(0.5, "cm")), col = "black") +
-  annotate("text", x = 15, y = -32, label = "Earlier", cex =5) 
+  scale_fill_manual(values = c("maroon","maroon")) + 
+  geom_segment(aes(x = 62, y = 0, xend = 62 , yend = -7),
+  arrow = arrow(length = unit(0.5, "cm")), col = "black") +
+  annotate("text", x = 62, y = -9, label = "Earlier", cex =5) 
 chilldotW
 
-forcedotW <- ggplot(chillPtW,aes(y= Forcing, x = Budburst), size = 7) +
+forcedotW <- ggplot(chillPtW,aes(y= force, x = meanBB), size = 7) +
   geom_point(size = 7,color = "orange3") +
-  geom_errorbar(aes(ymin= force5, ymax = force95,xmin= Budburst, xmax = Budburst),color = "orange3", width= 0, size =0.5) +
-  geom_errorbar(aes(ymin= force25, ymax = force75,xmin= Budburst, xmax = Budburst),color = "orange3", width= 0, size =1.5) +
+  geom_errorbar(aes(ymin= force5, ymax = force95,xmin= meanBB, xmax = meanBB),color = "orange3", width= 0, size =0.5) +
+  geom_errorbar(aes(ymin= force25, ymax = force75,xmin= meanBB, xmax = meanBB),color = "orange3", width= 0, size =1.5) +
   theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
         panel.background = element_blank(), axis.line = element_line(colour = "black"), legend.position = "none") + ylim(-25,5) +
   theme(axis.text.x = element_text( size = 17,angle = 78,  hjust=1),
         axis.text.y=element_text(size = 15),
-        axis.title=element_text(size=20),
+        axis.title=element_text(size=17),
         legend.position = "none") + 
   scale_x_continuous( breaks = spMiniW$meanBB, labels = spMiniW$species,limits = c(15,62)) +
-  labs( x = "Species ranked by predicted budburst date", y = expression("Forcing response (days/"*~degree*C*")"), main = NA) +
+  labs( x = "Species ranked by predicted budburst date", 
+        y = "Forcing response (days/standardized unit)"# "Days per standardized forcing" )+ # expression("Forcing response (days/"*~degree*C*")")
+  , main = NA) +
   theme(legend.title = element_blank()) +  annotate("text", x = 15, y = 5, label = "d)", cex =10) +
   # annotate("text", x = 38, y = 10, label = "Western transect", cex =5) +
   annotate("text", x = spTopW[1,5], y = -23, label = spTopW[1,2], cex = 6, angle = 78) +
@@ -1013,23 +1018,25 @@ forcedotW <- ggplot(chillPtW,aes(y= Forcing, x = Budburst), size = 7) +
   annotate("text", x = spTopW[3,5], y = -23, label = spTopW[3,2], cex = 6, angle = 78) +
   annotate("text", x = spTopW[4,5], y = -23, label = spTopW[4,2], cex = 6, angle = 78) +
   annotate("text", x = spTopW[5,5], y = -23, label = spTopW[5,2], cex = 6, angle = 78) +
-  annotate("text", x = spTopW[6,5], y = -23, label = spTopW[6,2], cex = 6, angle = 78) + geom_segment(aes(x = 15, y = -15, xend =15 , yend = -20),
-                                                                                                      arrow = arrow(length = unit(0.5, "cm")), col = "black") +
-  annotate("text", x = 15, y = -21, label = "Earlier", cex =5) 
+  annotate("text", x = spTopW[6,5], y = -23, label = spTopW[6,2], cex = 6, angle = 78) + 
+  geom_segment(aes(x = 62, y = 2, xend = 62 , yend = -3),
+  arrow = arrow(length = unit(0.5, "cm")), col = "black") +
+  annotate("text", x = 62, y = -5, label = "Earlier", cex =5) 
 forcedotW
 
-photodotW <- ggplot(chillPtW,aes(y= Photoperiod, x = Budburst, colour = "Photoperiod"), size = 7) +
+photodotW <- ggplot(chillPtW,aes(y= photo, x = meanBB, colour = "photo"), size = 7) +
   geom_point(size = 7, color = "steelblue4") +
-  geom_errorbar(aes(ymin= photo5, ymax = photo95,xmin= Budburst, xmax = Budburst), width= 0, size = 0.5, color = "steelblue4") +
-  geom_errorbar(aes(ymin= photo25, ymax = photo75,xmin= Budburst, xmax = Budburst),color = "steelblue4", width= 0, size =1.5) +
+  geom_errorbar(aes(ymin= photo5, ymax = photo95,xmin= meanBB, xmax = meanBB), width= 0, size = 0.5, color = "steelblue4") +
+  geom_errorbar(aes(ymin= photo25, ymax = photo75,xmin= meanBB, xmax = meanBB),color = "steelblue4", width= 0, size =1.5) +
     theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
         panel.background = element_blank(), axis.line = element_line(colour = "black"), legend.position = "none") + ylim(-10,0) +
   theme(axis.text.x = element_text( size = 17,angle = 78,  hjust=1),
         axis.text.y=element_text(size = 15),
-        axis.title=element_text(size=20),
+        axis.title=element_text(size=17),
         legend.position = "none") + 
-  scale_x_continuous( breaks = spMiniW$meanBB, labels = spMiniW$species,limits = c(15,62)) +
-  labs( x = "Species ranked by predicted budburst date", y = "Photoperiod response (days/hour)", main = NA) +
+  scale_x_continuous( breaks = spMiniW$meanBB, labels = spMiniW$species,limits = c(15,65)) +
+  labs( x = "Species ranked by predicted budburst date", y = "Photoperiod response (days/standardized unit)",#"Days per standardized photoperiod",
+        main = NA) +
   theme(legend.title = element_blank()) +  annotate("text", x = 15, y = 0, label = "f)", cex =10) +
   # annotate("text", x = 38, y = 10, label = "Western transect", cex =5) +
   annotate("text", x = spTopW[1,5], y = -9.3, label = spTopW[1,2], cex = 6, angle = 78) +
@@ -1037,26 +1044,28 @@ photodotW <- ggplot(chillPtW,aes(y= Photoperiod, x = Budburst, colour = "Photope
   annotate("text", x = spTopW[3,5], y = -9.3, label = spTopW[3,2], cex = 6, angle = 78) +
   annotate("text", x = spTopW[4,5], y = -9.3, label = spTopW[4,2], cex = 6, angle = 78) +
   annotate("text", x = spTopW[5,5], y = -9.3, label = spTopW[5,2], cex = 6, angle = 78) +
-  annotate("text", x = spTopW[6,5], y = -9.3, label = spTopW[6,2], cex = 6, angle = 78)+ geom_segment(aes(x = 15, y = -5, xend =15 , yend = -7.5),
-                                                                                                     arrow = arrow(length = unit(0.5, "cm")), col = "black") +
-  annotate("text", x = 15, y = -8, label = "Earlier", cex =5) 
+  annotate("text", x = spTopW[6,5], y = -9.3, label = spTopW[6,2], cex = 6, angle = 78)+ 
+  geom_segment(aes(x = 63, y = -0.2, xend =63 , yend = -2.3),
+               arrow = arrow(length = unit(0.5, "cm")), col = "black") +
+  annotate("text", x = 63, y = -2.7, label = "Earlier", cex =5) 
 photodotW
 
 chillPtE <- aggregate(dataEast[c("meanBB", "Int","chill","force","photo","chill5","chill95","chill25","chill75","force5","force95","force25","force75","photo5","photo95","photo25","photo75")], dataEast[c("species.name","type","transect")], FUN = mean)
-names(chillPtE) <- c("species.name","type","transect","Budburst","Intercept","Chilling","Forcing","Photoperiod","chill5","chill95","chill25","chill75","force5","force95","force25","force75","photo5","photo95","photo25","photo75")
+# names(chillPtE) <- c("species.name","type","transect","Budburst","Intercept","Chilling","Forcing","Photoperiod","chill5","chill95","chill25","chill75","force5","force95","force25","force75","photo5","photo95","photo25","photo75")
 
 
-chilldotE <- ggplot(chillPtE,aes(y= Chilling, x = Budburst, colour = "#cc6a70ff"), size = 7) +
+chilldotE <- ggplot(chillPtE,aes(y= chill, x = meanBB, colour = "#cc6a70ff"), size = 7) +
   geom_point(size = 7, colour = "#cc6a70ff") +
-  geom_errorbar(aes(ymin= chill5, ymax = chill95,xmin= Budburst, xmax = Budburst), width= 0, size = 0.5, colour = "#cc6a70ff") + geom_errorbar(aes(ymin= chill25, ymax = chill75,xmin= Budburst, xmax = Budburst), width= 0, size = 1.5, colour = "#cc6a70ff") +
+  geom_errorbar(aes(ymin= chill5, ymax = chill95,xmin= meanBB, xmax = meanBB), width= 0, size = 0.5, colour = "#cc6a70ff") + geom_errorbar(aes(ymin= chill25, ymax = chill75,xmin= meanBB, xmax = meanBB), width= 0, size = 1.5, colour = "#cc6a70ff") +
   theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
         panel.background = element_blank(), axis.line = element_line(colour = "black"), legend.position = "none") + ylim(-45,0) +
   theme(axis.text.x = element_text( size = 17,angle = 78,  hjust=1),
         axis.text.y=element_text(size = 15),
-        axis.title=element_text(size=20),
+        axis.title=element_text(size=17),
         legend.position = "none") + 
   scale_x_continuous( breaks = spMiniE$meanBB, labels = spMiniE$species,limits = c(23,65)) +
-  labs( x = "Species ranked by predicted budburst date", y = "Chilling response (days/chill portion)", main = NA) +
+  labs( x = "Species ranked by predicted budburst date", y = "Chill response (days/standardized unit)"#"Days per standardized chill portion"
+        , main = NA) +
   theme(legend.title = element_blank()) +  annotate("text", x =23, y = 0, label = "a)", cex =10) +
   annotate("text", x = 45, y = 0, label = "Eastern transect", cex = 10) +
   annotate("text", x = spTopE[1,5], y = -41.5, label = spTopE[1,2], cex = 6, angle = 78) +
@@ -1069,22 +1078,23 @@ chilldotE <- ggplot(chillPtE,aes(y= Chilling, x = Budburst, colour = "#cc6a70ff"
   annotate("text", x = spTopE[8,5], y = -41.5, label = spTopE[8,2], cex = 6, angle = 78) +
   annotate("text", x = spTopE[9,5], y = -41.5, label = spTopE[9,2], cex = 6, angle = 78) +
   scale_fill_manual(values = c("#cc6a70ff","#cc6a70ff"))+
-  geom_segment(aes(x = 23, y = -27, xend =23 , yend = -34),arrow = arrow(length = unit(0.5, "cm")), col = "black") +
-  annotate("text", x = 23, y = -35, label = "Earlier", cex =5) 
+  geom_segment(aes(x = 65, y = -2, xend = 65 , yend = -9),arrow = arrow(length = unit(0.5, "cm")), col = "black") +
+  annotate("text", x = 65, y = -11, label = "Earlier", cex =5) 
 chilldotE
 
-forcedotE <- ggplot(chillPtE,aes(y= Forcing, x = Budburst, colour = "#f9b641ff"), size = 7) +
+forcedotE <- ggplot(chillPtE,aes(y= force, x = meanBB, colour = "#f9b641ff"), size = 7) +
   geom_point(size = 7,color = "#f9b641ff") +
-  geom_errorbar(aes(ymin= force5, ymax = force95,xmin= Budburst, xmax = Budburst),color = "#f9b641ff", width= 0, size = 0.5) +
-  geom_errorbar(aes(ymin= force25, ymax = force75,xmin= Budburst, xmax = Budburst),color = "#f9b641ff", width= 0, size = 1.5) +
+  geom_errorbar(aes(ymin= force5, ymax = force95,xmin= meanBB, xmax = meanBB),color = "#f9b641ff", width= 0, size = 0.5) +
+  geom_errorbar(aes(ymin= force25, ymax = force75,xmin= meanBB, xmax = meanBB),color = "#f9b641ff", width= 0, size = 1.5) +
   theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
         panel.background = element_blank(), axis.line = element_line(colour = "black"), legend.position = "none") +  ylim(-25,0) +
   theme(axis.text.x = element_text( size=17,angle = 78,  hjust=1),
         axis.text.y=element_text(size = 15),
-        axis.title=element_text(size=20),
+        axis.title=element_text(size=17),
         legend.position = "none") + 
   scale_x_continuous( breaks = spMiniE$meanBB, labels = spMiniE$species,limits = c(23,65)) +
-  labs( x = "Species ranked by predicted budburst date", y = expression("Forcing response (days/"*~degree*C*")"), main = NA) +
+  labs( x = "Species ranked by predicted budburst date", y = "Forcing response (days/standardized unit)"#"Days per standardized forcing")+#expression("Forcing response (days/"*~degree*C*")")
+  , main = NA) +
   theme(legend.title = element_blank()) +  annotate("text", x = 23, y = 0, label = "c)", cex =10) +
   annotate("text", x = spTopE[1,5], y = -23.5, label = spTopE[1,2], cex = 6, angle = 78) +
   annotate("text", x = spTopE[2,5], y = -23.5, label = spTopE[2,2], cex = 6, angle = 78) +
@@ -1096,28 +1106,29 @@ forcedotE <- ggplot(chillPtE,aes(y= Forcing, x = Budburst, colour = "#f9b641ff")
   annotate("text", x = spTopE[8,5], y = -23.5, label = spTopE[8,2], cex = 6, angle = 78) +
   annotate("text", x = spTopE[9,5], y = -23.5, label = spTopE[9,2], cex = 6, angle = 78) +
   scale_fill_manual(values = c("#f9b641ff","#f9b641ff")) +
-  geom_segment(aes(x = 23, y = -13, xend =23 , yend = -18),
+  geom_segment(aes(x = 65, y = -2, xend = 65 , yend = -6),
                arrow = arrow(length = unit(0.5, "cm")), col = "black") +
-  annotate("text", x = 23, y = -19, label = "Earlier", cex =5) 
+  annotate("text", x = 65, y = -8, label = "Earlier", cex =5) 
 forcedotE
 
-photodotE <- ggplot(chillPtE,aes(y= Photoperiod, x = Budburst, colour = "Photoperiod"), size = 7) +
+photodotE <- ggplot(chillPtE,aes(y= photo, x = meanBB, colour = "Photoperiod"), size = 7) +
   geom_point(size = 7, color = "cyan4") +
-  geom_errorbar(aes(ymin= photo5, ymax = photo95,xmin= Budburst, xmax = Budburst), width= 0, size = 0.5, color = "cyan4") +
-  geom_errorbar(aes(ymin= photo25, ymax = photo75,xmin= Budburst, xmax = Budburst), width= 0, size = 1.5, color = "cyan4") +
-  geom_segment(aes(x = 23, y = -5, xend =23 , yend = -7),
+  geom_errorbar(aes(ymin= photo5, ymax = photo95,xmin= meanBB, xmax = meanBB), width= 0, size = 0.5, color = "cyan4") +
+  geom_errorbar(aes(ymin= photo25, ymax = photo75,xmin= meanBB, xmax = meanBB), width= 0, size = 1.5, color = "cyan4") +
+  geom_segment(aes(x = 65, y = -0.2, xend = 65 , yend = -2),
                arrow = arrow(length = unit(0.5, "cm")), col = "black") +
 theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
         panel.background = element_blank(), axis.line = element_line(colour = "black"), legend.position = "none") +  ylim(-10,0) +
   theme(axis.text.x = element_text( size=17,angle = 78,  hjust=1),
         axis.text.y=element_text(size = 15),
-        axis.title=element_text(size=20),
+        axis.title=element_text(size=  17),
         legend.position = "none") + 
   scale_x_continuous( breaks = spMiniE$meanBB, labels = spMiniE$species,limits = c(23,65)) +
-  labs( x = "Species ranked by predicted budburst date", y = "Photoperiod response (days/hour)", main = NA) +
+  labs( x = "Species ranked by predicted budburst date", y = "Photoperiod response (days/standardized unit)"#"Days per standardized photoperiod"
+        , main = NA) +
   theme(legend.title = element_blank()) +  annotate("text", x = 23, y = 0, label = "e)", cex =10) +  
   #annotate("text", x = 23, y = -2.3, label = "Later", cex =10) +
-  annotate("text", x = 23, y = -7.5, label = "Earlier", cex =5) +
+  annotate("text", x = 65, y = -2.5, label = "Earlier", cex =5) +
   annotate("text", x = spTopE[1,5], y = -9.3, label = spTopE[1,2], cex = 6, angle = 78) +
   annotate("text", x = spTopE[2,5], y = -9.3, label = spTopE[2,2], cex = 6, angle = 78) +
   annotate("text", x = spTopE[3,5], y = -9.3, label = spTopE[3,2], cex = 6, angle = 78) +
@@ -1130,6 +1141,6 @@ theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
   scale_fill_manual(values = c("#f9b641ff","#f9b641ff"))
 photodotE
 
-pdf("figures/dotCFPEWSizeColor.pdf", width = 20, height = 16)
+pdf("figures/dotCFPEWSizeColorUnits.pdf", width = 20, height = 16)
 plot_grid(chilldotE, chilldotW, forcedotE, forcedotW, photodotE, photodotW, nrow = 3, ncol = 2, align = "v")
 dev.off()

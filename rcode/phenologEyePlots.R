@@ -714,8 +714,8 @@ ggplot() +
         legend.title = element_blank(),
         axis.text.x = element_text( size= 16),
         axis.text.y = element_text( size= 12),
-        axis.title=element_text(size = 18)) +
-  labs( x = "Treatment cue", y = "Cue response", main = NA)+
+        axis.title=element_text(size = 14)) +
+  labs( x = "Treatment cue", y = "Cue response (days/standardized unit)", main = NA)+
   scale_fill_manual(values = c("Smithers" = "deepskyblue3",
                               "Manning Park" = "palegreen4", 
                               "St. Hippolyte"="darkorchid3", 

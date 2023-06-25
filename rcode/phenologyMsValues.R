@@ -146,15 +146,15 @@ westSite <- c("sm", "mp")
 westPheno <- pheno.t[pheno.t$population %in% westSite, ]
 
 meanBBWest <- round(mean(westPheno$bb), 1)
-meanBBWestU <- round(quantile(westPheno$bb, c(0.95)),1)
-meanBBWestL <- round(quantile(westPheno$bb, c(0.05)),1)
+meanBBWestU <- format(round(quantile(westPheno$bb, c(0.95)),1), nsmall =1)
+meanBBWestL <- format(round(quantile(westPheno$bb, c(0.05)),1), nsmall =1)
 
 eastSite <- c("HF", "SH")
 eastPheno <- pheno.t[pheno.t$population %in% eastSite, ]
 
 meanBBEast <- round(mean(eastPheno$bb), 1)
-meanBBEastU <- round(quantile(eastPheno$bb, c(0.95)),1)
-meanBBEastL <- round(quantile(eastPheno$bb, c(0.05)),1)
+meanBBEastU <- format(round(quantile(eastPheno$bb, c(0.95)),1), nsmall =1)
+meanBBEastL <-format(round(quantile(eastPheno$bb, c(0.05)),1), nsmall =1)
 
 #################################################################
 # load("output/final/ew_phylo_output_newpriors_allncp.Rda")
@@ -794,3 +794,208 @@ tempPS <- aggregate(pheno["bb"], pheno[c("population","photo")], FUN = mean);tem
 
 west <- subset(spInfo, transect != "east")
 westAgg <- aggregate(west[c("force","chill","photo","force2.5","chill2.5","photo2.5", "force97.5","chill97.5","photo97.5","force5","chill5","photo5", "force95","chill95","photo95")], west[c("type")], FUN = mean)
+
+
+# Adding posteriors to get the means!
+a_sp = mean(sum[grep("a_sp", rownames(sum)), c("mean")])
+a_sp5 <- round(quantile(post$a_sp, c(0.05)),1)
+a_sp95 <- round(quantile(post$a_sp, c(0.95)),1)
+a_sp25 <- round(quantile(post$a_sp, c(0.25)),1)
+a_sp75 <- round(quantile(post$a_sp, c(0.75)),1)
+a_sp <- cbind(a_sp, a_sp5,a_sp95, a_sp25,a_sp75)
+
+#a_z = (sum[grep("a_z", rownames(sum)), c("mean")])
+mu_b_warm = sum[grep("mu_b_warm", rownames(sum)), c("mean")]
+mu_b_warm5 <- round(quantile(post$mu_b_warm, c(0.05)),1)
+mu_b_warm95 <- round(quantile(post$mu_b_warm, c(0.95)),1)
+mu_b_warm25 <- round(quantile(post$mu_b_warm, c(0.25)),1)
+mu_b_warm75 <- round(quantile(post$mu_b_warm, c(0.75)),1)
+mu_b_warm <- (cbind(mu_b_warm, mu_b_warm5,mu_b_warm95, mu_b_warm25,mu_b_warm75))
+
+mu_b_photo = sum[grep("mu_b_photo", rownames(sum)), c("mean")]
+mu_b_photo5 <- round(quantile(post$mu_b_photo, c(0.05)),1)
+mu_b_photo95 <- round(quantile(post$mu_b_photo, c(0.95)),1)
+mu_b_photo25 <- round(quantile(post$mu_b_photo, c(0.25)),1)
+mu_b_photo75 <- round(quantile(post$mu_b_photo, c(0.75)),1)
+mu_b_photo <- (cbind(mu_b_photo, mu_b_photo5,mu_b_photo95, mu_b_photo25,mu_b_photo75))
+
+mu_b_chill1 = sum[grep("mu_b_chill1", rownames(sum)), c("mean")]
+mu_b_chill5 <- round(quantile(post$mu_b_chill, c(0.05)),1)
+mu_b_chill95 <- round(quantile(post$mu_b_chill, c(0.95)),1)
+mu_b_chill25 <- round(quantile(post$mu_b_chill, c(0.25)),1)
+mu_b_chill75 <- round(quantile(post$mu_b_chill, c(0.75)),1)
+mu_b_chill1 <- (cbind(mu_b_chill1, mu_b_chill5,mu_b_chill95, mu_b_chill25,mu_b_chill75))
+
+mu_b_inter_pc1 = sum[grep("mu_b_inter_pc1", rownames(sum)), c("mean")]
+mu_b_inter_pc15 <- round(quantile(post$mu_b_inter_pc1, c(0.05)),1)
+mu_b_inter_pc195 <- round(quantile(post$mu_b_inter_pc1, c(0.95)),1)
+mu_b_inter_pc125 <- round(quantile(post$mu_b_inter_pc1, c(0.25)),1)
+mu_b_inter_pc175 <- round(quantile(post$mu_b_inter_pc1, c(0.75)),1)
+mu_b_inter_pc1 <- (cbind(mu_b_inter_pc1, mu_b_inter_pc15,mu_b_inter_pc195, mu_b_inter_pc125,mu_b_inter_pc175))
+
+mu_b_inter_wp = sum[grep("mu_b_inter_wp", rownames(sum)), c("mean")]
+mu_b_inter_wp5 <- round(quantile(post$mu_b_inter_wp, c(0.05)),1)
+mu_b_inter_wp95 <- round(quantile(post$mu_b_inter_wp, c(0.95)),1)
+mu_b_inter_wp25 <- round(quantile(post$mu_b_inter_wp, c(0.25)),1)
+mu_b_inter_wp75 <- round(quantile(post$mu_b_inter_wp, c(0.75)),1)
+mu_b_inter_wp <- (cbind(mu_b_inter_wp, mu_b_inter_wp5,mu_b_inter_wp95, mu_b_inter_wp25,mu_b_inter_wp75))
+
+mu_b_inter_wc1 = sum[grep("mu_b_inter_wc1", rownames(sum)), c("mean")]
+mu_b_inter_wc15 <- round(quantile(post$mu_b_inter_wc1, c(0.05)),1)
+mu_b_inter_wc195 <- round(quantile(post$mu_b_inter_wc1, c(0.95)),1)
+mu_b_inter_wc125 <- round(quantile(post$mu_b_inter_wc1, c(0.25)),1)
+mu_b_inter_wc175 <- round(quantile(post$mu_b_inter_wc1, c(0.75)),1)
+mu_b_inter_wc1 <- (cbind(mu_b_inter_wc1, mu_b_inter_wc15,mu_b_inter_wc195, mu_b_inter_wc125,mu_b_inter_wc175))
+
+mu_b_inter_ws2 = sum[grep("mu_b_inter_ws2", rownames(sum)), c("mean")]
+mu_b_inter_ws25 <- round(quantile(post$mu_b_inter_ws2, c(0.05)),1)
+mu_b_inter_ws295 <- round(quantile(post$mu_b_inter_ws2, c(0.95)),1)
+mu_b_inter_ws225 <- round(quantile(post$mu_b_inter_ws2, c(0.25)),1)
+mu_b_inter_ws275 <- round(quantile(post$mu_b_inter_ws2, c(0.75)),1)
+mu_b_inter_ws2 <- (cbind(mu_b_inter_ws2, mu_b_inter_ws25,mu_b_inter_ws295, mu_b_inter_ws225,mu_b_inter_ws275))
+
+mu_b_inter_s2c1 = sum[grep("mu_b_inter_s2c1", rownames(sum)), c("mean")]
+mu_b_inter_s2c15 <- round(quantile(post$mu_b_inter_s2c1, c(0.05)),1)
+mu_b_inter_s2c195 <- round(quantile(post$mu_b_inter_s2c1, c(0.95)),1)
+mu_b_inter_s2c125 <- round(quantile(post$mu_b_inter_s2c1, c(0.25)),1)
+mu_b_inter_s2c175 <- round(quantile(post$mu_b_inter_s2c1, c(0.75)),1)
+mu_b_inter_s2c1 <- (cbind(mu_b_inter_s2c1, mu_b_inter_s2c15,mu_b_inter_s2c195, mu_b_inter_s2c125,mu_b_inter_s2c175))
+
+mu_b_inter_ps2 = sum[grep("mu_b_inter_ps2", rownames(sum)), c("mean")]
+mu_b_inter_ps25 <- round(quantile(post$mu_b_inter_ps2, c(0.05)),1)
+mu_b_inter_ps295 <- round(quantile(post$mu_b_inter_ps2, c(0.95)),1)
+mu_b_inter_ps225 <- round(quantile(post$mu_b_inter_ps2, c(0.25)),1)
+mu_b_inter_ps275 <- round(quantile(post$mu_b_inter_ps2, c(0.75)),1)
+mu_b_inter_ps2 <- (cbind(mu_b_inter_ps2, mu_b_inter_ps25,mu_b_inter_ps295, mu_b_inter_ps225,mu_b_inter_ps275))
+
+mu_b_inter_ws3 = sum[grep("mu_b_inter_ws3", rownames(sum)), c("mean")]
+mu_b_inter_ws35 <- round(quantile(post$mu_b_inter_ws3, c(0.05)),1)
+mu_b_inter_ws395 <- round(quantile(post$mu_b_inter_ws3, c(0.95)),1)
+mu_b_inter_ws325 <- round(quantile(post$mu_b_inter_ws3, c(0.25)),1)
+mu_b_inter_ws375 <- round(quantile(post$mu_b_inter_ws3, c(0.75)),1)
+mu_b_inter_ws3 <- (cbind(mu_b_inter_ws3, mu_b_inter_ws35,mu_b_inter_ws395, mu_b_inter_ws325,mu_b_inter_ws375))
+
+mu_b_inter_s3c1 = sum[grep("mu_b_inter_s3c1", rownames(sum)), c("mean")]
+mu_b_inter_s3c15 <- round(quantile(post$mu_b_inter_s3c1, c(0.05)),1)
+mu_b_inter_s3c195 <- round(quantile(post$mu_b_inter_s3c1, c(0.95)),1)
+mu_b_inter_s3c125 <- round(quantile(post$mu_b_inter_s3c1, c(0.25)),1)
+mu_b_inter_s3c175 <- round(quantile(post$mu_b_inter_s3c1, c(0.75)),1)
+mu_b_inter_s3c1 <- (cbind(mu_b_inter_s3c1, mu_b_inter_s3c15,mu_b_inter_s3c195, mu_b_inter_s3c125,mu_b_inter_s3c175))
+
+mu_b_inter_ps3 = sum[grep("mu_b_inter_ps3", rownames(sum)), c("mean")]
+mu_b_inter_ps35 <- round(quantile(post$mu_b_inter_ps3, c(0.05)),1)
+mu_b_inter_ps395 <- round(quantile(post$mu_b_inter_ps3, c(0.95)),1)
+mu_b_inter_ps325 <- round(quantile(post$mu_b_inter_ps3, c(0.25)),1)
+mu_b_inter_ps375 <- round(quantile(post$mu_b_inter_ps3, c(0.75)),1)
+mu_b_inter_ps3 <- (cbind(mu_b_inter_ps3, mu_b_inter_ps35,mu_b_inter_ps395, mu_b_inter_ps325,mu_b_inter_ps375))
+
+mu_b_inter_ws4 = sum[grep("mu_b_inter_ws4", rownames(sum)), c("mean")]
+mu_b_inter_ws45 <- round(quantile(post$mu_b_inter_ws4, c(0.05)),1)
+mu_b_inter_ws495 <- round(quantile(post$mu_b_inter_ws4, c(0.95)),1)
+mu_b_inter_ws425 <- round(quantile(post$mu_b_inter_ws4, c(0.25)),1)
+mu_b_inter_ws475 <- round(quantile(post$mu_b_inter_ws4, c(0.75)),1)
+mu_b_inter_ws4 <- (cbind(mu_b_inter_ws4, mu_b_inter_ws45,mu_b_inter_ws495, mu_b_inter_ws425,mu_b_inter_ws475))
+
+mu_b_inter_s4c1 = sum[grep("mu_b_inter_s4c1", rownames(sum)), c("mean")]
+mu_b_inter_s4c15 <- round(quantile(post$mu_b_inter_s4c1, c(0.05)),1)
+mu_b_inter_s4c195 <- round(quantile(post$mu_b_inter_s4c1, c(0.95)),1)
+mu_b_inter_s4c125 <- round(quantile(post$mu_b_inter_s4c1, c(0.25)),1)
+mu_b_inter_s4c175 <- round(quantile(post$mu_b_inter_s4c1, c(0.75)),1)
+mu_b_inter_s4c1 <- (cbind(mu_b_inter_s4c1, mu_b_inter_s4c15,mu_b_inter_s4c195, mu_b_inter_s4c125,mu_b_inter_s4c175))
+
+mu_b_inter_ps4 = sum[grep("mu_b_inter_ps4", rownames(sum)), c("mean")]
+mu_b_inter_ps45 <- round(quantile(post$mu_b_inter_ps4, c(0.05)),1)
+mu_b_inter_ps495 <- round(quantile(post$mu_b_inter_ps4, c(0.95)),1)
+mu_b_inter_ps425 <- round(quantile(post$mu_b_inter_ps4, c(0.25)),1)
+mu_b_inter_ps475 <- round(quantile(post$mu_b_inter_ps4, c(0.75)),1)
+mu_b_inter_ps4 <- (cbind(mu_b_inter_ps4, mu_b_inter_ps45,mu_b_inter_ps495, mu_b_inter_ps425,mu_b_inter_ps475))
+
+b_site2 = sum[grep("b_site2", rownames(sum)), c("mean")]
+b_site25 <- round(quantile(post$b_site2, c(0.05)),1)
+b_site295 <- round(quantile(post$b_site2, c(0.95)),1)
+b_site225 <- round(quantile(post$b_site2, c(0.25)),1)
+b_site275 <- round(quantile(post$b_site2, c(0.75)),1)
+b_site2 <- (cbind(b_site2, b_site25,b_site295, b_site225,b_site275))
+
+b_site3 = sum[grep("b_site3", rownames(sum)), c("mean")]
+b_site35 <- round(quantile(post$b_site3, c(0.05)),1)
+b_site395 <- round(quantile(post$b_site3, c(0.95)),1)
+b_site325 <- round(quantile(post$b_site3, c(0.25)),1)
+b_site375 <- round(quantile(post$b_site3, c(0.75)),1)
+b_site3 <- (cbind(b_site3, b_site35,b_site395, b_site325,b_site375))
+
+b_site4 = sum[grep("b_site4", rownames(sum)), c("mean")]
+b_site45 <- round(quantile(post$b_site4, c(0.05)),1)
+b_site495 <- round(quantile(post$b_site4, c(0.95)),1)
+b_site425 <- round(quantile(post$b_site4, c(0.25)),1)
+b_site475 <- round(quantile(post$b_site4, c(0.75)),1)
+b_site4 <- (cbind(b_site4, b_site45,b_site495, b_site425,b_site475))
+
+b_warm = sum[grep("b_warm\\[", rownames(sum)), c("mean")]
+mu_b_warm5 <- round(quantile(post$mu_b_warm, c(0.05)),1)
+mu_b_warm95 <- round(quantile(post$mu_b_warm, c(0.95)),1)
+mu_b_warm25 <- round(quantile(post$mu_b_warm, c(0.25)),1)
+mu_b_warm75 <- round(quantile(post$mu_b_warm, c(0.75)),1)
+mu_b_warm <- (cbind(mu_b_warm, mu_b_warm5,mu_b_warm95, mu_b_warm25,mu_b_warm75))
+
+# #<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>#
+# Get the means for the lowest F, C, P and each site
+#
+
+lowForce <- c(-0.3568628,-0.6723508)
+lowPhoto <- -0.5033863
+lowChill <- c(-0.3546922,-0.3494652,-0.2935465,-0.731798)
+
+
+site2 <- unique(pheno$site2.z2)
+site3 <- unique(pheno$site3.z2)
+site4 <- unique(pheno$site4.z2)
+
+
+# St. Hippolyte plot first for the high forcing - site = 1 is the second value (site4[2])
+bb_site4 = a_sp[1:5]   + b_site2[1:5] * site2[2] + b_site3[1:5] * site3[1] + b_site4[1:5] * site4[2]  + mu_b_warm[1:5] * lowForce[2] + mu_b_photo[1:5] * lowPhoto + mu_b_chill1[1:5] * lowChill[4] +
+  mu_b_inter_wp[1:5] * (lowForce[2]*lowPhoto) +
+  mu_b_inter_wc1[1:5] * (lowForce[2]*lowChill[4]) + mu_b_inter_pc1[1:5] * (lowPhoto*lowChill[4]) +
+  mu_b_inter_s2c1[1:5] * (lowChill[4]*site2[2]) + mu_b_inter_ws2[1:5] * (lowForce[2]*site2[2]) +mu_b_inter_ps2[1:5] * (lowPhoto*site2[2]) +
+  mu_b_inter_s3c1[1:5] * (lowChill[4]*site3[1]) + mu_b_inter_ws3[1:5] * (lowForce[2]*site3[1]) +mu_b_inter_ps3[1:5] * (lowPhoto*site3[1]) +
+  mu_b_inter_s4c1[1:5] * (lowChill[4]*site4[2]) + mu_b_inter_ws4[1:5] * (lowForce[2]*site4[2]) +mu_b_inter_ps4[1:5] * (lowPhoto*site4[2])
+
+# Manning park trends - site2[1]
+bb_site2 = a_sp[1:5] + b_site2[1:5] * site2[1] + b_site3[1:5] * site3[1] + b_site4[1:5] * site4[1]  + mu_b_warm[1:5] * lowForce[1] + mu_b_photo[1:5] * lowPhoto + mu_b_chill1[1:5] * lowChill[2] +
+  mu_b_inter_wp[1:5] * (lowForce[1]*lowPhoto) +
+  mu_b_inter_wc1[1:5] * (lowForce[1]*lowChill[2]) + mu_b_inter_pc1[1:5] * (lowPhoto*lowChill[2]) +
+  mu_b_inter_s2c1[1:5] * (lowChill[2]*site2[1]) + mu_b_inter_ws2[1:5] * (lowForce[1]*site2[1]) +mu_b_inter_ps2[1:5] * (lowPhoto*site2[1]) +
+  mu_b_inter_s3c1[1:5] * (lowChill[2]*site3[1]) + mu_b_inter_ws3[1:5] * (lowForce[1]*site3[1]) +mu_b_inter_ps3[1:5] * (lowPhoto*site3[1]) +
+  mu_b_inter_s4c1[1:5] * (lowChill[2]*site4[1]) + mu_b_inter_ws4[1:5] * (lowForce[1]*site4[1]) +mu_b_inter_ps4[1:5] * (lowPhoto*site4[1])
+
+# Smithers trends - site2[2]
+bb_site1 = a_sp[1:5] + b_site2[1:5] * site2[2] + b_site3[1:5] * site3[1] + b_site4[1:5] * site4[1]  + mu_b_warm[1:5] * lowForce[1] + mu_b_photo[1:5] * lowPhoto + mu_b_chill1[1:5] * lowChill[1] +
+  mu_b_inter_wp[1:5] * (lowForce[1]*lowPhoto) +
+  mu_b_inter_wc1[1:5] * (lowForce[1]*lowChill[1]) + mu_b_inter_pc1[1:5] * (lowPhoto*lowChill[1]) +
+  mu_b_inter_s2c1[1:5] * (lowChill[1]*site2[2]) + mu_b_inter_ws2[1:5] * (lowForce[1]*site2[2]) +mu_b_inter_ps2[1:5] * (lowPhoto*site2[2]) +
+  mu_b_inter_s3c1[1:5] * (lowChill[1]*site3[1]) + mu_b_inter_ws3[1:5] * (lowForce[1]*site3[1]) +mu_b_inter_ps3[1:5] * (lowPhoto*site3[1]) +
+  mu_b_inter_s4c1[1:5] * (lowChill[1]*site4[1]) + mu_b_inter_ws4[1:5] * (lowForce[1]*site4[1]) +mu_b_inter_ps4[1:5] * (lowPhoto*site4[1])
+
+# HarvardForest trends
+bb_site3 = a_sp[1:5] + b_site2[1:5] * site2[2] + b_site3[1:5] * site3[2] + b_site4[1:5] * site4[1] + mu_b_warm[1:5]* lowForce[2] + mu_b_photo[1:5] * lowPhoto + mu_b_chill1[1:5] * lowChill[3] +
+  mu_b_inter_wp[1:5] * (lowForce[2]*lowPhoto) +
+  mu_b_inter_wc1[1:5] * (lowForce[2]*lowChill[3]) + mu_b_inter_pc1[1:5] * (lowPhoto*lowChill[3]) +
+  mu_b_inter_s2c1[1:5] * (lowChill[3]*site2[2]) + mu_b_inter_ws2[1:5] * (lowForce[2]*site2[2]) +mu_b_inter_ps2[1:5] * (lowPhoto*site2[2]) +
+  mu_b_inter_s3c1[1:5] * (lowChill[3]*site3[2]) + mu_b_inter_ws3[1:5] * (lowForce[2]*site3[2]) +mu_b_inter_ps3[1:5] * (lowPhoto*site3[2]) +
+  mu_b_inter_s4c1[1:5] * (lowChill[3]*site4[1]) + mu_b_inter_ws4[1:5] * (lowForce[2]*site4[1]) +mu_b_inter_ps4[1:5] * (lowPhoto*site4[1])
+
+
+
+temp <- rbind(bb_site1,bb_site2,bb_site3,bb_site4)
+siteForce <- data.frame(temp, site = c("Smithers","Manning park", "Harvard forest","St.Hippolyte"))
+names(siteForce) <- c("mean", "lower1", "upper1","lower2","upper2","site")
+siteForce <- siteForce[order(siteForce$site),]
+siteForce$temp <- rownames(siteForce)
+
+meanWestEsti <- format(round(mean(siteForce[2,1], siteForce[3,1]), 1), nsmall =1)
+meanWestEstiU <- format(round(mean(siteForce[2,5], siteForce[3,5]), 1), nsmall =1)
+meanWestEstiL <- format(round(mean(siteForce[2,4], siteForce[3,4]), 1), nsmall =1)
+
+meanEastEsti <- format(round(mean(siteForce[1,1], siteForce[4,1]), 1), nsmall =1)
+meanEastEstiU <- format(round(mean(siteForce[1,5], siteForce[4,5]), 1), nsmall =1)
+meanEastEstiL <- format(round(mean(siteForce[1,4], siteForce[4,4]), 1), nsmall =1)

@@ -703,6 +703,8 @@ bb_lfsite3 = a_sp[1:5] + b_site2[1:5] * site2[2] + b_site3[1:5] * site3[2] + b_s
 temp <- rbind(bb_lfsite1,bb_lfsite2,bb_lfsite3,bb_lfsite4,bb_hfsite1,bb_hfsite2,bb_hfsite3,bb_hfsite4)
 siteForce <- data.frame(temp, site = c("Smithers","Manning park", "Harvard forest","St.Hippolyte","Smithers","Manning park", "Harvard forest","St.Hippolyte"), force = c("low forcing","low forcing","low forcing","low forcing", "high forcing","high forcing", "high forcing", "high forcing"))
 names(siteForce) <- c("mean", "lower1", "upper1","lower2","upper2","site","force")
+
+
 siteForce <- siteForce[order(siteForce$site),]
 siteForce$temp <- rownames(siteForce)
 siteForce$tempSite <- paste(siteForce$force, siteForce$site, sep = " ")
@@ -726,7 +728,15 @@ siteFPoint <- ggplot()  +
     "bb_lfsite4"="darkorchid1",
     "bb_hfsite3" ="darkorchid4",
     "bb_lfsite3"="darkorchid1"
-  ), labels = c("Smithers - High forcing", "Smithers - Low forcing","Manning Park - High forcing", "Manning Park - Low forcing", "St. Hippolyte - High forcing", "St. Hippolyte - Low forcing","Harvard Forest - High forcing", "Harvard Forest - Low forcing"), name = "") +theme(legend.position = "none") +  annotate("text", x = 1.15, y = 75, label = "a) Forcing", cex = 10) + scale_shape_manual(values = c("low forcing Smithers" = 0,  "high forcing Smithers" = 15,  "low forcing Manning park" = 0, "high forcing Manning park" = 15,  "low forcing Harvard forest" = 2, "high forcing Harvard forest" = 17,  "high forcing St.Hippolyte" = 17, "low forcing St.Hippolyte" = 2 ), breaks = c("low forcing Smithers", "high forcing Manning park"), label = c("Western", "Eastern"))
+  ), labels = c("Smithers - High forcing", "Smithers - Low forcing","Manning Park - High forcing", "Manning Park - Low forcing", "St. Hippolyte - High forcing", "St. Hippolyte - Low forcing","Harvard Forest - High forcing", "Harvard Forest - Low forcing"), name = "") +theme(legend.position = "none") +  annotate("text", x = 1.15, y = 75, label = "a) Forcing", cex = 10) + scale_shape_manual(values = c("low forcing Smithers" = 0,  "high forcing Smithers" = 15,  "low forcing Manning park" = 0, "high forcing Manning park" = 15,  "low forcing Harvard forest" = 2, "high forcing Harvard forest" = 17,  "high forcing St.Hippolyte" = 17, "low forcing St.Hippolyte" = 2 ), breaks = c("low forcing Smithers", "high forcing Manning park"), label = c("Western", "Eastern")) +
+scale_x_discrete(breaks = c("Smithers", "Manning park", "St.Hippolyte", "Harvard forest"),
+                       #limits = c(0,100),
+                       labels = c(expression("Smithers (54.8"*~degree*N*")"), 
+                                  expression("Manning park (49.1"*~degree*N*")"),
+                                  expression("St.Hippolyte (45.9"*~degree*N*")"),
+                                  expression("Harvard forest (42.5"*~degree*N*")")
+                       )
+  )
 siteFPoint
   # theme(legend.key=element_blank(), legend.position=c(.83,.85),legend.text = element_text(size = 15)) +
   # theme(legend.title = element_blank()) +  annotate("text", x = 0.6, y = 50, label = "b)", cex = 10) 
@@ -934,7 +944,15 @@ siteCPoint <- ggplot() +
     "bb_lc0site4"="darkorchid1",
     "bb_hc1site3" ="darkorchid4",
     "bb_lc0site3"="darkorchid1"
-  ), labels = c("Smithers - High  Chill", "Smithers - Low  Chill","Manning Park - High  Chill", "Manning Park - Low  Chill", "St. Hippolyte - High  Chill", "St. Hippolyte - Low  Chill","Harvard Forest - High  Chill", "Harvard Forest - Low Chill")) +  annotate("text", x = 1.15, y = 75, label = "b) Chilling", cex = 10) + scale_shape_manual(values = c("Western - Low Chill Smithers" = 0,  "Western - High Chill Smithers" = 15,  "Western - Low Chill Manning park" = 0, "Western - High Chill Manning park" = 15,  "Eastern - Low Chill Harvard forest" = 2, "Eastern - High Chill Harvard forest" = 17,  "Eastern - High Chill St.Hippolyte" = 17, "Eastern - Low Chill St.Hippolyte" = 2 ), breaks = c("Western - Low Chill Smithers", "Western - High Chill Manning park"), label = c("Western", "Eastern"))
+  ), labels = c("Smithers - High  Chill", "Smithers - Low  Chill","Manning Park - High  Chill", "Manning Park - Low  Chill", "St. Hippolyte - High  Chill", "St. Hippolyte - Low  Chill","Harvard Forest - High  Chill", "Harvard Forest - Low Chill")) +  annotate("text", x = 1.15, y = 75, label = "b) Chilling", cex = 10) + scale_shape_manual(values = c("Western - Low Chill Smithers" = 0,  "Western - High Chill Smithers" = 15,  "Western - Low Chill Manning park" = 0, "Western - High Chill Manning park" = 15,  "Eastern - Low Chill Harvard forest" = 2, "Eastern - High Chill Harvard forest" = 17,  "Eastern - High Chill St.Hippolyte" = 17, "Eastern - Low Chill St.Hippolyte" = 2 ), breaks = c("Western - Low Chill Smithers", "Western - High Chill Manning park"), label = c("Western", "Eastern"))+
+  scale_x_discrete(breaks = c("Smithers", "Manning park", "St.Hippolyte", "Harvard forest"),
+                   #limits = c(0,100),
+                   labels = c(expression("Smithers (54.8"*~degree*N*")"), 
+                              expression("Manning park (49.1"*~degree*N*")"),
+                              expression("St.Hippolyte (45.9"*~degree*N*")"),
+                              expression("Harvard forest (42.5"*~degree*N*")")
+                   )
+  )
 siteCPoint
   # ggplot() +
   # geom_pointrange(siteChill, mapping = aes(x = factor(site, level = siteOrder), y = mean, ymin=lower, ymax=upper, col = col),
@@ -1141,8 +1159,16 @@ sitePPoint <- ggplot() +
                                 "High photoperiod Harvard forest" = 17,
                                 "High photoperiod St.Hippolyte" = 17,
                                 "Low photoperiod St.Hippolyte" = 2),
-  breaks = c("Low photoperiod Smithers", "High photoperiod Manning park"), label = c("Western", "Eastern"), name = "") +theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(), panel.background = element_blank(), axis.line = element_line(colour = "black"), axis.text = element_text(size = 15), axis.title = element_text(size = 20), axis.text.x = element_text( size= 15,angle = 55, hjust=1), legend.key=element_rect(fill="white"),legend.text=element_text(size=20))+  annotate("text", x = 1.55, y = 75, label = "c) Photoperiod", cex = 10) 
-
+  breaks = c("High photoperiod Manning park", "High photoperiod St.Hippolyte"), label = c("Western", "Eastern"), name = "") +theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(), panel.background = element_blank(), axis.line = element_line(colour = "black"), axis.text = element_text(size = 15), axis.title = element_text(size = 20), axis.text.x = element_text( size= 15,angle = 55, hjust=1), legend.key=element_rect(fill="white"),legend.text=element_text(size=20))+  annotate("text", x = 1.55, y = 75, label = "c) Photoperiod", cex = 10) +
+  scale_x_discrete(breaks = c("Smithers", "Manning park", "St.Hippolyte", "Harvard forest"),
+                   #limits = c(0,100),
+                   labels = c(expression("Smithers (54.8"*~degree*N*")"), 
+                              expression("Manning park (49.1"*~degree*N*")"),
+                              expression("St.Hippolyte (45.9"*~degree*N*")"),
+                              expression("Harvard forest (42.5"*~degree*N*")")
+                   )
+  )
+sitePPoint
 
 # sitePPointNL <- ggplot() +
 #   geom_pointrange(sitePhoto, mapping = aes(x = factor(site, level = siteOrder), y = mean, ymin=lower1, ymax=upper1, col = temp),
@@ -1177,7 +1203,7 @@ pdf("figures/intrxnForceChill.pdf", height = 5, width = 5)
 intrxnCF
 dev.off()
 
-pdf("figures/intrxnPlots8Chill3_rel.pdf", height =5, width = 20)
+pdf("figures/intrxnPlots8Chill3Lat.pdf", height =8, width = 20)
 plot_grid( siteFPoint, siteCPoint, sitePPoint , ncol = 3, nrow =1,align = "v", rel_widths = c(1,1,1.25))
 dev.off()
 

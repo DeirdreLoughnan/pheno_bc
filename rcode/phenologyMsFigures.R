@@ -543,7 +543,7 @@ lf <- unique(lfData$force.z2)
 
 photo <- -0.5033863
 siteSM <- 0
-chill1 <- seq( -5,  5, length.out =30)
+chill1 <- seq( -2, 2, length.out =30)
 lf <- seq( -0.6723508, -0.3568628,  length.out = 30)
 hf <- seq( 0.2722241, 0.5877121, length.out =30)
   # c( -2, -1, -0.7642814, -0.4072595, -0.4023109, -0.3493703,  0.2750890,  0.2977055,  0.4308763,  0.5308110,  0.8457874,  0.9457221, 1,2)
@@ -558,6 +558,22 @@ bb_hfc = a_sp[1] + b_site2[1] * siteSM + b_site3[1] * siteSM + b_site4[1] * site
   mu_b_inter_s3c1[1] * (chill1*siteSM) + mu_b_inter_ws3[1] * (hf*siteSM) +mu_b_inter_ps3[1] * (photo*siteSM) +
   mu_b_inter_s4c1[1] * (chill1*siteSM) + mu_b_inter_ws4[1] * (hf*siteSM) +mu_b_inter_ps4[1] * (photo*siteSM)
 
+bb_hfc5 = a_sp[2] + b_site2[2] * siteSM + b_site3[2] * siteSM + b_site4[2] * siteSM + mu_b_warm[2] * hf + 
+  mu_b_photo[2] * photo + mu_b_chill1[2] * chill1 +
+  mu_b_inter_wp[2] * (hf*photo) +
+  mu_b_inter_wc1[2] * (hf*chill1) + mu_b_inter_pc1[2] * (photo*chill1) +
+  mu_b_inter_s2c1[2] * (chill1*siteSM) + mu_b_inter_ws2[2] * (hf*siteSM) +mu_b_inter_ps2[2] * (photo*siteSM) +
+  mu_b_inter_s3c1[2] * (chill1*siteSM) + mu_b_inter_ws3[2] * (hf*siteSM) +mu_b_inter_ps3[2] * (photo*siteSM) +
+  mu_b_inter_s4c1[2] * (chill1*siteSM) + mu_b_inter_ws4[2] * (hf*siteSM) +mu_b_inter_ps4[2] * (photo*siteSM)
+
+bb_hfc95 = a_sp[3] + b_site2[3] * siteSM + b_site3[3] * siteSM + b_site4[3] * siteSM + mu_b_warm[3] * hf + 
+  mu_b_photo[3] * photo + mu_b_chill1[3] * chill1 +
+  mu_b_inter_wp[3] * (hf*photo) +
+  mu_b_inter_wc1[3] * (hf*chill1) + mu_b_inter_pc1[3] * (photo*chill1) +
+  mu_b_inter_s2c1[3] * (chill1*siteSM) + mu_b_inter_ws2[3] * (hf*siteSM) +mu_b_inter_ps2[3] * (photo*siteSM) +
+  mu_b_inter_s3c1[3] * (chill1*siteSM) + mu_b_inter_ws3[3] * (hf*siteSM) +mu_b_inter_ps3[3] * (photo*siteSM) +
+  mu_b_inter_s4c1[3] * (chill1*siteSM) + mu_b_inter_ws4[3] * (hf*siteSM) +mu_b_inter_ps4[3] * (photo*siteSM)
+
 # plot first for the low forcing
 bb_lfc = a_sp[1]  + b_site2[1] * siteSM + b_site3[1] * siteSM + b_site4[1] * siteSM + mu_b_warm[1] * lf + mu_b_photo[1] * photo + mu_b_chill1[1] * chill1 +
   mu_b_inter_wp[1] * (lf*photo) +
@@ -565,6 +581,20 @@ bb_lfc = a_sp[1]  + b_site2[1] * siteSM + b_site3[1] * siteSM + b_site4[1] * sit
   mu_b_inter_s2c1[1] * (chill1*siteSM) + mu_b_inter_ws2[1] * (lf*siteSM) +mu_b_inter_ps2[1] * (photo*siteSM) +
   mu_b_inter_s3c1[1] * (chill1*siteSM) + mu_b_inter_ws3[1] * (lf*siteSM) +mu_b_inter_ps3[1] * (photo*siteSM) +
   mu_b_inter_s4c1[1] * (chill1*siteSM) + mu_b_inter_ws4[1] * (lf*siteSM) +mu_b_inter_ps4[1] * (photo*siteSM)
+
+bb_lfc5 = a_sp[2]  + b_site2[2] * siteSM + b_site3[2] * siteSM + b_site4[2] * siteSM + mu_b_warm[2] * lf + mu_b_photo[2] * photo + mu_b_chill1[2] * chill1 +
+  mu_b_inter_wp[2] * (lf*photo) +
+  mu_b_inter_wc1[2] * (lf*chill1) + mu_b_inter_pc1[2] * (photo*chill1) +
+  mu_b_inter_s2c1[2] * (chill1*siteSM) + mu_b_inter_ws2[2] * (lf*siteSM) +mu_b_inter_ps2[2] * (photo*siteSM) +
+  mu_b_inter_s3c1[2] * (chill1*siteSM) + mu_b_inter_ws3[2] * (lf*siteSM) +mu_b_inter_ps3[2] * (photo*siteSM) +
+  mu_b_inter_s4c1[2] * (chill1*siteSM) + mu_b_inter_ws4[2] * (lf*siteSM) +mu_b_inter_ps4[2] * (photo*siteSM)
+
+bb_lfc95 = a_sp[3]  + b_site2[3] * siteSM + b_site3[3] * siteSM + b_site4[3] * siteSM + mu_b_warm[3] * lf + mu_b_photo[3] * photo + mu_b_chill1[3] * chill1 +
+  mu_b_inter_wp[3] * (lf*photo) +
+  mu_b_inter_wc1[3] * (lf*chill1) + mu_b_inter_pc1[3] * (photo*chill1) +
+  mu_b_inter_s2c1[3] * (chill1*siteSM) + mu_b_inter_ws2[3] * (lf*siteSM) +mu_b_inter_ps2[3] * (photo*siteSM) +
+  mu_b_inter_s3c1[3] * (chill1*siteSM) + mu_b_inter_ws3[3] * (lf*siteSM) +mu_b_inter_ps3[3] * (photo*siteSM) +
+  mu_b_inter_s4c1[3] * (chill1*siteSM) + mu_b_inter_ws4[3] * (lf*siteSM) +mu_b_inter_ps4[3] * (photo*siteSM)
 #"#593d9cff","#cc6a70ff","#eb8055ff","#f9b641ff","#a65c85ff","#7e4e90ff", "cyan4"
 # pdf("figures/chill_forcing_4sites_interactions_mini.pdf", width =12, height = 12)
 # par(mfrow =c (2,2), mar = c(5.1, 5.1, 4.1, 2.1))
@@ -580,7 +610,7 @@ bb_lfc = a_sp[1]  + b_site2[1] * siteSM + b_site3[1] * siteSM + b_site4[1] * sit
 #        inset = 0.02, pch = c(19, 19 ),  cex = 1.25, bty = "n")
 #dev.off()
 
-intCF <- data.frame(bb_hfc = c(bb_hfc), bb_lfc = c(bb_lfc), chill = c(chill1))
+intCF <- data.frame(bb_hfc = c(bb_hfc),bb_hfc5 = c(bb_hfc5),bb_hfc95 = c(bb_hfc95), bb_lfc = c(bb_lfc), bb_lfc5 = c(bb_lfc5), bb_lfc95 = c(bb_lfc95), chill = c(chill1))
 
 intrxnCF <- ggplot(intCF, aes(x= chill, group =1)) +
   geom_line(aes(y = bb_hfc, col = "#2F5061"), size =1.5) +
@@ -597,6 +627,24 @@ intrxnCF <- ggplot(intCF, aes(x= chill, group =1)) +
   #scale_colour_discrete(labels=c("High forcing","Low forcing"), name = "") +
   theme(legend.title = element_blank())# +  annotate("text", x = -5.4, y = 125, label = "a)", cex = 10) 
 intrxnCF
+
+
+intrxnCF <- ggplot(intCF, aes(x= chill, group =1)) +
+  geom_line(aes(y = bb_hfc, col = "#2F5061"), size =1.5) +
+  geom_line(aes(y = bb_lfc, col = "#4297A0"), size = 1.5) + 
+   geom_ribbon(data = intCF, aes(ymin = bb_hfc5, ymax = bb_hfc95, x= chill), alpha = 0.2, fill = "sienna4") +
+  geom_ribbon(data = intCF, aes(ymin = bb_lfc5, ymax = bb_lfc95, x= chill), alpha = 0.2, fill = "tan2") + 
+  scale_color_manual(values = c("cyan4", "red"), labels = c("High forcing", "Low forcing","High forcing", "Low forcing"), name = "") +
+  xlab("Z-scored chill portions") + ylab("Estimated day of budburst") +
+  theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
+        panel.background = element_blank(), axis.line = element_line(colour = "black"),
+        axis.text = element_text(size = 15), axis.title = element_text(size = 20))+
+  theme(legend.key=element_blank(), legend.position=c(.8,.85),legend.text = element_text(size = 15)) +
+  #scale_fill_manual( labels = c("Low force", "High force")) +
+  scale_color_manual(values = c("sienna4","tan2"), labels = c("High forcing", "Low forcing"), name = "") +
+  #scale_colour_discrete(labels=c("High forcing","Low forcing"), name = "") +
+  theme(legend.title = element_blank())# +  annotate("text", x = -5.4, y = 125, label = "a)", cex = 10) 
+
 
 #"#E57F84","hotpink4"
 # #<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>#
@@ -1199,7 +1247,7 @@ sitePPoint
 
 l <- get_legend(sitePPoint) 
 
-pdf("figures/intrxnForceChill.pdf", height = 5, width = 5)
+pdf("figures/intrxnForceChill.pdf", height = 2, width = 2)
 intrxnCF
 dev.off()
 

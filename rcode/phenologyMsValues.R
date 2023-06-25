@@ -236,7 +236,7 @@ chillCue2.5 <- round(meanz4["Chilling",3],1)
 chillCue97.5 <- round(meanz4["Chilling",5],1)
 
 photoCue <- round(meanz4["Photoperiod",1],1)
-photoCueU <- round(quantile(fit$mu_b_photo, c(0.95)),1)
+photoCueU <- format(round(quantile(fit$mu_b_photo, c(0.95)),1), nsmall=1)
 photoCueL <- round(quantile(fit$mu_b_photo, c(0.05)),1)
 photoCue2.5 <- round(meanz4["Photoperiod",3],1)
 photoCue97.5 <- round(meanz4["Photoperiod",5],1)

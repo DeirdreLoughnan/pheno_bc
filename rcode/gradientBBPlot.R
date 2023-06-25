@@ -1162,10 +1162,11 @@ forcedotE <- ggplot(chillPtE,aes(y= force, x = meanBB, colour = "#f9b641ff"), si
   annotate("text", x = spTopE[8,5], y = -23.5, label = spTopE[8,2], cex = 6, angle = 78) +
   annotate("text", x = spTopE[9,5], y = -23.5, label = spTopE[9,2], cex = 6, angle = 78) +
   scale_fill_manual(values = c("#f9b641ff","#f9b641ff")) +
-  geom_segment(aes(x = 65, y = -2, xend = 65 , yend = -6),
+  geom_segment(aes(x = 65, y = 2, xend = 65 , yend = -3),
                arrow = arrow(length = unit(0.5, "cm")), col = "black") +
-  annotate("text", x = 65, y = -8, label = "Earlier", cex =5) 
+  annotate("text", x = 65, y = -5, label = "Earlier", cex =5) 
 forcedotE
+
 
 photodotE <- ggplot(chillPtE,aes(y= photo, x = meanBB, colour = "Photoperiod"), size = 7) +
   geom_point(size = 7, color = "cyan4", shape  = 17) +

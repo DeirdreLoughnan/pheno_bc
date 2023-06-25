@@ -394,7 +394,7 @@ upper <- rbind(azCueU, lambCueU,forceCueU, photoCueU, chillCueU, siteMPU, siteHF
 lower <- rbind(azCueL, lambCueL,forceCueL, photoCueL, chillCueL, siteMPL, siteHFL, siteSHL,intrxnPFL,intrxnCFL,intrxnCPL, forceMPL, photoMPL, chillMPL, forceHFL, photoHFL, chillHFL, forceSHL, photoSHL, chillSHL)
 meanz4 <- cbind(meanz4, lower, upper)
 
-print(xtable(meanz4, caption="Summary output from a phylogenetic Bayesian model in which species are partially pooled and phylogeny is included on the intercept. The model includes photoperiod and site as dummy variables, while the forcing and chilling effect is included as continuous. Parameter estimates were used to etimate day of budburst for sites under low cue conditions and for Smithers only when relevant.",label = "tab4Site"),include.rownames=TRUE, caption.placement="top", hline.after=c(-1,0))
+print(xtable(meanz4, caption="Summary output from a phylogenetic Bayesian model in which species are partially pooled and phylogeny is included on the intercept. The model includes photoperiod and site as dummy variables, while the forcing and chilling effect is included as continuous. Parameter estimates were used to estimate day of budburst for sites under low cue conditions and for Smithers only when relevant.",label = "tab4Site"),include.rownames=TRUE, caption.placement="top", hline.after=c(-1,0))
 
 @
 %dlJune23: it is not clear to me why talking about the baseline conditions is most relevant in the table caption (as per pdf comment), would it not be better in the caption of fig 2 and 3? 

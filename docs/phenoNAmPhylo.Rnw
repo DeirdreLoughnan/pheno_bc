@@ -113,7 +113,26 @@ Corresponding Author: Deirdre Loughnan, deirdre.loughnan@ubc.ca \\
 \item But also community specific responses---detect differences between Western and Eastern forest communities, and at different latitudes
 \end{enumerate}
 
-\section{Methods}
+\section{Materials and Methods}
+\begin{enumerate}
+\item Field sampling
+\begin{enumerate}
+\item Our analysis combines data from two growth chamber studies
+\item For details on the sampling and experimental set up of our easter populations --- see Flynn et al. 2018
+\item For our western species --- samples were collected for 21 species at sites around Smithers, British Columbia (lat \degree, long \degree) and E. C. Manning park, British Columbia (lat \degree, long \degree).
+\item We selected selected dominant decidous species, with 19 species occurring at both sites and two species occuring at a single site. 
+\item For each species we tagged 20 healthy, mature, individuals in the summer of 2019 and returned for sample collection in October 2019.
+\item Depending on individuals size, we collected between 1-10 cuttings from each individual, with samples being taken using a pole pruner from the ground.
+\item Samples were kept cold during sampling and transportation and placed in water upon returning to the University of British Columbia, Vancouver, Canada.
+\item
+\end{enumerate}
+\item Sample collection and treatments
+\item Data collected
+\begin{enumerate}
+\item We used daily weather data from local weather stations to calculate the field chilling experienced in the field.
+\end{enumerate}
+\item Model
+\end{enumerate}
 
 %emw1Jun2023 -- 'estimated for Smithers under a short photoperiod,' 'under low chilling conditions and short photoperiods' -- instead of stuff like this,  you should soon set a relevant level to be your intercept and define it in the methods. ... I think Smithers/low force/low photo/low chill is fine, but if you keep explaining it we'll confuse readers. 
 % I suggest we just say in the methods, we focus on results within 90% intervals to represent meaningful differences ... then use some common language here that is easier to read than the 'the 95\% uncertainty interval crosses zero' 

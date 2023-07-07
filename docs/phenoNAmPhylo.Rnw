@@ -113,26 +113,26 @@ Corresponding Author: Deirdre Loughnan, deirdre.loughnan@ubc.ca \\
 \item But also community specific responses---detect differences between Western and Eastern forest communities, and at different latitudes
 \end{enumerate}
 
-\section{Materials and Methods}
-\begin{enumerate}
-\item Field sampling
-\begin{enumerate}
-\item Our analysis combines data from two growth chamber studies
-\item For details on the sampling and experimental set up of our easter populations --- see Flynn et al. 2018
-\item For our western species --- samples were collected for 21 species at sites around Smithers, British Columbia (lat \degree, long \degree) and E. C. Manning park, British Columbia (lat \degree, long \degree).
-\item We selected selected dominant decidous species, with 19 species occurring at both sites and two species occuring at a single site. 
-\item For each species we tagged 20 healthy, mature, individuals in the summer of 2019 and returned for sample collection in October 2019.
-\item Depending on individuals size, we collected between 1-10 cuttings from each individual, with samples being taken using a pole pruner from the ground.
-\item Samples were kept cold during sampling and transportation and placed in water upon returning to the University of British Columbia, Vancouver, Canada.
-\item
-\end{enumerate}
-\item Sample collection and treatments
-\item Data collected
-\begin{enumerate}
-\item We used daily weather data from local weather stations to calculate the field chilling experienced in the field.
-\end{enumerate}
-\item Model
-\end{enumerate}
+% \section{Materials and Methods}
+% \begin{enumerate}
+% \item Field sampling
+% \begin{enumerate}
+% \item Our analysis combines data from two growth chamber studies
+% \item For details on the sampling and experimental set up of our easter populations --- see Flynn et al. 2018
+% \item For our western species --- samples were collected for 21 species at sites around Smithers, British Columbia (lat \degree, long \degree) and E. C. Manning park, British Columbia (lat \degree, long \degree).
+% \item We selected selected dominant decidous species, with 19 species occurring at both sites and two species occuring at a single site. 
+% \item For each species we tagged 20 healthy, mature, individuals in the summer of 2019 and returned for sample collection in October 2019.
+% \item Depending on individuals size, we collected between 1-10 cuttings from each individual, with samples being taken using a pole pruner from the ground.
+% \item Samples were kept cold during sampling and transportation and placed in water upon returning to the University of British Columbia, Vancouver, Canada.
+% \item
+% \end{enumerate}
+% \item Sample collection and treatments
+% \item Data collected
+% \begin{enumerate}
+% \item We used daily weather data from local weather stations to calculate the field chilling experienced in the field.
+% \end{enumerate}
+% \item Model
+% \end{enumerate}
 
 %emw1Jun2023 -- 'estimated for Smithers under a short photoperiod,' 'under low chilling conditions and short photoperiods' -- instead of stuff like this,  you should soon set a relevant level to be your intercept and define it in the methods. ... I think Smithers/low force/low photo/low chill is fine, but if you keep explaining it we'll confuse readers. 
 % I suggest we just say in the methods, we focus on results within 90% intervals to represent meaningful differences ... then use some common language here that is easier to read than the 'the 95\% uncertainty interval crosses zero' 
@@ -179,28 +179,18 @@ source("..//rcode/phenologyMsValues.R")
 
 
 \subsection*{Results + figures }
-\begin{enumerate}
-\item Budburst responses and interactions... 
-\begin {enumerate}
-\item On average, species budburst \Sexpr{meanBB} days after the start of forcing, but some species budburst as early as day \Sexpr{minBB} for \emph{Aronia melanocarpa} and as late as day \Sexpr{maxBB} for \emph{Quercus velutina} %emw3Jul -- at the end here you could add something like (all estimates given as mean $\pm$ 90 uncertainty intervals and budburst dates given as relative to baseline conditions, see methods for more details)
-\item Species budburst = strongly phylogenetically structured ($\lambda$ of \Sexpr{lamT}, UI: \Sexpr{lamTLower}, \Sexpr{lamTUpper})%, root trait value of \Sexpr{rootT}, UI: \Sexpr{rootTLower}, \Sexpr{rootTUpper}).
-\item All cues did lead to an advance in budburst date, chilling being strongest (\Sexpr{chillCue}, UI: \Sexpr{chillCueL}, \Sexpr{chillCueU}) and photoperiod weakest (\Sexpr{photoCue}, UI: \Sexpr{photoCueL}, \Sexpr{photoCueU}, Fig. \ref{fig:siteCues})
-\item But we observed strong interactions between cues and between cues and populations. %dlJune23: I modified this, but could also just cut it ... %emw3Jul -- before reading your notes I flagged 'and between cues and populations' as 'not right, right?' so I think you should cut it. Please correct me if you're wrong but there is not strong evidence that cues vary by population
-\item Forcing by chilling (\Sexpr{intrxnCF}, UI: \Sexpr{intrxnCFL}, \Sexpr{intrxnCFU}) = delaying effect = low chilling offset by high forcing (Fig. \ref{fig:intrxnCF} and see Table \ref{tab4Site} for model output).
-\end{enumerate}
 
-%emw1Jun2023 -- new paragraph suggested to transition better and break things up more:
-\item Transition between overall and sites with message: overall, population effects were small compared to differences between cues
-\begin{enumerate}
-\item Across all species, we observed considerable overlap in the responses of our four populations (Fig. \ref{fig:siteCues})
-\item Overall: Low forcing, chilling, and shorter photoperiods resulted in later estimated budburst dates than higher temperature and longer photoperiod treatments across all populations (Fig. \ref{fig:intrxn3} a-c) and across transects (Fig. \ref{fig:intrxn3}, see Table \ref{tab4Site} for model output).
+On average, we observed species budburst \Sexpr{meanBB} (\Sexpr{meanBBLower}, \Sexpr{meanBBUpper}) days after the start of our forcing and photoperiod treatments (all estimates are given as mean $\pm$ 90 uncertainty intervals and budburst dates given as relative to baseline conditions, see methods for more details). But some species, such as \emph{Aronia melanocarpa} budburst as early as day \Sexpr{minBB} to as late as day \Sexpr{maxBB} for \emph{Quercus velutina}. Species budburst was strongly phylogenetically structured ($\lambda$ of \Sexpr{lamT}, UI: \Sexpr{lamTLower}, \Sexpr{lamTUpper}). All cues did lead to an advance in budburst date, chilling being strongest of the three cues (\Sexpr{chillCue}, UI: \Sexpr{chillCueL}, \Sexpr{chillCueU}) and photoperiod weakest (\Sexpr{photoCue}, UI: \Sexpr{photoCueL}, \Sexpr{photoCueU}, Fig. \ref{fig:siteCues}). But we did observe a strong interaction between forcing and chilling (\Sexpr{intrxnCF}, UI: \Sexpr{intrxnCFL}, \Sexpr{intrxnCFU}), with produces a delaying effect. As a result of this interaction, low chilling effects are offset by high forcing comditions (Fig. \ref{fig:intrxnCF} and see Table \ref{tab4Site} for model output).\\
+
+Overall, population effects were small compared to differences between cues. Across all species, we observed considerable overlap in the responses of our four populations (Fig. \ref{fig:siteCues}). In general, low forcing, chilling, and shorter photoperiods resulted in later estimated budburst dates than higher temperature and longer photoperiod treatments across all populations (Fig. \ref{fig:intrxn3} a-c, shown for baseline conditions) and across transects (Fig. \ref{fig:intrxn3}, see Table \ref{tab4Site} for model output).
 %emw3Jul -- for below: the intervals overlap so I think you should rephrase; I edited it so see what you think. Again, say baseline conditions in the methods, maybe remind people parenthetically the first time in the results, but otherwise don't include. 
-\item Populations were similar in their overall budburst dates though marginally earlier for eastern populations (\Sexpr{meanEastEsti}, UI: \Sexpr{meanEastEstiU}, \Sexpr{meanEastEstiL}) compared to our western  populations (\Sexpr{meanWestEsti}, UI: \Sexpr{meanWestEstiU}, \Sexpr{meanWestEstiL}, see also Table \ref{tab4Site} for model output). 
+Populations were similar in their overall budburst dates, but eastern populations were marginally earlier (\Sexpr{meanEastEsti}, UI: \Sexpr{meanEastEstiU}, \Sexpr{meanEastEstiL}) compared to our western  populations (\Sexpr{meanWestEsti}, UI: \Sexpr{meanWestEstiU}, \Sexpr{meanWestEstiL}, see also Table \ref{tab4Site} for model output). \\
+
 %emw3Jul -- what was below here I moved up 
 % (\Sexpr{siteHF}, UI: \Sexpr{siteHFL}, \Sexpr{siteHFU} and \Sexpr{siteSH}, UI: \Sexpr{siteSHU}, \Sexpr{siteSHL} for Harvard Forest and St. Hippolyte respectively). Budburst of individuals from Manning park had a delayed response (\Sexpr{siteMP}, UI:\Sexpr{siteMPL}, \Sexpr{siteMPU}), although both western sites were similar in the estimated day of budburst across treatments  (producing highly overlapping bars between the high cue treatments across sites, Fig. \ref{fig:intrxn3}).
 % emw13Jun: I would report the mean for each transect with UI and then you could write more simply. Something like: However, populations differed in their their overall budburst dates ... Between the two transects eastern budburst dates were consistently earlier (mean +/- UI for eastern sites versus mean +/- UI for western sites, see also Table ID for model output)
 % dl23June: do you mean just the mean bb date across all species? Or in the pdf when you say add the posteriors and report the mean for each transect, you mean the means that are used to plot fig 3, based on low F, low P, low C etc. as the base condition?
-\end{enumerate}
+
 
 % emw13Jun: Looking at the current numbers these all seem to overlap a lot -- no? If so I would delete everything below and add something like the following to the end of the last paragraph (but tell me if I am missing something): Cue responses were similar across sites and transects (Fig 3, Table ID for model output). 
 % dlJune23: Yes they do, I simplied the below
@@ -235,35 +225,20 @@ source("..//rcode/phenologyMsValues.R")
 
 %\item Species differences....
 % \begin{enumerate}
-\item Individual species show distinct differences in their timing of bb and relative importance of cues.
-\begin{enumerate}
-\item Both chilling and forcing responses varied with budburst, with later bbing species having slightly stronger responses to each cue respectively (Fig. \ref{fig:cueGrad}).
+Individual species show distinct differences in their timing of bb and relative importance of cues. Both chilling and forcing responses varied with budburst, with later bbing species having slightly stronger responses to each cue respectively (Fig. \ref{fig:cueGrad}). But these differences are not due to plant architecture --- responses of both shrubs and trees were both very similar overall (Fig. \ref{supp-fig:cueST}). Many of our earliest budbursting species are shrub species, such as \emph{Cornus stolonifera}. This fits our predicted profile of shrub species having weaker chilling and forcing cue responses. But other shrub species exhibited the opposite response, with species like \emph{Menziesia ferruginea} and \emph{Symphoricarpos alba} budbursting relatively late and having higher chilling and forcing estimates (Fig. \ref{supp-fig:cueST}). Tree species, however, produced no strong trend. But individual species, such as \emph{Quercus velutina} did have stronger chilling and photoperiod responses as predicted, and \emph{Fagus grandifolia} produced the strongest photoperiod response of all our focal species.\\ % but others like \emph{Prunus pensylvanica}
 %emw3Jul -- the below several points read as almost contradictory so I would suggest the below re-ordering and rephrasing if accurate
 % \item While many of our earliest bb species were shrubs, e.g. \emph{Cornus stolonifera} --- fitting our predicted profile of weak chilling and forcing -- there was no overall effect of plant architecture --- shrubs and trees = very similar responses overall (Fig. \ref{supp-fig:cueST}). Indeed, other shrub species do not --- e.g. \emph{Menziesia ferruginea} and \emph{Symphoricarpos alba} = latest bb, but also higher chill and forcing estimates (Fig. \ref{supp-fig:cueST}).
 
-\item But these differences are not due to plant architecture --- shrubs and trees = very similar responses overall (Fig. \ref{supp-fig:cueST})
-\item Many of our earliest bb species are shrub species, e.g. \emph{Cornus stolonifera} --- fits our predicted profile of weak chilling and forcing
-\item But other shrub species do not --- e.g. \emph{Menziesia ferruginea} and \emph{Symphoricarpos alba} = latest bb, but also higher chill and forcing estimates (Fig. \ref{supp-fig:cueST}).
+% \item But these differences are not due to plant architecture --- shrubs and trees = very similar responses overall (Fig. \ref{supp-fig:cueST})
+% \item Many of our earliest bb species are shrub species, e.g. \emph{Cornus stolonifera} --- fits our predicted profile of weak chilling and forcing
+% \item But other shrub species do not --- e.g. \emph{Menziesia ferruginea} and \emph{Symphoricarpos alba} = latest bb, but also higher chill and forcing estimates (Fig. \ref{supp-fig:cueST}).
 % %Nov15DL: Menfer does have a different floral structure compared to other species, with both the floral and leaf buds clustered together. But there was nothing strickenly odd about the plant, nothing noted in Pojar plant guides to indicate unique ecology, based on web of science searches there is a fungus-root association in alpine populations, but there are no publications with phenology
-\item Tree species = no strong trends, but e.g. \emph{Quercus velutina} = stronger chilling and photoperiod responses as predicted, and \emph{Fagus grandifolia} = strongest photoperiod response % but others like \emph{Prunus pensylvanica}
-\end{enumerate}
 
-\item Results show the relative importance of phenological cues to variation across species, but trends were weak.
-\begin{enumerate}
-\item We observed relatively weak gradients in species' responses to cues across the period of budburst (Fig. \ref{fig:cueGrad}) %emw3Jul -- probably need to spell this out as you write this up with some examples like 'early species such as XX had as strong chilling and forcing cues as much later species such as. YY...'
-\item For our western species, \Sexpr{diffBAWest}\% of the estimated bb was due to the species intercept, while \Sexpr{diffBAEast}\% of the estimated bb of eastern species was due to their species intercepts (Fig. \ref{fig:betaAlphaGrad}).  
+
+Our results depict the relative importance of phenological cues to variation across species, but trends were weak. We observed relatively weak gradients in species' responses to cues across the period of budburst (Fig. \ref{fig:cueGrad}).  %emw3Jul -- probably need to spell this out as you write this up with some examples like 'early species such as XX had as strong chilling and forcing cues as much later species such as. YY...'
+For our western species, \Sexpr{diffBAWest}\% of the estimated budburst was due to the species intercept, while \Sexpr{diffBAEast}\% of the estimated budburst of eastern species was due to their species intercepts (Fig. \ref{fig:betaAlphaGrad}).  
 %emw3Jul -- When you go to write up the results I would keep this last and as a short separate paragraph with the idea of 'but suggest they are not the primary drivers of budburst differences across species' as the topic of that paragraph
-\item Species level differences (intercept) explain considerable portion of bb (Fig. \ref{fig:betaAlphaGrad}) 
-\end{enumerate}
-% \end{enumerate}
-
-% \item Species budburst did show a considerable gradient across our assemblage of species, but this was not well explained by variation in trait responses (Fig. \ref{fig:betaAlphaGrad} and \ref{fig:cueGrad}.
-% \begin{enumerate}
-% \item Substantial portion of species budburst date is explained by species-level differences (Fig. \ref{fig:betaAlphaGrad} c and d)
-% \item We do see slight gradients iwth later species having stronger chilling and forcing responses, especially in the western transect
-% \item But no real trend with photoperiod
-% \end{enumerate}
- \end {enumerate}
+Species level differences (intercept) explain considerable portion of bb (Fig. \ref{fig:betaAlphaGrad}).\\
 
 \section*{Discussion}
 

@@ -113,26 +113,24 @@ Corresponding Author: Deirdre Loughnan, deirdre.loughnan@ubc.ca \\
 \item But also community specific responses---detect differences between Western and Eastern forest communities, and at different latitudes
 \end{enumerate}
 
-% \section{Materials and Methods}
+\section{Materials and Methods}
 % \begin{enumerate}
-% \item Field sampling
-% \begin{enumerate}
-% \item Our analysis combines data from two growth chamber studies
-% \item For details on the sampling and experimental set up of our easter populations --- see Flynn et al. 2018
-% \item For our western species --- samples were collected for 21 species at sites around Smithers, British Columbia (lat \degree, long \degree) and E. C. Manning park, British Columbia (lat \degree, long \degree).
-% \item We selected selected dominant decidous species, with 19 species occurring at both sites and two species occuring at a single site. 
-% \item For each species we tagged 20 healthy, mature, individuals in the summer of 2019 and returned for sample collection in October 2019.
-% \item Depending on individuals size, we collected between 1-10 cuttings from each individual, with samples being taken using a pole pruner from the ground.
-% \item Samples were kept cold during sampling and transportation and placed in water upon returning to the University of British Columbia, Vancouver, Canada.
-% \item
-% \end{enumerate}
-% \item Sample collection and treatments
-% \item Data collected
-% \begin{enumerate}
-% \item We used daily weather data from local weather stations to calculate the field chilling experienced in the field.
-% \end{enumerate}
-% \item Model
-% \end{enumerate}
+\subsection{Field sampling}
+Our analysis combines data from two growth chamber studies using samples taken from two eastern populations---Harvard Forest, Massachusetts, USA (lat \degree, long \degree) and St. Hippolyte, Quebec, Canada (lat \degree,long \degree)---and two western populations---E.C. Manning Park (lat \degree, long \degree) and Smithers (lat \degree,long \degree), British Columbia, Canada. For details on the sampling and experimental set up of our eastern populations, see \cite{Flynn2018}.\\
+
+
+For our western species, samples were collected for 21 species at sites around Smithers, British Columbia (lat \degree, long \degree) and E. C. Manning park, British Columbia (lat \degree, long \degree). We selected dominant decidous species from the native forest community to use in this study, with 19 species occurring at both sites and two additional species occuring at a single site. For each species in each population, we tagged 20 healthy, mature, individuals in the summer of 2019 and returned for sample collection in October 2019. Depending on individuals size, we collected between 1-10 cuttings from each tagged plant, with samples being taken using a pole pruner from the ground. We kept samples cold during sampling and transportation back to the University of British Columbia, British Columbia,Canada.
+
+\subsection{Growth chamber study}
+
+We replicated the general study design and methods used by \cite{Flynn2018} for the growth chamber study of western species. Branch cuttings were kept in water in Erlenmyer flasks. We re-cut each branch  weekly to prevent callusing and changed the water in flasks at the same time. Our experiment consisted of eight experimental treatments, with two forcing treatments---a cool regime of 15\degree C:5\degree C and a warm regime of 20\degree C:10\degree C---two chilling treatments---30 or 70 days at 4\degree C---and two levels of photoperiods of either 8h or 12h of daylengths. For each treatment we had eight replicates, with the exception of \emph{Sorbus sco}, for which we were only able to collect sufficient samples to have six replicates per treatment. All chilling occured in one chamber, while treatments spanned eight growth chambers. To limit the effects of individual chambers and flask positions, we roatated samples within and across chambers biweekly. 
+
+Phenological observations of budburst were assessed using the BBCH scale, adapted for both tree species and our specific species \citep{Finn2007}. We observed each sample every 2-3 days for the \Sexpr{expLength}.
+
+\subsection{Statistical Analysis}
+
+We used daily weather data from local weather stations to calculate the field chilling experienced in the field.
+
 
 %emw1Jun2023 -- 'estimated for Smithers under a short photoperiod,' 'under low chilling conditions and short photoperiods' -- instead of stuff like this,  you should soon set a relevant level to be your intercept and define it in the methods. ... I think Smithers/low force/low photo/low chill is fine, but if you keep explaining it we'll confuse readers. 
 % I suggest we just say in the methods, we focus on results within 90% intervals to represent meaningful differences ... then use some common language here that is easier to read than the 'the 95\% uncertainty interval crosses zero' 

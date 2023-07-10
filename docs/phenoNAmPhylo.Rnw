@@ -125,11 +125,21 @@ For our western species, samples were collected for 21 species at sites around S
 
 We replicated the general study design and methods used by \cite{Flynn2018} for the growth chamber study of western species. Branch cuttings were kept in water in Erlenmyer flasks. We re-cut each branch  weekly to prevent callusing and changed the water in flasks at the same time. Our experiment consisted of eight experimental treatments, with two forcing treatments---a cool regime of 15\degree C:5\degree C and a warm regime of 20\degree C:10\degree C---two chilling treatments---30 or 70 days at 4\degree C---and two levels of photoperiods of either 8h or 12h of daylengths. For each treatment we had eight replicates, with the exception of \emph{Sorbus sco}, for which we were only able to collect sufficient samples to have six replicates per treatment. All chilling occured in one chamber, while treatments spanned eight growth chambers. To limit the effects of individual chambers and flask positions, we roatated samples within and across chambers biweekly. 
 
-Phenological observations of budburst were assessed using the BBCH scale, adapted for both tree species and our specific species \citep{Finn2007}. We observed each sample every 2-3 days for the \Sexpr{expLength}.
+Phenological observations of budburst were assessed using the BBCH scale, adapted for both tree species and our specific species \citep{Finn2007}. We observed each sample every 2-3 days for \Sexpr{expLength} days. We recorded all phenological stages up to full leaf expansion (defined as code 17 by \cite{Finn2007}), but here we present the response in budburst date, which we define as the day of budbreak or shoot elongation (defined as code 07 by \cite{Finn2007}). In total we made \Sexpre{totalObs} phenological observations across all samples.
 
 \subsection{Statistical Analysis}
+% add info about phylogeny! How does Nacho describe the model?
+For our analysis, we used a phylogenetic mixed effect model that allowed us to account for both the evolutionary relatedness of our species, and estimate the cue responses at and across species and sites. We used daily weather data from local weather stations to calculate the field chilling experienced in the field and calculate chill portions for each level of chilling across the two studies. Forcing and chilling were included as continous variables in our model, and photoperiod and site as dummy variables. In addition to these overall predictors, we included all two-way interactions between cues and cues and sites. Finally we included parital pooling across species:
 
-We used daily weather data from local weather stations to calculate the field chilling experienced in the field.
+Model code
+
+We used informative priors for each of our model parameters, validating the model code using test data prior to analysis. Our model produced Rhat values close to one and \emph{n_eff} values that exceeded 10\% of the model iterations. Our model produced well mixed chains.
+
+In our figures of model estimates, we visualized the baseline conditions of low...
+
+Our model was fitted using the Stan Bayesian language \citep{Carpenter2017} using the rstan package (version) in R \citep{RDevelopers} (version)
+
+
 
 
 %emw1Jun2023 -- 'estimated for Smithers under a short photoperiod,' 'under low chilling conditions and short photoperiods' -- instead of stuff like this,  you should soon set a relevant level to be your intercept and define it in the methods. ... I think Smithers/low force/low photo/low chill is fine, but if you keep explaining it we'll confuse readers. 

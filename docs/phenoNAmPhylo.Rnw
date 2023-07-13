@@ -67,7 +67,10 @@ Corresponding Author: Deirdre Loughnan, deirdre.loughnan@ubc.ca \\
 
 
 \section*{Introduction}
+<<label=runcode1,  echo=FALSE>>=
 
+source("..//rcode/phenologyMsValues.R")
+@
 \begin{enumerate}
 \item Plant phenology is changing with climate change:
 \begin{enumerate}
@@ -112,28 +115,43 @@ Corresponding Author: Deirdre Loughnan, deirdre.loughnan@ubc.ca \\
 \item Allows us to detect general trends in how bb of N Am. woody plants respond to forcing, chilling, photoperiod 
 \item But also community specific responses---detect differences between Western and Eastern forest communities, and at different latitudes
 \end{enumerate}
+\end{enumerate}
 
 \section{Materials and Methods}
 % \begin{enumerate}
 \subsection{Field sampling}
-Our analysis combines data from two growth chamber studies using samples taken from two eastern populations---Harvard Forest, Massachusetts, USA (lat \degree, long \degree) and St. Hippolyte, Quebec, Canada (lat \degree,long \degree)---and two western populations---E.C. Manning Park (lat \degree, long \degree) and Smithers (lat \degree,long \degree), British Columbia, Canada. For details on the sampling and experimental set up of our eastern populations, see \cite{Flynn2018}.\\
+ Our analysis combines data from two growth chamber studies using samples taken from two eastern populations---Harvard Forest, Massachusetts, USA (lat, long) and St. Hippolyte, Quebec, Canada (lat, long)---and two western populations---E.C. Manning Park (lat, long) and Smithers (lat, long), British Columbia, Canada. For details on the sampling and experimental set up of our eastern populations, see (cite Flynn).\\
 
 
-For our western species, samples were collected for 21 species at sites around Smithers, British Columbia (lat \degree, long \degree) and E. C. Manning park, British Columbia (lat \degree, long \degree). We selected dominant decidous species from the native forest community to use in this study, with 19 species occurring at both sites and two additional species occuring at a single site. For each species in each population, we tagged 20 healthy, mature, individuals in the summer of 2019 and returned for sample collection in October 2019. Depending on individuals size, we collected between 1-10 cuttings from each tagged plant, with samples being taken using a pole pruner from the ground. We kept samples cold during sampling and transportation back to the University of British Columbia, British Columbia,Canada.
+For our western species, samples were collected for 21 species at sites around Smithers, British Columbia (lat, long) and E. C. Manning park, British Columbia (lat, long). We selected dominant decidous species from the native forest community to use in this study, with 19 species occurring at both sites and two additional species occuring at a single site. For each species in each population, we tagged 20 healthy, mature, individuals in the summer of 2019 and returned for sample collection in October 2019. Depending on individuals size, we collected between 1-10 cuttings from each tagged plant, with samples being taken using a pole pruner from the ground. We kept samples cold during sampling and transportation back to the University of British Columbia, British Columbia,Canada.
 
 \subsection{Growth chamber study}
 
-We replicated the general study design and methods used by \cite{Flynn2018} for the growth chamber study of western species. Branch cuttings were kept in water in Erlenmyer flasks. We re-cut each branch  weekly to prevent callusing and changed the water in flasks at the same time. Our experiment consisted of eight experimental treatments, with two forcing treatments---a cool regime of 15\degree C:5\degree C and a warm regime of 20\degree C:10\degree C---two chilling treatments---30 or 70 days at 4\degree C---and two levels of photoperiods of either 8h or 12h of daylengths. For each treatment we had eight replicates, with the exception of \emph{Sorbus sco}, for which we were only able to collect sufficient samples to have six replicates per treatment. All chilling occured in one chamber, while treatments spanned eight growth chambers. To limit the effects of individual chambers and flask positions, we roatated samples within and across chambers biweekly. 
-
-Phenological observations of budburst were assessed using the BBCH scale, adapted for both tree species and our specific species \citep{Finn2007}. We observed each sample every 2-3 days for \Sexpr{expLength} days. We recorded all phenological stages up to full leaf expansion (defined as code 17 by \cite{Finn2007}), but here we present the response in budburst date, which we define as the day of budbreak or shoot elongation (defined as code 07 by \cite{Finn2007}). In total we made \Sexpre{totalObs} phenological observations across all samples.
+We replicated the general study design and methods used by ( cite Flynn2018) for the growth chamber study of western species. Branch cuttings were kept in water in Erlenmyer flasks. We re-cut each branch  weekly to prevent callusing and changed the water in flasks at the same time. Our experiment consisted of eight experimental treatments, with two forcing treatments---a cool regime of 15$^{\circ}$C:5$^{\circ}$C and a warm regime of 20$^{\circ}$C:10$^{\circ}$C---two chilling treatments---30 or 70 days at 4$^{\circ}$C---and two levels of photoperiods of either 8h or 12h of daylengths. For each treatment we had eight replicates, with the exception of \emph{Sorbus sco}, for which we were only able to collect sufficient samples to have six replicates per treatment. All chilling occured in one chamber, while treatments spanned eight growth chambers. To limit the effects of individual chambers and flask positions, we roatated samples within and across chambers biweekly.
+% 
+Phenological observations of budburst were assessed using the BBCH scale, adapted for both tree species and our specific species (cite Finn2007). We observed each sample every 2-3 days for \Sexpr{expLength} days. We recorded all phenological stages up to full leaf expansion (defined as code 17 by (cite Finn2007)), but here we present the response in budburst date, which we define as the day of budbreak or shoot elongation (defined as code 07 by (cite Finn2007)). In total we made \Sexpr{totalObs} phenological observations across all samples.
 
 \subsection{Statistical Analysis}
 % add info about phylogeny! How does Nacho describe the model?
-For our analysis, we used a phylogenetic mixed effect model that allowed us to account for both the evolutionary relatedness of our species, and estimate the cue responses at and across species and sites. We used daily weather data from local weather stations to calculate the field chilling experienced in the field and calculate chill portions for each level of chilling across the two studies. Forcing and chilling were included as continous variables in our model, and photoperiod and site as dummy variables. In addition to these overall predictors, we included all two-way interactions between cues and cues and sites. Finally we included parital pooling across species:
+For our analysis, we used a phylogenetic mixed effect model that allowed us to account for both the evolutionary relatedness of our species, and estimate the cue responses at and across species and sites. We used daily weather data from local weather stations to calculate the field chilling experienced in the field and calculate chill portions for each level of chilling across the two studies. Forcing and chilling were included as continous variables in our model, and photoperiod and site as dummy variables. In addition to these overall predictors, we included all two-way interactions between cues and cues and sites. Finally we included parital pooling across species:\\
 
-Model code
+\begin{align*}
+&\hat{y}_i \sim \text{Normal}(\alpha_{sp_i} + \beta_{site2} + \beta_{site3} + \beta_{site4} + \\
+&\beta_{chill_{sp_i}} + \beta_{force_{sp_i}} + \beta_{photo_{sp_i}} + \\
+& \beta_{force \times chilling_{sp_i}} + \beta_{chilling \times photo_{sp_i}} + \beta_{photoperiod \times chilling_{sp_i}}  + \\
+&\beta_{force \times site2_{sp_i}} + \beta_{force \times site3_{sp_i}}+ \beta_{force \times site4_{sp_i}} + \\
+&\beta_{chilling \times site2_{sp_i}} + \beta_{chilling \times site3_{sp_i}} + \beta_{chilling \times site4_{sp_i}} + \\
+&\beta_{photoperiod \times site2_{sp_i}} + \beta_{photoperiod \times site3_{sp_i}} + \beta_{photoperiod \times site4_{sp_i}})\\
+\end{align*}
+\\
 
-We used informative priors for each of our model parameters, validating the model code using test data prior to analysis. Our model produced Rhat values close to one and \emph{n_eff} values that exceeded 10\% of the model iterations. Our model produced well mixed chains.
+\begin{align*}
+&\beta_{force_{sp}} \sim \text{Normal} (\mu_{force_{sp}}, \sigma^2_{force}) \\
+&\ldots \\
+&\beta_{photoperiod \times site4} \sim \text{Normal} (\mu_{photoperiod \times site4}, \sigma^2_{photoperiod \times site4})\\
+\end{align*}
+
+We used informative priors for each of our model parameters, validating the model code using test data prior to analysis. Our model produced Rhat values close to one and \emph{$n_eff$} values that exceeded 10\% of the model iterations. Our model produced well mixed chains.
 
 In our figures of model estimates, we visualized the baseline conditions of low...
 
@@ -150,12 +168,9 @@ Our model was fitted using the Stan Bayesian language \citep{Carpenter2017} usin
 \begin{enumerate}
 \item Are species responses to chilling, forcing and photoperiod phylogenetically structured?
 \item How do species in deciduous forests communities across North America respond differently to varying cues? 
-\end {enumerate}
-\end{enumerate}
-<<label=runcode1,  echo=FALSE>>=
 
-source("..//rcode/phenologyMsValues.R")
-@
+\end{enumerate}
+
 
 %dlJun23: 
 % I still need to update Fig 1 to show the 50% and 90% 

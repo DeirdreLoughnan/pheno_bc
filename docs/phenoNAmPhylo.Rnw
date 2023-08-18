@@ -103,7 +103,7 @@ source("..//rcode/phenologyMsValues.R")
 
 \item Understanding species specific responses to cues is critical for predicting future climate change impacts across forest communities and for the species within them. %emw3Jul -- this feels a little contradictory to 2c above ... as a reader I am not sure if I should care about population or species effects, but the beauty of your paper is you have both, so you just need to be nuanced in how you present them. I like the angle hinted at here of pulling them together with a forecasting focus as your paper's angle, especially as you're thinking about community assembly (so we care how species assemble, but they assemble in unique populations over space -- this is nice angle). 
 \begin{enumerate}
-\item In many ecosystems winter and spring temperatures are increasing with climate change = faster accumulation of chilling and forcing (Guy2014) 
+\item In many ecosystems winter and spring temperatures are increasing with climate change = faster accumulation of chilling and forcing \citep{Guy2014}
 \item Spp with strong photoperiod cues would be limited in their ability to advance (Korner2010)
 \item Knowing whether there are geographic trends in species responses will allow us to predict how local changes in climate will effect species phenology and ultimately species coexistence
 \end{enumerate}
@@ -117,23 +117,33 @@ source("..//rcode/phenologyMsValues.R")
 \end{enumerate}
 \end{enumerate}
 
-\section{Materials and Methods}
+\section*{Research questions}
+%emw3Jul -- as you start working on intro I would adjust these -- the phylogeny should be sub-important and other questions should be first and more important I think; strong phylogenetic patterning is cool and important to consider in assembly, but that's not the BIG focus of your paper. 
+\begin{enumerate}
+\item Are species responses to chilling, forcing and photoperiod phylogenetically structured?
+\item How do species in deciduous forests communities across North America respond differently to varying cues? 
+\end{enumerate}
+
+
+\section*{Materials and Methods}
 % \begin{enumerate}
 \subsection{Field sampling}
- Our analysis combines data from two growth chamber studies using samples taken from two eastern populations---Harvard Forest, Massachusetts, USA (lat, long) and St. Hippolyte, Quebec, Canada (lat, long)---and two western populations---E.C. Manning Park (lat, long) and Smithers (lat, long), British Columbia, Canada. For details on the sampling and experimental set up of our eastern populations, see (cite Flynn).\\
+For our analysis we combined data from two separate growth chamber studies. The first was conducted in 2015 using samples taken from two eastern populations---Harvard Forest, Massachusetts, USA (42.55$^{\circ}$N, 72.20$^{\circ}$W) and St. Hippolyte, Quebec, Canada (45.98$^{\circ}$N, 74.01$^{\circ}$W). For details on the sampling and experimental set up of our eastern populations, see \citep{Flynn2018}. The second growth chamber study was conducted over the winter of 2019-2020 and spanned two western populations---E.C. Manning Park (49.06$^{\circ}$N, 120.78$^{\circ}$W) and Smithers (54.78$^{\circ}$N, 127.17$^{\circ}$W), British Columbia, Canada. \\
 
+For our western study, samples were collected for 21 dominatn woody species at both sides, with 19 of those species occurring in both populations and two species sampled at only one site. For each species in each population, we tagged 20 healthy, mature, individuals in the summer of 2019 and returned for sample collection in October 2019, miniming the extent of field chilling. Depending on individuals size, we collected between 1-10 cuttings from each tagged plant, with samples being taken using a pole pruner from the ground. We kept samples cold during sampling and transportation back to the University of British Columbia, British Columbia, Canada.
 
-For our western species, samples were collected for 21 species at sites around Smithers, British Columbia (lat, long) and E. C. Manning park, British Columbia (lat, long). We selected dominant decidous species from the native forest community to use in this study, with 19 species occurring at both sites and two additional species occuring at a single site. For each species in each population, we tagged 20 healthy, mature, individuals in the summer of 2019 and returned for sample collection in October 2019. Depending on individuals size, we collected between 1-10 cuttings from each tagged plant, with samples being taken using a pole pruner from the ground. We kept samples cold during sampling and transportation back to the University of British Columbia, British Columbia,Canada.
+\subsection*{Western growth chamber study}
 
-\subsection{Growth chamber study}
+We replicated the general study design and methods used by \cite{Flynn2018} for the growth chamber study of western species. %DLAug17L is it ok to say the above and omit the below text:
+%Branch cuttings were kept in water in Erlenmyer flasks. We re-cut each branch  weekly to prevent callusing and changed the water in flasks at the same time. 
+Our experiment consisted of eight replicates for each species across eight experimental treatments, with the exception of \emph{Sorbus scopulina}, for which we we only had six replicates per treatment. Our treatments included two levels of forcing---a cool regime of 15$^{\circ}$C:5$^{\circ}$C and a warm regime of 20$^{\circ}$C:10$^{\circ}$C---two levels of chilling---30 or 70 days at 4$^{\circ}$C---and two photoperiods of either 8 or 12 hours. Using daily weather data from local weather stations we calculated the field chilling experienced by samples prior to collection and used chill portions as our chilling levels.  
+%DLAug17L is the below level of detail too much?
+%All chilling occurred in one chamber, while treatments spanned eight growth chambers. To limit the effects of individual chambers and flask positions, we roatated samples within and across chambers biweekly.
 
-We replicated the general study design and methods used by ( cite Flynn2018) for the growth chamber study of western species. Branch cuttings were kept in water in Erlenmyer flasks. We re-cut each branch  weekly to prevent callusing and changed the water in flasks at the same time. Our experiment consisted of eight experimental treatments, with two forcing treatments---a cool regime of 15$^{\circ}$C:5$^{\circ}$C and a warm regime of 20$^{\circ}$C:10$^{\circ}$C---two chilling treatments---30 or 70 days at 4$^{\circ}$C---and two levels of photoperiods of either 8h or 12h of daylengths. For each treatment we had eight replicates, with the exception of \emph{Sorbus sco}, for which we were only able to collect sufficient samples to have six replicates per treatment. All chilling occured in one chamber, while treatments spanned eight growth chambers. To limit the effects of individual chambers and flask positions, we roatated samples within and across chambers biweekly.
-% 
-Phenological observations of budburst were assessed using the BBCH scale, adapted for both tree species and our specific species (cite Finn2007). We observed each sample every 2-3 days for \Sexpr{expLength} days. We recorded all phenological stages up to full leaf expansion (defined as code 17 by (cite Finn2007)), but here we present the response in budburst date, which we define as the day of budbreak or shoot elongation (defined as code 07 by (cite Finn2007)). In total we made \Sexpr{totalObs} phenological observations across all samples.
+Phenological observations of budburst were assessed using the BBCH scale, adapted for our specific species \citep{Finn2007}. We observed each sample every 1-3 days for \Sexpr{expLength} days. We recorded all phenological stages up to full leaf expansion (defined as code 17 by \cite{Finn2007}), but here we present the response in budburst date, which we define as the day of budbreak or shoot elongation (defined as code 07 by \cite{Finn2007}). In total we made \Sexpr{totalObs} phenological observations across all samples.
 
-\subsection{Statistical Analysis}
-% add info about phylogeny! How does Nacho describe the model?
-For our analysis, we used a phylogenetic mixed effect model that allowed us to account for both the evolutionary relatedness of our species, and estimate the cue responses at and across species and sites. We used daily weather data from local weather stations to calculate the field chilling experienced in the field and calculate chill portions for each level of chilling across the two studies. Forcing and chilling were included as continous variables in our model, and photoperiod and site as dummy variables. In addition to these overall predictors, we included all two-way interactions between cues and cues and sites. Finally we included parital pooling across species:\\
+\subsection*{Statistical Analysis}
+To test for differences in cue responses across species and populations, we used a phylogenetic mixed effect model with partial pooling across species. This approach allowed us to account for both the evolutionary relatedness of our species, and estimate the species level cue responses and differences across sites.  Species phylogenetic related was obtained by pruning the \cite{Smith2018} megatree of angiosperms. Forcing and chill portions were included as continous variables in our model, and photoperiod and site as dummy variables. In addition to these overall predictors, we included all two-way interactions between cues and cues and sites:\\
 
 \begin{align*}
 &\hat{y}_i \sim \text{Normal}(\alpha_{sp_i} + \beta_{site2} + \beta_{site3} + \beta_{site4} + \\
@@ -151,30 +161,13 @@ For our analysis, we used a phylogenetic mixed effect model that allowed us to a
 &\beta_{photoperiod \times site4} \sim \text{Normal} (\mu_{photoperiod \times site4}, \sigma^2_{photoperiod \times site4})\\
 \end{align*}
 
-We used informative priors for each of our model parameters, validating the model code using test data prior to analysis. Our model produced Rhat values close to one and \emph{$n_eff$} values that exceeded 10\% of the model iterations. Our model produced well mixed chains.
-
-In our figures of model estimates, we visualized the baseline conditions of low...
-
-Our model was fitted using the Stan Bayesian language \citep{Carpenter2017} using the rstan package (version) in R \citep{RDevelopers} (version)
-
-
-
+We used informative priors for each of our model parameters, validating the model code using test data prior to analysis. Our model produced Rhat values close to one, well mixed chains, and \emph{$n_{eff}$} values that exceeded 10\% of the model iterations. Our model was fitted using the Stan Bayesian language \citep{rstan2018} using the rstan package (version) in R \citep{R} (version). In our figures of model estimates, we visualized the baseline conditions, which we define as our low chilling, low forcing, and short photoperiod treatments, and when relevant for our Smithers population.
 
 %emw1Jun2023 -- 'estimated for Smithers under a short photoperiod,' 'under low chilling conditions and short photoperiods' -- instead of stuff like this,  you should soon set a relevant level to be your intercept and define it in the methods. ... I think Smithers/low force/low photo/low chill is fine, but if you keep explaining it we'll confuse readers. 
 % I suggest we just say in the methods, we focus on results within 90% intervals to represent meaningful differences ... then use some common language here that is easier to read than the 'the 95\% uncertainty interval crosses zero' 
 
-\section*{Research questions}
-%emw3Jul -- as you start working on intro I would adjust these -- the phylogeny should be sub-important and other questions should be first and more important I think; strong phylogenetic patterning is cool and important to consider in assembly, but that's not the BIG focus of your paper. 
-\begin{enumerate}
-\item Are species responses to chilling, forcing and photoperiod phylogenetically structured?
-\item How do species in deciduous forests communities across North America respond differently to varying cues? 
-
-\end{enumerate}
-
-
 %dlJun23: 
 % I still need to update Fig 1 to show the 50% and 90% 
-
 
 %emw1Jun2023
 % Nice work finalizing the models! Now I think we can hone in on organizing the results, which means thinking more about how we might want to organize them (including the figures). One natural option would be across species (overall cues), then species, then site level differences. But you have currently: across species, site level and then species. I think this can work and makes sense (though, given your results, I would consider switching for the discussion to put sites later). I edited towards what you have already here (across species, site level and then species).
@@ -201,7 +194,7 @@ Our model was fitted using the Stan Bayesian language \citep{Carpenter2017} usin
 % Speaking of which I would try to avoid getting stuck in 'cue response' land and aim for 'responses' when possible. You also write 'forcing cue' etc. a lot -- why not just 'forcing'?
 
 
-\subsection*{Results + figures }
+\subsection*{Results}
 
 On average, we observed species budburst \Sexpr{meanBB} (\Sexpr{meanBBLower}, \Sexpr{meanBBUpper}) days after the start of our forcing and photoperiod treatments (all estimates are given as mean $\pm$ 90 uncertainty intervals and budburst dates given as relative to baseline conditions, see methods for more details). But some species, such as \emph{Aronia melanocarpa} budburst as early as day \Sexpr{minBB} to as late as day \Sexpr{maxBB} for \emph{Quercus velutina}. Species budburst was strongly phylogenetically structured ($\lambda$ of \Sexpr{lamT}, UI: \Sexpr{lamTLower}, \Sexpr{lamTUpper}). All cues did lead to an advance in budburst date, chilling being strongest of the three cues (\Sexpr{chillCue}, UI: \Sexpr{chillCueL}, \Sexpr{chillCueU}) and photoperiod weakest (\Sexpr{photoCue}, UI: \Sexpr{photoCueL}, \Sexpr{photoCueU}, Fig. \ref{fig:siteCues}). But we did observe a strong interaction between forcing and chilling (\Sexpr{intrxnCF}, UI: \Sexpr{intrxnCFL}, \Sexpr{intrxnCFU}), with produces a delaying effect. As a result of this interaction, low chilling effects are offset by high forcing comditions (Fig. \ref{fig:intrxnCF} and see Table \ref{tab4Site} for model output).\\
 
@@ -252,16 +245,14 @@ Individual species show distinct differences in their timing of bb and relative 
 %emw3Jul -- the below several points read as almost contradictory so I would suggest the below re-ordering and rephrasing if accurate
 % \item While many of our earliest bb species were shrubs, e.g. \emph{Cornus stolonifera} --- fitting our predicted profile of weak chilling and forcing -- there was no overall effect of plant architecture --- shrubs and trees = very similar responses overall (Fig. \ref{supp-fig:cueST}). Indeed, other shrub species do not --- e.g. \emph{Menziesia ferruginea} and \emph{Symphoricarpos alba} = latest bb, but also higher chill and forcing estimates (Fig. \ref{supp-fig:cueST}).
 
-% \item But these differences are not due to plant architecture --- shrubs and trees = very similar responses overall (Fig. \ref{supp-fig:cueST})
+% \item But these differences are not due to plant axrchitecture --- shrubs and trees = very similar responses overall (Fig. \ref{supp-fig:cueST})
 % \item Many of our earliest bb species are shrub species, e.g. \emph{Cornus stolonifera} --- fits our predicted profile of weak chilling and forcing
 % \item But other shrub species do not --- e.g. \emph{Menziesia ferruginea} and \emph{Symphoricarpos alba} = latest bb, but also higher chill and forcing estimates (Fig. \ref{supp-fig:cueST}).
 % %Nov15DL: Menfer does have a different floral structure compared to other species, with both the floral and leaf buds clustered together. But there was nothing strickenly odd about the plant, nothing noted in Pojar plant guides to indicate unique ecology, based on web of science searches there is a fungus-root association in alpine populations, but there are no publications with phenology
 
 
-Our results depict the relative importance of phenological cues to variation across species, but trends were weak. We observed relatively weak gradients in species' responses to cues across the period of budburst (Fig. \ref{fig:cueGrad}).  %emw3Jul -- probably need to spell this out as you write this up with some examples like 'early species such as XX had as strong chilling and forcing cues as much later species such as. YY...'
-For our western species, \Sexpr{diffBAWest}\% of the estimated budburst was due to the species intercept, while \Sexpr{diffBAEast}\% of the estimated budburst of eastern species was due to their species intercepts (Fig. \ref{fig:betaAlphaGrad}).  
-%emw3Jul -- When you go to write up the results I would keep this last and as a short separate paragraph with the idea of 'but suggest they are not the primary drivers of budburst differences across species' as the topic of that paragraph
-Species level differences (intercept) explain considerable portion of bb (Fig. \ref{fig:betaAlphaGrad}).\\
+Our results depict the relative importance of phenological cues to variation across species, but trends were weak, suggesting they are not the primary drivers of species differences in budburst. We observed relatively weak gradients in species' responses to cues across the period of budburst (Fig. \ref{fig:cueGrad}). Early shrub species, such as \emph{Lyonia ligustrina}, had as strong a chilling and forcing cue as much later species, like \emph{Quercus alba}, despite the \Sexpr{QaLlDiff} day differences in their mean estimated day of budburst.  %emw3Jul -- probably need to spell this out as you write this up with some examples like 'early species such as XX had as strong chilling and forcing cues as much later species such as. YY...' 
+For our western species, \Sexpr{diffBAWest}\% of the estimated budburst was due to the species intercept, while \Sexpr{diffBAEast}\% of the estimated budburst of eastern species was due to their species intercepts (Fig. \ref{fig:betaAlphaGrad}).  Species level differences (intercept) explain considerable portion of bb (Fig. \ref{fig:betaAlphaGrad}).\\ %emw3Jul -- When you go to write up the results I would keep this last and as a short separate paragraph with the idea of 'but suggest they are not the primary drivers of budburst differences across species' as the topic of that paragraph
 
 \section*{Discussion}
 
@@ -506,6 +497,10 @@ print(xtable(meanz4, caption="Summary output from a phylogenetic Bayesian model 
 %     \label{fig:cuedobb}
 % \end{figure}
 
+\pagebreak
+
+\bibliographystyle{bibliography/bibstyles/amnat.bst}% 
+\bibliography{bibliography/phenoBCBib.bib}
 
 
 \end{document}

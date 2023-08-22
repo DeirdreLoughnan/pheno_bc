@@ -91,7 +91,7 @@ source("..//rcode/phenologyMsValues.R")
 
 \item Across a species geographic range---differences in spp cues and therefore bb
 \begin{enumerate}
- \item Species with large latitudianl distributions---experience differences in photoperiod cues 
+ \item Species with large latitudinal distributions---experience differences in photoperiod cues 
  \item experiencing different rates of climate change across North America (Kunkel2004)
  \item In addition to differences in community composition and biotic interactions---competition and herbivory
 \item But few studies have explored how cue use may differ across populations of the same species and the role of local environments and biotic communities in shaping budburst. 
@@ -127,7 +127,6 @@ source("..//rcode/phenologyMsValues.R")
 \item Data from four population, from eastern to western North America and a range of 4-6$^{\circ}$ latitude
 \item Allows us to detect general trends in how bb of N Am. deciduous forest communities respond to forcing, chilling, photoperiod 
 \item But also community specific responses---detect differences between Western and Eastern forest communities, and at different latitudes
-%\item Our study further builds on previous community wide studies of budburst phenology by adopting recent phylogenetic methods to better partition ecological processes from species evolutionary history.
 %DLAug21: I decided to cut all mention of phylogeny from the intro and just discuss it in the methods.
 %emw3Jul -- as you start working on intro I would adjust these -- the phylogeny should be sub-important and other questions should be first and more important I think; strong phylogenetic patterning is cool and important to consider in assembly, but that's not the BIG focus of your paper. 
 \end{enumerate}

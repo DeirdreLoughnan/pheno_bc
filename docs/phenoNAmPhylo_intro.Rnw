@@ -78,23 +78,8 @@ source("..//rcode/phenologyMsValues.R")
 \item Timing of spring bb is changing with anthropogenic climate change 
 \item But changes are not uniform with some regions experience greater warming than others.
 \item Responses are also  species specific and highly variable
-\item Important to understand and predict the drivers and extent of biogeographic trends, as changes in spring phenology determines growing season length, carbon cycle, species interactions
-\end{enumerate}
-
-\item Variation in bb phenology across species in a community
-\begin{enumerate}
-\item To date, most work has been devoted to understanding how environmental cues shape phenology and what drives the high species level variation in budburst
-\item Timing of bb in a forest community can span several weeks---species fill different temporal niche
-\item e.g. understory spp tend to bb earlier than canopy species, likely reflecting overarching differences in traits.
-\item But differences in budburst responses are likely to also exist across a species range.
-\end{enumerate}
-
-\item Across a species spatial distribution---differences in cues and therefore in spp responses/bb
-\begin{enumerate}
- \item Species with large latitudinal distributions experience differences in cues---e.g. photoperiod cues 
- \item May also be experiencing different rates of temperature change over time---e.g. diff rates climate change across North America (Kunkel2004)
- \item BB across diff pop = result of local selective pressures---abiotic (local envirt) and biotic (competition and herbivory) %DLAug21: is introducing biotic factors too much here? Save it for trait paper?
-\item But few studies have explored how cue use may differ across spatial gradient of the same species and the role of local environments and biotic communities in shaping budburst. 
+\item Budburst in forest communities is the product of both species differences and variability driven by geographic variability and local environmental cues.
+\item Understanding the realtive importance of these different drivers of budburst is needed to understand and predict future changes in spring phenology---and their impacts on growing season length, carbon cycle, species interactions
 \end{enumerate}
 
 \item Cues that shape bb
@@ -108,18 +93,45 @@ source("..//rcode/phenologyMsValues.R")
 \item But these cues interact---forcing can offset low chilling---photoperiod offsets weak forcing (Heide1993, Chuine2000, Caffarra2011, Flynn2018 )
 \item The consistency and strength of these interactions across populations remains unclear.
 \end{enumerate}
+
+%DLAug28 --- edited the below to make it less broad
+\item Individual cues are changing over time and can vary geographically---likely to create differences in community dynamics and species composition.
+\item Spring budburst is advancing---attributed to increasing winter and spring temperatures = faster accumulation of chilling and forcing \citep{Guy2014}
+\item Warmer spring and winter temps could create novel niche space early in growing season---facilitating spp invasions or novel community assemblages
+\item Could also reduce fitness in spp with strong photoperiod cues = limited in ability to advance  (Korner2010)
+\item Such spp will experience a different competitive landscape later in the growing season
+\item Differences in species cue responses are likely to shape the diversity and persistence of species in forest communities.
+
+% \item Linking the effects of these cues and geography on species differences across pops = critical for predicting future impacts on forest community dynamics and species composition. 
+% %DLAug19: is the above better?
+% %emw3Jul -- this feels a little contradictory to 2c above ... as a reader I am not sure if I should care about population or species effects, but the beauty of your paper is you have both, so you just need to be nuanced in how you present them. I like the angle hinted at here of pulling them together with a forecasting focus as your paper's angle, especially as you're thinking about community assembly (so we care how species assemble, but they assemble in unique populations over space -- this is nice angle). 
+% \begin{enumerate}
+% \item Increasing winter and spring temperatures = faster accumulation of chilling and forcing \citep{Guy2014}
+% \item Spp with strong photoperiod cues = limited in ability to advance (Korner2010)
+% \item Could disrupt species interactions or alter niche space---facilitating spp invasions or novel community assemblages
+% \item Knowing whether there are geographic trends in species responses will allow us to predict how local changes in climate will effect species fitness and ultimately persistence.
+% \end{enumerate}
+
+
+\item Variation in bb phenology across species in a community
+\begin{enumerate}
+\item To date, most work has been devoted to understanding how environmental cues shape phenology and what drives the high species level variation in budburst
+\item Timing of bb in a forest community can span several weeks---species fill different temporal niche
+\item e.g. understory spp tend to bb earlier than canopy species, likely reflecting overarching differences in traits.
+\item But differences in budburst responses are likely to also exist across a species range.
+\end{enumerate}
+
+\item Across a species spatial distribution---differences in cues and therefore in spp responses/bb
+\begin{enumerate}
+ \item Species with large latitudinal distributions experience differences in cues---e.g. photoperiod cues 
+ % \item May also be experiencing different rates of temperature change over time---e.g. diff rates climate change across North America (Kunkel2004) %DLAug28: I could see this fitting in the discussion---cues are changing at diff rates---diff rates of change in forest communities btwn east and west
+ \item BB across diff pop = result of local selective pressures---abiotic (local envirt) and biotic (competition and herbivory) %DLAug21: is introducing biotic factors too much here? Save it for trait paper?
+\item But few studies have explored how cue use may differ across spatial gradient for the same forest communities and the role of local environments and biotic communities in shaping budburst across North America. 
+\end{enumerate}
+
+
 % 
 % \item Important to consider not just spp but communities as a whole---understand role phenology in shaping spp assemblages, community dynamics, and ecoystem services (Cleland2007).
-
-\item Linking the effects of these cues and geography on species differences across pops = critical for predicting future impacts on forest communitie dynamics and species composition. 
-%DLAug19: is the above better?
-%emw3Jul -- this feels a little contradictory to 2c above ... as a reader I am not sure if I should care about population or species effects, but the beauty of your paper is you have both, so you just need to be nuanced in how you present them. I like the angle hinted at here of pulling them together with a forecasting focus as your paper's angle, especially as you're thinking about community assembly (so we care how species assemble, but they assemble in unique populations over space -- this is nice angle). 
-\begin{enumerate}
-\item Increasing winter and spring temperatures = faster accumulation of chilling and forcing \citep{Guy2014}
-\item Spp with strong photoperiod cues = limited in ability to advance (Korner2010)
-\item Could disrupt species interactions or alter niche space---facilitating spp invasions or novel community assemblages
-\item Knowing whether there are geographic trends in species responses will allow us to predict how local changes in climate will effect species fitness and ultimately persistence.
-\end{enumerate}
 
 \item In this study we:
 \begin{enumerate}

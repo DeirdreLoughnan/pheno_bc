@@ -184,7 +184,7 @@ require(xtable)
 #chill <- data.frame(chill)
 
 chill <- read.csv("..//output/chillUnits.csv")
-chillunit <- xtable(chill, caption = "Chill units from our two western sites, E.C. Manning Park (MP) and Smithers B.C.(SM) Canada, and our two eastern sites, Harvard Forest (HF) USA and St. Hippolyte(SH) Canada.")
+chillunit <- xtable(chill, caption = "Chill units from our two western sites, E.C. Manning Park (MP) and Smithers B.C.(SM) Canada, and our two eastern sites, Harvard Forest (HF) USA and St. Hippolyte(SH) Canada.", label = "tableChill")
 print(chillunit,include.rownames= F, caption.placement="top", hline.after=c(-1,0))
 @
 

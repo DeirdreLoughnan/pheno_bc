@@ -139,6 +139,7 @@ source("..//rcode/phenologyMsValues.R")
 \item Data from four populations, from eastern to western North America and a range of 4-6$^{\circ}$ latitude
 \item Allows us to detect general trends in how bb of N Am. deciduous forest communities respond to forcing, chilling, photoperiod 
 \item But also community specific responses---detect differences between Western and Eastern forest communities, and at different latitudes
+\item And trends across different functional groups, exploring differences between shrub and tree species.
 %DLAug21: I decided to cut all mention of phylogeny from the intro and just discuss it in the methods.
 %emw3Jul -- as you start working on intro I would adjust these -- the phylogeny should be sub-important and other questions should be first and more important I think; strong phylogenetic patterning is cool and important to consider in assembly, but that's not the BIG focus of your paper. 
 \end{enumerate}

@@ -76,15 +76,15 @@ source("..//rcode/phenologyMsValues.R")
 \item Plant phenology is changing with climate change:
 \begin{enumerate}
 \item Timing of spring bb is changing with anthropogenic climate change 
-\item But changes are not uniform with some regions experience greater warming than others.
+\item But changes are not uniform with some regions experiencing greater warming than others.
 \item Responses are also  species specific and highly variable
-\item Budburst in forest communities is the product of both species differences and variability driven by geographic variability and local environmental cues.
-\item Understanding the realtive importance of these different drivers of budburst is needed to understand and predict future changes in spring phenology---and their impacts on growing season length, carbon cycle, species interactions
+\item Budburst in forest communities is the product of species differences as well as geographic variability in environmental cues.
+\item Understanding the relative importance of these different drivers of budburst is needed to understand and predict future changes in spring phenology---and their ultimate impacts on growing season length, carbon cycle, species interactions
 \end{enumerate}
 
 \item Cues that shape bb
 \begin{enumerate}
-\item For woody plants, we do know there are three important cues for bb:
+\item For woody plants, we do know there are three important environmental cues for bb:
 \begin{enumerate}
 \item Forcing: spring temperatures
 \item Photoperiod/daylength
@@ -95,13 +95,13 @@ source("..//rcode/phenologyMsValues.R")
 \end{enumerate}
 
 %DLAug28 --- edited the below to make it less broad
-\item Individual cues are changing over time and can vary geographically---likely to create differences in community dynamics and species composition.
-\item Spring budburst is advancing---attributed to increasing winter and spring temperatures = faster accumulation of chilling and forcing \citep{Guy2014}
-\item Warmer spring and winter temps could create novel niche space early in growing season---facilitating spp invasions or novel community assemblages
-\item Could also reduce fitness in spp with strong photoperiod cues = limited in ability to advance  (Korner2010)
-\item Such spp will experience a different competitive landscape later in the growing season
-\item Differences in species cue responses are likely to shape the diversity and persistence of species in forest communities.
-
+\item Cues can vary geographically and temporally---likely to create differences in community dynamics and species composition.
+\begin{enumerate}
+\item Increasing winter and spring temperatures = faster accumulation of chilling and forcing (Guy2014)---associated with earlier budburst in many temperate plant species.
+\item Could create novel niche space early in growing season---facilitating spp invasions or novel community assemblages
+\item Will also reduce fitness in spp with strong photoperiod cues = limited in their ability to advance  (Korner2010) = different competitive landscape later in the growing season
+\item Differences in species cue responses are likely to shape the diversity and persistence of species across forest communities.
+\end{enumerate}
 % \item Linking the effects of these cues and geography on species differences across pops = critical for predicting future impacts on forest community dynamics and species composition. 
 % %DLAug19: is the above better?
 % %emw3Jul -- this feels a little contradictory to 2c above ... as a reader I am not sure if I should care about population or species effects, but the beauty of your paper is you have both, so you just need to be nuanced in how you present them. I like the angle hinted at here of pulling them together with a forecasting focus as your paper's angle, especially as you're thinking about community assembly (so we care how species assemble, but they assemble in unique populations over space -- this is nice angle). 
@@ -118,14 +118,14 @@ source("..//rcode/phenologyMsValues.R")
 \item To date, most work has been devoted to understanding how environmental cues shape phenology and what drives the high species level variation in budburst
 \item Timing of bb in a forest community can span several weeks---species fill different temporal niche
 \item e.g. understory spp tend to bb earlier than canopy species, likely reflecting overarching differences in traits.
-\item But differences in budburst responses are likely to also exist across a species range.
+\item But differences in budburst responses are likely to also exist across a species ranges.
 \end{enumerate}
 
 \item Across a species spatial distribution---differences in cues and therefore in spp responses/bb
 \begin{enumerate}
  \item Species with large latitudinal distributions experience differences in cues---e.g. photoperiod cues 
  % \item May also be experiencing different rates of temperature change over time---e.g. diff rates climate change across North America (Kunkel2004) %DLAug28: I could see this fitting in the discussion---cues are changing at diff rates---diff rates of change in forest communities btwn east and west
- \item BB across diff pop = result of local selective pressures---abiotic (local envirt) and biotic (competition and herbivory) %DLAug21: is introducing biotic factors too much here? Save it for trait paper?
+ \item Budburst across diff pop = result of local selective pressures---abiotic (local envirt) and biotic (competition and herbivory) %DLAug21: is introducing biotic factors too much here? Save it for trait paper?
 \item But few studies have explored how cue use may differ across spatial gradient for the same forest communities and the role of local environments and biotic communities in shaping budburst across North America. 
 \end{enumerate}
 
@@ -136,7 +136,7 @@ source("..//rcode/phenologyMsValues.R")
 \item In this study we:
 \begin{enumerate}
 \item Combined results from two growth chamber studies of woody plant phenological cues
-\item Data from four population, from eastern to western North America and a range of 4-6$^{\circ}$ latitude
+\item Data from four populations, from eastern to western North America and a range of 4-6$^{\circ}$ latitude
 \item Allows us to detect general trends in how bb of N Am. deciduous forest communities respond to forcing, chilling, photoperiod 
 \item But also community specific responses---detect differences between Western and Eastern forest communities, and at different latitudes
 %DLAug21: I decided to cut all mention of phylogeny from the intro and just discuss it in the methods.
@@ -145,9 +145,9 @@ source("..//rcode/phenologyMsValues.R")
 \end{enumerate}
 
 \pagebreak
-
-\bibliographystyle{bibliography/bibstyles/amnat.bst}% 
-\bibliography{bibliography/phenoBCBib.bib}
+% 
+% \bibliographystyle{bibliography/bibstyles/amnat.bst}% 
+% \bibliography{bibliography/phenoBCBib.bib}
 
 
 \end{document}

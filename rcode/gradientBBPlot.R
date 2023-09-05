@@ -130,6 +130,39 @@ for(sp in 1:47){
 }
 }
 
+photoHigh <- 0.4965051 #8 h photo
+siteSM <- 0
+forceHigh <- 0.5877121 
+chillHigh <- 0.3660412 # high chill for Smithers
+
+mHigh <- matrix(nrow = 1000, ncol = 47)
+
+for(sp in 1:47){
+  for (it in 1:nrow(mHigh)){
+    mHigh[it,sp] <- post$a_sp[it,sp]+ post$b_site2[it] * siteSM + post$b_site3[it] * siteSM + post$b_site4[it] * siteSM + 
+      post$b_warm[it,sp] * forceHigh + post$b_photo[it, sp] * photoHigh + post$b_chill[it,sp] * chillHigh +
+      post$b_inter_wp[it,sp] * (forceHigh*photoHigh) + post$b_inter_wc1[it,sp] * (forceHigh*chillHigh) + post$b_inter_pc1[it,sp] * (photoHigh*chillHigh) +
+      post$b_inter_s2c1[it,sp] * (chillHigh*siteSM) + post$b_inter_ws2[it,sp] * (forceHigh*siteSM) + post$b_inter_ps2[it,sp] * (photoHigh*siteSM) +
+      post$b_inter_s3c1[it,sp] * (chillHigh*siteSM) + post$b_inter_ws3[it,sp] * (forceHigh*siteSM) + post$b_inter_ps3[it,sp] * (photoHigh*siteSM) +
+      post$b_inter_s4c1[it,sp] * (chillHigh*siteSM) + post$b_inter_ws4[it,sp] * (forceHigh*siteSM) + post$b_inter_ps4[it,sp] * (photoHigh*siteSM)
+  }
+}
+
+# it <- 2
+# sp <- 2
+# m[it,sp] <- post$a_sp[it,sp]+ post$b_site2[it] * siteSM + post$b_site3[it] * siteSM + post$b_site4[it] * siteSM + 
+#   post$b_warm[it,sp] * force + post$b_photo[it, sp] * photo + post$b_chill[it,sp] * chill +
+#   post$b_inter_wp[it,sp] * (force*photo) + post$b_inter_wc1[it,sp] * (force*chill) + post$b_inter_pc1[it,sp] * (photo*chill) +
+#   post$b_inter_s2c1[it,sp] * (chill*siteSM) + post$b_inter_ws2[it,sp] * (force*siteSM) + post$b_inter_ps2[it,sp] * (photo*siteSM) +
+#   post$b_inter_s3c1[it,sp] * (chill*siteSM) + post$b_inter_ws3[it,sp] * (force*siteSM) + post$b_inter_ps3[it,sp] * (photo*siteSM) +
+#   post$b_inter_s4c1[it,sp] * (chill*siteSM) + post$b_inter_ws4[it,sp] * (force*siteSM) + post$b_inter_ps4[it,sp] * (photo*siteSM)
+# 
+# mHigh[it,sp] <- post$a_sp[it,sp]+ post$b_site2[it] * siteSM + post$b_site3[it] * siteSM + post$b_site4[it] * siteSM + 
+#   post$b_warm[it,sp] * forceHigh + post$b_photo[it, sp] * photoHigh + post$b_chill[it,sp] * chillHigh +
+#   post$b_inter_wp[it,sp] * (forceHigh*photoHigh) + post$b_inter_wc1[it,sp] * (forceHigh*chillHigh) + post$b_inter_pc1[it,sp] * (photoHigh*chillHigh) +
+#   post$b_inter_s2c1[it,sp] * (chillHigh*siteSM) + post$b_inter_ws2[it,sp] * (forceHigh*siteSM) + post$b_inter_ps2[it,sp] * (photoHigh*siteSM) +
+#   post$b_inter_s3c1[it,sp] * (chillHigh*siteSM) + post$b_inter_ws3[it,sp] * (forceHigh*siteSM) + post$b_inter_ps3[it,sp] * (photoHigh*siteSM) +
+#   post$b_inter_s4c1[it,sp] * (chillHigh*siteSM) + post$b_inter_ws4[it,sp] * (forceHigh*siteSM) + post$b_inter_ps4[it,sp] * (photoHigh*siteSM)
 # now get the order of diff spp bb that I can use to order the figure
 spInfo <- read.csv("input/species_list.csv")
 
@@ -137,6 +170,9 @@ spInfo <- spInfo[order(spInfo$species),]
 head(spInfo)
 spInfo$meanBB <- colMeans(m)
 colnames(m) <- spInfo$species.name
+
+spInfo$meanBBHigh <- colMeans(mHigh)
+colnames(mHigh) <- spInfo$species.name
 
 spInfo$Int <- a_sp
 spInfo <- cbind(spInfo, a_sp5,b_force5, b_chill5,b_photo5)
@@ -186,22 +222,49 @@ colnames(bb_df75.25)[colnames(bb_df75.25) == "X25."] <- "bb25"
 colnames(bb_df)[colnames(bb_df) == "X25."] <- "bb25"
 colnames(bb_df)[colnames(bb_df) == "X75."] <- "bb75"
 
+bb_quanHigh <- apply(mHigh, 2, quantile595)
+bb_tHigh <- t(bb_quanHigh)
+bb_dfHigh <- data.frame(bb_tHigh)
+colnames(bb_dfHigh)[colnames(bb_dfHigh) == "X5."] <- "bb5High"
+colnames(bb_dfHigh)[colnames(bb_dfHigh) == "X95."] <- "bb95High"
+
+bb_quan75.25High <- apply(mHigh, 2, quantile75.25)
+bb_t75.25High <- t(bb_quan75.25High)
+bb_df75.25High <- data.frame(bb_t75.25High)
+colnames(bb_df75.25High)[colnames(bb_df75.25High) == "X75."] <- "bb75High"
+colnames(bb_df75.25High)[colnames(bb_df75.25High) == "X25."] <- "bb25High"
+colnames(bb_dfHigh)[colnames(bb_dfHigh) == "X25."] <- "bb25High"
+colnames(bb_dfHigh)[colnames(bb_dfHigh) == "X75."] <- "bb75High"
+
 
 spInfo <- cbind(spInfo, bb_df)
 spInfo <- cbind(spInfo, bb_df75.25)
 spInfo$value <- spInfo$meanBB
 
+spInfo <- cbind(spInfo, bb_dfHigh)
+spInfo <- cbind(spInfo, bb_df75.25High)
+spInfo$valueHigh <- spInfo$meanBBHigh
+
 
 m <- data.frame(m)
 
 long <- melt(m)
-names(long) <- c("species.name", "value")
+names(long) <- c("species.name", "valueLow")
+
+mHigh <- data.frame(mHigh)
+
+longHigh <- melt(mHigh)
+names(longHigh) <- c("species.name", "valueHigh")
+
+long <- cbind(long, longHigh[,2])
 
 long <- merge(long,spInfo, by = "species.name")
+
 spOrderData <- spInfo[order(spInfo$meanBB),]
 spOrder <- as.factor(spOrderData$species.name)
 
 long <- long[order(long$species),]
+
 # longPhotoInfo$mean <- rowMeans(longPhotoInfo[,c("Site1","Site2","Site3","Site4")], na.rm=TRUE)
 
 bChill <- data.frame(post$b_chill1[1:1000,])
@@ -240,7 +303,7 @@ data <- long[order(long$meanBB),]
 # data$species.name <- factor(data$species.name, levels=unique(data$species.name) )
 #data <- transform(data, variable=reorder(species.name, -meanBB) ) 
 
-names(data) <- c("species.name","value","species","type","transect","meanBB", "Int","Int5","Int95","Int25","Int75","force5","force95","force25","force75","chill5", "chill95", "chill25", "chill75","photo5", "photo95", "photo25", "photo75","spMeanForce", "spMeanChill", "spMeanPhoto","bb5","bb95","bb25","bb75", "spacing","chill", "force","photo","intercept")
+names(data) <- c("species.name","valueLow", "valueHigh","species","type","transect","meanBB","meanBBHigh", "Int","Int5","Int95","Int25","Int75","force5","force95","force25","force75","chill5", "chill95", "chill25", "chill75","photo5", "photo95", "photo25", "photo75","spMeanForce", "spMeanChill", "spMeanPhoto","bb5","bb95","bb75","bb25", "spacing","bb5High","bb95High","bb75High","bb25High","chill", "force","photo","intercept")
 
 #####################################################################
 ## Eastern spp only #################################################
@@ -531,8 +594,8 @@ spTopW <- west[west$species %in% overlappingW,]
 
 # Making lizzie's other suggested plot - 2 connected dots:
 
-meanPtW <- aggregate(dataWest[c("meanBB", "Int")], dataWest[c("species.name","type","transect")], FUN = mean)
-names(meanPtW) <- c("species.name","type","transect","Budburst","Intercept")
+meanPtW <- aggregate(dataWest[c("meanBB", "meanBBHigh", "Int")], dataWest[c("species.name","type","transect")], FUN = mean)
+names(meanPtW) <- c("species.name","type","transect","Budburst","Buddy","Intercept")
 
 dotW <- ggplot(meanPtW) +
   geom_point(aes(y= Budburst, x = Budburst, colour = "Budburst"), size = 5) +
@@ -556,8 +619,10 @@ dotW <- ggplot(meanPtW) +
 
 dotWBw <- ggplot(meanPtW) +
   geom_point(aes(y= Budburst, x = Budburst, shape = "Budburst"), size = 5) +
+  geom_point(aes(y= Buddy, x = Budburst, shape = "Buddy"), size = 5) +
   geom_point(aes(y= Intercept, x = Budburst, shape = "Intercept"), size = 5) +
   geom_segment(aes(x = Budburst, y = Intercept, xend = Budburst, yend = Budburst), data = meanPtW, col = "black") +
+  geom_segment(aes(x = Budburst, y = Intercept, xend = Budburst, yend = Buddy), data = meanPtW, col = "black") +
   theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
         panel.background = element_blank(), axis.line = element_line(colour = "black"),
         legend.key=element_rect(fill="white")) + ylim(-1.5,65) +
@@ -565,25 +630,59 @@ dotWBw <- ggplot(meanPtW) +
         axis.text.y=element_text(size = 15),
         axis.title=element_text(size=20), legend.position = "none") + 
   scale_x_continuous( breaks = spMiniW$meanBB, labels = spMiniW$species,limits = c(15,70)) +
-  labs( x = "Species ordered by predicted budburst date", y = "Estimated parameter (days/standardized units)", main = NA) +
+  labs( x = "Species ordered by predicted budburst date under high cues", y = "Day of budburst (days/standardized units)", main = NA) +
   theme(legend.position = "none") +  annotate("text", x = 21.5, y = 60, label = "b)      Western transect", cex =8) +
   annotate("text", x = spTopW[1,5], y = -1, label = spTopW[1,2], cex = 5, angle = 78) +
   annotate("text", x = spTopW[2,5], y = -1, label = spTopW[2,2], cex = 5, angle = 78) +
   annotate("text", x = spTopW[3,5], y = -1, label = spTopW[3,2], cex = 5, angle = 78) +
   annotate("text", x = spTopW[4,5], y = -1, label = spTopW[4,2], cex = 5, angle = 78) +
   annotate("text", x = spTopW[5,5], y = -1, label = spTopW[5,2], cex = 5, angle = 78) +
-  scale_shape_manual(values = c(1,16))+  annotate("text", x = 66, y = 60.5, label = "All cues", cex = 7)+  annotate("text", x = 66, y = 44.5, label = "Intercept", cex = 7)+
+  scale_shape_manual(values = c(1,2,16)) +
+  annotate("text", x = 66, y = 60.5, label = "High cues", cex = 7) +  
+  annotate("text", x = 66, y = 44.5, label = "Intercept", cex = 7) +
+  annotate("text", x = 66, y = 27.5, label = "Low cues", cex = 7) + 
   geom_segment(aes(x = 61, y = 60.5, xend = 62.5 , yend = 60.5)) +
-  geom_segment(aes(x = 61, y = 44.5, xend = 62.5 , yend = 44.5))
+  geom_segment(aes(x = 61, y = 44.5, xend = 62.5 , yend = 44.5)) +
+  geom_segment(aes(x = 61, y = 27.5, xend = 62.5 , yend = 27.5))
 
 # +  annotate("text", x = 62, y = 39, label = "Intercept", cex = 3) +
 #   geom_segment(aes(x = 62, y = 60, xend = 59 , yend = 60)) +
 #                  geom_segment(aes(x = 62, y = 39, xend = 59 , yend = 39))
 dotWBw
 
+ggplot(meanPtW) +
+  geom_point(aes(y= Budburst, x = Intercept, shape = "Budburst"), size = 5) +
+  geom_point(aes(y= Buddy, x = Intercept, shape = "Buddy"), size = 5) +
+  geom_point(aes(y= Intercept, x = Intercept, shape = "Intercept"), size = 5) +
+  geom_segment(aes(x = Intercept, y = Intercept, xend = Intercept, yend = Budburst), data = meanPtW, col = "black") +
+  geom_segment(aes(x = Intercept, y = Intercept, xend = Intercept, yend = Buddy), data = meanPtW, col = "black") +
+  theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
+        panel.background = element_blank(), axis.line = element_line(colour = "black"),
+        legend.key=element_rect(fill="white")) + ylim(-1.5,65) +
+  theme(axis.text.x = element_text( size=15,angle = 78,  hjust=1),
+        axis.text.y=element_text(size = 15),
+        axis.title=element_text(size=20), legend.position = "none") + 
+  scale_x_continuous( breaks = spMiniW$Int, labels = spMiniW$species) +
+  labs( x = "Species ordered by predicted budburst date under high cues", y = "Day of budburst (days/standardized units)", main = NA) +
+  theme(legend.position = "none") +  annotate("text", x = 18, y = 60, label = "b)      Western transect", cex =8) +
+  annotate("text", x = spTopW[1,7], y = -1, label = spTopW[1,2], cex = 5, angle = 78) +
+  annotate("text", x = spTopW[2,7], y = -1, label = spTopW[2,2], cex = 5, angle = 78) +
+  annotate("text", x = spTopW[3,7], y = -1, label = spTopW[3,2], cex = 5, angle = 78) +
+  annotate("text", x = spTopW[4,7], y = -1, label = spTopW[4,2], cex = 5, angle = 78) +
+  annotate("text", x = spTopW[5,7], y = -1, label = spTopW[5,2], cex = 5, angle = 78) +
+  scale_shape_manual(values = c(1,2,16)) 
+
++
+  annotate("text", x = 66, y = 60.5, label = "High cues", cex = 7) +  
+  annotate("text", x = 66, y = 44.5, label = "Intercept", cex = 7) +
+  annotate("text", x = 66, y = 27.5, label = "Low cues", cex = 7) + 
+  geom_segment(aes(x = 61, y = 60.5, xend = 62.5 , yend = 60.5)) +
+  geom_segment(aes(x = 61, y = 44.5, xend = 62.5 , yend = 44.5)) +
+  geom_segment(aes(x = 61, y = 27.5, xend = 62.5 , yend = 27.5))
+
 #### Eastern plot
-meanPtE <- aggregate(dataEast[c("meanBB", "Int")], dataEast[c("species.name","type","transect")], FUN = mean)
-names(meanPtE) <- c("species.name","type","transect","Budburst","Intercept")
+meanPtE <- aggregate(dataEast[c("meanBB", "meanBBHigh","Int")], dataEast[c("species.name","type","transect")], FUN = mean)
+names(meanPtE) <- c("species.name","type","transect","Budburst", "Buddy","Intercept")
 
 dotE <- ggplot(meanPtE) +
   geom_point(aes(y= Budburst, x = Budburst, colour = "Budburst"), size = 5) +
@@ -612,8 +711,10 @@ dotE <- ggplot(meanPtE) +
 
 dotEBw <- ggplot(meanPtE) +
   geom_point(aes(y= Budburst, x = Budburst, shape = "Budburst"), size = 5) +
+  geom_point(aes(y= Buddy, x = Budburst, shape = "Buddy"), size = 5) +
   geom_point(aes(y= Intercept, x = Budburst, shape = "Intercept"), size = 5) +
   geom_segment(aes(x = Budburst, y = Intercept, xend = Budburst, yend = Budburst), data = meanPtE, col = "black") +
+  geom_segment(aes(x = Budburst, y = Intercept, xend = Budburst, yend = Buddy), data = meanPtE, col = "black") +
   theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
         panel.background = element_blank(), axis.line = element_line(colour = "black"),
         legend.key=element_rect(fill="white")) +
@@ -621,7 +722,7 @@ dotEBw <- ggplot(meanPtE) +
                         axis.text.y=element_text(size = 15),
                         axis.title=element_text(size=20)) +
   scale_x_continuous( breaks = spMiniE$meanBB, labels = spMiniE$species,limits = c(24,70)) +
-  labs( x = "Species ordered by predicted budburst date", y = "Estimated parameter (days/standardized units)", main = NA) +
+  labs( x = "", y = "Day of budburst (days/standardized units)", main = NA) +
   theme(legend.position = "none") +  annotate("text", x = 29, y = 60, label = "a)      Eastern transect", cex =8) +
   annotate("text", x = spTopE[1,5], y = -1, label = spTopE[1,2], cex = 5, angle = 78) +
   annotate("text", x = spTopE[2,5], y = -1, label = spTopE[2,2], cex = 5, angle = 78) +
@@ -631,15 +732,22 @@ dotEBw <- ggplot(meanPtE) +
   annotate("text", x = spTopE[5,5], y = -1, label = spTopE[5,2], cex = 5, angle = 78) +
   annotate("text", x = spTopE[6,5], y = -1, label = spTopE[6,2], cex = 5, angle = 78) +
   annotate("text", x = spTopE[7,5], y = -1, label = spTopE[7,2], cex = 5, angle = 78) +
-  annotate("text", x = spTopE[8,5], y = -1, label = spTopE[8,2], cex = 5, angle = 78)+scale_shape_manual(values = c(1,16)) +  annotate("text", x = 68, y = 63, label = "All cues", cex = 7)+  annotate("text", x = 68, y = 48, label = "Intercept", cex = 7)+
-  geom_segment(aes(x = 64, y = 63, xend = 65.5 , yend = 63)) +
-  geom_segment(aes(x = 64, y = 48, xend = 65.5 , yend = 48))
+  annotate("text", x = spTopE[8,5], y = -1, label = spTopE[8,2], cex = 5, angle = 78) +
+  scale_shape_manual(values = c(1,2,16)) +       
+  annotate("text", x = 68, y = 63, label = "High cues", cex = 7) +  
+  annotate("text", x = 68, y = 48, label = "Intercept", cex = 7) +
+  annotate("text", x = 68, y = 36.5, label = "Low cues", cex = 7) + 
+  geom_segment(aes(x = 64, y = 63, xend = 65 , yend = 63)) +
+  geom_segment(aes(x = 64, y = 48, xend = 65.5 , yend = 48)) +
+  geom_segment(aes(x = 64, y = 36.5, xend = 65 , yend = 36.5))
 dotEBw
+
+
 # pdf("figures/dotBetaAlphaLongColor.pdf", width = 12, height = 16)
 # plot_grid(dotE, dotW, nrow = 2, ncol = 1, align = "v")
 # dev.off()
 
-pdf("figures/dotBetaAlphaLongBW.pdf", width = 12, height = 16)
+pdf("figures/dotBetaAlphaLongBW_LH.pdf", width = 12, height = 16)
 plot_grid(dotEBw, dotWBw, nrow = 2, ncol = 1, align = "v")
 dev.off()
 #############################################

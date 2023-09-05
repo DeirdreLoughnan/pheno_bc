@@ -55,7 +55,7 @@
 \SweaveOpts{concordance=TRUE} % For RStudio hiccups
 
 
-\title{Species differences in budburst responses in woody plants of North America}
+\title{Differences in phenological cues responses do not explain temporal assembly of woody plant communities}
 \date{\today}
 \author{Deirdre Loughnan$^1$ and E M Wolkovich$^1$}
 \maketitle 
@@ -91,11 +91,11 @@ source("..//rcode/phenologyMsValues.R")
 \item Chilling: winter length and temperatures
 \end{enumerate}
 \item But these cues interact---forcing can offset low chilling---photoperiod offsets weak forcing (Heide1993, Chuine2000, Caffarra2011, Flynn2018 )
-\item The consistency and strength of these interactions across populations remains unclear.
+\item The consistency and strength of these interactions across species and populations remains unclear.
 \end{enumerate}
 
 %DLAug28 --- edited the below to make it less broad
-\item Cues can vary geographically and temporally---likely to create differences in community dynamics and species composition.
+\item Cues can vary geographically and temporally---under future climates---likely to create differences in community dynamics and species composition.
 \begin{enumerate}
 \item Increasing winter and spring temperatures = faster accumulation of chilling and forcing (Guy2014)---associated with earlier budburst in many temperate plant species.
 \item Could create novel niche space early in growing season---facilitating spp invasions or novel community assemblages
@@ -115,18 +115,22 @@ source("..//rcode/phenologyMsValues.R")
 
 \item Variation in bb phenology across species in a community
 \begin{enumerate}
-\item To date, most work has been devoted to understanding how environmental cues shape phenology and what drives the high species level variation in budburst
+%\item To date, most work has been devoted to understanding how environmental cues shape phenology and what drives the high species level variation in budburst
 \item Timing of bb in a forest community can span several weeks---species fill different temporal niche
-\item e.g. understory spp tend to bb earlier than canopy species, likely reflecting overarching differences in traits.
-\item But differences in budburst responses are likely to also exist across a species ranges.
+\item e.g. understory shrub spp tend to bb earlier than canopy species, likely reflecting overarching differences in growth strategies. 
+\item But differences in budburst responses are likely to also exist across a species ranges---need to know the relative effects of pop vs sp
 \end{enumerate}
 
-\item Across a species spatial distribution---differences in cues and therefore in spp responses/bb
+
+\item While climate change may cause climates to shift rapidly, forest communities have assembled over longer timescales, with traits like phenology responding to local conditions. 
 \begin{enumerate}
+\item Across a species' spatial distribution---we can expect to see differences in both cues and therefore in spp responses in bb that have evolved over time
  \item Species with large latitudinal distributions experience differences in cues---e.g. photoperiod cues 
+ %DLSept4: I am leaving the above bc I do feel like an illustrative example (ie photoperiod over latitudes) is needed, but we can cut it if need be
  % \item May also be experiencing different rates of temperature change over time---e.g. diff rates climate change across North America (Kunkel2004) %DLAug28: I could see this fitting in the discussion---cues are changing at diff rates---diff rates of change in forest communities btwn east and west
- \item Budburst across diff pop = result of local selective pressures---abiotic (local envirt) and biotic (competition and herbivory) %DLAug21: is introducing biotic factors too much here? Save it for trait paper?
+% \item Budburst across diff pop = result of local selective pressures---abiotic (local envirt) and biotic (competition and herbivory) %DLAug21: is introducing biotic factors too much here? Save it for trait paper?
 \item But few studies have explored how cue use may differ across spatial gradient for the same forest communities and the role of local environments and biotic communities in shaping budburst across North America. 
+\item To better predict how forest communities will respond and assemble under continued climate change we need to identify the cues that drive budburst in our dominant forest species and functional groups, and how these responses can change across populations. 
 \end{enumerate}
 
 
@@ -139,13 +143,34 @@ source("..//rcode/phenologyMsValues.R")
 \item Data from four populations, from eastern to western North America and a range of 4-6$^{\circ}$ latitude
 \item Allows us to detect general trends in how bb of N Am. deciduous forest communities respond to forcing, chilling, photoperiod 
 \item But also community specific responses---detect differences between Western and Eastern forest communities, and at different latitudes
-\item And trends across different functional groups, exploring differences between shrub and tree species.
+\item And trends across different functional groups, exploring differences between the shrubs that dominate the forest understory and tree species.
 %DLAug21: I decided to cut all mention of phylogeny from the intro and just discuss it in the methods.
 %emw3Jul -- as you start working on intro I would adjust these -- the phylogeny should be sub-important and other questions should be first and more important I think; strong phylogenetic patterning is cool and important to consider in assembly, but that's not the BIG focus of your paper. 
 \end{enumerate}
 \end{enumerate}
 
 \pagebreak
+
+\section*{Discussion}
+
+% \begin{enumerate}
+% \item Summarize overall findings/main take aways
+% \begin{enumerate}
+% \item All cues did lead to earlier bb, but with complex interactions
+% \end{enumerate}
+% 
+% \item Differences between the western and eastern populations
+% \begin{enumerate}
+% \item Across our populations, did find differences between cue responses in western species versus eastern species.
+% \end{enumerate}
+% \end{enumerate}
+
+\begin{enumerate}
+\item Across all species, relative importance of cue = varied = unique temporal niches  (Fig. \ref{supp-fig:cueSp})  %emw1Jun2023 -- you have cool figures and info on this! 
+\item Large portion of budburst due to spp differences - need more research to understand this, if not cues what causes it? Could introduce traits and foreshadow the third chapter  %emw1Jun2023 -- need to format results and discussion so this is a minor but important (and provocative/interesting) point 
+\item The experimental design (which is impressive) combined with your models means that most other things some models would assign to the intercept are assigned to site, species, chill, force etc. here... and still the intercept is big. Wow!! 
+\item Suggests factors other than species cues and architectural growth driving budburst.
+\end{enumerate}
 % 
 % \bibliographystyle{bibliography/bibstyles/amnat.bst}% 
 % \bibliography{bibliography/phenoBCBib.bib}

@@ -154,32 +154,36 @@ source("..//rcode/phenologyMsValues.R")
 \section*{Discussion}
 
 \begin{enumerate}
-\item In general, all species did show some cue response---earlier bb with stronger cue 
+\item Our findings highlight the complex relationships between phenological cues and spring phenology within and across forest communities
 \begin{enumerate}
+\item In general, all species showed some cue response---earlier bb with stronger cue 
 \item Chilling cues produced the strongest responses
 \item Photoperiod produced the weakest cue response---consistent with previous studies
-\item But strong chilling by forcing interaction
-\item In agreement with previous work---complex interactions between cues---eg Flynn2018, Heide1993, Caffarra2011
+\item But strong chilling by forcing interaction---complex interactions between cues---eg Flynn2018, Heide1993, Caffarra2011
+\item In taking a community approach---able to examine these relationships at the species level---where we find more complex patterns
 \end{enumerate}
 
-\item examining individual species, we see differences in relative importance of cues---unique temporal niches across forest communities  (Fig. \ref{supp-fig:cueSp})  
+\item Within commnities, individual species differed in the timing of budburst and relative importance of cues (Fig. \ref{supp-fig:cueSp})  
 \begin{enumerate}
-\item We observed substantial differences in timing bb, with the averaging timing of budburst in our eastern and western studies spanning \Sexpr{diffBBEast} and \Sexpr{diffBBWest} respectively, similar to the breadth of leafout observed in natural communities.
-\item While we found later budbursting species to have stronger cue responses, the strength of this relationship was weak (Fig. \ref{cueGrad})
-\item Compare to previous studies...
-\begin{enumerate}
-
-\item While shrub and tree species differ greaterly in their ecological niche and physiology, this did not lead to clear differences in their budburst or cue responses.
-\begin{enumerate}
-\item This contrast previous studies that find earlier bb in shrubs compared to trees (Panchen2014, Yu2015) but is in line with Sun2006---who also found trees and shrubs to leaf out together
-\item Predict that advances in tree species phenology will lead to reduced light and fitness for shrubs (Donnelly&Yu2019)
+\item Species differed substantially in their mean bb, with the average period of budburst in our eastern and western studies spanning \Sexpr{diffBBEast} and \Sexpr{diffBBWest} days respectively
+\item This is similar to the period of budburst observed in natural communities---suggesting that our experiment captures a realistic breadth in phenology within our forest communities
+\item While in general we found later budbursting species to have stronger chilling and forcing requirements, several of our earlier budbursting species did not have weaker cue responses that species that budburst later (Fig. \ref{cueGrad})
+\item This suggests that budburst phenology is important part of a species temporal niche (Gotelli1996)---but may be shaped by other factors than temperature and light alone
 \end{enumerate}
 
-\item Differences between the western and eastern populations
+\item While shrub and tree species differ greatly in their ecological niche and physiology, this did not lead to clear differences in their budburst or cue responses.
 \begin{enumerate}
-\item Across our populations, did find differences between cue responses in western species versus eastern species.
-\item 3 species that occur in both
+\item We found no difference in cue responses between shrub or tree species for none of the three cues we tested.
+\item This finding is surprising given previous studies have found earlier bb in shrubs compared to trees (Panchen2014, Yu2015) but is in line with Sun2006---who also found trees and shrubs to leaf out together
+\item Currently prediction is that advances in tree species phenology will lead to reduced light and fitness for shrubs (Donnelly&Yu2019)---but if shrubs respond to changing cues similarly might keep pace with shifts in their canopy.
 \end{enumerate}
+
+\item We expected budburst across populations should be locally adapted in response to local selective pressures---but we found little evidence of poplation level differences
+\begin{enumerate}
+\item Our two eastern populations budburst slightly before our two western populations---strongest effect for chilling (Table 1)---could be due to differences in chilling requirements or the slightly greater chilling experienced in our eastern study
+\item Across latitudes, our two eastern and two western populations do not differ (Fig \ref{siteCue}), which contrasts previous work that finds phenological events to occurr later in poleward populations (Zettlemoyer2021)
+\end{enumerate}
+
 
 \item phylogeny
 \begin{enumerate}
@@ -190,6 +194,8 @@ source("..//rcode/phenologyMsValues.R")
 
 \item Advantages of our approach
 \begin{enumerate}
+\item In this study we present data comparing phenological cue resposnes for two forest communities from across North America, providing insights acorss a greater geographic scale and diversity of species. 
+\item For many of our focal 
 \item Our methods differ from previous studies---many studies rely entirely on field chilling---none of our cuttings experience full chilling in the field
 \item Our treatments are artificial and do not accurately replicate natural temporal variation in temperature plants experience in the field during winter and spring conditions (Erez1988, Luedeling2009)
 \item Limited understanding of dormancy for our focal species---for some spp first time included in phenological experiment

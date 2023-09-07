@@ -1309,3 +1309,170 @@ photodotE
 pdf("figures/dotCFPEWSizeColorUnitsShape.pdf", width = 20, height = 16)
 plot_grid(chilldotE, chilldotW, forcedotE, forcedotW, photodotE, photodotW, nrow = 3, ncol = 2, align = "v")
 dev.off()
+
+## How does species rank change with high low intercept?
+
+rank <- spInfo[,c("species.name","species","type","transect","meanBB","meanBBHigh","Int")]
+rank <- rank[order(rank$Int),]
+rank$rankInt <- seq(1:nrow(rank))
+
+rank <- rank[order(rank$meanBB),]
+rank$rankLowC <- seq(1:nrow(rank))
+
+rank <- rank[order(rank$meanBBHigh),]
+rank$rankHighC <- seq(1:nrow(rank))
+
+pdf("figures/rankEstiBB.pdf", width = 9, height =3)
+colTran <- c("maroon","navy","forestgreen")
+par(mfrow = c(1,3), mar = c(5.1, 4.8, 4.1, 2.1))
+plot(rank$rankHighC~rank$rankInt, 
+     col = colTran[factor(rank$transect)], 
+     pch = 19,
+     xlab = "Intercept rank",
+     ylab = "High cue rank",
+     cex.lab =1.5,
+     cex =1.5)
+abline(0,1)
+
+plot(rank$rankLowC~rank$rankInt, 
+     col = colTran[factor(rank$transect)], 
+     pch = 19,
+     xlab = "Intercept rank",
+     ylab = "Low cue rank",
+     cex.lab =1.5,
+     cex =1.5)
+abline(0,1)
+
+plot(rank$rankHighC~rank$rankLowC, 
+     col = colTran[factor(rank$transect)], 
+     pch = 19,
+     xlab = "Low cue rank",
+     ylab = "High cue rank",
+     cex.lab =1.5,
+     cex =1.5)
+abline(0,1)
+
+legend("topleft",legend = c( expression("East"),
+                            expression("West"),
+                            expression("Both")),
+       col = c("maroon","forestgreen","navy"),
+       #pt.bg = c("#042333ff","#cc6a70ff","#593d9cff","#f9b641ff","#13306dff","#efe350ff","#eb8055ff"),
+       pt.bg = c( "maroon","forestgreen","navy"),
+       inset = 0.02, pch = c(21, 21, 21 ), cex = 1.25, bty = "n")
+dev.off()
+
+colType <- c("maroon","navy")
+par(mfrow = c(1,3), mar = c(5.1, 4.8, 4.1, 2.1))
+plot(rank$rankHighC~rank$rankInt, 
+     col = colType[factor(rank$type)], 
+     pch = 19,
+     xlab = "Intercept rank",
+     ylab = "High cue rank",
+     cex.lab =1.5,
+     cex =1.5)
+abline(0,1)
+
+plot(rank$rankLowC~rank$rankInt, 
+     col = colType[factor(rank$type)], 
+     pch = 19,
+     xlab = "Intercept rank",
+     ylab = "Low cue rank",
+     cex.lab =1.5,
+     cex =1.5)
+abline(0,1)
+
+plot(rank$rankHighC~rank$rankLowC, 
+     col = colType[factor(rank$type)], 
+     pch = 19,
+     xlab = "Low cue rank",
+     ylab = "High cue rank",
+     cex.lab =1.5,
+     cex =1.5)
+abline(0,1)
+
+### Rank within transect:
+rankE <- subset(rank, transect != "west")
+
+rankE <- rankE[order(rankE$Int),]
+rankE$rankInt <- seq(1:nrow(rankE))
+
+rankE <- rankE[order(rankE$meanBB),]
+rankE$rankLowC <- seq(1:nrow(rankE))
+
+rankE <- rankE[order(rankE$meanBBHigh),]
+rankE$rankHighC <- seq(1:nrow(rankE))
+
+pdf("figures/rankstiBBTransect.pdf", width = 9, height =6)
+
+par(mfrow = c(2,3), mar = c(5.1, 4.8, 4.1, 2.1))
+plot(rankE$rankHighC~rankE$rankInt, 
+     col = "maroon", 
+     pch = 19,
+     xlab = "Intercept rank",
+     ylab = "High cue rank",
+     main = "Eastern transect",
+     cex.lab =1.5,
+     cex =1.5, cex.main = 2)
+abline(0,1)
+
+plot(rankE$rankLowC~rankE$rankInt, 
+     col = "maroon", 
+     pch = 19,
+     xlab = "Intercept rank",
+     ylab = "Low cue rank",
+     cex.lab =1.5,
+     cex =1.5)
+abline(0,1)
+
+plot(rankE$rankHighC~rankE$rankLowC, 
+     col = "maroon", 
+     pch = 19,
+     xlab = "Low cue rank",
+     ylab = "High cue rank",
+     cex.lab =1.5,
+     cex =1.5)
+abline(0,1)
+
+
+rankW <- subset(rank, transect != "east")
+
+rankW <- rankW[order(rankW$Int),]
+rankW$rankInt <- seq(1:nrow(rankW))
+
+rankW <- rankW[order(rankW$meanBB),]
+rankW$rankLowC <- seq(1:nrow(rankW))
+
+rankW <- rankW[order(rankW$meanBBHigh),]
+rankW$rankHighC <- seq(1:nrow(rankW))
+
+
+
+#par(mfrow = c(2,3), mar = c(5.1, 4.8, 4.1, 2.1))
+plot(rankW$rankHighC~rankW$rankInt, 
+     col = "forestgreen", 
+     pch = 19,
+     xlab = "Intercept rank",
+     ylab = "High cue rank",main = "Western transect",
+     cex.lab =1.5,
+     cex =1.5, cex.main = 2
+     )
+abline(0,1)
+
+plot(rankW$rankLowC~rankW$rankInt, 
+     col = "forestgreen", 
+     pch = 19,
+     xlab = "Intercept rank",
+     ylab = "Low cue rank",
+     cex.lab =1.5,
+     cex =1.5)
+abline(0,1)
+
+plot(rankW$rankHighC~rankW$rankLowC, 
+     col = "forestgreen", 
+     pch = 19,
+     xlab = "Low cue rank",
+     ylab = "High cue rank",
+     cex.lab =1.5,
+     cex =1.5)
+abline(0,1)
+dev.off()

@@ -357,11 +357,25 @@ temp <- aggregate(noTermEnd["count"], noTermEnd[c("species")], FUN = sum)
 # what is the min and max average bb?
 meanBBData <- aggregate(pheno.t["bb"], pheno.t[c("species")], FUN = mean)
 
-minBB <- round(min(meanBBData$bb), 0)
-maxBB <- round(max(meanBBData$bb), 0)
+minBB <- round(min(meanBBData$bb), 1)
+maxBB <- round(max(meanBBData$bb), 1)
 
-meanBB <- round(mean(meanBBData$bb),0)
-# What are teh lambda values?
+meanBBPop <- aggregate(pheno.t["bb"], pheno.t[c("species", "transect")], FUN = mean)
+meanBBEast <- subset(meanBBPop, transect != "west")
+meanBBWest <- subset(meanBBPop, transect != "east")
+
+minBBE <- round(min(meanBBEast$bb), 1)
+maxBBE <- round(max(meanBBEast$bb), 1)
+diffBBEast <- maxBBE-minBBE
+
+minBBW <- round(min(meanBBWest$bb), 1)
+maxBBW <- round(max(meanBBWest$bb), 1)
+diffBBWest <- maxBBW-minBBW
+
+meanBB <- round(mean(meanBBData$bb),1)
+meanBBUpper <- round(quantile(meanBBData$bb, c(0.05)),1)
+meanBBLower <- round(quantile((meanBBData$bb), c(0.95)),1)
+# What are the lambda values?
 lam_params <- c( 
   "a_z",
   "lam_interceptsa"
@@ -563,6 +577,28 @@ for(sp in 1:47){
   }
 }
 
+photoHigh <- 0.4965051 #8 h photo
+siteSM <- 0
+forceHigh <- 0.5877121 
+chillHigh <- 0.3660412 # high chill for Smithers
+
+mHigh <- matrix(nrow = 1000, ncol = 47)
+
+for(sp in 1:47){
+  for (it in 1:nrow(mHigh)){
+    mHigh[it,sp] <- post$a_sp[it,sp]+ post$b_site2[it] * siteSM + post$b_site3[it] * siteSM + post$b_site4[it] * siteSM + 
+      post$b_warm[it,sp] * forceHigh + post$b_photo[it, sp] * photoHigh + post$b_chill[it,sp] * chillHigh +
+      post$b_inter_wp[it,sp] * (forceHigh*photoHigh) + post$b_inter_wc1[it,sp] * (forceHigh*chillHigh) + post$b_inter_pc1[it,sp] * (photoHigh*chillHigh) +
+      post$b_inter_s2c1[it,sp] * (chillHigh*siteSM) + post$b_inter_ws2[it,sp] * (forceHigh*siteSM) + post$b_inter_ps2[it,sp] * (photoHigh*siteSM) +
+      post$b_inter_s3c1[it,sp] * (chillHigh*siteSM) + post$b_inter_ws3[it,sp] * (forceHigh*siteSM) + post$b_inter_ps3[it,sp] * (photoHigh*siteSM) +
+      post$b_inter_s4c1[it,sp] * (chillHigh*siteSM) + post$b_inter_ws4[it,sp] * (forceHigh*siteSM) + post$b_inter_ps4[it,sp] * (photoHigh*siteSM)
+  }
+}
+
+meanLowBB <- mean(m)
+meanHighBB <- mean(mHigh)
+
+
 #manning park
 # mp <- matrix(nrow = 1000, ncol = 47)
 # for(sp in 1:47){
@@ -593,10 +629,34 @@ for(sp in 1:47){
 # now get the order of diff spp bb that I can use to order the figure
 #spInfo <- read.csv("..//input/species_list.csv")
 
+spNo <- nrow(spInfo)
+
+eastSpp <- subset(spInfo, transect != "west")
+eastSpNo <- nrow(eastSpp)
+eastShrub <- subset(eastSpp, type == "shrub")
+eastTree <- subset(eastSpp, type == "tree")
+
+eastShrubNo <- nrow(eastShrub)
+eastTreeNo <- nrow(eastTree)
+
+westSpp <- subset(spInfo, transect != "east")
+westSpNo <- nrow(westSpp)
+westShrub <- subset(westSpp, type == "shrub")
+westTree <- subset(westSpp, type == "tree")
+
+westShrubNo <- nrow(westShrub)
+westTreeNo <- nrow(westTree)
+
+bothSpp <- subset(spInfo, transect == "east/west")
+bothSpNo <- nrow(bothSpp)
+
 spInfo <- spInfo[order(spInfo$species),]
 head(spInfo)
 spInfo$meanBB <- colMeans(m)
 colnames(m) <- spInfo$species.name
+
+spInfo$meanBBHigh <- colMeans(mHigh)
+colnames(mHigh) <- spInfo$species.name
 
 spInfo$Int <- a_sp
 spInfo$Int2.5 <- a_sp2.5
@@ -633,9 +693,15 @@ spInfo$force95 <- b_force95
 spInfo$chill95 <- b_chill95
 spInfo$photo95 <- b_photo95
 
-
+QaLlDiff <- round(spInfo[28,"meanBB"] - spInfo[21,"meanBB"] ,1)
 east <- subset(spInfo, transect != "west")
 eastSp <- unique(east$species.name)
+
+qaChill <- round(spInfo[28,"chill"] ,1)
+qaForcing <- round(spInfo[28,"force"] ,1)
+
+llChill <- round(spInfo[21,"chill"] ,1)
+llForcing <- round(spInfo[21,"force"] ,1)
 
 dataEast <- spInfo[spInfo$species.name %in% eastSp, ]
 
@@ -652,12 +718,15 @@ overlappingW <- c("spialb","betpap","popbal")
 spMiniW <- west[!west$species %in% overlappingW,]
 spTopW <- west[west$species %in% overlappingW,]
 
-meanPtW <- aggregate(dataWest[c("meanBB", "Int")], dataWest[c("species.name","type","transect")], FUN = mean)
+meanPtW <- aggregate(dataWest[c("meanBB","meanBBHigh", "Int")], dataWest[c("species.name","type","transect")], FUN = mean)
 
-meanPtE <- aggregate(dataEast[c("meanBB", "Int")], dataEast[c("species.name","type","transect")], FUN = mean)
+meanPtE <- aggregate(dataEast[c("meanBB","meanBBHigh", "Int")], dataEast[c("species.name","type","transect")], FUN = mean)
 
 diffBAWest <- round(mean((meanPtW$Int/meanPtW$meanBB)*100),1)
-diffBAEast <- round(mean((meanPtE$Int/meanPtE$meanBB)*100),1)
+diffBAEast <- format(round(mean((meanPtE$Int/meanPtE$meanBB)*100),1),nsmall =1)
+
+diffBAWestHigh <- 100-round(mean((meanPtW$meanBBHigh/meanPtW$Int)*100),1)
+diffBAEastHigh <- format(100-round(mean((meanPtE$meanBBHigh/meanPtE$Int)*100),1),nsmall =1)
 
 ## Interaction values:
 
@@ -999,3 +1068,14 @@ meanWestEstiL <- format(round(mean(siteForce[2,4], siteForce[3,4]), 1), nsmall =
 meanEastEsti <- format(round(mean(siteForce[1,1], siteForce[4,1]), 1), nsmall =1)
 meanEastEstiU <- format(round(mean(siteForce[1,5], siteForce[4,5]), 1), nsmall =1)
 meanEastEstiL <- format(round(mean(siteForce[1,4], siteForce[4,4]), 1), nsmall =1)
+
+expLength <- 86
+
+tot <- read.csv("..//input/phenoMini.csv")
+
+#Only want the total number that reached 7:
+below <- subset(tot, bbch.t < 8)
+totalObs <- nrow(below)
+
+totalDays <- max(tot$day)
+# what spp are different bb but similar 

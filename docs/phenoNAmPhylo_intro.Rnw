@@ -152,53 +152,59 @@ source("..//rcode/phenologyMsValues.R")
 
 \pagebreak
 
+
+\section{Brainstorming---Main takeaways}
+\begin{enumerate}
+\item Population effects were negligible---both across transects and latitudes---weak local adaptation
+\item But spp vary a lot---not by functional groups---phylogeny
+\item Temporal community assembly---not result of habitat selection---niche partitioning best explained by phylogeny---may be selection on other traits physiological constraints---e.g. competition, water availability, etc selecting for leaf traits
+\item Also our observed cue responses were in line with prev obs---chilling strongest, photo weakest, but strong interaction btwn cues
+\end{enumerate}
+
 \section*{Discussion}
 
-\subsection{Temporal assembly acorss North America}
+\subsection*{Temporal assembly across North America}
 \begin{enumerate}
-\item We found little evidence for differences in budburst phenology or cue responses geographically across populations, despite our chmaber studies encompassing the largest spatial scale to date 
+\item We combined observations of cue responses in woody plant budburst for forest communities from across North America---the largest spatial extent studied to date.
 \begin{enumerate}
-\item We expected local adaptation and differeing selective pressures across populations would lead to differences in cues responses across populations
+\item While our western and eastern forest communities differ in their species composition and local environments---little evidence for differences in budburst phenology or cue responses across populations
+\item Expected local adaptation = differeing selective pressures across populations = differences in cues responses across populations
 \item But we only observed slightly earlier budburst in our eastern populations when compared to western populations (Fig 1). 
-\item Across latitudes, our two eastern and two western populations do not differ (Fig \ref{siteCue}), which contrasts previous work that finds phenological events to occur later in poleward populations (Lieth1974, Zettlemoyer2021)
-\item The lack of population level trends suggests the drivers of budburst phenology are not related to biogeographic differences.
+\item Across our latitudinal gradients populations also do not differ (Fig \ref{siteCue})---contrasts previous work in which poleward populations were later (Lieth1974, Zettlemoyer2021)
+\item The lack of population level trends suggests the drivers of budburst phenology are not driven by biogeographic differences.
 \end{enumerate}
-
-We expected budburst across populations vary, with local adaptation in response to different selective pressures---but we found little evidence of population level differences
-% \begin{enumerate}
-% \item Our two eastern populations budburst slightly before our two western populations---strongest effect for chilling (Table 1)---could be due to differences in chilling requirements or artifact of the slightly greater chilling experienced in our eastern study
-% \item Across latitudes, our two eastern and two western populations do not differ (Fig \ref{siteCue}), which contrasts previous work that finds phenological events to occur later in poleward populations (Lieth1974, Zettlemoyer2021)
-% \item The lack of population level trends suggests budburst might be a well conserved trait, driven less by direct temperature cues, and more by other factors or selection of other traits.
-
-
-\item But we did find species-level variability 
 
 \end{enumerate}
 
-\subsection{Effects of functional groups on phenology}
-\item Species level differences in cue responses were not fully explained by differences between shrub and tree functional groups
-
-\subsection{Critical role of evolutionary history}
-
-
+\subsection*{Community composition and interspecific variation in phenology}
 \begin{enumerate}
+\item In taking a community approach---able to examine these relationships at the species level---where we see high variation in species cue responses
+\begin{enumerate}
+\item Species varied in the timing of budburst, with the timing between early and late budbursting spp spanning a similar period as that observed in natural communities (Maycock1961)---suggesting that our experiment captures a realistic breadth in phenology within our forest communities
+\item In general, all species showed some cue response---earlier bb with stronger cue 
+\item Overall cue responses were consistent with previous studies---ie.chilling beign strongest, photoperiod weakest, but complex interactions between cues---eg Flynn2018, Heide1993, Caffarra2011
 \item High forcing can offset low chilling---may be an important adaptation under future warmer winters when chilling might be insufficient
-\item In taking a community approach---able to examine these relationships at the species level---where we see high variation in species cue responses \end{enumerate}
-\item This is similar to the period of budburst observed in natural communities (Maycock1961)---suggesting that our experiment captures a realistic breadth in phenology within our forest communities
-\item We expected budburst across populations vary, with local adaptation in response to different selective pressures---but we found little evidence of population level differences % BIG RESULT
-\item Across latitudes, our two eastern and two western populations do not differ (Fig \ref{siteCue}), which contrasts previous work that finds phenological events to occur later in poleward populations (Lieth1974, Zettlemoyer2021)---ours is the biggest study of this to date
+\end{enumerate}
 
-% below is "fine" add citation of Laube
-\item shrub and tree species differ greatly in their ecological niche and physiology---but we found little variation in their cue responses on a whole.
+\item The differences observed across spp did not relate to species functional groups
 \begin{enumerate}
+\item Shrub and tree species differ greatly in their ecological niche and physiology---but we found little variation in their cue responses on a whole.
 \item Most tree species did budburst later than shrubs species---in line with previous work---earlier bb in shrubs compared to trees (Panchen2014, Yu2015)
 \item But about a quarter of tree species did show earlier budburst dates and a third of shrubs budburst later than expected---suggesting more nuance than previously found---advantage of us having such a large assemblages of species
 %Sun2006---found trees and shrubs to leaf out together
 \item As trees advance phenologically---with earlier canopy closure and reduced light predicted (Donnelly2019)---some less responsive shrubs will experience reduced fitness---but our finding suggests many shrub species have similar cue responses and at least have the capacity to maintain relative order.
 \item Provides novel insights into how species in the understory and canopy layer may respond differently to changes in temperature cues and which species are likely to experience the greatest declines in fitness
+% \end{enumerate}
 \end{enumerate}
 
-\item Next steps---predicting budburst phenology under future climates
+\end{enumerate}
+
+\subsection*{Phylogenetic structuring of phenology---OR---Critical role of evolutionary history}
+\begin{enumerate}
+\item Species level differences in cue responses were not fully explained by differences between shrub and tree functional groups
+\end{enumerate}
+
+\subsection*{Predicting budburst phenology under future climates}
 \begin{enumerate}
 \item Currently = limited understanding of spp sensitivity to environmental cues and how they interact (Chuine2017, Ettinger2020)
 \item Community wide approaches such as ours = critical bc greater diversity of spp and insights into how communities as a whole will respond
@@ -206,9 +212,35 @@ We expected budburst across populations vary, with local adaptation in response 
 \item But to forcast future changes = require further work to know what traits or other cues are contributing to high spp variability
 \end{enumerate}
 
-\end{enumerate}
 
-\begin{enumerate}
+%\begin{enumerate}
+%\item High forcing can offset low chilling---may be an important adaptation under future warmer winters when chilling might be insufficient
+%item In taking a community approach---able to examine these relationships at the species level---where we see high variation in species cue responses 
+% \item This is similar to the period of budburst observed in natural communities (Maycock1961)---suggesting that our experiment captures a realistic breadth in phenology within our forest communities
+% \item We expected budburst across populations vary, with local adaptation in response to different selective pressures---but we found little evidence of population level differences % BIG RESULT
+% \item Across latitudes, our two eastern and two western populations do not differ (Fig \ref{siteCue}), which contrasts previous work that finds phenological events to occur later in poleward populations (Lieth1974, Zettlemoyer2021)---ours is the biggest study of this to date
+
+% below is "fine" add citation of Laube
+% \item shrub and tree species differ greatly in their ecological niche and physiology---but we found little variation in their cue responses on a whole.
+% \begin{enumerate}
+% \item Most tree species did budburst later than shrubs species---in line with previous work---earlier bb in shrubs compared to trees (Panchen2014, Yu2015)
+% \item But about a quarter of tree species did show earlier budburst dates and a third of shrubs budburst later than expected---suggesting more nuance than previously found---advantage of us having such a large assemblages of species
+% %Sun2006---found trees and shrubs to leaf out together
+% \item As trees advance phenologically---with earlier canopy closure and reduced light predicted (Donnelly2019)---some less responsive shrubs will experience reduced fitness---but our finding suggests many shrub species have similar cue responses and at least have the capacity to maintain relative order.
+% \item Provides novel insights into how species in the understory and canopy layer may respond differently to changes in temperature cues and which species are likely to experience the greatest declines in fitness
+% \end{enumerate}
+% 
+% \item Next steps---predicting budburst phenology under future climates
+% \begin{enumerate}
+% \item Currently = limited understanding of spp sensitivity to environmental cues and how they interact (Chuine2017, Ettinger2020)
+% \item Community wide approaches such as ours = critical bc greater diversity of spp and insights into how communities as a whole will respond
+% \item We address many of the challenges to predicting species responses to further climate change---complexity of regional and increasingly variable seasonality
+% \item But to forcast future changes = require further work to know what traits or other cues are contributing to high spp variability
+% \end{enumerate}
+% 
+% \end{enumerate}
+% 
+% \begin{enumerate}
 % \item Our findings highlight the complex relationships between phenological cues and spring phenology within and across forest communities
 % \begin{enumerate}
 % \item In general, all species showed some cue response---earlier bb with stronger cue 
@@ -286,7 +318,7 @@ We expected budburst across populations vary, with local adaptation in response 
 % \item But to forcast future changes = require further work to know what traits or other cues are contributing to high spp variability
 % \end{enumerate}
 
-\end{enumerate}
+% \end{enumerate}
 
 
 % 

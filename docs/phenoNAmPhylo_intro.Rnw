@@ -167,7 +167,7 @@ source("..//rcode/phenologyMsValues.R")
 \begin{enumerate}
 \item While our western and eastern forest communities differ in both their species composition and local environments---only small differences in budburst phenology or cue responses across populations
 \begin{enumerate}
-\item Expected local adaptation = differing selective pressures across populations = leading to differences in cues responses across populations
+\item Expected local habitat selection = differing selective pressures across populations = leading to differences in cues responses across populations
 \item But we only observed slightly earlier budburst in our eastern populations when compared to western populations (Fig 1). 
 \item Also found no latitudinal gradients across populations despite differences in local photoperiods (Fig \ref{siteCue})---contrasts previous work in which poleward populations were later (Lieth1974, Zettlemoyer2021)
 \item Lack of population level trends suggests the drivers that shape the timing of budburst are not driven by geography alone.

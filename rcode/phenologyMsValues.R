@@ -728,8 +728,71 @@ diffBAEast <- format(round(mean((meanPtE$Int/meanPtE$meanBB)*100),1),nsmall =1)
 diffBAWestHigh <- 100-round(mean((meanPtW$meanBBHigh/meanPtW$Int)*100),1)
 diffBAEastHigh <- format(100-round(mean((meanPtE$meanBBHigh/meanPtE$Int)*100),1),nsmall =1)
 
-## Interaction values:
+# Ranking info:
+rank <- spInfo[,c("species.name","species","type","transect","meanBB","meanBBHigh","Int")]
+rank <- rank[order(rank$Int),]
+rank$rankInt <- seq(1:nrow(rank))
 
+rank <- rank[order(rank$meanBB),]
+rank$rankLowC <- seq(1:nrow(rank))
+
+rank <- rank[order(rank$meanBBHigh),]
+rank$rankHighC <- seq(1:nrow(rank))
+
+# How much to ranks change?
+rank$absDiff <- abs(rank$rankHighC-rank$rankLowC)
+# eastern ranks
+rankE <- subset(rank, transect != "west")
+
+rankE <- rankE[order(rankE$Int),]
+rankE$rankInt <- seq(1:nrow(rankE))
+
+rankE <- rankE[order(rankE$meanBB),]
+rankE$rankLowC <- seq(1:nrow(rankE))
+
+rankE <- rankE[order(rankE$meanBBHigh),]
+rankE$rankHighC <- seq(1:nrow(rankE))
+
+minRankDiffE <- min(rankE$absDiff)
+maxRankDiffE <- max(rankE$absDiff)
+meanRankDiffE <- round(mean(rankE$absDiff),0)
+# Western ranks
+rankW <- subset(rank, transect != "east")
+
+rankW <- rankW[order(rankW$Int),]
+rankW$rankInt <- seq(1:nrow(rankW))
+
+rankW <- rankW[order(rankW$meanBB),]
+rankW$rankLowC <- seq(1:nrow(rankW))
+
+rankW <- rankW[order(rankW$meanBBHigh),]
+rankW$rankHighC <- seq(1:nrow(rankW))
+
+minRankDiffW <- min(rankW$absDiff)
+maxRankDiffW <- max(rankW$absDiff)
+meanRankDiffW <- round(mean(rankW$absDiff),0)
+# Subset just the spp that are in both transect:
+both <- c("Alnus_incana","Betula_papyrifera","Populus_tremuloides")
+
+rankESub <- rankE[rankE$species.name %in% both,]
+rankWSub <- rankW[rankW$species.name %in% both,]
+
+# How many early vs late spp were trees vs shrubs
+earlyShrub <- nrow(subset(rank, rankLowC <24 & type == "shrub"))
+earlyTree <- nrow(subset(rank, rankLowC <24 & type == "tree"))
+
+lateShrub <- nrow(subset(rank, rankLowC >23 & type == "shrub"))
+lateTree <- nrow(subset(rank, rankLowC >23 & type == "tree"))
+
+nShrub <- nrow(subset(rank, type == "shrub"))
+nTree <- nrow(subset(rank, type == "tree"))
+
+perEarlyTree <- round((earlyTree/nTree)*100,1)
+perLateShrub <- round((lateShrub/nShrub)*100,1)
+
+perLateTree <- round((lateTree/nTree)*100,1)
+perEarlyShrub <- round((earlyShrub/nShrub)*100,1)
+## Interaction values:
 
 
 #1 E vs w being overall earlier:

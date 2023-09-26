@@ -1406,32 +1406,36 @@ pdf("figures/rankstiBBTransect.pdf", width = 9, height =6)
 
 par(mfrow = c(2,3), mar = c(5.1, 4.8, 4.1, 2.1))
 plot(rankE$rankHighC~rankE$rankInt, 
-     col = "maroon", 
+     col = "purple3",  
      pch = 19,
      xlab = "Intercept rank",
      ylab = "High cue rank",
      main = "Eastern transect",
      cex.lab =1.5,
-     cex =1.5, cex.main = 2)
+     cex =2, cex.main = 2)
 abline(0,1)
+text(1.5,27, label = "a)", cex = 1.5)
+
 
 plot(rankE$rankLowC~rankE$rankInt, 
-     col = "maroon", 
+     col = "purple3",  
      pch = 19,
      xlab = "Intercept rank",
      ylab = "Low cue rank",
      cex.lab =1.5,
-     cex =1.5)
+     cex =2)
 abline(0,1)
+text(1.5,27, label = "b)", cex = 1.5)
 
 plot(rankE$rankHighC~rankE$rankLowC, 
-     col = "maroon", 
+     col = "purple3", 
      pch = 19,
      xlab = "Low cue rank",
      ylab = "High cue rank",
      cex.lab =1.5,
-     cex =1.5)
+     cex =2)
 abline(0,1)
+text(1.5,27, label = "c)", cex = 1.5)
 
 
 rankW <- subset(rank, transect != "east")
@@ -1454,9 +1458,13 @@ plot(rankW$rankHighC~rankW$rankInt,
      xlab = "Intercept rank",
      ylab = "High cue rank",main = "Western transect",
      cex.lab =1.5,
-     cex =1.5, cex.main = 2
+     cex =2, cex.main = 2,
+     xlim = c(0,25),
+     ylim = c(0,25)
      )
 abline(0,1)
+text(0.8,24, label = "d)", cex = 1.5)
+
 
 plot(rankW$rankLowC~rankW$rankInt, 
      col = "forestgreen", 
@@ -1464,8 +1472,12 @@ plot(rankW$rankLowC~rankW$rankInt,
      xlab = "Intercept rank",
      ylab = "Low cue rank",
      cex.lab =1.5,
-     cex =1.5)
+     cex =2,
+     xlim = c(0,25),
+     ylim = c(0,25)
+)
 abline(0,1)
+text(0.8,24, label = "e)", cex = 1.5)
 
 plot(rankW$rankHighC~rankW$rankLowC, 
      col = "forestgreen", 
@@ -1473,6 +1485,10 @@ plot(rankW$rankHighC~rankW$rankLowC,
      xlab = "Low cue rank",
      ylab = "High cue rank",
      cex.lab =1.5,
-     cex =1.5)
+     cex =2,
+     xlim = c(0,25),
+     ylim = c(0,25)
+)
 abline(0,1)
+text(0.8,24, label = "f)", cex = 1.5)
 dev.off()

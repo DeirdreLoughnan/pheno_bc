@@ -55,7 +55,7 @@
 \SweaveOpts{concordance=TRUE} % For RStudio hiccups
 
 
-\title{Differences in phenological cues responses do not explain temporal assembly of woody plant communities}
+\title{Evolutionary history and not phenological cues explain temporal assembly of woody plant communities}
 \date{\today}
 \author{Deirdre Loughnan$^1$ and E M Wolkovich$^1$}
 \maketitle 
@@ -165,34 +165,34 @@ source("..//rcode/phenologyMsValues.R")
 
 \subsection*{Temporal assembly across North America}
 \begin{enumerate}
-\item While our western and eastern forest communities differ in both their species composition and local environments---little evidence for differences in budburst phenology or cue responses across populations
+\item While our western and eastern forest communities differ in both their species composition and local environments---only small differences in budburst phenology or cue responses across populations
 \begin{enumerate}
 \item Expected local adaptation = differing selective pressures across populations = leading to differences in cues responses across populations
 \item But we only observed slightly earlier budburst in our eastern populations when compared to western populations (Fig 1). 
-\item Across our latitudinal gradients populations also do not differ (Fig \ref{siteCue})---contrasts previous work in which poleward populations were later (Lieth1974, Zettlemoyer2021)
-\item The lack of population level trends suggests the drivers of budburst and phenology and the cues that shape it are not driven by geography alone.
+\item Also found no latitudinal gradients across populations despite differences in local photoperiods (Fig \ref{siteCue})---contrasts previous work in which poleward populations were later (Lieth1974, Zettlemoyer2021)
+\item Lack of population level trends suggests the drivers that shape the timing of budburst are not driven by geography alone.
 \end{enumerate}
 
 \end{enumerate}
 
 \subsection*{Community composition and interspecific variation in phenology}
 \begin{enumerate}
-\item In taking a community approach---able to examine these relationships at the species level---where we see high variation in species cue responses
+\item In taking a community approach---able to examine these relationships at the species level---see high variation in species cue responses
 \begin{enumerate}
-\item Species varied in the timing of budburst, with the timing between early and late budbursting spp spanning a similar period as that observed in natural communities (Maycock1961)---suggesting that our experiment captures a realistic breadth in phenology within our forest communities
-\item In general, all species showed some cue response---earlier bb with stronger cue 
-\item Consistent with previous studies---ie.chilling being strongest, photoperiod weakest, but complex interactions between cues---eg Flynn2018, Heide1993, Caffarra2011
-\item High forcing can offset low chilling---may be an important adaptation under future warmer winters when chilling might be insufficient
-\item While differences in cue responses exist, identifying general trends cue responses across assemblages of species remains challenging.
+\item Species varied in the timing of budburst---early to late budbursting spp span a similar period as natural communities (Maycock1961)---suggesting that our experiment captures a realistic breadth in phenology within our forest communities
+\item Generally---all species showed some cue response---earlier bb with stronger cue 
+\item Cues consistent with previous studies---ie.chilling being strongest, photoperiod weakest, but complex interactions between cues---eg Flynn2018, Heide1993, Caffarra2011
+\item May be an important adaptation under future warmer winters when chilling might be insufficient and higher forcing needed to offset it
+\item While spp do differ in cue responses, identifying general trends cue responses across assemblages of species remains challenging.
 \end{enumerate}
 
-\item Forest communities consist of species that fill unique ecological niche----but we found no differences across spp functional groups
+%\item Forest communities consist of species that fill unique ecological niche----but we found no clear differences across spp functional groups
+\item Shrub and tree species differ greatly in their physiology---filling unique ecological niche---but we found little variation in their cue responses on a whole.
 \begin{enumerate}
-\item Shrub and tree species differ greatly in their ecological niche and physiology---but we found little variation in their cue responses on a whole.
-\item Most tree species did budburst later than shrubs species---in line with previous work---earlier bb in shrubs compared to trees (Panchen2014, Yu2015)
+\item Most tree species budburst later than shrubs species---in line with previous work---earlier bb in shrubs compared to trees (Panchen2014, Yu2015)
 \item But about a quarter of tree species did show earlier budburst dates and a third of shrubs budburst later than expected---suggesting more nuance than previously found---advantage of us having such a large assemblages of species
 %Sun2006---found trees and shrubs to leaf out together
-\item As trees advance phenologically---with earlier canopy closure and reduced light predicted (Donnelly2019)---some less responsive shrubs will experience reduced fitness---but our finding suggests many shrub species have similar cue responses and at least have the capacity to maintain relative order.
+\item As trees advance phenologically---with earlier canopy closure and reduced light predicted (Donnelly2019)---some less responsive shrubs will experience reduced fitness---but our finding suggests many have similar cue responses and the capacity to maintain their relative temporal niche space.
 \item Provides novel insights into how species in the understory and canopy layer may respond differently to changes in temperature cues and which species are likely to experience the greatest declines in fitness
 % \end{enumerate}
 \end{enumerate}
@@ -207,20 +207,22 @@ source("..//rcode/phenologyMsValues.R")
 % But incorporating evolutionary history into our understanding of community assembly---insights into spp phenotypic constraints and potential for phylogenetic nich conservatism
 \subsection*{Community assembly in responses to cues versus evolutionary history}
 \begin{enumerate}
-\item In addition to improving our ecological understanding of budburst phenology at the community level---accounting for the effects of species' phylogeny highlighted the critical role evolutionary history plays in shaping this triat.
+\item In addition to improving our ecological understanding of budburst phenology at the community level---our results illustrate the critical role of species' evolutionary history in shaping this trait.
+
+accounting for the effects of species' phylogeny highlighted the critical role evolutionary history plays in shaping this trait.
 \begin{enumerate}
-\item We found a high level of phylogenetic relatedness amongst clades of species in the timing of budburst.
-\item The proportion of variation in bb explained by species' responses to cues was relatively small (Fig 4)
+\item In accounting for the effects of species' phylogeny, we found a high level of phylogenetic relatedness amongst clades of species in the timing of budburst.
+\item This is reflected in the high proportion of variation in bb explained by species' level effects and relatively weak contribution by our three cues (Fig 4)
 \item Suggests species' budburst is constrainted by their evolutionary history and not as strongly shaped by current environmental conditions as we would expect.
 \item This phylogenetic niche conservatism is surprising---given phenology is thought of as a highly plastic trait, with local conditions expected to drive variation in the type and magnitude of cue responses
-\item Evidence of phenotypic attraction of similar, more closely related species in temperate forests.
+\item May be evidence of phenotypic attraction of similar, more closely related species in temperate forests.
 \item But could also be an indication of limited evolutionary time---some temperate species, like \emph{Nyssa} and \emph{Fagus} have had a shorter geologic time in which to adapt to temperatures
-\item But within clades find similar trends in budburst
+\item Concerning---as it could limit species' ability to respond to changing climates and future community dynamics
 \end{enumerate}
 
-\item Ecological communities are thought to be shaped by habitat selection---spp that withinstand local abiotic conditions---and phenotypic repulsion---limiting niche overlap and competition---but seems not to be the case for spring phenology
+\item Ecological communities are thought to be shaped by habitat selection---spp that withinstand local abiotic conditions persist---and phenotypic repulsion---limiting niche overlap and competition---but seems not to be the case for species temporal niche (or spring temporal niche?)
 \begin{enumerate}
-\item While indiviudal spp to filled unique temporal niche and varied in their timing of bb by several weeks---the similarity in temporal niche variation suggests strong phylogenetic niche conservatism and stabilizing selection on spp phenologies with little change in phenology in response to local habitats
+\item While spp in our forest communities varied in their timing of bb by several weeks---the similarity in temporal niche variation across populations suggests strong phylogenetic niche conservatism and stabilizing selection with little change in phenology in response to local habitats
 \item This is despite communities having very unique regional spp pools---western community dominated by shrub spp vs eastern communities with more canopy tree spp
 \item Indicates that cues we think are important for bb may also be selecting for other functional traits---such as traits related to light capture and photosynthesis or nutrient uptake
 \item Exploring how suites of other triats contribute to species cue response could = greater insights into the mechanisms driving species temporal niche
@@ -247,7 +249,8 @@ source("..//rcode/phenologyMsValues.R")
 \item Currently = limited understanding of spp sensitivity to environmental cues and how they interact (Chuine2017, Ettinger2020)
 \item Community wide approaches such as ours = critical bc greater diversity of spp and insights into how communities as a whole will respond
 \item We address many of the challenges to predicting species responses to further climate change---complexity of regional and increasingly variable seasonality
-\item But to forcast future changes = require further work to know what traits or other cues are contributing to high spp variability
+\item Our findings also highlight the importance of species evolutionary history in shaping budburst---concerning as these ancestral constraints on spring phenology may limit species' ability to respond to climate change
+\item to forcast future changes = require further work to know what traits or other cues are contributing to high spp variability
 \end{enumerate}
 
 

@@ -293,9 +293,9 @@ But a more detailed examination of the the underlying mechanism, whether they be
 \item But also raise concerns---as it could limit species' ability to respond to changing climates and future community dynamics
 \end{enumerate}
 
-\item Ecological communities are thought to be shaped by habitat selection---spp that with stand local abiotic conditions persist---and phenotypic repulsion---limiting niche overlap and competition---but seems not to be the case for species temporal niche (or spring temporal niche?)
+\item Ecological communities are thought to be shaped by habitat selection---species that withstand local abiotic conditions persist---and phenotypic repulsion---limiting niche overlap and competition---but seems not to be the case for species temporal niche (or spring temporal niche?)
 \begin{enumerate}
-\item While spp in our forest communities varied in their timing of bb by several weeks---the similarity in temporal niche variation across populations suggests strong phylogenetic niche conservatism and stabilizing selection with little change in phenology in response to local habitats
+\item While species in our forest communities varied in their timing of bb by several weeks---the similarity in temporal niche variation across populations suggests strong phylogenetic niche conservatism and stabilizing selection with little change in phenology in response to local habitats
 \item This is despite communities having very unique regional spp pools---western community dominated by shrub spp vs eastern communities with more canopy tree spp
 \item Indicates that cues we think are important for bb may also be selecting for other functional traits---such as traits related to light capture and photosynthesis or nutrient uptake
 \item Exploring how suites of other traits contribute to species cue response could = greater insights into the mechanisms driving species temporal niche
@@ -306,13 +306,20 @@ But a more detailed examination of the the underlying mechanism, whether they be
 
 \subsection*{Predicting budburst phenology under future climates}
 \begin{enumerate}
-\item Currently = limited understanding of spp sensitivity to environmental cues and how they interact (Chuine2017, Ettinger2020)
-\item Community wide approaches such as ours = critical bc greater diversity of spp and insights into how communities as a whole will respond
+\item Integrating the relative effects of climate, evolutionary history, and ecological process is critical to forecasting future phenologies under climate change.
+\item Our study is one of the first to include these three types of drivers at a large geographic scale and across forest communities. 
+\item To improve our forecasting abilities requires community wide approaches such as ours = critical bc greater diversity of spp and insights into how communities as a whole will respond
 \item We address many of the challenges to predicting species responses to further climate change---complexity of regional and increasingly variable seasonality
-\item Our findings also highlight the importance of species evolutionary history in shaping budburst---concerning as these ancestral constraints on spring phenology may limit species' ability to respond to climate change
-\item to forecast future changes = require further work to know what traits or other cues are contributing to high spp variability
+\item And yet, our findings highlight our limited understanding of the factors underlying phenological variation within forest communities and groups of species.
+\item to forecast future changes = require further work to know what traits or other cues are contributing to high spp variability in addition to a better understanding of species evolutionary constraints.
 \end{enumerate}
 
+% Things to keep for future:
+% \item Currently = limited understanding of spp sensitivity to environmental cues and how they interact (Chuine2017, Ettinger2020)
+% \item Community wide approaches such as ours = critical bc greater diversity of spp and insights into how communities as a whole will respond
+% \item We address many of the challenges to predicting species responses to further climate change---complexity of regional and increasingly variable seasonality
+% \item Our findings also highlight the importance of species evolutionary history in shaping budburst---concerning as these ancestral constraints on spring phenology may limit species' ability to respond to climate change
+% \item to forecast future changes = require further work to know what traits or other cues are contributing to high spp variability
 
 \section{Tables and figures}
 

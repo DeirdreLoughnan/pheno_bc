@@ -102,6 +102,13 @@
 
 \begin{figure}[h!]
     \centering
+     \includegraphics[width=\textwidth]{..//figures/bothRanked.pdf}
+     \caption{The difference in budburst ranking between high and low cues for the three species that occurr in both the eastern (shown in green) and western transect (shown in purple). }
+    \label{fig:bothRanked}
+\end{figure}
+
+\begin{figure}[h!]
+    \centering
      \includegraphics[width=\textwidth]{..//figures/phylogeny.pdf}
      \caption{Species differences were accounted for by including phylogenetic effects on the species intercept. The phylogeny was obtained by pruning the existing tree for flowering plants developed by Smith and Brown (2018)}
     \label{fig:intrxn}

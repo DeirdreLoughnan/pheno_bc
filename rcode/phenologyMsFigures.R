@@ -2171,96 +2171,119 @@ phyloplot = dataPhy$phy
 x = dataPhy$data$mean
 names(x)=dataPhy$phy$tip.label
 
-slope <- contMap(phyloplot, x, plot = F)
+slope <- contMap(tree, x, plot = T)
+
 slopeCol <- setMap(slope, colors=c("blue","purple","red"))
-plot(slopeCol)
-# plot(tree)
-# x <- as.numeric(sum[grep("a_sp\\[", rownames(sum)), c("mean")])
-# 
-# rownames(intercepts) <- spFact
-# 
-# obj<-contMap(tree,x,plot=FALSE)
-# obj
-# plot(obj)
+h<-max(nodeHeights(slopeCol$tree))
 
-obj<-setMap(obj,colors=c("blue","purple","red"))
-plot(obj,leg.txt="Intercept)",lwd=3)
+pdf("figures/phyloIntColor.pdf", height = 9, width = 7)
+plot(slopeCol,legend = F, lwd=3, ylim=c(1-0.09*(Ntip(slopeCol$tree)),Ntip(slopeCol$tree)))
 
-data(mammal.tree)
-data(mammal.data)
-## extract character of interest
-ln.bodyMass<-(setNames(intercepts$mean,
-  rownames(intercepts)))
-## create "contMap" object
-mammal.contMap<-contMap(tree,
-  ln.bodyMass,plot=T)
-## change color scheme
-mammal.contMap<-setMap(mammal.contMap,
-  c("white","#FFFFB2","#FECC5C","#FD8D3C",
-    "#E31A1C"))
-plot(mammal.contMap,fsize=c(0.7,0.8),
-  leg.txt="log(body mass)")
-par(mar=c(5.1,4.1,4.1,2.1)) ## reset margins to default
-
-
-
-
-# now get the tree:
-tree <- read.tree("input/SBphylo_phenobc.tre")
-head(tree$tip.label)
-length(tree$tip.label) #47
-tree$tip.label[tree$tip.label=="Cornus_asperifolia"] <- "Cornus_stolonifera"
-tree$tip.label[tree$tip.label=="Alnus_alnobetula"] <- "Alnus_viridis"
-tree$tip.label[tree$tip.label== "Fagus_grandifolia_var._caroliniana"] <- "Fagus_grandifolia"
-tree$tip.label[tree$tip.label== "Spiraea_alba_var._latifolia"] <- "Spiraea_alba"
-tree$tip.label[tree$tip.label== "Rhamnus_arguta"] <- "Rhamnus_frangula"
-
-tree.contMAP <- contMap(tree, intercepts, method = "user")
-plot(tree.contMAP,ftype="off",lwd=c(3,6))
-
-plot(tree, tip.color = spInfo$mean)
-?dottree
-dotTree(tree, spInfo$mean)
-# all_tree <- root(all_tree, 'SAL_AB9236AA_AS') # This is an outgroup I picked for the tree.
-# 
-# # Just shrinking some long branches so it's clearer
-# # Don't distort your actual data this way without good reason.
-# all_tree$edge.length[all_tree$edge.length  > 100  ]  <- 100
-# 
-# p1 <- ggtree(all_tree) %<+% info +
-#   geom_tippoint(aes(color=Country)) + # Colour code the tips with country
-#   # Adding in a scale
-#   geom_treescale(x=0, y=45, fontsize=4, linesize=2, offset=2, width=10)
-# 
-# plot(p1)
+add.color.bar(60, slopeCol$cols, title = "Intercept", subtitle="", digits = 1,lims = c(10,50),  prompt = F,x=0.2*h, y = -2)
+dev.off()
+# LWD<-diff(par()$usr[1:2])/dev.size("px")[1]
+# lines(x=rep(-0.2*h+LWD*15/2,2),y=c(2,Ntip(slopeCol$tree)-1))
+# nticks<-10
+# Y<-cbind(round(seq(2,Ntip(obj$tree)-1,length.out=nticks),1),
+#   round(seq(2,Ntip(obj$tree)-1,length.out=nticks),1))
+# X<-cbind(rep(-0.2*h+LWD*15/2,nticks),
+#   rep(-0.2*h+LWD*15/2+0.02*h,nticks))
+# for(i in 1:nrow(Y)) lines(X[i,],Y[i,])
+# ticks<-seq(round(slopeCol$lims[1],1),round(slopeCol$lims[2],1),length.out=nticks)
+# text(x=X[,2],y=Y[,2],round(ticks,3),pos=4,cex=0.8)
 # 
 # 
 # 
-# a_sp
+# # plot(tree)
+# # x <- as.numeric(sum[grep("a_sp\\[", rownames(sum)), c("mean")])
+# # 
+# # rownames(intercepts) <- spFact
+# # 
+# # obj<-contMap(tree,x,plot=FALSE)
+# # obj
+# # plot(obj)
 # 
-# ggtree(beast_tree, aes(color=rate)) +
-#   scale_color_continuous(low='darkgreen', high='red') +
-#   theme(legend.position="right")
+# obj<-setMap(obj,colors=c("blue","purple","red"))
+# plot(obj,leg.txt="Intercept)", lims = c(10,50),lwd=3)
+# cols=c("blue","purple","red") 
+# leg <- 50
+# add.color.bar(leg, cols, lims = c(10,50))
+# add.simmap.legend(leg = Null, cols, prompt = T)
+# data(mammal.tree)
+# data(mammal.data)
+# ## extract character of interest
+# ln.bodyMass<-(setNames(intercepts$mean,
+#   rownames(intercepts)))
+# ## create "contMap" object
+# mammal.contMap<-contMap(tree,
+#   ln.bodyMass,plot=T)
+# ## change color scheme
+# mammal.contMap<-setMap(mammal.contMap,
+#   c("white","#FFFFB2","#FECC5C","#FD8D3C",
+#     "#E31A1C"))
+# plot(mammal.contMap,fsize=c(0.7,0.8),
+#   leg.txt="log(body mass)")
+# par(mar=c(5.1,4.1,4.1,2.1)) ## reset margins to default
 # 
-# p1 <- ggtree(tree, aes(color=trait), layout = 'circular', 
-#   ladderize = FALSE, continuous = 'colour', size=2) +
-#   scale_color_gradientn(colours=c("red", 'orange', 'green', 'cyan', 'blue')) +
-#   geom_tiplab(hjust = -.1) + 
-#   xlim(0, 1.2) + 
-#   theme(legend.position = c(.05, .85)) 
 # 
-# ggtree(tree, aes(color=trait), continuous = 'colour', yscale = "trait") + 
-#   scale_color_viridis_c() + theme_minimal()
 # 
-# set.seed(2020)
-# x <- rtree(30)
-# d <- data.frame(label=x$tip.label, var1=abs(rnorm(30)), var2=abs(rnorm(30)))
-# tree <- full_join(x, d, by='label')
-# trs <- list(TREE1 = tree, TREE2 = tree)
-# class(trs) <- 'treedataList'
-# ggtree(trs) + facet_wrap(~.id) + 
-#   geom_tippoint(aes(subset=.id == 'TREE1', colour=var1)) + 
-#   scale_colour_gradient(low='blue', high='red') +  
-#   ggnewscale::new_scale_colour()  + 
-#   geom_tippoint(aes(colour=var2), data=td_filter(.id == "TREE2")) + 
-#   scale_colour_viridis_c()
+# 
+# # now get the tree:
+# tree <- read.tree("input/SBphylo_phenobc.tre")
+# head(tree$tip.label)
+# length(tree$tip.label) #47
+# tree$tip.label[tree$tip.label=="Cornus_asperifolia"] <- "Cornus_stolonifera"
+# tree$tip.label[tree$tip.label=="Alnus_alnobetula"] <- "Alnus_viridis"
+# tree$tip.label[tree$tip.label== "Fagus_grandifolia_var._caroliniana"] <- "Fagus_grandifolia"
+# tree$tip.label[tree$tip.label== "Spiraea_alba_var._latifolia"] <- "Spiraea_alba"
+# tree$tip.label[tree$tip.label== "Rhamnus_arguta"] <- "Rhamnus_frangula"
+# 
+# tree.contMAP <- contMap(tree, intercepts, method = "user")
+# plot(tree.contMAP,ftype="off",lwd=c(3,6))
+# 
+# plot(tree, tip.color = spInfo$mean)
+# ?dottree
+# dotTree(tree, spInfo$mean)
+# # all_tree <- root(all_tree, 'SAL_AB9236AA_AS') # This is an outgroup I picked for the tree.
+# # 
+# # # Just shrinking some long branches so it's clearer
+# # # Don't distort your actual data this way without good reason.
+# # all_tree$edge.length[all_tree$edge.length  > 100  ]  <- 100
+# # 
+# # p1 <- ggtree(all_tree) %<+% info +
+# #   geom_tippoint(aes(color=Country)) + # Colour code the tips with country
+# #   # Adding in a scale
+# #   geom_treescale(x=0, y=45, fontsize=4, linesize=2, offset=2, width=10)
+# # 
+# # plot(p1)
+# # 
+# # 
+# # 
+# # a_sp
+# # 
+# # ggtree(beast_tree, aes(color=rate)) +
+# #   scale_color_continuous(low='darkgreen', high='red') +
+# #   theme(legend.position="right")
+# # 
+# # p1 <- ggtree(tree, aes(color=trait), layout = 'circular', 
+# #   ladderize = FALSE, continuous = 'colour', size=2) +
+# #   scale_color_gradientn(colours=c("red", 'orange', 'green', 'cyan', 'blue')) +
+# #   geom_tiplab(hjust = -.1) + 
+# #   xlim(0, 1.2) + 
+# #   theme(legend.position = c(.05, .85)) 
+# # 
+# # ggtree(tree, aes(color=trait), continuous = 'colour', yscale = "trait") + 
+# #   scale_color_viridis_c() + theme_minimal()
+# # 
+# # set.seed(2020)
+# # x <- rtree(30)
+# # d <- data.frame(label=x$tip.label, var1=abs(rnorm(30)), var2=abs(rnorm(30)))
+# # tree <- full_join(x, d, by='label')
+# # trs <- list(TREE1 = tree, TREE2 = tree)
+# # class(trs) <- 'treedataList'
+# # ggtree(trs) + facet_wrap(~.id) + 
+# #   geom_tippoint(aes(subset=.id == 'TREE1', colour=var1)) + 
+# #   scale_colour_gradient(low='blue', high='red') +  
+# #   ggnewscale::new_scale_colour()  + 
+# #   geom_tippoint(aes(colour=var2), data=td_filter(.id == "TREE2")) + 
+# #   scale_colour_viridis_c()

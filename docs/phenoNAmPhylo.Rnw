@@ -238,7 +238,7 @@ In comparing our earliest and latest budbursting species, we found the differenc
 \item A high proportion of variation in budburst is explained by species' level effects, with cues only explaining about two-thirds of variation in budburst (Fig \ref{fig:cueGrad})
 \item Our study applied extreme differences in cues to test for responses---useful for longer-term predictions/parameterizing process based models---but variation due to phylogenetic structure likely underestimated  
 \item Surprising evolutionary history has such a large effect---given phenology is thought of as a highly plastic trait, with local conditions expected to drive variation in the type and magnitude of cue responses
-\item But it indicates we are not accounting for other key drivers of spring phenology---additional cues or functitional traits---limiting our predictive abilities.
+\item But it indicates we are not accounting for other key drivers of spring phenology---additional cues or functional traits---limiting our predictive abilities.
 \end{enumerate}
 
 \item The evolutionary history and ancestral phenotype of a species has the potential to effect their ability to adapt to future climates. 
@@ -248,40 +248,6 @@ In comparing our earliest and latest budbursting species, we found the differenc
 \item But could also indicate limited evolutionary time---some temperate species, like \emph{Nyssa} and \emph{Fagus} have had a shorter geologic time in which to adapt to temperatures
 \item Identifying how and to what extent latent traits contribute to the phylogenetic structuring of temperate forest communities = unknown, but important if we are to predict how communities will respond to continued changes in climate.
 \end{enumerate}
-% \item While our study applied extreme differences in cues to test for responses and is useful for longer-term predictions or parameterizing process based models, it likely underestimates the full extent to which evolutionary history shaped budburst. 
-
-%\item May be evidence of phenotypic attraction or environmental filtering of similar, more closely related species in temperate forests.
-% \item But could also be an indication of limited evolutionary time---some temperate species, like \emph{Nyssa} and \emph{Fagus} have had a shorter geologic time in which to adapt to temperatures
-% \item These results illustrate the critical role of species' evolutionary history in shaping this trait---but could also limit species' ability to respond to changing climates and future community dynamics
-% \end{enumerate}
-
-% \item To tease apart the latent traits accounted for by spp evolutionary history requires us to explore additional cues or the suite of functional traits that contribute to species temporal niche.
-% \begin{enumerate}
-% % \item While our study applied a extreme differences in cues to test for responses and is useful for longer-term predictions or parameterizing process based models, it likely underestimates the full extent to which evolutionary history shaped budburst. 
-% \item A species evolutionary history could prevent adaptation to new environmental conditions, if they are physiologically constrained by their ancestral, optimum, phenotype.
-% \item Could also skew species assemblages, with species possessing ancesatral traits favourable for warmer climates---lower chilling and photoperiod requirements---better able to track and benefit from future climate conditions
-% \item But could also be an indication of limited evolutionary time---some temperate species, like \emph{Nyssa} and \emph{Fagus} have had a shorter geologic time in which to adapt to temperatures
-% % \item To forecast future forest dynamics will require us to accurrately model the impacts of species evolutionary history on their species-level differences, in addition to changing environmental cues. 
-% \item These results illustrate the critical role of species' evolutionary history in shaping this trait---but could also limit species' ability to respond to changing climates and future community dynamics
-% \end{enumerate}
-% \item But size of cue effects will depend on evolutionary history
-% To better forecast future forest dynamics will require us to accurrately model these species-level differences under changing climates
-% 
-% 
-% \item To predict how species will respond to future change---will need to account for species evolutionary history, in addition to cue responses
-% \item Species with ancesatral traits favourable for warmer climates and lower chilling and photoperiod requirements will be better able to track future climates
-% 
-% \item To better forecast future forest dynamics will require us to accurrately model these species-level differences under changing climates
-% 
-% \item This is despite communities having very unique regional spp pools---western community dominated by shrub spp vs eastern communities with more canopy tree spp
-% \item
-% \end{enumerate}
-
-% \item Ecological communities are thought to be shaped by habitat selection---species that withstand local abiotic conditions persist---and phenotypic repulsion---limiting niche overlap and competition---but seems not to be the case for species temporal niche (or spring temporal niche?)
-% \begin{enumerate}
-% \item While species in our forest communities varied in their timing of bb by several weeks---the similarity across populations suggests strong phylogenetic niche conservatism and stabilizing selection with little change in response to local habitats
-% \item This is despite communities having very unique regional spp pools---western community dominated by shrub spp vs eastern communities with more canopy tree spp
-% % \item Exploring how suites of other traits contribute to species cue response could = greater insights into the mechanisms driving species temporal niche
 
 %\end{enumerate}
 

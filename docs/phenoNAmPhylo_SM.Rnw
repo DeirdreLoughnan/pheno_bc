@@ -109,7 +109,7 @@
 
 \begin{figure}[h!]
     \centering
-     \includegraphics[width=\textwidth]{..//figures/phylogeny.pdf}
+     \includegraphics[width=\textwidth]{..//figures/phyloIntColor.pdf}
      \caption{Species differences were accounted for by including phylogenetic effects on the species intercept. The phylogeny was obtained by pruning the existing tree for flowering plants developed by Smith and Brown (2018)}
     \label{fig:intrxn}
 \end{figure}

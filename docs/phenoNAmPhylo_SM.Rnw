@@ -103,19 +103,20 @@
 \begin{figure}[h!]
     \centering
      \includegraphics[width=\textwidth]{..//figures/bothRanked.pdf}
-     \caption{The difference in budburst ranking between high and low cues for the three species that occurr in both the eastern (shown in green) and western transect (shown in purple). }
+     \caption{The difference in budburst ranking between high and low cues for the three species that occurr in both the eastern (shown in green) and western transect (shown in purple). } %emwOct25: Not so much info in this figure; maybe better to mention the high and low changes possible in caption to previous figures: Changes varied from a high of XX rank diff (Alnus incana) to a low of ...
     \label{fig:bothRanked}
 \end{figure}
 
 \begin{figure}[h!]
     \centering
      \includegraphics[width=\textwidth]{..//figures/phyloIntColor.pdf}
-     \caption{Species differences were accounted for by including phylogenetic effects on the species intercept. The phylogeny was obtained by pruning the existing tree for flowering plants developed by Smith and Brown (2018)}
+     \caption{Species differences were accounted for by including phylogenetic effects on the species intercept. The phylogeny was obtained by pruning the existing tree for flowering plants developed by Smith and Brown (2018)} %emwOct25 -- add units to intercept (days) on figure.
     \label{fig:intrxn}
 \end{figure}
 
 
 
+%emwOct25 -- italicize spp names
 <<label= meanBBTab, echo=FALSE , results=tex>>=
 # Mean bb dates across all treatments from raw data for 47 species at our two western sites, E.C. Manning Park and Smithers B.C., and our two eastern sites, Harvard Forest (HF) USA and St. Hippolyte(SH) Canada.
 

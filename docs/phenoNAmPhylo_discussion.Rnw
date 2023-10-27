@@ -134,7 +134,7 @@ source("..//rcode/phenologyMsValues.R")
 \begin{enumerate}
 \item Within a community, species varied in their timing of bb by several weeks--- but the similarity across populations suggests strong niche conservatism and stabilizing selection with little change in response to local habitats
 \item This finding illustrates the negligible impacts of population level variation in environmental cue, despite individual species within communities species assemblages and within functional groups varying in their cue responses.
-\item But can't simply focus on current cues---species current phenotypes are the result of multiple interacting and complex environmental cues that have shaped species over evolutionary time scales (Ackerly2009). %emwOct25 -- good, be sure to contrast somewhere timescales: we see effects of 'deep' time that matter to really short-term predictions (CC forecasting) TO DO STILL!
+\item But can't simply focus on current cues---species current phenotypes are the result of multiple interacting and complex environmental cues that have shaped species over evolutionary time scales (Ackerly2009). %emwOct25 -- good, be sure to contrast somewhere timescales: we see effects of 'deep' time that matter to really short-term predictions (CC forecasting) %DLOct26 --- see below Line 152
 \end{enumerate}
 
 % \item In accounting for the effects of species' phylogeny, we found a high level of phylogenetic relatedness among clades of species in the timing of budburst. %emwOct25 -- this is a results sentence ... can you make it more of a Discussion sentence. What does this result mean to readers?
@@ -149,7 +149,8 @@ source("..//rcode/phenologyMsValues.R")
 \item The evolutionary history and ancestral phenotype of a species has the potential to effect their ability to adapt to future climates. %emwOct25 -- nice section. 
 \begin{enumerate}
 \item  Could prevent adaptation to new environmental conditions, if spp are physiologically constrained by their ancestral, optimum phenotype
-\item Constraints could skew species assemblages,  favouring spp with traits adapted for warmer climates---lower chilling and photoperiod requirements---better able to track and benefit from future climate conditions
+\item The high phylogenetic structuring we observe demonstrates the potential for processes occurring across different time scales to be strongly interdependent---the evolution of traits shaped over 'deep' timescales is influencing species' abilities to respond to several decades of climate change.
+\item Constraints could skew species assemblages, favouring spp with traits adapted for warmer climates---lower chilling and photoperiod requirements---better able to track and benefit from future climate conditions
 \item But could also indicate limited evolutionary time---some temperate species, like \emph{Nyssa} and \emph{Fagus} have had a shorter geologic time in which to adapt to temperatures
 \item Identifying how and to what extent latent traits contribute to the phylogenetic structuring of temperate forest communities = unknown, but important if we are to predict how communities will respond to continued changes in climate.
 \end{enumerate}
@@ -160,7 +161,7 @@ source("..//rcode/phenologyMsValues.R")
 
 \subsection*{Predicting budburst phenology under future climates} %emwOct25 -- good stuff here but should be organized into 2-3 sections I think: I would have one about WHAT we learned for forecasting (e.g., we can skip forecasting populations, what else did we learn?) and then pivot to what we see as next steps based on what we learned.
 \begin{enumerate}
-%What we learned for forecasting - skip forcasting pop, account for phylogeny, don't assume trees and shrubs will be totally different
+%What we learned for forecasting - skip forecasting pop, account for phylogeny, don't assume trees and shrubs will be totally different
 \item Our results provide new insights into the key factors and ecological processes that are critical to forcasting future phenoloiges under climate change.
 \begin{enumerate}
 \item Our studies provides strong evidence that changes in budburst cues will produce consistent trends across populations---allowing us to forecast across populations for which we have limited local phenological data but similar species assemblages.

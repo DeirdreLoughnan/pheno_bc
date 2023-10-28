@@ -2145,8 +2145,21 @@ dev.off()
 
 
 ## Need a nicer phylogy - colour tips based on intercept values:
+tree <- read.tree("input/SBphylo_phenobc.tre")
+head(tree$tip.label)
+tree <- read.tree("input/SBphylo_phenobc.tre")
+head(tree$tip.label)
+length(tree$tip.label) #47
+tree$tip.label[tree$tip.label=="Cornus_asperifolia"] <- "Cornus_stolonifera"
+tree$tip.label[tree$tip.label=="Alnus_alnobetula"] <- "Alnus_viridis"
+tree$tip.label[tree$tip.label== "Fagus_grandifolia_var._caroliniana"] <- "Fagus_grandifolia"
+tree$tip.label[tree$tip.label== "Spiraea_alba_var._latifolia"] <- "Spiraea_alba"
+tree$tip.label[tree$tip.label== "Rhamnus_arguta"] <- "Rhamnus_frangula"
+
+
 # first getting the intercept values paired with the species names:
 spInfo <- read.csv("input/species_list.csv")
+
 
 spFact <- spInfo$species.name
 rownames(spInfo) <- spFact
@@ -2179,7 +2192,7 @@ h<-max(nodeHeights(slopeCol$tree))
 pdf("figures/phyloIntColor.pdf", height = 9, width = 7)
 plot(slopeCol,legend = F, lwd=3, ylim=c(1-0.09*(Ntip(slopeCol$tree)),Ntip(slopeCol$tree)))
 
-add.color.bar(60, slopeCol$cols, title = "Intercept", subtitle="", digits = 1,lims = c(10,50),  prompt = F,x=0.2*h, y = -2)
+add.color.bar(60, slopeCol$cols, title = "Intercept (days)", subtitle="", digits = 1,lims = c(10,50),  prompt = F,x=0.2*h, y = -2)
 dev.off()
 # LWD<-diff(par()$usr[1:2])/dev.size("px")[1]
 # lines(x=rep(-0.2*h+LWD*15/2,2),y=c(2,Ntip(slopeCol$tree)-1))
@@ -2237,7 +2250,7 @@ dev.off()
 # tree$tip.label[tree$tip.label== "Fagus_grandifolia_var._caroliniana"] <- "Fagus_grandifolia"
 # tree$tip.label[tree$tip.label== "Spiraea_alba_var._latifolia"] <- "Spiraea_alba"
 # tree$tip.label[tree$tip.label== "Rhamnus_arguta"] <- "Rhamnus_frangula"
-# 
+
 # tree.contMAP <- contMap(tree, intercepts, method = "user")
 # plot(tree.contMAP,ftype="off",lwd=c(3,6))
 # 

@@ -638,9 +638,9 @@ dotWBw <- ggplot(meanPtW) +
   annotate("text", x = spTopW[4,5], y = -1, label = spTopW[4,2], cex = 5, angle = 78) +
   annotate("text", x = spTopW[5,5], y = -1, label = spTopW[5,2], cex = 5, angle = 78) +
   scale_shape_manual(values = c(1,2,16)) +
-  annotate("text", x = 66, y = 60.5, label = "High cues", cex = 7) +  
+  annotate("text", x = 66, y = 60.5, label = "Low cues", cex = 7) +  
   annotate("text", x = 66, y = 44.5, label = "Intercept", cex = 7) +
-  annotate("text", x = 66, y = 27.5, label = "Low cues", cex = 7) + 
+  annotate("text", x = 66, y = 27.5, label = "High cues", cex = 7) + 
   geom_segment(aes(x = 61, y = 60.5, xend = 62.5 , yend = 60.5)) +
   geom_segment(aes(x = 61, y = 44.5, xend = 62.5 , yend = 44.5)) +
   geom_segment(aes(x = 61, y = 27.5, xend = 62.5 , yend = 27.5))
@@ -673,9 +673,9 @@ ggplot(meanPtW) +
   scale_shape_manual(values = c(1,2,16)) 
 
 +
-  annotate("text", x = 66, y = 60.5, label = "High cues", cex = 7) +  
+  annotate("text", x = 66, y = 60.5, label = "Low cues", cex = 7) +  
   annotate("text", x = 66, y = 44.5, label = "Intercept", cex = 7) +
-  annotate("text", x = 66, y = 27.5, label = "Low cues", cex = 7) + 
+  annotate("text", x = 66, y = 27.5, label = "High cues", cex = 7) + 
   geom_segment(aes(x = 61, y = 60.5, xend = 62.5 , yend = 60.5)) +
   geom_segment(aes(x = 61, y = 44.5, xend = 62.5 , yend = 44.5)) +
   geom_segment(aes(x = 61, y = 27.5, xend = 62.5 , yend = 27.5))
@@ -734,9 +734,9 @@ dotEBw <- ggplot(meanPtE) +
   annotate("text", x = spTopE[7,5], y = -1, label = spTopE[7,2], cex = 5, angle = 78) +
   annotate("text", x = spTopE[8,5], y = -1, label = spTopE[8,2], cex = 5, angle = 78) +
   scale_shape_manual(values = c(1,2,16)) +       
-  annotate("text", x = 68, y = 63, label = "High cues", cex = 7) +  
+  annotate("text", x = 68, y = 63, label = "Low cues", cex = 7) +  
   annotate("text", x = 68, y = 48, label = "Intercept", cex = 7) +
-  annotate("text", x = 68, y = 36.5, label = "Low cues", cex = 7) + 
+  annotate("text", x = 68, y = 36.5, label = "High cues", cex = 7) + 
   geom_segment(aes(x = 64, y = 63, xend = 65 , yend = 63)) +
   geom_segment(aes(x = 64, y = 48, xend = 65.5 , yend = 48)) +
   geom_segment(aes(x = 64, y = 36.5, xend = 65 , yend = 36.5))
@@ -1403,10 +1403,10 @@ rankE <- rankE[order(rankE$meanBBHigh),]
 rankE$rankHighC <- seq(1:nrow(rankE))
 
 pdf("figures/rankstiBBTransect.pdf", width = 9, height =6)
-
+colTran <- c("maroon","goldenrod")
 par(mfrow = c(2,3), mar = c(5.1, 4.8, 4.1, 2.1))
 plot(rankE$rankHighC~rankE$rankInt, 
-     col = "purple3",  
+     col = colTran[factor(rankE$transect)], 
      pch = 19,
      xlab = "Intercept rank",
      ylab = "High cue rank",
@@ -1418,7 +1418,7 @@ text(1.5,27, label = "a)", cex = 1.5)
 
 
 plot(rankE$rankLowC~rankE$rankInt, 
-     col = "purple3",  
+     col = colTran[factor(rankE$transect)], 
      pch = 19,
      xlab = "Intercept rank",
      ylab = "Low cue rank",
@@ -1428,7 +1428,7 @@ abline(0,1)
 text(1.5,27, label = "b)", cex = 1.5)
 
 plot(rankE$rankHighC~rankE$rankLowC, 
-     col = "purple3", 
+     col = colTran[factor(rankE$transect)], 
      pch = 19,
      xlab = "Low cue rank",
      ylab = "High cue rank",
@@ -1436,6 +1436,13 @@ plot(rankE$rankHighC~rankE$rankLowC,
      cex =2)
 abline(0,1)
 text(1.5,27, label = "c)", cex = 1.5)
+
+legend("bottomright",legend = c( expression("Eastern"),
+  expression("Shared")),
+  col = c("maroon","goldenrod"),
+  #pt.bg = c("#042333ff","#cc6a70ff","#593d9cff","#f9b641ff","#13306dff","#efe350ff","#eb8055ff"),
+  pt.bg = c( "maroon","goldenrod"),
+  inset = 0.02, pch = c(21, 21), cex = 1.25, bty = "n")
 
 
 rankW <- subset(rank, transect != "east")
@@ -1449,11 +1456,11 @@ rankW$rankLowC <- seq(1:nrow(rankW))
 rankW <- rankW[order(rankW$meanBBHigh),]
 rankW$rankHighC <- seq(1:nrow(rankW))
 
-
+colTran <- c("cyan4","goldenrod")
 
 #par(mfrow = c(2,3), mar = c(5.1, 4.8, 4.1, 2.1))
 plot(rankW$rankHighC~rankW$rankInt, 
-     col = "forestgreen", 
+     col = colTran[factor(rankW$transect)], 
      pch = 19,
      xlab = "Intercept rank",
      ylab = "High cue rank",main = "Western transect",
@@ -1467,7 +1474,7 @@ text(0.8,24, label = "d)", cex = 1.5)
 
 
 plot(rankW$rankLowC~rankW$rankInt, 
-     col = "forestgreen", 
+     col = colTran[factor(rankW$transect)], 
      pch = 19,
      xlab = "Intercept rank",
      ylab = "Low cue rank",
@@ -1480,7 +1487,7 @@ abline(0,1)
 text(0.8,24, label = "e)", cex = 1.5)
 
 plot(rankW$rankHighC~rankW$rankLowC, 
-     col = "forestgreen", 
+     col = colTran[factor(rankW$transect)], 
      pch = 19,
      xlab = "Low cue rank",
      ylab = "High cue rank",
@@ -1491,4 +1498,12 @@ plot(rankW$rankHighC~rankW$rankLowC,
 )
 abline(0,1)
 text(0.8,24, label = "f)", cex = 1.5)
+
+legend("bottomright",legend = c( expression("Western"),
+  expression("Shared")),
+  col = c("cyan4","goldenrod"),
+  #pt.bg = c("#042333ff","#cc6a70ff","#593d9cff","#f9b641ff","#13306dff","#efe350ff","#eb8055ff"),
+  pt.bg = c( "cyan4","goldenrod"),
+  inset = 0.02, pch = c(21, 21), cex = 1.25, bty = "n")
+
 dev.off()

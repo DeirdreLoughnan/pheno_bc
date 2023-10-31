@@ -78,7 +78,7 @@ source("..//rcode/phenologyMsValues.R")
 
 \subsection*{Quick overview}
 \begin{enumerate}
-\item In our study of woody plant budburst phenology across North America, we found the assembly of species' temporal niche to only be partially explained by environmental cues and population level variation.
+\item In our study of woody plant budburst phenology across North America, we found the assembly of species' temporal niche to be partly explained by environmental cues, with little variation explained by population level. %emwOct31 -- I made edits here, as you made env cues sound similar to pop variation ... seemed weird. 
 \item Within a community, there was considerable species level variation. 
 \item Evidence of a strong phylogenetic structure to the timing of species bb
 \end{enumerate}
@@ -90,7 +90,7 @@ source("..//rcode/phenologyMsValues.R")
 \item Expected local habitat selection = differing selective pressures across populations = leading to differences in cues responses across populations
 \item But we only observed slightly earlier budburst in our eastern populations when compared to western populations (Fig \ref{fig:siteCues})---such negligible differences could be due to differences in the methodologies used---eg differences in timing of sample collection or the slightly greater levels of chilling eastern spp experienced as a result
 \item Also found no latitudinal gradients across populations despite differences in local photoperiods (Fig \ref{fig:siteCues})---contrasts previous work in which poleward populations were later (Lieth1974, Zettlemoyer2021)
-\item Lack of population-level trends suggests the drivers that determine the timing of budburst are not shaped by current geography, at least at our continental scale
+\item Lack of population-level trends suggests the drivers that determine the timing of budburst are not shaped by current geography, at least at our continental scale %emwOct31 -- somewhere may want to mention high interannual variation in climate may explain this (combined with selection to match it for early season), see Alina's ms
 \end{enumerate}
 
 \end{enumerate}
@@ -108,7 +108,7 @@ source("..//rcode/phenologyMsValues.R")
 \end{enumerate}
 
 %\item Forest communities consist of species that fill unique ecological niche----but we found no clear differences across spp functional groups
-\item Shrub and tree species differ greatly in their physiology---filling different ecological niche---but we found little variation in their cue responses on a whole.
+\item Shrub and tree species differ greatly in their physiology---filling different ecological niche---but we found little variation in their cue responses on a whole. %emwOct31 - nice!
 \begin{enumerate}
 \item Most tree species budburst later than shrubs species---in line with previous work---earlier bb in shrubs compared to trees (Panchen2014, Yu2015)
 \item But about a quarter of tree species = earlier budburst dates, more similar to the timing of shrub species, and a third of shrubs budburst at similar times as trees ---suggesting more nuance to this than previously found---advantage of us having such a large assemblages of species %emwOct25 -- nice!
@@ -130,9 +130,9 @@ source("..//rcode/phenologyMsValues.R")
 \subsection*{Community assembly in responses to cues versus evolutionary history}
 \begin{enumerate}
 
-\item With continued warming, our ability to predict the timing of spring growth will depend on our understanding of cue responses at the species and community level. %emwOct25 -- I expected this part to have a bit more about forecasting high and low cues (what you used for your figures contrasting with intercept): how do I translate these to assembly (and maybe CC, or maybe that can fit below)?
+\item With continued warming, our ability to predict the timing of spring growth will depend on our understanding of cue responses at the species and community level. %emwOct25 -- I expected this part to have a bit more about forecasting high and low cues (what you used for your figures contrasting with intercept): how do I translate these to assembly (and maybe CC, or maybe that can fit below)? %emwOct31 -- good stuff in this section now (esp. last two pts)
 \begin{enumerate}
-\item Within a community, species varied in their timing of bb by several weeks--- but the similarity across populations suggests strong niche conservatism and stabilizing selection with little change in response to local habitats
+\item Within a community, species varied in their timing of bb by several weeks--- but the similarity across populations suggests strong niche conservatism and stabilizing selection with little change in response to local habitats %emwOct31 -- when you write this up, may want to define niche conservatism the first time you use it (and then always use that definition). I also might avoid stabilizing selection here unless you're sure ... this actually might be a good place to discuss the inter-annual variation driving one set of cues that work across inter-annual and thus potentially large spatial scales 
 \item While the effects of population level variation on cue responses appears be negligible, individual species within community assemblages do differ in their responses to cue (Fig 5).
 \item Species' budburst responses were dependent on the magnitude of cues---populations that are warming at a faster rate = strongest bb advances and changes in spp bb order (Fig 5 \& S4)---altering community dynamics and species interactions.
 \item But we can't simply focus on current cues---species current phenotypes are the result of multiple interacting and complex environmental cues that have shaped species over evolutionary time scales (Ackerly2009). %emwOct25 -- good, be sure to contrast somewhere timescales: we see effects of 'deep' time that matter to really short-term predictions (CC forecasting) %DLOct26 --- see below Line 152
@@ -141,32 +141,34 @@ source("..//rcode/phenologyMsValues.R")
 % \item In accounting for the effects of species' phylogeny, we found a high level of phylogenetic relatedness among clades of species in the timing of budburst. %emwOct25 -- this is a results sentence ... can you make it more of a Discussion sentence. What does this result mean to readers?
 \item The high degree of phylogenetic relatedness among species suggests that species with shared ancestry, and presumably more similar phenotypes and growth strategies, exhibit similar timing in budburst. 
 \begin{enumerate}
-\item A high proportion of variation in budburst is explained by species' level effects, with cues only explaining about two-thirds of variation in budburst (Fig \ref{fig:cueGrad})
-\item Our study applied extreme differences in cues to test for responses---useful for longer-term predictions/parameterizing process based models---but variation due to phylogenetic structure likely underestimated  
+\item A high proportion of variation in budburst is explained by species' level effects, with the differing cues of different species explaining about two-thirds of variation in budburst (Fig \ref{fig:cueGrad}) ... this suggests our model of what drives spring phenology is incomplete.  %emwOct31 -- I wouldn't say 'only' unless you explain why you mean 'only' (i.e., this suggests our model of what drives spring phenology is incomplete... then, you get to phylogeny)
+% \item Our study applied extreme differences in cues to test for responses---useful for longer-term predictions/parameterizing process based models---but variation due to phylogenetic structure likely underestimated  %emwOct31 -- why do you think its underestimated? Maybe cut this -- you have a lot now and good stuff. 
 \item Surprising evolutionary history has such a large effect---given phenology is thought of as a highly plastic trait, with local conditions expected to drive variation in the type and magnitude of cue responses
-\item But it indicates we are not accounting for other key drivers of spring phenology---additional cues or functional traits---limiting our predictive abilities.
+\item But it indicates we are not accounting for other key drivers of spring phenology---additional cues or functional traits---limiting our predictive abilities. %emwOct31 -- phylogeny and latent traits would work here (move up some of the item below)
 \end{enumerate}
 
 \item The evolutionary history and ancestral phenotype of a species has the potential to effect their ability to adapt to future climates. %emwOct25 -- nice section. 
 \begin{enumerate}
-\item  Could prevent adaptation to new environmental conditions, if spp are physiologically constrained by their ancestral, optimum phenotype
-\item Potential for processes occurring across different time scales to be strongly interdependent---the evolution of traits shaped over 'deep' timescales is influencing species' abilities to respond to several decades of climate change.
-\item Constraints could skew species assemblages, favouring spp with traits adapted for warmer climates---lower chilling and photoperiod requirements---better able to track and benefit from future climate conditions
+\item % Potential for processes occurring across different time scales to be strongly interdependent---
+Potential for the previous evolution of traits shaped over 'deep' timescales to influencing species' responses to recent climate change today .. %emwOct31 -- mmm, I am not sure they're independent; and I would otherwise be careful about framing, see edits. 
+\item  Could prevent adaptation to new environmental conditions, if spp are physiologically constrained by their ancestral phenotype %emwOct31 -- if they're not optimum today, we never should assume they were in the past ... 
+\item These phylogenetic constraints could skew species assemblages, favouring spp with traits adapted for warmer climates---lower chilling and photoperiod requirements---better able to track and benefit from future climate conditions 
 \item But could also indicate limited evolutionary time---some temperate species, like \emph{Nyssa} and \emph{Fagus} have had a shorter geologic time in which to adapt to temperatures---especially in populations at northern range limits.
-\item Identifying how and to what extent latent traits contribute to the phylogenetic structuring of temperate forest communities = unknown, but important if we are to predict how communities will respond to continued changes in climate.
+% \item Identifying how and to what extent latent traits contribute to the phylogenetic structuring of temperate forest communities = unknown, but important if we are to predict how communities will respond to continued changes in climate. %emwOct31 -- I would discuss this in the context mentioned above and cut here 
 \end{enumerate}
 
 %\end{enumerate}
 
 \end{enumerate}
 
+%emwOct31 -- whoop, whoop -- I like this section!
 \subsection*{Predicting budburst phenology under future climates} %emwOct25 -- good stuff here but should be organized into 2-3 sections I think: I would have one about WHAT we learned for forecasting (e.g., we can skip forecasting populations, what else did we learn?) and then pivot to what we see as next steps based on what we learned.
 \begin{enumerate}
 %What we learned for forecasting - skip forecasting pop, account for phylogeny, don't assume trees and shrubs will be totally different
-\item Our results provide new insights into the key factors and ecological processes that are critical to forcasting future phenoloiges under climate change.
+\item Our results provide new insights into the key factors and ecological processes that are critical to forcasting future phenoloiges under climate change. 
 \begin{enumerate}
-\item Provides evidence that changes in budburst cues will produce consistent trends across populations---allowing us to forecast across populations for which we have limited local phenological data but similar species assemblages.
-\item The high phylogenetic structure in budburst timing also allows us to use our existing knowledge of species' phenological cue responses to forecasts trends in phylogenetically related species.
+\item Provides evidence that changes in budburst cues will produce consistent trends across populations---allowing us to forecast across populations for which we have limited local phenological data but similar species assemblages. %emwOct31 -- nice!
+\item The high phylogenetic structure in budburst timing also allows us to use our existing knowledge of species' phenological cue responses to forecasts trends in phylogenetically related species. %emwOct31 -- but carefully, see refs in the ospree phylo ms on the dangers of imputation
 \item But must also be cautious in our assumptions---as we did not find strong general trends at coarser taxonomic groupings (shrubs vs trees)---the number of exceptions within tree and shrub functional group suggests still selective pressures shaping bb we do not understand.
 % \item While our approach address many of the challenges to predicting species responses to further climate change---complexity of regional and increasingly variable seasonality
 % \item And yet, our findings highlight our limited understanding of the factors underlying phenological variation within forest communities and groups of species.

@@ -110,7 +110,7 @@
 \begin{figure}[h!]
     \centering
      \includegraphics[width=\textwidth]{..//figures/phyloIntColor.pdf}
-     \caption{Species differences were accounted for by including phylogenetic effects on the species intercept. The phylogeny was obtained by pruning the existing tree for flowering plants developed by Smith and Brown (2018)} %emwOct25 -- add units to intercept (days) on figure.
+     \caption{Species differences were accounted for by including phylogenetic effects on the species intercept in a model estimating days to budburst after the start of forcing treatments. We pruned to our species subset an existing phylogeny for flowering plants developed by Smith and Brown (2018)} %emwOct25 -- add units to intercept (days) on figure.
     \label{fig:intrxn}
 \end{figure}
 

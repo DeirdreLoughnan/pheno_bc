@@ -71,21 +71,18 @@ Corresponding Author: Deirdre Loughnan, deirdre.loughnan@ubc.ca \\
 source("..//rcode/phenologyMsValues.R")
 @
 
-
-
-
 \section*{Discussion}
 
 \subsection*{Quick overview}
 \begin{enumerate}
-\item In our study of woody plant budburst phenology across North America, we found the assembly of species' temporal niche to be partly explained by environmental cues, with little variation explained by population level. %emwOct31 -- I made edits here, as you made env cues sound similar to pop variation ... seemed weird. 
+\item In our study of woody plant budburst phenology across North America, we found the assembly of species' temporal niche to be partly explained by environmental cues, with little variation explained by different populations.
 \item Within a community, there was considerable species level variation. 
 \item Evidence of a strong phylogenetic structure to the timing of species bb
 \end{enumerate}
 
-\subsection*{Temporal assembly across North America} %emwOct25 -- nice section!
+\subsection*{Temporal assembly across North America} 
 \begin{enumerate}
-\item While our western and eastern forest communities differ in both their species composition and local environments---only small differences in budburst phenology or cue responses across populations %emwOct25 -- better! Building some excitement for the results.
+\item While our western and eastern forest communities differ in both their species composition and local environments---only small differences in budburst phenology or cue responses across populations 
 \begin{enumerate}
 \item Expected local habitat selection = differing selective pressures across populations = leading to differences in cues responses across populations
 \item But we only observed slightly earlier budburst in our eastern populations when compared to western populations (Fig \ref{fig:siteCues})---such negligible differences could be due to differences in the methodologies used---eg differences in timing of sample collection or the slightly greater levels of chilling eastern spp experienced as a result
@@ -104,14 +101,13 @@ source("..//rcode/phenologyMsValues.R")
 \item Generally---all species showed some cue response 
 \item Cues responses were consistent with previous studies---ie.chilling being strongest, photoperiod weakest, but complex interactions between cues that are advantageous under warming climates \citep{Heide1993,Caffarra2011,Flynn2018}
 \item While spp do differ in cue responses, we did not find the clear, generalizable trends we expected across species with similar growth strategies.  
- %emwOct25 -- instead of 'remains challenging' maybe better to contrast with what you expected -- despite expectations, no clear strategies or patterns (or something)
 \end{enumerate}
 
 %\item Forest communities consist of species that fill unique ecological niche----but we found no clear differences across spp functional groups
-\item Shrub and tree species differ greatly in their physiology---filling different ecological niche---but we found little variation in their cue responses on a whole. %emwOct31 - nice!
+\item Shrub and tree species differ greatly in their physiology---filling different ecological niche---but we found little variation in their cue responses on a whole. 
 \begin{enumerate}
 \item Most tree species budburst later than shrubs species---in line with previous work---earlier bb in shrubs compared to trees (Panchen2014, Yu2015)
-\item But about a quarter of tree species = earlier budburst dates, more similar to the timing of shrub species, and a third of shrubs budburst at similar times as trees ---suggesting more nuance to this than previously found---advantage of us having such a large assemblages of species %emwOct25 -- nice!
+\item But about a quarter of tree species = earlier budburst dates, more similar to the timing of shrub species, and a third of shrubs budburst at similar times as trees ---suggesting more nuance to this than previously found---advantage of us having such a large assemblages of species 
 %Sun2006---found trees and shrubs to leaf out together
 \item As trees advance phenologically---with earlier canopy closure and reduced light predicted (Donnelly2019)---some less responsive shrubs will experience reduced fitness---but our finding suggests many have similar cue responses and are likely to also advance with warming with the potential to maintain their relative temporal niche space.
 %\item Provides novel insights into how species in the understory and canopy layer may respond differently to changes in temperature cues.
@@ -121,7 +117,7 @@ source("..//rcode/phenologyMsValues.R")
 \begin{enumerate}
 \item Selection for earlier budburst may correlate with traits related to light capture and photosynthesis in understory shrub species or nutrient uptake in trees associated with early successional stages or disturbance.
 \item The fitness of species across different temporal niche = determined by species overall suite of traits--- but currently we lack a sufficient understanding of the the underlying mechanisms
-\item By incorporating phenology into a broader trait framework = greater insight into the considerable variation observed within species functional groups. %and which species are likely to experience the greatest declines in fitness %emwOct25 -- good points ... probably should merge this and previous item into one distinct paragraph.
+\item By incorporating phenology into a broader trait framework = greater insight into the considerable variation observed within species functional groups. %and which species are likely to experience the greatest declines in fitness 
 \end{enumerate}
 \end{enumerate}
 
@@ -162,7 +158,7 @@ Potential for the previous evolution of traits shaped over 'deep' timescales to 
 \end{enumerate}
 
 %emwOct31 -- whoop, whoop -- I like this section!
-\subsection*{Predicting budburst phenology under future climates} %emwOct25 -- good stuff here but should be organized into 2-3 sections I think: I would have one about WHAT we learned for forecasting (e.g., we can skip forecasting populations, what else did we learn?) and then pivot to what we see as next steps based on what we learned.
+\subsection*{Predicting budburst phenology under future climates} 
 \begin{enumerate}
 %What we learned for forecasting - skip forecasting pop, account for phylogeny, don't assume trees and shrubs will be totally different
 \item Our results provide new insights into the key factors and ecological processes that are critical to forcasting future phenoloiges under climate change. 

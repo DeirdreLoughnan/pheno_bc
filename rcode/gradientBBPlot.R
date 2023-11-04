@@ -670,9 +670,7 @@ ggplot(meanPtW) +
   annotate("text", x = spTopW[3,7], y = -1, label = spTopW[3,2], cex = 5, angle = 78) +
   annotate("text", x = spTopW[4,7], y = -1, label = spTopW[4,2], cex = 5, angle = 78) +
   annotate("text", x = spTopW[5,7], y = -1, label = spTopW[5,2], cex = 5, angle = 78) +
-  scale_shape_manual(values = c(1,2,16)) 
-
-+
+  scale_shape_manual(values = c(1,2,16)) +
   annotate("text", x = 66, y = 60.5, label = "High cues", cex = 7) +  
   annotate("text", x = 66, y = 44.5, label = "Intercept", cex = 7) +
   annotate("text", x = 66, y = 27.5, label = "Low cues", cex = 7) + 

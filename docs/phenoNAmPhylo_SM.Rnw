@@ -95,22 +95,22 @@
 
 \begin{figure}[h!]
     \centering
-     \includegraphics[width=\textwidth]{..//figures/rankstiBBTransect.pdf}
-     \caption{Estimated changes in species ranked budburst order, compared between species level effects (species intercept) and under high cue conditions (a and d), species level effects and under low cue condition (b and e), and ranked order under low and high cue conditions (c and f) for our eastern (a-c) and western species (d-f). }
+     \includegraphics[width=\textwidth]{..//figures/rankstiBBTransectSpp.pdf}
+     \caption{Estimated changes in species ranked budburst order, compared between species level effects (species intercept) and under high cue conditions (a and d), species level effects and under low cue condition (b and e), and ranked order under low and high cue conditions (c and f) for our eastern in red (a-c) and western species in blue (d-f). For the three species that occur in both transect, shown in yellow, \emph{Alnus incana} exhibited the greatest rank change with a difference of three, while \emph{Betula papyrifera} had a rank difference of two and \emph{Populus tremuloides} a rank difference of one.}
     \label{fig:rank}
 \end{figure}
 
-\begin{figure}[h!]
-    \centering
-     \includegraphics[width=\textwidth]{..//figures/bothRanked.pdf}
-     \caption{The difference in budburst ranking between high and low cues for the three species that occurr in both the eastern (shown in green) and western transect (shown in purple). } %emwOct25: Not so much info in this figure; maybe better to mention the high and low changes possible in caption to previous figures: Changes varied from a high of XX rank diff (Alnus incana) to a low of ...
-    \label{fig:bothRanked}
-\end{figure}
+% \begin{figure}[h!]
+%     \centering
+%      \includegraphics[width=\textwidth]{..//figures/bothRanked.pdf}
+%      \caption{The difference in budburst ranking between high and low cues for the three species that occurr in both the eastern (shown in green) and western transect (shown in purple). } %emwOct25: Not so much info in this figure; maybe better to mention the high and low changes possible in caption to previous figures: Changes varied from a high of XX rank diff (Alnus incana) to a low of ...
+%     \label{fig:bothRanked}
+% \end{figure}
 
 \begin{figure}[h!]
     \centering
      \includegraphics[width=\textwidth]{..//figures/phyloIntColor.pdf}
-     \caption{Species differences were accounted for by including phylogenetic effects on the species intercept. The phylogeny was obtained by pruning the existing tree for flowering plants developed by Smith and Brown (2018)} %emwOct25 -- add units to intercept (days) on figure.
+     \caption{Species differences were accounted for by including phylogenetic effects on the species intercept in a model estimating days to budburst after the start of forcing treatments. We pruned to our species subset an existing phylogeny for flowering plants developed by Smith and Brown (2018)} %emwOct25 -- add units to intercept (days) on figure.
     \label{fig:intrxn}
 \end{figure}
 
@@ -157,14 +157,14 @@ meanBBPop$species <- tolower(meanBBPop$species)
 
 spInfo <- read.csv("..//input/species_list.csv")
 spInfo$species.name <- gsub("_"," ", spInfo$species.name)
-
+spInfo$species.name <- paste("\\emph{", spInfo$species.name, "}", sep = "")
 mdlTab <- merge(meanBBPop, spInfo, by = "species")
 mdlTab <- mdlTab[, c("species.name","HF","SH","mp","sm")]
 
 colnames(mdlTab) <- c("Species" , "Harvard Forest", "St. Hippoltye","Manning Park", "Smithers")
 
 meanBBTab <- xtable(mdlTab, caption="Mean budburst dates across all treatments from raw data for 47 species at our two western sites, E.C. Manning Park (MP) and Smithers B.C.(SM) Canada, and our two eastern sites, Harvard Forest (HF) USA and St. Hippolyte (SH) Canada.")
-print(meanBBTab,include.rownames=F, caption.placement="top", hline.after=c(-1,0))
+print(meanBBTab,include.rownames=F, caption.placement="top", hline.after=c(-1,0), sanitize.text.function = identity)
 
 @
 
@@ -211,6 +211,7 @@ library(xtable)
 
 spInfo <- read.csv("..//input/species_list.csv")
 spInfo$species.name <- gsub("_"," ", spInfo$species.name)
+spInfo$species.name <- paste("\\emph{", spInfo$species.name, "}", sep = "")
 colnames(spInfo) <- c("Species name", "Species","Plant type", "transect")
 bb_suc <- merge(spwithbb, spInfo, by = "Species")
 
@@ -218,7 +219,7 @@ bb_suc <- bb_suc[, c("Species name", "Proportion.Budburst","Plant type")]
 names(bb_suc) <- c("Species name", "Proportion budburst","Plant type")
 
 make.bb_suc <- xtable(bb_suc, caption="Proportion of samples per species for which budburst was observed.")
-print(make.bb_suc,include.rownames=F, caption.placement="top", hline.after=c(-1,0))
+print(make.bb_suc,include.rownames=F, caption.placement="top", hline.after=c(-1,0), sanitize.text.function = identity)
 
 @
 

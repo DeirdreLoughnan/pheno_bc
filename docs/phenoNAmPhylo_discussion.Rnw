@@ -154,7 +154,6 @@ Our results provide new insights into the key factors and ecological processes t
 % \item While our approach address many of the challenges to predicting species responses to further climate change---complexity of regional and increasingly variable seasonality
 % \item And yet, our findings highlight our limited understanding of the factors underlying phenological variation within forest communities and groups of species.
 
-
 %What are the next steps based on what we learned? 
 %EMWNov6:  good stuff but needs some work, and sounds a but repetitive currently. 
 

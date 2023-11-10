@@ -48,7 +48,7 @@
 % more optionals! %
 
 \graphicspath{ {./figures/} }% tell latex where to find photos 
-\externaldocument{phenoNAmPhylo_SM}
+\externaldocument[supp-]{phenoNAmPhylo_SM}
 \begin{document}
 \renewcommand{\bibname}{References}%names reference list 
 
@@ -60,7 +60,7 @@
 \author{Deirdre Loughnan$^1$ and E M Wolkovich$^1$}
 \maketitle 
 
-$^1$ Department of Forest and Conservation, Faculty of Forestry, University of British Columbia, 2424 Main Mall
+$^1$ Department of Forest and Conservation Sciences, Faculty of Forestry, University of British Columbia, 2424 Main Mall
 Vancouver, BC, Canada, V6T 1Z4. \\
 
 Corresponding Author: Deirdre Loughnan, deirdre.loughnan@ubc.ca \\
@@ -84,7 +84,7 @@ Climate changes is altering phenology, or the timing of life history events, for
 Species differences in phenological responses can be attributed to species-level differences and geographic variability in environmental cues \citep{Vitasse2009,Wolkovich2014,Zohner2014,Vitasse2018}. Identifying the relative importance of different drivers of key life event is necessary to understand and predict future changes in phenology, and their ultimate impacts on community dynamics and ecosystem services, including growing season length, carbon cycles, and species interactions \citep{Gotelli1996,Cleland2007,Richardson2009}.\\%,Richardson2013,Keenan2014}.\\
 
 %emwOct25 -- Move here ...need to be more general --
-In a community, the timing of individual phenological events can vary over weeks or months \citep{Lechowicz1984}. This breadth in the period of when individual species' events occur allows species' to fill different temporal niche \citep{Gotelli1996}. In plant communities, understory species often budburst earlier than taller canopy species, a niche difference predicted to infer overarching differences in species growth strategies. Similarly, in Mediterranean marsh communities, native bird species have a distinct temporal niche from exotic species, reproducing earlier in the season \citep{SanzAguilar2015}. In addition to these within community differences, variation in phenological responses is likely to also exist between different populations across species' ranges (cite). At present, however, we lack a strong understanding of the relative effects of population versus species-level variation in shaping budburst of individual species and forest communities overall. \\
+In a community, the timing of individual phenological events can vary over weeks or months \citep{Lechowicz1984}. This breadth in the period of when individual species' events occur allows species' to fill different temporal niche \citep{Gotelli1996}. In plant communities, understory species often budburst earlier than taller canopy species, a niche difference predicted to infer overarching differences in species growth strategies. Similarly, in Mediterranean marsh communities, native bird species have a distinct temporal niche from exotic species, reproducing earlier in the season \citep{SanzAguilar2015}. In addition to these within community differences, variation in phenological responses is likely to also exist between different populations across species' ranges (citation). At present, however, we lack a strong understanding of the relative effects of population versus species-level variation in shaping budburst of individual species and forest communities overall. \\
 %needs better flow from above paragraph
 %emwOct25 --I agree! We discussed we were not sure if this would work and I don't think it works here. I would move it up. I made a not of where; you'll need to be more general -- but nothing below needs to be so focused. I made a few edits below but you'll need a little more. 
 % The timing of individual species' budburst in a forest community can be highly variable, with the time from the earliest to latest budbursting species spanning several weeks in some temperate forests (Lechowicz1984). This breadth in the period of when individual species budburst in the spring allows species to fill different temporal niche (Gotelli1996). For example, in plant communities, understory species often budburst earlier than taller canopy species, a niche difference predicted to infer overarching differences in species growth strategies. Similarly, in [insert example from an animal system or aquatic system]. In addition to these within community differences, variation in phenological responses is likely to also exist between different populations across species' ranges (cite). At present, however, we lack a strong understanding of the relative effects of population versus species-level variation in shaping budburst of individual species and forest communities overall. \\
@@ -111,7 +111,7 @@ In this study we combined results from two growth chamber studies of woody speci
 We combined data from two growth chamber studies using branch clippings of North American deciduous woody plants. Such cutting experiments are a commonly used and powerful approach to understanding the responses of adult trees to known environmental conditions \citep{Vitasse2014}. Our first study used samples taken from two eastern populations---Harvard Forest, Massachusetts, USA (42.55$^{\circ}$N, 72.20$^{\circ}$W) and St. Hippolyte, Quebec, Canada (45.98$^{\circ}$N, 74.01$^{\circ}$W), which we sampled from the 20-28 January, 2015. The second growth chamber study spanned two western populations---Smithers (54.78$^{\circ}$N, 127.17$^{\circ}$W) and E.C. Manning Park (49.06$^{\circ}$N, 120.78$^{\circ}$W), British Columbia, Canada, respectively, sampled from the 19-28 of October, 2019. \\
 
 % emw25Aug -- See paper copy -- rework to be about both studies. It's a bit of a tricky M&M to write, but you need readers to have what they need to evaluate THIS study, without referring back so we need a little more, and we need to not presume readers know Flynn & Wolkovich. 
-We observed budburst for \Sexpr{spNo} species spanning our two transects, with \Sexpr{eastSpNo} species at our eastern transect and \Sexpr{westSpNo} species at our western transect, \Sexpr{bothSpNo} of which occur at both transects. We selected the dominant deciduous species in the forest communities at each population and to maximize the number of species occurring across sites. Of the species we sampled in our eastern transect, \Sexpr{eastShrubNo} were shrubs and \Sexpr{eastTreeNo} were trees, while in our western forest community we sampled \Sexpr{westShrubNo} shrub and \Sexpr{westTreeNo} tree species. At all sites, we tagged 15-20 healthy, mature, individuals for each species in the summer prior to the growth chamber study. Depending on the size of the individual, we collected 1-16 cuttings from 6-20 tagged plants, with samples being taken using a pole pruner from the ground. We kept samples cold during sampling and immediately placed them in water upon returning from the field. Our eastern study was conducted at the Arnold Arboretum, Boston, MA, USA, and the western study at the University of British Columbia, BC, Canada. We used daily weather data from local weather stations to calculate the field chilling prior to collection (see Table \ref{tableChill}). 
+We observed budburst for \Sexpr{spNo} species spanning our two transects, with \Sexpr{eastSpNo} species at our eastern transect and \Sexpr{westSpNo} species at our western transect, \Sexpr{bothSpNo} of which occur at both transects. We selected the dominant deciduous species in the forest communities at each population and to maximize the number of species occurring across sites. Of the species we sampled in our eastern transect, \Sexpr{eastShrubNo} were shrubs and \Sexpr{eastTreeNo} were trees, while in our western forest community we sampled \Sexpr{westShrubNo} shrub and \Sexpr{westTreeNo} tree species. At all sites, we tagged 15-20 healthy, mature, individuals for each species in the summer prior to the growth chamber study. Depending on the size of the individual, we collected 1-16 cuttings from 6-20 tagged plants, with samples being taken using a pole pruner from the ground. We kept samples cold during sampling and immediately placed them in water upon returning from the field. Our eastern study was conducted at the Arnold Arboretum, Boston, MA, USA, and the western study at the University of British Columbia, BC, Canada. We used daily weather data from local weather stations to calculate the field chilling prior to collection (see Table \ref{supp-tabChill}). 
 
 \subsection*{Growth chamber study}
 
@@ -140,7 +140,6 @@ In our model, we included each of our three cues as continuous variables. To acc
 &\beta_{photoperiod \times site2_{sp_i}} + \beta_{photoperiod \times site3_{sp_i}} + \beta_{photoperiod \times site4_{sp_i}})\\
 \end{align*}
 \\
-
 \begin{align*}
 &\beta_{force_{sp}} \sim \text{normal} (\mu_{force_{sp}}, \sigma^2_{force}) \\
 &\ldots \\
@@ -183,7 +182,7 @@ Overall we found population effects were small compared to differences between c
 % \begin{enumerate}
 Budburst of individual species showed distinct differences in their timing and the relative importance of cues. Both chilling and forcing responses varied with budburst, with later budbursting species having slightly stronger responses to each cue respectively (Fig. \ref{fig:cueGrad}). Despite our expectations that species responses should differ across the canopy layer, with shrubs being less sensitive to cues than tree species, we did not find strong differences across these two functional groups (Fig. \ref{fig:cueST}). Many of our earliest species were shrubs with weaker responses to chilling and forcing, like \emph{Cornus stolonifera}. But \Sexpr{perLateShrub}\% of our shrubs species, including \emph{Menziesia ferruginea} and \emph{Symphoricarpos alba}, exhibited the opposite response and budburst relatively late (Fig. \ref{fig:cueST}). Similarly for tree species, some matched our predictions for their cue responses, but \Sexpr{perEarlyTree}\% budburst earlier than expected. Specific tree species, such as \emph{Quercus velutina}, did have stronger chilling and photoperiod responses as predicted, and of all our focal species, such as \emph{Fagus grandifolia} produced the strongest photoperiod response. But overall there were no clear differences between the cue responses of trees and shrubs across our four forest communities.\\ 
 
-Our results depict the relative importance of phenological cues to variation across species, but we found the contribution of cues to budburst order and timing to be dependent of the magnitude of the cue, and small compared to overall species differences. The rank order of species estimated budburst changed more under high cue conditions than under low cues (Fig \ref{fig:rank}). The budburst ranking for the three species that occurred in both transects remined relatively consistent across the two communities (Fig. \ref{fig:cueGrad}), with only \emph{Alnus incana} in our western community experiencing a large change in rank with cues (Fig. \ref{fig:bothRanked}). \\
+Our results depict the relative importance of phenological cues to variation across species, but we found the contribution of cues to budburst order and timing to be dependent of the magnitude of the cue, and small compared to overall species differences. The rank order of species estimated budburst changed more under high cue conditions than under low cues (Fig \ref{fig:rank}). The budburst ranking for the three species that occurred in both transects remined relatively consistent across the two communities (Fig. \ref{fig:cueGrad}), with only \emph{Alnus incana} in our western community experiencing a large change in rank with cues (Fig. \ref{fig:rank}). \\
 
 In comparing our earliest and latest budbursting species, we found the differences in the cue responses were relatively small (Fig. \ref{fig:cueGrad}). This is contrary to our prediction of stronger cue requirements---especially chilling cues---for later budbursting species. For example, an early (shrub) species \emph{Lyonia ligustrina} had chilling and forcing cues of \Sexpr{llChill} and \Sexpr{llForcing} respectively, which are comparable to the estimates of \Sexpr{qaChill} and \Sexpr{qaForcing} for the much later tree species, \emph{Quercus alba}. Yet our model predicts these species to have a \Sexpr{QaLlDiff} day difference in day of budburst. This highlights how the timing of budburst across species was mostly attributed to species level differences outside of cue responses (Fig. \ref{fig:betaAlphaGrad}). Across the range of cue values, cues explained only between \Sexpr{diffBAEastHigh} and \Sexpr{diffBAEast}\% of variation for eastern species and between \Sexpr{diffBAWestHigh} and \Sexpr{diffBAWest}\% for western species, with the intercept explaining the rest (Fig. \ref{fig:betaAlphaGrad}).\\ %emw25Aug --we have species-level differences in cues, so `species level differences' to mean the intercept could be hard to pull off (though I see `intercept' as not great either, so I see your issue) ... I would flip around the #s and text of the last differences to say 'Cues explained only XX percent of variation for western species and XX for eastern, with the intercept explaining the rest.'
 
@@ -227,9 +226,7 @@ While the effects of population-level variation on cue responses appears be negl
 % 3. Rank order -- community level
 At a finer scale, our findings also suggest the order with which species budburst in a community will change with future climate change. We found the rank order of species within our communities differed between weak and strong cue conditions, with low cues producing similar rank order to the species-level rank than estimated under high cues, particularly for our western community (Fig S4). This suggests that populations that experience greater warming will experience the greatest changes in species rank order, which will have cascading effects on competitive dynamics and possibly trophic interactions. But we cannot simply focus solely on species cues to understand community assembly, as species phenotypes are the result of multiple interacting and complex environmental cues that have shaped species over evolutionary time scales \citep{Ackerly2009}.\\ 
 
-The high degree of phylogenetic relatedness among species suggests that those with shared ancestry, and presumably more similar phenotypes and growth strategies, exhibit similar timing in budburst. We found species-level effects to explain a high proportion of variation in budburst, with the cue responses of different species explaining about two-thirds of variation (Fig \ref{fig:cueGrad}). While our study includes the three cues mostly commonly attributed to species spring phenology, this finding suggests our model of what drives spring phenology is incomplete.  
-
-Given that phenology is thought of as a highly plastic trait, we expected differences in cues across years and geography to drive variation in budburst timing. Our results, however, suggest that species evolutionary history has a large effect on budburst phenology. Still missing from our understanding of budburst phenology are the unidentified latent traits---such as additional physiological traits---that contribute to the phylogenetic structuring, and ultimately temporal niche, of temperate forest communities. By not accounting for the additional cues or traits driving spring phenology, we have a limited ability to predict how communities will respond to continued changes in climate.\\
+The high degree of phylogenetic relatedness among species suggests that those with shared ancestry, and presumably more similar phenotypes and growth strategies, exhibit similar timing in budburst. We found species-level effects to explain a high proportion of variation in budburst, with the cue responses of different species explaining about two-thirds of variation (Fig \ref{fig:cueGrad}). While our study includes the three cues mostly commonly attributed to species spring phenology, this finding suggests our model of what drives spring phenology is incomplete. Given that phenology is thought of as a highly plastic trait, we expected differences in cues across years and geography to drive variation in budburst timing. Our results, however, suggest that species evolutionary history has a large effect on budburst phenology. Still missing from our understanding of budburst phenology are the unidentified latent traits---such as additional physiological traits---that contribute to the phylogenetic structuring, and ultimately temporal niche, of temperate forest communities. By not accounting for the additional cues or traits driving spring phenology, we have a limited ability to predict how communities will respond to continued changes in climate.\\
 
 The evolutionary history and ancestral phenotype of a species has the potential to effect their ability to adapt to future climates. Specie's traits are shaped over 'deep' timescales, with the potential for this previous evolution to influencing species' responses to recent climate change today. There is the potential for the previous evolution of a specie's traits shaped over 'deep' timescales to influencing species' responses to recent climate change today. This could limit species from adapting to new environmental conditions, if they are physiologically constrained by their ancestral phenotype. Such phylogenetic constraints could skew species assemblages, favouring species with traits and cue requirements adapted for warmer climates. Species with low chilling and photoperiod requirements would be better able to track and benefit from future climate conditions. But the phylogenetic trends we observed could also indicate our focal species have had limited evolutionary time to adapt. Some temperate species, like \emph{Nyssa} and \emph{Fagus} \citep{Lechowicz1984}, have had a shorter geologic time in which to adapt to their local temperatures, especially in populations at northern range limits such as the ones we sampled.\\
 
@@ -408,13 +405,7 @@ print(xtable(meanz4, caption="Summary output from a phylogenetic Bayesian model 
 %     \label{fig:cues}
 % \end{figure}
 
-% \begin{figure}[h!]
-%     \centering
-%      \includegraphics[width=\textwidth]{..//figures/cueST2.pdf}
-%     \caption{Comparisons of posterior distributions for cues estimates between shrub and tree species. Black circles represent the median cue response, while the thinner black line the 90\% quantile interval. The coloured distribution is the the posterior density of the posteriors of the cue responses for all species within a given architectural type. The y-axis spans the entire range of the data.}
-%     \label{fig:cueST}
-%     \end{figure}
-% 
+
 % %DL20Mar I think we can cut this figure, but add the dashed lines to Fig 4
 % \begin{figure}[h!]
 %     \centering
@@ -471,5 +462,56 @@ print(xtable(meanz4, caption="Summary output from a phylogenetic Bayesian model 
 \bibliographystyle{bibliography/bibstyles/amnat}% 
 \bibliography{bibliography/phenoBCBib.bib}
 
+\section*{Things that will not render}
+<<label= tabChill, echo=FALSE , results=tex>>=
+
+# Chill units from our two western sites, E.C. Manning Park and Smithers B.C., and our two eastern sites, Harvard Forest (HF) USA and St. Hippolyte(SH) Canada.
+
+require(xtable)
+#library(tidyr)
+
+# dl.chill <- read.csv("..//input/chilling_values_Hope_Smithers.csv")
+# # dl.chill$population[dl.chill$population == "sm"] <- "SM"
+# # dl.chill$population[dl.chill$population == "mp"] <- "MP"
+#
+# df.chill <- read.csv("..//input/chilling_values_eastern.csv")
+#
+# chill <- rbind(df.chill, dl.chill)
+# chill$population[chill$population == "sm"] <- "Smithers"
+# chill$population[chill$population == "mp"] <- "Manning Park"
+# chill$population[chill$population == "SH"] <- "St. Hippoltye"
+# chill$population[chill$population == "HF"] <- "Harvard forest"
+#
+# chill$population <- as.factor(chill$population)
+# chill$chill[chill$chill == "chill0"] <- "Field chilling"
+# chill$chill[chill$chill == "chill1"] <- "Field chilling + 30 d at 4 degree C"
+# chill$chill[chill$chill == "chill2"] <- "Field chilling + 30 d at 1.5 degree C"
+# chill$chill[chill$chill == "HC"] <- "Field chilling + 30 d at 4 degree C"
+# chill$chill[chill$chill == "LC"] <- "Field chilling + 70 d at 4 degree C"
+#
+# colnames(chill) <- c("Population","Chilling treatment", "Chilling Hours", "Utah Model", "Chill Portions")
+# #chill$population <- toupper(chill$population)
+#
+# write.csv(chill, "chillUnits.csv", row.names = F)
+#chill <- data.frame(chill)
+
+chill <- read.csv("..//output/chillUnits.csv")
+# chillunit <- xtable(chill, caption = "Chill units from our two western sites, E.C. Manning Park (MP) and Smithers B.C.(SM) Canada, and our two eastern sites, Harvard Forest (HF) USA and St. Hippolyte(SH) Canada.", label = "tableChill")
+print(xtable(chill, caption = "Chill units from our two western sites, E.C. Manning Park (MP) and Smithers B.C.(SM) Canada, and our two eastern sites, Harvard Forest (HF) USA and St. Hippolyte(SH) Canada.", label = "tabChill"),include.rownames= F, caption.placement="top", hline.after=c(-1,0))
+@
+
+\begin{figure}[h!]
+    \centering
+     \includegraphics[width=\textwidth]{..//figures/cueST28Chill.pdf}
+    \caption{Comparisons of posterior distributions for cues estimates between shrub and tree species. Black circles represent the median cue response, while the thinner black line the 90\% quantile interval. The coloured distribution is the the posterior density of the posteriors of the cue responses for all species within a given architectural type. The y-axis spans the entire range of the data.}
+    \label{fig:cueST}
+    \end{figure}
+    
+\begin{figure}[h!]
+    \centering
+     \includegraphics[width=\textwidth]{..//figures/rankstiBBTransectSpp.pdf}
+     \caption{Estimated changes in species ranked budburst order, compared between species level effects (species intercept) and under high cue conditions (a and d), species level effects and under low cue condition (b and e), and ranked order under low and high cue conditions (c and f) for our eastern in red (a-c) and western species in blue (d-f). For the three species that occur in both transect, shown in yellow, \emph{Alnus incana} exhibited the greatest rank change with a difference of three, while \emph{Betula papyrifera} had a rank difference of two and \emph{Populus tremuloides} a rank difference of one.}
+    \label{fig:rank}
+\end{figure}
 
 \end{document}

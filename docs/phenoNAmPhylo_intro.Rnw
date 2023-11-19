@@ -72,11 +72,37 @@ Corresponding Author: Deirdre Loughnan, deirdre.loughnan@ubc.ca \\
 source("..//rcode/phenologyMsValues.R")
 @
 
+%emwOct25 --I also wonder if you can JUMP in -- have a starting sentence about big impacts on phenology, but not uniform. CC impacts is so common that I think starting with something narrower for this paper would be good. Also, I would not jump to forest communities or budburst so soon -- stay broad (unless you want to submit to a narrow forest-focused journal) -- you don't need them. 
+%emw17Nov -- you have a lot going on here in two sentences: are you trying to say that because of uneven warming effects are non-uniform? It reads closest to that, but that seems a very specific way to start a paper where you suggest other things matter. 
 \begin{enumerate}
-\item Plant phenology is changing with climate change:
+\item Climate change = altering the timing of life history events across the tree of life.
 \begin{enumerate}
-\item Timing of spring bb is changing with anthropogenic climate change 
-\item But changes are not uniform with some regions experiencing greater warming than others.
+\item But see high variability in phenological shifts between species and habitats \citep{Fitter2002,Menzel2006,Yu2010,Fridley2012}. 
+\item Species that vary in phenology within a season can fill different  temporal niche \citep{Gotelli1996}---eg plants understory species often budburst earlier than canopy trees---or birds that reproduce at different times \citep{SanzAguilar2015}
+\item Understanding relative importance of environmental versus physiological drivers of phenology = needed to understand and predict future impacts of climate change---changes in speices fitness and distributions, changing ecosystem services---carbon seqestration, species interactions
+\end{enumerate}
+
+%emw17Nov --... I think the previous paragraph probably needs to set up more of a mystery or problem: variability. And then you can either (1) close on one reason being uneven warming, but say that's not it alone?  And Here you aim to introduce other sources of variation that occur at species and population levels. Or (2) end on variability and how important predicting it is (last sentence here) and make this next paragraph an overview of potential drivers: uneven warming, geography, population and species diffs. Either way you need a better transition to niches. 
+%DL18Nov: trying option 2
+
+\item Phenological variation results from species-level differences and geographic variability in environmental cues \citep{Vitasse2009,Wolkovich2014,Zohner2014,Vitasse2018}. 
+\begin{enumerate}
+\item Uneven warming
+\item geography
+\item population differences
+\item species differences
+\item Tie back to niche 
+\end{enumerate}
+
+\item Spring budburst offers an excellent system to study the drivers of phenological events.
+\begin{enumerate}
+\item Decades of work = under controlled environments budburst cues are consistent.
+\item Woody plants = cool winter and warm spring temperature cues, and daylength \citep{Chuine2010,Polgar2011,Cooke2012,Basler2014,Laube2014}.
+\item Cues can also have interactive effects---mechanisms to compensate for if single cue is insufficient \citep{Heide1993,Chuine2000,Caffarra2011,Flynn2018}
+\item Given phenology is highly variable---and that cues interact---it is challenging to draw generalizable trends across communities.
+\end{enumerate}
+
+######## OLD INTRO ###############
 \item Responses are also  species specific and highly variable
 \item Budburst in forest communities is the product of species differences as well as geographic variability in environmental cues.
 \item Understanding the relative importance of these different drivers of budburst is needed to understand and predict future changes in spring phenology---and their ultimate impacts on growing season length, carbon cycle, species interactions

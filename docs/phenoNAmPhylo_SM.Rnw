@@ -47,7 +47,7 @@
 \fancyhead[RO]{Temporal Ecology Lab}
 % more optionals! %
 
-\graphicspath{ {./figures/} }% tell latex where to find photos 
+\graphicspath{ {../figures/} }% tell latex where to find photos 
 \externaldocument[main-]{phenoNAmPhylo}
 \begin{document}
 
@@ -90,7 +90,7 @@
     % \centering
     %  \includegraphics[width=\textwidth]{..//figures/fullHistogramSTNorm.pdf}
     % \caption{Comparisons of posterior distributions for cues estimates between shrub and tree species. Black circles represent the median cue response, while the thinner black line the 90\% quantile interval. The coloured distribution is the the posterior density of the posteriors of the cue responses for all species within a given architectural type. The y-axis spans the entire range of the data.}
-    % \label{fig:cueST}
+    % \label{fig}
     % \end{figure}
 
 \begin{figure}[h!]
@@ -169,41 +169,6 @@ print(meanBBTab,include.rownames=F, caption.placement="top", hline.after=c(-1,0)
 @
 
 
-<<label= chillunit, echo=FALSE , results=tex>>=
-# Chill units from our two western sites, E.C. Manning Park and Smithers B.C., and our two eastern sites, Harvard Forest (HF) USA and St. Hippolyte(SH) Canada.
-
-require(xtable)
-#library(tidyr)
-
-# dl.chill <- read.csv("..//input/chilling_values_Hope_Smithers.csv")
-# # dl.chill$population[dl.chill$population == "sm"] <- "SM"
-# # dl.chill$population[dl.chill$population == "mp"] <- "MP"
-#
-# df.chill <- read.csv("..//input/chilling_values_eastern.csv")
-#
-# chill <- rbind(df.chill, dl.chill)
-# chill$population[chill$population == "sm"] <- "Smithers"
-# chill$population[chill$population == "mp"] <- "Manning Park"
-# chill$population[chill$population == "SH"] <- "St. Hippoltye"
-# chill$population[chill$population == "HF"] <- "Harvard forest"
-#
-# chill$population <- as.factor(chill$population)
-# chill$chill[chill$chill == "chill0"] <- "Field chilling"
-# chill$chill[chill$chill == "chill1"] <- "Field chilling + 30 d at 4 degree C"
-# chill$chill[chill$chill == "chill2"] <- "Field chilling + 30 d at 1.5 degree C"
-# chill$chill[chill$chill == "HC"] <- "Field chilling + 30 d at 4 degree C"
-# chill$chill[chill$chill == "LC"] <- "Field chilling + 70 d at 4 degree C"
-#
-# colnames(chill) <- c("Population","Chilling treatment", "Chilling Hours", "Utah Model", "Chill Portions")
-# #chill$population <- toupper(chill$population)
-#
-# write.csv(chill, "chillUnits.csv", row.names = F)
-#chill <- data.frame(chill)
-
-chill <- read.csv("..//output/chillUnits.csv")
-chillunit <- xtable(chill, caption = "Chill units from our two western sites, E.C. Manning Park (MP) and Smithers B.C.(SM) Canada, and our two eastern sites, Harvard Forest (HF) USA and St. Hippolyte(SH) Canada.", label = "tableChill")
-print(chillunit,include.rownames= F, caption.placement="top", hline.after=c(-1,0))
-@
 
 <<label=bbSuccess, echo=FALSE, results=tex >>=
 spwithbb <- read.csv("..//output/bb.success.ax.trt.csv", head = TRUE)

@@ -149,16 +149,12 @@ While differences in the timing of phenological events across communities can be
 
 Despite the high degree of phenological variation within and across species, we often find animals and plants to have very similar cue systems. Most species respond to variation in temperature and photoperiod cues with consistent phenological responses occurring under controlled environments. Across species distributions we would expect to find  biogeographic gradients in phenoloy in response to similar gradients in cues. Both photoperiod and temperatues vary across latitudinal gradients, possibly leading to similar gradients in phenology.  
 
-\item What do we need?
-\begin{enumerate}
-\item Spp variability
-\item Population variability
-\item Remove interannual variability by identifying cues
-\item Given that cues/species have evolved over long timescales --- consider phylogeny
-\end{enumerate}
+To better predict how forest communities will respond and assemble under continued climate change requires a holistic approach to studying the drivers of phenological variability. For a given community, we must account for differences across species to account for the effects of phenotypic variation and biotic interactions. But this cannot be done in isolation of speices distribution and the local adapation that indiviudal populations may exhibit. By indentifying the primay cues for a given phenological event, we can conduct experiments under controlled conditions and remove the relative effects of intannual variability. While for many species, shifts in phenology are relatively recent, we must also account for the longer evolutionary timescales over which communities assembled \citep{Davies2013}. 
 
 Spring budburst offers an excellent system to study spatial patterns in phenology and cue responses. The budburst of temperate woody plants responds to temperature cues in both the winter and spring, as well as daylength \citep{Chuine2010,Polgar2011,Cooke2012,Basler2014,Laube2014}. These three cues interact to shape species temporal niche, with variation in the relative importance of indiviudal cues across species. Phenotypic differences between species --- such as functional groups and varying growth strategies --- promote phenological differences and ultimately optimize their temporal niche.
 
-Here we combined results from two growth chamber studies of woody species budburst cues. We used data from four populations, from eastern to western North America, with pairs of populations on each coast spanning 4-6$^{\circ}$ latitude respectively. Our approach allowed us to detect general trends in budburst cue responses in North American deciduous forest communities. We also explored community specific responses and detect differences between western and eastern forest communities, and across latitudes. By including diverse assemblages of species, we tested for differences between functional groups, comparing the dominant shrub and tree species that characterize our forest understories and canopy.\\
+Here we combined results from two growth chamber studies of woody species budburst cues. We used data from four populations, from eastern to western North America, with pairs of populations on each coast spanning 4-6$^{\circ}$ latitude respectively. Our phylogenetic approach allowed us to detect general trends in budburst cue responses in North American deciduous forest communities. We also explored community specific responses and detect differences between western and eastern forest communities, and across latitudes. By including diverse assemblages of species, we tested for differences between functional groups, comparing the dominant shrub and tree species that characterize our forest understories and canopy.\\
 
+\bibliographystyle{bibliography/bibstyles/amnat}% 
+\bibliography{bibliography/phenoBCBib.bib}
 \end{document}

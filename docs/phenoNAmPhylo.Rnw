@@ -77,15 +77,11 @@ Vancouver, BC, Canada, V6T 1Z4. \\
 
 Corresponding Author: Deirdre Loughnan, deirdre.loughnan@ubc.ca \\
 
-<<label=runcode1,  echo=FALSE>>=
-
-source("..//rcode/phenologyMsValues.R")
-@
 
 \section*{Abstract} 
 %Aim 200-300 words --- New Phyt 200 GCB 300
-% currently 212
-Species life history events are advancing with climate change, but these phenological responses are highly variable. The impacts of climate change are spatially implicit, varying across populations,in addition to high species-level variation. But understanding the causes of this variability is critical if we are to accurately predict future changes and the cascading impacts phenology has on communities. We took a more holistic approach to account the diversity in drivers of phenological variability, using spring budburst to test the relative importance of population-level variation, species differences, and the potentially confounding effects of phylogenetic structure on current day phenology. We combined budburst data from two growth chamber studies and used a Bayesian phylogenetic mixed effects model to test cue responses of 47 woody plant species across four populations in eastern and western North America. While we found weak population-level differences in budburst and cues, budburst showed a strong phylogenetic structure. Cue responses, however, only explained \Sexpr{diffBAEastHigh} to \Sexpr{diffBAWest}\% of variation, with considerable species-level differences. Our findings suggest phenology is largely the result of environmental cues and evolutionary history, and not geographic differences. Understanding the unidentified drivers of species-level differences, whether they be physiological constraints or other key traits, will allow us to predict future community responses to climate change and conserve ecosystem services. 
+% currently 232
+Species life history events are advancing with climate change. But these phenological impacts of climate change are spatially implicit, and found to have variable effects across species. Understanding the causes of this variability is critical if we are to accurately predict future changes and phenology's cascading impacts on communities. We took a more holistic approach to account for the diversity of drives that shape phenology. Using spring budburst as our study system, we tested the relative importance of population-level variation, species differences, and the potentially confounding effects of phylogenetic structure on phenology across variable temperature and photoperiod cues. We combined budburst data from two growth chamber studies and used a Bayesian phylogenetic mixed effects model to estimate cue responses of 47 woody plant species from four populations across eastern and western North America. While we found weak population-level differences in budburst and cues, this phenological event had a strong phylogenetic structure. Cue responses, however, only explained \Sexpr{diffBAEastHigh} to \Sexpr{diffBAWest}\% of variation. The remaining species-level variation suggests there are additional traits driving budburst phenology in woody plant communities. Our findings suggest that current phenology is largely the result of environmental cues, but evolutionary history and not geographic differences also plays an imporant role. Understanding the unidentified drivers of species-level differences, whether they be physiological constraints or other key environmental cues, is critical for understanding species phenology and future responses under our changing climate. 
 
 \section*{Introduction}
 

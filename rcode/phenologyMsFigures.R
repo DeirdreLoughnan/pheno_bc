@@ -617,7 +617,7 @@ intrxnCF <- ggplot(intCF, aes(x= chill, group =1)) +
   geom_line(aes(y = bb_lfc, col = "#4297A0"), size = 1.5) +
   xlim (-1.5,2) + 
   ylim (-2,50) +
-  xlab("Z-scored chill portions") + ylab("Estimated day of budburst") +
+  xlab("Chilling (standardized chill portions)") + ylab("Estimated day of budburst") +
   theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
         panel.background = element_blank(), axis.line = element_line(colour = "black"),
         axis.text = element_text(size = 15), axis.title = element_text(size = 20))+
@@ -634,8 +634,8 @@ intrxnCF <- ggplot(intCF, aes(x= chill, group =1)) +
   geom_line(aes(y = bb_lfc, col = "#4297A0"), size = 1.5) + 
    geom_ribbon(data = intCF, aes(ymin = bb_hfc5, ymax = bb_hfc95, x= chill), alpha = 0.2, fill = "sienna4") +
   geom_ribbon(data = intCF, aes(ymin = bb_lfc5, ymax = bb_lfc95, x= chill), alpha = 0.2, fill = "tan2") + 
-  scale_color_manual(values = c("cyan4", "red"), labels = c("High forcing", "Low forcing","High forcing", "Low forcing"), name = "") +
-  xlab("Z-scored chill portions") + ylab("Estimated day of budburst") +
+  #scale_color_manual(values = c("cyan4", "red"), labels = c("High forcing", "Low forcing","High forcing", "Low forcing"), name = "") +
+  xlab("Chilling (standardized chill portions) ") + ylab("Estimated day of budburst") +
   theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
         panel.background = element_blank(), axis.line = element_line(colour = "black"),
         axis.text = element_text(size = 15), axis.title = element_text(size = 20))+

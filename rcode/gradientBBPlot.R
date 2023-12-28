@@ -303,7 +303,7 @@ data <- long[order(long$meanBB),]
 # data$species.name <- factor(data$species.name, levels=unique(data$species.name) )
 #data <- transform(data, variable=reorder(species.name, -meanBB) ) 
 
-names(data) <- c("species.name","valueLow", "valueHigh","species","type","transect","meanBB","meanBBHigh", "Int","Int5","Int95","Int25","Int75","force5","force95","force25","force75","chill5", "chill95", "chill25", "chill75","photo5", "photo95", "photo25", "photo75","spMeanForce", "spMeanChill", "spMeanPhoto","bb5","bb95","bb75","bb25", "spacing","bb5High","bb95High","bb75High","bb25High","chill", "force","photo","intercept")
+names(data) <- c("species.name","valueLow", "valueHigh","species","type","transect","meanBB","meanBBHigh", "Int","Int5","Int95","Int25","Int75","force5","force95","force25","force75","chill5", "chill95", "chill25", "chill75","photo5", "photo95", "photo25", "photo75","spMeanForce", "spMeanChill", "spMeanPhoto","bb5","bb95","bb75","bb25", "spacing","bb5High","bb95High","bb75High","bb25High","valueHigh2","chill", "force","photo","intercept")
 
 #####################################################################
 ## Eastern spp only #################################################
@@ -1145,7 +1145,7 @@ chilldotW <- ggplot(chillPtW,aes(y= chill, x = meanBB, colour = "#cc6a70ff"), si
         legend.position = "none") + 
   scale_x_continuous( breaks = spMiniW$meanBB, labels = spMiniW$species,limits = c(15,62)) +
   labs( x = "", y = 
-         "Chill response (days/standardized unit)"# "Days per standardized chill portion"
+         ""# "Days per standardized chill portion"
         , main = NA) +
   theme(legend.title = element_blank()) +  annotate("text", x = 15, y = 2, label = "b)", cex =10) +
   annotate("text", x = 38, y = 3, label = "Western transect", cex =10) +
@@ -1173,7 +1173,7 @@ forcedotW <- ggplot(chillPtW,aes(y= force, x = meanBB), size = 7) +
         legend.position = "none") + 
   scale_x_continuous( breaks = spMiniW$meanBB, labels = spMiniW$species,limits = c(15,62)) +
   labs( x = "", 
-        y = "Forcing response (days/standardized unit)"# "Days per standardized forcing" )+ # expression("Forcing response (days/"*~degree*C*")")
+        y = ""# "Days per standardized forcing" )+ # expression("Forcing response (days/"*~degree*C*")")
   , main = NA) +
   theme(legend.title = element_blank()) +  annotate("text", x = 15, y = 2, label = "d)", cex =10) +
   # annotate("text", x = 38, y = 10, label = "Western transect", cex =5) +
@@ -1196,10 +1196,10 @@ photodotW <- ggplot(chillPtW,aes(y= photo, x = meanBB, colour = "photo"), size =
         panel.background = element_blank(), axis.line = element_line(colour = "black"), legend.position = "none") + ylim(-10,0) +
   theme(axis.text.x = element_text( size = 17,angle = 78,  hjust=1),
         axis.text.y=element_text(size = 15),
-        axis.title=element_text(size=17),
+        axis.title=element_text(size=21),
         legend.position = "none") + 
   scale_x_continuous( breaks = spMiniW$meanBB, labels = spMiniW$species,limits = c(15,65)) +
-  labs( x = "Species ordered by predicted budburst date", y = "Photoperiod response (days/standardized unit)",#"Days per standardized photoperiod",
+  labs( x = "Species ordered by predicted budburst date", y = "",#"Days per standardized photoperiod",
         main = NA) +
   theme(legend.title = element_blank()) +  annotate("text", x = 15, y = 0, label = "f)", cex =10) +
   # annotate("text", x = 38, y = 10, label = "Western transect", cex =5) +
@@ -1225,7 +1225,7 @@ chilldotE <- ggplot(chillPtE,aes(y= chill, x = meanBB, colour ="#cc6a70ff"), siz
         panel.background = element_blank(), axis.line = element_line(colour = "black"), legend.position = "none") + ylim(-45,5) +
   theme(axis.text.x = element_text( size = 17,angle = 78,  hjust=1),
         axis.text.y=element_text(size = 15),
-        axis.title=element_text(size=17),
+        axis.title=element_text(size=21),
         legend.position = "none") + 
   scale_x_continuous( breaks = spMiniE$meanBB, labels = spMiniE$species,limits = c(23,65)) +
   labs( x = "", y = "Chill response (days/standardized unit)"#"Days per standardized chill portion"
@@ -1254,7 +1254,7 @@ forcedotE <- ggplot(chillPtE,aes(y= force, x = meanBB, colour = "#f9b641ff"), si
         panel.background = element_blank(), axis.line = element_line(colour = "black"), legend.position = "none") +  ylim(-25,5) +
   theme(axis.text.x = element_text( size=17,angle = 78,  hjust=1),
         axis.text.y=element_text(size = 15),
-        axis.title=element_text(size=17),
+        axis.title=element_text(size=21),
         legend.position = "none") + 
   scale_x_continuous( breaks = spMiniE$meanBB, labels = spMiniE$species,limits = c(23,65)) +
   labs( x = "", y = "Forcing response (days/standardized unit)"#"Days per standardized forcing")+#expression("Forcing response (days/"*~degree*C*")")
@@ -1286,7 +1286,7 @@ theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
         panel.background = element_blank(), axis.line = element_line(colour = "black"), legend.position = "none") +  ylim(-10,0) +
   theme(axis.text.x = element_text( size=17,angle = 78,  hjust=1),
         axis.text.y=element_text(size = 15),
-        axis.title=element_text(size=  17),
+        axis.title=element_text(size=  21),
         legend.position = "none") + 
   scale_x_continuous( breaks = spMiniE$meanBB, labels = spMiniE$species,limits = c(23,65)) +
   labs( x = "Species ordered by predicted budburst date", y = "Photoperiod response (days/standardized unit)"#"Days per standardized photoperiod"
@@ -1306,7 +1306,7 @@ theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
   scale_fill_manual(values = c("#f9b641ff","#f9b641ff"))
 photodotE
 
-pdf("figures/dotCFPEWSizeColorUnitsShape.pdf", width = 20, height = 16)
+pdf("figures/dotCFPEWSizeColorUnitsShape.pdf", width = 20, height = 20)
 plot_grid(chilldotE, chilldotW, forcedotE, forcedotW, photodotE, photodotW, nrow = 3, ncol = 2, align = "v")
 dev.off()
 

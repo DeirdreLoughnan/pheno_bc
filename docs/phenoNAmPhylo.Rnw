@@ -150,12 +150,12 @@ Our modeling approach allowed us to combine observations of budburst (\emph{i}) 
 &\beta_{force \times site2_{sp_i}} + \beta_{force \times site3_{sp_i}}+ \beta_{force \times site4_{sp_i}} + \\
 &\beta_{chilling \times site2_{sp_i}} + \beta_{chilling \times site3_{sp_i}} + \beta_{chilling \times site4_{sp_i}} + \\
 &\beta_{photoperiod \times site2_{sp_i}} + \beta_{photoperiod \times site3_{sp_i}} + \beta_{photoperiod \times site4_{sp_i}} + \epsilon_{i}\\
-& \epsilon_{i} \sim \text{normal}(0, \sigma^2_y)
+% &             \epsilon_{i} \sim \text{normal}(0, \sigma^2_y)
 \end{align*}
 % \\
-% \begin{align*}
-% & \epsilon_{i} \sim \text{normal}(0, \sigma^2_y)
-% \end{align*}
+\begin{align*}
+& \epsilon_{i} \sim \text{normal}(0, \sigma^2_y)
+\end{align*}
 
 The intercept and slopes were modeled with partial pooling at the species-level:\\
 

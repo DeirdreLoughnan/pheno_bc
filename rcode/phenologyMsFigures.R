@@ -1247,7 +1247,7 @@ sitePPoint
 
 l <- get_legend(sitePPoint) 
 
-pdf("figures/intrxnForceChill.pdf", height = 2, width = 2)
+pdf("figures/intrxnForceChill.pdf", height = 5, width = 5)
 intrxnCF
 dev.off()
 

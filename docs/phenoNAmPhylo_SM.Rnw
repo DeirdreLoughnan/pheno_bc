@@ -64,22 +64,43 @@
 \renewcommand{\thefigure}{S\arabic{figure}}
 \renewcommand{\labelitemi}{$-$}
 
-<<label= tabChill, echo=FALSE , results=tex>>=
+\begin{table}[ht]
+\centering
+\caption{Approximate chill units from our two western sites, E.C. Manning Park and Smithers B.C., Canada, and our two eastern sites, Harvard Forest, USA and St. Hippolyte, Canada. Weather data was obtained from the Hope Slide weather station for our E.C. Manning Park estimates and the Smithers airport weather station for our Smithers communities. For our eastern communities, weather data was obtained from weather stations at Harvard Forest and in St. Hippolyte.} 
+\label{tabChill}
+\begin{tabular}{llrrr}
+  \hline
+Population & Chilling treatment & Chill hours & Utah model & Chill portions \\ 
+  \hline
+Harvard forest & Field chilling & 892 & 814.50 & 56.62 \\ 
+  Harvard forest & Field chilling + 30 d at 4$^\circ$C & 2140 & 2062.50 & 94.06 \\ 
+  St. Hippoltye & Field chilling & 682 & 599.50 & 44.63 \\ 
+  St. Hippoltye & Field chilling + 30 d at 4$^\circ$C & 1930 & 1847.50 & 82.06 \\ 
+  Smithers & Field chilling + 30 d at 4$^\circ$C & 1317 & 1368.00 & 54.95 \\ 
+  Smithers & Field chilling + 70 d at 4$^\circ$C & 1965 & 2016.00 & 74.67 \\ 
+  Manning Park & Field chilling + 30 d at 4$^\circ$C & 1213 & 1377.00 & 55.09 \\ 
+  Manning Park & Field chilling + 70 d at 4$^\circ$C & 1861 & 2025.00 & 75.33 \\ 
+  \end{tabular}
+\end{table}
 
-# Chill units from our two western sites, E.C. Manning Park and Smithers B.C., and our two eastern sites, Harvard Forest (HF) USA and St. Hippolyte(SH) Canada.
-
-require(xtable)
-#library(tidyr)
-chill <- read.csv("..//output/chillUnits.csv")
-names(chill) <- c("Population","Chilling treatment","Chill hours","Utah model","Chill portions")
-# chillunit <- xtable(chill, caption = "Chill units from our two western sites, E.C. Manning Park (MP) and Smithers B.C.(SM) Canada, and our two eastern sites, Harvard Forest (HF) USA and St. Hippolyte(SH) Canada.", label = "tableChill")
-print(xtable(chill, caption = "Approximate chill units from our two western sites, E.C. Manning Park and Smithers B.C., Canada, and our two eastern sites, Harvard Forest, USA and St. Hippolyte, Canada. Weather data was obtained from the Hope Slide weather station for our E.C. Manning Park estimates and the Smithers airport weather station for our Smithers communities. For our eastern communities, weather data was obtained from weather stations at Harvard Forest and in St. Hippolyte", label = "tabChill"),include.rownames= F, caption.placement="top", hline.after=c(-1,0))
-@
+% <<label= tabChill, echo=FALSE , results=tex>>=
+% 
+% # Chill units from our two western sites, E.C. Manning Park and Smithers B.C., and our two eastern sites, Harvard Forest (HF) USA and St. Hippolyte(SH) Canada.
+% 
+% require(xtable)
+% #library(tidyr)
+% chill <- read.csv("..//output/chillUnits.csv")
+% chill$Chilling.treatment<- gsub("degree ","$\\circ$", chill$Chilling.treatment)
+% names(chill) <- c("Population","Chilling treatment","Chill hours","Utah model","Chill portions")
+% 
+% # chillunit <- xtable(chill, caption = "Chill units from our two western sites, E.C. Manning Park (MP) and Smithers B.C.(SM) Canada, and our two eastern sites, Harvard Forest (HF) USA and St. Hippolyte(SH) Canada.", label = "tableChill")
+% print(xtable(chill, caption = "Approximate chill units from our two western sites, E.C. Manning Park and Smithers B.C., Canada, and our two eastern sites, Harvard Forest, USA and St. Hippolyte, Canada. Weather data was obtained from the Hope Slide weather station for our E.C. Manning Park estimates and the Smithers airport weather station for our Smithers communities. For our eastern communities, weather data was obtained from weather stations at Harvard Forest and in St. Hippolyte", label = "tabChill"),include.rownames= F, caption.placement="top", hline.after=c(-1,0))
+% @
 
 \begin{figure}[h!]
     \centering
      \includegraphics[width=8cm]{..//figures/intrxnForceChill.pdf}
-     \caption{Estimated day of budburst of first bud in response to chill portions and forcing, estimated for our defined baseline conditions. We found a positive interaction between chilling and forcing cues, with high forcing compensating for low chilling to produce earlier budburst, while budburst occurred earlier under low forcing following high chilling. In our analysis, we standardized predictors, (here specifically chilling) via $z$-scores, using two standard deviations, see methods for further details.} 
+     \caption{Estimated day of budburst in response to chill portions and forcing, estimated for our defined baseline conditions. We found a positive interaction between chilling and forcing. High forcing compensated for low chilling to produce earlier budburst, while budburst occurred earlier under low forcing following high chilling. In our analysis, we standardized predictors, (here specifically chilling) via $z$-scores, using two standard deviations, see methods for further details.} 
     \label{fig:intrxnCF} 
 \end{figure}
 \newpage
@@ -87,7 +108,7 @@ print(xtable(chill, caption = "Approximate chill units from our two western site
 \begin{figure}[h!]
     \centering
      \includegraphics[width=\textwidth]{..//figures/intrxnPlots8Chill3Lat.pdf}
-     \caption{Estimated day of budburst of first bud in response to (a) forcing across populations under low chilling conditions and short photoperiods, (b) chilling across populations under low forcing and short photoperiods, and (c) across photoperiods under our baseline forcing and chilling conditions for species sampled from our four populations. The thin error bars represent the 90\% uncertainty interval, while the thicker error bars represent the 50\% uncertainty interval.} 
+     \caption{Estimated day of budburst in response to (a) forcing across populations under low chilling and short photoperiods, (b) chilling across populations under low forcing and short photoperiods, and (c) across photoperiods under our baseline forcing and chilling for species sampled from our four populations. The thin error bars represent the 90\% uncertainty interval, while the thicker error bars represent the 50\% uncertainty interval, and symbols the mean.} 
     \label{fig:intrxn3}
 \end{figure}
 \newpage
@@ -95,14 +116,14 @@ print(xtable(chill, caption = "Approximate chill units from our two western site
 \begin{figure}[h!]
     \centering
      \includegraphics[width=\textwidth]{..//figures/cueST28Chill.pdf}
-    \caption{Comparisons of posterior distributions for cues estimates between shrub and tree species. Black circles represent the median cues, while the thinner black line the 90\% quantile interval. The coloured distribution is the the posterior density of the posteriors of the cues for all species within a given architectural type. The y-axis spans the entire range of the data.}
+    \caption{Comparisons of posterior distributions for cues estimates between shrub and tree species. Black circles represent the median cues, while the thinner black line the 90\% quantile interval. The coloured distribution is the the posterior density of cues responses for all species within a given architectural type. The y-axis spans the entire range of the data.}
     \label{fig:cueST}
     \end{figure}
     
 \begin{figure}[h!]
     \centering
      \includegraphics[width=\textwidth]{..//figures/rankstiBBTransectSpp.pdf}
-     \caption{Estimated changes in species ranked budburst order, compared between species level effects (species intercept) and under high cue conditions (a and d), species level effects and under low cue condition (b and e), and ranked order under low and high cue conditions (c and f) for our eastern in red (a-c) and western species in blue (d-f). For the three species that occur in both transect, shown in yellow, \emph{Alnus incana} exhibited the greatest rank change with a difference of three, while \emph{Betula papyrifera} had a rank difference of two and \emph{Populus tremuloides} a rank difference of one.}
+     \caption{Estimated changes in species ranked budburst order, compared between species level effects (species intercept) and under high cues (a and d), species level effects and under low cues (b and e), and ranked order under low and high cues (c and f) for our eastern species in red (a-c) and western species in blue (d-f). For the three species that occur in both transect, shown in yellow, \emph{Alnus incana} exhibited the greatest rank change with a difference of three, while \emph{Betula papyrifera} had a rank difference of two and \emph{Populus tremuloides} a rank difference of one.}
     \label{fig:rank}
 \end{figure}
 
@@ -143,60 +164,117 @@ print(xtable(chill, caption = "Approximate chill units from our two western site
     \label{fig:phylo}
 \end{figure}
 
+\begin{table}[ht]
+\centering
+\caption{Mean budburst dates across all treatments from raw data for 47 species at our two western sites, E.C. Manning Park and Smithers B.C., Canada, and our two eastern sites, Harvard Forest, USA and St. Hippolyte, Canada.} 
+\begin{tabular}{lrrrr}
+  \hline
+Species & Harvard Forest & St. Hippoltye & Manning Park & Smithers \\ 
+  \hline
+\emph{Acer glabrum} &  &  & 36 & 39 \\ 
+  \emph{Acer pensylvanicum} & 16 & 18 &  &  \\ 
+  \emph{Acer rubrum} & 22 & 25 &  &  \\ 
+  \emph{Acer saccharum} & 45 & 36 &  &  \\ 
+  \emph{Alnus incana} &  &  & 28 & 30 \\ 
+  \emph{Alnus incana} & 33 & 25 &  &  \\ 
+  \emph{Alnus viridis} &  &  & 44 & 43 \\ 
+  \emph{Amelanchier alnifolia} &  &  & 19 & 18 \\ 
+  \emph{Aronia melanocarpa} & 14 &  &  &  \\ 
+  \emph{Betula alleghaniensis} & 20 & 21 &  &  \\ 
+  \emph{Betula lenta} & 30 &  &  &  \\ 
+  \emph{Betula papyrifera} &  &  &  & 31 \\ 
+  \emph{Betula papyrifera} & 17 & 18 &  &  \\ 
+  \emph{Corylus cornuta} & 25 & 19 &  &  \\ 
+  \emph{Cornus stolonifera} &  &  & 15 & 17 \\ 
+  \emph{Fagus grandifolia} & 42 & 43 &  &  \\ 
+  \emph{Fraxinus nigra} & 38 & 38 &  &  \\ 
+  \emph{Hamamelis virginiana} & 44 &  &  &  \\ 
+  \emph{Ilex mucronata} & 16 & 15 &  &  \\ 
+  \emph{Kalmia angustifolia} & 30 & 32 &  &  \\ 
+  \emph{Lonicera canadensis} & 17 & 16 &  &  \\ 
+  \emph{Lonicera involucrata} &  &  & 22 & 20 \\ 
+  \emph{Lyonia ligustrina} & 31 &  &  &  \\ 
+  \emph{Menziesia ferruginea} &  &  & 43 & 46 \\ 
+  \emph{Nyssa sylvatica} & 32 &  &  &  \\ 
+  \emph{Populus balsamifera} &  &  & 30 & 31 \\ 
+  \emph{Populus grandidentata} & 33 & 31 &  &  \\ 
+  \emph{Populus tremuloides} &  &  & 46 & 35 \\ 
+  \emph{Prunus pensylvanica} & 18 & 16 &  &  \\ 
+  \emph{Quercus alba} & 45 &  &  &  \\ 
+  \emph{Quercus rubra} & 36 & 34 &  &  \\ 
+  \emph{Quercus velutina} & 52 &  &  &  \\ 
+  \emph{Rhamnus frangula} & 32 &  &  &  \\ 
+  \emph{Rhododendron albiflorum} &  &  & 19 &  \\ 
+  \emph{Rhododendron prinophyllum} & 29 &  &  &  \\ 
+  \emph{Ribes lacustre} &  &  & 29 & 23 \\ 
+  \emph{Rubus parviflorus} &  &  & 28 & 30 \\ 
+  \emph{Sambucus racemosa} &  &  & 33 &  \\ 
+  \emph{Shepherdia canadensis} &  &  & 25 & 24 \\ 
+  \emph{Sorbus scopulina} &  &  & 21 & 19 \\ 
+  \emph{Spiraea alba} & 18 & 20 &  &  \\ 
+  \emph{Spiraea betulifolia} &  &  & 24 & 18 \\ 
+  \emph{Spiraea pyramidata} &  &  & 26 & 22 \\ 
+  \emph{Symphoricarpos albus} &  &  & 27 & 32 \\ 
+  \emph{Vaccinium membranaceum} &  &  & 22 & 23 \\ 
+  \emph{Vaccinium myrtilloides} & 13 & 17 &  &  \\ 
+  \emph{Viburnum cassinoides} & 15 & 18 &  &  \\ 
+  \emph{Viburnum edule} &  &  & 19 & 8 \\ 
+  \emph{Viburnum lantanoides} & 31 & 28 &  &  \\ 
+  \end{tabular}
+\end{table}
 
-
-%emwOct25 -- italicize spp names
-<<label= meanBBTab, echo=FALSE , results=tex>>=
-# Mean bb dates across all treatments from raw data for 47 species at our two western sites, E.C. Manning Park and Smithers B.C., and our two eastern sites, Harvard Forest (HF) USA and St. Hippolyte(SH) Canada.
-
-require(xtable)
-#library(tidyr)
-require(reshape2)
-require(stringr)
-require(plyr)
-
-dl <- read.csv("..//input/dl_allbb_mini.csv")
-
-temp <- str_split_fixed(dl$trt, "_", 3)
-dl$chill<- temp[,1]
-dl$photo <- temp[,2]
-dl$force <- temp[,3]
-
-dl.chill <- read.csv("..//input/chilling_values_Hope_Smithers.csv")
-
-dl.wchill <- merge(dl, dl.chill, by = c("population","chill"))
-dl.wchill$lab3 <- dl.wchill$lab2
-dl.wchill$lab2 <- paste(dl.wchill$species, dl.wchill$population, dl.wchill$rep, sep = "_")
-dl.wchill$transect <- "west"
-
-df <- read.csv("..//input/df_dxb_prepped_data.csv")
-df.chill <- read.csv("..//input/chilling_values_eastern.csv")
-df.wchill <- merge(df, df.chill, by =c("population","chill"))
-df.wchill <- df.wchill[, c("population", "chill","force","photo","lab2", "bb","species", "treatment","Chill_portions","Utah_Model")]
-df.wchill$transect <- "east"
-
-# # mergeing the my data with DF
- pheno <- rbind.fill(dl.wchill, df.wchill)
-
-meanBB <- aggregate(pheno["bb"], pheno[c("population", "species")], FUN = mean, na.rm  =T)
-meanBB$bb <- round(meanBB$bb, 0)
-
-meanBBPop <- dcast(meanBB, species ~ population, value.var = "bb")
-meanBBPop$species <- tolower(meanBBPop$species)
-
-spInfo <- read.csv("..//input/species_list.csv")
-spInfo$species.name <- gsub("_"," ", spInfo$species.name)
-spInfo$species.name <- paste("\\emph{", spInfo$species.name, "}", sep = "")
-mdlTab <- merge(meanBBPop, spInfo, by = "species")
-mdlTab <- mdlTab[, c("species.name","HF","SH","mp","sm")]
-
-colnames(mdlTab) <- c("Species" , "Harvard Forest", "St. Hippoltye","Manning Park", "Smithers")
-
-meanBBTab <- xtable(mdlTab, caption="Mean budburst dates across all treatments from raw data for 47 species at our two western sites, E.C. Manning Park (MP) and Smithers B.C.(SM) Canada, and our two eastern sites, Harvard Forest (HF) USA and St. Hippolyte (SH) Canada.")
-print(meanBBTab,include.rownames=F, caption.placement="top", hline.after=c(-1,0), sanitize.text.function = identity)
-
-@
-
+% %emwOct25 -- italicize spp names
+% <<label= meanBBTab, echo=FALSE , results=tex>>=
+% # Mean bb dates across all treatments from raw data for 47 species at our two western sites, E.C. Manning Park and Smithers B.C., and our two eastern sites, Harvard Forest (HF) USA and St. Hippolyte(SH) Canada.
+% 
+% require(xtable)
+% #library(tidyr)
+% require(reshape2)
+% require(stringr)
+% require(plyr)
+% 
+% dl <- read.csv("..//input/dl_allbb_mini.csv")
+% 
+% temp <- str_split_fixed(dl$trt, "_", 3)
+% dl$chill<- temp[,1]
+% dl$photo <- temp[,2]
+% dl$force <- temp[,3]
+% 
+% dl.chill <- read.csv("..//input/chilling_values_Hope_Smithers.csv")
+% 
+% dl.wchill <- merge(dl, dl.chill, by = c("population","chill"))
+% dl.wchill$lab3 <- dl.wchill$lab2
+% dl.wchill$lab2 <- paste(dl.wchill$species, dl.wchill$population, dl.wchill$rep, sep = "_")
+% dl.wchill$transect <- "west"
+% 
+% df <- read.csv("..//input/df_dxb_prepped_data.csv")
+% df.chill <- read.csv("..//input/chilling_values_eastern.csv")
+% df.wchill <- merge(df, df.chill, by =c("population","chill"))
+% df.wchill <- df.wchill[, c("population", "chill","force","photo","lab2", "bb","species", "treatment","Chill_portions","Utah_Model")]
+% df.wchill$transect <- "east"
+% 
+% # # mergeing the my data with DF
+%  pheno <- rbind.fill(dl.wchill, df.wchill)
+% 
+% meanBB <- aggregate(pheno["bb"], pheno[c("population", "species")], FUN = mean, na.rm  =T)
+% meanBB$bb <- round(meanBB$bb, 0)
+% 
+% meanBBPop <- dcast(meanBB, species ~ population, value.var = "bb")
+% meanBBPop$species <- tolower(meanBBPop$species)
+% 
+% spInfo <- read.csv("..//input/species_list.csv")
+% spInfo$species.name <- gsub("_"," ", spInfo$species.name)
+% spInfo$species.name <- paste("\\emph{", spInfo$species.name, "}", sep = "")
+% mdlTab <- merge(meanBBPop, spInfo, by = "species")
+% mdlTab <- mdlTab[, c("species.name","HF","SH","mp","sm")]
+% 
+% colnames(mdlTab) <- c("Species" , "Harvard Forest", "St. Hippoltye","Manning Park", "Smithers")
+% 
+% meanBBTab <- xtable(mdlTab, caption="Mean budburst dates across all treatments from raw data for 47 species at our two western sites, E.C. Manning Park (MP) and Smithers B.C.(SM) Canada, and our two eastern sites, Harvard Forest (HF) USA and St. Hippolyte (SH) Canada.")
+% print(meanBBTab,include.rownames=F, caption.placement="top", hline.after=c(-1,0), sanitize.text.function = identity,digits=c(0,0,0,0,0))
+% 
+% @
+% 
 
 
 <<label=bbSuccess, echo=FALSE, results=tex >>=
@@ -212,7 +290,7 @@ bb_suc <- merge(spwithbb, spInfo, by = "Species")
 bb_suc <- bb_suc[, c("Species name", "Proportion.Budburst","Plant type")]
 names(bb_suc) <- c("Species name", "Proportion budburst","Plant type")
 
-make.bb_suc <- xtable(bb_suc, caption="Proportion of samples per species for which budburst was observed.")
+make.bb_suc <- xtable(bb_suc, caption="Proportion of surviving samples per species for which budburst was observed in our western controlled enviornment study. See Flynn and Wolkovich (2018) for survival in our eastern study.")
 print(make.bb_suc,include.rownames=F, caption.placement="top", hline.after=c(-1,0), sanitize.text.function = identity)
 
 @

@@ -23,7 +23,9 @@
 %put your Fig.s in one place! Also, note that here 'Fig.s' is the folder and 'demoFig' is what each 
 % Fig. produced will be titled plus its number or label (e.g., demoFig-nqpbetter.pdf')
 % make your captioning look better
-\usepackage[small]{caption}
+\usepackage{caption}
+\usepackage{subcaption}
+ \captionsetup[subfigure]{labelformat=simple, position=top, labelfont=bf,textfont=large,singlelinecheck=off,justification=raggedright, font = large}
 
 \usepackage{xr-hyper} %refer to Fig.s in another document
 \usepackage{hyperref}
@@ -97,7 +99,7 @@ source("..//rcode/phenologyMsValues.R")
 
 % EMWJan2 -- lots of edits here for flow again -- careful of adding terms and words without connecting/explaining them for reader. Also, I suggest you INSERT lambda as noted below. 
 %dlJan5: I assume to keep the abstract short you would not need to include the UI for values
-With climate change the timings of many life history events---or phenologies---are advancing. But these advances are highly variable across space and species, making it challenging to manage shifts and forecast future responses. Across space, differences in the local environment (e.g., temperature and daylength) alongside local-adaptation by populations can produce different phenologies. This however, does not explain the considerable species-level variation observed within communities---where the same phenological event often occurs over several weeks or more. Such variation suggests species may partition their period of growth to occupy different temporal niches, but species differences can additionally be caused by their evolutionary history (phylogeny). To understand these multiple drivers of variability, we examined community-level responses to environmental cues across 47 species from four populations across eastern and western North America. We focused on budburst phenology of woody plants, where the underlying cues---temperature and daylength---are well known and can be manipulated in controlled environments. Using a Bayesian phylogenetic mixed effects model, we found little variation across populations, but strong variation by species. Budburst advanced in response to temperature and daylength, with these cues explaining only \Sexpr{diffBAEastHigh} to \Sexpr{diffBAWest}\% of variation, with the remaining variation mostly ascribed to intrinsic differences in species that were strongly phylogenetically structured ($\lambda$ = \Sexpr{lamT}). These phylogenetic effects suggest an important role of additional---and unaccounted for---traits that determine woody plant budburst, and could improve predictions of future phenological shifts and their effects on community dynamics and ecosystem services. 
+With climate change the timings of many species life history events---or phenologies---are advancing. But these advances are highly variable across space and species, making it challenging to manage shifts and forecast future responses. Across space, differences in the local environment (e.g., temperature and daylength) alongside local adaptation by populations can produce different phenologies. This however, does not explain the considerable species-level variation observed within communities---where the same phenological event often occurs over several weeks or more. Such variation suggests species may partition their period of growth to occupy different temporal niches, but species differences can additionally be caused by their evolutionary history (phylogeny). To understand these multiple drivers of variability, we examined community-level responses to environmental cues across 47 species from four populations across eastern and western North America. We focused on budburst phenology of woody plants, where the underlying cues---temperature and daylength---are well known and can be manipulated in controlled environments. Using a Bayesian phylogenetic mixed effects model, we found little variation across populations, but strong variation by species. Budburst advanced in response to temperature and daylength, with these cues explaining only \Sexpr{diffBAEastHigh} to \Sexpr{diffBAWest}\% of variation, with the remaining variation mostly ascribed to intrinsic differences in species that were strongly phylogenetically structured ($\lambda$ = \Sexpr{lamT}). These phylogenetic effects suggest an important role of additional---and unaccounted for---traits that determine woody plant budburst, and could improve predictions of future phenological shifts and their effects on community dynamics and ecosystem services. 
 
 
 \section*{Introduction}
@@ -412,21 +414,90 @@ print(xtable(meanz4, caption="Summary output from a phylogenetic Bayesian model 
 \newpage
 
 
-\begin{figure}[h!]
-    \centering
-     \includegraphics[width=\textwidth]{..//figures/dotCFPEWSizeColorUnitsShape.pdf}
-    \caption{Estimated species chilling (a,b), forcing (c,d) and photoperiod (e,f) responses ranked by increasing estimated budburst dates for both the eastern (a, c, e) and western (b, d, f) populations. Cues are plotted on differing y-axis to better depict species differences. For each species, the thinner error bars represent the 90\% uncertainty interval, and thicker bars represent the 50\% uncertainty interval. Species that occur in both the eastern and western transects are depicted using darker colours. To make the results across cues directly comparable, we standardized predictors (here, cues) via $z$-scores using two standard deviations, see methods for further details.} %emw3Jul -- might run simple linear regression on each of this for our own knowledge since I am sure a reviewer may want it .. include in supp for now? 
+\begin{figure}[ht]
+\centering
+\begin{subfigure}{0.48\textwidth}
+\centering
+\caption{}
+\vspace{-0.5\baselineskip}
+\label{}
+    \includegraphics[width=2.8in]{..//..//pheno_bc/figures/dotCFPEWSizeColorUnitsShapea.pdf}
+    \end{subfigure}
+\begin{subfigure}{0.48\textwidth}
+\centering
+\caption{}
+\vspace{-0.5\baselineskip}
+\label{}
+    \includegraphics[width=2.8in]{..//..//pheno_bc/figures/dotCFPEWSizeColorUnitsShapeb.pdf}
+\end{subfigure}
+\begin{subfigure}{0.48\textwidth}
+\centering
+\caption{}
+\vspace{-0.5\baselineskip}
+\label{}
+    \includegraphics[width=2.8in]{..//..//pheno_bc/figures/dotCFPEWSizeColorUnitsShapec.pdf}
+    \end{subfigure}
+\begin{subfigure}{0.48\textwidth}
+\centering
+\caption{}
+\vspace{-0.5\baselineskip}
+\label{}
+    \includegraphics[width=2.8in]{..//..//pheno_bc/figures/dotCFPEWSizeColorUnitsShaped.pdf}
+\end{subfigure}
+\begin{subfigure}{0.48\textwidth}
+\centering
+\caption{}
+\vspace{-0.5\baselineskip}
+\label{}
+    \includegraphics[width=2.8in]{..//..//pheno_bc/figures/dotCFPEWSizeColorUnitsShapee.pdf}
+    \end{subfigure}
+\begin{subfigure}{0.48\textwidth}
+\centering
+\caption{}
+\vspace{-0.5\baselineskip}
+\label{}
+    \includegraphics[width=2.8in]{..//..//pheno_bc/figures/dotCFPEWSizeColorUnitsShapef.pdf}
+\end{subfigure}
+    \caption[Cue responses ranked by budburst timing]{Estimated species \textbf{a,b}, chilling, \textbf{c,d} forcing, \textbf{e,f}  and photoperiod responses ranked by increasing estimated budburst dates for both the \textbf{a,c,e},  eastern \textbf{b,d,f}  and western populations. Cues are plotted on differing y-axis to better depict species differences. For each species, the thinner error bars represent the 90\% uncertainty interval, and thicker bars represent the 50\% uncertainty interval. Species that occur in both the eastern and western transects are depicted using darker colours. To make the results across cues directly comparable, we standardized predictors (here, cues) via $z$-scores using two standard deviations, see methods for further details.} %emw3Jul -- might run simple linear regression on each of this for our own knowledge since I am sure a reviewer may want it .. include in supp for now? 
     \label{fig:cueGrad}
 \end{figure}
 \newpage
 
-\begin{figure}[h!]
-    \centering
-     \includegraphics[width=\textwidth]{..//figures/dotBetaAlphaLongBW_LH.pdf} 
-    \caption{Comparisons of our estimated budburst based on the full model (intercept plus all cues), shown in white, versus the intercepts only (without cues), shown in black, ordered according to differences in species estimated budburst dates for both the eastern (a) and western (b) populations under high cue conditions, depicted as circles, and low cue conditions, depicted as triangles.} 
+% \begin{figure}[h!]
+%     \centering
+%      \includegraphics[width=\textwidth]{..//figures/dotCFPEWSizeColorUnitsShape.pdf}
+%     \caption{Estimated species chilling (a,b), forcing (c,d) and photoperiod (e,f) responses ranked by increasing estimated budburst dates for both the eastern (a, c, e) and western (b, d, f) populations. Cues are plotted on differing y-axis to better depict species differences. For each species, the thinner error bars represent the 90\% uncertainty interval, and thicker bars represent the 50\% uncertainty interval. Species that occur in both the eastern and western transects are depicted using darker colours. To make the results across cues directly comparable, we standardized predictors (here, cues) via $z$-scores using two standard deviations, see methods for further details.} %emw3Jul -- might run simple linear regression on each of this for our own knowledge since I am sure a reviewer may want it .. include in supp for now? 
+%     \label{fig:cueGrad}
+% \end{figure}
+% \newpage
+
+\begin{figure}[ht]
+\centering
+\begin{subfigure}{1\textwidth}
+\centering
+\caption{}
+\vspace{-0.5\baselineskip}
+\label{}
+    \includegraphics[width=5.5in]{..//..//pheno_bc/figures/dotBetaAlphaLongBW_LHa.pdf}%,
+\end{subfigure}
+\begin{subfigure}{1\textwidth}
+\centering
+\caption{}
+\vspace{-0.5\baselineskip}
+\label{}
+    \includegraphics[width=5.5in]{..//..//pheno_bc/figures/dotBetaAlphaLongBW_LHb.pdf}%,
+\end{subfigure}
+    \caption[Estimated budburst by cue strengths and across populations]{Comparisons of our estimated budburst based on the full model (intercept plus all cues), shown in white, versus the intercepts only (without cues), shown in black, ordered according to differences in species estimated budburst dates for both the \textbf{a} eastern \textbf{b} and western populations under high cue conditions, depicted as circles, and low cue conditions, depicted as triangles.} 
     \label{fig:betaAlphaGrad}
 \end{figure}
 \newpage
+% \begin{figure}[h!]
+%     \centering
+%      \includegraphics[width=\textwidth]{..//figures/dotBetaAlphaLongBW_LH.pdf} 
+%     \caption{Comparisons of our estimated budburst based on the full model (intercept plus all cues), shown in white, versus the intercepts only (without cues), shown in black, ordered according to differences in species estimated budburst dates for both the eastern (a) and western (b) populations under high cue conditions, depicted as circles, and low cue conditions, depicted as triangles.} 
+%     \label{fig:betaAlphaGrad}
+% \end{figure}
+% \newpage
 
 
 \end{document}

@@ -45,8 +45,6 @@ df.wchill$transect <- "east"
 
 # mergeing the my data with DF
 pheno <- rbind.fill(dl.wchill, df.wchill)
-
-head(pheno)
 # combined the data has 3197 unique samples
 ############################################################
 # Preping the data for the model
@@ -765,7 +763,7 @@ siteFPoint <- ggplot()  +
   ylim(0,80) +
   theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
         panel.background = element_blank(), axis.line = element_line(colour = "black"),
-        axis.text = element_text(size = 15), axis.title = element_text(size = 20),axis.text.x = element_text( size= 15,angle = 55, hjust=1)) +
+        axis.text = element_text(size = 15), axis.title = element_text(size = 20),axis.text.x = element_text( size= 20,angle = 55, hjust=1), legend.key=element_rect(fill="white"),legend.text=element_text(size=25))+
   # scale_color_manual(values = c("cyan4", "#CC6677"), labels = c("High forcing", "Low forcing"), name = "") +
   scale_color_manual(values = c(
     "bb_hfsite1"="forestgreen",
@@ -776,7 +774,8 @@ siteFPoint <- ggplot()  +
     "bb_lfsite4"="darkorchid1",
     "bb_hfsite3" ="darkorchid4",
     "bb_lfsite3"="darkorchid1"
-  ), labels = c("Smithers - High forcing", "Smithers - Low forcing","Manning Park - High forcing", "Manning Park - Low forcing", "St. Hippolyte - High forcing", "St. Hippolyte - Low forcing","Harvard Forest - High forcing", "Harvard Forest - Low forcing"), name = "") +theme(legend.position = "none") +  annotate("text", x = 1.15, y = 75, label = "a) Forcing", cex = 9) + scale_shape_manual(values = c("low forcing Smithers" = 0,  "high forcing Smithers" = 15,  "low forcing Manning park" = 0, "high forcing Manning park" = 15,  "low forcing Harvard forest" = 2, "high forcing Harvard forest" = 17,  "high forcing St.Hippolyte" = 17, "low forcing St.Hippolyte" = 2 ), breaks = c("low forcing Smithers", "high forcing Manning park"), label = c("Western", "Eastern")) +
+  ), breaks = c("bb_hfsite1", "bb_hfsite4"), label =c("High", "Low"))+ #+theme(legend.position = "none") +  #annotate("text", x = 1.15, y = 75, label = "a) Forcing", cex = 9) + 
+  scale_shape_manual(values = c("low forcing Smithers" = 0,  "high forcing Smithers" = 15,  "low forcing Manning park" = 0, "high forcing Manning park" = 15,  "low forcing Harvard forest" = 2, "high forcing Harvard forest" = 17,  "high forcing St.Hippolyte" = 17, "low forcing St.Hippolyte" = 2 ), breaks = c("low forcing Smithers", "high forcing Manning park"), label = c("Western", "Eastern")) +
 scale_x_discrete(breaks = c("Smithers", "Manning park", "St.Hippolyte", "Harvard forest"),
                        #limits = c(0,100),
                        labels = c(expression("Smithers (54.8"*~degree*N*")"), 
@@ -786,42 +785,7 @@ scale_x_discrete(breaks = c("Smithers", "Manning park", "St.Hippolyte", "Harvard
                        )
   )
 siteFPoint
-  # theme(legend.key=element_blank(), legend.position=c(.83,.85),legend.text = element_text(size = 15)) +
-  # theme(legend.title = element_blank()) +  annotate("text", x = 0.6, y = 50, label = "b)", cex = 10) 
 
-# siteForce$force_pop <- paste(siteForce$force, siteForce$site, sep = "_")
-# siteForce$col <- "black"
-# siteForce$col[which(siteForce$force_pop == "18")] <- 1978
-# 
-# 
-# ggplot() +
-#   geom_pointrange(siteForce, mapping = aes(x = factor(site, level = siteOrder), y = mean, ymin=X2.5., ymax=X97.5., col = force_pop),
-#                   position=position_dodge(width=0.5), size =1.25) +
-#   xlab("Population") + ylab("Estimated day of budburst") +
-#   ylim(0,50) +
-#   theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
-#         panel.background = element_blank(), axis.line = element_line(colour = "black"),
-#         axis.text = element_text(size = 15), axis.title = element_text(size = 20)) +
-#   scale_color_manual(values = c( "#D48C70", 
-#                                 "#29A0B1",
-#                                 "#98D7C2",
-#                                 "#167D7F",
-#                                 "#116530",
-#                                 
-#                                 "#C85250",
-#                                 "#EBBBB0", 
-#                                 "#E98980"), labels = c("High forcing", "Low forcing"), name = "") +
-#   theme(legend.position = "none") + 
-#   #theme(legend.key=element_blank(), legend.position=c(.83,.85),legend.text = element_text(size = 15)) +
-#   theme(legend.title = element_blank()) +  annotate("text", x = 0.6, y = 50, label = "b)", cex = 10) 
-
-#98D7C2, #29A0B1
-#167D7F
-#116530
-#18A558
-
-#D48C70 #C85250
-#EBBBB0 #E98980
 
 ### Site 4 and chill:
 hcData <- subset(pheno, chill == "HC" )
@@ -975,15 +939,14 @@ siteChill$tranSite <- paste(siteChill$transect, siteChill$site, sep = " ")
 siteChill$tempSite <- paste(siteChill$chill, siteChill$site, sep = " ")
 
 siteCPoint <- ggplot() +
-  geom_pointrange(siteChill, mapping = aes(x = factor(site, level = siteOrder), y = mean, ymin=lower1, ymax=upper1, col = temp, shape = tempSite),
-                  position=position_dodge(width=0.5), size = 0.55) +
+  geom_pointrange(siteChill, mapping = aes(x = factor(site, level = siteOrder), y = mean, ymin=lower1, ymax=upper1, col = temp, shape = tempSite), position=position_dodge(width=0.5), size = 0.55) +
   geom_linerange( siteChill, mapping = aes(x = factor(site, level = siteOrder), ymin = lower2, ymax=upper2, col = temp), size =1.25, position=position_dodge(width=0.5)) + 
   ylim(0,80) +
   xlab("Population") + ylab("Estimated day of budburst") +
   #ylim(0,50) +
   theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
         panel.background = element_blank(), axis.line = element_line(colour = "black"),
-        axis.text = element_text(size = 15), axis.title = element_text(size = 20),axis.text.x = element_text( size= 15,angle = 55, hjust=1), legend.position = "none") + scale_color_manual(values = c(
+        axis.text = element_text(size = 15), axis.title = element_text(size = 20),axis.text.x = element_text( size= 20,angle = 55, hjust=1), legend.key=element_rect(fill="white"),legend.text=element_text(size=25))+ scale_color_manual(values = c(
     "bb_hcsite1"="forestgreen",
     "bb_lcsite1"="palegreen3",
     "bb_hcsite2"= "forestgreen",
@@ -992,102 +955,15 @@ siteCPoint <- ggplot() +
     "bb_lc0site4"="darkorchid1",
     "bb_hc1site3" ="darkorchid4",
     "bb_lc0site3"="darkorchid1"
-  ), labels = c("Smithers - High  Chill", "Smithers - Low  Chill","Manning Park - High  Chill", "Manning Park - Low  Chill", "St. Hippolyte - High  Chill", "St. Hippolyte - Low  Chill","Harvard Forest - High  Chill", "Harvard Forest - Low Chill")) +  annotate("text", x = 1.15, y = 75, label = "b) Chilling", cex = 9) + scale_shape_manual(values = c("Western - Low Chill Smithers" = 0,  "Western - High Chill Smithers" = 15,  "Western - Low Chill Manning park" = 0, "Western - High Chill Manning park" = 15,  "Eastern - Low Chill Harvard forest" = 2, "Eastern - High Chill Harvard forest" = 17,  "Eastern - High Chill St.Hippolyte" = 17, "Eastern - Low Chill St.Hippolyte" = 2 ), breaks = c("Western - Low Chill Smithers", "Western - High Chill Manning park"), label = c("Western", "Eastern"))+
+  ), breaks = c("bb_hcsite1", "bb_lcsite1"), label = c("High","Low")) + # annotate("text", x = 1.15, y = 75, label = "b) Chilling", cex = 9) + 
+  scale_shape_manual(values = c("Western - Low Chill Smithers" = 0,  "Western - High Chill Smithers" = 15,  "Western - Low Chill Manning park" = 0, "Western - High Chill Manning park" = 15,  "Eastern - Low Chill Harvard forest" = 2, "Eastern - High Chill Harvard forest" = 17,  "Eastern - High Chill St.Hippolyte" = 17, "Eastern - Low Chill St.Hippolyte" = 2 ), breaks = c("Western - Low Chill Smithers", "Western - High Chill Manning park"), label = c("Western", "Eastern"))+
   scale_x_discrete(breaks = c("Smithers", "Manning park", "St.Hippolyte", "Harvard forest"),
                    #limits = c(0,100),
                    labels = c(expression("Smithers (54.8"*~degree*N*")"), 
                               expression("Manning park (49.1"*~degree*N*")"),
                               expression("St.Hippolyte (45.9"*~degree*N*")"),
-                              expression("Harvard forest (42.5"*~degree*N*")")
-                   )
-  )
+                              expression("Harvard forest (42.5"*~degree*N*")")))
 siteCPoint
-  # ggplot() +
-  # geom_pointrange(siteChill, mapping = aes(x = factor(site, level = siteOrder), y = mean, ymin=lower, ymax=upper, col = col),
-  #                 position=position_dodge(width=0.5), size = 1.25) +
-  # #ylim (0,50) +
-  # xlab("Population") + ylab("Estimated day of budburst") +
-  # #ylim(0,50) +
-  # theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
-  #       panel.background = element_blank(), axis.line = element_line(colour = "black"),
-  #       axis.text = element_text(size = 15), axis.title = element_text(size = 20)) +
-  # scale_color_manual(values = c("darkorchid4",
-  #                               "darkorchid3",
-  #                               "forestgreen",
-  #                               "springgreen4",
-  #                               "darkred",
-  #                               "indianred3",
-  #                               "deepskyblue3",
-  #                               "deepskyblue1"), labels = c("High chill - East",
-  #                                                        "Low chill - East",
-  #                                                       # "No chill - East",
-  #                                                        "High chill - West",
-  #                                                        "Low chill - West"), name = "") +
-  # theme(legend.key=element_blank(), legend.position=c(.8,.85),legend.text = element_text(size = 15)) +
-  # theme(legend.title = element_blank()) +  annotate("text", x = 0.6, y = 50, label = "c)", cex = 10) 
-
-
-# cbp1 <- c("#999999", "#E69F00", "#56B4E9", "#009E73",
-#           "#F0E442", "#0072B2", "#D55E00", "#CC79A7")
-
-# remove the low chill:
-
-# tempChillNoHigh <- rbind(bb_hc2site4,bb_lc0site4,bb_hc2site3,bb_lc0site3,bb_hcsite2,bb_lcsite2,bb_hcsite1,bb_lcsite1)
-# siteChillNoHigh <- data.frame(tempChillNoHigh , chill = c("Eastern - High Chill","Eastern - No Chill","Eastern - High Chill", "Eastern - No Chill", "Western - High Chill","Western - Low Chill", "Western - High Chill","Western - Low Chill"), site = c("St.Hippolyte","St.Hippolyte", "Harvard forest",  "Harvard forest","Manning park","Manning park","Smithers","Smithers"), col = c("#593d9cff", "cyan4","#593d9cff", "cyan4","#CC6677","#f9b641ff","#CC6677","#f9b641ff"))
-# 
-# siteChillNoHigh <- siteChillNoHigh[order(siteChillNoHigh$site),]
-# 
-# siteOrder <- c("Smithers", "Manning park", "Harvard forest", "St.Hippolyte")
-# 
-# siteCPointNH <- ggplot() +
-#   geom_pointrange(siteChillNoHigh, mapping = aes(x = factor(site, level = siteOrder), y = mean, ymin=X2.5., ymax=X97.5., col = chill),
-#                   position=position_dodge(width=0.5), size = 1.25) +
-#   xlab("Population") + ylab("Estimated day of budburst") +
-#   ylim(0,50) +
-#   theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
-#         panel.background = element_blank(), axis.line = element_line(colour = "black"),
-#         axis.text = element_text(size = 15), axis.title = element_text(size = 20)) +
-#   scale_color_manual(values = c("cyan4", 
-#                                 "orchid4", 
-#                                 "#CC6677",
-#                                 "#f9b641ff"), labels = c("High chill - East",
-#                                                          "Low chill - East",
-#                                                          "High chill - West",
-#                                                          "Low chill - West"), name = "") +
-#   theme(legend.key=element_blank(), legend.position=c(.8,.85),legend.text = element_text(size = 15)) +
-#   theme(legend.title = element_blank()) +  annotate("text", x = 0.6, y = 50, label = "c)", cex = 10) 
-
-
-# plot(hcData$site4.z2, hcData$bb, type = "n",  xlim = c(-1,1), ylim = c(-5,90), xlab = "Site", ylab = "Day of budburst", cex.lab = 2)
-# # points(jitter(hcData$site4.z2, 10), hcData$bb, bg = "#f9b641ff", pch =21, cex = 2.5)
-# # points(jitter(lcData$site4.z2, 8), lcData$bb, bg = "cyan4", pch = 21, cex = 2.5)
-# # points((c0Data$site4.z2), c0Data$bb, bg = "#a65c85ff", pch =21, cex = 2.5)
-# # points(c1Data$site4.z2 ,c1Data$bb, bg = "#7e4e90ff", pch =21, cex = 2.5)
-# # points(c2Data$site4.z2, c2Data$bb, bg = "#cc6a70ff", pch =21, cex = 2.5)
-# 
-# # abline(lm(bb_hcsite4 ~ site4), col = "#f9b641ff", lwd = 3)
-# # abline(lm(bb_lcsite4 ~ site4), col = "cyan4", lwd = 3)
-# abline(lm(bb_c0site4 ~ site4), col = "cyan4", lwd = 3, lty = 1)
-# abline(lm(bb_c1site4 ~ site4), col = "cyan4", lwd = 3, lty = 2)
-# abline(lm(bb_c2site4 ~ site4), col = "cyan4", lwd = 3, lty = 3)
-# 
-# abline(lm(bb_c0site3 ~ site3), col = "#f9b641ff", lwd = 3, lty = 1)
-# abline(lm(bb_c1site3 ~ site3), col = "#f9b641ff", lwd = 3, lty = 2)
-# abline(lm(bb_c2site3 ~ site3), col = "#f9b641ff", lwd = 3, lty = 3)
-# 
-# abline(lm(bb_hcsite2 ~ site2), col = "#a65c85ff", lwd = 3, lty = 6)
-# abline(lm(bb_lcsite2 ~ site2), col = "#a65c85ff", lwd = 3, lty = 1)
-# 
-# legend("topleft",legend = c(expression("St. Hippolyte"),
-#                             expression("Harvard Forest"),
-#                             expression("Manning Park"),
-#                             expression("c0"),
-#                             expression("c1"),
-#                             expression("c2"),
-#                              expression("hc"),
-#                              expression("lc")),
-#        col = c("cyan4","#f9b641ff","#a65c85ff", "black", "black", "black", "black", "black" ),
-#        inset = 0.02, lty = c(1,1,1,1,2, 1,6 ), lwd =2,  cex = 1.1, bty = "n")
 
 
 ### Photo and site 4
@@ -1207,7 +1083,7 @@ sitePPoint <- ggplot() +
                                 "High photoperiod Harvard forest" = 17,
                                 "High photoperiod St.Hippolyte" = 17,
                                 "Low photoperiod St.Hippolyte" = 2),
-  breaks = c("High photoperiod Manning park", "High photoperiod St.Hippolyte"), label = c("Western", "Eastern"), name = "") +theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(), panel.background = element_blank(), axis.line = element_line(colour = "black"), axis.text = element_text(size = 15), axis.title = element_text(size = 20), axis.text.x = element_text( size= 15,angle = 55, hjust=1), legend.key=element_rect(fill="white"),legend.text=element_text(size=25))+  annotate("text", x = 1.55, y = 75, label = "c) Photoperiod", cex = 9) +
+  breaks = c("High photoperiod Manning park", "High photoperiod St.Hippolyte"), label = c("Western", "Eastern"), name = "") +theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(), panel.background = element_blank(), axis.line = element_line(colour = "black"), axis.text = element_text(size = 15), axis.title = element_text(size = 20), axis.text.x = element_text( size= 20,angle = 55, hjust=1), legend.key=element_rect(fill="white"),legend.text=element_text(size=25))+  #annotate("text", x = 1.55, y = 75, label = "c) Photoperiod", cex = 9) +
   scale_x_discrete(breaks = c("Smithers", "Manning park", "St.Hippolyte", "Harvard forest"),
                    #limits = c(0,100),
                    labels = c(expression("Smithers (54.8"*~degree*N*")"), 
@@ -1251,13 +1127,25 @@ pdf("figures/intrxnForceChill.pdf", height = 5, width = 5)
 intrxnCF
 dev.off()
 
-pdf("figures/intrxnPlots8Chill3Lat.pdf", height =8, width = 20)
-plot_grid( siteFPoint, siteCPoint, sitePPoint , ncol = 3, nrow =1,align = "v", rel_widths = c(1,1,1.25))
+pdf("..//figures/intrxnPlots8Chill3Lata.pdf", height =8, width = 7)
+siteFPoint
 dev.off()
 
-pdf("figures/intrxnPlots8Chill3.pdf", height =5, width = 20)
-plot_grid( siteFPoint, siteCPoint, sitePPointNL, l , ncol = 4, nrow =1,align = "v")
+pdf("..//figures/intrxnPlots8Chill3Latb.pdf", height =8, width = 7)
+siteCPoint
 dev.off()
+
+pdf("..//figures/intrxnPlots8Chill3Latc.pdf", height =8, width = 7)
+sitePPoint
+dev.off()
+
+pdf("..//figures/intrxnPlots8Chill3Lat.pdf", height =8, width = 20)
+plot_grid( siteFPoint, siteCPoint, sitePPoint , ncol = 3, nrow =1,align = "v", rel_widths = c(1,1,1.2))
+dev.off()
+
+# pdf("figures/intrxnPlots8Chill3.pdf", height =5, width = 20)
+# plot_grid( siteFPoint, siteCPoint, sitePPointNL, l , ncol = 4, nrow =1,align = "v")
+# dev.off()
 
 
 ##################################

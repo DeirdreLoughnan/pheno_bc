@@ -23,7 +23,10 @@
 %put your Fig.s in one place! Also, note that here 'Fig.s' is the folder and 'demoFig' is what each 
 % Fig. produced will be titled plus its number or label (e.g., demoFig-nqpbetter.pdf')
 % make your captioning look better
-\usepackage[small]{caption}
+\usepackage{caption}
+\usepackage{subcaption}
+ \captionsetup[subfigure]{labelformat=simple, position=top, labelfont=bf,textfont=normalfont,singlelinecheck=off,justification=raggedright, font = normal}
+ 
 \usepackage{xr-hyper} %refer to Fig.s in another document
 \usepackage{hyperref}
 \externaldocument{phenoNAmPhylo} 
@@ -105,9 +108,32 @@ Harvard forest & Field chilling & 892 & 814.50 & 56.62 \\
 \end{figure}
 \newpage
 
-\begin{figure}[h!]
-    \centering
-     \includegraphics[width=\textwidth]{..//figures/intrxnPlots8Chill3Lat.pdf}
+\begin{figure}[ht]
+\centering
+\begin{subfigure}{0.28\textwidth}
+\centering
+\hfill
+\caption{Forcing}
+\vspace{-0.5\baselineskip}
+\label{Forcing}
+    \includegraphics[width=1.8in]{..//figures/intrxnPlots8Chill3Lata.pdf}%,
+\end{subfigure}
+\begin{subfigure}{0.28\textwidth}
+\centering
+\hfill
+\caption{Chilling}
+\vspace{-0.5\baselineskip}
+\label{Chilling}
+    \includegraphics[width=1.8in]{..//figures/intrxnPlots8Chill3Latb.pdf}%,
+\end{subfigure}
+\begin{subfigure}{0.38\textwidth}
+\centering
+\hfill
+\caption{Photoperiod}
+\vspace{-0.5\baselineskip}
+\label{Photoperiod}
+    \includegraphics[width=1.8in]{..//figures/intrxnPlots8Chill3Latc.pdf}%,
+\end{subfigure}
      \caption{Estimated day of budburst in response to (a) forcing across populations under low chilling and short photoperiods, (b) chilling across populations under low forcing and short photoperiods, and (c) across photoperiods under our baseline forcing and chilling for species sampled from our four populations. The thin error bars represent the 90\% uncertainty interval, while the thicker error bars represent the 50\% uncertainty interval, and symbols the mean.} 
     \label{fig:intrxn3}
 \end{figure}
@@ -116,7 +142,7 @@ Harvard forest & Field chilling & 892 & 814.50 & 56.62 \\
 \begin{figure}[h!]
     \centering
      \includegraphics[width=\textwidth]{..//figures/cueST28Chill.pdf}
-    \caption{Comparisons of posterior distributions for cues estimates between shrub and tree species. Black circles represent the median cues, while the thinner black line the 90\% quantile interval. The coloured distribution is the the posterior density of cues responses for all species within a given architectural type. The y-axis spans the entire range of the data.}
+    \caption{Comparisons of posterior distributions for cues estimates between shrub and tree species. Black circles represent the median cues, while the thinner black line the 90\% quantile interval. The coloured distribution is the posterior density of cues responses for all species within a given architectural type. The y-axis spans the entire range of the data.}
     \label{fig:cueST}
     \end{figure}
     

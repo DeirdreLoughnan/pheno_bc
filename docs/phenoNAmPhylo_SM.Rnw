@@ -58,7 +58,7 @@
 \SweaveOpts{concordance=TRUE} % For RStudio hiccups
 
 
-\title{Supplementary Material - Species differences in cue responses in woody plants of North America}
+\title{Supplementary Material: Temporal assembly of woody plant communities are shaped equally by evolutionary history as by current environments}
 \date{\today}
 \author{Deirdre Loughnan$^1$ and E M Wolkovich$^1$}
 \maketitle 
@@ -334,7 +334,7 @@ bb_suc <- merge(spwithbb, spInfo, by = "Species")
 bb_suc <- bb_suc[, c("Species name", "Proportion.Budburst","Plant type")]
 names(bb_suc) <- c("Species name", "Proportion budburst","Plant type")
 
-make.bb_suc <- xtable(bb_suc, caption="Proportion of surviving samples per species for which budburst was observed in our western controlled enviornment study. See Flynn and Wolkovich (2018) for survival in our eastern study.")
+make.bb_suc <- xtable(bb_suc, caption="Proportion of surviving samples per species for which budburst was observed in our western controlled enviornment study. See Flynn and Wolkovich (2018) for survival in our eastern study.",label = "tabSpp")
 print(make.bb_suc,include.rownames=F, caption.placement="top", hline.after=c(-1,0), sanitize.text.function = identity)
 
 @

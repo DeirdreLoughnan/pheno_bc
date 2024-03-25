@@ -584,7 +584,7 @@ forcedotE <- ggplot(chillPtE,aes(y= force, x = meanBB, colour = transect), size 
 forcedotE
 
 pdf("figures/dotCFPEWSizeColorUnitsShapec.pdf", width = 10, height = 7)
-forcedotW
+forcedotE
 dev.off()
 
 photodotE <- ggplot(chillPtE,aes(y= photo, x = meanBB, colour = transect), size = 7) +
@@ -618,7 +618,7 @@ theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
 photodotE
 
 pdf("figures/dotCFPEWSizeColorUnitsShapee.pdf", width = 10, height = 7)
-photodotW
+photodotE
 dev.off()
 
 pdf("figures/dotCFPEWSizeColorUnitsShape.pdf", width = 20, height = 20)

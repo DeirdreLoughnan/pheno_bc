@@ -584,7 +584,7 @@ forcedotE <- ggplot(chillPtE,aes(y= force, x = meanBB, colour = transect), size 
 forcedotE
 
 pdf("figures/dotCFPEWSizeColorUnitsShapec.pdf", width = 10, height = 7)
-forcedotW
+forcedotE
 dev.off()
 
 photodotE <- ggplot(chillPtE,aes(y= photo, x = meanBB, colour = transect), size = 7) +
@@ -618,7 +618,7 @@ theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
 photodotE
 
 pdf("figures/dotCFPEWSizeColorUnitsShapee.pdf", width = 10, height = 7)
-photodotW
+photodotE
 dev.off()
 
 pdf("figures/dotCFPEWSizeColorUnitsShape.pdf", width = 20, height = 20)
@@ -717,8 +717,6 @@ rankE$rankLowC <- seq(1:nrow(rankE))
 rankE <- rankE[order(rankE$meanBBHigh),]
 rankE$rankHighC <- seq(1:nrow(rankE))
 
-
-
 pdf("figures/rankstiBBTransecta.pdf", width = 6, height = 6)
 colTran <- c("maroon","goldenrod")
 par(mfrow = c(1,1), mar = c(5.1, 4.8, 4.1, 2.1))
@@ -727,22 +725,24 @@ plot(rankE$rankHighC~rankE$rankInt,
   pch = 19,
   xlab = "Intercept rank",
   ylab = "High cue rank",
-  main = "Eastern transect",
+ # main = "Eastern transect",
   cex.lab =1.5,
   xlim = c(0,30),
   ylim = c(0,30),
-  cex =2, cex.main = 2,
+  cex = 2, cex.lab = 2, cex.axis = 2,
   axes = F)
 abline(0,1)
-axis(side=1, at=seq(-5,30,5))
-axis(side=2,at=seq(-5,30,5))
+axis(side=1, at=seq(-5,30,5), cex.axis = 1.75)
+axis(side=2,at=seq(-5,30,5), cex.axis = 1.75)
 #text(1.5,29, label = "a)", cex = 1.5)
 text(26,18, label = "Populus", cex = 1.25)
 text(7,14, label = "Betula", cex = 1.25)
 text(10,5, label = "Alnus", cex = 1.25)
+text(10,30, label = "Eastern Communities", cex = 1.75)
 dev.off()
 
 pdf("figures/rankstiBBTransectb.pdf", width = 6, height = 6)
+par( mar = c(5.1, 4.8, 4.1, 2.1))
 plot(rankE$rankLowC~rankE$rankInt, 
   col = colTran[factor(rankE$transect)], 
   pch = 19,
@@ -751,10 +751,10 @@ plot(rankE$rankLowC~rankE$rankInt,
   cex.lab =1.5,
   xlim = c(0,30),
   ylim = c(0,30),
-  cex =2,axes = F)
+  cex = 2, cex.lab = 2, cex.axis = 2,axes = F)
 abline(0,1)
-axis(side=1, at=seq(-5,30,5))
-axis(side=2,at=seq(-5,30,5))
+axis(side=1, at=seq(-5,30,5), cex.axis = 1.75)
+axis(side=2,at=seq(-5,30,5), cex.axis = 1.75)
 #text(1.5,29, label = "b)", cex = 1.5)
 text(26,19, label = "Populus", cex = 1.25)
 text(7,13.5, label = "Betula", cex = 1.25)
@@ -762,6 +762,7 @@ text(10,5.5, label = "Alnus", cex = 1.25)
 dev.off()
 
 pdf("figures/rankstiBBTransectc.pdf", width = 6, height = 6)
+par( mar = c(5.1, 4.8, 4.1, 2.1))
 plot(rankE$rankHighC~rankE$rankLowC, 
   col = colTran[factor(rankE$transect)], 
   pch = 19,
@@ -770,10 +771,10 @@ plot(rankE$rankHighC~rankE$rankLowC,
   xlab = "Low cue rank",
   ylab = "High cue rank",
   cex.lab =1.5,
-  cex =2,axes = F)
+  cex = 2, cex.lab = 2, cex.axis = 2, axes = F)
 abline(0,1)
-axis(side=1, at=seq(-5,30,5))
-axis(side=2,at=seq(-5,30,5))
+axis(side=1, at=seq(-5,30,5), cex.axis = 1.75)
+axis(side=2,at=seq(-5,30,5), cex.axis = 1.75)
 #text(1.5,29, label = "c)", cex = 1.5)
 text(26,18, label = "Populus", cex = 1.25)
 text(7,14, label = "Betula", cex = 1.25)
@@ -800,39 +801,42 @@ rankW$rankHighC <- seq(1:nrow(rankW))
 
 colTran <- c("goldenrod", "cyan4")
 
-#par(mfrow = c(2,3), mar = c(5.1, 4.8, 4.1, 2.1))
+
 pdf("figures/rankstiBBTransectd.pdf", width = 6, height = 6)
+par( mar = c(5.1, 4.8, 4.1, 2.1))
 plot(rankW$rankHighC~rankW$rankInt, 
   col = colTran[factor(rankW$transect)], 
   pch = 19,
   xlab = "Intercept rank",
-  ylab = "High cue rank",main = "Western transect",
+  ylab = "High cue rank",main = "",
   cex.lab =1.5,
-  cex =2, cex.main = 2,
+  cex = 2, cex.lab = 2, cex.axis = 2, cex.main = 2,
   xlim = c(0,30),
   ylim = c(0,30),axes = F)
 abline(0,1)
-axis(side=1, at=seq(-5,30,5))
-axis(side=2,at=seq(-5,30,5))
+axis(side=1, at=seq(-5,30,5), cex.axis = 1.75)
+axis(side=2,at=seq(-5,30,5), cex.axis = 1.75)
 #text(0.8,29, label = "d)", cex = 1.5)
 text(24,17.5, label = "Populus", cex = 1.25)
 text(12.2,20, label = "Betula", cex = 1.25)
 text(16.3,11.5, label = "Alnus", cex = 1.25)
+text(10,30, label = "Western Communities", cex = 1.75)
 dev.off()
 
 pdf("figures/rankstiBBTransecte.pdf", width = 6, height = 6)
+par( mar = c(5.1, 4.8, 4.1, 2.1))
 plot(rankW$rankLowC~rankW$rankInt, 
   col = colTran[factor(rankW$transect)], 
   pch = 19,
   xlab = "Intercept rank",
   ylab = "Low cue rank",
   cex.lab =1.5,
-  cex =2,
+  cex = 2, cex.lab = 2, cex.axis = 2,
   xlim = c(0,30),
   ylim = c(0,30),axes = F)
 abline(0,1)
-axis(side=1, at=seq(-5,30,5))
-axis(side=2,at=seq(-5,30,5))
+axis(side=1, at=seq(-5,30,5), cex.axis = 1.75)
+axis(side=2,at=seq(-5,30,5), cex.axis = 1.75)
 #text(0.8,29, label = "e)", cex = 1.5)
 text(24,17.5, label = "Populus", cex = 1.25)
 text(19,11.5, label = "Betula", cex = 1.25)
@@ -840,18 +844,19 @@ text(15,9, label = "Alnus", cex = 1.25)
 dev.off()
 
 pdf("figures/rankstiBBTransectf.pdf", width = 6, height = 6)
+par( mar = c(5.1, 4.8, 4.1, 2.1))
 plot(rankW$rankHighC~rankW$rankLowC, 
   col = colTran[factor(rankW$transect)], 
   pch = 19,
   xlab = "Low cue rank",
   ylab = "High cue rank",
   cex.lab =1.5,
-  cex =2,
+  cex = 2, cex.lab = 2, cex.axis = 2,
   xlim = c(0,30),
   ylim = c(0,30),axes = F)
 abline(0,1)
-axis(side=1, at=seq(-5,30,5))
-axis(side=2,at=seq(-5,30,5))
+axis(side=1, at=seq(-5,30,5), cex.axis = 1.75)
+axis(side=2,at=seq(-5,30,5), cex.axis = 1.75)
 #text(0.8,29, label = "f)", cex = 1.5)
 text(24,17.5, label = "Populus", cex = 1.25)
 text(7,17.5, label = "Betula", cex = 1.25)

@@ -759,11 +759,11 @@ siteOrder <- c("Smithers", "Manning park", "St.Hippolyte", "Harvard forest")
 siteFPoint <- ggplot()  +
   geom_pointrange(siteForce, mapping = aes(x = factor(site, level = siteOrder), y = mean, ymin=lower1, ymax=upper1, col = temp, shape = tempSite), size =0.55, position=position_dodge(width=0.5)) +
   geom_linerange( siteForce, mapping = aes(x = factor(site, level = siteOrder), ymin = lower2, ymax=upper2, col = temp), size =1.25, position=position_dodge(width=0.5)) +
-  xlab("Population") + ylab("Estimated day of budburst") +
+  xlab("Community") + ylab("Estimated day of budburst") +
   ylim(0,80) +
   theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
         panel.background = element_blank(), axis.line = element_line(colour = "black"),
-        axis.text = element_text(size = 15), axis.title = element_text(size = 20),axis.text.x = element_text( size= 20,angle = 55, hjust=1), legend.key=element_rect(fill="white"),legend.text=element_text(size=25))+
+        axis.text = element_text(size = 20), axis.title = element_text(size = 30),axis.text.x = element_text( size= 20,angle = 55, hjust=1), legend.key=element_rect(fill="white"),legend.text=element_text(size=25))+
   # scale_color_manual(values = c("cyan4", "#CC6677"), labels = c("High forcing", "Low forcing"), name = "") +
   scale_color_manual(values = c(
     "bb_hfsite1"="forestgreen",
@@ -927,7 +927,7 @@ names(siteChill) <- c("mean", "lower1", "upper1", "lower2", "upper2","chill","si
 siteChill <- siteChill[order(siteChill$site),]
 siteChill$temp <- rownames(siteChill)
 
-siteOrder <- c("Smithers", "Manning park", "Harvard forest", "St.Hippolyte")
+siteOrder <- c("Smithers", "Manning park", "St.Hippolyte", "Harvard forest")
 
 siteChill$transect <- siteChill$site
 siteChill$transect[siteChill$transect == "Smithers"] <- "Western"
@@ -942,11 +942,11 @@ siteCPoint <- ggplot() +
   geom_pointrange(siteChill, mapping = aes(x = factor(site, level = siteOrder), y = mean, ymin=lower1, ymax=upper1, col = temp, shape = tempSite), position=position_dodge(width=0.5), size = 0.55) +
   geom_linerange( siteChill, mapping = aes(x = factor(site, level = siteOrder), ymin = lower2, ymax=upper2, col = temp), size =1.25, position=position_dodge(width=0.5)) + 
   ylim(0,80) +
-  xlab("Population") + ylab("Estimated day of budburst") +
+  xlab("Community") + ylab("Estimated day of budburst") +
   #ylim(0,50) +
   theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
         panel.background = element_blank(), axis.line = element_line(colour = "black"),
-        axis.text = element_text(size = 15), axis.title = element_text(size = 20),axis.text.x = element_text( size= 20,angle = 55, hjust=1), legend.key=element_rect(fill="white"),legend.text=element_text(size=25))+ scale_color_manual(values = c(
+        axis.text = element_text(size = 20), axis.title = element_text(size = 30),axis.text.x = element_text( size= 20,angle = 55, hjust=1), legend.key=element_rect(fill="white"),legend.text=element_text(size=25))+ scale_color_manual(values = c(
     "bb_hcsite1"="forestgreen",
     "bb_lcsite1"="palegreen3",
     "bb_hcsite2"= "forestgreen",
@@ -1065,7 +1065,7 @@ sitePPoint <- ggplot() +
                   position=position_dodge(width=0.5), size =0.55) + 
   ylim(0,80) +
   geom_linerange( sitePhoto, mapping = aes(x = factor(site, level = siteOrder), ymin = lower2, ymax=upper2, col = temp), size =1.25, position=position_dodge(width=0.5))+
-  xlab("Population") + ylab("Estimated day of budburst")+
+  xlab("Community") + ylab("Estimated day of budburst")+
   scale_color_manual(values = c("bb_hpsite1"="forestgreen",
                                 "bb_lpsite1"="palegreen3",
                                 "bb_hpsite2"= "forestgreen",
@@ -1083,7 +1083,7 @@ sitePPoint <- ggplot() +
                                 "High photoperiod Harvard forest" = 17,
                                 "High photoperiod St.Hippolyte" = 17,
                                 "Low photoperiod St.Hippolyte" = 2),
-  breaks = c("High photoperiod Manning park", "High photoperiod St.Hippolyte"), label = c("Western", "Eastern"), name = "") +theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(), panel.background = element_blank(), axis.line = element_line(colour = "black"), axis.text = element_text(size = 15), axis.title = element_text(size = 20), axis.text.x = element_text( size= 20,angle = 55, hjust=1), legend.key=element_rect(fill="white"),legend.text=element_text(size=25))+  #annotate("text", x = 1.55, y = 75, label = "c) Photoperiod", cex = 9) +
+  breaks = c("High photoperiod Manning park", "High photoperiod St.Hippolyte"), label = c("Western", "Eastern"), name = "") +theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(), panel.background = element_blank(), axis.line = element_line(colour = "black"), axis.text = element_text(size = 20), axis.title = element_text(size = 30), axis.text.x = element_text( size= 20,angle = 55, hjust=1), legend.key=element_rect(fill="white"),legend.text=element_text(size=25))+  #annotate("text", x = 1.55, y = 75, label = "c) Photoperiod", cex = 9) +
   scale_x_discrete(breaks = c("Smithers", "Manning park", "St.Hippolyte", "Harvard forest"),
                    #limits = c(0,100),
                    labels = c(expression("Smithers (54.8"*~degree*N*")"), 
@@ -1127,15 +1127,15 @@ pdf("figures/intrxnForceChill.pdf", height = 5, width = 5)
 intrxnCF
 dev.off()
 
-pdf("..//figures/intrxnPlots8Chill3Lata.pdf", height =8, width = 7)
+pdf("figures/intrxnPlots8Chill3Lata.pdf", height =8, width = 7)
 siteFPoint
 dev.off()
 
-pdf("..//figures/intrxnPlots8Chill3Latb.pdf", height =8, width = 7)
+pdf("figures/intrxnPlots8Chill3Latb.pdf", height =8, width = 7)
 siteCPoint
 dev.off()
 
-pdf("..//figures/intrxnPlots8Chill3Latc.pdf", height =8, width = 7)
+pdf("figures/intrxnPlots8Chill3Latc.pdf", height =8, width = 7)
 sitePPoint
 dev.off()
 
@@ -1792,7 +1792,7 @@ siteF <- ggplot(siteForce, aes(x = factor(site, level = siteOrder), y = value, f
   geom_bar(stat="identity", position="dodge") +
   scale_fill_discrete(name="Forcing level",
                       labels=c("high forcing"="High forcing", "low forcing" = "Low forcing")) +
-  xlab("Population") + ylab("Estimated day of budburst") +
+  xlab("Community"") + ylab("Estimated day of budburst") +
   theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
         panel.background = element_blank(), axis.line = element_line(colour = "black"),
         axis.text = element_text(size = 15), axis.title = element_text(size = 15)) +
@@ -1803,7 +1803,7 @@ siteC <- ggplot(siteChill, aes(x = factor(site, level = siteOrder), y = value, f
   geom_bar(stat="identity", position="dodge") +
   scale_fill_discrete(name="Forcing level",
                       labels=c("high forcing"="High forcing", "low forcing" = "Low forcing")) +
-  xlab("Population") + ylab("Estimated day of budburst") +
+  xlab("Community"") + ylab("Estimated day of budburst") +
   theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
         panel.background = element_blank(), axis.line = element_line(colour = "black"), 
         axis.text = element_text(size = 15), axis.title = element_text(size = 15)) +
@@ -1821,7 +1821,7 @@ siteC <- ggplot(siteChill, aes(x = factor(site, level = siteOrder), y = value, f
 
 siteP <- ggplot(sitePhoto, aes(x = factor(site, level = siteOrder), y = value, fill = photo)) +
   geom_bar(stat="identity", position="dodge") +
-  xlab("Population") + ylab("Estimated day of budburst") +
+  xlab("Community"") + ylab("Estimated day of budburst") +
   theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
         panel.background = element_blank(), axis.line = element_line(colour = "black"),
         axis.text = element_text(size = 15), axis.title = element_text(size = 15)) +
@@ -1918,7 +1918,7 @@ siteForce$tranSite <- paste(siteForce$transect, siteForce$site, sep = " ")
 siteFPoint <- ggplot()  +
   geom_pointrange(siteForce, mapping = aes(x = factor(site, level = siteOrder), y = mean, ymin=lower1, ymax=upper1, col = temp, shape = transect), size =0.55, position=position_dodge(width=0.5)) +
   geom_linerange( siteForce, mapping = aes(x = factor(site, level = siteOrder), ymin = lower2, ymax=upper2, col = temp), size =1.25, position=position_dodge(width=0.5)) +
-  xlab("Population") + ylab("Estimated day of budburst") +
+  xlab("Community"") + ylab("Estimated day of budburst") +
   #ylim(0,50) +
   theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
         panel.background = element_blank(), axis.line = element_line(colour = "black"),
@@ -1953,7 +1953,7 @@ siteCPoint <- ggplot() +
                   position=position_dodge(width=0.5), size = 0.55) +
   geom_linerange( siteChill, mapping = aes(x = factor(site, level = siteOrder), ymin = lower2, ymax=upper2, col = temp), size =1.25, position=position_dodge(width=0.5))+
   #ylim (0,50) +
-  xlab("Population") + ylab("Estimated day of budburst") +
+  xlab("Community"") + ylab("Estimated day of budburst") +
   #ylim(0,50) +
   theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
         panel.background = element_blank(), axis.line = element_line(colour = "black"),
@@ -1982,7 +1982,7 @@ sitePPoint <- ggplot() +
   geom_pointrange(sitePhoto, mapping = aes(x = factor(site, level = siteOrder), y = mean, ymin=lower1, ymax=upper1, col = tranSite, shape = transect),
                   position=position_dodge(width=0.5), size =0.55) +
   geom_linerange( sitePhoto, mapping = aes(x = factor(site, level = siteOrder), ymin = lower2, ymax=upper2, col =tranSite), size =1.25, position=position_dodge(width=0.5))+
-  xlab("Population") + ylab("Estimated day of budburst") +
+  xlab("Community"") + ylab("Estimated day of budburst") +
   # ylim(0,50) +
   theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
         panel.background = element_blank(), axis.line = element_line(colour = "black"),
@@ -1998,7 +1998,7 @@ sitePPointNL <- ggplot() +
   geom_pointrange(sitePhoto, mapping = aes(x = factor(site, level = siteOrder), y = mean, ymin=lower1, ymax=upper1, col = temp, shape = transect),
                   position=position_dodge(width=0.5), size =.55) +
   geom_linerange( sitePhoto, mapping = aes(x = factor(site, level = siteOrder), ymin = lower2, ymax=upper2, col = temp), size =1.25, position=position_dodge(width=0.5))+
-  xlab("Population") + ylab("Estimated day of budburst") +
+  xlab("Community"") + ylab("Estimated day of budburst") +
   # ylim(0,50) +
   theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
         panel.background = element_blank(), axis.line = element_line(colour = "black"),

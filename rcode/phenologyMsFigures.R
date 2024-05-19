@@ -1792,7 +1792,7 @@ siteF <- ggplot(siteForce, aes(x = factor(site, level = siteOrder), y = value, f
   geom_bar(stat="identity", position="dodge") +
   scale_fill_discrete(name="Forcing level",
                       labels=c("high forcing"="High forcing", "low forcing" = "Low forcing")) +
-  xlab("Community"") + ylab("Estimated day of budburst") +
+  xlab("Community") + ylab("Estimated day of budburst") +
   theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
         panel.background = element_blank(), axis.line = element_line(colour = "black"),
         axis.text = element_text(size = 15), axis.title = element_text(size = 15)) +
@@ -1803,7 +1803,7 @@ siteC <- ggplot(siteChill, aes(x = factor(site, level = siteOrder), y = value, f
   geom_bar(stat="identity", position="dodge") +
   scale_fill_discrete(name="Forcing level",
                       labels=c("high forcing"="High forcing", "low forcing" = "Low forcing")) +
-  xlab("Community"") + ylab("Estimated day of budburst") +
+  xlab("Community") + ylab("Estimated day of budburst") +
   theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
         panel.background = element_blank(), axis.line = element_line(colour = "black"), 
         axis.text = element_text(size = 15), axis.title = element_text(size = 15)) +
@@ -1821,7 +1821,7 @@ siteC <- ggplot(siteChill, aes(x = factor(site, level = siteOrder), y = value, f
 
 siteP <- ggplot(sitePhoto, aes(x = factor(site, level = siteOrder), y = value, fill = photo)) +
   geom_bar(stat="identity", position="dodge") +
-  xlab("Community"") + ylab("Estimated day of budburst") +
+  xlab("Community") + ylab("Estimated day of budburst") +
   theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
         panel.background = element_blank(), axis.line = element_line(colour = "black"),
         axis.text = element_text(size = 15), axis.title = element_text(size = 15)) +
@@ -1918,12 +1918,12 @@ siteForce$tranSite <- paste(siteForce$transect, siteForce$site, sep = " ")
 siteFPoint <- ggplot()  +
   geom_pointrange(siteForce, mapping = aes(x = factor(site, level = siteOrder), y = mean, ymin=lower1, ymax=upper1, col = temp, shape = transect), size =0.55, position=position_dodge(width=0.5)) +
   geom_linerange( siteForce, mapping = aes(x = factor(site, level = siteOrder), ymin = lower2, ymax=upper2, col = temp), size =1.25, position=position_dodge(width=0.5)) +
-  xlab("Community"") + ylab("Estimated day of budburst") +
+  xlab("Community") + ylab("Estimated day of budburst") +
   #ylim(0,50) +
   theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
         panel.background = element_blank(), axis.line = element_line(colour = "black"),
         axis.text = element_text(size = 15), axis.title = element_text(size = 20),axis.text.x = element_text( size= 15,angle = 55, hjust=1)) +
-  # scale_color_manual(values = c("cyan4", "#CC6677"), labels = c("High forcing", "Low forcing"), name = "") +
+  # scale_color_manual(values = c("cyan4", "#CC6677"), labels = c("High forcing", "Low forcing"), name = ) +
   scale_color_manual(values = c(
     "bb_hfsite1"="forestgreen",
     "bb_lfsite1"="palegreen3",
@@ -1933,7 +1933,7 @@ siteFPoint <- ggplot()  +
     "bb_lfsite4"="darkorchid1",
     "bb_hfsite3" ="darkorchid4",
     "bb_lfsite3"="darkorchid1"
-  ), labels = c("Smithers - High forcing", "Smithers - Low forcing","Manning Park - High forcing", "Manning Park - Low forcing", "St. Hippolyte - High forcing", "St. Hippolyte - Low forcing","Harvard Forest - High forcing", "Harvard Forest - Low forcing"), name = "") +theme(legend.position = "none") +  annotate("text", x = 1.5, y = 75, label = "a) Forcing", cex = 10) 
+  ), labels = c("Smithers - High forcing", "Smithers - Low forcing","Manning Park - High forcing", "Manning Park - Low forcing", "St. Hippolyte - High forcing", "St. Hippolyte - Low forcing","Harvard Forest - High forcing", "Harvard Forest - Low forcing"), name = ) +theme(legend.position = "none") +  annotate("text", x = 1.5, y = 75, label = "a) Forcing", cex = 10) 
 siteFPoint
 # theme(legend.key=element_blank(), legend.position=c(.83,.85),legend.text = element_text(size = 15)) +
 # theme(legend.title = element_blank()) +  annotate("text", x = 0.6, y = 50, label = "b)", cex = 10) 
@@ -1953,7 +1953,7 @@ siteCPoint <- ggplot() +
                   position=position_dodge(width=0.5), size = 0.55) +
   geom_linerange( siteChill, mapping = aes(x = factor(site, level = siteOrder), ymin = lower2, ymax=upper2, col = temp), size =1.25, position=position_dodge(width=0.5))+
   #ylim (0,50) +
-  xlab("Community"") + ylab("Estimated day of budburst") +
+  xlab("Community") + ylab("Estimated day of budburst") +
   #ylim(0,50) +
   theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
         panel.background = element_blank(), axis.line = element_line(colour = "black"),
@@ -1982,7 +1982,7 @@ sitePPoint <- ggplot() +
   geom_pointrange(sitePhoto, mapping = aes(x = factor(site, level = siteOrder), y = mean, ymin=lower1, ymax=upper1, col = tranSite, shape = transect),
                   position=position_dodge(width=0.5), size =0.55) +
   geom_linerange( sitePhoto, mapping = aes(x = factor(site, level = siteOrder), ymin = lower2, ymax=upper2, col =tranSite), size =1.25, position=position_dodge(width=0.5))+
-  xlab("Community"") + ylab("Estimated day of budburst") +
+  xlab("Community") + ylab("Estimated day of budburst") +
   # ylim(0,50) +
   theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
         panel.background = element_blank(), axis.line = element_line(colour = "black"),
@@ -1998,7 +1998,7 @@ sitePPointNL <- ggplot() +
   geom_pointrange(sitePhoto, mapping = aes(x = factor(site, level = siteOrder), y = mean, ymin=lower1, ymax=upper1, col = temp, shape = transect),
                   position=position_dodge(width=0.5), size =.55) +
   geom_linerange( sitePhoto, mapping = aes(x = factor(site, level = siteOrder), ymin = lower2, ymax=upper2, col = temp), size =1.25, position=position_dodge(width=0.5))+
-  xlab("Community"") + ylab("Estimated day of budburst") +
+  xlab("Community") + ylab("Estimated day of budburst") +
   # ylim(0,50) +
   theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
         panel.background = element_blank(), axis.line = element_line(colour = "black"),

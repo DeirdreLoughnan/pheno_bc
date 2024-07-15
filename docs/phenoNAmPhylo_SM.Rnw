@@ -67,7 +67,7 @@
 \renewcommand{\thefigure}{S\arabic{figure}}
 \renewcommand{\labelitemi}{$-$}
 
-begin{table}[ht]
+\begin{table}[ht]
 \centering
 \caption[Chill units by populations]{Approximate chill units from our two western sites, E.C. Manning Park and Smithers B.C., Canada, and our two eastern sites, Harvard Forest, USA and St. Hippolyte, Canada. Weather data was obtained from the Hope Slide weather station for our E.C. Manning Park estimates and the Smithers airport weather station for our Smithers communities. For our eastern communities, weather data was obtained from weather stations at Harvard Forest and in St. Hippolyte.} 
 \label{tabChill}
@@ -211,6 +211,7 @@ Harvard forest & Field chilling & 892 & 814.50 & 56.62 \\
 \begin{table}[ht]
 \centering
 \caption{Mean budburst dates across all treatments from raw data for 47 species at our two western sites, E.C. Manning Park and Smithers B.C., Canada, and our two eastern sites, Harvard Forest, USA and St. Hippolyte, Canada.} 
+\label{tabPhenoSp}
 \begin{tabular}{lrrrr}
   \hline
 Species & Harvard Forest & St. Hippoltye & Manning Park & Smithers \\ 
@@ -334,7 +335,7 @@ bb_suc <- merge(spwithbb, spInfo, by = "Species")
 bb_suc <- bb_suc[, c("Species name", "Proportion.Budburst","Plant type")]
 names(bb_suc) <- c("Species name", "Proportion budburst","Plant type")
 
-make.bb_suc <- xtable(bb_suc, caption="Proportion of surviving samples per species for which budburst was observed in our western controlled enviornment study. See Flynn and Wolkovich (2018) for survival in our eastern study.",label = "tabSpp")
+make.bb_suc <- xtable(bb_suc,caption="Proportion of surviving samples per species for which budburst was observed in our western controlled enviornment study. See Flynn and Wolkovich (2018) for survival in our eastern study.",label = "tabSurv")
 print(make.bb_suc,include.rownames=F, caption.placement="top", hline.after=c(-1,0), sanitize.text.function = identity)
 
 @

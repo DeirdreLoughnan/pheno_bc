@@ -20,6 +20,7 @@ library(patchwork) # another way of arranging plots
 # library(rethinking)
 require(cowplot)
 require(plotrix)
+require(ggdist)
 
 require(ggpubr)
 require(dplyr)
@@ -722,6 +723,14 @@ ggplot() +
                               "Harvard Forest" = "tomato3"))
 dev.off()
 
+ggplot() + 
+  stat_eye(data = longest, aes(x = as.factor(cue), y = value, fill = factor(site, level = siteOrder)), .width = c(.90, .15), cex = 0.75, position = position_dodge(0.9)) +
+  labs( x = "Treatment cue", y = "Cue response (days/standardized unit)", main = NA)+
+  scale_fill_manual(values = c("Smithers" = "deepskyblue3",
+    "Manning Park" = "palegreen4", 
+    "St. Hippolyte"="darkorchid3", 
+    "Harvard Forest" = "tomato3"))
+
 pdf("figures/site4CueGrouped8Chill50Outline.pdf", width = 12, height =5)
 ggplot() + 
   geom_violin(data = longest, aes(x = as.factor(cue), y = value, col = factor(site, level = siteOrder))) +
@@ -1013,4 +1022,67 @@ hist(tempS$value, add = T,col = col2)
 title(main = "Forcing", adj = 0, cex.main = 2)
 text(-10, 0.06, label = "e)", cex = 2)
 legend("topright", c("Non-interacting", "Interacting"), col = c( col1.sp, col4.sp), bty = "n", pt.cex =2, pch = 19, cex = 1.45, inset = c(-0.03, 0))
+dev.off()
+
+
+
+####### Eye plot but with 5-95% data shown #############
+# this is the figure I want, but with only 90 of the data
+longest$cueSite <- paste(longest$cue, longest$site)
+
+cueSites <- unique(longest$cueSite)
+
+ninety <- vector()
+
+for (i in 1:length(cueSites)){
+temp <- subset(longest, cueSite == cueSites[i])
+tempy <- subset(temp, value < quantile(tempy$value, prob = c(0.95)) & value > quantile(tempy$value, prob = c(0.05)))
+ninety <- rbind(ninety, tempy)
+}
+
+longForceInfo <- longForceInfo[, c("species.name","species","type","transect","Site1","Site2","Site3","Site4","cue")]
+longF <- melt(longForceInfo, id = c("species.name","species","type","transect", "cue"))
+names(longF)<- c("species.name","species","type","transect","cue","site","value")
+
+temp <- quantile(longForceInfo$Site1, prob = c(0.05, 0.95))
+tempy <- subset(longForceInfo, Site1 >  temp[1] & Site1 < temp[2])
+longChillInfo <- longChillInfo[, c("species.name","species","type","transect","Site1","Site2","Site3","Site4","cue")]
+longC <- melt(longChillInfo, id = c("species.name","species","type","transect", "cue"))
+names(longC)<- c("species.name","species","type","transect","cue","site","value")
+
+longPhotoInfo <- longPhotoInfo[, c("species.name","species","type","transect","Site1","Site2","Site3","Site4","cue")]
+longP <- melt(longPhotoInfo, id = c("species.name","species","type","transect", "cue"))
+names(longP)<- c("species.name","species","type","transect","cue","site","value")
+
+longest <- rbind(longC, longF, longP)
+
+longest$site <- as.character(longest$site)
+longest$site[which(longest$site == "Site1")] <- "Smithers"
+longest$site[which(longest$site == "Site2")] <- "Manning Park"
+longest$site[which(longest$site == "Site3")] <- "Harvard Forest"
+longest$site[which(longest$site == "Site4")] <- "St. Hippolyte"
+longest$site <- as.factor(longest$site)
+
+siteOrder <- c("Smithers","Manning Park", "St. Hippolyte","Harvard Forest")
+
+pdf("figures/siteCue90.pdf", width = 6, height =4)
+ggplot() + 
+  stat_pointinterval(data = longest, aes(x = as.factor(cue), y = value, col = factor(site, level = siteOrder)), .width = c(.5, .95) ,position = position_dodge(0.9)) +
+  theme_classic() +   
+  theme(legend.position = "right", 
+    legend.title = element_blank(),
+    axis.text.x = element_text( size= 12),
+    axis.text.y = element_text( size= 12),
+    axis.title=element_text(size = 14)) +
+  labs( x = "Treatment cue", y = "Cue response (days/standardized unit)", main = NA) +
+  scale_color_manual(values = c("Smithers" = "deepskyblue3",
+    "Manning Park" = "palegreen4", 
+    "St. Hippolyte"="darkorchid3", 
+    "Harvard Forest" = "tomato3"))+
+  scale_fill_manual(values = c("Smithers" = "deepskyblue3",
+    "Manning Park" = "palegreen4", 
+    "St. Hippolyte"="darkorchid3", 
+    "Harvard Forest" = "tomato3"))+ 
+  guides(color = guide_legend( 
+    override.aes=list(shape = 16, size = 8)))
 dev.off()

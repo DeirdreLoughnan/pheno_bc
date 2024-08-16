@@ -349,7 +349,7 @@ print(xtable(meanz4, caption="Summary output from a phylogenetic Bayesian model 
 \newpage
 \begin{figure}[h!]
     \centering
-     \includegraphics[width=\textwidth]{..//figures/site4CueGrouped8Chill50Outline.pdf}
+     \includegraphics[width=\textwidth]{..//figures/siteCue90.pdf.pdf}
     \caption{Posterior distributions of estimated chilling, forcing, and photoperiod responses with site level effects for individual communities. Black circles represent the median cue, thicker black lines the 50\% uncertainty interval, while the thinner black line the 90\% uncertainty interval. The y-axis spans the entire range of the data. We standardized predictors (cues) via $z$-scores using two standard deviations, see methods for further details.} 
     \label{fig:siteCues}
 \end{figure}

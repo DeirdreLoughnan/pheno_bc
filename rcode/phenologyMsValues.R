@@ -373,7 +373,7 @@ maxBBW <- round(max(meanBBWest$bb), 1)
 diffBBWest <- maxBBW-minBBW
 
 meanBB <- round(mean(meanBBData$bb),1)
-meanBBLowerer <- round(quantile(meanBBData$bb, c(0.05)),1)
+meanBBLower <- round(quantile(meanBBData$bb, c(0.05)),1)
 meanBBUpper <- format(round(quantile((meanBBData$bb), c(0.95)),1),nsmall =1)
 # What are the lambda values?
 lam_params <- c( 

@@ -44,10 +44,10 @@
 % \renewcommand{\baselinestretch}{1.5} % 1.5 lines between lines
 \parindent 0pt		  % sets leading space for paragraphs
 % optional: cute, fancy headers
-\usepackage{fancyhdr}
-\pagestyle{fancy}
-\fancyhead[LO]{Loughnan et al. 2024}
-\fancyhead[RO]{Temporal Ecology Lab}
+% \usepackage{fancyhdr}
+% \pagestyle{fancy}
+% \fancyhead[LO]{Loughnan et al. 2024}
+% \fancyhead[RO]{Temporal Ecology Lab}
 % more optionals! %
 
 \graphicspath{ {./figures/} }% tell latex where to find photos 

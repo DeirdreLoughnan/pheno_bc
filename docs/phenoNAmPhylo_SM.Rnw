@@ -69,7 +69,7 @@
 
 \begin{table}[ht]
 \centering
-\caption[Chill units by populations]{Approximate chill units from our two western sites, E.C. Manning Park and Smithers B.C., Canada, and our two eastern sites, Harvard Forest, USA and St. Hippolyte, Canada. Weather data was obtained from the Hope Slide weather station for our E.C. Manning Park estimates and the Smithers airport weather station for our Smithers communities. For our eastern communities, weather data was obtained from weather stations at Harvard Forest and in St. Hippolyte.} 
+\caption{Approximate chill units from our two western sites, E.C. Manning Park and Smithers B.C., Canada, and our two eastern sites, Harvard Forest, USA and St. Hippolyte, Canada. Weather data was obtained from the Hope Slide weather station for our E.C. Manning Park estimates and the Smithers airport weather station for our Smithers communities. For our eastern communities, weather data was obtained from weather stations at Harvard Forest and in St. Hippolyte.} 
 \label{tabChill}
 \begin{tabular}{llrrr}
   \hline
@@ -127,7 +127,7 @@ Harvard forest & Field chilling & 892 & 814.50 & 56.62 \\
 \label{Photoperiod}
     \includegraphics[scale = 1.5]{..//..//pheno_bc/figures/intrxnPlots8Chill3Latc.pdf}%,
 \end{subfigure}
-     \caption[Interactions between cues and populations]{Estimated day of budburst in response to \textbf{a,} forcing across populations under low chilling and short photoperiods, \textbf{b,} chilling across populations under low forcing and short photoperiods, and \textbf{c,}  across photoperiods under our baseline forcing and chilling for species sampled from our four populations. The thin error bars represent the 90\% uncertainty interval, while the thicker error bars represent the 50\% uncertainty interval, and symbols the mean.} 
+     \caption{Estimated day of budburst in response to \textbf{a,} forcing across populations under low chilling and short photoperiods, \textbf{b,} chilling across populations under low forcing and short photoperiods, and \textbf{c,}  across photoperiods under low forcing and chilling for species sampled from our four populations. The thin error bars represent the 90\% uncertainty interval, while the thicker error bars represent the 50\% uncertainty interval, and symbols the mean.} 
     \label{fig:intrxn3}
 \end{figure}
 \newpage
@@ -189,14 +189,14 @@ Harvard forest & Field chilling & 892 & 814.50 & 56.62 \\
 \label{}
     \includegraphics[width=1.8in]{..//..//pheno_bc/figures/rankstiBBTransectf.pdf}%,
 \end{subfigure}
-     \caption[Species ranked by estimated budburst dates]{Estimated changes in species ranked budburst order, \textbf{a} \& \textbf{d} compared between species level effects (species intercept) and under high cues, species level effects and under low cues, \textbf{b} \& \textbf{e}, and ranked order under low and high cues, \textbf{c} \& \textbf{f}, for our eastern species in red, \textbf{a-c}, and western species in blue \textbf{d-f}. For the three species that occur in both transect, shown in yellow, \emph{Alnus incana} exhibited the greatest rank change with a difference of three, while \emph{Betula papyrifera} had a rank difference of two and \emph{Populus tremuloides} a rank difference of one.}
+     \caption[Species ranked by estimated budburst dates]{Estimated changes in species ranked budburst order, \textbf{a} \& \textbf{d} compared between species level effects (species intercept) and under high cues, species level effects and under low cues, \textbf{b} \& \textbf{e}, and ranked order under low and high cues, \textbf{c} \& \textbf{f}, for our eastern species in red (\textbf{a-c}) and western species in blue (\textbf{d-f}). For the three species that occur in both transect, shown in yellow, \emph{Alnus incana} exhibited the greatest rank change with a difference of three, while \emph{Betula papyrifera} had a rank difference of two and \emph{Populus tremuloides} a rank difference of one.}
     \label{fig:rank}
 \end{figure}
 
 \begin{figure}[!ht]
     \centering
      \includegraphics[width=\textwidth]{..//..//pheno_bc/figures/changes_pheno_4sites8Chill.pdf}
-    \caption[Estimated response in budburst to varying cues]{Estimated mean responses in budburst date of first bud to varying forcing, chilling, and photoperiod cues for 47 deciduous woody species across North America. Points represent mean posterior estimate, while bars depict the 95\% uncertainty interval. Negative responses represent advances budburst, while positive values represent delaying effects. }
+    \caption[Estimated response in budburst to varying cues]{Estimated mean responses in budburst date of first bud to varying forcing, chilling, and photoperiod cues for 47 deciduous woody species across North America. Points represent mean posterior estimates, while bars depict the 90\% uncertainty interval. Negative responses represent advances in budburst, while positive values represent delaying effects. }
     \label{fig:muplot}
 \end{figure}
 

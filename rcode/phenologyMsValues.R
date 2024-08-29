@@ -166,6 +166,9 @@ load("..//output/bb_phylo_contphotothermo_2zscoredMay13.Rda")
 sum <- summary(mdl.2z)$summary
 fit <- rstan::extract(mdl.2z)
 
+meanBB <- round(mean(fit$a_sp),1)
+meanBBLower <- format(round(quantile(fit$a_sp, c(0.05)),1), nsmall = 1)
+meanBBUpper <- format(round(quantile((fit$a_sp), c(0.95)),1),nsmall =1)
 # sum <- summary(mdl.4phyloContWP)$summary 
 # fit <- rstan::extract(mdl.4phyloContWP)
 
@@ -372,9 +375,9 @@ minBBW <- round(min(meanBBWest$bb), 1)
 maxBBW <- round(max(meanBBWest$bb), 1)
 diffBBWest <- maxBBW-minBBW
 
-meanBB <- round(mean(meanBBData$bb),1)
-meanBBLower <- round(quantile(meanBBData$bb, c(0.05)),1)
-meanBBUpper <- format(round(quantile((meanBBData$bb), c(0.95)),1),nsmall =1)
+# meanBB <- round(mean(meanBBData$bb),1)
+# meanBBLower <- round(quantile(meanBBData$bb, c(0.05)),1)
+# meanBBUpper <- format(round(quantile((meanBBData$bb), c(0.95)),1),nsmall =1)
 # What are the lambda values?
 lam_params <- c( 
   "a_z",
@@ -394,8 +397,8 @@ rootTUpper <- round(quantile(fit$a_z, c(0.05)) ,1)
 
 lamT <- round(phylo[2,1],1)
 
-lamTLower <- round(quantile(fit$lam_interceptsa, c(0.95)),1)
-lamTUpper <- round(quantile(fit$lam_interceptsa, c(0.05)),1) 
+lamTLower <- round(quantile(fit$lam_interceptsa, c(0.05)),1)
+lamTUpper <- round(quantile(fit$lam_interceptsa, c(0.95)),1) 
 
 # lamTLower <- as.numeric(round(HPDI(data.frame(fit$lam_interceptsa), prob = 0.90)[1],1))
 # lamTUpper <- as.numeric(round(HPDI(data.frame(fit$lam_interceptsa), prob = 0.90)[2],1))

@@ -58,7 +58,7 @@
 \SweaveOpts{concordance=TRUE} % For RStudio hiccups
 
 
-\title{Supplementary Material: Temporal assembly of woody plant communities are shaped equally by evolutionary history as by current environments}
+\title{Supplementary Material: Current environments and evolutionary history shape forest temporal assembly}
 \date{\today}
 \author{Deirdre Loughnan$^1$ and E M Wolkovich$^1$}
 \maketitle 

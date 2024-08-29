@@ -1036,7 +1036,7 @@ ninety <- vector()
 
 for (i in 1:length(cueSites)){
 temp <- subset(longest, cueSite == cueSites[i])
-tempy <- subset(temp, value < quantile(tempy$value, prob = c(0.95)) & value > quantile(tempy$value, prob = c(0.05)))
+tempy <- subset(temp, value < quantile(temp$value, prob = c(0.95)) & value > quantile(temp$value, prob = c(0.05)))
 ninety <- rbind(ninety, tempy)
 }
 
@@ -1065,15 +1065,14 @@ longest$site <- as.factor(longest$site)
 
 siteOrder <- c("Smithers","Manning Park", "St. Hippolyte","Harvard Forest")
 
-pdf("figures/siteCue90.pdf", width = 6, height =4)
-ggplot() + 
+
+siteCue <- ggplot() + 
   stat_pointinterval(data = longest, aes(x = as.factor(cue), y = value, col = factor(site, level = siteOrder)), .width = c(.5, .95) ,position = position_dodge(0.9)) +
   theme_classic() +   
   theme(legend.position = "right", 
     legend.title = element_blank(),
-    axis.text.x = element_text( size= 12),
-    axis.text.y = element_text( size= 12),
-    axis.title=element_text(size = 14)) +
+    axis.text= element_text( size= 17),
+    axis.title=element_text(size = 17),legend.text = element_text(size = 15)) +
   labs( x = "Treatment cue", y = "Cue response (days/standardized unit)", main = NA) +
   scale_color_manual(values = c("Smithers" = "deepskyblue3",
     "Manning Park" = "palegreen4", 
@@ -1083,6 +1082,28 @@ ggplot() +
     "Manning Park" = "palegreen4", 
     "St. Hippolyte"="darkorchid3", 
     "Harvard Forest" = "tomato3"))+ 
+  annotate("text", x = 0.6, y =5, label = "a", size = 10 )+
   guides(color = guide_legend( 
     override.aes=list(shape = 16, size = 8)))
+  siteCue
+
+intrxnCF <- ggplot(intCF, aes(x= chill, group =1)) +
+  geom_line(aes(y = bb_hfc, col = "#2F5061"), size =1.5) +
+  geom_line(aes(y = bb_lfc, col = "#4297A0"), size = 1.5) + 
+  geom_ribbon(data = intCF, aes(ymin = bb_hfc5, ymax = bb_hfc95, x= chill), alpha = 0.2, fill = "sienna4") +
+  geom_ribbon(data = intCF, aes(ymin = bb_lfc5, ymax = bb_lfc95, x= chill), alpha = 0.2, fill = "tan2") + 
+  #scale_color_manual(values = c("cyan4", "red"), labels = c("High forcing", "Low forcing","High forcing", "Low forcing"), name = "") +
+  xlab("Chilling (standardized chill portions) ") + ylab("Estimated day of budburst") +
+  theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
+    panel.background = element_blank(), axis.line = element_line(colour = "black"),
+    axis.text = element_text(size = 17), axis.title = element_text(size = 17))+
+  theme(legend.key=element_blank(), legend.position=c(.8,.85),legend.text = element_text(size = 15)) +
+  #scale_fill_manual( labels = c("Low force", "High force")) +
+  scale_color_manual(values = c("sienna4","tan2"), labels = c("High forcing", "Low forcing"), name = "") +
+  #scale_colour_discrete(labels=c("High forcing","Low forcing"), name = "") +
+  theme(legend.title = element_blank()) +  annotate("text", x = -2, y = 125, label = "b", cex = 10) 
+
+
+pdf("figures/siteCue90_intrxn.pdf", width = 15, height = 5.5)
+plot_grid(siteCue, intrxnCF)
 dev.off()

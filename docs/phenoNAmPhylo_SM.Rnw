@@ -53,7 +53,7 @@
 \graphicspath{ {../figures/} }% tell latex where to find photos 
 \begin{document}
 
-
+%emwSep2 -- Fig S4 (mu plot) -- ref the table with values in caption; for the phylogeny -- italicize the names. REALLY cool figures in this supp ... esp. S3
 
 \SweaveOpts{concordance=TRUE} % For RStudio hiccups
 

@@ -28,8 +28,8 @@
  \captionsetup[subfigure]{labelformat=simple, position=top, labelfont=bf,textfont=normalfont,singlelinecheck=off,justification=raggedright, font = normal}
  
 \usepackage{xr-hyper} %refer to Fig.s in another document
-\usepackage{hyperref}
-\externaldocument{phenoNAmPhylo} 
+
+\externaldocument[main-]{phenoNAmPhylo} 
 
 \setlength{\captionmargin}{30pt}
 \setlength{\abovecaptionskip}{0pt}

@@ -718,7 +718,7 @@ rankE <- rankE[order(rankE$meanBBHigh),]
 rankE$rankHighC <- seq(1:nrow(rankE))
 
 pdf("figures/rankstiBBTransect.pdf", width = 12, height = 8)
-par(mfrow = c(2,3))
+par(mfrow = c(2,3), mar = c(5.1, 4.8, 4.1, 2.1))
 colTran <- c("maroon","goldenrod")
 #par(mfrow = c(1,1), mar = c(5.1, 4.8, 4.1, 2.1))
 plot(rankE$rankHighC~rankE$rankInt, 

@@ -1044,8 +1044,8 @@ longForceInfo <- longForceInfo[, c("species.name","species","type","transect","S
 longF <- melt(longForceInfo, id = c("species.name","species","type","transect", "cue"))
 names(longF)<- c("species.name","species","type","transect","cue","site","value")
 
-temp <- quantile(longForceInfo$Site1, prob = c(0.05, 0.95))
-tempy <- subset(longForceInfo, Site1 >  temp[1] & Site1 < temp[2])
+# temp <- quantile(longForceInfo$Site1, prob = c(0.05, 0.95))
+# tempy <- subset(longForceInfo, Site1 >  temp[1] & Site1 < temp[2])
 longChillInfo <- longChillInfo[, c("species.name","species","type","transect","Site1","Site2","Site3","Site4","cue")]
 longC <- melt(longChillInfo, id = c("species.name","species","type","transect", "cue"))
 names(longC)<- c("species.name","species","type","transect","cue","site","value")
@@ -1106,4 +1106,45 @@ intrxnCF <- ggplot(intCF, aes(x= chill, group =1)) +
 
 pdf("figures/siteCue90_intrxn.pdf", width = 15, height = 5.5)
 plot_grid(siteCue, intrxnCF)
+dev.off()
+
+##################################################################################################
+temp <- quantile(longForceInfo$value, prob = c(0.05, 0.95))
+lF <- subset(longForceInfo, value >  temp[1] & value < temp[2])
+#longChillInfo <- longChillInfo[, c("species.name","species","type","transect","Site1","Site2","Site3","Site4","cue")]
+longF <- melt(lF, id = c("species.name","species","type","transect", "cue"))
+names(longF)<- c("species.name","species","type","transect","cue","site","value")
+
+temp <- quantile(longChillInfo$value, prob = c(0.05, 0.95))
+lC <- subset(longChillInfo, value >  temp[1] & value < temp[2])
+#longChillInfo <- longChillInfo[, c("species.name","species","type","transect","Site1","Site2","Site3","Site4","cue")]
+longC <- melt(lC, id = c("species.name","species","type","transect", "cue"))
+names(longC)<- c("species.name","species","type","transect","cue","site","value")
+
+temp <- quantile(longPhotoInfo$value, prob = c(0.05, 0.95))
+lP <- subset(longPhotoInfo, value >  temp[1] & value < temp[2])
+#longChillInfo <- longChillInfo[, c("species.name","species","type","transect","Site1","Site2","Site3","Site4","cue")]
+longP <- melt(lP, id = c("species.name","species","type","transect", "cue"))
+names(longP)<- c("species.name","species","type","transect","cue","site","value")
+
+longCues <- rbind(longForceInfo, longChillInfo, longPhotoInfo)
+
+longCues$type[which(longCues$type == "tree")] <- "Tree"
+longCues$type[which(longCues$type == "shrub")] <- "Shrub"
+
+
+cueST2 <- ggplot() + 
+  stat_pointinterval(data = longCues, aes(x = as.factor(cue), y = value, col = type), .width = c(.5, .95) ,position = position_dodge(0.9)) +
+  theme_classic() +   
+  theme(legend.position = "right", 
+    legend.title = element_blank(),
+    axis.text= element_text( size= 15),
+    axis.title=element_text(size = 17),legend.text = element_text(size = 15)) +
+  labs( x = "Cue", y = "Response (days/standardized unit)", main = NA) +  scale_color_manual(values = c("#cc6a70ff","cyan4"))+ guides(color = guide_legend( 
+    override.aes=list(shape = 16, size = 8)))
+    
+
+
+pdf("figures/cueST28Chill_90.pdf", width = 6, height = 4.5)
+cueST2
 dev.off()

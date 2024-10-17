@@ -65,115 +65,145 @@
 \renewcommand{\thefigure}{S\arabic{figure}}
 \renewcommand{\labelitemi}{$-$}
 
-<<label= tab4Site, echo=FALSE, results=tex >>=
-require(rstan)
-require(xtable)
+\begin{table}[ht]
+\centering
+\caption{Summary output from a phylogenetic Bayesian model in which species are partially pooled and phylogeny is included on the intercept. See the Statistical Analysis section of the methods for more detail.} 
+\label{tab4Site}
+\begin{tabular}{rrrrrrr}
+  \hline
+ & mean & sd & 5\% & 95\% & n\_eff & Rhat \\ 
+  \hline
+$\alpha_{sp_i}$ & 12.51 & 3.14 & 7.40 & 17.60 & 3183.32 & 1.00 \\ $\lambda$ & 0.79 & 0.12 & 0.60 & 0.90 & 2156.20 & 1.00 \\ 
+$\beta_{forcing}$ & -9.55 & 0.74 & -10.70 & -8.30 & 1391.78 & 1.00 \\ 
+$\beta_{photoperiod}$ & -3.62 & 0.41 & -4.30 & -3.00 & 3089.29 & 1.00 \\ 
+$\beta_{chilling}$ & -15.21 & 1.25 & -17.30 & -13.20 & 2142.42 & 1.00 \\ 
+$\beta_{Manning Park}$ & 2.09 & 0.36 & 1.50 & 2.70 & 4061.13 & 1.00 \\ 
+$\beta_{Harvard Forest}$ & -6.04 & 1.03 & -7.80 & -4.40 & 486.95 & 1.01 \\ 
+$\beta_{St. Hippolyte}$ & -8.71 & 0.97 & -10.30 & -7.10 & 485.37 & 1.01 \\ 
+$\beta_{forcing \times photoperiod}$ & 0.23 & 0.71 & -1.00 & 1.40 & 3698.87 & 1.00 \\ 
+$\beta_{forcing \times chilling}$ & 9.06 & 0.90 & 7.60 & 10.50 & 3005.09 & 1.00 \\ 
+$\beta_{photoperiod \times chilling}$ & -0.67 & 0.90 & -2.20 & 0.80 & 2690.36 & 1.00 \\ 
+$\beta_{forcing \times Manning Park}$ & -1.76 & 0.77 & -3.00 & -0.50 & 3836.43 & 1.00 \\ 
+$\beta_{photoperiod \times Manning Park}$ & 0.58 & 0.79 & -0.70 & 1.90 & 3375.92 & 1.00 \\ 
+$\beta_{chilling \times Manning Park}$ & -0.36 & 1.60 & -3.00 & 2.20 & 1714.08 & 1.00 \\ 
+$\beta_{forcing \times Harvard Forest}$ & 3.81 & 1.22 & 1.80 & 5.80 & 1752.75 & 1.00 \\ 
+$\beta_{photoperiod \times Harvard Forest}$ & -1.96 & 0.86 & -3.30 & -0.60 & 2877.96 & 1.00 \\ 
+$\beta_{chilling \times Harvard Forest}$ & 9.97 & 2.03 & 6.60 & 13.40 & 911.46 & 1.01 \\ 
+$\beta_{forcing \times St. Hippolyte}$ & 5.25 & 1.19 & 3.20 & 7.20 & 1659.45 & 1.00 \\ 
+$\beta_{photoperiod \times St. Hippolyte}$ & -2.13 & 0.84 & -3.50 & -0.70 & 2606.20 & 1.00 \\ 
+$\beta_{chilling \times St. Hippolyte}$ & 8.65 & 1.70 & 5.90 & 11.50 & 1021.36 & 1.01 \\ 
+  \end{tabular}
+\end{table}
 
-load("..//output/bb_phylo_contphotothermo_2zscoredMay13.Rda")
-
-sum <- summary(mdl.2z)$summary
-
-fit <- rstan::extract(mdl.2z)
-
-col4fig <- c("mean","sd")
-col4table <- c("mean","sd","n_eff","Rhat")
-
-mu_params_4 <- c(
-  "a_z","lam_interceptsa",
-  "mu_b_warm",
-  "mu_b_photo",
-  "mu_b_chill1",
-  "b_site2",
-  "b_site3",
-  "b_site4",
-  "mu_b_inter_wp",
-  "mu_b_inter_wc1",
-  "mu_b_inter_pc1",
-  "mu_b_inter_ws2",
-  "mu_b_inter_ps2",
-  "mu_b_inter_s2c1",
-  "mu_b_inter_ws3",
-  "mu_b_inter_ps3",
-  "mu_b_inter_s3c1",
-  "mu_b_inter_ws4",
-  "mu_b_inter_ps4",
-  "mu_b_inter_s4c1")
-  
-meanz4 <- data.frame(sum[mu_params_4, col4table])
-
-rownames(meanz4) = c( "Intercept","Phylogenetic effect",
-                      "Forcing",
-                      "Photoperiod",
-                      "Chilling",
-                      "Manning Park",
-                       "Harvard Forest",
-                       "St. Hippolyte",
-                      "Forcing x photoperiod",
-                      "Forcing x chilling",
-                      "Photoperiod x chilling",
-                      "Forcing x Manning Park",
-                      "Photoperiod x Manning Park",
-                      "Chilling x Manning Park",
-                      "Forcing x Harvard Forest",
-                      "Photoperiod x Harvard Forest",
-                      "Chilling x Harvard Forest",
-                      "Forcing x St. Hippolyte",
-                      "Photoperiod x St. Hippolyte",
-                      "Chilling x St. Hippolyte"
-)
-
-# now get the 90% UI:
-azCueU <- round(quantile(fit$a_z, c(0.95)),1)
-azCueL <- round(quantile(fit$a_z, c(0.05)),1)
-
-lambCueU <- round(quantile(fit$lam_interceptsa, c(0.95)),1)
-lambCueL <- round(quantile(fit$lam_interceptsa, c(0.05)),1)
-
-chillCueU <- round(quantile(fit$mu_b_chill1, c(0.95)),1)
-chillCueL <- round(quantile(fit$mu_b_chill1, c(0.05)),1)
-photoCueU <- round(quantile(fit$mu_b_photo, c(0.95)),1)
-photoCueL <- round(quantile(fit$mu_b_photo, c(0.05)),1)
-forceCueU <- round(quantile(fit$mu_b_warm, c(0.95)),1)
-forceCueL <- round(quantile(fit$mu_b_warm, c(0.05)),1)
-intrxnCFU <- round(quantile(fit$mu_b_inter_wc1, c(0.95)),1)
-intrxnCFL <- round(quantile(fit$mu_b_inter_wc1, c(0.05)),1)
-intrxnPFU <- round(quantile(fit$mu_b_inter_wp, c(0.95)),1)
-intrxnPFL <- round(quantile(fit$mu_b_inter_wp, c(0.05)),1)
-intrxnCPU <- round(quantile(fit$mu_b_inter_pc1, c(0.95)),1)
-intrxnCPL <- round(quantile(fit$mu_b_inter_pc1, c(0.05)),1)
-siteHFU <- round(quantile(fit$b_site3, c(0.95)),1)
-siteHFL <- round(quantile(fit$b_site3, c(0.05)),1)
-siteSHU <- round(quantile(fit$b_site4, c(0.95)),1)
-siteSHL <- round(quantile(fit$b_site4, c(0.05)),1)
-siteMPU <- round(quantile(fit$b_site2, c(0.95)),1)
-siteMPL <- round(quantile(fit$b_site2, c(0.05)),1)
-forceHFU <- round(quantile(fit$mu_b_inter_ws3, c(0.95)),1)
-forceHFL <- round(quantile(fit$mu_b_inter_ws3, c(0.05)),1)
-forceSHU <- round(quantile(fit$mu_b_inter_ws4, c(0.95)),1)
-forceSHL <- round(quantile(fit$mu_b_inter_ws4, c(0.05)),1)
-forceMPU <- round(quantile(fit$mu_b_inter_ws2, c(0.95)),1)
-forceMPL <- round(quantile(fit$mu_b_inter_ws2, c(0.05)),1)
-chillHFU <- round(quantile(fit$mu_b_inter_s3c1, c(0.95)),1)
-chillHFL <- round(quantile(fit$mu_b_inter_s3c1, c(0.05)),1)
-chillSHU <- round(quantile(fit$mu_b_inter_s4c1, c(0.95)),1)
-chillSHL <- round(quantile(fit$mu_b_inter_s4c1, c(0.05)),1)
-chillMPU <- round(quantile(fit$mu_b_inter_s2c1, c(0.95)),1)
-chillMPL <- round(quantile(fit$mu_b_inter_s2c1, c(0.05)),1)
-photoHFU <- round(quantile(fit$mu_b_inter_ps3, c(0.95)),1)
-photoHFL <- round(quantile(fit$mu_b_inter_ps3, c(0.05)),1)
-photoSHU <- round(quantile(fit$mu_b_inter_ps4, c(0.95)),1)
-photoSHL <- round(quantile(fit$mu_b_inter_ps4, c(0.05)),1)
-photoMPU <- round(quantile(fit$mu_b_inter_ps2, c(0.95)),1)
-photoMPL <- round(quantile(fit$mu_b_inter_ps2, c(0.05)),1)
-
-upper <- rbind(azCueU, lambCueU,forceCueU, photoCueU, chillCueU, siteMPU, siteHFU, siteSHU,intrxnPFU,intrxnCFU,intrxnCPU, forceMPU, photoMPU, chillMPU, forceHFU, photoHFU, chillHFU, forceSHU, photoSHU, chillSHU)
-
-lower <- rbind(azCueL, lambCueL,forceCueL, photoCueL, chillCueL, siteMPL, siteHFL, siteSHL,intrxnPFL,intrxnCFL,intrxnCPL, forceMPL, photoMPL, chillMPL, forceHFL, photoHFL, chillHFL, forceSHL, photoSHL, chillSHL)
-meanz4 <- cbind(meanz4, lower, upper)
-meanz4 <- meanz4[,c("mean", "sd","5%", "95%", "n_eff","Rhat")]
-print(xtable(meanz4, caption="Summary output from a phylogenetic Bayesian model in which species are partially pooled and phylogeny is included on the intercept. The model includes photoperiod and site as dummy variables, while the forcing and chilling effects are included as continuous, with the predictors z-scored to allow comparisons across cues. Parameter estimates were used to estimate day of budburst for sites under low cue conditions and for Smithers only when relevant.",label = "tab4Site"),include.rownames=TRUE, caption.placement="top", hline.after=c(-1,0))
-
-@
+% <<label= tab4Site, echo=FALSE, results=tex >>=
+% require(rstan)
+% require(xtable)
+% 
+% load("..//output/bb_phylo_contphotothermo_2zscoredMay13.Rda")
+% 
+% sum <- summary(mdl.2z)$summary
+% 
+% fit <- rstan::extract(mdl.2z)
+% 
+% col4fig <- c("mean","sd")
+% col4table <- c("mean","sd","n_eff","Rhat")
+% 
+% mu_params_4 <- c(
+%   "a_z","lam_interceptsa",
+%   "mu_b_warm",
+%   "mu_b_photo",
+%   "mu_b_chill1",
+%   "b_site2",
+%   "b_site3",
+%   "b_site4",
+%   "mu_b_inter_wp",
+%   "mu_b_inter_wc1",
+%   "mu_b_inter_pc1",
+%   "mu_b_inter_ws2",
+%   "mu_b_inter_ps2",
+%   "mu_b_inter_s2c1",
+%   "mu_b_inter_ws3",
+%   "mu_b_inter_ps3",
+%   "mu_b_inter_s3c1",
+%   "mu_b_inter_ws4",
+%   "mu_b_inter_ps4",
+%   "mu_b_inter_s4c1")
+%   
+% meanz4 <- data.frame(sum[mu_params_4, col4table])
+% 
+% rownames(meanz4) = c( "Intercept","Phylogenetic effect",
+%                       "Forcing",
+%                       "Photoperiod",
+%                       "Chilling",
+%                       "Manning Park",
+%                        "Harvard Forest",
+%                        "St. Hippolyte",
+%                       "Forcing x photoperiod",
+%                       "Forcing x chilling",
+%                       "Photoperiod x chilling",
+%                       "Forcing x Manning Park",
+%                       "Photoperiod x Manning Park",
+%                       "Chilling x Manning Park",
+%                       "Forcing x Harvard Forest",
+%                       "Photoperiod x Harvard Forest",
+%                       "Chilling x Harvard Forest",
+%                       "Forcing x St. Hippolyte",
+%                       "Photoperiod x St. Hippolyte",
+%                       "Chilling x St. Hippolyte"
+% )
+% 
+% # now get the 90% UI:
+% azCueU <- round(quantile(fit$a_z, c(0.95)),1)
+% azCueL <- round(quantile(fit$a_z, c(0.05)),1)
+% 
+% lambCueU <- round(quantile(fit$lam_interceptsa, c(0.95)),1)
+% lambCueL <- round(quantile(fit$lam_interceptsa, c(0.05)),1)
+% 
+% chillCueU <- round(quantile(fit$mu_b_chill1, c(0.95)),1)
+% chillCueL <- round(quantile(fit$mu_b_chill1, c(0.05)),1)
+% photoCueU <- round(quantile(fit$mu_b_photo, c(0.95)),1)
+% photoCueL <- round(quantile(fit$mu_b_photo, c(0.05)),1)
+% forceCueU <- round(quantile(fit$mu_b_warm, c(0.95)),1)
+% forceCueL <- round(quantile(fit$mu_b_warm, c(0.05)),1)
+% intrxnCFU <- round(quantile(fit$mu_b_inter_wc1, c(0.95)),1)
+% intrxnCFL <- round(quantile(fit$mu_b_inter_wc1, c(0.05)),1)
+% intrxnPFU <- round(quantile(fit$mu_b_inter_wp, c(0.95)),1)
+% intrxnPFL <- round(quantile(fit$mu_b_inter_wp, c(0.05)),1)
+% intrxnCPU <- round(quantile(fit$mu_b_inter_pc1, c(0.95)),1)
+% intrxnCPL <- round(quantile(fit$mu_b_inter_pc1, c(0.05)),1)
+% siteHFU <- round(quantile(fit$b_site3, c(0.95)),1)
+% siteHFL <- round(quantile(fit$b_site3, c(0.05)),1)
+% siteSHU <- round(quantile(fit$b_site4, c(0.95)),1)
+% siteSHL <- round(quantile(fit$b_site4, c(0.05)),1)
+% siteMPU <- round(quantile(fit$b_site2, c(0.95)),1)
+% siteMPL <- round(quantile(fit$b_site2, c(0.05)),1)
+% forceHFU <- round(quantile(fit$mu_b_inter_ws3, c(0.95)),1)
+% forceHFL <- round(quantile(fit$mu_b_inter_ws3, c(0.05)),1)
+% forceSHU <- round(quantile(fit$mu_b_inter_ws4, c(0.95)),1)
+% forceSHL <- round(quantile(fit$mu_b_inter_ws4, c(0.05)),1)
+% forceMPU <- round(quantile(fit$mu_b_inter_ws2, c(0.95)),1)
+% forceMPL <- round(quantile(fit$mu_b_inter_ws2, c(0.05)),1)
+% chillHFU <- round(quantile(fit$mu_b_inter_s3c1, c(0.95)),1)
+% chillHFL <- round(quantile(fit$mu_b_inter_s3c1, c(0.05)),1)
+% chillSHU <- round(quantile(fit$mu_b_inter_s4c1, c(0.95)),1)
+% chillSHL <- round(quantile(fit$mu_b_inter_s4c1, c(0.05)),1)
+% chillMPU <- round(quantile(fit$mu_b_inter_s2c1, c(0.95)),1)
+% chillMPL <- round(quantile(fit$mu_b_inter_s2c1, c(0.05)),1)
+% photoHFU <- round(quantile(fit$mu_b_inter_ps3, c(0.95)),1)
+% photoHFL <- round(quantile(fit$mu_b_inter_ps3, c(0.05)),1)
+% photoSHU <- round(quantile(fit$mu_b_inter_ps4, c(0.95)),1)
+% photoSHL <- round(quantile(fit$mu_b_inter_ps4, c(0.05)),1)
+% photoMPU <- round(quantile(fit$mu_b_inter_ps2, c(0.95)),1)
+% photoMPL <- round(quantile(fit$mu_b_inter_ps2, c(0.05)),1)
+% 
+% upper <- rbind(azCueU, lambCueU,forceCueU, photoCueU, chillCueU, siteMPU, siteHFU, siteSHU,intrxnPFU,intrxnCFU,intrxnCPU, forceMPU, photoMPU, chillMPU, forceHFU, photoHFU, chillHFU, forceSHU, photoSHU, chillSHU)
+% 
+% lower <- rbind(azCueL, lambCueL,forceCueL, photoCueL, chillCueL, siteMPL, siteHFL, siteSHL,intrxnPFL,intrxnCFL,intrxnCPL, forceMPL, photoMPL, chillMPL, forceHFL, photoHFL, chillHFL, forceSHL, photoSHL, chillSHL)
+% meanz4 <- cbind(meanz4, lower, upper)
+% meanz4 <- meanz4[,c("mean", "sd","5%", "95%", "n_eff","Rhat")]
+% print(xtable(meanz4, caption="Summary output from a phylogenetic Bayesian model in which species are partially pooled and phylogeny is included on the intercept. See the Statistical Analysis section of the methods for more detail.",label = "tab4Site"),include.rownames=TRUE, caption.placement="top", hline.after=c(-1,0))
+% 
+% @
 
 \begin{table}[ht]
 \centering
@@ -181,7 +211,7 @@ print(xtable(meanz4, caption="Summary output from a phylogenetic Bayesian model 
 \label{tabChill}
 \begin{tabular}{llrrr}
   \hline
-Population & Chilling treatment & Chill hours & Utah model & Chill portions \\ 
+Site & Chilling treatment & Chill hours & Utah model & Chill portions \\ 
   \hline
 Harvard forest & Field chilling & 892 & 814.50 & 56.62 \\ 
   Harvard forest & Field chilling + 30 d at 4$^\circ$C & 2140 & 2062.50 & 94.06 \\ 
@@ -235,7 +265,7 @@ Harvard forest & Field chilling & 892 & 814.50 & 56.62 \\
 \label{Photoperiod}
     \includegraphics[scale = 1.5]{..//..//pheno_bc/figures/intrxnPlots8Chill3Latc.pdf}%,
 \end{subfigure}
-     \caption{Estimated day of budburst in response to \textbf{a,} forcing across populations under low chilling and short photoperiods, \textbf{b,} chilling across populations under low forcing and short photoperiods, and \textbf{c,}  across photoperiods under low forcing and chilling for species sampled from our four populations. The thin error bars represent the 90\% uncertainty interval, while the thicker error bars represent the 50\% uncertainty interval, and symbols the mean.} 
+     \caption{Estimated day of budburst in response to \textbf{a,} forcing across sites under low chilling and short photoperiods, \textbf{b,} chilling across sites under low forcing and short photoperiods, and \textbf{c,}  across photoperiods under low forcing and chilling for species sampled from our four sites. The thin error bars represent the 90\% uncertainty interval, while the thicker error bars represent the 50\% uncertainty interval, and symbols the mean.} 
     \label{fig:intrxn3}
 \end{figure}
 \newpage
@@ -243,21 +273,21 @@ Harvard forest & Field chilling & 892 & 814.50 & 56.62 \\
 \begin{figure}[h!]
     \centering
      \includegraphics[width=\textwidth]{..//..//pheno_bc/figures/cueST28Chill_90.pdf}
-    \caption[Comparison of cues by functional groups]{Comparisons of posterior distributions for cues estimates between shrub and tree species. Black circles represent the median cues, while the thinner black line the 90\% quantile interval. The coloured distribution is the posterior density of cues responses for all species within a given architectural type. The y-axis spans the entire range of the data.}
+    \caption[Comparison of cues by functional groups]{Comparisons of posterior distributions for cues estimates between shrub and tree species. Circles represent the mean cues, while the thinner black line the 90\% quantile interval.}
     \label{fig:cueST}
     \end{figure}
     
 \begin{figure}[ht]
 \centering
   \includegraphics[width= \textwidth]{..//..//pheno_bc/figures/rankstiBBTransect.pdf}%,
-     \caption[Species ranked by estimated budburst dates]{Estimated changes in species ranked budburst order, \textbf{a} \& \textbf{d} compared between species level effects (species intercept) and under high cues, species level effects and under low cues, \textbf{b} \& \textbf{e}, and ranked order under low and high cues, \textbf{c} \& \textbf{f}, for our eastern species in red (\textbf{a-c}) and western species in blue (\textbf{d-f}). For the three species that occur in both transect, shown in yellow, \emph{Alnus incana} exhibited the greatest rank change with a difference of three, while \emph{Betula papyrifera} had a rank difference of two and \emph{Populus tremuloides} a rank difference of one.}
+     \caption{Comparisons of the estimated changes in species ranked budburst order, \textbf{a} \& \textbf{d} between species level effects (species intercept) and under high cues, species level effects and under low cues, \textbf{b} \& \textbf{e}, and under low versus high cues, \textbf{c} \& \textbf{f}, for our eastern species (in red, \textbf{a-c}) and western species (in blue, \textbf{d-f}). For the three species that occur in both transect (shown in yellow) \emph{Alnus incana} exhibited the greatest rank change with a difference of three, while \emph{Betula papyrifera} had a rank difference of two and \emph{Populus tremuloides} a rank difference of one.}
     \label{fig:rank}
 \end{figure}
 
 \begin{figure}[!ht]
     \centering
      \includegraphics[width=\textwidth]{..//..//pheno_bc/figures/changes_pheno_4sites8Chill.pdf}
-    \caption{Estimated mean responses in budburst date of first bud to varying forcing, chilling, and photoperiod cues for 47 deciduous woody species across North America \ref{tab4Site}. Points represent mean posterior estimates, while bars depict the 90\% uncertainty interval. Negative responses represent advances in budburst, while positive values represent delaying effects. }
+    \caption{Estimated mean responses in budburst timing of the first bud to varying forcing, chilling, and photoperiod cues across 47 deciduous woody species across North America \ref{tab4Site}. Points represent mean posterior estimates, while bars depict the 90\% uncertainty interval. Negative responses represent advances in budburst, while positive values represent delaying effects. }
     \label{fig:muplot}
 \end{figure}
 
@@ -271,7 +301,7 @@ Harvard forest & Field chilling & 892 & 814.50 & 56.62 \\
 
 \begin{table}[ht]
 \centering
-\caption{Mean budburst dates across all treatments from raw data for 47 species at our two western sites, E.C. Manning Park and Smithers B.C., Canada, and our two eastern sites, Harvard Forest, USA and St. Hippolyte, Canada.} 
+\caption{Mean budburst dates across all treatments from raw observation data of 47 species at our two western sites, E.C. Manning Park and Smithers B.C., Canada, and our two eastern sites, Harvard Forest, USA and St. Hippolyte, Canada.} 
 \label{tabPhenoSp}
 \begin{tabular}{lrrrr}
   \hline

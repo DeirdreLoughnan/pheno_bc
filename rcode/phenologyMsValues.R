@@ -140,7 +140,6 @@ spInfo <- read.csv("..//input/species_list.csv")
 
 pheno.t <- merge(pheno.t, spInfo, by = "species")
 
-head(pheno.t)
 
 westSite <- c("sm", "mp")
 westPheno <- pheno.t[pheno.t$population %in% westSite, ]
@@ -161,10 +160,10 @@ meanBBEastL <-format(round(quantile(eastPheno$bb, c(0.05)),1), nsmall =1)
 # sumew <- summary(mdl.ewphylo)$summary
 
 #load("..//output/bb_4sites_phylo_contphotothermo_zscored_Apr19.Rda")
-load("..//output/bb_phylo_contphotothermo_2zscoredMay13.Rda")
+load("..//output/bb_phylo_contphotothermo_2zscored_oct172024_triple.Rda")
 
-sum <- summary(mdl.2z)$summary
-fit <- rstan::extract(mdl.2z)
+sum <- summary(mdl.3)$summary
+fit <- rstan::extract(mdl.3)
 
 meanBB <- round(mean(fit$a_sp),1)
 meanBBLower <- format(round(quantile(fit$a_sp, c(0.05)),1), nsmall = 1)
@@ -233,14 +232,14 @@ head(meanz4.table)
 
 chillCue <- round(meanz4["Chilling",1],1)
 chillCueU <- round(quantile(fit$mu_b_chill1, c(0.95)),1)
-chillCueL <- round(quantile(fit$mu_b_chill1, c(0.05)),1)
+chillCueL <- format(round(quantile(fit$mu_b_chill1, c(0.05)),1), nsmall = 1)
 
 chillCue2.5 <- round(meanz4["Chilling",3],1)
 chillCue97.5 <- round(meanz4["Chilling",5],1)
 
 photoCue <- round(meanz4["Photoperiod",1],1)
 photoCueU <- format(round(quantile(fit$mu_b_photo, c(0.95)),1), nsmall=1)
-photoCueL <- round(quantile(fit$mu_b_photo, c(0.05)),1)
+photoCueL <- format(round(quantile(fit$mu_b_photo, c(0.05)),1), nsmall =1)
 photoCue2.5 <- round(meanz4["Photoperiod",3],1)
 photoCue97.5 <- round(meanz4["Photoperiod",5],1)
 
@@ -467,6 +466,10 @@ last <- subset(phenoBB, bb == max(phenoBB$bb))
 # (meanz50l[,1] - meanz1l[,1])/meanz50l[,1]
 
 ###################################
+
+a_z = round((sum[grep("a_z", rownames(sum)), 1]),1)
+a_zU = round(quantile(fit$a_z, c(0.95)),1)
+a_zL = format(round(quantile(fit$a_z, c(0.05)),1),nsmall =1)
 
 a_sp = (sum[grep("a_sp", rownames(sum)), 1])
 a_spU = round(quantile(fit$a_sp, c(0.95)),1)

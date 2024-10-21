@@ -219,16 +219,16 @@ unique(datalist.z2$photo)
 unique(datalist.z2$site2)
 unique(datalist.z2$site4)
 
-mdl.2z <- stan("stan/df_mdl_4sites_again_allint_ncp_phylogeny_natural_wp.stan",
+mdl.3 <- stan("stan/df_mdl_4sites_again_allint_ncp_phylogeny_natural_newPrior.stan",
                     data = datalist.z2,
                     iter = 4000, warmup = 3000, chains=4,
                     include = FALSE, pars = c("ypred_new","y_hat")
                     #, control = list(adapt_delta = 0.99)
 )
-save(mdl.2z, file="output/bb_phylo_contphotothermo_2zscoredMay13.Rda")
+save(mdl.3, file="output/bb_phylo_contphotothermo_2zscored_oct172024_triple.Rda")
 
 # #load("output/bb_4sites_phylo_contphotothermo_2zscored.Rda")
-sum2z <- summary(mdl.2z)$summary
+sum2z <- summary(mdl.3)$summary
 
 col4table <- c("mean","2.5%","50%","97.5%")
 

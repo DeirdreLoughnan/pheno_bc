@@ -249,7 +249,7 @@ forceCueL <- round(quantile(fit$mu_b_warm, c(0.05)),1)
 
 intrxnCF <- round(meanz4["Forcing x chilling",1],1)
 intrxnCFU <- round(quantile(fit$mu_b_inter_wc1, c(0.95)),1)
-intrxnCFL <- round(quantile(fit$mu_b_inter_wc1, c(0.05)),1)
+intrxnCFL <- format(round(quantile(fit$mu_b_inter_wc1, c(0.05)),1), nsmall=1)
 intrxnCF2.5 <- round(meanz4["Forcing x chilling",3],1)
 intrxnCF97.5 <- round(meanz4["Forcing x chilling",5],1)
 
@@ -703,7 +703,7 @@ QaLlDiff <- round(spInfo[28,"meanBB"] - spInfo[21,"meanBB"] ,1)
 east <- subset(spInfo, transect != "west")
 eastSp <- unique(east$species.name)
 
-qaChill <- round(spInfo[28,"chill"] ,1)
+qaChill <- format(round(spInfo[28,"chill"] ,1), nsmall = 1)
 qaForcing <- round(spInfo[28,"force"] ,1)
 
 llChill <- round(spInfo[21,"chill"] ,1)

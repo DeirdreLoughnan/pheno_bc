@@ -65,7 +65,7 @@
 \renewcommand{\thefigure}{S\arabic{figure}}
 \renewcommand{\labelitemi}{$-$}
 
-\begin{table}[ht]
+\begin{table}[ht!]
 \centering
 \caption{Mean budburst dates across all treatments from raw observation data of 47 species at our two western sites, E.C. Manning Park and Smithers B.C., Canada, and our two eastern sites, Harvard Forest, USA and St. Hippolyte, Canada.} 
 \label{tabPhenoSp}
@@ -124,8 +124,9 @@ Species & Harvard Forest & St. Hippoltye & Manning Park & Smithers \\
   \emph{Viburnum lantanoides} & 31 & 28 &  &  \\ 
   \end{tabular}
 \end{table}
+\newpage
 
-\begin{table}[ht]
+\begin{table}[ht!]
 \centering
 \caption{Approximate chill units from our two western sites, E.C. Manning Park and Smithers B.C., Canada, and our two eastern sites, Harvard Forest, USA and St. Hippolyte, Canada. Weather data for the fall of 2019 and winter 2020 was obtained from the Hope Slide weather station for our E.C. Manning Park estimates and the Smithers airport weather station for our Smithers communities. For our eastern communities, weather data for the fall of 2014 and winter 2015 was obtained from weather stations at Harvard Forest and in St. Hippolyte.} 
 \label{tabChill}
@@ -143,8 +144,9 @@ Harvard forest & Field chilling & 892 & 814.50 & 56.62 \\
   Manning Park & Field chilling + 70 d at 4$^\circ$C & 1861 & 2025.00 & 75.33 \\ 
   \end{tabular}
 \end{table}
+\newpage
 
-\begin{table}[ht]
+\begin{table}[ht!]
 \centering
 \caption{Summary output from a phylogenetic Bayesian model in which species are partially pooled and phylogeny is included on the intercept. See the statistical analysis section of the methods for more detail.} 
 \label{tab4Site}

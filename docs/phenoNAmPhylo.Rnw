@@ -77,7 +77,7 @@ Vancouver, BC, Canada, V6T 1Z4. \\
 Corresponding Author: Deirdre Loughnan, deirdre.loughnan@ubc.ca \\
 
 <<label=runcode1,  echo=FALSE>>=
-source("..//rcode/phenologyMsValuesOct17.R")
+source("..//rcode/phenologyMsValues.R")
 @
 
 \section*{Abstract} 

@@ -59,7 +59,7 @@
 
 \SweaveOpts{concordance=TRUE} % For RStudio hiccups
 
-%dlDec20: Journal submission order:
+% Journal submission order:
 % GCB
 % Ecology letters 
 % New Phytologist

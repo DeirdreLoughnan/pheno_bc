@@ -65,13 +65,49 @@
 \renewcommand{\thefigure}{S\arabic{figure}}
 \renewcommand{\labelitemi}{$-$}
 
+\begin{figure}[ht]
+\centering
+    \includegraphics[scale = 0.75]{..//..//pheno_bc/figures/panelFig/intrxnPlots8Chill3Lat_Oct17.pdf}%,
+     \caption{Estimated day of budburst in response to \textbf{a,} forcing across sites under low chilling and short photoperiods, \textbf{b,} chilling across sites under low forcing and short photoperiods, and \textbf{c,}  across photoperiods under low forcing and chilling for species sampled from our four sites. The thin error bars represent the 90\% uncertainty interval, while the thicker error bars represent the 50\% uncertainty interval, and symbols the mean.} 
+    \label{fig:intrxn3}
+\end{figure}
+\newpage
+
+\begin{figure}[h!]
+    \centering
+     \includegraphics[width=\textwidth]{..//..//pheno_bc/figures/panelFig/cueST28Chill_90_Oct17.pdf}
+    \caption[Comparison of cues by functional groups]{Comparisons of posterior distributions for cues estimates between shrub and tree species. Circles represent the mean cues, while the thinner black line the 90\% quantile interval.}
+    \label{fig:cueST}
+    \end{figure}
+    
+\begin{figure}[ht]
+\centering
+  \includegraphics[width= \textwidth]{..//..//pheno_bc/figures/panelFig/rankstiBBTransect_Oct17.pdf}%,
+     \caption{Comparisons of the estimated changes in species ranked budburst order, \textbf{a} \& \textbf{d} between species-level effects (species intercept) and under high cues, species-level effects and under low cues, \textbf{b} \& \textbf{e}, and under low versus high cues, \textbf{c} \& \textbf{f}, for our eastern species (in red, \textbf{a-c}) and western species (in blue, \textbf{d-f}). For the three species that occur in both transect (shown in yellow), \emph{Alnus incana} exhibited the greatest rank change with a difference of three, while \emph{Betula papyrifera} had a rank difference of two and \emph{Populus tremuloides} a rank difference of one.}
+    \label{fig:rank}
+\end{figure}
+
+% \begin{figure}[!ht]
+%     \centering
+%      \includegraphics[width=\textwidth]{..//..//pheno_bc/figures/panelFig/changes_pheno_4sites_Oct17.pdf}
+%     \caption{Estimated mean responses in budburst timing of the first bud to varying forcing, chilling, and photoperiod cues across 47 deciduous woody species across North America (see Table \ref{tab4Site} for values). Points represent mean posterior estimates, while bars depict the 90\% uncertainty interval. Negative responses represent advances in budburst, while positive values represent delaying effects. }
+%     \label{fig:muplot}
+% \end{figure}
+
+\begin{figure}[h!]
+    \centering
+     \includegraphics[width=\textwidth]{..//..//pheno_bc/figures/panelFig/phyloIntColor_Oct17.pdf}
+     \caption{Species differences were accounted for by including phylogenetic effects on the species intercept in a model estimating days to budburst after the start of forcing treatments. We pruned to our species subset an existing phylogeny for flowering plants developed by Smith and Brown (2018).} 
+    \label{fig:phylo}
+\end{figure}
+
 \begin{table}[ht!]
 \centering
-\caption{Mean budburst dates across all treatments from raw observation data of 47 species at our two western sites, E.C. Manning Park and Smithers B.C., Canada, and our two eastern sites, Harvard Forest, USA and St. Hippolyte, Canada.} 
+\caption{Mean budburst dates across all treatments from raw observation data of 47 species at our two western sites, E.C. Manning park and Smithers B.C., Canada, and our two eastern sites, Harvard Forest, USA and St. Hippolyte, Canada.} 
 \label{tabPhenoSp}
 \begin{tabular}{lrrrr}
   \hline
-Species & Harvard Forest & St. Hippoltye & Manning Park & Smithers \\ 
+Species & Harvard forest & St. Hippoltye & Manning park & Smithers \\ 
   \hline
 \emph{Acer glabrum} &  &  & 36 & 39 \\ 
   \emph{Acer pensylvanicum} & 16 & 18 &  &  \\ 
@@ -128,7 +164,7 @@ Species & Harvard Forest & St. Hippoltye & Manning Park & Smithers \\
 
 \begin{table}[ht!]
 \centering
-\caption{Approximate chill units from our two western sites, E.C. Manning Park and Smithers B.C., Canada, and our two eastern sites, Harvard Forest, USA and St. Hippolyte, Canada. Weather data for the fall of 2019 and winter 2020 was obtained from the Hope Slide weather station for our E.C. Manning Park estimates and the Smithers airport weather station for our Smithers communities. For our eastern communities, weather data for the fall of 2014 and winter 2015 was obtained from weather stations at Harvard Forest and in St. Hippolyte.} 
+\caption{Approximate chill units from our two western sites, E.C. Manning park and Smithers B.C., Canada, and our two eastern sites, Harvard Forest, USA and St. Hippolyte, Canada. Weather data for the fall of 2019 and winter 2020 was obtained from the Hope Slide weather station for our E.C. Manning park estimates and the Smithers airport weather station for our Smithers communities. For our eastern communities, weather data for the fall of 2014 and winter 2015 was obtained from weather stations at Harvard Forest and in St. Hippolyte.} 
 \label{tabChill}
 \begin{tabular}{llrrr}
   \hline
@@ -140,8 +176,8 @@ Harvard forest & Field chilling & 892 & 814.50 & 56.62 \\
   St. Hippoltye & Field chilling + 30 d at 4$^\circ$C & 1930 & 1847.50 & 82.06 \\ 
   Smithers & Field chilling + 30 d at 4$^\circ$C & 1317 & 1368.00 & 54.95 \\ 
   Smithers & Field chilling + 70 d at 4$^\circ$C & 1965 & 2016.00 & 74.67 \\ 
-  Manning Park & Field chilling + 30 d at 4$^\circ$C & 1213 & 1377.00 & 55.09 \\ 
-  Manning Park & Field chilling + 70 d at 4$^\circ$C & 1861 & 2025.00 & 75.33 \\ 
+  Manning park & Field chilling + 30 d at 4$^\circ$C & 1213 & 1377.00 & 55.09 \\ 
+  Manning park & Field chilling + 70 d at 4$^\circ$C & 1861 & 2025.00 & 75.33 \\ 
   \end{tabular}
 \end{table}
 \newpage
@@ -158,241 +194,23 @@ Harvard forest & Field chilling & 892 & 814.50 & 56.62 \\
 $\beta_{forcing}$ & -9.55 & 0.74 & -10.70 & -8.30 & 1391.78 & 1.00 \\ 
 $\beta_{photoperiod}$ & -3.62 & 0.41 & -4.30 & -3.00 & 3089.29 & 1.00 \\ 
 $\beta_{chilling}$ & -15.21 & 1.25 & -17.30 & -13.20 & 2142.42 & 1.00 \\ 
-$\beta_{Manning Park}$ & 2.09 & 0.36 & 1.50 & 2.70 & 4061.13 & 1.00 \\ 
-$\beta_{Harvard Forest}$ & -6.04 & 1.03 & -7.80 & -4.40 & 486.95 & 1.01 \\ 
-$\beta_{St. Hippolyte}$ & -8.71 & 0.97 & -10.30 & -7.10 & 485.37 & 1.01 \\ 
+$\beta_{Manning\ park}$ & 2.09 & 0.36 & 1.50 & 2.70 & 4061.13 & 1.00 \\ 
+$\beta_{Harvard\ forest}$ & -6.04 & 1.03 & -7.80 & -4.40 & 486.95 & 1.01 \\ 
+$\beta_{St.\ Hippolyte}$ & -8.71 & 0.97 & -10.30 & -7.10 & 485.37 & 1.01 \\ 
 $\beta_{forcing \times photoperiod}$ & 0.23 & 0.71 & -1.00 & 1.40 & 3698.87 & 1.00 \\ 
 $\beta_{forcing \times chilling}$ & 9.06 & 0.90 & 7.60 & 10.50 & 3005.09 & 1.00 \\ 
 $\beta_{photoperiod \times chilling}$ & -0.67 & 0.90 & -2.20 & 0.80 & 2690.36 & 1.00 \\ 
-$\beta_{forcing \times Manning Park}$ & -1.76 & 0.77 & -3.00 & -0.50 & 3836.43 & 1.00 \\ 
-$\beta_{photoperiod \times Manning Park}$ & 0.58 & 0.79 & -0.70 & 1.90 & 3375.92 & 1.00 \\ 
-$\beta_{chilling \times Manning Park}$ & -0.36 & 1.60 & -3.00 & 2.20 & 1714.08 & 1.00 \\ 
-$\beta_{forcing \times Harvard Forest}$ & 3.81 & 1.22 & 1.80 & 5.80 & 1752.75 & 1.00 \\ 
-$\beta_{photoperiod \times Harvard Forest}$ & -1.96 & 0.86 & -3.30 & -0.60 & 2877.96 & 1.00 \\ 
-$\beta_{chilling \times Harvard Forest}$ & 9.97 & 2.03 & 6.60 & 13.40 & 911.46 & 1.01 \\ 
-$\beta_{forcing \times St. Hippolyte}$ & 5.25 & 1.19 & 3.20 & 7.20 & 1659.45 & 1.00 \\ 
-$\beta_{photoperiod \times St. Hippolyte}$ & -2.13 & 0.84 & -3.50 & -0.70 & 2606.20 & 1.00 \\ 
-$\beta_{chilling \times St. Hippolyte}$ & 8.65 & 1.70 & 5.90 & 11.50 & 1021.36 & 1.01 \\ 
+$\beta_{forcing \times Manning\ park}$ & -1.76 & 0.77 & -3.00 & -0.50 & 3836.43 & 1.00 \\ 
+$\beta_{photoperiod \times Manning\ park}$ & 0.58 & 0.79 & -0.70 & 1.90 & 3375.92 & 1.00 \\ 
+$\beta_{chilling \times Manning\ park}$ & -0.36 & 1.60 & -3.00 & 2.20 & 1714.08 & 1.00 \\ 
+$\beta_{forcing \times Harvard\ forest}$ & 3.81 & 1.22 & 1.80 & 5.80 & 1752.75 & 1.00 \\ 
+$\beta_{photoperiod \times Harvard\ forest}$ & -1.96 & 0.86 & -3.30 & -0.60 & 2877.96 & 1.00 \\ 
+$\beta_{chilling \times Harvard\ forest}$ & 9.97 & 2.03 & 6.60 & 13.40 & 911.46 & 1.01 \\ 
+$\beta_{forcing \times St.\ Hippolyte}$ & 5.25 & 1.19 & 3.20 & 7.20 & 1659.45 & 1.00 \\ 
+$\beta_{photoperiod \times St.\ Hippolyte}$ & -2.13 & 0.84 & -3.50 & -0.70 & 2606.20 & 1.00 \\ 
+$\beta_{chilling \times St.\ Hippolyte}$ & 8.65 & 1.70 & 5.90 & 11.50 & 1021.36 & 1.01 \\ 
   \end{tabular}
 \end{table}
-
-% <<label= tab4Site, echo=FALSE, results=tex >>=
-% require(rstan)
-% require(xtable)
-% 
-% load("..//output/bb_phylo_contphotothermo_2zscoredMay13.Rda")
-% 
-% sum <- summary(mdl.2z)$summary
-% 
-% fit <- rstan::extract(mdl.2z)
-% 
-% col4fig <- c("mean","sd")
-% col4table <- c("mean","sd","n_eff","Rhat")
-% 
-% mu_params_4 <- c(
-%   "a_z","lam_interceptsa",
-%   "mu_b_warm",
-%   "mu_b_photo",
-%   "mu_b_chill1",
-%   "b_site2",
-%   "b_site3",
-%   "b_site4",
-%   "mu_b_inter_wp",
-%   "mu_b_inter_wc1",
-%   "mu_b_inter_pc1",
-%   "mu_b_inter_ws2",
-%   "mu_b_inter_ps2",
-%   "mu_b_inter_s2c1",
-%   "mu_b_inter_ws3",
-%   "mu_b_inter_ps3",
-%   "mu_b_inter_s3c1",
-%   "mu_b_inter_ws4",
-%   "mu_b_inter_ps4",
-%   "mu_b_inter_s4c1")
-%   
-% meanz4 <- data.frame(sum[mu_params_4, col4table])
-% 
-% rownames(meanz4) = c( "Intercept","Phylogenetic effect",
-%                       "Forcing",
-%                       "Photoperiod",
-%                       "Chilling",
-%                       "Manning Park",
-%                        "Harvard Forest",
-%                        "St. Hippolyte",
-%                       "Forcing x photoperiod",
-%                       "Forcing x chilling",
-%                       "Photoperiod x chilling",
-%                       "Forcing x Manning Park",
-%                       "Photoperiod x Manning Park",
-%                       "Chilling x Manning Park",
-%                       "Forcing x Harvard Forest",
-%                       "Photoperiod x Harvard Forest",
-%                       "Chilling x Harvard Forest",
-%                       "Forcing x St. Hippolyte",
-%                       "Photoperiod x St. Hippolyte",
-%                       "Chilling x St. Hippolyte"
-% )
-% 
-% # now get the 90% UI:
-% azCueU <- round(quantile(fit$a_z, c(0.95)),1)
-% azCueL <- round(quantile(fit$a_z, c(0.05)),1)
-% 
-% lambCueU <- round(quantile(fit$lam_interceptsa, c(0.95)),1)
-% lambCueL <- round(quantile(fit$lam_interceptsa, c(0.05)),1)
-% 
-% chillCueU <- round(quantile(fit$mu_b_chill1, c(0.95)),1)
-% chillCueL <- round(quantile(fit$mu_b_chill1, c(0.05)),1)
-% photoCueU <- round(quantile(fit$mu_b_photo, c(0.95)),1)
-% photoCueL <- round(quantile(fit$mu_b_photo, c(0.05)),1)
-% forceCueU <- round(quantile(fit$mu_b_warm, c(0.95)),1)
-% forceCueL <- round(quantile(fit$mu_b_warm, c(0.05)),1)
-% intrxnCFU <- round(quantile(fit$mu_b_inter_wc1, c(0.95)),1)
-% intrxnCFL <- round(quantile(fit$mu_b_inter_wc1, c(0.05)),1)
-% intrxnPFU <- round(quantile(fit$mu_b_inter_wp, c(0.95)),1)
-% intrxnPFL <- round(quantile(fit$mu_b_inter_wp, c(0.05)),1)
-% intrxnCPU <- round(quantile(fit$mu_b_inter_pc1, c(0.95)),1)
-% intrxnCPL <- round(quantile(fit$mu_b_inter_pc1, c(0.05)),1)
-% siteHFU <- round(quantile(fit$b_site3, c(0.95)),1)
-% siteHFL <- round(quantile(fit$b_site3, c(0.05)),1)
-% siteSHU <- round(quantile(fit$b_site4, c(0.95)),1)
-% siteSHL <- round(quantile(fit$b_site4, c(0.05)),1)
-% siteMPU <- round(quantile(fit$b_site2, c(0.95)),1)
-% siteMPL <- round(quantile(fit$b_site2, c(0.05)),1)
-% forceHFU <- round(quantile(fit$mu_b_inter_ws3, c(0.95)),1)
-% forceHFL <- round(quantile(fit$mu_b_inter_ws3, c(0.05)),1)
-% forceSHU <- round(quantile(fit$mu_b_inter_ws4, c(0.95)),1)
-% forceSHL <- round(quantile(fit$mu_b_inter_ws4, c(0.05)),1)
-% forceMPU <- round(quantile(fit$mu_b_inter_ws2, c(0.95)),1)
-% forceMPL <- round(quantile(fit$mu_b_inter_ws2, c(0.05)),1)
-% chillHFU <- round(quantile(fit$mu_b_inter_s3c1, c(0.95)),1)
-% chillHFL <- round(quantile(fit$mu_b_inter_s3c1, c(0.05)),1)
-% chillSHU <- round(quantile(fit$mu_b_inter_s4c1, c(0.95)),1)
-% chillSHL <- round(quantile(fit$mu_b_inter_s4c1, c(0.05)),1)
-% chillMPU <- round(quantile(fit$mu_b_inter_s2c1, c(0.95)),1)
-% chillMPL <- round(quantile(fit$mu_b_inter_s2c1, c(0.05)),1)
-% photoHFU <- round(quantile(fit$mu_b_inter_ps3, c(0.95)),1)
-% photoHFL <- round(quantile(fit$mu_b_inter_ps3, c(0.05)),1)
-% photoSHU <- round(quantile(fit$mu_b_inter_ps4, c(0.95)),1)
-% photoSHL <- round(quantile(fit$mu_b_inter_ps4, c(0.05)),1)
-% photoMPU <- round(quantile(fit$mu_b_inter_ps2, c(0.95)),1)
-% photoMPL <- round(quantile(fit$mu_b_inter_ps2, c(0.05)),1)
-% 
-% upper <- rbind(azCueU, lambCueU,forceCueU, photoCueU, chillCueU, siteMPU, siteHFU, siteSHU,intrxnPFU,intrxnCFU,intrxnCPU, forceMPU, photoMPU, chillMPU, forceHFU, photoHFU, chillHFU, forceSHU, photoSHU, chillSHU)
-% 
-% lower <- rbind(azCueL, lambCueL,forceCueL, photoCueL, chillCueL, siteMPL, siteHFL, siteSHL,intrxnPFL,intrxnCFL,intrxnCPL, forceMPL, photoMPL, chillMPL, forceHFL, photoHFL, chillHFL, forceSHL, photoSHL, chillSHL)
-% meanz4 <- cbind(meanz4, lower, upper)
-% meanz4 <- meanz4[,c("mean", "sd","5%", "95%", "n_eff","Rhat")]
-% print(xtable(meanz4, caption="Summary output from a phylogenetic Bayesian model in which species are partially pooled and phylogeny is included on the intercept. See the Statistical Analysis section of the methods for more detail.",label = "tab4Site"),include.rownames=TRUE, caption.placement="top", hline.after=c(-1,0))
-% 
-% @
-
-
-
-% <<label= tabChill, echo=FALSE , results=tex>>=
-% 
-% # Chill units from our two western sites, E.C. Manning Park and Smithers B.C., and our two eastern sites, Harvard Forest (HF) USA and St. Hippolyte(SH) Canada.
-% 
-% require(xtable)
-% #library(tidyr)
-% chill <- read.csv("..//output/chillUnits.csv")
-% chill$Chilling.treatment<- gsub("degree ","$\\circ$", chill$Chilling.treatment)
-% names(chill) <- c("Population","Chilling treatment","Chill hours","Utah model","Chill portions")
-% 
-% # chillunit <- xtable(chill, caption = "Chill units from our two western sites, E.C. Manning Park (MP) and Smithers B.C.(SM) Canada, and our two eastern sites, Harvard Forest (HF) USA and St. Hippolyte(SH) Canada.", label = "tableChill")
-% print(xtable(chill, caption = "Approximate chill units from our two western sites, E.C. Manning Park and Smithers B.C., Canada, and our two eastern sites, Harvard Forest, USA and St. Hippolyte, Canada. Weather data was obtained from the Hope Slide weather station for our E.C. Manning Park estimates and the Smithers airport weather station for our Smithers communities. For our eastern communities, weather data was obtained from weather stations at Harvard Forest and in St. Hippolyte", label = "tabChill"),include.rownames= F, caption.placement="top", hline.after=c(-1,0))
-% @
-
-\begin{figure}[ht]
-\centering
-    \includegraphics[scale = 0.75]{..//..//pheno_bc/figures/panelFig/intrxnPlots8Chill3Lat_Oct17.pdf}%,
-     \caption{Estimated day of budburst in response to \textbf{a,} forcing across sites under low chilling and short photoperiods, \textbf{b,} chilling across sites under low forcing and short photoperiods, and \textbf{c,}  across photoperiods under low forcing and chilling for species sampled from our four sites. The thin error bars represent the 90\% uncertainty interval, while the thicker error bars represent the 50\% uncertainty interval, and symbols the mean.} 
-    \label{fig:intrxn3}
-\end{figure}
-\newpage
-
-\begin{figure}[h!]
-    \centering
-     \includegraphics[width=\textwidth]{..//..//pheno_bc/figures/panelFig/cueST28Chill_90_Oct17.pdf}
-    \caption[Comparison of cues by functional groups]{Comparisons of posterior distributions for cues estimates between shrub and tree species. Circles represent the mean cues, while the thinner black line the 90\% quantile interval.}
-    \label{fig:cueST}
-    \end{figure}
-    
-\begin{figure}[ht]
-\centering
-  \includegraphics[width= \textwidth]{..//..//pheno_bc/figures/panelFig/rankstiBBTransect_Oct17.pdf}%,
-     \caption{Comparisons of the estimated changes in species ranked budburst order, \textbf{a} \& \textbf{d} between species-level effects (species intercept) and under high cues, species-level effects and under low cues, \textbf{b} \& \textbf{e}, and under low versus high cues, \textbf{c} \& \textbf{f}, for our eastern species (in red, \textbf{a-c}) and western species (in blue, \textbf{d-f}). For the three species that occur in both transect (shown in yellow), \emph{Alnus incana} exhibited the greatest rank change with a difference of three, while \emph{Betula papyrifera} had a rank difference of two and \emph{Populus tremuloides} a rank difference of one.}
-    \label{fig:rank}
-\end{figure}
-
-\begin{figure}[!ht]
-    \centering
-     \includegraphics[width=\textwidth]{..//..//pheno_bc/figures/panelFig/changes_pheno_4sites_Oct17.pdf}
-    \caption{Estimated mean responses in budburst timing of the first bud to varying forcing, chilling, and photoperiod cues across 47 deciduous woody species across North America (see Table \ref{tab4Site} for values). Points represent mean posterior estimates, while bars depict the 90\% uncertainty interval. Negative responses represent advances in budburst, while positive values represent delaying effects. }
-    \label{fig:muplot}
-\end{figure}
-
-\begin{figure}[h!]
-    \centering
-     \includegraphics[width=\textwidth]{..//..//pheno_bc/figures/panelFig/phyloIntColor_Oct17.pdf}
-     \caption{Species differences were accounted for by including phylogenetic effects on the species intercept in a model estimating days to budburst after the start of forcing treatments. We pruned to our species subset an existing phylogeny for flowering plants developed by Smith and Brown (2018).} 
-    \label{fig:phylo}
-\end{figure}
-
-
-
-
-% <<label= meanBBTab, echo=FALSE , results=tex>>=
-% # Mean bb dates across all treatments from raw data for 47 species at our two western sites, E.C. Manning Park and Smithers B.C., and our two eastern sites, Harvard Forest (HF) USA and St. Hippolyte(SH) Canada.
-% 
-% require(xtable)
-% #library(tidyr)
-% require(reshape2)
-% require(stringr)
-% require(plyr)
-% 
-% dl <- read.csv("..//input/dl_allbb_mini.csv")
-% 
-% temp <- str_split_fixed(dl$trt, "_", 3)
-% dl$chill<- temp[,1]
-% dl$photo <- temp[,2]
-% dl$force <- temp[,3]
-% 
-% dl.chill <- read.csv("..//input/chilling_values_Hope_Smithers.csv")
-% 
-% dl.wchill <- merge(dl, dl.chill, by = c("population","chill"))
-% dl.wchill$lab3 <- dl.wchill$lab2
-% dl.wchill$lab2 <- paste(dl.wchill$species, dl.wchill$population, dl.wchill$rep, sep = "_")
-% dl.wchill$transect <- "west"
-% 
-% df <- read.csv("..//input/df_dxb_prepped_data.csv")
-% df.chill <- read.csv("..//input/chilling_values_eastern.csv")
-% df.wchill <- merge(df, df.chill, by =c("population","chill"))
-% df.wchill <- df.wchill[, c("population", "chill","force","photo","lab2", "bb","species", "treatment","Chill_portions","Utah_Model")]
-% df.wchill$transect <- "east"
-% 
-% # # mergeing the my data with DF
-%  pheno <- rbind.fill(dl.wchill, df.wchill)
-% 
-% meanBB <- aggregate(pheno["bb"], pheno[c("population", "species")], FUN = mean, na.rm  =T)
-% meanBB$bb <- round(meanBB$bb, 0)
-% 
-% meanBBPop <- dcast(meanBB, species ~ population, value.var = "bb")
-% meanBBPop$species <- tolower(meanBBPop$species)
-% 
-% spInfo <- read.csv("..//input/species_list.csv")
-% spInfo$species.name <- gsub("_"," ", spInfo$species.name)
-% spInfo$species.name <- paste("\\emph{", spInfo$species.name, "}", sep = "")
-% mdlTab <- merge(meanBBPop, spInfo, by = "species")
-% mdlTab <- mdlTab[, c("species.name","HF","SH","mp","sm")]
-% 
-% colnames(mdlTab) <- c("Species" , "Harvard Forest", "St. Hippoltye","Manning Park", "Smithers")
-% 
-% meanBBTab <- xtable(mdlTab, caption="Mean budburst dates across all treatments from raw data for 47 species at our two western sites, E.C. Manning Park (MP) and Smithers B.C.(SM) Canada, and our two eastern sites, Harvard Forest (HF) USA and St. Hippolyte (SH) Canada.")
-% print(meanBBTab,include.rownames=F, caption.placement="top", hline.after=c(-1,0), sanitize.text.function = identity,digits=c(0,0,0,0,0))
-% 
-% @
-% 
-
 
 <<label=bbSuccess, echo=FALSE, results=tex >>=
 spwithbb <- read.csv("..//output/bb.success.ax.trt.csv", head = TRUE)

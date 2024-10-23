@@ -3,11 +3,6 @@
 // Including species as intercept
 // Leafout day as a function of species and site of origin as modeled group level factors, and site, temperature, photoperiod, and chilling as unmodeled factors (experimental manipulation)
 
-// Note by Lizzie: This model includes pooled intercepts
-// Adding non-centered parameterization (NCP or ncp) on b_inter_sp to start 
-
-// Tried widening the prior - didn't change it, still 15 dt
-//Tried ncp for warming
 functions {
   matrix lambda_vcv(matrix vcv, real lambda, real sigma){
     matrix[rows(vcv),cols(vcv)] local_vcv;

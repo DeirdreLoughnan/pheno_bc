@@ -69,29 +69,10 @@ pheno$force.n[pheno$force.n == "HF" & pheno$population == "sm"] <- "15"
 pheno$force.n[pheno$force.n == "LF" & pheno$population == "mp"] <- "10"
 pheno$force.n[pheno$force.n == "LF" & pheno$population == "sm"] <- "10"
 
-# (8*20+16*10)/24 #13.33
-# (8*15+16*5)/24 #8.33
-
 pheno$force.n[pheno$force.n == "HF" & pheno$population == "HF"] <- "13.33"
 pheno$force.n[pheno$force.n == "HF" & pheno$population == "SH"] <- "13.33"
 pheno$force.n[pheno$force.n == "LF" & pheno$population == "HF"] <- "8.33"
 pheno$force.n[pheno$force.n == "LF" & pheno$population == "SH"] <- "8.33"
-
-#forcing units - temp/hour
-# (12*20+12*10)# 360
-# (12*15+12*5) # 240
-# pheno$force.n[pheno$force.n == "HF" & pheno$population == "mp"] <- "360"
-# pheno$force.n[pheno$force.n == "HF" & pheno$population == "sm"] <- "360"
-# pheno$force.n[pheno$force.n == "LF" & pheno$population == "mp"] <- "240"
-# pheno$force.n[pheno$force.n == "LF" & pheno$population == "sm"] <- "240"
-# 
-# (8*20+16*10) #320
-# (8*15+16*5) #200
-# 
-# pheno$force.n[pheno$force.n == "HF" & pheno$population == "HF"] <- "320"
-# pheno$force.n[pheno$force.n == "HF" & pheno$population == "SH"] <- "320"
-# pheno$force.n[pheno$force.n == "LF" & pheno$population == "HF"] <- "200"
-# pheno$force.n[pheno$force.n == "LF" & pheno$population == "SH"] <- "200"
 
 pheno$force.n <- as.numeric(pheno$force.n)
 
@@ -123,21 +104,9 @@ pheno$force.z2 <- (pheno$force.n-mean(pheno$force.n,na.rm=TRUE))/(sd(pheno$force
 pheno$photo.z2 <- (pheno$photo.n-mean(pheno$photo.n,na.rm=TRUE))/(sd(pheno$photo.n,na.rm=TRUE)*2)
 pheno$chillport.z2 <- (pheno$Chill_portions-mean(pheno$Chill_portions,na.rm=TRUE))/(sd(pheno$Chill_portions,na.rm=TRUE)*2)
 
-pheno$force.z <- (pheno$force.n-mean(pheno$force.n,na.rm=TRUE))/(sd(pheno$force.n,na.rm=TRUE))
-pheno$photo.z <- (pheno$photo.n-mean(pheno$photo.n,na.rm=TRUE))/(sd(pheno$photo.n,na.rm=TRUE))
-pheno$chillport.z <- (pheno$Chill_portions-mean(pheno$Chill_portions,na.rm=TRUE))/(sd(pheno$Chill_portions,na.rm=TRUE))
-pheno$chillport.10 <- (pheno$Chill_portions)/(10)
-pheno$force.10 <- (pheno$force.n)/(10)
-
-
 pheno$site2.z2 <- (pheno$site2-mean(pheno$site2,na.rm=TRUE))/(sd(pheno$site2,na.rm=TRUE)*2)
 pheno$site3.z2 <- (pheno$site3-mean(pheno$site3,na.rm=TRUE))/(sd(pheno$site3,na.rm=TRUE)*2)
 pheno$site4.z2 <- (pheno$site4-mean(pheno$site4,na.rm=TRUE))/(sd(pheno$site4,na.rm=TRUE)*2)
-
-pheno$site2.z <- (pheno$site2-mean(pheno$site2,na.rm=TRUE))/(sd(pheno$site2,na.rm=TRUE))
-pheno$site3.z <- (pheno$site3-mean(pheno$site3,na.rm=TRUE))/(sd(pheno$site3,na.rm=TRUE))
-pheno$site4.z <- (pheno$site4-mean(pheno$site4,na.rm=TRUE))/(sd(pheno$site4,na.rm=TRUE))
-
 
 #going to split it into analysis of terminal bb and lateral bb
 # Starting with the terminal buds:
@@ -152,10 +121,6 @@ sort(unique(pheno.t$species.fact)) # 49
 
 # now get the phylogeny and pair it with species names:
 spInfo <- read.csv("input/species_list.csv")
-
-head(pheno.t)
-# change the df to lowercase:
-
 pheno.t <- merge(pheno.t, spInfo, by = "species")
 
 tree <- read.tree("input/SBphylo_phenobc.tre")
@@ -176,15 +141,6 @@ nspecies <- max(d$sppnum)
 #nspecies <- 21
 cophen_tree <- cophenetic(tree)
 vcv_tree <- vcv(tree, cor = TRUE)
-
-phypriors <- list( 
-  a_z_prior_mu = 4, 
-  a_z_prior_sigma = 1,
-  lam_interceptsa_prior_alpha = 4, # 
-  lam_interceptsa_prior_beta = 6, # 
-  sigma_interceptsa_prior_mu = 0.2, 
-  sigma_interceptsa_prior_sigma = 0.2
-)
 
 simu_inits <- function(chain_id) {
   a_z.temp <- rnorm(n = nspecies, mean = phypriors[["a_z_prior_mu"]], sd = phypriors[["a_z_prior_sigma"]])
@@ -210,25 +166,14 @@ datalist.z2 <- with(pheno.t,
                        Vphy = vcv_tree
                        ))
 
-
-datalist.z2$n_sp
-datalist.z2$n_site
-unique(datalist.z2$chill1)
-unique(datalist.z2$warm)
-unique(datalist.z2$photo)
-unique(datalist.z2$site2)
-unique(datalist.z2$site4)
-
 mdl.3 <- stan("stan/df_mdl_4sites_again_allint_ncp_phylogeny_natural_newPrior.stan",
                     data = datalist.z2,
                     iter = 4000, warmup = 3000, chains=4,
                     include = FALSE, pars = c("ypred_new","y_hat")
                     #, control = list(adapt_delta = 0.99)
 )
-save(mdl.3, file="output/bb_phylo_contphotothermo_2zscored_oct172024_triple.Rda")
-
-# #load("output/bb_4sites_phylo_contphotothermo_2zscored.Rda")
-sum2z <- summary(mdl.3)$summary
+save(mdl.3, file="output/bb_phylo_triple.Rda")
+sum <- summary(mdl.3)$summary
 
 col4table <- c("mean","2.5%","50%","97.5%")
 
@@ -253,6 +198,6 @@ mu_params_4 <- c("a_z",
                  "mu_b_inter_ps4",
                  "mu_b_inter_s4c1",
                  "sigma_y")
-meanz1 <- sum2z[mu_params_4, col4table]
+meanz1 <- sum[mu_params_4, col4table]
 round(meanz1,2)
 

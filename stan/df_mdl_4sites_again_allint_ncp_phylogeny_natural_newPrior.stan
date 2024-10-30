@@ -224,7 +224,7 @@ transformed parameters { // Vectorize: Won't save time probably here (no scalar 
 model {
 	// Priors //
 	a_sp ~ multi_normal(rep_vector(a_z,n_sp), lambda_vcv(Vphy, lam_interceptsa, sigma_interceptsa)); 
-	a_z ~ normal(5,30); //(5,10)
+	a_z ~ normal(30,30); //(5,10)
 	lam_interceptsa ~ beta(1,1);
   sigma_interceptsa ~ normal(1,10); //(1,10)
 

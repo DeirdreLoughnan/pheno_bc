@@ -11,7 +11,7 @@ options(stringsAsFactors = FALSE)
 #library(scales)
 #library(arm)
 library(rstan)
-library(shinystan)
+#library(shinystan)
 library(reshape2)
 library(bayesplot)
 library(ggplot2)
@@ -27,7 +27,7 @@ options(mc.cores = parallel::detectCores())
 if(length(grep("deirdreloughnan", getwd()) > 0)) { 
   setwd("~/Documents/github/pheno_bc") 
 }  else{
- setwd("/home/deirdre/pheno_bc") # for midge
+ setwd("~/Documents/github/pheno_bc") # for midge
 }
 
 
@@ -111,7 +111,7 @@ pheno$site4.z2 <- (pheno$site4-mean(pheno$site4,na.rm=TRUE))/(sd(pheno$site4,na.
 #going to split it into analysis of terminal bb and lateral bb
 # Starting with the terminal buds:
 #pheno.term <- pheno[,c("tbb", "chill.n", "force.n", "photo.n", "site.n", "species", "lab2")]
-pheno.term <- pheno[,c("bb", "force.n", "force.z2", "force.z", "photo.n","photo.z2","photo.z", "population", "species", "lab2","Utah_Model","Chill_portions","chillport.z2","chillport.z","chillport.10","force.10", "site2","site3","site4","site2.z2", "site3.z2","site4.z2","site2.z", "site3.z","site4.z")]
+pheno.term <- pheno[,c("bb", "force.n", "force.z2", "photo.n","photo.z2", "population", "species", "lab2","Utah_Model","Chill_portions","chillport.z2", "site2","site3","site4","site2.z2", "site3.z2","site4.z2")]
 pheno.t <- pheno.term[complete.cases(pheno.term), ] # 3609
 
 pheno.t <- pheno.term[complete.cases(pheno.term$bb), ] # 1780 rows data 
@@ -172,13 +172,20 @@ mdl.3 <- stan("stan/df_mdl_4sites_again_allint_ncp_phylogeny_natural_newPrior.st
                     include = FALSE, pars = c("ypred_new","y_hat")
                     #, control = list(adapt_delta = 0.99)
 )
-save(mdl.3, file="output/bb_phylo_triple.Rda")
+
+
+save(mdl.3, file="output/bb_phylo.Rda")
+
+load("output/bb_phylo_contphotothermo_2zscoredMay13.Rda")
+load("output/bb_phylo_triple.Rda")
 sum <- summary(mdl.3)$summary
+sumo <- summary(mdl.2)$summary
 
 col4table <- c("mean","2.5%","50%","97.5%")
 
 mu_params_4 <- c("a_z",
                  "lam_interceptsa",
+                 "sigma_interceptsa",
                  "mu_b_warm",
                  "mu_b_photo",
                  "mu_b_chill1",
@@ -197,7 +204,50 @@ mu_params_4 <- c("a_z",
                  "mu_b_inter_ws4",
                  "mu_b_inter_ps4",
                  "mu_b_inter_s4c1",
+                 "sigma_b_warm",
+                 "sigma_b_photo",
+                 "sigma_b_chill1",
+                 "sigma_b_inter_wp",
+                 "sigma_b_inter_wc1",
+                 "sigma_b_inter_pc1",
+                 "sigma_b_inter_s2c1",
+                 "sigma_b_inter_ws2",
+                 "sigma_b_inter_ps2",
+                 "sigma_b_inter_s3c1",
+                 "sigma_b_inter_ws3",
+                 "sigma_b_inter_ps3",
+                 "sigma_b_inter_s4c1",
+                 "sigma_b_inter_ws4",
+                 "sigma_b_inter_ps4",
                  "sigma_y")
 meanz1 <- sum[mu_params_4, col4table]
 round(meanz1,2)
 
+old <- data.frame(rstan::extract(mdl.2))
+new <- data.frame(rstan::extract(mdl.3))
+
+old <- old[, mu_params_4]
+new <- new[, mu_params_4]
+
+plot(new[,"b_site2"] ~ old[,"b_site2"])
+plot(new[,"sigma_b_inter_s4c1"] ~ old[,"sigma_b_inter_s4c1"])
+
+b_chill <- data.frame(sum[grep("b_chill1\\[", rownames(sum)), c("mean")])
+b_chill_o <- data.frame(sumo[grep("b_chill1\\[", rownames(sumo)), c("mean","2.5%", "97.5%", "n_eff", "Rhat")])
+
+plot(sum[grep("a_sp\\[", rownames(sum)), c("mean")] ~ sumo[grep("a_sp\\[", rownames(sumo)), c("mean")], xlab = "Constrained model", ylab ="Wide prior model", main = "a_sp");abline(0, 1)
+plot(sum[grep("b_chill1\\[", rownames(sum)), c("mean")] ~ sumo[grep("b_chill1\\[", rownames(sumo)), c("mean")], xlab = "Constrained model", ylab ="Wide prior model", main = "b_chill");abline(0, 1)
+plot(sum[grep("b_force_ncp\\[", rownames(sum)), c("mean")] ~ sumo[grep("b_force_ncp\\[", rownames(sumo)), c("mean")], xlab = "Constrained model", ylab ="Wide prior model", main = "b_force");abline(0, 1)
+plot(sum[grep("b_photo_ncp\\[", rownames(sum)), c("mean")] ~ sumo[grep("b_photo_ncp\\[", rownames(sumo)), c("mean")], xlab = "Constrained model", ylab ="Wide prior model", main = "b_photo");abline(0, 1)
+plot(sum[grep("b_inter_wp_ncp\\[", rownames(sum)), c("mean")] ~ sumo[grep("b_inter_wp_ncp\\[", rownames(sumo)), c("mean")], xlab = "Constrained model", ylab ="Wide prior model", main = "intrxn force x photo");abline(0, 1)
+plot(sum[grep("b_inter_wc1_ncp\\[", rownames(sum)), c("mean")] ~ sumo[grep("b_inter_wc1_ncp\\[", rownames(sumo)), c("mean")], xlab = "Constrained model", ylab ="Wide prior model", main = "intrxn force x chill");abline(0, 1)
+plot(sum[grep("b_inter_pc1_ncp\\[", rownames(sum)), c("mean")] ~ sumo[grep("b_inter_pc1_ncp\\[", rownames(sumo)), c("mean")], xlab = "Constrained model", ylab ="Wide prior model", main = "intrxn chill x photo");abline(0, 1)
+plot(sum[grep("b_inter_s2c1_ncp\\[", rownames(sum)), c("mean")] ~ sumo[grep("b_inter_s2c1_ncp\\[", rownames(sumo)), c("mean")], xlab = "Constrained model", ylab ="Wide prior model", main = "intrxn mp x chill");abline(0, 1)
+plot(sum[grep("b_inter_ws2_ncp\\[", rownames(sum)), c("mean")] ~ sumo[grep("b_inter_ws2_ncp\\[", rownames(sumo)), c("mean")], xlab = "Constrained model", ylab ="Wide prior model", main = "intrxn mp x force");abline(0, 1)
+plot(sum[grep("b_inter_ps2_ncp\\[", rownames(sum)), c("mean")] ~ sumo[grep("b_inter_ps2_ncp\\[", rownames(sumo)), c("mean")], xlab = "Constrained model", ylab ="Wide prior model", main = "intrxn mp x photo");abline(0, 1)
+plot(sum[grep("b_inter_s3c1_ncp\\[", rownames(sum)), c("mean")] ~ sumo[grep("b_inter_s3c1_ncp\\[", rownames(sumo)), c("mean")], xlab = "Constrained model", ylab ="Wide prior model", main = "intrxn hf x chill");abline(0, 1)
+plot(sum[grep("b_inter_ws3_ncp\\[", rownames(sum)), c("mean")] ~ sumo[grep("b_inter_ws3_ncp\\[", rownames(sumo)), c("mean")], xlab = "Constrained model", ylab ="Wide prior model", main = "intrxn hf x force");abline(0, 1)
+plot(sum[grep("b_inter_ps3_ncp\\[", rownames(sum)), c("mean")] ~ sumo[grep("b_inter_ps3_ncp\\[", rownames(sumo)), c("mean")], xlab = "Constrained model", ylab ="Wide prior model", main = "intrxn hf x photo");abline(0, 1)
+plot(sum[grep("b_inter_s4c1_ncp\\[", rownames(sum)), c("mean")] ~ sumo[grep("b_inter_s4c1_ncp\\[", rownames(sumo)), c("mean")], xlab = "Constrained model", ylab ="Wide prior model", main = "intrxn sh x chill");abline(0, 1)
+plot(sum[grep("b_inter_ws4_ncp\\[", rownames(sum)), c("mean")] ~ sumo[grep("b_inter_ws4_ncp\\[", rownames(sumo)), c("mean")], xlab = "Constrained model", ylab ="Wide prior model", main = "intrxn sh x force");abline(0, 1)
+plot(sum[grep("b_inter_ps4_ncp\\[", rownames(sum)), c("mean")] ~ sumo[grep("b_inter_ps4_ncp\\[", rownames(sumo)), c("mean")], xlab = "Constrained model", ylab ="Wide prior model", main = "intrxn sh x photo");abline(0, 1)

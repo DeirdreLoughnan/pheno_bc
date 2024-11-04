@@ -1068,7 +1068,7 @@ siteOrder <- c("Smithers","Manning Park", "St. Hippolyte","Harvard Forest")
 
 siteCue <- ggplot() + 
   stat_pointinterval(data = longest, aes(x = as.factor(cue), y = value, col = factor(site, level = siteOrder)), .width = c(.5, .95) ,position = position_dodge(0.9)) +
-  theme_classic() +   
+  theme_classic() + geom_hline(yintercept=0, linetype="dashed", color = "gray", size = 2)+   
   theme(legend.position = "right", 
     legend.title = element_blank(),
     axis.text= element_text( size= 17),
@@ -1104,7 +1104,7 @@ intrxnCF <- ggplot(intCF, aes(x= chill, group =1)) +
   theme(legend.title = element_blank()) +  annotate("text", x = -2, y = 125, label = "b", cex = 10) 
 
 
-pdf("figures/siteCue90_intrxn.pdf", width = 15, height = 5.5)
+pdf("figures/siteCue90_intrxn_Oct17.pdf", width = 15, height = 5.5)
 plot_grid(siteCue, intrxnCF)
 dev.off()
 

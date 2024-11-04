@@ -83,7 +83,6 @@ source("..//rcode/phenologyMsValues.R")
 \section*{Abstract} 
 %Aim 200-300 words --- New Phyt 200 GCB 300
 % Currently 201
-%emwNov2: the timing spans (not span)
 The timing of major life history events, such as the start of growth or reproduction, often spans weeks or months within a community due to species differences in their timing. Theory suggests this variation comes from species partitioning time to reduce competition for resources. But shared evolutionary history may moderate such potential effects. Adding to this complexity, timings vary across environments as they are often controlled by responses to  cues like temperature and daylength. To understand these drivers of variability, we examined community-level responses to environmental cues across 47 species from eastern and western North America. We focused on woody plant budburst, where the underlying cues---temperature and daylength---are well known and can be manipulated in controlled environments. Using a Bayesian phylogenetic model, we found little variation across sites, but strong variation by species. Budburst advanced in response to temperature and daylength, with these cues explaining \Sexpr{diffBAEastHigh} and \Sexpr{diffBAEast}\% of variation. The remaining variation was partially ascribed to intrinsic differences in species that were phylogenetically structured ($\lambda$ = \Sexpr{lamT}). The high species-level variation we observed suggest an role of evolutionary history, as well as additional, unidentifed traits that together shape phenological responses and their effects on community dynamics. 
 
 \section*{Introduction}
@@ -122,19 +121,19 @@ In our model, we included each of our three cues as continuous variables. To acc
 
 Our modelling approach allowed us to combine observations of budburst (\emph{$y_{i}$}) across species (\emph{sp}), to estimate both a species-level intercept ($\alpha_{sp_i}$) and slope estimates ($\beta$) for individual cues, sites, and all possible two-way interactions between cues (chilling, forcing and photoperiod) and between cues and sites to estimate the day of budburst (\emph{$\hat{y}$}) relative to the first day of forcing conditions. 
 
-\begin{align*} %emwNov2: just below, need to add subscript i to &\hat{y} 
-&\hat{y} = \alpha_{sp_i} + \beta_{Manning\ park} + \beta_{Harvard\ forest} + \beta_{St.\ Hippolyte} + \\
+\begin{align*} 
+&\hat{y_i} = \alpha_{sp_i} + \beta_{Manning\ park} + \beta_{Harvard\ forest} + \beta_{St.\ Hippolyte} + \\
 &\beta_{chilling_{sp_i}} + \beta_{forcing_{sp_i}} + \beta_{photoperiod_{sp_i}} + \\
 & \beta_{forcing \times chilling_{sp_i}} + \beta_{forcing \times photoperiod_{sp_i}} + \beta_{chilling \times photoperiod_{sp_i}}  + \\
 &\beta_{forcing \times Manning\ park_{sp_i}} + \beta_{forcing \times Harvard\ forest_{sp_i}}+ \beta_{forcing \times St.\ Hippolyte_{sp_i}} + \\
 &\beta_{chilling \times Manning\ park_{sp_i}} + \beta_{chilling \times Harvard\ forest_{sp_i}} + \beta_{chilling \times St.\ Hippolyte_{sp_i}} + \\
-&\beta_{photoperiod \times Manning\ park_{sp_i}} + \beta_{photoperiod \times Harvard\ forest_{sp_i}} + \beta_{photoperiod \times St.\ Hippolyte_{sp_i}} + \epsilon_{i}\\
+&\beta_{photoperiod \times Manning\ park_{sp_i}} + \beta_{photoperiod \times Harvard\ forest_{sp_i}} + \beta_{photoperiod \times St.\ Hippolyte_{sp_i}} \\% + \epsilon_{i}\\
 % &             \epsilon_{i} \sim \text{normal}(0, \sigma^2_y)
 \end{align*}
 % \\
-\begin{align*} %emwNov2: You have sort of doubled your error terms below .... so delete the first line below OR delete the second line below and the epsilon above ... also what is subscript y? (I personally would delete the second line below and the epsilon above and then sigma is subscript free I am pretty sure! Let me know if the problem here is not obvious to you and I can explain more.)
-& {y}_i \sim \text{normal}(\hat{y}_i, \sigma^2_y)\\
-& \epsilon_{i} \sim \text{normal}(0, \sigma^2_y)
+\begin{align*} 
+& {y}_i \sim \text{normal}(\hat{y}_i, \sigma^2)\\
+%& \epsilon_{i} \sim \text{normal}(0, \sigma^2_y)
 \end{align*}
 
 The slopes were modelled with partial pooling at the species-level:\\
@@ -162,14 +161,13 @@ We included the phylogenetic effect of budburst timing ($\alpha_{sp}$) as a vari
 
 \noindent The timing of budburst ancestrally is represented as root value of the means of the multivariate normal distribution. For more detail on this method of phylogenetic modeling, see \citet[][]{Morales2024}.\\
 
-%emwNov2: consider changing below to be: We used non-informative priors for each of our model parameters (increasing priors three-fold did not demonstrably change our estimates), 
-We used semi-informative priors for each of our model parameters, validating the model code using test data prior to analysis. Our model produced $\hat{R}$ values close to 1, well mixed chains, and \emph{$n_{eff}$} values that exceeded 10\% of the model iterations. Our model was fit using the Stan language with the rstan package \citep[v. 2.26.23,][]{rstan2018} in R \citep[v. 4.3.1,][]{R}. \\ 
+We used non-informative priors for each of our model parameters (increasing priors three-fold did not demonstrably change our estimates), validating the model code using test data prior to analysis. Our model produced $\hat{R}$ values close to 1, well mixed chains, and \emph{$n_{eff}$} values that exceeded 10\% of the model iterations. Our model was fit using the Stan language with the rstan package \citep[v. 2.26.23,][]{rstan2018} in R \citep[v. 4.3.1,][]{R}. \\ 
 
 We present model estimates, relative to baseline conditions of low chilling, low forcing, and short photoperiod treatments, and---when relevant---for the Smithers community. We present results as means and 90\% posterior uncertainty intervals from our Bayesian phylogenetic models.\\ 
 
 \subsection*{Results}
 
-On average, species budburst \Sexpr{a_z} days (uncertainty interval: \Sexpr{a_zL}, \Sexpr{a_zU}, all estimates are given as mean $\pm$ 90\% uncertainty intervals, henceforth `UI,' and budburst dates given as relative to baseline conditions, see methods for more details) after the start of forcing and photoperiod treatments. The empirical observations on which this modelled mean is based, span budburst days as early as \Sexpr{minBB} for \emph{Aronia melanocarpa}, and as late as day \Sexpr{maxBB} for \emph{Quercus velutina}. Between the earliest and latest budbursting species, the difference in the mean day of budburst was \Sexpr{diffBBEast} and \Sexpr{diffBBWest} days for the eastern and western sites respectively. Overall we found species budburst was moderately phylogenetically structured ($\lambda$ of \Sexpr{lamT}, UI: \Sexpr{lamTLower}, \Sexpr{lamTUpper}, estimated on the intercept) and that all cues led to an advance in budburst date. Of the three cues, chilling had the largest effect (\Sexpr{chillCue}, UI: \Sexpr{chillCueL}, \Sexpr{chillCueU}) and photoperiod the smallest (\Sexpr{photoCue}, UI: \Sexpr{photoCueL}, \Sexpr{photoCueU}, Fig. \ref{fig:siteCues}a, \ref{fig:intrxn3}). But we found a large, positive interaction between forcing and chilling (\Sexpr{intrxnCF}, UI: \Sexpr{intrxnCFL}, \Sexpr{intrxnCFU}, \ref{fig:siteCues}b); this subadditive effect means that low chilling is offset by high forcing conditions, and vice versa (see Table \ref{tab4Site} for model output).\\ 
+On average, species budburst \Sexpr{a_z} days (uncertainty interval: \Sexpr{a_zL}, \Sexpr{a_zU}, all estimates are given as mean $\pm$ 90\% uncertainty intervals, henceforth `UI,' and budburst dates given as relative to baseline conditions, see methods for more details) after the start of forcing and photoperiod treatments. The empirical observations on which this modelled mean is based, spans budburst days as early as \Sexpr{minBB} for \emph{Aronia melanocarpa}, and as late as day \Sexpr{maxBB} for \emph{Quercus velutina}. Between the earliest and latest budbursting species, the difference in the mean day of budburst was \Sexpr{diffBBEast} and \Sexpr{diffBBWest} days for the eastern and western sites respectively. Overall we found species budburst was moderately phylogenetically structured ($\lambda$ of \Sexpr{lamT}, UI: \Sexpr{lamTLower}, \Sexpr{lamTUpper}, estimated on the intercept) and that all cues led to an advance in budburst date. Of the three cues, chilling had the largest effect (\Sexpr{chillCue}, UI: \Sexpr{chillCueL}, \Sexpr{chillCueU}) and photoperiod the smallest (\Sexpr{photoCue}, UI: \Sexpr{photoCueL}, \Sexpr{photoCueU}, Fig. \ref{fig:siteCues}a, \ref{fig:intrxn3}). But we found a large, positive interaction between forcing and chilling (\Sexpr{intrxnCF}, UI: \Sexpr{intrxnCFL}, \Sexpr{intrxnCFU}, \ref{fig:siteCues}b); this subadditive effect means that low chilling is offset by high forcing conditions, and vice versa (see Table \ref{tab4Site} for model output).\\ 
 
 Overall we found small site-level effects compared to differences between cues. Across all species, there was considerable overlap in the responses of the four sites to each cue (Fig. \ref{fig:siteCues}). As such, low forcing, chilling, and shorter photoperiods all produced later estimated budburst dates compared to higher temperature and longer photoperiod treatments across all sites and across transects (Fig. \ref{fig:intrxn3} a-c, shown for baseline conditions, see Table \ref{tab4Site} for model output). Overall budburst dates did not differ between sites, though eastern sites budburst marginally earlier (\Sexpr{meanEastEsti}, UI: \Sexpr{meanEastEstiL}, \Sexpr{meanEastEstiU}) compared to the western  sites (\Sexpr{meanWestEsti}, UI: \Sexpr{meanWestEstiL}, \Sexpr{meanWestEstiU}, see also Table \ref{tab4Site} for model output). This could be due to the earlier collection date of our western species, which reduced the field chilling they received relative to our eastern samples (though see corrections for this in the statistical analysis section of our methods).\\ 
 
@@ -224,8 +222,8 @@ The authors have no competing interests.
 \newpage
 \begin{figure}[h!]
     \centering %emwNov2: Can you add a dashed gray line at zero?
-     \includegraphics[width=\textwidth]{..//figures/panelFig/siteCue90_intrxn_Oct17.pdf}
-    \caption{\textbf{a,} Posterior distributions of estimated chilling, forcing, and photoperiod responses with site level effects for individual sites. Points represent the mean, thicker lines the 50\% uncertainty interval, and the thin lines the 90\% uncertainty interval. \textbf{b,} Cues interacted to produce a subadditive effect that promoted budburst under either low forcing or low chilling conditions. variable responses that promote budburst when individual cues are not met. We standardized predictors (chilling, forcing, and photoperiod) via $z$-scores using two standard deviations, see methods for further details.} %emw7Oct2024 -- something is wrong in this caption.... maybe delete: variable responses that promote budburst when individual cues are not met.  ??
+     \includegraphics[width=\textwidth]{..//figures/panelFig/siteCue90_intrxn_oct17.pdf}
+    \caption{\textbf{a,} Posterior distributions of estimated chilling, forcing, and photoperiod responses with site level effects for individual sites. Points represent the mean, thicker lines the 50\% uncertainty interval, and the thin lines the 90\% uncertainty interval. \textbf{b,} Cues interacted to produce a subadditive effect that promoted budburst under either low forcing or low chilling conditions. variable responses that promote budburst when individual cues are not met. We standardized predictors (chilling, forcing, and photoperiod) via $z$-scores using two standard deviations, see methods for further details.} 
     \label{fig:siteCues}
 \end{figure}
 \newpage

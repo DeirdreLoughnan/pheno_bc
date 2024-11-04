@@ -152,11 +152,11 @@ pheno.t <- merge(pheno.t, spInfo, by = "species")
 
 #load("output/final/bb_4sites_phylo_mini.Rda")
 #load("output/bb_4sites_phylo_contphotothermo_zscored_Apr19.Rda")
-load("output/bb_phylo_contphotothermo_2zscoredMay13.Rda")
+load("output/bb_phylo_contphotothermo_2zscored_oct172024_triple.Rda")
 # sum <- summary(mdl.4phyloContWP)$summary
 # post <- rstan::extract(mdl.4phyloContWP)
-sum <- summary(mdl.2z)$summary
-post <- rstan::extract(mdl.2z)
+sum <- summary(mdl.3)$summary
+post <- rstan::extract(mdl.3)
 #############################################
 col4fig <- c("mean","sd","25%","50%","75%","Rhat")
 col4table <- c("mean","sd","2.5%","50%","97.5%","Rhat")

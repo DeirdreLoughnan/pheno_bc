@@ -76,7 +76,7 @@
 \begin{figure}[h!]
     \centering
      \includegraphics[width=\textwidth]{..//..//pheno_bc/figures/panelFig/cueST28Chill_90_Oct17.pdf}
-    \caption[Comparison of cues by functional groups]{Comparisons of posterior distributions for cues estimates between shrub and tree species. Circles represent the mean cues, while the thinner black line the 90\% quantile interval.}
+    \caption{Comparisons of posterior distributions for cue estimates between shrub and tree species. Circles represent the mean, while the thicker error bars represent the 50\% uncertainty interval, and thinner line the 90\% quantile interval.}
     \label{fig:cueST}
     \end{figure}
     

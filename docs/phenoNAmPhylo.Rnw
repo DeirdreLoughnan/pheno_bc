@@ -18,6 +18,7 @@
 \usepackage[export]{adjustbox} % adding a box around a map
 \usepackage{lineno}
 \linenumbers
+\linespread{1.25}
 % recommended! Uncomment the below line and change the path for your computer!
 % \SweaveOpts{prefix.string=/Users/Lizzie/Documents/git/teaching/demoSweave/Fig.s/demoFig, eps=FALSE} 
 %put your Fig.s in one place! Also, note that here 'Fig.s' is the folder and 'demoFig' is what each 
@@ -28,7 +29,7 @@
  \captionsetup[subfigure]{labelformat=simple, position=top, labelfont=bf,textfont=large,singlelinecheck=off,justification=raggedright, font = large}
 
 \usepackage{xr-hyper} %refer to Fig.s in another document
-\usepackage{hyperref}
+%\usepackage{hyperref}
 \externaldocument{PhenoNAmPhylo_SM}
 
 \setlength{\captionmargin}{30pt}
@@ -74,16 +75,39 @@
 $^1$ Department of Forest and Conservation Sciences, Faculty of Forestry, University of British Columbia, 2424 Main Mall
 Vancouver, BC, Canada, V6T 1Z4. \\
 
-Corresponding Author: Deirdre Loughnan, deirdre.loughnan@ubc.ca \\
+Corresponding Author: Deirdre Loughnan, deirdre.loughnan@ubc.ca, 6270 University Blvd, RM 1015, Vancouver, BC, V6T 1Z4\\
+Coauthor: Elizabeth Wolkovich, e.wolkovich@ubc.ca\\
 
+Running title: The environment and evolution shape forests \\
+
+Keywords: Phenology, Budburst, Climate change, Forest communities, Community assembly, Temporal niche.\\
+
+Article type: Letter\\
+
+Abstract: words
+Main text: words
+References:
+Figures and tables:
+
+\section*{Author Contribution Statement}
+Both D.L. and E.M.W. conceived the study, led the collection of the data for the Western and Eastern experiments respectively, contributed to the analysis and code and contributed to the writing and revision of the manuscript.
+
+\section*{Competing Interests Statement}
+
+The authors have no competing interests.
+
+\section*{Data and code availability statement}
+All data and Stan code will be freely available through the Knowledge Network for Biocomplexity at the time of publication.
 <<label=runcode1,  echo=FALSE>>=
 source("..//rcode/phenologyMsValues.R")
 @
+\newpage
 
 \section*{Abstract} 
-%Aim 200-300 words --- New Phyt 200 GCB 300
-% Currently 201
-The timing of major life history events, such as the start of growth or reproduction, often spans weeks or months within a community due to species differences in their timing. Theory suggests this variation comes from species partitioning time to reduce competition for resources. But shared evolutionary history may moderate such potential effects. Adding to this complexity, timings vary across environments as they are often controlled by responses to  cues like temperature and daylength. To understand these drivers of variability, we examined community-level responses to environmental cues across 47 species from eastern and western North America. We focused on woody plant budburst, where the underlying cues---temperature and daylength---are well known and can be manipulated in controlled environments. Using a Bayesian phylogenetic model, we found little variation across sites, but strong variation by species. Budburst advanced in response to temperature and daylength, with these cues explaining \Sexpr{diffBAEastHigh} and \Sexpr{diffBAEast}\% of variation. The remaining variation was partially ascribed to intrinsic differences in species that were phylogenetically structured ($\lambda$ = \Sexpr{lamT}). The high species-level variation we observed suggest an role of evolutionary history, as well as additional, unidentifed traits that together shape phenological responses and their effects on community dynamics. 
+%Aim 200-300 words --- New Phyt 200 Ecology letters 150
+The timing of major life history events, such as the start of growth or reproduction, often spans weeks or months within a community due to species differences in their timing. Theory suggests this variation comes from species partitioning time to reduce competition for resources. But shared evolutionary history may moderate such potential effects. Adding to this complexity, timings vary across environments as they are often controlled by responses to  cues like temperature and daylength. To understand these drivers of variability, we examined community-level responses to environmental cues across 47 species from eastern and western North America. We focused on woody plant budburst, where the underlying cues---temperature and daylength---are well known and can be manipulated in controlled environments. Using a Bayesian phylogenetic model, we found little variation across sites, but strong variation by species. Budburst advanced in response to temperature and daylength, with these cues explaining \Sexpr{diffBAEastHigh} and \Sexpr{diffBAEast}\% of variation. The remaining variation was partially ascribed to intrinsic differences in species that were phylogenetically structured ($\lambda$ = \Sexpr{lamT}). The high species-level variation we observed suggest a role of evolutionary history, as well as additional, unidentified traits that together shape phenological responses and their effects on community dynamics. 
+
+\newpage
 
 \section*{Introduction}
 
@@ -110,7 +134,7 @@ We selected the dominant deciduous species in each forest community and maximize
 
 We used growth chambers with two levels of chilling---with either no additional chilling or 30 days at 4$^{\circ}$C for our eastern study, and 30 or 70 days of chilling at 4$^{\circ}$C for our western study (all dark)---after which we moved plants to one of two levels of forcing---with day and night temperatures that varied to create a cool regime of 15:5$^{\circ}$C and a warm regime of 20:10$^{\circ}$C---crossed with two photoperiods of either 8 or 12 hours---for a total of 8 distinct treatments in each study.\\
 
-Our design was similar for both eastern and western species. We had seven to ten replicates per treatment in our eastern study and eight replicates in our western study, with the exception of \emph{Sorbus scopulina}, for which we we only had six replicates per treatment. Our eastern and western studies differed only in the timing of sample collection and thermoperiodicity---alternation in day and night temperatures---in forcing treatments. By collecting samples in our eastern study in late January, they experienced considerable field chilling. We collected the western samples in late October, with most chilling occurring under controlled conditions. In our eastern study, we also set the duration of forcing temperatures to correspond with the photoperiod treatments. While this is a widespread and common approach in phenology chamber studies, it leads to a confounding effect in the thermoperiodicity \citep{Buonaiuto2023}. Thus we applied forcing temperatures for 12 hours independent of the duration of the photoperiod treatments in our western study, and controlled for this difference in our statistical approach (see below). Further details regarding the re-cutting of samples, water changes, and rotation through chambers are presented in \citet[][]{Flynn2018}. We controlled for differences in the number of replicates across species in our statistical approach using partial pooling (see section on statistical analysis). \\ 
+Our design was similar for both eastern and western species. We had seven to ten replicates per treatment in our eastern study and eight replicates in our western study, with the exception of \emph{Sorbus scopulina}, for which we only had six replicates per treatment. Our eastern and western studies differed only in the timing of sample collection and thermoperiodicity---alternation in day and night temperatures---in forcing treatments. By collecting samples in our eastern study in late January, they experienced considerable field chilling. We collected the western samples in late October, with most chilling occurring under controlled conditions. In our eastern study, we also set the duration of forcing temperatures to correspond with the photoperiod treatments. While this is a widespread and common approach in phenology chamber studies, it leads to a confounding effect in the thermoperiodicity \citep{Buonaiuto2023}. Thus we applied forcing temperatures for 12 hours independent of the duration of the photoperiod treatments in our western study, and controlled for this difference in our statistical approach (see below). Further details regarding the re-cutting of samples, water changes, and rotation through chambers are presented in \citet[][]{Flynn2018}. We controlled for differences in the number of replicates across species in our statistical approach using partial pooling (see section on statistical analysis). \\ 
 
 We assessed phenological stages of budburst using the BBCH scale, adapted for our specific species \citep{Finn2007}. We also created photographic guides to help define each stage of the BBCH scale for our specific species \citep{Savas2017, LoughnanInPrepc}. Every 1-3 days, we observed each sample and recorded all phenological stages up to full leaf expansion \cite[defined as code 17 by][]{Finn2007}. Here, we present the response in budburst date, defined as the day of budbreak or shoot elongation \citep[defined as code 07 by][]{Finn2007}. Our eastern study spanned 82 days, with over 19320 phenological observations, while the western study spanned 113 days and 47844 phenological observations.\\ 
 
@@ -171,7 +195,7 @@ On average, species budburst \Sexpr{a_z} days (uncertainty interval: \Sexpr{a_zL
 
 Overall we found small site-level effects compared to differences between cues. Across all species, there was considerable overlap in the responses of the four sites to each cue (Fig. \ref{fig:siteCues}). As such, low forcing, chilling, and shorter photoperiods all produced later estimated budburst dates compared to higher temperature and longer photoperiod treatments across all sites and across transects (Fig. \ref{fig:intrxn3} a-c, shown for baseline conditions, see Table \ref{tab4Site} for model output). Overall budburst dates did not differ between sites, though eastern sites budburst marginally earlier (\Sexpr{meanEastEsti}, UI: \Sexpr{meanEastEstiL}, \Sexpr{meanEastEstiU}) compared to the western  sites (\Sexpr{meanWestEsti}, UI: \Sexpr{meanWestEstiL}, \Sexpr{meanWestEstiU}, see also Table \ref{tab4Site} for model output). This could be due to the earlier collection date of our western species, which reduced the field chilling they received relative to our eastern samples (though see corrections for this in the statistical analysis section of our methods).\\ 
 
-Budburst of individual species showed distinct differences in their timing and the relative importance of cues. Later budbursting species had slightly larger responses to chilling and forcing (Fig. \ref{fig:cueGrad}). Despite our expectations that species responses should differ across the canopy layer, with shrubs being less sensitive to cues than trees, we did not find substantial differences across these two functional groups (Fig. \ref{fig:cueST}). Shrubs, like \emph{Cornus stolonifera}, showed small responses to chilling and forcing (Fig. \ref{fig:cueGrad}b, d). But \Sexpr{perLateShrub}\% of the shrubs, including \emph{Menziesia ferruginea} and \emph{Symphoricarpos alba}, exhibited the opposite response and budburst relatively late (Fig. \ref{fig:betaAlphaGrad},\ref{fig:cueST}). Similarly for trees, some matched our predictions for their cues, but \Sexpr{perEarlyTree}\% budburst earlier than expected. Specific tree species, such as \emph{Quercus velutina}, did have larger chilling and photoperiod responses as predicted (Fig.  \ref{fig:cueGrad}a, e), and \emph{Fagus grandifolia} had the largest photoperiod response  (Fig. \ref{fig:cueGrad}e). But overall we did not find clear differences between the cues of trees and shrubs across the four forest communities.\\ 
+Budburst of individual species showed distinct differences in their timing and the relative importance of cues. Later budbursting species had slightly larger responses to chilling and forcing (Fig. \ref{fig:cueGrad}). Despite our expectations that species responses should differ across the canopy layer, with shrubs being less sensitive to cues than trees, we did not find substantial differences across these two functional groups (Fig. \ref{fig:cueST}). Shrubs, like \emph{Cornus stolonifera}, showed small responses to chilling and forcing (Fig. \ref{fig:cueGrad}b, d). But \Sexpr{perLateShrub}\% of the shrubs, including \emph{Menziesia ferruginea} and \emph{Symphoricarpos alba}, exhibited the opposite response and budburst relatively late (Fig. \ref{fig:betaAlphaGrad}, \ref{fig:cueST}). Similarly for trees, some matched our predictions for their cues, but \Sexpr{perEarlyTree}\% budburst earlier than expected. Specific tree species, such as \emph{Quercus velutina}, did have larger chilling and photoperiod responses as predicted (Fig.  \ref{fig:cueGrad}a, e), and \emph{Fagus grandifolia} had the largest photoperiod response  (Fig. \ref{fig:cueGrad}e). But overall we did not find clear differences between the cues of trees and shrubs across the four forest communities.\\ 
 
 Our results depict the relative importance of phenological cues to variation across species, but we found the contribution of cues to budburst order and timing to be dependent on the magnitude of the cue, and to be small compared to the overall species differences unexplained by cues (represented in the modeling framework as the intercept). The rank order of species estimated budburst changed more under high cue conditions than under low cues (Fig \ref{fig:rank}). The budburst ranking for the three species that occurred in both transects remained relatively consistent across the two communities (Fig. \ref{fig:cueGrad}), with only \emph{Alnus incana} in the western community experiencing a large change in rank with cues (Fig. \ref{fig:rank}). \\
 
@@ -194,36 +218,37 @@ Our study included the three cues---chilling, forcing and photoperiod---commonly
 
 Latent traits could reflect environmental cues or additional traits that mitigate environmental cues. Theories of how plants vary in their growth strategies predict phenology should correlate with other key traits, including those that facilitate greater resource use and earlier spring growth, or the greater competitive abilities needed when budbursting later \citep{Grime1977}. For example, early successional species are predicted to budburst early in the season and have traits associated with faster growth rates and resource acquisition, such as high specific leaf areas or low wood density \citep{Wright2004, Chave2009}. Incorporating phenology into a broader trait framework could thus provide insights into traits that correlate with budburst timing, and---ultimately---the drivers selecting for species phenotypes. \\ 
 
-Our results suggest that evolutionary history and species ancestral phenotypee have some effect on species adaptive potential to future climates, but they explain only part of the variability observed. Species traits are shaped over `deep' timescales, with previous evolution also influencing responses to the present climate. Phenological trends could thus be an indication of limited evolutionary time to adapt---such as for temperate species, like \emph{Nyssa} and \emph{Fagus} that had shorter geological time frames to respond to their local temperatures \citep{Lechowicz1984}---or shaped by selection on other important traits that are not phylogenetically structured. The phylogenetic effects could therefore skew species assemblages, favouring species with traits and cue requirements adapted for historical climates. \\
-%dlOct21: I deleted the last sentence above, but added it back in after reading it a few hours later.
+Our results suggest that evolutionary history and species ancestral phenotype have some effect on species adaptive potential to future climates, but they explain only part of the variability observed. Species traits are shaped over `deep' timescales, with previous evolution also influencing responses to the present climate. Phenological trends could thus be an indication of limited evolutionary time to adapt---such as for temperate species, like \emph{Nyssa} and \emph{Fagus} that had shorter geological time frames to respond to their local temperatures \citep{Lechowicz1984}---or shaped by selection on other important traits that are not phylogenetically structured. The phylogenetic effects could therefore skew species assemblages, favouring species with traits and cue requirements adapted for historical climates. \\
 
 \subsection*{Predicting budburst under future climates} 
 
 To accurately forecast shifts in phenology and its impact on ecological communities will require an understanding of what environmental cues are most important at the population-, species-, and community-level. As climate change leads to greater temperature cues, we are already observing advances in species budburst within diverse ecological communities. But the greatest ecological impacts will occur in high latitude communities that are warming fastest and to a greater extent \citep{IPCC2018}. This makes species in northern communities most likely to advance their budburst and experience the greatest changes in budburst order, but our knowledge of these systems is limited by the lack of data available. The consistent trends we observed across sites supports forecasting across similar regions with limited local phenological data but similar species assemblages, allowing us to leverage existing research to mitigate the cascading effects that shifted plant phenology could have on ecological communities, their competitive landscapes and their ecosystem services.\\
 
-%emw7Oct2024 -- good stuff here, but the last two sentences are pretty long and hard to get through, can you simplify?
 While our findings have applications to plant communities, our analytical approach is widely applicable to forecasting diverse species responses to climate change. The phylogenetic model we used here could be easily applied to other phenological events or suites of species from across the tree of life. By combining species-rich and community-wide approaches with phylogenetic relationships we can better understand the impacts of evolutionary history and current ecological processes in shaping species phenology under a changing climate.
 
 \section*{Acknowledgements} 
 We thank M. Yasutake, K. Slimon, S. Larter, P. Autio, and S. Collins for their help running the Western part of this experiment; D. Flynn and T. Savas for contributions to the Eastern experimental data; S. Joly for his help constructing the phylogenetic tree used in our analysis; and to J. Hopps and K. Wilson for their support during our work at E. C. Manning Park and P. Crawford and D. Belford for their support while working in Babine Provincial Park. 
-
-\section*{Author Contribution Statement}
-Both D.L. and E.M.W. conceived the study, led the collection of the data for the Western and Eastern experiments respectively, contributed to the analysis and code and contributed to the writing and revision of the manuscript.
-
-\section*{Competing Interests Statement}
-
-The authors have no competing interests.
+% 
+% \section*{Data and code availability statement}
+% All data and Stan code will be freely available through the Knowledge Network for Biocomplexity at the time of publication.
+% 
+% \section*{Author Contribution Statement}
+% Both D.L. and E.M.W. conceived the study, led the collection of the data for the Western and Eastern experiments respectively, contributed to the analysis and code and contributed to the writing and revision of the manuscript.
+% 
+% \section*{Competing Interests Statement}
+% 
+% The authors have no competing interests.
 
 \clearpage
 
-\bibliographystyle{bibliography/bibstyles/gcb}% 
+\bibliographystyle{bibliography/bibstyles/ecoletters}% 
 \bibliography{bibliography/phenoBCBib.bib}
 
 \newpage
 \begin{figure}[h!]
-    \centering %emwNov2: Can you add a dashed gray line at zero?
+    \centering 
      \includegraphics[width=\textwidth]{..//figures/panelFig/siteCue90_intrxn_oct17.pdf}
-    \caption{\textbf{a,} Posterior distributions of estimated chilling, forcing, and photoperiod responses with site level effects for individual sites. Points represent the mean, thicker lines the 50\% uncertainty interval, and the thin lines the 90\% uncertainty interval. \textbf{b,} Cues interacted to produce a subadditive effect that promoted budburst under either low forcing or low chilling conditions. variable responses that promote budburst when individual cues are not met. We standardized predictors (chilling, forcing, and photoperiod) via $z$-scores using two standard deviations, see methods for further details.} 
+    \caption{\textbf{a,} Posterior distributions of estimated chilling, forcing, and photoperiod responses with site-level effects for individual sites. Points represent the mean, thicker lines the 50\% uncertainty interval, and the thin lines the 90\% uncertainty interval. \textbf{b,} Cues interacted to produce a subadditive effect that promoted budburst under either low forcing or low chilling conditions. We standardized predictors (chilling, forcing, and photoperiod) via $z$-scores using two standard deviations, see methods for further details.} 
     \label{fig:siteCues}
 \end{figure}
 \newpage
@@ -231,7 +256,7 @@ The authors have no competing interests.
 \begin{figure}[ht]
 \centering
     \includegraphics[width=\textwidth]{..//..//pheno_bc/figures/panelFig/dotCFPEWSizeColorUnitsShape_Oct17.pdf}
-    \caption{Estimated species \textbf{a,b}, chilling, \textbf{c,d} forcing, \textbf{e,f}  and photoperiod responses ranked by increasing estimated budburst dates for both the \textbf{a,c,e},  eastern \textbf{b,d,f}  and western sites. Cues are plotted on differing y-axis scales to better depict species differences across cues. For each species, the thinner error bars represent the 90\% uncertainty interval, and thicker bars represent the 50\% uncertainty interval. The three species that occur in both the eastern and western transects are depicted using darker colours. To make the results across cues directly comparable, we standardized predictors (here, chilling, forcing, and photoperiod) via $z$-scores using two standard deviations, see methods for further details.} 
+    \caption{Estimated species \textbf{a,b} chilling, \textbf{c,d} forcing, and \textbf{e,f} photoperiod responses ranked by increasing estimated budburst dates for both the \textbf{a,c,e},  eastern and \textbf{b,d,f} western sites. Cues are plotted on differing y-axis scales to better depict species differences across cues. For each species, the points represent the mean, thinner error bars represent the 90\% uncertainty interval, and thicker bars represent the 50\% uncertainty interval. The three species that occur in both the eastern and western transects are depicted using darker colours. To make the results across cues directly comparable, we standardized predictors (here, chilling, forcing, and photoperiod) via $z$-scores using two standard deviations, see methods for further details.} 
     \label{fig:cueGrad}
 \end{figure}
 \newpage
@@ -246,8 +271,8 @@ The authors have no competing interests.
 
 \begin{figure}[ht]
 \centering
-    \includegraphics[width=\textwidth]{..//..//pheno_bc/figures/panelFig/dotBetaAlphaLongBW_LH_Oct17.pdf}%,
-    \caption{Comparisons of estimated day of budburst based on the full model (intercept plus all cues), shown in white (open) symbols, versus the intercepts only (without effects of cues---chilling, forcing, and photoperiod), shown in black (filled) symbols, ordered according to differences in species estimated budburst dates for both the \textbf{a}, eastern \textbf{b}, and western sites under low cue conditions, depicted as circles, and high cue conditions, depicted as triangles.} 
+    \includegraphics[width= 0.95 \textwidth]{..//..//pheno_bc/figures/panelFig/dotBetaAlphaLongBW_LH_Oct17.pdf}%,
+    \caption{Comparisons of estimated day of budburst based on the full model (intercept plus all cues), shown as white (open) symbols, versus the intercepts only (without effects of chilling, forcing, and photoperiod), shown as black (filled) symbols, ordered according to differences in species estimated budburst dates for both the \textbf{a}, eastern \textbf{b}, and western sites under low cue conditions, depicted as circles, and high cue conditions, depicted as triangles.} 
     \label{fig:betaAlphaGrad}
 \end{figure}
 \newpage

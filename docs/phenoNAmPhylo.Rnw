@@ -69,13 +69,17 @@
 
 \title{Current environments and evolutionary history shape forest temporal assembly} 
 \date{\today}
-\author{Deirdre Loughnan$^1$ and E M Wolkovich$^1$}
+\author{Deirdre Loughnan$^{1,2,3}$ and E M Wolkovich$^1$}
 \maketitle 
 
 $^1$ Department of Forest and Conservation Sciences, Faculty of Forestry, University of British Columbia, 2424 Main Mall
 Vancouver, BC, Canada, V6T 1Z4. \\
 
-Corresponding Author: Deirdre Loughnan, deirdre.loughnan@ubc.ca, 6270 University Blvd, RM 1015, Vancouver, BC, V6T 1Z4\\
+$^2$ Department of Zoology, Faculty of Science, University of British Columbia, 6270 University Blvd, Vancouver, BC, Canada, V6T 1Z4 \\
+
+$^3$ Hakai Institute, PO Box 25039, Campbell River, BC, Canada, V9W 0B7 \\
+
+Corresponding Author: Deirdre Loughnan, deirdre.loughnan@ubc.ca, 6048026917, 6270 University Blvd, RM 1015, Vancouver, BC, V6T 1Z4\\
 Coauthor: Elizabeth Wolkovich, e.wolkovich@ubc.ca\\
 
 Running title: The environment and evolution shape forests \\
@@ -106,7 +110,7 @@ source("..//rcode/phenologyMsValues.R")
 %emw26Nov: Re-reading the abstract after some distance, it is a little dull. I made some edits to the shortened version below that you may want to use.
 
 %emw26Nov: Semi-shortened alternative that sounds more exciting (though I don't love the last sentence).... 
-How species may assemble temporally has received growing attention as climate change shifts the timing of major life cycle events across most systems. While theory predicts species should partition time to reduce competition for resources few studies have examined this given the complexity of environmental cues that make phenology highly variable across years and sites. Here, focusing on timing of woody plant budburst, where the underlying cues---temperature and daylength---are well known and can be manipulated in controlled environments, we examine species- and community-level responses across 47 species from eastern and western North America. We found species generally separated their timings, but the effect of environmental cues in producing this structure was surprisingly low. Instead, much of the variation was explained by intrinsic differences in species and effects of shared evolutionary history ($\lambda$ = \Sexpr{lamT}). Our results suggest our models of phenology as driven by environmental cues are missing important variation that appears to structure species timings within communities. Identifying the unidentified cues, traits or other factors that shape phenological responses appears critical to understanding their effects on community dynamics. 
+How species may assemble temporally has received growing attention as climate change shifts the timing of major life cycle events across most systems. While theory predicts species should partition time to reduce competition for resources, few studies have examined this given the complexity of environmental cues that make phenology highly variable across years and sites. Here, focusing on the timing of woody plant budburst, where the underlying cues---temperature and daylength---are well known and can be manipulated in controlled environments. We examine species- and community-level responses across 47 species from eastern and western North America, applying a phylogenetic Bayesian model to also test the effects of species evolutionary history. We found species generally separated their timings, but the effect of environmental cues in producing this structure was surprisingly low. Instead, much of the variation was explained by intrinsic differences in species and effects of shared evolutionary history ($\lambda$ = \Sexpr{lamT}). Our results suggest our models of phenology as driven by environmental cues are missing important variation that appears to structure species timings within communities. Identifying the unidentified cues, traits or other factors that shape phenological responses appears critical to understanding their effects on community dynamics. 
 %emw26Nov: Semi-shortened alternative without making it more exciting:
 % The timing of major life history events often spans weeks or months within a community due to species differences. Theory suggests this variation comes from species partitioning time to reduce competition for resources, but shared evolutionary history may moderate these effects. To understand these drivers of variability, we examined community-level responses to environmental cues across 47 species from eastern and western North America. We focused on woody plant budburst, where the underlying cues---temperature and daylength---are well known and can be manipulated in controlled environments. Using a Bayesian phylogenetic model, we found budburst advanced in response to temperature and daylength, with these cues explaining \Sexpr{diffBAEastHigh} and \Sexpr{diffBAEast}\% of variation. The remaining variation was partially ascribed to differences in species that were phylogenetically structured ($\lambda$ = \Sexpr{lamT}). The high species-level variation we observed suggests a role of evolutionary history, as well as additional, unidentified traits that together shape phenological responses and their effects on community dynamics. 
 

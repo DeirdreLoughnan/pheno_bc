@@ -34,28 +34,25 @@ phy.plants<-read.tree("data/ALLMB.tre")
 
 ## getting a list of genera in S&B's phylo
 phy.genera<-unlist(
-  lapply(strsplit(phy.plants$tip.label, "_"),function(x){return(x[1])})
-)
+  lapply(strsplit(phy.plants$tip.label, "_"),function(x){return(x[1])}))
+
 phy.genera.uniq<-sort(unique(phy.genera))
 
 #temp <- sort(unique(phy.plants$tip.label)) #356305 species
 
 ## how many phenobc species are in the phylogeny?
-phenosp.genus.inphylo<-genus.list[which(genus.list%in%phy.genera.uniq)]
-
+phenosp.genus.inphylo <- genus.list[which(genus.list %in% phy.genera.uniq)]
 
 ## first prune the phylogeny to include only these genera
-phy.genera.phenobc<-drop.tip(phy.plants,
+phy.genera.phenobc <- drop.tip(phy.plants,
                             which(!phy.genera %in% phenosp.genus.inphylo)) #8814 tips
+
 rm(phy.plants)
 View(sort(phy.genera.phenobc$tip.label))
-# now prune just the species I want
-phy.plants.phenobc<- drop.tip(phy.genera.phenobc,
-                            which(!phy.genera.phenobc$tip.label %in% sps.list))
 
-length(phy.plants.phenobc$tip.label)
-sort(phy.plants.phenobc$tip.label)
-# only 172 species are in the phylogeny
+# now prune just the species I want
+phy.plants.phenobc <-  drop.tip(phy.genera.phenobc,
+                            which(!phy.genera.phenobc$tip.label %in% sps.list))
 
 
 plot(phy.plants.phenobc,cex=.5)
@@ -65,15 +62,15 @@ plot(phy.plants.phenobc,cex=.5)
 
 # Smith and Brown tree is missing Alnus viridis and Rhamnus frangula, maybe they are in the Zanne tree -- nope
 
-# phy.zanne<-read.tree("data/Vascular_Plants_rooted.dated.tre")
+# phy.zanne <- read.tree("data/Vascular_Plants_rooted.dated.tre")
 # 
 # missing <- c("Alnus_viridis", "Rhamnus_frangula")
 # missing.genera <- c("Alnus", "Rhamnus")
 # 
-# phy.genera.zanne<-unlist(
+# phy.genera.zanne <- unlist(
 #   lapply(strsplit(phy.zanne$tip.label, "_"),function(x){return(x[1])})
 # )
-# phy.genera.uniq<-sort(unique(phy.genera.zanne))
+# phy.genera.uniq <- sort(unique(phy.genera.zanne))
 # 
 # ## first prune the phylogeny to include only these genera
 # phy.genera.zanne.phenobc <- drop.tip(phy.plants,

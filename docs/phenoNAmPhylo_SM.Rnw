@@ -57,8 +57,8 @@
 
 
 \title{Supplementary Material: Current environments and evolutionary history shape forest temporal assembly}
-\date{\today}
-\author{Deirdre Loughnan$^1$ and E M Wolkovich$^1$}
+\date{}
+\author{Deirdre Loughnan$^{1,2,3}$ and E M Wolkovich$^1$}
 \maketitle 
 
 \renewcommand{\thetable}{S\arabic{table}}
@@ -68,7 +68,7 @@
 \begin{figure}[ht]
 \centering
     \includegraphics[scale = 0.75]{..//..//pheno_bc/figures/panelFig/intrxnPlots8Chill3Lat_Oct17.pdf}%,
-     \caption{Estimated day of budburst in response to \textbf{a,} forcing across sites under low chilling and short photoperiods, \textbf{b,} chilling across sites under low forcing and short photoperiods, and \textbf{c,}  across photoperiods under low forcing and chilling for species sampled from our four sites. The thin error bars represent the 90\% uncertainty interval, while the thicker error bars represent the 50\% uncertainty interval, and symbols the mean.} 
+     \caption{Estimated day of budburst in response to \textbf{a,} forcing across sites under low chilling and short photoperiods, \textbf{b,} chilling across sites under low forcing and short photoperiods, and \textbf{c,}  across photoperiods under low forcing and chilling for species sampled from our four sites. The thin bars represent the 90\% uncertainty interval, while the thicker bars represent the 50\% uncertainty interval, and symbols the mean.} 
     \label{fig:intrxn3}
 \end{figure}
 \newpage
@@ -186,32 +186,99 @@ Harvard forest & Field chilling & 892 & 814.50 & 56.62 \\
 \centering
 \caption{Summary output from a phylogenetic Bayesian model in which species are partially pooled and phylogeny is included on the intercept. See the statistical analysis section of the methods for more detail.} 
 \label{tab4Site}
-\begin{tabular}{rrrrrrr}
+\begin{tabular}{rrrrrr}
   \hline
- & mean & sd & 5\% & 95\% & n\_eff & Rhat \\ 
+ & mean  & 5\% & 95\% & n\_eff & Rhat \\ 
   \hline
-$\alpha_{sp}$ & 30.33 & 2.84 & 25.93 & 35.12 & 2689.65 & 1.00 \\ 
-$\lambda$ & 0.41 & 0.20 & 0.07 & 0.74 & 2805.35 & 1.00 \\ 
-$\beta_{forcing}$ & -9.55 & 0.74 & -10.70 & -8.30 & 1391.78 & 1.00 \\ 
-$\beta_{photoperiod}$ & -3.62 & 0.41 & -4.30 & -3.00 & 3089.29 & 1.00 \\ 
-$\beta_{chilling}$ & -15.21 & 1.25 & -17.30 & -13.20 & 2142.42 & 1.00 \\ 
-$\beta_{Manning\ park}$ & 2.09 & 0.36 & 1.50 & 2.70 & 4061.13 & 1.00 \\ 
-$\beta_{Harvard\ forest}$ & -6.04 & 1.03 & -7.80 & -4.40 & 486.95 & 1.01 \\ 
-$\beta_{St.\ Hippolyte}$ & -8.71 & 0.97 & -10.30 & -7.10 & 485.37 & 1.01 \\ 
-$\beta_{forcing \times photoperiod}$ & 0.23 & 0.71 & -1.00 & 1.40 & 3698.87 & 1.00 \\ 
-$\beta_{forcing \times chilling}$ & 9.06 & 0.90 & 7.60 & 10.50 & 3005.09 & 1.00 \\ 
-$\beta_{photoperiod \times chilling}$ & -0.67 & 0.90 & -2.20 & 0.80 & 2690.36 & 1.00 \\ 
-$\beta_{forcing \times Manning\ park}$ & -1.76 & 0.77 & -3.00 & -0.50 & 3836.43 & 1.00 \\ 
-$\beta_{photoperiod \times Manning\ park}$ & 0.58 & 0.79 & -0.70 & 1.90 & 3375.92 & 1.00 \\ 
-$\beta_{chilling \times Manning\ park}$ & -0.36 & 1.60 & -3.00 & 2.20 & 1714.08 & 1.00 \\ 
-$\beta_{forcing \times Harvard\ forest}$ & 3.81 & 1.22 & 1.80 & 5.80 & 1752.75 & 1.00 \\ 
-$\beta_{photoperiod \times Harvard\ forest}$ & -1.96 & 0.86 & -3.30 & -0.60 & 2877.96 & 1.00 \\ 
-$\beta_{chilling \times Harvard\ forest}$ & 9.97 & 2.03 & 6.60 & 13.40 & 911.46 & 1.01 \\ 
-$\beta_{forcing \times St.\ Hippolyte}$ & 5.25 & 1.19 & 3.20 & 7.20 & 1659.45 & 1.00 \\ 
-$\beta_{photoperiod \times St.\ Hippolyte}$ & -2.13 & 0.84 & -3.50 & -0.70 & 2606.20 & 1.00 \\ 
-$\beta_{chilling \times St.\ Hippolyte}$ & 8.65 & 1.70 & 5.90 & 11.50 & 1021.36 & 1.01 \\ 
+$\alpha_{sp}$ & 30.30 & 25.90 & 35.10 & 3691.90 & 1.00 \\  
+$\lambda$ & 0.40 & 0.10 & 0.70 & 2805.40 & 1.00 \\ 
+$\beta_{forcing}$ & -10.60 & -16.70 & -12.90 & 1192.50 & 1.00 \\ 
+$\beta_{photoperiod}$ & -3.30 & -11.90 & -9.30 & 3349.30 & 1.00 \\  
+$\beta_{chilling}$ & -14.80 & -4.00 & -2.70 & 1996.50 & 1.00 \\ 
+$\beta_{Manning\ park}$ & 2.10 & 1.50 & 2.70 & 4468.30 & 1.00 \\ 
+$\beta_{Harvard\ forest}$ & -6.10 & -7.70 & -4.50 & 599.70 & 1.00 \\ 
+$\beta_{St.\ Hippolyte}$ & -8.30 & -9.80 & -6.80 & 613.40 & 1.00 \\ 
+$\beta_{forcing \times photoperiod}$ & 0.90 & -0.40 & 2.20 & 2977.90 & 1.00 \\ 
+$\beta_{forcing \times chilling}$ & 8.40 & 7.00 & 9.80 & 3255.90 & 1.00 \\  
+$\beta_{photoperiod \times chilling}$ & -0.70 & -2.10 & 0.70 & 2804.90 & 1.00 \\ 
+$\beta_{forcing \times Manning\ park}$ & -1.80 & -3.10 & -0.50 & 3761.60 & 1.00 \\ 
+$\beta_{photoperiod \times Manning\ park}$ & 0.60 & -0.70 & 1.90 & 2772.30 & 1.00 \\
+$\beta_{chilling \times Manning\ park}$ & -0.40 & -3.00 & 2.10 & 1841.30 & 1.00 \\ 
+$\beta_{forcing \times Harvard\ forest}$ & 3.70 & 1.70 & 5.80 & 1452.20 & 1.00 \\ 
+$\beta_{photoperiod \times Harvard\ forest}$ & -1.60 & -3.00 & -0.10 & 2010.80 & 1.00 \\ 
+$\beta_{chilling \times Harvard\ forest}$ & 8.80 & 5.90 & 11.70 & 1023.20 & 1.00 \\ 
+$\beta_{forcing \times St.\ Hippolyte}$& 4.80 & 2.80 & 6.90 & 1580.30 & 1.00 \\ 
+$\beta_{photoperiod \times St.\ Hippolyte}$ & -2.20 & -3.60 & -0.80 & 2689.60 & 1.00 \\ 
+$\beta_{chilling \times St.\ Hippolyte}$ & 7.30 & 4.90 & 9.90 & 1141.50 & 1.00 \\ 
   \end{tabular}
 \end{table}
+
+
+% <<label= tableCN, echo=FALSE , results= tex >>=
+% 
+% require(xtable)
+% require(rstan)
+% 
+% load("..//output/bb_phylo_contphotothermo_2zscored_oct172024_triple.Rda")
+% 
+% sum <- summary(mdl.3)$summary
+% 
+% fit <- rstan::extract(mdl.3)
+% 
+% mu_params_4 <- c("a_z",
+%                  "lam_interceptsa",
+%                  "mu_b_warm",
+%                  "mu_b_photo",
+%                  "mu_b_chill1",
+%                  "b_site2",
+%                  "b_site3",
+%                  "b_site4",
+%                  "mu_b_inter_wp",
+%                  "mu_b_inter_wc1",
+%                  "mu_b_inter_pc1",
+%                  "mu_b_inter_ws2",
+%                  "mu_b_inter_ps2",
+%                  "mu_b_inter_s2c1",
+%                  "mu_b_inter_ws3",
+%                  "mu_b_inter_ps3",
+%                  "mu_b_inter_s3c1",
+%                  "mu_b_inter_ws4",
+%                  "mu_b_inter_ps4",
+%                  "mu_b_inter_s4c1")
+%   
+% meanz4 <- round(data.frame(sum[mu_params_4, c("mean", "n_eff", "Rhat")]),1)
+% names(meanz4) <- c("mean", "n_eff", "Rhat")
+% 
+% # now get the 90% UI:
+% alamb <- round(quantile(fit$a_z, c(0.05, 0.95)),1)
+% lambdaP <- round(quantile(fit$lam_interceptsa, c(0.05, 0.95)),1)
+% warmP <- round(quantile(fit$mu_b_chill1, c(0.05, 0.95)),1)
+% photoP <- round(quantile(fit$mu_b_warm, c(0.05, 0.95)),1)
+% chillP <- round(quantile(fit$mu_b_photo, c(0.05, 0.95)),1)
+% site2P <- round(quantile(fit$b_site2, c(0.05, 0.95)),1)
+% site3P <- round(quantile(fit$b_site3, c(0.05, 0.95)),1)
+% site4P <- round(quantile(fit$b_site4, c(0.05, 0.95)),1)
+% wp <- round(quantile(fit$mu_b_inter_wp, c(0.05, 0.95)),1)
+% wc1 <- round(quantile(fit$mu_b_inter_wc1, c(0.05, 0.95)),1)
+% pc <- round(quantile(fit$mu_b_inter_pc1, c(0.05, 0.95)),1)
+% fmp <- round(quantile(fit$mu_b_inter_ws2, c(0.05, 0.95)),1)
+% pm <- round(quantile(fit$mu_b_inter_ps2, c(0.05, 0.95)),1)
+% cmp <- round(quantile(fit$mu_b_inter_s2c, c(0.05, 0.95)),1)
+% fhf <- round(quantile(fit$mu_b_inter_ws3, c(0.05, 0.95)),1)
+% phf <- round(quantile(fit$mu_b_inter_ps3, c(0.05, 0.95)),1)
+% chf <- round(quantile(fit$mu_b_inter_s3c1, c(0.05, 0.95)),1)
+% fsh <- round(quantile(fit$mu_b_inter_ws4, c(0.05, 0.95)),1)
+% psh <- round(quantile(fit$mu_b_inter_ps4, c(0.05, 0.95)),1)
+% csh <- round(quantile(fit$mu_b_inter_s4c1, c(0.05, 0.95)),1)
+% 
+% 
+% upper <- rbind(alamb, lambdaP, warmP, photoP, chillP, site2P,site3P, site4P, wp, wc1, pc, fmp, pm, cmp, fhf, phf, chf, fsh, psh, csh)
+% 
+% meanz4 <- cbind(meanz4, upper)
+% meanz4 <- meanz4[, c("mean", "5%", "95%", "n_eff", "Rhat")]
+% print(xtable(meanz4, caption="Summary output from a phylogenetic Bayesian model in which species are partially pooled and phylogeny is included on the intercept. See the statistical analysis section of the methods for more detail.",label = "tableMain"),include.rownames=TRUE, caption.placement="top", hline.after=c(-1,0))
+% @
+
 
 <<label=bbSuccess, echo=FALSE, results=tex >>=
 spwithbb <- read.csv("..//output/bb.success.ax.trt.csv", head = TRUE)

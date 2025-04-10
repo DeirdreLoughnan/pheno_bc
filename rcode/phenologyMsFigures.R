@@ -2046,7 +2046,7 @@ tree$tip.label[tree$tip.label== "Rhamnus_arguta"] <- "Rhamnus_frangula"
 
 
 # first getting the intercept values paired with the species names:
-spInfo <- read.csv("input/species_list.csv")
+spInfo <- read.csv("species_list.csv")
 
 
 spFact <- spInfo$species.name

@@ -21,9 +21,10 @@ if(length(grep("deirdreloughnan", getwd()) > 0)) {
 # sum <- summary(mdl.4phyloMini)$summary 
 
 #load("output/bb_4sites_phylo_contphotothermo_zscored_Apr19.Rda")
-load("output/bb_phylo_contphotothermo_2zscoredMay13.Rda")
-sum <- summary(mdl.2z)$summary
-post <- rstan::extract(mdl.2z)
+#load("output/bb_phylo_contphotothermo_2zscoredMay13.Rda")
+load("output/bb_phylo_contphotothermo_2zscored_oct172024_triple.Rda")
+sum <- summary(mdl.3)$summary
+post <- rstan::extract(mdl.3)
 
 a_sp = (sum[grep("a_sp", rownames(sum)), 1])
 b_photo = sum[grep("b_photo\\[", rownames(sum)), 1]
@@ -255,7 +256,7 @@ dotW <- ggplot(meanPtW) +
         axis.text.y=element_text(size = 15),
         axis.title=element_text(size=20), legend.position = "none") + 
   scale_x_continuous( breaks = spMiniW$meanBB, labels = spMiniW$species,limits = c(15,62)) +
-  labs( x = "Species ordered by predicted budburst date", y = "Estimated parameter (days/standardized units)", main = NA) +
+  labs( x = "Species ordered by mean predicted budburst date", y = "Estimated parameter (days/standardized units)", main = NA) +
   theme(legend.title = element_blank(), legend.text = element_text(size =25), legend.position = "top") +  annotate("text", x = 18, y = 60, label = "b)      Western transect", cex =8) +
   annotate("text", x = spTopW[1,5], y = -1, label = spTopW[1,2], cex = 5, angle = 78) +
   annotate("text", x = spTopW[2,5], y = -1, label = spTopW[2,2], cex = 5, angle = 78) +
@@ -277,7 +278,7 @@ dotWBw <- ggplot(meanPtW) +
         axis.text.y=element_text(size = 15),
         axis.title=element_text(size=20), legend.position = "none") + 
   scale_x_continuous( breaks = spMiniW$meanBB, labels = spMiniW$species,limits = c(15,70)) +
-  labs( x = "Species ordered by predicted budburst date under high cues", y = "Day of budburst (days/standardized units)", main = NA) +
+  labs( x = "Species ordered by mean predicted budburst date", y = "Day of budburst (days/standardized units)", main = NA) +
   theme(legend.position = "none") +  #annotate("text", x = 21.5, y = 60, label = "b)      Western transect", cex =8) +
   annotate("text", x = spTopW[1,5], y = -1, label = spTopW[1,2], cex = 5, angle = 78) +
   annotate("text", x = spTopW[2,5], y = -1, label = spTopW[2,2], cex = 5, angle = 78) +
@@ -285,12 +286,12 @@ dotWBw <- ggplot(meanPtW) +
   annotate("text", x = spTopW[4,5], y = -1, label = spTopW[4,2], cex = 5, angle = 78) +
   annotate("text", x = spTopW[5,5], y = -1, label = spTopW[5,2], cex = 5, angle = 78) +
   scale_shape_manual(values = c(1,2,16)) +
-  annotate("text", x = 66, y = 60.5, label = "Low cues", cex = 7) +  
-  annotate("text", x = 66, y = 44.5, label = "Intercept", cex = 7) +
-  annotate("text", x = 66, y = 27.5, label = "High cues", cex = 7) + 
-  geom_segment(aes(x = 61, y = 60.5, xend = 62.5 , yend = 60.5)) +
-  geom_segment(aes(x = 61, y = 44.5, xend = 62.5 , yend = 44.5)) +
-  geom_segment(aes(x = 61, y = 27.5, xend = 62.5 , yend = 27.5))
+  annotate("text", x = 68, y = 62.5, label = "Low cues", cex = 7) +  
+  annotate("text", x = 68, y = 46.5, label = "Intercept", cex = 7) +
+  annotate("text", x = 68, y = 29.5, label = "High cues", cex = 7) + 
+  geom_segment(aes(x = 63, y = 62.5, xend = 64.5 , yend = 62.5)) +
+  geom_segment(aes(x = 63, y = 46.5, xend = 64.5 , yend = 46.5)) +
+  geom_segment(aes(x = 63, y = 29.5, xend = 64.5 , yend = 29.5))
 
 # +  annotate("text", x = 62, y = 39, label = "Intercept", cex = 3) +
 #   geom_segment(aes(x = 62, y = 60, xend = 59 , yend = 60)) +
@@ -310,7 +311,7 @@ ggplot(meanPtW) +
         axis.text.y=element_text(size = 15),
         axis.title=element_text(size=20), legend.position = "none") + 
   scale_x_continuous( breaks = spMiniW$Int, labels = spMiniW$species) +
-  labs( x = "Species ordered by predicted budburst date under high cues", y = "Day of budburst (days/standardized units)", main = NA) +
+  labs( x = "Species ordered by mean predicted budburst date", y = "Day of budburst (days/standardized units)", main = NA) +
   theme(legend.position = "none") +  annotate("text", x = 18, y = 60, label = "b)      Western transect", cex =8) +
   annotate("text", x = spTopW[1,7], y = -1, label = spTopW[1,2], cex = 5, angle = 78) +
   annotate("text", x = spTopW[2,7], y = -1, label = spTopW[2,2], cex = 5, angle = 78) +
@@ -342,7 +343,7 @@ dotE <- ggplot(meanPtE) +
         axis.text.y=element_text(size = 15),
         axis.title=element_text(size=20)) +
   scale_x_continuous( breaks = spMiniE$meanBB, labels = spMiniE$species,limits = c(24,64)) +
-  labs( x = "Species ordered by predicted budburst date", y = "Estimated parameter (days/standardized units)", main = NA) +
+  labs( x = "Species ordered by mean predicted budburst date", y = "Estimated parameter (days/standardized units)", main = NA) +
   theme(legend.title = element_blank(), legend.text = element_text(size =25), legend.position = "top") +  annotate("text", x = 29, y = 60, label = "a)      Eastern transect", cex =8) +
   annotate("text", x = spTopE[1,5], y = -1, label = spTopE[1,2], cex = 5, angle = 78) +
   annotate("text", x = spTopE[2,5], y = -1, label = spTopE[2,2], cex = 5, angle = 78) +
@@ -381,12 +382,12 @@ dotEBw <- ggplot(meanPtE) +
   annotate("text", x = spTopE[7,5], y = -1, label = spTopE[7,2], cex = 5, angle = 78) +
   annotate("text", x = spTopE[8,5], y = -1, label = spTopE[8,2], cex = 5, angle = 78) +
   scale_shape_manual(values = c(1,2,16)) +       
-  annotate("text", x = 68, y = 63, label = "Low cues", cex = 7) +  
-  annotate("text", x = 68, y = 48, label = "Intercept", cex = 7) +
-  annotate("text", x = 68, y = 36.5, label = "High cues", cex = 7) + 
-  geom_segment(aes(x = 64, y = 63, xend = 65 , yend = 63)) +
-  geom_segment(aes(x = 64, y = 48, xend = 65.5 , yend = 48)) +
-  geom_segment(aes(x = 64, y = 36.5, xend = 65 , yend = 36.5))
+  annotate("text", x = 69, y = 65, label = "Low cues", cex = 7) +  
+  annotate("text", x = 69, y = 50, label = "Intercept", cex = 7) +
+  annotate("text", x = 69, y = 35, label = "High cues", cex = 7) + 
+  geom_segment(aes(x = 65, y = 65, xend = 66 , yend = 65)) +
+  geom_segment(aes(x = 65, y = 50, xend = 66.5 , yend = 50)) +
+  geom_segment(aes(x = 65, y = 35, xend = 66 , yend = 35))
 dotEBw
 
 
@@ -401,7 +402,7 @@ pdf("figures/dotBetaAlphaLongBW_LHb.pdf", width = 12, height = 8)
 dotWBw
 dev.off()
 
-pdf("figures/dotBetaAlphaLongBW_LH.pdf", width = 12, height = 16)
+pdf("figures/dotBetaAlphaLongBW_LH_April20.pdf", width = 12, height = 16)
 plot_grid(dotEBw, dotWBw, nrow = 2, ncol = 1, align = "v")
 dev.off()
 #############################################

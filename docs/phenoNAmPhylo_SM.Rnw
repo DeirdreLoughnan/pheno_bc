@@ -67,6 +67,15 @@
 
 \begin{figure}[ht]
 \centering
+    \includegraphics[scale = 0.75]{..//..//pheno_bc/figures/panelFig/conceptPhenoBC.pdf}%,
+     \caption{We combined data from two controlled environment studies of temperature and photoperiod cues for budburst in temperate woody species \textbf{a,} from two forest communities in eastern North America that span a 4$^{\circ}$ latitudinal gradient and \textbf{b,} two communities in western North America that span a 6$^{\circ}$ latitudinal gradient. Combined, our dataset includes 28 tree and shrub species from eastern communities and 21 species from western communities, with three species occurring across all four populations. Both studies used a factorial design with chilling treatments consisting of a combination of field and different durations of chamber chilling, a cool and warm spring treatment (low and high forcing), and a short or long photoperiod treatment. Observations of budburst were made during the forcing treatment, using the BBCH scale to classify stages of bud development.} 
+    \label{fig:concept}
+\end{figure}
+\newpage
+
+
+\begin{figure}[ht]
+\centering
     \includegraphics[scale = 0.75]{..//..//pheno_bc/figures/panelFig/intrxnPlots8Chill3Lat_Oct17.pdf}%,
      \caption{Estimated day of budburst in response to \textbf{a,} forcing across sites under low chilling and short photoperiods, \textbf{b,} chilling across sites under low forcing and short photoperiods, and \textbf{c,}  across photoperiods under low forcing and chilling for species sampled from our four sites. The thin bars represent the 90\% uncertainty interval, while the thicker bars represent the 50\% uncertainty interval, and symbols the mean.} 
     \label{fig:intrxn3}

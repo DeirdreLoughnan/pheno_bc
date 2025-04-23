@@ -278,8 +278,8 @@ dotWBw <- ggplot(meanPtW) +
         axis.text.y=element_text(size = 15),
         axis.title=element_text(size=20), legend.position = "none") + 
   scale_x_continuous( breaks = spMiniW$meanBB, labels = spMiniW$species,limits = c(15,70)) +
-  labs( x = "Species ordered by mean predicted budburst date", y = "Day of budburst (days/standardized units)", main = NA) +
-  theme(legend.position = "none") +  #annotate("text", x = 21.5, y = 60, label = "b)      Western transect", cex =8) +
+  labs( x = "Species ordered by predicted budburst date under low cues", y = "Day of budburst (days/standardized units)", main = NA) +
+  theme(legend.position = "none") +  annotate("text", x = 21.5, y = 60, label = "b     Western transect", cex =8) +
   annotate("text", x = spTopW[1,5], y = -1, label = spTopW[1,2], cex = 5, angle = 78) +
   annotate("text", x = spTopW[2,5], y = -1, label = spTopW[2,2], cex = 5, angle = 78) +
   annotate("text", x = spTopW[3,5], y = -1, label = spTopW[3,2], cex = 5, angle = 78) +
@@ -298,36 +298,6 @@ dotWBw <- ggplot(meanPtW) +
 #                  geom_segment(aes(x = 62, y = 39, xend = 59 , yend = 39))
 dotWBw
 
-ggplot(meanPtW) +
-  geom_point(aes(y= Budburst, x = Intercept, shape = "Budburst"), size = 5) +
-  geom_point(aes(y= Buddy, x = Intercept, shape = "Buddy"), size = 5) +
-  geom_point(aes(y= Intercept, x = Intercept, shape = "Intercept"), size = 5) +
-  geom_segment(aes(x = Intercept, y = Intercept, xend = Intercept, yend = Budburst), data = meanPtW, col = "black") +
-  geom_segment(aes(x = Intercept, y = Intercept, xend = Intercept, yend = Buddy), data = meanPtW, col = "black") +
-  theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
-        panel.background = element_blank(), axis.line = element_line(colour = "black"),
-        legend.key=element_rect(fill="white")) + ylim(-1.5,65) +
-  theme(axis.text.x = element_text( size=15,angle = 78,  hjust=1),
-        axis.text.y=element_text(size = 15),
-        axis.title=element_text(size=20), legend.position = "none") + 
-  scale_x_continuous( breaks = spMiniW$Int, labels = spMiniW$species) +
-  labs( x = "Species ordered by mean predicted budburst date", y = "Day of budburst (days/standardized units)", main = NA) +
-  theme(legend.position = "none") +  annotate("text", x = 18, y = 60, label = "b)      Western transect", cex =8) +
-  annotate("text", x = spTopW[1,7], y = -1, label = spTopW[1,2], cex = 5, angle = 78) +
-  annotate("text", x = spTopW[2,7], y = -1, label = spTopW[2,2], cex = 5, angle = 78) +
-  annotate("text", x = spTopW[3,7], y = -1, label = spTopW[3,2], cex = 5, angle = 78) +
-  annotate("text", x = spTopW[4,7], y = -1, label = spTopW[4,2], cex = 5, angle = 78) +
-  annotate("text", x = spTopW[5,7], y = -1, label = spTopW[5,2], cex = 5, angle = 78) +
-
-  scale_shape_manual(values = c(1,2,16)) +
-  annotate("text", x = 66, y = 60.5, label = "High cues", cex = 7) +  
-
-  annotate("text", x = 66, y = 44.5, label = "Intercept", cex = 7) +
-  annotate("text", x = 66, y = 27.5, label = "High cues", cex = 7) + 
-  geom_segment(aes(x = 61, y = 60.5, xend = 62.5 , yend = 60.5)) +
-  geom_segment(aes(x = 61, y = 44.5, xend = 62.5 , yend = 44.5)) +
-  geom_segment(aes(x = 61, y = 27.5, xend = 62.5 , yend = 27.5))
-
 #### Eastern plot
 meanPtE <- aggregate(dataEast[c("meanBB", "meanBBHigh","Int")], dataEast[c("species.name","type","transect")], FUN = mean)
 names(meanPtE) <- c("species.name","type","transect","Budburst", "Buddy","Intercept")
@@ -343,8 +313,8 @@ dotE <- ggplot(meanPtE) +
         axis.text.y=element_text(size = 15),
         axis.title=element_text(size=20)) +
   scale_x_continuous( breaks = spMiniE$meanBB, labels = spMiniE$species,limits = c(24,64)) +
-  labs( x = "Species ordered by mean predicted budburst date", y = "Estimated parameter (days/standardized units)", main = NA) +
-  theme(legend.title = element_blank(), legend.text = element_text(size =25), legend.position = "top") +  annotate("text", x = 29, y = 60, label = "a)      Eastern transect", cex =8) +
+  labs( x = "Species ordered by predicted budburst date under low cues", y = "Estimated parameter (days/standardized units)", main = NA) +
+  theme(legend.title = element_blank(), legend.text = element_text(size =25), legend.position = "top") +  annotate("text", x = 29, y = 60, label = "a      Eastern transect", cex =8) +
   annotate("text", x = spTopE[1,5], y = -1, label = spTopE[1,2], cex = 5, angle = 78) +
   annotate("text", x = spTopE[2,5], y = -1, label = spTopE[2,2], cex = 5, angle = 78) +
   annotate("text", x = spTopE[3,5], y = -1, label = spTopE[3,2], cex = 5, angle = 78) +
@@ -371,7 +341,8 @@ dotEBw <- ggplot(meanPtE) +
                         axis.title=element_text(size=20)) +
   scale_x_continuous( breaks = spMiniE$meanBB, labels = spMiniE$species,limits = c(24,70)) +
   labs( x = "", y = "Day of budburst (days/standardized units)", main = NA) +
-  theme(legend.position = "none") +  #annotate("text", x = 29, y = 60, label = "Eastern transect", cex =8) +#annotate("text", x = 29, y = 60, label = "a)      Eastern transect", cex =8) +
+  theme(legend.position = "none") +  #annotate("text", x = 29, y = 60, label = "Eastern transect", cex =8) 
+  annotate("text", x = 29, y = 60, label = "a      Eastern transect", cex =8) +
   annotate("text", x = spTopE[1,5], y = -1, label = spTopE[1,2], cex = 5, angle = 78) +
   annotate("text", x = spTopE[2,5], y = -1, label = spTopE[2,2], cex = 5, angle = 78) +
   annotate("text", x = spTopE[3,5], y = -1, label = spTopE[3,2], cex = 5, angle = 78) +

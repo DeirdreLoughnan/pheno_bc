@@ -175,10 +175,10 @@ Harvard forest & Field chilling & 892 & 814.50 & 56.62 \\
   Harvard forest & Field chilling + 30 d at 4$^\circ$C & 2140 & 2062.50 & 94.06 \\ 
   St. Hippoltye & Field chilling & 682 & 599.50 & 44.63 \\ 
   St. Hippoltye & Field chilling + 30 d at 4$^\circ$C & 1930 & 1847.50 & 82.06 \\ 
-  Smithers & Field chilling + 30 d at 4$^\circ$C & 1317 & 1368.00 & 54.95 \\ 
-  Smithers & Field chilling + 70 d at 4$^\circ$C & 1965 & 2016.00 & 74.67 \\ 
-  Manning park & Field chilling + 30 d at 4$^\circ$C & 1213 & 1377.00 & 55.09 \\ 
-  Manning park & Field chilling + 70 d at 4$^\circ$C & 1861 & 2025.00 & 75.33 \\ 
+  Smithers & Field chilling + 21 d at 4$^\circ$C & 1317 & 1368.00 & 54.95 \\ 
+  Smithers & Field chilling + 56 d at 4$^\circ$C & 1965 & 2016.00 & 74.67 \\ 
+  Manning park & Field chilling + 21 d at 4$^\circ$C & 1213 & 1377.00 & 55.09 \\ 
+  Manning park & Field chilling + 56 d at 4$^\circ$C & 1861 & 2025.00 & 75.33 \\ 
   \end{tabular}
 \end{table}
 \newpage

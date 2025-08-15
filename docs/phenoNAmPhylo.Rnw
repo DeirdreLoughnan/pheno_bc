@@ -80,16 +80,19 @@ $^2$ Department of Zoology, Faculty of Science, University of British Columbia, 
 
 $^3$ Hakai Institute, PO Box 25039, Campbell River, BC, Canada, V9W 0B7 \\
 
-Corresponding Author: Deirdre Loughnan, deirdre.loughnan@ubc.ca, 6048026917, 6270 University Blvd, RM 1015, Vancouver, BC, V6T 1Z4\\
+Corresponding Author: Deirdre Loughnan, deirdre.loughnan@ubc.ca, 6270 University Blvd, RM 1015, Vancouver, BC, V6T 1Z4\\
 Coauthor: Elizabeth Wolkovich, e.wolkovich@ubc.ca\\
 
 Running title: The environment and evolution shape forests \\
 
 Keywords: Phenology, Budburst, Climate change, Forest communities, Community assembly, Temporal niche.\\
 
-Article type: Letter\\
+% Article type: Letter\\
+% 
+% Abstract: 152 words; Main text: 4095 words; References: 63; Figures and tables:3\\
 
-Abstract: 152 words; Main text: 4095 words; References: 63; Figures and tables:3\\
+% Plain language summary:
+% Climate change is shifting the timing of leafout in forests, but given the complexity of environmental cues that determine leafout timing, we do not understand what drives differences across sites and species. We found similar leafout across temperate forests, but with a surprising amount of unexplained variation, suggesting there are gaps in our understanding of this important life history event. 
 
 <<label=runcode1,  echo=FALSE>>=
 source("..//rcode/phenologyMsValues.R")
@@ -230,7 +233,7 @@ The authors have no competing interests.\\
 Both D.L. and E.M.W. conceived the study, contributed to the analysis and code and contributed to the writing and revision of the manuscript. DL led field and experimental data collection.\\ 
 
 \textbf{Data and code availability statement}\\
-All data and Stan code will are freely available through the Knowledge Network for Biocomplexity \citep{LoughnanKNB} and at the Harvard Forest data repository. %emw25May -- I would add that some data is on HF data repo -- at least make a note to add that before publication *or* link to it clearly in the KNB posting. 
+All data and Stan code are freely available through the Knowledge Network for Biocomplexity \citep{LoughnanKNB} and at the Harvard Forest data repository. %emw25May -- I would add that some data is on HF data repo -- at least make a note to add that before publication *or* link to it clearly in the KNB posting. 
 % 
 % \section*{Data and code availability statement}
 % All data and Stan code will be freely available through the Knowledge Network for Biocomplexity at the time of publication.

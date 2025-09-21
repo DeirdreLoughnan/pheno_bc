@@ -277,7 +277,7 @@ All data and Stan code are freely available through the Knowledge Network for Bi
 \begin{figure}[ht]
 \centering
     \includegraphics[width=\textwidth]{..//..//pheno_bc/figures/panelFig/dotCFPEWSizeColorUnitsShape_astrix.pdf}
-    \caption{Estimated species \textbf{a,b} chilling, \textbf{c,d} forcing, and \textbf{e,f} photoperiod responses ordered by estimated budburst dates for both the \textbf{a,c,e},  eastern and \textbf{b,d,f} western sites based on our model estimates. Cues are plotted on differing y-axis scales to better depict species differences across cues. For each species, the points represent the mean, thinner error bars represent the 90\% uncertainty interval, and thicker bars represent the 50\% uncertainty interval. The three species that occur in both the eastern and western transects are depicted using darker colours. To make the results across cues directly comparable, we standardized predictors (here, chilling, forcing, and photoperiod) via $z$-scores using two standard deviations, see methods for further details.} 
+    \caption{Estimated species \textbf{a,b} chilling, \textbf{c,d} forcing, and \textbf{e,f} photoperiod responses ordered by estimated budburst dates for both the \textbf{a,c,e},  eastern and \textbf{b,d,f} western sites based on our model estimates. Cues are plotted on differing y-axis scales to better depict species differences across cues. For each species, the points represent the mean, thinner error bars represent the 90\% uncertainty interval, and thicker bars represent the 50\% uncertainty interval. The three species that occur in both the eastern and western transects are depicted using darker colours and tree species denoted using an asterisk following the species abbreviation. To make the results across cues directly comparable, we standardized predictors (here, chilling, forcing, and photoperiod) via $z$-scores using two standard deviations, see methods for further details.} 
     \label{fig:cueGrad}
 \end{figure}
 \newpage
@@ -293,7 +293,7 @@ All data and Stan code are freely available through the Knowledge Network for Bi
 \begin{figure}[ht]
 \centering
     \includegraphics[width= 0.95 \textwidth]{..//..//pheno_bc/figures/panelFig/dotBetaAlphaLongBW_LH_astrix.pdf}%,
-    \caption{Comparisons of estimated day of budburst based on the full model (intercept plus all cues), shown as white (open) symbols, versus the intercepts only (without effects of chilling, forcing, and photoperiod), shown as black (filled) symbols. Points are ordered according to differences in species estimated budburst dates for both the \textbf{a}, eastern \textbf{b}, and western sites under low cue conditions, depicted as circles, and high cue conditions, depicted as triangles. The abbreviated names of tree species are shown in red.} 
+    \caption{Comparisons of estimated day of budburst based on the full model (intercept plus all cues), shown as white (open) symbols, versus the intercepts only (without effects of chilling, forcing, and photoperiod), shown as black (filled) symbols. Points are ordered according to differences in species estimated budburst dates for both the \textbf{a}, eastern \textbf{b}, and western sites under low cue conditions, depicted as circles, and high cue conditions, depicted as triangles. The abbreviated names of tree species are denoted using an asterisk.} 
     \label{fig:betaAlphaGrad}  
 \end{figure}
 \newpage

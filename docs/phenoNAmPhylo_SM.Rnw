@@ -73,13 +73,6 @@
     \label{fig:intrxn3}
 \end{figure}
 \newpage
-
-\begin{figure}[h!]
-    \centering
-     \includegraphics[width=\textwidth]{..//..//pheno_bc/figures/panelFig/cueST28Chill_90.pdf}
-    \caption{Comparisons of posterior distributions for cue estimates between shrub and tree species. Circles represent the mean, while the thicker error bars represent the 50\% uncertainty interval, and thinner line the 90\% quantile interval.}
-    \label{fig:cueST}
-    \end{figure}
     
 \begin{figure}[ht]
 \centering
@@ -88,6 +81,12 @@
     \label{fig:rank}
 \end{figure}
 
+\begin{figure}[h!]
+    \centering
+     \includegraphics[width=\textwidth]{..//..//pheno_bc/figures/panelFig/cueST28Chill_90.pdf}
+    \caption{Comparisons of posterior distributions for cue estimates between shrub and tree species. Circles represent the mean, while the thicker error bars represent the 50\% uncertainty interval, and thinner line the 90\% quantile interval.}
+    \label{fig:cueST}
+    \end{figure}
 % \begin{figure}[!ht]
 %     \centering
 %      \includegraphics[width=\textwidth]{..//..//pheno_bc/figures/panelFig/changes_pheno_4sites_Oct17.pdf}

@@ -16,6 +16,7 @@ library(phytools)
 #library(ggpubr)
 library(lattice)
 require(cowplot)
+library(caper)
 
 
 if(length(grep("deirdreloughnan", getwd()) > 0)) { 
@@ -372,84 +373,85 @@ ggarrange (tc.both, tf.both,tp.both,
 dev.off()
 
 # Let's plot some interactions:
-a_sp = mean(sum[grep("a_sp", rownames(sum)), c("mean")])
+# a_sp = mean(sum[grep("a_sp", rownames(sum)), c("mean")])
+a_sp <- mean(post$a_z)
 post <- data.frame(post)
 postSub <- post[,c("mu_b_warm","mu_b_photo","mu_b_chill1","mu_b_inter_pc1","mu_b_inter_wp", "mu_b_inter_wc1", "mu_b_inter_ws2","mu_b_inter_s2c1", "b_site2","b_site3","b_site4")]
-a_spQ <- quantile(post, c(0.05, 0.95, 0.25, 0.75))
-a_sp <- cbind(a_sp, a_spQ)
+a_spQ <- quantile(post$a_z, c(0.05, 0.95, 0.25, 0.75))
+a_sp <- cbind(a_sp, t(a_spQ))
 
 #a_z = (sum[grep("a_z", rownames(sum)), c("mean")])
 mu_b_warm = sum[grep("mu_b_warm", rownames(sum)), c("mean")]
 mu_b_warmQ <- round(quantile(post$mu_b_warm, c(0.05, 0.95, 0.25, 0.75)),1)
-mu_b_warm <- (cbind(mu_b_warm, mu_b_warm5,mu_b_warm95, mu_b_warm25,mu_b_warm75))
+mu_b_warm <- (cbind(mu_b_warm, t(mu_b_warmQ)))
 
 mu_b_photo = sum[grep("mu_b_photo", rownames(sum)), c("mean")]
 mu_b_photoQ <- round(quantile(post$mu_b_photo, c(0.05, 0.95, 0.25, 0.75)),1)
-mu_b_photo <- (cbind(mu_b_photo, mu_b_photoQ))
+mu_b_photo <- (cbind(mu_b_photo, t(mu_b_photoQ)))
 
 mu_b_chill1 = sum[grep("mu_b_chill1", rownames(sum)), c("mean")]
 mu_b_chillQ <- round(quantile(post$mu_b_chill, c(0.05, 0.95, 0.25, 0.75)),1)
-mu_b_chill1 <- (cbind(mu_b_chill1, mu_b_chillQ))
+mu_b_chill1 <- (cbind(mu_b_chill1, t(mu_b_chillQ)))
 
 mu_b_inter_pc1 = sum[grep("mu_b_inter_pc1", rownames(sum)), c("mean")]
 mu_b_inter_pc1Q <- round(quantile(post$mu_b_inter_pc1, c(0.05, 0.95, 0.25, 0.75)),1)
-mu_b_inter_pc1 <- (cbind(mu_b_inter_pc1, mu_b_inter_pc1Q))
+mu_b_inter_pc1 <- (cbind(mu_b_inter_pc1, t(mu_b_inter_pc1Q)))
 
 mu_b_inter_wp = sum[grep("mu_b_inter_wp", rownames(sum)), c("mean")]
 mu_b_inter_wpQ <- round(quantile(post$mu_b_inter_wp, c(0.05, 0.95, 0.25, 0.75)),1)
-mu_b_inter_wp <- (cbind(mu_b_inter_wp, mu_b_inter_wpQ))
+mu_b_inter_wp <- (cbind(mu_b_inter_wp, t(mu_b_inter_wpQ)))
 
 mu_b_inter_wc1 = sum[grep("mu_b_inter_wc1", rownames(sum)), c("mean")]
 mu_b_inter_wc1Q <- round(quantile(post$mu_b_inter_wc1,c(0.05, 0.95, 0.25, 0.75)),1)
-mu_b_inter_wc1 <- (cbind(mu_b_inter_wc1, mu_b_inter_wc1Q))
+mu_b_inter_wc1 <- (cbind(mu_b_inter_wc1, t(mu_b_inter_wc1Q)))
 
 mu_b_inter_ws2 = sum[grep("mu_b_inter_ws2", rownames(sum)), c("mean")]
 mu_b_inter_ws2Q <- round(quantile(post$mu_b_inter_ws2, c(0.05, 0.95, 0.25, 0.75)),1)
-mu_b_inter_ws2 <- (cbind(mu_b_inter_ws2, mu_b_inter_ws2Q))
+mu_b_inter_ws2 <- (cbind(mu_b_inter_ws2, t(mu_b_inter_ws2Q)))
 
 mu_b_inter_s2c1 = sum[grep("mu_b_inter_s2c1", rownames(sum)), c("mean")]
 mu_b_inter_s2c1Q <- round(quantile(post$mu_b_inter_s2c1, c(0.05, 0.95, 0.25, 0.75)),1)
-mu_b_inter_s2c1 <- (cbind(mu_b_inter_s2c1, mu_b_inter_s2c1Q))
+mu_b_inter_s2c1 <- (cbind(mu_b_inter_s2c1, t(mu_b_inter_s2c1Q)))
 
 mu_b_inter_ps2 = sum[grep("mu_b_inter_ps2", rownames(sum)), c("mean")]
 mu_b_inter_ps2Q <- round(quantile(post$mu_b_inter_ps2, c(0.05, 0.95, 0.25, 0.75)),1)
-mu_b_inter_ps2 <- (cbind(mu_b_inter_ps2, mu_b_inter_ps2Q))
+mu_b_inter_ps2 <- (cbind(mu_b_inter_ps2, t(mu_b_inter_ps2Q)))
 
 mu_b_inter_ws3 = sum[grep("mu_b_inter_ws3", rownames(sum)), c("mean")]
 mu_b_inter_ws3Q <- round(quantile(post$mu_b_inter_ws3, c(0.05, 0.95, 0.25, 0.75)),1)
-mu_b_inter_ws3 <- (cbind(mu_b_inter_ws3, mu_b_inter_ws3Q))
+mu_b_inter_ws3 <- (cbind(mu_b_inter_ws3, t(mu_b_inter_ws3Q)))
 
 mu_b_inter_s3c1 = sum[grep("mu_b_inter_s3c1", rownames(sum)), c("mean")]
 mu_b_inter_s3c1Q <- round(quantile(post$mu_b_inter_s3c1, c(0.05, 0.95, 0.25, 0.75)),1)
-mu_b_inter_s3c1 <- (cbind(mu_b_inter_s3c1, mu_b_inter_s3c1Q))
+mu_b_inter_s3c1 <- (cbind(mu_b_inter_s3c1, t(mu_b_inter_s3c1Q)))
 
 mu_b_inter_ps3 = sum[grep("mu_b_inter_ps3", rownames(sum)), c("mean")]
 mu_b_inter_ps3Q <- round(quantile(post$mu_b_inter_ps3, c(0.05, 0.95, 0.25, 0.75)),1)
-Qmu_b_inter_ps3 <- (cbind(mu_b_inter_ps3, mu_b_inter_ps3Q))
+mu_b_inter_ps3 <- (cbind(mu_b_inter_ps3, t(mu_b_inter_ps3Q)))
 
 mu_b_inter_ws4 = sum[grep("mu_b_inter_ws4", rownames(sum)), c("mean")]
 mu_b_inter_ws4Q <- round(quantile(post$mu_b_inter_ws4, c(0.05, 0.95, 0.25, 0.75)),1)
-mu_b_inter_ws4 <- (cbind(mu_b_inter_ws4, mu_b_inter_ws4Q))
+mu_b_inter_ws4 <- (cbind(mu_b_inter_ws4,t(mu_b_inter_ws4Q)))
 
 mu_b_inter_s4c1 = sum[grep("mu_b_inter_s4c1", rownames(sum)), c("mean")]
 mu_b_inter_s4c1Q <- round(quantile(post$mu_b_inter_s4c1, c(0.05, 0.95, 0.25, 0.75)),1)
-mu_b_inter_s4c1 <- (cbind(mu_b_inter_s4c1, mu_b_inter_s4c1Q))
+mu_b_inter_s4c1 <- (cbind(mu_b_inter_s4c1, t(mu_b_inter_s4c1Q)))
 
 mu_b_inter_ps4 = sum[grep("mu_b_inter_ps4", rownames(sum)), c("mean")]
 mu_b_inter_ps4Q <- round(quantile(post$mu_b_inter_ps4, c(0.05, 0.95, 0.25, 0.75)),1)
-mu_b_inter_ps4 <- (cbind(mu_b_inter_ps4, mu_b_inter_ps4Q))
+mu_b_inter_ps4 <- (cbind(mu_b_inter_ps4, t(mu_b_inter_ps4Q)))
 
 b_site2 = sum[grep("b_site2", rownames(sum)), c("mean")]
 b_site2Q <- round(quantile(post$b_site2, c(0.05, 0.95, 0.25, 0.75)),1)
-b_site2 <- (cbind(b_site2, b_site2Q))
+b_site2 <- (cbind(b_site2, t(b_site2Q)))
 
 b_site3 = sum[grep("b_site3", rownames(sum)), c("mean")]
 b_site3Q <- round(quantile(post$b_site3, c(0.05, 0.95, 0.25, 0.75)),1)
-b_site3 <- (cbind(b_site3, b_site3Q))
+b_site3 <- (cbind(b_site3, t(b_site3Q)))
 
 b_site4 = sum[grep("b_site4", rownames(sum)), c("mean")]
 b_site4Q <- round(quantile(post$b_site4, c(0.05, 0.95, 0.25, 0.75)),1)
-b_site4 <- (cbind(b_site4, b_site4Q))
+b_site4 <- (cbind(b_site4, t(b_site4Q)))
 
 # b_warm = sum[grep("b_warm\\[", rownames(sum)), c("mean")]
 # mu_b_warmQ <- round(quantile(post$mu_b_warm, c(0.05, 0.95, 0.25, 0.75)),1)
@@ -690,7 +692,9 @@ siteFPoint <- ggplot()  +
   ylim(0,80) +
   theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
         panel.background = element_blank(), axis.line = element_line(colour = "black"),
-        axis.text = element_text(size = 20), axis.title = element_text(size = 30),axis.text.x = element_text( size= 20,angle = 55, hjust=1), legend.key=element_rect(fill="white"),legend.text=element_text(size=25))+
+        axis.text = element_text(size = 20), axis.title = element_text(size = 30),
+        axis.text.x = element_text( size= 20,angle = 55, hjust=1), 
+        legend.key=element_rect(fill="white"),legend.text=element_text(size=25))+
   # scale_color_manual(values = c("cyan4", "#CC6677"), labels = c("High forcing", "Low forcing"), name = "") +
   scale_color_manual(values = c(
     "bb_hfsite1"="forestgreen",
@@ -1066,7 +1070,7 @@ pdf("figures/intrxnPlots8Chill3Latc.pdf", height =8, width = 7)
 sitePPoint
 dev.off()
 
-pdf("..//figures/intrxnPlots8Chill3Lat.pdf", height =8, width = 20)
+pdf("figures/intrxnPlots8Chill3LatTemp.pdf", height =8, width = 20)
 plot_grid( siteFPoint, siteCPoint, sitePPoint , ncol = 3, nrow =1,align = "v", rel_widths = c(1,1,1.2))
 dev.off()
 
@@ -1971,9 +1975,44 @@ tree$tip.label[tree$tip.label== "Fagus_grandifolia_var._caroliniana"] <- "Fagus_
 tree$tip.label[tree$tip.label== "Spiraea_alba_var._latifolia"] <- "Spiraea_alba"
 tree$tip.label[tree$tip.label== "Rhamnus_arguta"] <- "Rhamnus_frangula"
 
+tree$tip.label[tree$tip.label== "Acer_glabrum"] <- "Acer_glabrum*"
+tree$tip.label[tree$tip.label== "Acer_pensylvanicum"] <- "Acer_pensylvanicum*"
+tree$tip.label[tree$tip.label== "Acer_rubrum"] <- "Acer_rubrum*"
+tree$tip.label[tree$tip.label== "Acer_saccharum"] <- "Acer_saccharum*"
+tree$tip.label[tree$tip.label== "Betula_alleghaniensis"] <- "Betula_alleghaniensis*"
+tree$tip.label[tree$tip.label== "Betula_lenta"] <- "Betula_lenta*"
+tree$tip.label[tree$tip.label== "Betula_papyrifera"] <- "Betula_papyrifera*"
+tree$tip.label[tree$tip.label== "Fagus_grandifolia"] <- "Fagus_grandifolia*"
+tree$tip.label[tree$tip.label== "Fraxinus_nigra"] <- "Fraxinus_nigra*"
+tree$tip.label[tree$tip.label== "Nyssa_sylvatica"] <- "Nyssa_sylvatica*"
+tree$tip.label[tree$tip.label== "Populus_balsamifera"] <- "Populus_balsamifera*"
+tree$tip.label[tree$tip.label== "Populus_grandidentata"] <- "Populus_grandidentata*"
+tree$tip.label[tree$tip.label== "Populus_tremuloides"] <- "Populus_tremuloides*"
+tree$tip.label[tree$tip.label== "Prunus_pensylvanica"] <- "Prunus_pensylvanica*"
+tree$tip.label[tree$tip.label== "Quercus_alba"] <- "Quercus_alba*"
+tree$tip.label[tree$tip.label== "Quercus_rubra"] <- "Quercus_rubra*"
+tree$tip.label[tree$tip.label== "Quercus_velutina"] <- "Quercus_velutina*"
+
 
 # first getting the intercept values paired with the species names:
-spInfo <- read.csv("species_list.csv")
+spInfo <- read.csv("input/species_list.csv")
+spInfo$species.name[spInfo$species.name== "Acer_glabrum"] <- "Acer_glabrum*"
+spInfo$species.name[spInfo$species.name== "Acer_pensylvanicum"] <- "Acer_pensylvanicum*"
+spInfo$species.name[spInfo$species.name== "Acer_rubrum"] <- "Acer_rubrum*"
+spInfo$species.name[spInfo$species.name== "Acer_saccharum"] <- "Acer_saccharum*"
+spInfo$species.name[spInfo$species.name== "Betula_alleghaniensis"] <- "Betula_alleghaniensis*"
+spInfo$species.name[spInfo$species.name== "Betula_lenta"] <- "Betula_lenta*"
+spInfo$species.name[spInfo$species.name== "Betula_papyrifera"] <- "Betula_papyrifera*"
+spInfo$species.name[spInfo$species.name== "Fagus_grandifolia"] <- "Fagus_grandifolia*"
+spInfo$species.name[spInfo$species.name== "Fraxinus_nigra"] <- "Fraxinus_nigra*"
+spInfo$species.name[spInfo$species.name== "Nyssa_sylvatica"] <- "Nyssa_sylvatica*"
+spInfo$species.name[spInfo$species.name== "Populus_balsamifera"] <- "Populus_balsamifera*"
+spInfo$species.name[spInfo$species.name== "Populus_grandidentata"] <- "Populus_grandidentata*"
+spInfo$species.name[spInfo$species.name== "Populus_tremuloides"] <- "Populus_tremuloides*"
+spInfo$species.name[spInfo$species.name== "Prunus_pensylvanica"] <- "Prunus_pensylvanica*"
+spInfo$species.name[spInfo$species.name== "Quercus_alba"] <- "Quercus_alba*"
+spInfo$species.name[spInfo$species.name== "Quercus_rubra"] <- "Quercus_rubra*"
+spInfo$species.name[spInfo$species.name== "Quercus_velutina"] <- "Quercus_velutina*"
 
 
 spFact <- spInfo$species.name
@@ -1987,7 +2026,7 @@ dat.int <- cbind(phylo.dat, intercepts)
 # tree needs to be rooted:
 namesphy <- tree$tip.label
 tree$root.edge <- 0
-root(tree, outgroup = "Acer_glabrum")
+root(tree, outgroup = "Acer_glabrum*")
 
 is.rooted(tree)
 tree$node.label<-NULL
@@ -2001,11 +2040,11 @@ names(x)=dataPhy$phy$tip.label
 
 slope <- contMap(tree, x, plot = T)
 
-slopeCol <- setMap(slope, colors=c("blue","purple","red"))
+slopeCol <- setMap(slope, colors=c("#0D0887FF","#B12A90FF","#F0F921FF"))
 h<-max(nodeHeights(slopeCol$tree))
 
-pdf("figures/phyloIntColor.pdf", height = 9, width = 7)
-plot(slopeCol,legend = F, lwd=3, ylim=c(1-0.09*(Ntip(slopeCol$tree)),Ntip(slopeCol$tree)))
+pdf("figures/phyloIntColor_astrix.pdf", height = 9, width = 7)
+plot(slopeCol,legend = F, lwd = 5, ylim=c(1-0.09*(Ntip(slopeCol$tree)),Ntip(slopeCol$tree)))
 
 add.color.bar(60, slopeCol$cols, title = "Intercept (days)", subtitle="", digits = 1,lims = c(10,50),  prompt = F,x=0.2*h, y = -2)
 dev.off()

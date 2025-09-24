@@ -11,11 +11,8 @@ library(ggdist)
 library(reshape2)
 require(cowplot)
 
-if(length(grep("deirdreloughnan", getwd()) > 0)) { 
   setwd("~/Documents/github/pheno_bc") 
-}  else{
-  setwd("/home/deirdre/pheno_bc") # for midge
-}
+
 
 # load("output/bb_4sites_phylo_mini.Rda")
 # sum <- summary(mdl.4phyloMini)$summary 
@@ -220,13 +217,31 @@ names(data) <- c("species.name","valueLow", "valueHigh","species","type","transe
 
 #####################################################################
 ## Eastern spp only #################################################
+spInfo$species[spInfo$species.name== "Acer_glabrum"] <- "acegla*"
+spInfo$species[spInfo$species.name== "Acer_pensylvanicum"] <- "acepen*"
+spInfo$species[spInfo$species.name== "Acer_rubrum"] <- "acerub*"
+spInfo$species[spInfo$species.name== "Acer_saccharum"] <- "acesac*"
+spInfo$species[spInfo$species.name== "Betula_alleghaniensis"] <- "betall*"
+spInfo$species[spInfo$species.name== "Betula_lenta"] <- "betlen*"
+spInfo$species[spInfo$species.name== "Betula_papyrifera"] <- "betpap*"
+spInfo$species[spInfo$species.name== "Fagus_grandifolia"] <- "faggra*"
+spInfo$species[spInfo$species.name== "Fraxinus_nigra"] <- "franig*"
+spInfo$species[spInfo$species.name== "Nyssa_sylvatica"] <- "nyssyl*"
+spInfo$species[spInfo$species.name== "Populus_balsamifera"] <- "popbal*"
+spInfo$species[spInfo$species.name== "Populus_grandidentata"] <- "popgra*"
+spInfo$species[spInfo$species.name== "Populus_tremuloides"] <- "poptre*"
+spInfo$species[spInfo$species.name== "Prunus_pensylvanica"] <- "prupen*"
+spInfo$species[spInfo$species.name== "Quercus_alba"] <- "quealb*"
+spInfo$species[spInfo$species.name== "Quercus_rubra"] <- "querub*"
+spInfo$species[spInfo$species.name== "Quercus_velutina"] <- "quevel*"
+
 
 east <- subset(spInfo, transect != "west")
 eastSp <- unique(east$species.name)
 
 dataEast <- data[data$species.name %in% eastSp, ]
 
-overlappingE <- c("aromel","betlen", "betpap", "lyolig","faggra", "betall", "prupen","poptre","rhafra")
+overlappingE <- c("aromel","betlen*", "betpap*", "lyolig","faggra*", "betall*", "prupen*","poptre*","rhafra")
 spMiniE <- east[!east$species %in% overlappingE,]
 spTopE <- east[east$species %in% overlappingE,]
 
@@ -238,7 +253,7 @@ westSp <- unique(west$species.name)
 
 dataWest <- data[data$species.name %in% westSp, ]
 
-overlappingW <- c("spialb","betpap","popbal","rhoalb","alninc")
+overlappingW <- c("spibet","spialb","betpap*","popbal*","rhoalb","alninc")
 spMiniW <- west[!west$species %in% overlappingW,]
 spTopW <- west[west$species %in% overlappingW,]
 
@@ -285,6 +300,7 @@ dotWBw <- ggplot(meanPtW) +
   annotate("text", x = spTopW[3,5], y = -1, label = spTopW[3,2], cex = 5, angle = 78) +
   annotate("text", x = spTopW[4,5], y = -1, label = spTopW[4,2], cex = 5, angle = 78) +
   annotate("text", x = spTopW[5,5], y = -1, label = spTopW[5,2], cex = 5, angle = 78) +
+  annotate("text", x = 29, y = -1, label = spTopW[6,2], cex = 5, angle = 78) +
   scale_shape_manual(values = c(1,2,16)) +
   annotate("text", x = 68, y = 62.5, label = "Low cues", cex = 7) +  
   annotate("text", x = 68, y = 46.5, label = "Intercept", cex = 7) +
@@ -344,14 +360,16 @@ dotEBw <- ggplot(meanPtE) +
   theme(legend.position = "none") +  #annotate("text", x = 29, y = 60, label = "Eastern transect", cex =8) 
   annotate("text", x = 29, y = 60, label = "a      Eastern transect", cex =8) +
   annotate("text", x = spTopE[1,5], y = -1, label = spTopE[1,2], cex = 5, angle = 78) +
-  annotate("text", x = spTopE[2,5], y = -1, label = spTopE[2,2], cex = 5, angle = 78) +
+  annotate("text", x = spTopE[2,5], y = -0.75, label = spTopE[2,2], cex = 5, angle = 78) +
   annotate("text", x = spTopE[3,5], y = -1, label = spTopE[3,2], cex = 5, angle = 78) +
   annotate("text", x = spTopE[4,5], y = -1, label = spTopE[4,2], cex = 5, angle = 78) +
   # annotate("text", x = 38, y = 0, label = spTopE[4,2], cex = 5, angle = 78) +
   annotate("text", x = spTopE[5,5], y = -1, label = spTopE[5,2], cex = 5, angle = 78) +
   annotate("text", x = spTopE[6,5], y = -1, label = spTopE[6,2], cex = 5, angle = 78) +
   annotate("text", x = spTopE[7,5], y = -1, label = spTopE[7,2], cex = 5, angle = 78) +
-  annotate("text", x = spTopE[8,5], y = -1, label = spTopE[8,2], cex = 5, angle = 78) +
+  annotate("text", x = spTopE[8,5], y = -0.65, label = spTopE[8,2], cex = 5, angle = 78) +
+  annotate("text", x = spTopE[9,5], y = -1, label = spTopE[9,2], cex = 5, angle = 78) +
+
   scale_shape_manual(values = c(1,2,16)) +       
   annotate("text", x = 69, y = 65, label = "Low cues", cex = 7) +  
   annotate("text", x = 69, y = 50, label = "Intercept", cex = 7) +
@@ -373,14 +391,14 @@ pdf("figures/dotBetaAlphaLongBW_LHb.pdf", width = 12, height = 8)
 dotWBw
 dev.off()
 
-pdf("figures/dotBetaAlphaLongBW_LH_April20.pdf", width = 12, height = 16)
+pdf("figures/dotBetaAlphaLongBW_LH_astrix.pdf", width = 12, height = 16)
 plot_grid(dotEBw, dotWBw, nrow = 2, ncol = 1, align = "v")
 dev.off()
 #############################################
 # old plots
 ####### Old plot not spaced out ####################3
 
-overlapping <- c("aromel","prupen","vacmyr","spialb","ilemuc", "vibcas","betpap","betlen","symalb","acerub","lyolig","rhopri")
+overlapping <- c("aromel","prupen*","vacmyr","spialb","ilemuc", "vibcas","betpap*","betlen*","symalb","acerub*","lyolig","rhopri")
 spMini <- spInfo[!spInfo$species %in% overlapping,]
 spTop <- spInfo[spInfo$species %in% overlapping,]
 
@@ -404,19 +422,19 @@ chilldotW <- ggplot(chillPtW, aes(y= chill, x = meanBB, color = transect), size 
   labs( x = "", y = 
          ""# "Days per standardized chill portion"
         , main = NA) +
-  theme(legend.title = element_blank()) +  #annotate("text", x = 15, y = 2, label = "b)", cex =10) +
+  theme(legend.title = element_blank()) +  annotate("text", x = 15, y = 2, label = "b", cex =10) +
   annotate("text", x = 38, y = 3, label = "Western transect", cex =10) +
   annotate("text", x = spTopW[1,5], y = -37, label = spTopW[1,2], cex = 6, angle = 78) +
   annotate("text", x = spTopW[2,5], y = -37, label = spTopW[2,2], cex = 6, angle = 78) +
   annotate("text", x = spTopW[3,5], y = -37, label = spTopW[3,2], cex = 6, angle = 78) +
   annotate("text", x = spTopW[4,5], y = -37, label = spTopW[4,2], cex = 6, angle = 78) +
   annotate("text", x = spTopW[5,5], y = -37, label = spTopW[5,2], cex = 6, angle = 78) +
-  annotate("text", x = spTopW[6,5], y = -37, label = spTopW[6,2], cex = 6, angle = 78) +
+  annotate("text", x = 29, y = -37, label = spTopW[6,2], cex = 6, angle = 78) +
   scale_fill_manual(values = c("darkred","#cc6a70ff","#cc6a70ff")) + 
-  scale_color_manual(values = c("darkred","#cc6a70ff","#cc6a70ff")) + 
-  geom_segment(aes(x = 15, y = 5, xend = 15 , yend = -2),
-  arrow = arrow(length = unit(0.5, "cm")), col = "black") +
-  annotate("text", x = 15, y = -3, label = "Earlier", cex =5) 
+  scale_color_manual(values = c("darkred","#cc6a70ff","#cc6a70ff"))# + 
+  # geom_segment(aes(x = 15, y = 5, xend = 15 , yend = -2),
+  # arrow = arrow(length = unit(0.5, "cm")), col = "black") +
+  # annotate("text", x = 15, y = -3, label = "Earlier", cex =5) 
 chilldotW
 
 pdf("figures/dotCFPEWSizeColorUnitsShapeb.pdf", width = 10, height = 7)
@@ -437,19 +455,19 @@ forcedotW <- ggplot(chillPtW,aes(y= force, x = meanBB, color = transect), size =
   labs( x = "", 
         y = ""# "Days per standardized forcing" )+ # expression("Forcing response (days/"*~degree*C*")")
   , main = NA) +
-  theme(legend.title = element_blank()) +  #annotate("text", x = 15, y = 2, label = "d)", cex =10) +
+  theme(legend.title = element_blank()) +  annotate("text", x = 15, y = 2, label = "d", cex =10) +
   # annotate("text", x = 38, y = 10, label = "Western transect", cex =5) +
   annotate("text", x = spTopW[1,5], y = -23, label = spTopW[1,2], cex = 6, angle = 78) +
   annotate("text", x = spTopW[2,5], y = -23, label = spTopW[2,2], cex = 6, angle = 78) +
   annotate("text", x = spTopW[3,5], y = -23, label = spTopW[3,2], cex = 6, angle = 78) +
   annotate("text", x = spTopW[4,5], y = -23, label = spTopW[4,2], cex = 6, angle = 78) +
   annotate("text", x = spTopW[5,5], y = -23, label = spTopW[5,2], cex = 6, angle = 78) +
-  annotate("text", x = spTopW[6,5], y = -23, label = spTopW[6,2], cex = 6, angle = 78) + 
+  annotate("text", x = 29, y = -23, label = spTopW[6,2], cex = 6, angle = 78) + 
   scale_fill_manual(values = c("tan4","#f9b641ff","#f9b641ff")) + 
-  scale_color_manual(values = c("tan4","#f9b641ff","#f9b641ff")) + 
-  geom_segment(aes(x = 15, y = 5, xend = 15 , yend = 1),
-    arrow = arrow(length = unit(0.5, "cm")), col = "black") +
-  annotate("text", x = 15, y = 0, label = "Earlier", cex =5) 
+  scale_color_manual(values = c("tan4","#f9b641ff","#f9b641ff"))# + 
+  # geom_segment(aes(x = 15, y = 5, xend = 15 , yend = 1),
+  #   arrow = arrow(length = unit(0.5, "cm")), col = "black") #+
+  # annotate("text", x = 15, y = 0, label = "Earlier", cex =5) 
 forcedotW
 
 pdf("figures/dotCFPEWSizeColorUnitsShaped.pdf", width = 10, height = 7)
@@ -469,19 +487,19 @@ photodotW <- ggplot(chillPtW,aes(y= photo, x = meanBB, color = transect), size =
   scale_x_continuous( breaks = spMiniW$meanBB, labels = spMiniW$species,limits = c(15,65)) +
   labs( x = "Species ordered by predicted budburst date", y = "",#"Days per standardized photoperiod",
         main = NA) +
-  theme(legend.title = element_blank()) +  #annotate("text", x = 15, y = 0, label = "f)", cex =10) +
+  theme(legend.title = element_blank()) +  annotate("text", x = 15, y = 0, label = "f", cex =10) +
   # annotate("text", x = 38, y = 10, label = "Western transect", cex =5) +
   annotate("text", x = spTopW[1,5], y = -9.3, label = spTopW[1,2], cex = 6, angle = 78) +
   annotate("text", x = spTopW[2,5], y = -9.3, label = spTopW[2,2], cex = 6, angle = 78) +
   annotate("text", x = spTopW[3,5], y = -9.3, label = spTopW[3,2], cex = 6, angle = 78) +
   annotate("text", x = spTopW[4,5], y = -9.3, label = spTopW[4,2], cex = 6, angle = 78) +
   annotate("text", x = spTopW[5,5], y = -9.3, label = spTopW[5,2], cex = 6, angle = 78) +
-  annotate("text", x = spTopW[6,5], y = -9.3, label = spTopW[6,2], cex = 6, angle = 78)+ 
+  annotate("text", x = 29, y = -9.3, label = spTopW[6,2], cex = 6, angle = 78)+ 
   scale_fill_manual(values = c("navy","cyan4", "cyan4")) + 
-  scale_color_manual(values = c("navy","cyan4", "cyan4")) + 
-  geom_segment(aes(x = 15, y = 0.5, xend =15 , yend = -0.7),
-               arrow = arrow(length = unit(0.5, "cm")), col = "black") +
-  annotate("text", x = 15, y = -1, label = "Earlier", cex =5) 
+  scale_color_manual(values = c("navy","cyan4", "cyan4")) #+ 
+  # geom_segment(aes(x = 15, y = 0.5, xend =15 , yend = -0.7),
+  #              arrow = arrow(length = unit(0.5, "cm")), col = "black") +
+  # annotate("text", x = 15, y = -1, label = "Earlier", cex =5) 
 photodotW
 
 pdf("figures/dotCFPEWSizeColorUnitsShapef.pdf", width = 10, height = 7)
@@ -504,7 +522,7 @@ chilldotE <- ggplot(chillPtE,aes(y= chill, x = meanBB, color = transect), size =
   scale_x_continuous( breaks = spMiniE$meanBB, labels = spMiniE$species,limits = c(23,65)) +
   labs( x = "", y = "Chill response (days/standardized unit)"#"Days per standardized chill portion"
         , main = NA) +
-  theme(legend.title = element_blank()) +  #annotate("text", x =23, y = 2, label = "a)", cex =10) +
+  theme(legend.title = element_blank()) +  annotate("text", x =23, y = 2, label = "a", cex =10) +
   annotate("text", x = 45, y = 0, label = "Eastern transect", cex = 10) +
   annotate("text", x = spTopE[1,5], y = -41.5, label = spTopE[1,2], cex = 6, angle = 78) +
   annotate("text", x = spTopE[2,5], y = -41.5, label = spTopE[2,2], cex = 6, angle = 78) +
@@ -517,8 +535,9 @@ chilldotE <- ggplot(chillPtE,aes(y= chill, x = meanBB, color = transect), size =
   annotate("text", x = spTopE[9,5], y = -41.5, label = spTopE[9,2], cex = 6, angle = 78) +
   scale_fill_manual(values = c("#cc6a70ff","darkred","#cc6a70ff")) + 
   scale_color_manual(values = c("#cc6a70ff","darkred","#cc6a70ff")) + 
-  geom_segment(aes(x = 23, y = 5, xend = 23 , yend = -2),arrow = arrow(length = unit(0.5, "cm")), col = "black") +
-  annotate("text", x = 23, y = -3, label = "Earlier", cex =5) 
+  geom_segment(aes(x = 23, y = -10, xend = 23 , yend = -17),
+               arrow = arrow(length = unit(0.5, "cm")), col = "black", lwd =2) +
+  annotate("text", x = 23, y = -20, label = "Earlier", cex = 6) 
 chilldotE
 
 pdf("figures/dotCFPEWSizeColorUnitsShapea.pdf", width = 10, height = 7)
@@ -538,7 +557,7 @@ forcedotE <- ggplot(chillPtE,aes(y= force, x = meanBB, colour = transect), size 
   scale_x_continuous( breaks = spMiniE$meanBB, labels = spMiniE$species,limits = c(23,65)) +
   labs( x = "", y = "Forcing response (days/standardized unit)"#"Days per standardized forcing")+#expression("Forcing response (days/"*~degree*C*")")
   , main = NA) +
-  theme(legend.title = element_blank()) +  #annotate("text", x = 23, y = 2, label = "c)", cex =10) +
+  theme(legend.title = element_blank()) +  annotate("text", x = 23, y = 2, label = "c", cex =10) +
   annotate("text", x = spTopE[1,5], y = -23.5, label = spTopE[1,2], cex = 6, angle = 78) +
   annotate("text", x = spTopE[2,5], y = -23.5, label = spTopE[2,2], cex = 6, angle = 78) +
   annotate("text", x = spTopE[3,5], y = -23.5, label = spTopE[3,2], cex = 6, angle = 78) +
@@ -549,10 +568,10 @@ forcedotE <- ggplot(chillPtE,aes(y= force, x = meanBB, colour = transect), size 
   annotate("text", x = spTopE[8,5], y = -23.5, label = spTopE[8,2], cex = 6, angle = 78) +
   annotate("text", x = spTopE[9,5], y = -23.5, label = spTopE[9,2], cex = 6, angle = 78) +
   scale_fill_manual(values = c("#f9b641ff","tan4","#f9b641ff")) + 
-  scale_color_manual(values = c("#f9b641ff","tan4","#f9b641ff")) + 
-  geom_segment(aes(x = 23, y = 5, xend =23 , yend = 1),
-               arrow = arrow(length = unit(0.5, "cm")), col = "black") +
-  annotate("text", x = 23, y = 0, label = "Earlier", cex =5) 
+  scale_color_manual(values = c("#f9b641ff","tan4","#f9b641ff")) #+ 
+  # geom_segment(aes(x = 23, y = 5, xend =23 , yend = 1),
+  #              arrow = arrow(length = unit(0.5, "cm")), col = "black") +
+  # annotate("text", x = 23, y = 0, label = "Earlier", cex =5) 
 forcedotE
 
 pdf("figures/dotCFPEWSizeColorUnitsShapec.pdf", width = 10, height = 7)
@@ -572,7 +591,7 @@ theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
   scale_x_continuous( breaks = spMiniE$meanBB, labels = spMiniE$species,limits = c(23,65)) +
   labs( x = "Species ordered by predicted budburst date", y = "Photoperiod response (days/standardized unit)"#"Days per standardized photoperiod"
         , main = NA) +
-  theme(legend.title = element_blank()) +  #annotate("text", x = 23, y = 0, label = "e)", cex =10) + 
+  theme(legend.title = element_blank()) +  annotate("text", x = 23, y = 0, label = "e", cex =10) + 
   annotate("text", x = spTopE[1,5], y = -9.3, label = spTopE[1,2], cex = 6, angle = 78) +
   annotate("text", x = spTopE[2,5], y = -9.3, label = spTopE[2,2], cex = 6, angle = 78) +
   annotate("text", x = spTopE[3,5], y = -9.3, label = spTopE[3,2], cex = 6, angle = 78) +
@@ -583,17 +602,17 @@ theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
   annotate("text", x = spTopE[8,5], y = -9.3, label = spTopE[8,2], cex = 6, angle = 78) +
   annotate("text", x = spTopE[9,5], y = -9.3, label = spTopE[9,2], cex = 6, angle = 78) +
   scale_fill_manual(values = c("cyan4", "navy","cyan4")) + 
-  scale_color_manual(values = c("cyan4","navy", "cyan4")) + 
-  geom_segment(aes(x = 23, y = 0.5, xend =23 , yend = -0.7),
-    arrow = arrow(length = unit(0.5, "cm")), col = "black") +
-  annotate("text", x = 23, y = -1, label = "Earlier", cex =5) 
+  scale_color_manual(values = c("cyan4","navy", "cyan4"))# + 
+  # geom_segment(aes(x = 23, y = 0.5, xend =23 , yend = -0.7),
+  #   arrow = arrow(length = unit(0.5, "cm")), col = "black") +
+  # annotate("text", x = 23, y = -1, label = "Earlier", cex =5) 
 photodotE
 
 pdf("figures/dotCFPEWSizeColorUnitsShapee.pdf", width = 10, height = 7)
 photodotE
 dev.off()
 
-pdf("figures/dotCFPEWSizeColorUnitsShape.pdf", width = 20, height = 20)
+pdf("figures/dotCFPEWSizeColorUnitsShape_astrix.pdf", width = 20, height = 20)
 plot_grid(chilldotE, chilldotW, forcedotE, forcedotW, photodotE, photodotW, nrow = 3, ncol = 2, align = "v")
 dev.off()
 

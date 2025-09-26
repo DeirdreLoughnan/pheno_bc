@@ -29,7 +29,7 @@
 
 \usepackage{xr-hyper} %refer to Fig.s in another document
 \externaldocument{PhenoNAmPhylo_SM}
-\usepackage{hyperref}
+% \usepackage{hyperref}
 
 \setlength{\captionmargin}{30pt}
 \setlength{\abovecaptionskip}{0pt}
@@ -68,28 +68,28 @@
 % Ecology 
 
 \title{How temperature, photoperiod and evolutionary history shape forest leafout} 
-\date{}
-\author{Deirdre Loughnan$^{1,2,3}$ and E M Wolkovich$^{1,4,5}$}
+ \date{}
+% \author{Deirdre Loughnan$^{1,2,3}$ and E M Wolkovich$^{1,4,5}$}
 \maketitle 
-
-$^1$ Department of Forest and Conservation Sciences, Faculty of Forestry, University of British Columbia, 2424 Main Mall
-Vancouver, BC, Canada, V6T 1Z4. \\
-
-$^2$ Department of Zoology, Faculty of Science, University of British Columbia, 6270 University Blvd, Vancouver, BC, Canada, V6T 1Z4 \\
-
-$^3$ Hakai Institute, PO Box 25039, Campbell River, BC, Canada, V9W 0B7 \\
-
-$^4$ Arnold Arboretum of Harvard University, 1300 Centre Street, Boston, Massachusetts, USA;\\
- 
-$^5$ Organismic \& Evolutionary Biology, Harvard University, 26 Oxford Street, Cambridge, Massachusetts, USA;\\
- 
-
-Corresponding Author: Deirdre Loughnan, deirdre.loughnan@ubc.ca, 6270 University Blvd, RM 1015, Vancouver, BC, V6T 1Z4\\
-Coauthor: Elizabeth Wolkovich, e.wolkovich@ubc.ca\\
-
-Running title: The environment and evolution shape forests \\
-
-Keywords: Phenology, Budburst, Climate change, Forest communities, Community assembly, Temporal niche.\\
+% 
+% $^1$ Department of Forest and Conservation Sciences, Faculty of Forestry, University of British Columbia, 2424 Main Mall
+% Vancouver, BC, Canada, V6T 1Z4. \\
+% 
+% $^2$ Department of Zoology, Faculty of Science, University of British Columbia, 6270 University Blvd, Vancouver, BC, Canada, V6T 1Z4 \\
+% 
+% $^3$ Hakai Institute, PO Box 25039, Campbell River, BC, Canada, V9W 0B7 \\
+% 
+% $^4$ Arnold Arboretum of Harvard University, 1300 Centre Street, Boston, Massachusetts, USA;\\
+%  
+% $^5$ Organismic \& Evolutionary Biology, Harvard University, 26 Oxford Street, Cambridge, Massachusetts, USA;\\
+%  
+% 
+% Corresponding Author: Deirdre Loughnan, deirdre.loughnan@ubc.ca, 6270 University Blvd, RM 1015, Vancouver, BC, V6T 1Z4\\
+% Coauthor: Elizabeth Wolkovich, e.wolkovich@ubc.ca\\
+% 
+% Running title: The environment and evolution shape forests \\
+% 
+% Keywords: Phenology, Budburst, Climate change, Forest communities, Community assembly, Temporal niche.\\
 
 % Article type: Letter\\
 % 
@@ -101,7 +101,7 @@ Keywords: Phenology, Budburst, Climate change, Forest communities, Community ass
 <<label=runcode1,  echo=FALSE>>=
 source("..//rcode/phenologyMsValues.R")
 @
-\newpage
+
 
 \section*{Abstract} 
 %New Phyt 200---currently 199
@@ -146,7 +146,7 @@ We assessed phenological stages of budburst using the BBCH scale \citep{Finn2007
 \subsection*{Statistical Analysis}
 We tested for differences in budburst cues across species and communities using a phylogenetic mixed effects model with partial pooling (`shrinkage') across species. This approach accounts for both the evolutionary relatedness of our species and estimates the species-level cues and differences across sites. We obtained species phylogenetic relatedness by pruning the \citet[][]{Smith2018} megatree of angiosperms (Fig. \ref{fig:phylo}).\\
 
-In our model, we included each of our three cues as continuous variables. To account for the greater amounts of field chilling experienced in our eastern study, we converted our chilling treatments to chill portions for each individual community using local weather station data and the chillR package \citep[v. 0.73.1,][]{Luedeling2020}. Chill portions are are a commonly used chill metric that is calculated using hourly climate data and a Dynamic Model in which cool temperatures lead to the accumulation of chilling, while more accurately estimateing chilling accumulation under fluctuating temperatures \citep{Luedeling2012,Luedeling2020}. We calculated chill portions for both the chilling experienced in the field prior to sampling and during the experiment in our 4$^{\circ}$C chilling chambers. We also converted forcing temperatures to mean daily temperatures in each treatment to account for differences in thermoperiodicity between the two studies \citep{Buonaiuto2023}. Finally, we $z$-scored each cue and site using two standard deviations to allow direct comparisons between results across cues \citep{Gelman2008}. In addition to the overall predictors, we included all two-way interactions between cues and between cues and sites.\\
+In our model, we included each of our three cues as continuous variables. To account for the greater amounts of field chilling experienced in our eastern study, we converted our chilling treatments to chill portions for each individual community using local weather station data and the chillR package \citep[v. 0.73.1,][]{Luedeling2020}. Chill portions are a commonly used chill metric that is calculated using hourly climate data and a Dynamic Model in which cool temperatures lead to the accumulation of chilling, while more accurately estimating chilling accumulation under fluctuating temperatures \citep{Luedeling2012,Luedeling2020}. We calculated chill portions for both the chilling experienced in the field prior to sampling and during the experiment in our 4$^{\circ}$C chilling chambers. We also converted forcing temperatures to mean daily temperatures in each treatment to account for differences in thermoperiodicity between the two studies \citep{Buonaiuto2023}. Finally, we $z$-scored each cue and site using two standard deviations to allow direct comparisons between results across cues \citep{Gelman2008}. In addition to the overall predictors, we included all two-way interactions between cues and between cues and sites.\\
 
 Our modelling approach allowed us to combine observations of budburst (\emph{$y_{i}$}) across species (\emph{sp}) to estimate both the effects of species-specific differences in their responses (slope estimates, $\beta$) to cues (chilling, forcing and photoperiod) and any remaining species-specific differences in timings (via species-level intercepts, $\alpha_{sp_i}$). Our full model also estimated effects of sites and all possible two-way interactions between cues, and between cues and sites, to estimate the day of budburst (\emph{$\hat{y}$}) relative to the first day of forcing conditions. 
 \begin{align*} 
@@ -232,17 +232,17 @@ As climate change leads to greater temperature cues, we are already observing ad
 
 While our findings have applications to plant communities, our analytical approach is widely applicable to forecasting diverse species responses to climate change. The phylogenetic model we used here could be easily applied to other phenological events or suites of species from across the tree of life. By combining species-rich and community-wide approaches with phylogenetic relationships we can better understand the impacts of evolutionary history and current ecological processes in shaping species phenology under a changing climate.\\
 
-\textbf{Acknowledgements} \\
-We thank M. Yasutake, K. Slimon, S. Larter, P. Autio, and S. Collins for their help running the Western part of this experiment; D. Flynn and T. Savas for contributions to the Eastern experimental data; S. Joly for his help constructing the phylogenetic tree used in our analysis; and to J. Hopps and K. Wilson for their support during our work at E. C. Manning Park and P. Crawford and D. Belford for their support while working in Babine Provincial Park. \\
-
-\textbf{Competing Interests Statement}\\
-The authors have no competing interests.\\
-
-\textbf{Author Contribution Statement}\\
-Both D.L. and E.M.W. conceived the study, contributed to the analysis and code and contributed to the writing and revision of the manuscript. DL led field and experimental data collection.\\ 
-
-\textbf{Data and code availability statement}\\
-All data and Stan code are freely available through the Knowledge Network for Biocomplexity \citep{LoughnanKNB} and at the Harvard Forest data repository. %emw25May -- I would add that some data is on HF data repo -- at least make a note to add that before publication *or* link to it clearly in the KNB posting. 
+% \textbf{Acknowledgements} \\
+% We thank M. Yasutake, K. Slimon, S. Larter, P. Autio, and S. Collins for their help running the Western part of this experiment; D. Flynn and T. Savas for contributions to the Eastern experimental data; S. Joly for his help constructing the phylogenetic tree used in our analysis; and to J. Hopps and K. Wilson for their support during our work at E. C. Manning Park and P. Crawford and D. Belford for their support while working in Babine Provincial Park. \\
+% 
+% \textbf{Competing Interests Statement}\\
+% The authors have no competing interests.\\
+% 
+% \textbf{Author Contribution Statement}\\
+% Both D.L. and E.M.W. conceived the study, contributed to the analysis and code and contributed to the writing and revision of the manuscript. DL led field and experimental data collection.\\ 
+% 
+% \textbf{Data and code availability statement}\\
+% All data and Stan code are freely available through the Knowledge Network for Biocomplexity \citep{LoughnanKNB} and at the Harvard Forest data repository. %emw25May -- I would add that some data is on HF data repo -- at least make a note to add that before publication *or* link to it clearly in the KNB posting. 
 % 
 % \section*{Data and code availability statement}
 % All data and Stan code will be freely available through the Knowledge Network for Biocomplexity at the time of publication.
@@ -276,7 +276,7 @@ All data and Stan code are freely available through the Knowledge Network for Bi
 \begin{figure}[h!]
     \centering 
      \includegraphics[width=\textwidth]{..//figures/panelFig/siteCue90_intrxn_colors.pdf}
-    \caption{\textbf{a,} Posterior distributions of estimated chilling, forcing, and photoperiod responses with individual site-level effects. Symbols denote the eastern (traingle) and western (square) transects and the darker point color our more northern communities. Points represent the mean, thicker lines the 50\% uncertainty interval, and the thin lines the 90\% uncertainty interval. \textbf{b,} Cues interacted to produce a subadditive effect, where delays in budburst under low chilling was offset by high forcing conditions, and vice versa. To make results comparable across cues we standardized chilling, forcing, and photoperiod via $z$-scores using two standard deviations, see methods for further details.} 
+    \caption{\textbf{a,} Posterior distributions of estimated chilling, forcing, and photoperiod responses with individual site-level effects. Symbols denote the eastern (triangle) and western (square) transects and the darker point color our more northern communities. Points represent the mean, thicker lines the 50\% uncertainty interval, and the thin lines the 90\% uncertainty interval. \textbf{b,} Cues interacted to produce a subadditive effect, where delays in budburst under low chilling was offset by high forcing conditions, and vice versa. To make results comparable across cues we standardized chilling, forcing, and photoperiod via $z$-scores using two standard deviations, see methods for further details.} 
     \label{fig:siteCues}
 \end{figure}
 \newpage

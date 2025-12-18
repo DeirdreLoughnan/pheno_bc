@@ -17,7 +17,7 @@
 \usepackage[export]{adjustbox} % adding a box around a map
 \usepackage{lineno}
 \linenumbers
-\linespread{1.25}
+\linespread{1.5}
 % recommended! Uncomment the below line and change the path for your computer!
 % \SweaveOpts{prefix.string=/Users/Lizzie/Documents/git/teaching/demoSweave/Fig.s/demoFig, eps=FALSE} 
 %put your Fig.s in one place! Also, note that here 'Fig.s' is the folder and 'demoFig' is what each 
@@ -67,10 +67,10 @@
 % Journal of Ecology 
 % Ecology 
 
-\title{How temperature, photoperiod and evolutionary history shape forest leafout} 
- \date{}
-% \author{Deirdre Loughnan$^{1,2,3}$ and E M Wolkovich$^{1,4,5}$}
-\maketitle 
+% \title{How temperature, photoperiod and evolutionary history shape forest leafout} 
+%  \date{}
+% % \author{Deirdre Loughnan$^{1,2,3}$ and E M Wolkovich$^{1,4,5}$}
+% \maketitle 
 % 
 % $^1$ Department of Forest and Conservation Sciences, Faculty of Forestry, University of British Columbia, 2424 Main Mall
 % Vancouver, BC, Canada, V6T 1Z4. \\
@@ -106,13 +106,7 @@ source("..//rcode/phenologyMsValues.R")
 \section*{Abstract} 
 %New Phyt 200---currently 199
 
-1. How species assemble temporally has received growing attention as climate change shifts the timing of major life cycle events across most systems. While theory predicts that plant species should partition time to reduce resource competition---for example by leafing out at different times---few studies have examined this given the complexity of environmental cues that make timings highly variable across years and sites. \\
-
-2. We examine species- and community-level responses in budburst across 47 woody plant species across four sites in North America. By manipulating known temperature and photoperiod cues in controlled environments, then applying a phylogenetic Bayesian model, we estimate the effects of these cues and evolutionary history in shaping leafout across species. \\
-
-3. We found responses from plants sampled at different sites were highly similar, but species varied greatly in their timings. Species-specific differences in responses to well-studied temperature and photoperiod cues, however, explained only half this variation, with the remaining variation mostly explained by intrinsic species differences in timing and shared evolutionary history. \\
-
-Synthesis. This suggests current models of leafout phenology are missing important variation that may structure species assembly within communities. Identifying these unidentified cues or traits is critical to forecasting phenological shifts and understanding their effects on community dynamics.
+How species assemble temporally has received growing attention as climate change shifts the timing of major life cycle events across most systems. While theory predicts that plant species should partition time to reduce resource competition---for example by leafing out at different times---few studies have examined this given the complexity of environmental cues that make timings highly variable across years and sites. We examine species- and community-level responses in budburst across 47 woody plant species across four sites in North America. By manipulating known temperature and photoperiod cues in controlled environments, then applying a phylogenetic Bayesian model, we estimate the effects of these cues and evolutionary history in shaping leafout across species. We found responses from plants sampled at different sites were highly similar, but species varied greatly in their timings. Species-specific differences in responses to well-studied temperature and photoperiod cues, however, explained only half this variation, with the remaining variation mostly explained by intrinsic species differences in timing and shared evolutionary history. This suggests current models of leafout phenology are missing important variation that may structure species assembly within communities. Identifying these unidentified cues or traits is critical to forecasting phenological shifts and understanding their effects on community dynamics.
 
 \newpage
 
@@ -232,15 +226,15 @@ As climate change leads to greater temperature cues, we are already observing ad
 
 While our findings have applications to plant communities, our analytical approach is widely applicable to forecasting diverse species responses to climate change. The phylogenetic model we used here could be easily applied to other phenological events or suites of species from across the tree of life. By combining species-rich and community-wide approaches with phylogenetic relationships we can better understand the impacts of evolutionary history and current ecological processes in shaping species phenology under a changing climate.\\
 
-% \textbf{Acknowledgements} \\
-% We thank M. Yasutake, K. Slimon, S. Larter, P. Autio, and S. Collins for their help running the Western part of this experiment; D. Flynn and T. Savas for contributions to the Eastern experimental data; S. Joly for his help constructing the phylogenetic tree used in our analysis; and to J. Hopps and K. Wilson for their support during our work at E. C. Manning Park and P. Crawford and D. Belford for their support while working in Babine Provincial Park. \\
-% 
-% \textbf{Competing Interests Statement}\\
-% The authors have no competing interests.\\
-% 
-% \textbf{Author Contribution Statement}\\
-% Both D.L. and E.M.W. conceived the study, contributed to the analysis and code and contributed to the writing and revision of the manuscript. DL led field and experimental data collection.\\ 
-% 
+\textbf{Acknowledgements} \\
+We thank M. Yasutake, K. Slimon, S. Larter, P. Autio, and S. Collins for their help running the Western part of this experiment; D. Flynn and T. Savas for contributions to the Eastern experimental data; S. Joly for his help constructing the phylogenetic tree used in our analysis; and to J. Hopps and K. Wilson for their support during our work at E. C. Manning Park and P. Crawford and D. Belford for their support while working in Babine Provincial Park. \\
+
+\textbf{Author Contribution Statement}\\
+Both D.L. and E.M.W. conceived the study, contributed to the analysis and code and contributed to the writing and revision of the manuscript. DL led field and experimental data collection.\\
+
+\textbf{Competing Interests Statement}\\
+The authors have no competing interests.\\
+
 % \textbf{Data and code availability statement}\\
 % All data and Stan code are freely available through the Knowledge Network for Biocomplexity \citep{LoughnanKNB} and at the Harvard Forest data repository. %emw25May -- I would add that some data is on HF data repo -- at least make a note to add that before publication *or* link to it clearly in the KNB posting. 
 % 

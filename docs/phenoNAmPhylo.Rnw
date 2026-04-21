@@ -67,7 +67,7 @@
 % Journal of Ecology 
 % Ecology 
 
-% \title{How temperature, photoperiod and evolutionary history shape forest leafout} 
+% \title{How temperature, photoperiod, and evolutionary history shape forest leafout} 
 %  \date{}
 % % \author{Deirdre Loughnan$^{1,2,3}$ and E M Wolkovich$^{1,4,5}$}
 % \maketitle 
@@ -106,7 +106,9 @@ source("..//rcode/phenologyMsValues.R")
 \section*{Abstract} 
 %New Phyt 200---currently 199
 
-How species assemble temporally has received growing attention as climate change shifts the timing of major life cycle events across most systems. While theory predicts that plant species should partition time to reduce resource competition---for example by leafing out at different times---few studies have examined this given the complexity of environmental cues that make timings highly variable across years and sites. We examine species- and community-level responses in budburst across 47 woody plant species across four sites in North America. By manipulating known temperature and photoperiod cues in controlled environments, then applying a phylogenetic Bayesian model, we estimate the effects of these cues and evolutionary history in shaping leafout across species. We found responses from plants sampled at different sites were highly similar, but species varied greatly in their timings. Species-specific differences in responses to well-studied temperature and photoperiod cues, however, explained only half this variation, with the remaining variation mostly explained by intrinsic species differences in timing and shared evolutionary history. This suggests current models of leafout phenology are missing important variation that may structure species assembly within communities. Identifying these unidentified cues or traits is critical to forecasting phenological shifts and understanding their effects on community dynamics.
+How species assemble temporally has received growing attention as 
+
+\color{purple}\R{R1_1}Climate change has shifted the timing of major life cycle events across most systems and is altering how species assemble temporally. \color{black}While theory predicts that plant species should partition time to reduce resource competition---for example by leafing out at different times---few studies have examined this given the complexity of environmental cues that make timings highly variable across years and sites. We examine species- and community-level responses in budburst across 47 \color{purple}\R{R1_2} cuttings\color{black} of woody plant species across four sites in North America. By manipulating known temperature and photoperiod cues in controlled environments, then applying a phylogenetic Bayesian model, we estimate the effects of these cues and evolutionary history in shaping leafout across species. We found responses from plants sampled at different sites were highly similar, but species varied greatly in their timings. Species-specific differences in responses to well-studied temperature and photoperiod cues, however, explained only half this variation, with the remaining variation attributed to \color{purple}\R{R1_3} inherent differences between species that shape the timing of their growth, \R{R1_4}after accounting for the estimated phylogenetic structure of budburst\color{black}. This suggests current models of leafout phenology are missing important variation that may structure species assembly within communities. Identifying these unidentified cues or traits is critical to forecasting phenological shifts and understanding their effects on community dynamics.
 
 \newpage
 

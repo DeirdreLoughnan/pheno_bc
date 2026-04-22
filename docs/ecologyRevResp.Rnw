@@ -92,13 +92,15 @@ Done (\lr{R1_thermoP}).
 \texbf{Results:}
 \emph{Line 193-195: Move “after the start of forcing and photoperiod treatments” to immediately follow “30.4 days”; complete the sense before the parentheses.}
 
-Done. 
+Done (\lr{R1_Results}).
 
 \emph{Lines 247-251: How do you determine whether community-level eastern v western budburst  date differences are due to different species in these communities versus different collection dates? And is this a meaningful comparison given the different species pools? I guess I just assumed the meaningful site comparisons were North and South within each set of twig cutting experiments, since this would test the intraspecific variation in response.}
 
 \textbf{Discussion}\\
 
 \emph{Line 272:When you write “we found no detectable site-level differences” I wondered if you meant at the community level or at the species level. Again, I am confused by the coastal comparisons because I expect that the differences in community composition would swamp this comparison.}
+
+We were equally surprised to find that the differences in community composition did not swamp the community-level differences across sites. 
 
 \emph{Lines 271-276: What about common garden studies? In McDonough MacKenzie et al 2019, Vitasse et al 2013, Stinson 2005, and Vitasse et al 2010 local condition drove phenology, while Korner et al 2015, Gugger et al 2015, Vitasse et al 2009, and Rossi and Isabel 2016 reported population-level variation in phenological response.}
 
@@ -108,7 +110,7 @@ Done.
 
 \emph{Lines 300-302: As in Line 35, I think Herbeling et al 2019’s overstory-understory asynchrony paper belongs here}
 
-Done. 
+Done (\lr{R1_Herb2}). 
 
 \emph{Line 312: the discussion “latent traits” reminds me of Inouye’s conceptual synthesis on phenology as a process and a trait (Inouye, Brian D., Johan Ehrlén, and Nora Underwood. "Phenology as a process rather than an event: from individual reaction norms to community metrics." Ecological Monographs 89, no. 2 (2019): e01352.)}
 
@@ -122,16 +124,19 @@ This is a great suggestion and have added this reference.}
 \textbf{Figures 1:}\\
 \emph{I think the species lists should be moved to their own table to simplify the conceptual design of this figure.}
 
+We see the reviewers point and have removed the species lists from our conceptual figure. Instead we now reference the list of species in Table S1.
+
 
 \textbf{Reviewer #2 Comments to the Author:}\\
 
-\emph{This study examined how temperature, photoperiod, and evolutionary history shape tree leaf-out across 47 woody species in North America using manipulative experiments and phylogenetic Bayesian modeling. The results reveal that species-specific responses to chilling, forcing, and photoperiod cues explain only about half of the variation in budburst timing, with the remaining variation attributed to intrinsic species differences and shared evolutionary history. These findings provide important insights into phenological forecasting and community assembly. However, several issues need to be addressed before publication.
-First, the quantification and interpretation of the intercept require further clarification. The authors should provide additional methodological details explaining how the species-level intercepts (αspi) represent timing differences independent of the manipulated cues.}
+\emph{This study examined how temperature, photoperiod, and evolutionary history shape tree leaf-out across 47 woody species in North America using manipulative experiments and phylogenetic Bayesian modeling. The results reveal that species-specific responses to chilling, forcing, and photoperiod cues explain only about half of the variation in budburst timing, with the remaining variation attributed to intrinsic species differences and shared evolutionary history. These findings provide important insights into phenological forecasting and community assembly. However, several issues need to be addressed before publication.}
+
+
+\emph{First, the quantification and interpretation of the intercept require further clarification. The authors should provide additional methodological details explaining how the species-level intercepts (αspi) represent timing differences independent of the manipulated cues.}
 
 %findings provide important insights into phenological forecasting and community assembly
 
 %quantification and interpretation of the intercept require further clarification. The authors should provide additional methodological details explaining how the species-level intercepts (αspi) represent timing differences independent of the manipulated cues.
-
 
 \emph{In addition, while the authors attribute the unexplained variation to shared evolutionary history, the intercept may potentially contain confounding effects from other factors beyond phylogeny. It would therefore be helpful to test whether phylogenetic distance is related to leaf-out timing (or to the residuals of the model based on chilling, forcing, and photoperiod), which would provide more direct support for the phylogenetic interpretation.}
 
@@ -140,7 +145,13 @@ First, the quantification and interpretation of the intercept require further cl
 \emph{Furthermore, the Discussion focuses primarily on mechanistic explanations. It would be valuable to expand this section to address the broader implications of the findings and to more clearly emphasize the significance of the study’s contributions for phenological prediction and community-level responses to climate change.}
 
 % discussion: broader implications of the findings and to more clearly emphasize the significance of the study’s contributions for phenological prediction and community-level responses to climate change.
-\emph{Finally, the presentation of the figures requires improvement. In Fig. 2, numerical intercept values for each species could be added, and the annotation of phylogenetic relationships among major clades should be improved to enhance interpretability. In Figs. 4 and 5, the font sizes of axis labels, legends, and species names are currently too small to read comfortably. The presentation of species names on the x-axis should be standardized and clearly positioned below the axis for readability.}
+\emph{Finally, the presentation of the figures requires improvement. In Fig. 2, numerical intercept values for each species could be added, and the annotation of phylogenetic relationships among major clades should be improved to enhance interpretability.}
+
+We appreciate the reviewers suggestions to improve the interpretability of the phylogeny. 
+
+\emph{In Figs. 4 and 5, the font sizes of axis labels, legends, and species names are currently too small to read comfortably. The presentation of species names on the x-axis should be standardized and clearly positioned below the axis for readability.}
+
+
 
 %Fig. 2, numerical intercept values for each species could be added
 %  the annotation of phylogenetic relationships among major clades should be improved to enhance interpretability

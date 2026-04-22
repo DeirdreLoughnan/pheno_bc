@@ -35,7 +35,7 @@ We thank the reviewer for this positive feedback and are glad to hear they found
 
 \emph{I am reasonably confident that readers familiar with phenology will clearly understand the difference between “response” as a rate in phenological shift per cue and “timing” as a date, but I do wonder if Ecology readers in general will immediately grasp this subtly throughout the paper.}
 
-We appreciate the reviewers insight and agree that a more detailed explanation of these terms would improve the clarity of our work for a wider readership. We have clarified this point from \lr{X} to \lr{X}. \\
+We appreciate the reviewers insight and agree that a more detailed explanation of these terms would improve the clarity of our work for a wider readership. We have clarified this point from \lr{\R{R1_respTime1}} to \lr{\R{R1_respTime1b}, \lr{R1_respTime2} to \lr{R1_respTime2b}, \lr{R1_respTime3} to \lr{R1_respTime3b}. \\
 
 \emph{My only other manuscript-level concern is merely the peccadillo that the authors gloss over the experimental design(s) which incorporates both twig cuttings and a common garden element in that the twigs from two provenances/populations experience phenological forcing (under various photoperiod and temperature treatments) together. As an experimental ecologist, I would appreciate a slightly firmer grounding in the common garden and twig forcing methods and literature, though that may be my own professional bias. I have included my line edits below. I look forward to seeing this paper in the pages of Ecology! Kudos to the authors.}
 
@@ -64,11 +64,17 @@ The reviewer is correct in their interpretation, but we have revised this senten
 
 \emph{Line 13: Is “shared evolutionary history” implying something broader than phylogenetic relationships? Asking because “temperature and photoperiod cues” are noted as model variables in line 7 and then this language is repeated as “temperature and photoperiod cures” in the results in line 11, but “phylogenetic Bayesian model” becomes “shared evolutionary history” when reported as a result.}
 
-\lr{R_4}
+We appreciate the importance of word choice and agree with the reviewer that a different word would be more accurate, we have revised this sentence as follows (\lr{R1_instrinPhylo}):\\
+
+\begin{quote}
+These species-specific differences in their responses to well-studied temperature and photoperiod cues, however, explained only half this variation, with the remaining variation mostly explained by the estimated phylogenetic structure of budburst and inherent species differences in the patterns and timing of their growth
+\end{quote}
 
 \textbf{Introduction}\\
 
 \emph{Line 35: surprised to see that Heberling, J. Mason, Caitlin McDonough MacKenzie, Jason D. Fridley, Susan Kalisz, and Richard B. Primack. "Phenological mismatch with trees reduces wildflower carbon budgets." Ecology letters 22, no. 4 (2019): 616-623 was NOT the Heberling et al 2019 that you cited here. In addition to the invasion story in your Heberling, this other Heberling links understory-overstory asynchrony with carbon budgets which is also relevant to lines 39-42. (and wow Heberling had a productive 2019!)}\\
+
+We appreciate the reviewer suggesting this interesting and relevant work, we have added it to our citation on \lr{R1_Heberling1} and \lr{R1_Heberling2}.
 
 \emph{Lines 57-58: Here, you touch on inter- and intraspecific variation in phenological response, but then shift the focus entirely to interspecific variation and the cues that structure this variation and theory that predicts it for the rest of the paragraph. Why not give the same treatment to intraspecific variation — especially since your experimental design explores populations from two different sites on each coast? What is the theoretical explanation for intraspecific variation in phenological response and why would understanding the cues that structure this variation be important for ecological forecasting?}
 
@@ -77,11 +83,11 @@ The reviewer is correct in their interpretation, but we have revised this senten
 
 \emph{Lines 91-106: I’m impressed with the experimental design for this twig study since I was raised in a lab that completed similar work in dunkin donuts cups located in the back of a teaching lab (McDonough MacKenzie, Caitlin, Amanda S. Gallinat, and Lucy Zipf. 2020. Low-cost observations and experiments return a high value in plant phenology research. Applications in Plant Sciences.) Although, I did miss the citation for Primack, Richard B., Julia Laube, Amanda S. Gallinat, and Annette Menzel. "From observations to experiments in phenology research: investigating climate change impacts on trees and shrubs using dormant twigs." Annals of botany 116, no. 6 (2015): 889-897.}
 
-We thank the reviewer for this addition and have added the citation on line X.
+We thank the reviewer for this positive comment and for sharing these interesting references, we have revised our references on \lr{R1_Primack}. 
 
 \emph{Line 186: please define “thermoperiodicity”}
 
-Done (\lr{X}).
+Done (\lr{R1_thermoP}).
 
 \texbf{Results:}
 \emph{Line 193-195: Move “after the start of forcing and photoperiod treatments” to immediately follow “30.4 days”; complete the sense before the parentheses.}

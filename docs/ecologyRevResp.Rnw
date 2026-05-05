@@ -64,12 +64,11 @@ We have revised this sentence to clarify that we are measuring budburst of cutti
 
 \emph{Line 12: I bumped on the phrase “intrinsic species differences in timing.” I think you mean that some species are just earlier than others, like maples are just leafing out before oaks, but I wonder if I misinterpreted this.}\\
 
-The reviewer is correct in their interpretation, but appreciate how this could be clearer. We have revised this sentence from \lr{R1_instrinPhylo} to \lr{R1_instrinPhylob} for clarity. \\
+The reviewer is correct in their interpretation, but we appreciate how this could be clearer. We have revised this sentence from \lr{R1_instrinPhylo} to \lr{R1_instrinPhylob} for clarity. \\
 
 \emph{Line 13: Is “shared evolutionary history” implying something broader than phylogenetic relationships? Asking because “temperature and photoperiod cues” are noted as model variables in line 7 and then this language is repeated as “temperature and photoperiod cures” in the results in line 11, but “phylogenetic Bayesian model” becomes “shared evolutionary history” when reported as a result.}\\
 
 We appreciate the importance of word choice and agree with the reviewer that a different word would be more accurate, we have revised this sentence as follows (\lr{R1_instrinPhylo} to \lr{R1_instrinPhylob}):\\
-
 \begin{quote}
 These differences in species responses to well-studied temperature and photoperiod cues, however, explained only half this variation, with the remaining variation mostly explained by the estimated phylogenetic structure of budburst and inherent species differences in the timing of their growth and leafout.
 \end{quote}
@@ -81,6 +80,8 @@ These differences in species responses to well-studied temperature and photoperi
 We appreciate the reviewer suggesting this interesting and relevant work, we have added this citation on \lr{R1_Heberling1} and \lr{R1_Heberling2}.\\
 
 \emph{Lines 57-58: Here, you touch on inter- and intraspecific variation in phenological response, but then shift the focus entirely to interspecific variation and the cues that structure this variation and theory that predicts it for the rest of the paragraph. Why not give the same treatment to intraspecific variation — especially since your experimental design explores populations from two different sites on each coast? What is the theoretical explanation for intraspecific variation in phenological response and why would understanding the cues that structure this variation be important for ecological forecasting?}\\
+
+We see the reviewers point and have revised our introduction from \lr{R1_intraSp} to \lr{R1_intraSpb} to include a discussion of intraspecific variation in phenological responses and their importance to ecological forecasting.\\
 
 \textbf{Methods:}\\
 
@@ -139,7 +140,7 @@ We are glad that the reviewer found the insights from our work to be an importan
 
 \emph{First, the quantification and interpretation of the intercept require further clarification. The authors should provide additional methodological details explaining how the species-level intercepts ($\alpha_{spi}$) represent timing differences independent of the manipulated cues.}\\
 
-We see the reviewers point and have revised this sentence starting on \lr{R2_intercept} of our methods to improve clarity. As a linear model, the intercepts estimated by our model for each species represent the species-level day of budburst when the coefficient for the slope of each predictor, or the response to chilling, forcing, and photoperiod in our case, is equal to zero \citep{Gelman_ROS}.\\
+We see the reviewers point and have revised this sentence starting on \lr{R2_intercept} of our methods to improve clarity. As a linear model, the intercepts estimated by our model for each species represent the species-level day of budburst when the coefficient for the slope of each predictor, or the response to chilling, forcing, and photoperiod in our case, is equal to zero \citep{GelmanROS}.\\
 
 \emph{In addition, while the authors attribute the unexplained variation to shared evolutionary history, the intercept may potentially contain confounding effects from other factors beyond phylogeny. It would therefore be helpful to test whether phylogenetic distance is related to leaf-out timing (or to the residuals of the model based on chilling, forcing, and photoperiod), which would provide more direct support for the phylogenetic interpretation.}\\
 
@@ -147,23 +148,15 @@ This is a good point, the intercept could contain confounding effects from other
 
 \emph{Furthermore, the Discussion focuses primarily on mechanistic explanations. It would be valuable to expand this section to address the broader implications of the findings and to more clearly emphasize the significance of the study’s contributions for phenological prediction and community-level responses to climate change.}\\
 
-We completely agree with the reviewer and have added a more indepth disucssion of the implications of our findings and their contribution to phenological prediction and community-level responses to climat change from \lr{R1_2_Discuss} to \lr{R1_2_Discussb}.
+We completely agree with the reviewer and have added a more indepth disucssion of the implications of our findings and their contribution to phenological prediction and community-level responses to climat change from \lr{R1_2_Discuss} to \lr{R1_2_Discussb}.\\
 
 \emph{Finally, the presentation of the figures requires improvement. In Fig. 2, numerical intercept values for each species could be added, and the annotation of phylogenetic relationships among major clades should be improved to enhance interpretability.}\\
 
-We appreciate the reviewers suggestions to improve the interpretability of the phylogenetic relationships. We have added the numerical intercept values and uncertainty intervals to the tips of the phylogeny. We have also added additional annotation to denote the major clades represented in the tree. \\ 
+We appreciate the reviewers suggestions to improve the interpretability of the phylogenetic relationships. We have added the numerical intercept values to the tips of the phylogeny. We have also added additional annotation to denote the major clades represented in the tree. \\ 
 
 \emph{In Figs. 4 and 5, the font sizes of axis labels, legends, and species names are currently too small to read comfortably. The presentation of species names on the x-axis should be standardized and clearly positioned below the axis for readability.}\\
 
-Good point unexplain var could be explained. Firstly, this is a linear model; 
-Try move off the intercept and re run with it on the residuals\\
-
-%Fig. 2, numerical intercept values for each species could be added
-%  the annotation of phylogenetic relationships among major clades should be improved to enhance interpretability
-%Figs. 4 and 5, the font sizes of axis labels, legends, and species names are currently too small to read comfortably. The presentation of species names on the x-axis should be standardized and clearly positioned below the axis for readability.
-Step back and think about what to add to the dicussion---push more on what to say about results---what do 
-I actually want to say
-\clearpage
+We agree and have revised these two figures to now have larger axis labels, legends, and species names. Given that species are ordered on the x-axis based on their estimated day of budburst, their species names often overlap when positioned below the axis. We have now standardized the presentation of the species name so that tree species are labled above the axis and shrub species are labeled below and all labels are spaced to ensure thier readability. \\ 
 
 \bibliographystyle{bibliography/bibstyles/ecology}% 
 \bibliography{bibliography/phenoBCBib.bib}

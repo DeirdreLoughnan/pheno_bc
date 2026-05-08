@@ -77,7 +77,7 @@ These differences in species responses to well-studied temperature and photoperi
 
 \emph{Line 35: surprised to see that Heberling, J. Mason, Caitlin McDonough MacKenzie, Jason D. Fridley, Susan Kalisz, and Richard B. Primack. "Phenological mismatch with trees reduces wildflower carbon budgets." Ecology letters 22, no. 4 (2019): 616-623 was NOT the Heberling et al 2019 that you cited here. In addition to the invasion story in your Heberling, this other Heberling links understory-overstory asynchrony with carbon budgets which is also relevant to lines 39-42. (and wow Heberling had a productive 2019!)}\\
 
-We appreciate the reviewer suggesting this interesting and relevant work, we have added this citation on \lr{R1_Heberling1} and \lr{R1_Heberling2}.\\
+We appreciate the reviewer suggesting this interesting and relevant work, we have added this citation on \lr{R1_Heberling1}.\\
 
 \emph{Lines 57-58: Here, you touch on inter- and intraspecific variation in phenological response, but then shift the focus entirely to interspecific variation and the cues that structure this variation and theory that predicts it for the rest of the paragraph. Why not give the same treatment to intraspecific variation — especially since your experimental design explores populations from two different sites on each coast? What is the theoretical explanation for intraspecific variation in phenological response and why would understanding the cues that structure this variation be important for ecological forecasting?}\\
 
@@ -99,19 +99,25 @@ Done (\lr{R1_thermoP}).\\
 
 Done (\lr{R1_Results}).\\
 
-\emph{Lines 247-251: How do you determine whether community-level eastern v western budburst  date differences are due to different species in these communities versus different collection dates? And is this a meaningful comparison given the different species pools? I guess I just assumed the meaningful site comparisons were North and South within each set of twig cutting experiments, since this would test the intraspecific variation in response.}\\
+\emph{Lines 247-251: How do you determine whether community-level eastern v western budburst date differences are due to different species in these communities versus different collection dates? And is this a meaningful comparison given the different species pools? I guess I just assumed the meaningful site comparisons were North and South within each set of twig cutting experiments, since this would test the intraspecific variation in response.}\\
+
+We can see how this statement would benefit from a more detailed explanation. We are able to determine that the differences between our eastern and western budburst dates are due to differences in the communities and not collection dates by using chill portions in our models that include field chilling, which was calculated using site-specific weather data from the fall prior to sampling, discussed from \lr{R1_collect} to \lr{R1_collectb} in the methods. We believe that this is a meaningful comparison, as we sampled many congener species between the two transects, and thus we would expect species of the same genus to be similar in their phenology and responses to cues, further highlighting the importance of including the phylogenetic structure in our analysis, which we now explicitly mention on \lr{R1_congener}. 
 
 \textbf{Discussion}\\
 
 \emph{Line 272:When you write “we found no detectable site-level differences” I wondered if you meant at the community level or at the species level. Again, I am confused by the coastal comparisons because I expect that the differences in community composition would swamp this comparison.}\\
 
-We were equally surprised to find that the differences in community composition did not swamp the community-level differences across sites. \\
+We were equally surprised to find that the differences in community composition did not swamp the differences across sites. Here we are specifically referring to the community-level differences in cue responses and have now revised this sentence starting on \lr{R1_swamp} to now read:
+
+\begin{quote}
+Despite the high degree of diversity and spatial scale represented in our study, we found no detectable differences in the community-level responses to temperature and photoperiod, including across different coasts and over 6$^{\circ}$ of latitude.
+\end{quote}
 
 \emph{Lines 271-276: What about common garden studies? In McDonough MacKenzie et al 2019, Vitasse et al 2013, Stinson 2005, and Vitasse et al 2010 local condition drove phenology, while Korner et al 2015, Gugger et al 2015, Vitasse et al 2009, and Rossi and Isabel 2016 reported population-level variation in phenological response.}\\
 
 \emph{Lines 295-297: I recommend adding Polgar, Caroline, Amanda Gallinat, and Richard B. Primack. "Drivers of leaf‐out phenology and their implications for species invasions: insights from Thoreau's Concord." New Phytologist 202, no. 1 (2014) to this section.}\\
 
-Done.
+Done (\lr{R1_Polgar}).
 
 \emph{Lines 300-302: As in Line 35, I think Herbeling et al 2019’s overstory-understory asynchrony paper belongs here}\\
 
@@ -148,7 +154,7 @@ This is a good point, the intercept could contain confounding effects from other
 
 \emph{Furthermore, the Discussion focuses primarily on mechanistic explanations. It would be valuable to expand this section to address the broader implications of the findings and to more clearly emphasize the significance of the study’s contributions for phenological prediction and community-level responses to climate change.}\\
 
-We completely agree with the reviewer and have added a more indepth disucssion of the implications of our findings and their contribution to phenological prediction and community-level responses to climat change from \lr{R1_2_Discuss} to \lr{R1_2_Discussb}.\\
+We completely agree with the reviewer and have added a more detailed discussion of the implications of our findings and their contribution to phenological prediction and community-level responses to climate change from \lr{R1_2_Discuss} to \lr{R1_2_Discussb}.\\
 
 \emph{Finally, the presentation of the figures requires improvement. In Fig. 2, numerical intercept values for each species could be added, and the annotation of phylogenetic relationships among major clades should be improved to enhance interpretability.}\\
 

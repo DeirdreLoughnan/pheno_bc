@@ -101,7 +101,7 @@ Done (\lr{R1_Results}).\\
 
 \emph{Lines 247-251: How do you determine whether community-level eastern v western budburst date differences are due to different species in these communities versus different collection dates? And is this a meaningful comparison given the different species pools? I guess I just assumed the meaningful site comparisons were North and South within each set of twig cutting experiments, since this would test the intraspecific variation in response.}\\
 
-We can see how this statement would benefit from a more detailed explanation. We are able to determine that the differences between our eastern and western budburst dates are due to differences in the communities and not collection dates by using chill portions in our models that include field chilling, which was calculated using site-specific weather data from the fall prior to sampling, discussed from \lr{R1_collect} to \lr{R1_collectb} in the methods. We believe that this is a meaningful comparison, as we sampled many congener species between the two transects, and thus we would expect species of the same genus to be similar in their phenology and responses to cues, further highlighting the importance of including the phylogenetic structure in our analysis, which we now explicitly mention on \lr{R1_congener}. 
+We can see how this statement would benefit from a more detailed explanation. We are able to determine that the differences between our eastern and western budburst dates are due to differences in the communities and not collection dates by using chill portions in our models that include field chilling, which was calculated using site-specific weather data from the fall prior to sampling, discussed from \lr{R1_collect} to \lr{R1_collectb} in the methods. We believe that this is a meaningful comparison, as we sampled many congener species between the two transects, and thus we would expect species of the same genus to be similar in their phenology and responses to cues, further highlighting the importance of including the phylogenetic structure in our analysis, which we now explicitly mention on \lr{R1_congener}. \\
 
 \textbf{Discussion}\\
 
@@ -113,11 +113,14 @@ We were equally surprised to find that the differences in community composition 
 Despite the high degree of diversity and spatial scale represented in our study, we found no detectable differences in the community-level responses to temperature and photoperiod, including across different coasts and over 6$^{\circ}$ of latitude.
 \end{quote}
 
-\emph{Lines 271-276: What about common garden studies? In McDonough MacKenzie et al 2019, Vitasse et al 2013, Stinson 2005, and Vitasse et al 2010 local condition drove phenology, while Korner et al 2015, Gugger et al 2015, Vitasse et al 2009, and Rossi and Isabel 2016 reported population-level variation in phenological response.}\\
+\emph{Lines 271-276: What about common garden studies? In McDonough MacKenzie et al 2019, Vitasse et al 2013, Stinson 2005, and
+Vitasse et al 2010 local condition drove phenology, while Korner et al 2015, Gugger et al 2015, Vitasse et al 2009, and Rossi and Isabel 2016 reported population-level variation in phenological response.}\\
+
+We agree that this is an important that requires more detail, we have therefore revised this section of the discussion from \lr{R1_commG} to \lr{R1_commGb}.
 
 \emph{Lines 295-297: I recommend adding Polgar, Caroline, Amanda Gallinat, and Richard B. Primack. "Drivers of leaf‐out phenology and their implications for species invasions: insights from Thoreau's Concord." New Phytologist 202, no. 1 (2014) to this section.}\\
 
-Done (\lr{R1_Polgar}).
+Done (\lr{R1_Polgar}).\\
 
 \emph{Lines 300-302: As in Line 35, I think Herbeling et al 2019’s overstory-understory asynchrony paper belongs here}\\
 
@@ -125,12 +128,15 @@ Done (\lr{R1_Herb2}). \\
 
 \emph{Line 312: the discussion “latent traits” reminds me of Inouye’s conceptual synthesis on phenology as a process and a trait (Inouye, Brian D., Johan Ehrlén, and Nora Underwood. "Phenology as a process rather than an event: from individual reaction norms to community metrics." Ecological Monographs 89, no. 2 (2019): e01352.)}\\
 
-This is a great suggestion and have added this reference (\lr{R1_Inouye}).\\
+This is a great suggestion and have added this reference (\lr{R1_inouye}).\\
 
 \emph{Lines 330-331: I was surprised by the statement that species in northern communities were most likely to “experience the greatest changes in budburst order” as I did not make that connection while reading your results. Can you provide more context here or point the reader to a specific figure?}\\
 
+We see how more clarity is needed. This statement was in reference to our results on \lr{R1_rankOrder}, which suggest that the order with which species budburst depends on the strength of the cues. We have revised this sentence from \lr{R1_rank} to \lr{R1_rankb} to provide more context and have a more explicit link to our results.\\
 
 \emph{Lines 336-338: This sentence implies that the reader already agrees that forecasting phenology is meaningful and important, but authors never explicitly state why phenological forecasting is ecologically relevant for management, conservation, theory, or practice. Why does forecasting matter? And why does it need to be improved?}\\
+
+We see the reviewers point and have revised this section of our discussion from \lr{R1_2_Discuss} to \lr{R1_2_Discussb} to explicitly state why phenological forecasting is important and why it needs to be improved.
 
 \textbf{Figures 1:}\\
 

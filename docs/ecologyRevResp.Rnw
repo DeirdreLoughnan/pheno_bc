@@ -31,7 +31,7 @@ Reviewer comments are italicized and our detailed explanation of changes are in 
 
 \emph{Deirdre Loughnan and Elizabeth Wolkovich have elegantly integrated experimental twig phenology work and sophisticated modeling in their manuscript “How temperature, photoperiod and evolutionary history shape forest leaf out.” The manuscript is well written and well organized, with sound connections to ecological theory and intentional tests of the well-known environmental cues, temperature and photoperiod, driving shifts in leaf out phenology. This concise work upgrades our understanding of population-, species-, and community-level phenology and clarifies fruitful research directions for ecological forecasting. This is perhaps the most polished twig-cutting common garden experiment that I’ve read and Wolkovich continues to “model” how to write methods for Bayesian models in clean, clear sentences.} \\
 
-We thank the reviewer for this positive feedback and are glad to hear they found our work `elegant' and `well written', and with `sound connections to theory'. \\
+We thank the reviewer for this positive feedback and are glad to hear they found our manuscript to be well written, and theoretically sound. \\
 
 \emph{I am reasonably confident that readers familiar with phenology will clearly understand the difference between “response” as a rate in phenological shift per cue and “timing” as a date, but I do wonder if Ecology readers in general will immediately grasp this subtly throughout the paper.}\\
 
@@ -39,7 +39,7 @@ We appreciate the reviewers insight and agree that a more detailed explanation o
 
 \emph{My only other manuscript-level concern is merely the peccadillo that the authors gloss over the experimental design(s) which incorporates both twig cuttings and a common garden element in that the twigs from two provenances/populations experience phenological forcing (under various photoperiod and temperature treatments) together. As an experimental ecologist, I would appreciate a slightly firmer grounding in the common garden and twig forcing methods and literature, though that may be my own professional bias. I have included my line edits below. I look forward to seeing this paper in the pages of Ecology! Kudos to the authors.}\\
 
-We see the reviewers point and have added additional discussion of twig experiment and common garden studies to the introduction on \lr{X}. We have also added details of our study design to the methods from \lr{X} to \lr{X}\\
+We see the reviewers point and have added additional discussion of twig experiment and common garden studies on \lr{R1_commG} to \lr{R1_commGb}. We have also added details of our study design to the methods on \lr{R1_congener} and \lr{R1_thermoP}\\
 
 % "elegantly integrated experimental twig phenology " and our statistical approach as "sophisticated"
 % Appreciate that the reviewer finds our manuscript to be "well written and well organized"
@@ -136,7 +136,7 @@ We see how more clarity is needed. This statement was in reference to our result
 
 \emph{Lines 336-338: This sentence implies that the reader already agrees that forecasting phenology is meaningful and important, but authors never explicitly state why phenological forecasting is ecologically relevant for management, conservation, theory, or practice. Why does forecasting matter? And why does it need to be improved?}\\
 
-We see the reviewers point and have revised this section of our discussion from \lr{R1_2_Discuss} to \lr{R1_2_Discussb} to explicitly state why phenological forecasting is important and why it needs to be improved.
+We see the reviewers point and have revised this section of our discussion substantially from \lr{R1_2_Discuss} to \lr{R1_2_Discussb} to explicitly state why phenological forecasting is important and why it needs to be improved.\\
 
 \textbf{Figures 1:}\\
 
@@ -156,7 +156,9 @@ We see the reviewers point and have revised this sentence starting on \lr{R2_int
 
 \emph{In addition, while the authors attribute the unexplained variation to shared evolutionary history, the intercept may potentially contain confounding effects from other factors beyond phylogeny. It would therefore be helpful to test whether phylogenetic distance is related to leaf-out timing (or to the residuals of the model based on chilling, forcing, and photoperiod), which would provide more direct support for the phylogenetic interpretation.}\\
 
-This is a good point, the intercept could contain confounding effects from other factors besides phylogeny. To address this, we include an estimate of Pagel's lambda on \lr{R2_BloomK}, which is an estimate of the phylogenetic signal and provides a metric of whether closely related species resemble each other more than species chosen at random from a phylogenetic tree based on the amount of the evolutionary history or branch length between two species on the phylogeny. \\
+This is a good point, and we agree that the intercept could contain confounding effects from other factors besides phylogeny. To address this, we re-ran our analysis using a model in which the phylogenetic structure was placed on the residuals instead of the intercept. This new analysis is discussed on \lr{R2_resid} of the methods and \lr{R2_residResult} of the results section, along with an additional table in the supplementary material (Table S2). This revised model produced similar estimates of the phylogenetic structure as our main model, confirming that the variation explained by the intercept is due to species shared evolutionary history and not other confounding effects.
+
+%include an estimate of Bloomberg's K on \lr{R2_BloomK}, which is an estimate of the phylogenetic signal and provides a metric of whether closely related species resemble each other more than species chosen at random from a phylogenetic tree based on the amount of the evolutionary history or branch length between two species on the phylogeny. \\
 
 \emph{Furthermore, the Discussion focuses primarily on mechanistic explanations. It would be valuable to expand this section to address the broader implications of the findings and to more clearly emphasize the significance of the study’s contributions for phenological prediction and community-level responses to climate change.}\\
 

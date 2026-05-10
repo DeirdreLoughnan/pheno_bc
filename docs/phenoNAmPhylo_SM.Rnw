@@ -98,7 +98,7 @@
 
 \begin{table}[ht!]
 \centering
-\caption{Mean budburst dates across all treatments from raw observation data of 47 species at our two western sites, E.C. Manning park and Smithers B.C., Canada, and our two eastern sites, Harvard Forest, USA and St. Hippolyte, Canada.} 
+\caption{Mean day of budburst following the start of forcing treatments, estimated from raw observation data of 47 species at our two western sites, E.C. Manning park and Smithers B.C., Canada, and our two eastern sites, Harvard Forest, USA and St. Hippolyte, Canada.} 
 \label{tabPhenoSp}
 \begin{tabular}{lrrrr}
   \hline
@@ -186,7 +186,7 @@ Harvard forest & Field chilling & 892 & 814.50 & 56.62 \\
  & mean  & 5\% & 95\% & n\_eff & Rhat \\ 
   \hline
 $\alpha_{sp}$ & 30.30 & 25.90 & 35.10 & 3691.90 & 1.00 \\  
-$\lambda$ & 0.40 & 0.10 & 0.70 & 2805.40 & 1.00 \\ 
+$\lambda$ & 0.42 & 0.10 & 0.70 & 2805.40 & 1.00 \\ 
 $\beta_{forcing}$ & -10.60 & -16.70 & -12.90 & 1192.50 & 1.00 \\ 
 $\beta_{photoperiod}$ & -3.30 & -11.90 & -9.30 & 3349.30 & 1.00 \\  
 $\beta_{chilling}$ & -14.80 & -4.00 & -2.70 & 1996.50 & 1.00 \\ 
@@ -208,19 +208,49 @@ $\beta_{chilling \times St.\ Hippolyte}$ & 7.30 & 4.90 & 9.90 & 1141.50 & 1.00 \
   \end{tabular}
 \end{table}
 
+\begin{table}[ht]
+\centering
+\caption{Summary output from a phylogenetic Bayesian model in which the phylogeny is included on the residuals. Estimates of phylogenetic structure are similar to our main model, thus supporting our interpretation that phylogenetic distance is related to leaf-out timing and not other confounding effects encompassed by the intercept. See the statistical analysis section of the methods for more detail.} 
+\label{tabRes}
+\begin{tabular}{rrrrrr}
+  \hline
+ & mean & 5\% & 25\% & 75\% & 95\% \\ 
+  \hline
+$\alpha_{sp}$ & 28.90 & 26.20 & 27.80 & 29.98 & 31.62 \\ 
+  $\lambda$ & 0.49 & 0.05 & 0.25 & 0.75 & 0.96 \\ 
+  $\beta_{forcing}$ & -10.60 & -11.90 & -11.14 & -10.12 & -9.35 \\ 
+ $\beta_{photoperiod}$ & -3.30 & -3.99 & -3.60 & -3.08 & -2.72 \\ 
+  $\beta_{chilling}$ & -14.80 & -16.72 & -15.58 & -14.04 & -12.96 \\ 
+  $\beta_{Manning\ park}$ & 2.10 & 1.45 & 1.84 & 2.34 & 2.73 \\ 
+  $\beta_{Harvard\ forest}$ & -5.90 & -7.57 & -6.58 & -5.26 & -4.30 \\ 
+  $\beta_{St.\ Hippolyte}$ & -8.10 & -9.68 & -8.75 & -7.50 & -6.59 \\ 
+  $\beta_{forcing \times photoperiod}$ & 0.90 & -0.42 & 0.32 & 1.39 & 2.12 \\ 
+  $\beta_{forcing \times chilling}$ & 8.40 & 6.96 & 7.80 & 8.95 & 9.82 \\ 
+  $\beta_{photoperiod \times chilling}$ & -0.70 & -2.15 & -1.26 & -0.09 & 0.78 \\ 
+  $\beta_{forcing \times Manning\ park}$ & -1.70 & -3.11 & -2.29 & -1.20 & -0.35 \\ 
+  $\beta_{photoperiod \times Manning\ park}$ & 0.60 & -0.75 & 0.05 & 1.11 & 1.84 \\ 
+  $\beta_{chilling \times Manning\ park}$ & -0.30 & -2.94 & -1.32 & 0.68 & 2.22 \\ 
+  $\beta_{forcing \times Harvard\ forest}$ & 3.80 & 1.76 & 2.95 & 4.66 & 5.92 \\ 
+  $\beta_{photoperiod \times Harvard\ forest}$ & -1.60 & -3.05 & -2.15 & -0.98 & -0.14 \\ 
+  $\beta_{chilling \times Harvard\ forest}$ & 8.80 & 5.89 & 7.62 & 10.01 & 11.79 \\ 
+  $\beta_{forcing \times St.\ Hippolyte}$ & 4.90 & 2.86 & 4.03 & 5.67 & 6.88 \\ 
+  $\beta_{photoperiod \times St.\ Hippolyte}$ & -2.20 & -3.53 & -2.71 & -1.60 & -0.79 \\ 
+  $\beta_{chilling \times St.\ Hippolyte}$ & 7.40 & 4.92 & 6.40 & 8.35 & 9.78 \\ 
+  \end{tabular}
+\end{table}
 
-% <<label= tableCN, echo=FALSE , results= tex >>=
-% 
+% <<label= tableRes, echo=FALSE , results= tex >>=
+%  
 % require(xtable)
 % require(rstan)
 % 
-% load("..//output/bb_phylo_contphotothermo_2zscored_oct172024_triple.Rda")
+% load("..//output/bb_phyloResidMay5.Rda")
 % 
-% sum <- summary(mdl.3)$summary
+% sum <- summary(mdl.res)$summary
 % 
-% fit <- rstan::extract(mdl.3)
+% fit <- rstan::extract(mdl.res)
 % 
-% mu_params_4 <- c("a_z",
+% mu_params_4 <- c("mu_a",
 %                  "lam_interceptsa",
 %                  "mu_b_warm",
 %                  "mu_b_photo",
@@ -240,38 +270,24 @@ $\beta_{chilling \times St.\ Hippolyte}$ & 7.30 & 4.90 & 9.90 & 1141.50 & 1.00 \
 %                  "mu_b_inter_ws4",
 %                  "mu_b_inter_ps4",
 %                  "mu_b_inter_s4c1")
-%   
-% meanz4 <- round(data.frame(sum[mu_params_4, c("mean", "n_eff", "Rhat")]),1)
-% names(meanz4) <- c("mean", "n_eff", "Rhat")
 % 
-% # now get the 90% UI:
-% alamb <- round(quantile(fit$a_z, c(0.05, 0.95)),1)
-% lambdaP <- round(quantile(fit$lam_interceptsa, c(0.05, 0.95)),1)
-% warmP <- round(quantile(fit$mu_b_chill1, c(0.05, 0.95)),1)
-% photoP <- round(quantile(fit$mu_b_warm, c(0.05, 0.95)),1)
-% chillP <- round(quantile(fit$mu_b_photo, c(0.05, 0.95)),1)
-% site2P <- round(quantile(fit$b_site2, c(0.05, 0.95)),1)
-% site3P <- round(quantile(fit$b_site3, c(0.05, 0.95)),1)
-% site4P <- round(quantile(fit$b_site4, c(0.05, 0.95)),1)
-% wp <- round(quantile(fit$mu_b_inter_wp, c(0.05, 0.95)),1)
-% wc1 <- round(quantile(fit$mu_b_inter_wc1, c(0.05, 0.95)),1)
-% pc <- round(quantile(fit$mu_b_inter_pc1, c(0.05, 0.95)),1)
-% fmp <- round(quantile(fit$mu_b_inter_ws2, c(0.05, 0.95)),1)
-% pm <- round(quantile(fit$mu_b_inter_ps2, c(0.05, 0.95)),1)
-% cmp <- round(quantile(fit$mu_b_inter_s2c, c(0.05, 0.95)),1)
-% fhf <- round(quantile(fit$mu_b_inter_ws3, c(0.05, 0.95)),1)
-% phf <- round(quantile(fit$mu_b_inter_ps3, c(0.05, 0.95)),1)
-% chf <- round(quantile(fit$mu_b_inter_s3c1, c(0.05, 0.95)),1)
-% fsh <- round(quantile(fit$mu_b_inter_ws4, c(0.05, 0.95)),1)
-% psh <- round(quantile(fit$mu_b_inter_ps4, c(0.05, 0.95)),1)
-% csh <- round(quantile(fit$mu_b_inter_s4c1, c(0.05, 0.95)),1)
+% meanz4 <- round(data.frame(sum[mu_params_4, c("mean")]),1)
+% names(meanz4) <- c("mean")
+% 
+% quantile2575 <- function(x){
+%   returnQuanilte <- quantile(x, prob = c(0.05, 0.25, 0.75,0.95))
+%   return(returnQuanilte)
+% }
 % 
 % 
-% upper <- rbind(alamb, lambdaP, warmP, photoP, chillP, site2P,site3P, site4P, wp, wc1, pc, fmp, pm, cmp, fhf, phf, chf, fsh, psh, csh)
+% bf_quan <- t(apply(data.frame(fit), 2, quantile2575) )
+% temp <- bf_quan[mu_params_4, ]
 % 
-% meanz4 <- cbind(meanz4, upper)
-% meanz4 <- meanz4[, c("mean", "5%", "95%", "n_eff", "Rhat")]
-% print(xtable(meanz4, caption="Summary output from a phylogenetic Bayesian model in which species are partially pooled and phylogeny is included on the intercept. See the statistical analysis section of the methods for more detail.",label = "tableMain"),include.rownames=TRUE, caption.placement="top", hline.after=c(-1,0))
+% meanQuantRes <- cbind(meanz4,temp)
+% 
+% 
+% make.bb.res <- xtable(meanQuantRes,caption="Summary output from a phylogenetic Bayesian model in which the phylogeny is included on the residuals. Estimates of phylogenetic structure are equivalent to our main model, thus confirming that phylogenetic distance is related to leaf-out timing and not other confounding effects encompassed by the intercept. See the statistical analysis section of the methods for more detail.",label = "tabRes")
+% print(make.bb.res,include.rownames=T, caption.placement="top", hline.after=c(-1,0), sanitize.text.function = identity)
 % @
 
 
@@ -292,5 +308,7 @@ make.bb_suc <- xtable(bb_suc,caption="Proportion of surviving samples per specie
 print(make.bb_suc,include.rownames=F, caption.placement="top", hline.after=c(-1,0), sanitize.text.function = identity)
 
 @
+
+
 
 \end{document}

@@ -24,6 +24,7 @@
 
 \begin{document}
 \SweaveOpts{concordance=TRUE}
+\renewcommand{\bibname}{References}%names reference list 
 
 Reviewer comments are italicized and our detailed explanation of changes are in regular text. \\
 
@@ -172,7 +173,10 @@ We appreciate the reviewers suggestions to improve the interpretability of the p
 
 We agree and have revised these two figures to now have larger axis labels, legends, and species names. Given that species are ordered on the x-axis based on their estimated day of budburst, their species names often overlap when positioned below the axis. We have now standardized the presentation of the species name so that tree species are labled above the axis and shrub species are labeled below and all labels are spaced to ensure thier readability. \\ 
 
+\clearpage
+
 \bibliographystyle{bibliography/bibstyles/ecology}% 
 \bibliography{bibliography/phenoBCBib.bib}
+
 
 \end{document}

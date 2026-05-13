@@ -1,20 +1,39 @@
-\documentclass[11pt,a4paper]{article}
-\usepackage[top=1.00in, bottom=1.0in, left=1.1in, right=1.1in]{geometry}
-\usepackage{graphicx}
-\usepackage[sort&compress]{natbib}
-%\bibliographystyle{..//..//bib/styles/gcb}
+\documentclass{article}
+
+\usepackage[hyphens]{url} 
 \usepackage{Sweave}
-\usepackage{xcolor}
+\usepackage{graphicx}
+% \usepackage[sort&compress, numbers, super]{natbib}
+\usepackage{natbib}
+
 \usepackage{amsmath}
-\usepackage[hyphens]{url}
-\usepackage{caption}
-\usepackage{subcaption}
-
-\setlength\parindent{0pt}
-\usepackage{xr}
-
+\usepackage{textcomp}
+\usepackage{float}
+\usepackage[utf8]{inputenc}
+\usepackage[nottoc]{tocbibind} 
+\usepackage{amsmath} 
+\usepackage{listings} 
+\usepackage{xcolor}
+\usepackage{capt-of}
+\usepackage[export]{adjustbox} 
 \usepackage{lineno}
-%\usepackage{xr-hyper}
+\linenumbers
+\usepackage[small]{caption}
+\usepackage{setspace}
+\doublespacing
+
+\setlength{\captionmargin}{30pt}
+\setlength{\abovecaptionskip}{0pt}
+\setlength{\belowcaptionskip}{10pt}
+
+\topmargin -1.5cm        
+\oddsidemargin 0.5cm   
+\evensidemargin 0.5cm  
+\textwidth 15.59cm
+\textheight 21.94cm 
+\parindent 0pt		 
+
+\usepackage{xr-hyper} 
 \externaldocument{phenoNAmPhylo}
 \externaldocument{phenoNAmPhyloSM}
 
@@ -24,6 +43,7 @@
 
 \begin{document}
 \SweaveOpts{concordance=TRUE}
+
 \renewcommand{\bibname}{References}%names reference list 
 
 Reviewer comments are italicized and our detailed explanation of changes are in regular text. \\
@@ -32,7 +52,7 @@ Reviewer comments are italicized and our detailed explanation of changes are in 
 
 \emph{Deirdre Loughnan and Elizabeth Wolkovich have elegantly integrated experimental twig phenology work and sophisticated modeling in their manuscript “How temperature, photoperiod and evolutionary history shape forest leaf out.” The manuscript is well written and well organized, with sound connections to ecological theory and intentional tests of the well-known environmental cues, temperature and photoperiod, driving shifts in leaf out phenology. This concise work upgrades our understanding of population-, species-, and community-level phenology and clarifies fruitful research directions for ecological forecasting. This is perhaps the most polished twig-cutting common garden experiment that I’ve read and Wolkovich continues to “model” how to write methods for Bayesian models in clean, clear sentences.} \\
 
-We thank the reviewer for this positive feedback and are glad to hear they found our manuscript to be well written, and theoretically sound. \\
+We thank the reviewer for this positive feedback and are glad to hear they found our manuscript to be well written and theoretically sound. \\
 
 \emph{I am reasonably confident that readers familiar with phenology will clearly understand the difference between “response” as a rate in phenological shift per cue and “timing” as a date, but I do wonder if Ecology readers in general will immediately grasp this subtly throughout the paper.}\\
 
@@ -40,7 +60,7 @@ We appreciate the reviewers insight and agree that a more detailed explanation o
 
 \emph{My only other manuscript-level concern is merely the peccadillo that the authors gloss over the experimental design(s) which incorporates both twig cuttings and a common garden element in that the twigs from two provenances/populations experience phenological forcing (under various photoperiod and temperature treatments) together. As an experimental ecologist, I would appreciate a slightly firmer grounding in the common garden and twig forcing methods and literature, though that may be my own professional bias. I have included my line edits below. I look forward to seeing this paper in the pages of Ecology! Kudos to the authors.}\\
 
-We see the reviewers point and have added additional discussion of twig experiment and common garden studies on \lr{R1_commG} to \lr{R1_commGb}. We have also added details of our study design to the methods on \lr{R1_congener} and \lr{R1_thermoP}\\
+We see the reviewers point and have added additional discussion of twig experiment and common garden studies on \lr{R1_commG} to \lr{R1_commGb}. We have also added details of our study design to the methods on \lr{R1_congener} and \lr{R1_thermoP}.\\
 
 % "elegantly integrated experimental twig phenology " and our statistical approach as "sophisticated"
 % Appreciate that the reviewer finds our manuscript to be "well written and well organized"
@@ -53,7 +73,7 @@ Done.\\
 
 \emph{Line 2: I dislike how you open with a passive verb. “Has received growing attention” from whom?}\\
 
-We see the reviewers point and have revised this sentence to no longer include this passive verb, revising the sentence to now read (\lr{R1_1}):
+We see the reviewers point and have revised this sentence to no longer include this passive verb. This sentence now reads (\lr{R1_1}):
 
 \begin{quote}
 Climate change has shifted the timing of major life cycle events across most systems and is altering how species assemble temporally.
@@ -65,7 +85,7 @@ We have revised this sentence to clarify that we are measuring budburst of cutti
 
 \emph{Line 12: I bumped on the phrase “intrinsic species differences in timing.” I think you mean that some species are just earlier than others, like maples are just leafing out before oaks, but I wonder if I misinterpreted this.}\\
 
-The reviewer is correct in their interpretation, but we appreciate how this could be clearer. We have revised this sentence from \lr{R1_instrinPhylo} to \lr{R1_instrinPhylob} for clarity. \\
+The reviewer is correct in their interpretation, but we appreciate how this could be more explicit. We have revised this sentence from \lr{R1_instrinPhylo} to \lr{R1_instrinPhylob} for clarity. \\
 
 \emph{Line 13: Is “shared evolutionary history” implying something broader than phylogenetic relationships? Asking because “temperature and photoperiod cues” are noted as model variables in line 7 and then this language is repeated as “temperature and photoperiod cures” in the results in line 11, but “phylogenetic Bayesian model” becomes “shared evolutionary history” when reported as a result.}\\
 
@@ -102,7 +122,7 @@ Done (\lr{R1_Results}).\\
 
 \emph{Lines 247-251: How do you determine whether community-level eastern v western budburst date differences are due to different species in these communities versus different collection dates? And is this a meaningful comparison given the different species pools? I guess I just assumed the meaningful site comparisons were North and South within each set of twig cutting experiments, since this would test the intraspecific variation in response.}\\
 
-We can see how this statement would benefit from a more detailed explanation. We are able to determine that the differences between our eastern and western budburst dates are due to differences in the communities and not collection dates by using chill portions in our models that include field chilling, which was calculated using site-specific weather data from the fall prior to sampling, discussed from \lr{R1_collect} to \lr{R1_collectb} in the methods. We believe that this is a meaningful comparison, as we sampled many congener species between the two transects, and thus we would expect species of the same genus to be similar in their phenology and responses to cues, further highlighting the importance of including the phylogenetic structure in our analysis, which we now explicitly mention on \lr{R1_congener}. \\
+We can see how this statement would benefit from a more detailed explanation. We are able to attribute differences in budburst are due to differences in the communities and not collection dates by using in our model the total chill portions for each individual site, which includes both the field chilling experienced prior to sampling and was calculated from site-specific weather data. This is discussed from \lr{R1_collect} to \lr{R1_collectb} in the methods. We believe that this is a meaningful comparison, as we sampled many congener species between the two transects, and thus we would expect species of the same genus to be similar in their phenology and responses to cues, further highlighting the importance of including the phylogenetic structure in our analysis---a detail we now explicitly mention on \lr{R1_congener}. \\
 
 \textbf{Discussion}\\
 
@@ -117,7 +137,7 @@ Despite the high degree of diversity and spatial scale represented in our study,
 \emph{Lines 271-276: What about common garden studies? In McDonough MacKenzie et al 2019, Vitasse et al 2013, Stinson 2005, and
 Vitasse et al 2010 local condition drove phenology, while Korner et al 2015, Gugger et al 2015, Vitasse et al 2009, and Rossi and Isabel 2016 reported population-level variation in phenological response.}\\
 
-We agree that this is an important that requires more detail, we have therefore revised this section of the discussion from \lr{R1_commG} to \lr{R1_commGb}.
+We agree that this is an important topic that requires more detail, we have therefore revised this section of the discussion from \lr{R1_commG} to \lr{R1_commGb}.\\
 
 \emph{Lines 295-297: I recommend adding Polgar, Caroline, Amanda Gallinat, and Richard B. Primack. "Drivers of leaf‐out phenology and their implications for species invasions: insights from Thoreau's Concord." New Phytologist 202, no. 1 (2014) to this section.}\\
 
@@ -129,7 +149,7 @@ Done (\lr{R1_Herb2}). \\
 
 \emph{Line 312: the discussion “latent traits” reminds me of Inouye’s conceptual synthesis on phenology as a process and a trait (Inouye, Brian D., Johan Ehrlén, and Nora Underwood. "Phenology as a process rather than an event: from individual reaction norms to community metrics." Ecological Monographs 89, no. 2 (2019): e01352.)}\\
 
-This is a great suggestion and have added this reference (\lr{R1_inouye}).\\
+This is a great suggestion, we now include reference (\lr{R1_inouye}).\\
 
 \emph{Lines 330-331: I was surprised by the statement that species in northern communities were most likely to “experience the greatest changes in budburst order” as I did not make that connection while reading your results. Can you provide more context here or point the reader to a specific figure?}\\
 
@@ -143,7 +163,7 @@ We see the reviewers point and have revised this section of our discussion subst
 
 \emph{I think the species lists should be moved to their own table to simplify the conceptual design of this figure.}\\
 
-We see the reviewers point and have removed the species lists from our conceptual figure. Instead we now reference the list of species in Table S1.\\
+We agree that removing the species list would simplify the figure and have now removed it, instead referencing in the figure caption the list of species in Table S1 .\\
 
 \textbf{Reviewer 2 Comments to the Author:}\\
 
@@ -157,8 +177,7 @@ We see the reviewers point and have revised this sentence starting on \lr{R2_int
 
 \emph{In addition, while the authors attribute the unexplained variation to shared evolutionary history, the intercept may potentially contain confounding effects from other factors beyond phylogeny. It would therefore be helpful to test whether phylogenetic distance is related to leaf-out timing (or to the residuals of the model based on chilling, forcing, and photoperiod), which would provide more direct support for the phylogenetic interpretation.}\\
 
-This is a good point, and we agree that the intercept could contain confounding effects from other factors besides phylogeny. To address this, we re-ran our analysis using a model in which the phylogenetic structure was placed on the residuals instead of the intercept. This new analysis is discussed on \lr{R2_resid} of the methods and \lr{R2_residResult} of the results section, along with an additional table in the supplementary material (Table S2). This revised model produced similar estimates of the phylogenetic structure as our main model, confirming that the variation explained by the intercept is due to species shared evolutionary history and not other confounding effects.
-
+This is a good point, and we agree that the intercept could contain confounding effects from other factors besides phylogeny. We performed an additional analysis using a model in which the phylogenetic structure was placed on the residuals instead of the intercept. This revised model produced similar estimates of the phylogenetic structure as our main model, confirming that intrinsic species-differences are in part explained by shared evolutionary history. The discussion of this analysis can be found on \lr{R2_resid} of the methods and \lr{R2_residResult} of the results section, with an additional table in the supplementary material (Table S2). \\
 %include an estimate of Bloomberg's K on \lr{R2_BloomK}, which is an estimate of the phylogenetic signal and provides a metric of whether closely related species resemble each other more than species chosen at random from a phylogenetic tree based on the amount of the evolutionary history or branch length between two species on the phylogeny. \\
 
 \emph{Furthermore, the Discussion focuses primarily on mechanistic explanations. It would be valuable to expand this section to address the broader implications of the findings and to more clearly emphasize the significance of the study’s contributions for phenological prediction and community-level responses to climate change.}\\
@@ -173,10 +192,7 @@ We appreciate the reviewers suggestions to improve the interpretability of the p
 
 We agree and have revised these two figures to now have larger axis labels, legends, and species names. Given that species are ordered on the x-axis based on their estimated day of budburst, their species names often overlap when positioned below the axis. We have now standardized the presentation of the species name so that tree species are labled above the axis and shrub species are labeled below and all labels are spaced to ensure thier readability. \\ 
 
-\clearpage
-
 \bibliographystyle{bibliography/bibstyles/ecology}% 
 \bibliography{bibliography/phenoBCBib.bib}
-
 
 \end{document}

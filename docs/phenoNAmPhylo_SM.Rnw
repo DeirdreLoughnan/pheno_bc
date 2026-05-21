@@ -98,7 +98,7 @@
 
 \begin{table}[ht!]
 \centering
-\caption{Mean day of budburst following the start of forcing treatments, estimated from raw observation data of 47 species at our two western sites, E.C. Manning park and Smithers B.C., Canada, and our two eastern sites, Harvard Forest, USA and St. Hippolyte, Canada.} 
+\caption{Mean day of budburst following the start of forcing treatments, estimated from raw observational data of 47 species at our two western sites, E.C. Manning park and Smithers B.C., Canada, and our two eastern sites, Harvard Forest, USA and St. Hippolyte, Canada.} 
 \label{tabPhenoSp}
 \begin{tabular}{lrrrr}
   \hline
@@ -209,7 +209,7 @@ $\beta_{chilling \times St.\ Hippolyte}$ & 7.18 & 4.65 & 6.18 & 8.22 & 9.68 \\
 
 \begin{table}[ht]
 \centering
-\caption{Summary output from a phylogenetic Bayesian model in which the phylogeny is included on the residuals. Estimates of phylogenetic structure are similar to our main model, thus supporting our interpretation that phylogenetic distance is related to leaf-out timing and not other confounding effects encompassed by the intercept. See the statistical analysis section of the methods for more detail.} 
+\caption{Summary output from a phylogenetic Bayesian model in which the phylogeny is included on the residuals. Estimates of phylogenetic structure are similar to our main model, thus supporting our interpretation that phylogenetic distance is related to leaf-out timing. See the statistical analysis section of the methods for more detail.} 
 \label{tabRes}
 \begin{tabular}{rrrrrr}
   \hline

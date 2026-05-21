@@ -56,6 +56,7 @@ We thank the reviewer for this positive feedback and are glad to hear they found
 
 \emph{I am reasonably confident that readers familiar with phenology will clearly understand the difference between “response” as a rate in phenological shift per cue and “timing” as a date, but I do wonder if Ecology readers in general will immediately grasp this subtly throughout the paper.}\\
 
+%emw21May -- something is wrong with how all the line # print out! Check the labgit -- I think I have seen this problem before and if you follow instructions there closely, it should go away. 
 We appreciate the reviewers insight and agree that a more detailed explanation of these terms would improve the clarity of our work for a wider readership. We have clarified this point in the abstract from \lr{R1_respTime1} to \lr{R1_respTime1b}, in the methods from \lr{R1_respTime2} to \lr{R1_respTime2b}, in the results from \lr{R1_respTime3} to \lr{R1_respTime3b}, and in the caption of Figures 3 \& 4. \\
 
 \emph{My only other manuscript-level concern is merely the peccadillo that the authors gloss over the experimental design(s) which incorporates both twig cuttings and a common garden element in that the twigs from two provenances/populations experience phenological forcing (under various photoperiod and temperature treatments) together. As an experimental ecologist, I would appreciate a slightly firmer grounding in the common garden and twig forcing methods and literature, though that may be my own professional bias. I have included my line edits below. I look forward to seeing this paper in the pages of Ecology! Kudos to the authors.}\\
@@ -192,7 +193,7 @@ We appreciate the reviewers suggestions to improve the interpretability of the p
 
 \emph{In Figs. 4 and 5, the font sizes of axis labels, legends, and species names are currently too small to read comfortably. The presentation of species names on the x-axis should be standardized and clearly positioned below the axis for readability.}\\
 
-We agree and have revised these two figures to now have larger axis labels, legends, and species names. Given that species are ordered on the x-axis based on their estimated day of budburst, their species names often overlap when positioned below the axis. We have now standardized the presentation of the species name so that tree species are labled above the axis and shrub species are labeled below and all labels are spaced to ensure thier readability. \\ 
+We agree and have revised these two figures to now have larger axis labels, legends, and species names. Given that species are ordered on the x-axis based on their estimated day of budburst, their species names often overlap when positioned below the axis. We have now standardized the presentation of the species name so that tree species are labled above the axis and shrub species are labeled below and all labels are spaced to ensure their readability. We updated our captions to explain this.  \\ 
 
 \bibliographystyle{bibliography/bibstyles/ecology}% 
 \bibliography{bibliography/phenoBCBib.bib}

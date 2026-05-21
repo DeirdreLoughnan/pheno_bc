@@ -68,7 +68,7 @@
 
 \begin{figure}[ht]
 \centering
-    \includegraphics[width= 1 \textwidth]{..//..//pheno_bc/figures/panelFig/intrxnPlots8Chill3Lat.pdf}%,
+    \includegraphics[width= 1 \textwidth]{..//..//pheno_bc/figures/panelFig/intSiteCueSite.pdf}%,
      \caption{Estimated day of budburst in response to \textbf{a,} forcing across sites under low chilling and short photoperiods, \textbf{b,} chilling across sites under low forcing and short photoperiods, and \textbf{c,}  across photoperiods under low forcing and chilling for species sampled from our four sites. The thin bars represent the 90\% uncertainty interval, while the thicker bars represent the 50\% uncertainty interval, and symbols the mean.} 
     \label{fig:intrxn3}
 \end{figure}
@@ -159,7 +159,7 @@ Species & Harvard forest & St. Hippoltye & Manning park & Smithers \\
 
 \begin{table}[ht!]
 \centering
-\caption{Approximate chill units from our two western sites, E.C. Manning park and Smithers B.C., Canada, and our two eastern sites, Harvard Forest, USA and St. Hippolyte, Canada. Weather data for the fall of 2019 and winter 2020 was obtained from the Hope Slide weather station for our E.C. Manning park estimates and the Smithers airport weather station for our Smithers communities. For our eastern communities, weather data for the fall of 2014 and winter 2015 was obtained from weather stations at Harvard Forest and in St. Hippolyte.} 
+\caption{Approximate chill units from our two western sites, E.C. Manning park and Smithers B.C., Canada, and our two eastern sites, Harvard Forest, USA and St. Hippolyte, Canada. Weather data for the fall of 2019 and winter 2020 was obtained from the Hope Slide weather station for our E.C. Manning park estimates and the Smithers airport weather station for our Smithers site. For our eastern sites, weather data for the fall of 2014 and winter 2015 was obtained from weather stations at Harvard Forest and in St. Hippolyte.} 
 \label{tabChill}
 \begin{tabular}{llrrr}
   \hline

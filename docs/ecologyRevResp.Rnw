@@ -61,7 +61,7 @@ We appreciate the reviewers insight and agree that a more detailed explanation o
 
 \emph{My only other manuscript-level concern is merely the peccadillo that the authors gloss over the experimental design(s) which incorporates both twig cuttings and a common garden element in that the twigs from two provenances/populations experience phenological forcing (under various photoperiod and temperature treatments) together. As an experimental ecologist, I would appreciate a slightly firmer grounding in the common garden and twig forcing methods and literature, though that may be my own professional bias. I have included my line edits below. I look forward to seeing this paper in the pages of Ecology! Kudos to the authors.}\\
 
-We see the reviewers point and have added additional discussion of twig experiment and common garden studies on \lr{R1_commG} to \lr{R1_commGb}. We have also added details of our study design to the methods on \lr{R1_congener} and \lr{R1_thermoP}.\\
+We see the reviewers point and have added additional discussion of twig experiment and common garden studies on \lr{R1_commG} to \lr{R1_commGb}. We have also added details of our study design to the methods on \lr{R1_thermoP}.\\
 
 % "elegantly integrated experimental twig phenology " and our statistical approach as "sophisticated"
 % Appreciate that the reviewer finds our manuscript to be "well written and well organized"
@@ -174,7 +174,7 @@ We are glad that the reviewer found the insights from our work to be an importan
 
 \emph{First, the quantification and interpretation of the intercept require further clarification. The authors should provide additional methodological details explaining how the species-level intercepts ($\alpha_{spi}$) represent timing differences independent of the manipulated cues.}\\
 
-We see the reviewers point and have revised this sentence starting on \lr{R2_intercept} of our methods to improve clarity. As a linear model, the intercepts estimated by our model for each species represent the species-level day of budburst when the coefficient for the slope of each predictor, or the response to chilling, forcing, and photoperiod in our case, is equal to zero \citep{GelmanROS}.\\
+We see the reviewers point and have revised this sentence starting on \lr{R2_intercept} of our methods to improve clarity. As we are using z-scored values in our model, the intercepts for each species represent the species-level day of budburst realtive to the mean day of budburst when when all cue and site predictors are at their mean values\citep{GelmanROS}.\\
 
 \emph{In addition, while the authors attribute the unexplained variation to shared evolutionary history, the intercept may potentially contain confounding effects from other factors beyond phylogeny. It would therefore be helpful to test whether phylogenetic distance is related to leaf-out timing (or to the residuals of the model based on chilling, forcing, and photoperiod), which would provide more direct support for the phylogenetic interpretation.}\\
 

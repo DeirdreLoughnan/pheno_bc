@@ -1,39 +1,20 @@
-\documentclass{article}
-
-\usepackage[hyphens]{url} 
-\usepackage{Sweave}
+\documentclass[11pt,a4paper]{article}
+\usepackage[top=1.00in, bottom=1.0in, left=1.1in, right=1.1in]{geometry}
 \usepackage{graphicx}
-% \usepackage[sort&compress, numbers, super]{natbib}
-\usepackage{natbib}
-
-\usepackage{amsmath}
-\usepackage{textcomp}
-\usepackage{float}
-\usepackage[utf8]{inputenc}
-\usepackage[nottoc]{tocbibind} 
-\usepackage{amsmath} 
-\usepackage{listings} 
+\usepackage[sort&compress]{natbib}
+%\bibliographystyle{..//..//bib/styles/gcb}
+\usepackage{Sweave}
 \usepackage{xcolor}
-\usepackage{capt-of}
-\usepackage[export]{adjustbox} 
+
+\usepackage[hyphens]{url}
+\usepackage{caption}
+\usepackage{subcaption}
+
+\setlength\parindent{0pt}
+\usepackage{xr}
+
 \usepackage{lineno}
-\linenumbers
-\usepackage[small]{caption}
-\usepackage{setspace}
-\doublespacing
-
-\setlength{\captionmargin}{30pt}
-\setlength{\abovecaptionskip}{0pt}
-\setlength{\belowcaptionskip}{10pt}
-
-\topmargin -1.5cm        
-\oddsidemargin 0.5cm   
-\evensidemargin 0.5cm  
-\textwidth 15.59cm
-\textheight 21.94cm 
-\parindent 0pt		 
-
-\usepackage{xr-hyper} 
+%\usepackage{xr-hyper}
 \externaldocument{phenoNAmPhylo}
 \externaldocument{phenoNAmPhyloSM}
 

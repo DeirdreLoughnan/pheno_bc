@@ -58,7 +58,7 @@ Done.\\
 We see the reviewers point and have revised this sentence to no longer include this passive verb. This sentence now reads (\lr{R1_1}):
 
 \begin{quote}
-Climate change has shifted the timing of major life cycle events across most systems and is altering how species assemble temporally.
+Climate change has shifted the timing of major life cycle events across most systems. These shifts may in turn alter how species assemble temporally.
 \end{quote}
 
 \emph{Line 6: I think you should add “twig” before “budburst” to note that this is a twig study.}\\
@@ -73,7 +73,7 @@ The reviewer is correct in their interpretation, but we appreciate how this coul
 
 We appreciate the importance of word choice and agree with the reviewer that a different word would be more accurate, we have revised this sentence as follows (\lr{R1_instrinPhylo} to \lr{R1_instrinPhylob}):\\
 \begin{quote}
-These differences in species responses to well-studied temperature and photoperiod cues, however, explained only half this variation, with the remaining variation mostly explained by the estimated phylogenetic structure of budburst and inherent species differences in the timing of their growth and leafout.
+Differences in species responses to well-studied temperature and photoperiod cues explained only half of the observed variation in leafout date, with the remaining variation mostly explained by the estimated phylogenetic structure of leafout and inherent species differences in the timing of their growth.
 \end{quote}
 
 \textbf{Introduction}\\
@@ -104,7 +104,7 @@ Done (\lr{R1_Results}).\\
 
 \emph{Lines 247-251: How do you determine whether community-level eastern v western budburst date differences are due to different species in these communities versus different collection dates? And is this a meaningful comparison given the different species pools? I guess I just assumed the meaningful site comparisons were North and South within each set of twig cutting experiments, since this would test the intraspecific variation in response.}\\
 
-We can see how this statement would benefit from a more detailed explanation. We are able to attribute differences in budburst are due to differences in the communities and not collection dates by using in our model the total chill portions for each individual site, which includes both the field chilling experienced prior to sampling and was calculated from site-specific weather data. This is discussed from \lr{R1_collect} to \lr{R1_collectb} in the methods. We believe that this is a meaningful comparison, as we sampled many congener species between the two transects, and thus we would expect species of the same genus to be similar in their phenology and responses to cues, further highlighting the importance of including the phylogenetic structure in our analysis---a detail we now explicitly mention on \lr{R1_congener}. \\
+We can see how this statement would benefit from a more detailed explanation. We are able to attribute differences in budburst are due to differences in the communities and not collection dates by using in our model the total chill portions for each individual site, which includes both the field chilling experienced prior to sampling and was calculated from site-specific weather data. This is discussed from \lr{R1_collect} to \lr{R1_collectb} in the methods. We believe that this is a meaningful comparison, as we sampled many species in the same clades in each transect, and thus we would expect more closely realted species to be similar in their phenology and responses to cues regardless of their site of origin, further highlighting the importance of including the phylogenetic structure in our analysis. \\
 
 \textbf{Discussion}\\
 
@@ -113,7 +113,7 @@ We can see how this statement would benefit from a more detailed explanation. We
 We were equally surprised to find that the differences in community composition did not swamp the differences across sites. Here we are specifically referring to the community-level differences in cue responses and have now revised this sentence starting on \lr{R1_swamp} to now read:
 
 \begin{quote}
-Despite the high degree of diversity and spatial scale represented in our study, we found no detectable differences in the community-level responses to temperature and photoperiod, including across different coasts and over 6$^{\circ}$ of latitude.
+Despite the high degree of diversity and spatial scale represented in our study, we found no detectable differences in the responses to temperature and photoperiod at our different sites, \color{black} even though sites span different coasts and over 6$^{\circ}$ of latitude.
 \end{quote}
 
 \emph{Lines 271-276: What about common garden studies? In McDonough MacKenzie et al 2019, Vitasse et al 2013, Stinson 2005, and

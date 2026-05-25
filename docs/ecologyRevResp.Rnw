@@ -73,7 +73,7 @@ The reviewer is correct in their interpretation, but we appreciate how this coul
 
 We appreciate the importance of word choice and agree with the reviewer that a different word would be more accurate, we have revised this sentence as follows (\lr{R1_instrinPhylo} to \lr{R1_instrinPhylob}):\\
 \begin{quote}
-Differences in species responses to well-studied temperature and photoperiod cues explained only half of the observed variation in leafout date, with the remaining variation mostly explained by the estimated phylogenetic structure of leafout and inherent species differences in the timing of their growth.
+Differences in species responses to well-studied temperature and photoperiod cues explained only half of the observed variation in leafout date, with the remaining variation mostly explained by the estimated phylogenetic structure of leafout and inherent species differences in the timing of their growth. %emw25May --  need to update
 \end{quote}
 
 \textbf{Introduction}\\
@@ -104,11 +104,11 @@ Done (\lr{R1_Results}).\\
 
 \emph{Lines 247-251: How do you determine whether community-level eastern v western budburst date differences are due to different species in these communities versus different collection dates? And is this a meaningful comparison given the different species pools? I guess I just assumed the meaningful site comparisons were North and South within each set of twig cutting experiments, since this would test the intraspecific variation in response.}\\
 
-We can see how this statement would benefit from a more detailed explanation. We are able to attribute differences in budburst are due to differences in the communities and not collection dates by using in our model the total chill portions for each individual site, which includes both the field chilling experienced prior to sampling and was calculated from site-specific weather data. This is discussed from \lr{R1_collect} to \lr{R1_collectb} in the methods. We believe that this is a meaningful comparison, as we sampled many species in the same clades in each transect, and thus we would expect more closely realted species to be similar in their phenology and responses to cues regardless of their site of origin, further highlighting the importance of including the phylogenetic structure in our analysis. \\
+We can see how this statement would benefit from a more detailed explanation. We are able to attribute differences in budburst are due to differences in the communities and not collection dates by using in our model the total chill portions for each individual site, which includes both the field chilling experienced prior to sampling and was calculated from site-specific weather data. This is discussed from \lr{R1_collect} to \lr{R1_collectb} in the methods. We believe that this is a meaningful comparison, as we sampled many species in the same clades in each transect, and thus we would expect more closely realted species to be similar in their phenology and responses to cues regardless of their site of origin, further highlighting the importance of including the phylogenetic structure in our analysis. \\ %emw25May --  fix typos and I would update to say you see how this is confusing so have carefully checked and updated your use of site, community and transect throughout and also updated the results and also the discussion (as shown below). Right now it sounds like you did less than you did. Maybe open with the changes and bury the info on the model in the middle of them instead of leading with it .... it sounds like you're arguing when you're not. 
 
 \textbf{Discussion}\\
 
-\emph{Line 272:When you write “we found no detectable site-level differences” I wondered if you meant at the community level or at the species level. Again, I am confused by the coastal comparisons because I expect that the differences in community composition would swamp this comparison.}\\
+\emph{Line 272:When you write “we found no detectable site-level differences” I wondered if you meant at the community level or at the species level. Again, I am confused by the coastal comparisons because I expect that the differences in community composition would swamp this comparison.}\\ %emw25May --  I would change your first sentence below to: We were equally surprised to find that the differences in community composition did not swamp the differences across sites and, as we discussed above have made changes throughout to make our results and interepretation of this clearer. 
 
 We were equally surprised to find that the differences in community composition did not swamp the differences across sites. Here we are specifically referring to the community-level differences in cue responses and have now revised this sentence starting on \lr{R1_swamp} to now read:
 
@@ -161,7 +161,7 @@ We see the reviewers point and have revised this sentence starting on \lr{R2_int
 
 This is a good point, and we agree that the intercept could contain confounding effects from other factors besides phylogeny. We performed an additional analysis using a model in which the phylogenetic structure was placed on the residuals instead of the intercept. This revised model produced similar estimates  ($\lambda$: 0.49) of the phylogenetic structure as our main model ($\lambda$: 0.43), confirming that species-level variation not explained by the cues does seem attributable in part to evolutionary history. The discussion of this analysis can be found on \lr{R2_resid} of the methods and \lr{R2_residResult} of the results section, with an additional table in the supplementary material (Table S2). \\
 
-Species-level variation not explained by the cues does seem attributable in part (0.49) to evolutionary history
+Species-level variation not explained by the cues does seem attributable in part (0.49) to evolutionary history.\\
 %include an estimate of Bloomberg's K on \lr{R2_BloomK}, which is an estimate of the phylogenetic signal and provides a metric of whether closely related species resemble each other more than species chosen at random from a phylogenetic tree based on the amount of the evolutionary history or branch length between two species on the phylogeny. \\
 
 \emph{Furthermore, the Discussion focuses primarily on mechanistic explanations. It would be valuable to expand this section to address the broader implications of the findings and to more clearly emphasize the significance of the study’s contributions for phenological prediction and community-level responses to climate change.}\\
@@ -170,7 +170,7 @@ We completely agree with the reviewer and have added a more detailed discussion 
 
 \emph{Finally, the presentation of the figures requires improvement. In Fig. 2, numerical intercept values for each species could be added, and the annotation of phylogenetic relationships among major clades should be improved to enhance interpretability.}\\
 
-We appreciate the reviewers suggestions to improve the interpretability of the phylogenetic relationships. We have added the numerical intercept values to the tips of the phylogeny. We have also added additional annotation to denote the major clades represented in the tree. \\ 
+We appreciate the reviewer's suggestions to improve the interpretability of the phylogenetic relationships. We have added the numerical intercept values to the tips of the phylogeny. We have also added additional annotation to denote the major clades represented in the tree. \\ 
 
 \emph{In Figs. 4 and 5, the font sizes of axis labels, legends, and species names are currently too small to read comfortably. The presentation of species names on the x-axis should be standardized and clearly positioned below the axis for readability.}\\
 

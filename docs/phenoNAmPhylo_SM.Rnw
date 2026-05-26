@@ -30,7 +30,7 @@
 \usepackage{xr-hyper} %refer to Fig.s in another document
 
 \externaldocument{phenoNAmPhylo} 
-\usepackage{hyperref}
+% \usepackage{hyperref}
 \setlength{\captionmargin}{30pt}
 \setlength{\abovecaptionskip}{0pt}
 \setlength{\belowcaptionskip}{10pt}
@@ -69,7 +69,7 @@
 \begin{figure}[ht]
 \centering
     \includegraphics[width= 1 \textwidth]{..//..//pheno_bc/figures/panelFig/intSiteCueSite.pdf}%,
-     \caption{Estimated day of budburst in response to \textbf{a,} forcing across sites under low chilling and short photoperiods, \textbf{b,} chilling across sites under low forcing and short photoperiods, and \textbf{c,}  across photoperiods under low forcing and chilling for species sampled from our four sites. The thin bars represent the 90\% uncertainty interval, while the thicker bars represent the 50\% uncertainty interval, and symbols the mean.} 
+     \caption{Estimated day of budburst in response to forcing (\textbf{a}) across sites under low chilling and short photoperiods, chilling across sites under low forcing and short photoperiods (\textbf{b}), and across photoperiods (\textbf{c}) under low forcing and chilling for species sampled from our four sites. The thin bars represent the 90\% uncertainty interval, while the thicker bars represent the 50\% uncertainty interval, and symbols the mean.} 
     \label{fig:intrxn3}
 \end{figure}
 \newpage
@@ -77,7 +77,7 @@
 \begin{figure}[ht]
 \centering
   \includegraphics[width= \textwidth]{..//..//pheno_bc/figures/rankPlot.pdf}%,
-     \caption{Comparisons of the estimated changes in species ranked budburst order, \textbf{a, d} between species-level effects (species intercept) and under high cues, species-level effects and under low cues, \textbf{b, e}, and under low versus high cues, \textbf{c, f}, for our eastern species (in red, \textbf{a-c}) and western species (in blue, \textbf{d-f}). For the three species that occur in both transect (shown in yellow), \emph{Alnus incana} exhibited the greatest rank change with a difference of three, while \emph{Betula papyrifera} had a rank difference of two and \emph{Populus tremuloides} a rank difference of one.}
+     \caption{Comparisons of the estimated changes in species ranked budburst order, between species-level effects (species intercept) and under high cues (\textbf{a, d}), species-level effects and under low cues (\textbf{b, e}), and under low versus high cues (\textbf{c, f}), for our eastern species (in red, \textbf{a-c}) and western species (in blue, \textbf{d-f}). For the three species that occur in both transect (shown in yellow), \emph{Alnus incana} exhibited the greatest rank change with a difference of three, while \emph{Betula papyrifera} had a rank difference of two and \emph{Populus tremuloides} a rank difference of one.}
     \label{fig:rank}
 \end{figure}
 
@@ -98,7 +98,7 @@
 
 \begin{table}[ht!]
 \centering
-\caption{Mean day of budburst following the start of forcing treatments, estimated from raw observational data of 47 species at our two western sites, E.C. Manning park and Smithers B.C., Canada, and our two eastern sites, Harvard Forest, USA and St. Hippolyte, Canada.} 
+\caption{Mean day of budburst following the start of forcing treatments, estimated from raw observational data of 47 species at our two western sites, E.C. Manning park and Smithers B.C., Canada, and our two eastern sites, Harvard Forest, MA, USA and St. Hippolyte, QC,Canada.} 
 \label{tabPhenoSp}
 \begin{tabular}{lrrrrr}
   \hline
@@ -159,7 +159,7 @@ Species & Spp. abbreviation & Harvard forest & St. Hippoltye & Manning park & Sm
 
 \begin{table}[ht!]
 \centering
-\caption{Approximate chill units from our two western sites, E.C. Manning park and Smithers B.C., Canada, and our two eastern sites, Harvard Forest, USA and St. Hippolyte, Canada. Weather data for the fall of 2019 and winter 2020 was obtained from the Hope Slide weather station for our E.C. Manning park estimates and the Smithers airport weather station for our Smithers site \citep{canadaWeather}. For our eastern sites, weather data for the fall of 2014 and winter 2015 was obtained from weather stations at Harvard Forest \citep{hfWeather} and in St. Hippolyte.\citep{canadaWeather}} 
+\caption{Approximate chill units from our two western sites, E.C. Manning park and Smithers B.C., Canada, and our two eastern sites, Harvard Forest, MA, USA and St. Hippolyte, QC, Canada. Weather data for the fall of 2019 and winter 2020 was obtained from the Hope Slide weather station for our E.C. Manning park sites and the Smithers airport weather station for our Smithers site \citep{canadaWeather}. For our eastern sites, weather data for the fall of 2014 and winter 2015 was obtained from weather stations at Harvard Forest \citep{hfWeather} and the St. Hippolyte weather station.\citep{canadaWeather}} 
 \label{tabChill}
 \begin{tabular}{llrrr}
   \hline
@@ -209,7 +209,7 @@ $\beta_{chilling \times St.\ Hippolyte}$ & 7.18 & 4.65 & 6.18 & 8.22 & 9.68 \\
 
 \begin{table}[ht]
 \centering
-\caption{Summary output from a phylogenetic Bayesian model in which the phylogeny is included on the residuals. Estimates of phylogenetic structure are similar to our main model, thus supporting our interpretation that phylogenetic distance is related to leaf-out timing. See the statistical analysis section of the methods for more detail.} 
+\caption{Summary output from a phylogenetic Bayesian model in which the phylogeny is included on the residuals. See the statistical analysis section of the methods for more detail.} 
 \label{tabRes}
 \begin{tabular}{rrrrrr}
   \hline
@@ -237,6 +237,39 @@ $\alpha_{sp}$ & 28.90 & 26.20 & 27.80 & 29.98 & 31.62 \\
   $\beta_{chilling \times St.\ Hippolyte}$ & 7.40 & 4.92 & 6.40 & 8.35 & 9.78 \\ 
   \end{tabular}
 \end{table}
+
+\begin{table}[ht]
+\centering
+\caption{Proportion of surviving samples per species for which budburst was observed in our controlled environment study of western sites. See \citep{Flynn2018} for survival in our study of eastern sites.} 
+\label{tabSurv}
+\begin{tabular}{lrl}
+  \hline
+Species name & Proportion budburst & Plant type \\ 
+  \hline
+\emph{Acer glabrum} & 0.83 & tree \\ 
+  \emph{Alnus incana} & 1.00 & shrub \\ 
+  \emph{Alnus viridis} & 0.92 & shrub \\ 
+  \emph{Amelanchier alnifolia} & 0.99 & shrub \\ 
+  \emph{Betula papyrifera} & 1.00 & tree \\ 
+  \emph{Cornus stolonifera} & 0.99 & shrub \\ 
+  \emph{Lonicera involucrata} & 0.87 & shrub \\ 
+  \emph{Menziesia ferruginea} & 0.80 & shrub \\ 
+  \emph{Populus balsamifera} & 0.98 & tree \\ 
+  \emph{Populus tremuloides} & 0.90 & tree \\ 
+  \emph{Rhododendron albiflorum} & 1.00 & shrub \\ 
+  \emph{Ribes lacustre} & 0.82 & shrub \\ 
+  \emph{Rubus parviflorus} & 0.94 & shrub \\ 
+  \emph{Sambucus racemosa} & 0.95 & shrub \\ 
+  \emph{Shepherdia canadensis} & 1.00 & shrub \\ 
+  \emph{Sorbus scopulina} & 0.99 & shrub \\ 
+  \emph{Spiraea betulifolia} & 0.94 & shrub \\ 
+  \emph{Spiraea pyramidata} & 0.92 & shrub \\ 
+  \emph{Symphoricarpos albus} & 0.84 & shrub \\ 
+  \emph{Vaccinium membranaceum} & 0.90 & shrub \\ 
+  \emph{Viburnum edule} & 1.00 & shrub \\ 
+  \end{tabular}
+\end{table}
+\clearpage
 
 % <<label= tableRes, echo=FALSE , results= tex >>=
 % 
@@ -290,24 +323,24 @@ $\alpha_{sp}$ & 28.90 & 26.20 & 27.80 & 29.98 & 31.62 \\
 % print(make.bb.res,include.rownames=T, caption.placement="top", hline.after=c(-1,0), sanitize.text.function = identity)
 % @
 
-
-<<label=bbSuccess, echo=FALSE, results=tex >>=
-spwithbb <- read.csv("..//output/bb.success.ax.trt.csv", head = TRUE)
-library(xtable)
-
-spInfo <- read.csv("..//input/species_list.csv")
-spInfo$species.name <- gsub("_"," ", spInfo$species.name)
-spInfo$species.name <- paste("\\emph{", spInfo$species.name, "}", sep = "")
-colnames(spInfo) <- c("Species name", "Species","Plant type", "transect")
-bb_suc <- merge(spwithbb, spInfo, by = "Species")
-
-bb_suc <- bb_suc[, c("Species name", "Proportion.Budburst","Plant type")]
-names(bb_suc) <- c("Species name", "Proportion budburst","Plant type")
-
-make.bb_suc <- xtable(bb_suc,caption="Proportion of surviving samples per species for which budburst was observed in our western controlled environment study. See Flynn and Wolkovich (2018) for survival in our eastern study.",label = "tabSurv")
-print(make.bb_suc,include.rownames=F, caption.placement="top", hline.after=c(-1,0), sanitize.text.function = identity)
-
-@
+% 
+% <<label=bbSuccess, echo=FALSE, results=tex >>=
+% spwithbb <- read.csv("..//output/bb.success.ax.trt.csv", head = TRUE)
+% library(xtable)
+% 
+% spInfo <- read.csv("..//input/species_list.csv")
+% spInfo$species.name <- gsub("_"," ", spInfo$species.name)
+% spInfo$species.name <- paste("\\emph{", spInfo$species.name, "}", sep = "")
+% colnames(spInfo) <- c("Species name", "Species","Plant type", "transect")
+% bb_suc <- merge(spwithbb, spInfo, by = "Species")
+% 
+% bb_suc <- bb_suc[, c("Species name", "Proportion.Budburst","Plant type")]
+% names(bb_suc) <- c("Species name", "Proportion budburst","Plant type")
+% 
+% make.bb_suc <- xtable(bb_suc,caption="Proportion of surviving samples per species for which budburst was observed in our controlled environment study of western sites. See Flynn and Wolkovich (2018) for survival in our study of eastern sites.",label = "tabSurv")
+% print(make.bb_suc,include.rownames=F, caption.placement="top", hline.after=c(-1,0), sanitize.text.function = identity)
+% 
+% @
 
 \clearpage
 

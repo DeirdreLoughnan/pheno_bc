@@ -37,11 +37,11 @@ We thank the reviewer for this positive feedback and are glad to hear they found
 
 \emph{I am reasonably confident that readers familiar with phenology will clearly understand the difference between “response” as a rate in phenological shift per cue and “timing” as a date, but I do wonder if Ecology readers in general will immediately grasp this subtly throughout the paper.}\\
 
-We appreciate the reviewers insight and agree that a more detailed explanation of these terms would improve the clarity of our work for a wider readership. We have clarified this point in the abstract from \lr{R1_respTime1} to \lr{R1_respTime1b}, in the methods from \lr{R1_respTime2} to \lr{R1_respTime2b}, in the results from \lr{R1_respTime3} to \lr{R1_respTime3b}, and in the caption of Figures 3 \& 4. \\
+We appreciate the reviewers insight and agree that a more detailed explanation of these terms would improve the clarity of our work for a wider readership. We have clarified this point in the abstract from \lr{R1_respTime1} to \lr{R1_respTime1b}, in the methods from \lr{R1_respTime2} to \lr{R1_respTime2b}, in the results from \lr{R1_respTime3} to \lr{R1_respTime3b}, and in the captions of Figures 3 \& 4. \\
 
 \emph{My only other manuscript-level concern is merely the peccadillo that the authors gloss over the experimental design(s) which incorporates both twig cuttings and a common garden element in that the twigs from two provenances/populations experience phenological forcing (under various photoperiod and temperature treatments) together. As an experimental ecologist, I would appreciate a slightly firmer grounding in the common garden and twig forcing methods and literature, though that may be my own professional bias. I have included my line edits below. I look forward to seeing this paper in the pages of Ecology! Kudos to the authors.}\\
 
-We see the reviewers point and have added additional discussion of twig experiment and common garden studies on \lr{R1_commG} to \lr{R1_commGb}. We have also added details of our study design to the methods on \lr{R1_thermoP}.\\
+We see the reviewers point and have added additional discussion of twig experiments and common garden studies from \lr{R1_commG} to \lr{R1_commGb}. We have also added details of our study design to the methods on \lr{R1_thermoP}.\\
 
 % "elegantly integrated experimental twig phenology " and our statistical approach as "sophisticated"
 % Appreciate that the reviewer finds our manuscript to be "well written and well organized"
@@ -70,7 +70,7 @@ The reviewer is correct in their interpretation, but we appreciate how this coul
 
 \emph{Line 13: Is “shared evolutionary history” implying something broader than phylogenetic relationships? Asking because “temperature and photoperiod cues” are noted as model variables in line 7 and then this language is repeated as “temperature and photoperiod cures” in the results in line 11, but “phylogenetic Bayesian model” becomes “shared evolutionary history” when reported as a result.}\\
 
-We appreciate the importance of word choice and agree with the reviewer that a different word would be more accurate, we have revised this sentence as follows (\lr{R1_instrinPhylo} to \lr{R1_instrinPhylob}):\\
+We appreciate the importance of word choice and agree with the reviewer that a different word would be more accurate. We have revised this sentence as follows (\lr{R1_instrinPhylo} to \lr{R1_instrinPhylob}):\\
 \begin{quote}
 Differences in species responses to well-studied temperature and photoperiod cues explained only half of the observed variation in leafout date, with the remaining variation explained in part by the estimated phylogenetic structure of leafout, representing species shared evolutionary history
 \end{quote}
@@ -130,11 +130,11 @@ Done (\lr{R1_Herb2}). \\
 
 \emph{Line 312: the discussion “latent traits” reminds me of Inouye’s conceptual synthesis on phenology as a process and a trait (Inouye, Brian D., Johan Ehrlén, and Nora Underwood. "Phenology as a process rather than an event: from individual reaction norms to community metrics." Ecological Monographs 89, no. 2 (2019): e01352.)}\\
 
-This is a great suggestion, we now include reference (\lr{R1_inouye}).\\
+This is a great suggestion, we now include this reference on \lr{R1_inouye}.\\
 
 \emph{Lines 330-331: I was surprised by the statement that species in northern communities were most likely to “experience the greatest changes in budburst order” as I did not make that connection while reading your results. Can you provide more context here or point the reader to a specific figure?}\\
 
-We see how more clarity is needed. This statement was in reference to our results on \lr{R1_rankOrder}, which suggest that the order with which species budburst depends on the strength of the cues. We have revised this sentence from \lr{R1_rank} to \lr{R1_rankb} to provide more context and have a more explicit link to our results.\\
+We see how more clarity and context is needed in discussing this result. This statement was in reference to our results on \lr{R1_rankOrder}, which suggest that the order with which species budburst depends on the strength of the cues. We have revised this sentence from \lr{R1_rank} to \lr{R1_rankb} to provide more context and have a more explicit link to our results.\\
 
 \emph{Lines 336-338: This sentence implies that the reader already agrees that forecasting phenology is meaningful and important, but authors never explicitly state why phenological forecasting is ecologically relevant for management, conservation, theory, or practice. Why does forecasting matter? And why does it need to be improved?}\\
 
@@ -154,14 +154,11 @@ We are glad that the reviewer found the insights from our work to be an importan
 
 \emph{First, the quantification and interpretation of the intercept require further clarification. The authors should provide additional methodological details explaining how the species-level intercepts ($\alpha_{spi}$) represent timing differences independent of the manipulated cues.}\\
 
-We see the reviewers point and have revised this sentence starting on \lr{R2_intercept} of our methods to improve clarity. As we are using z-scored values in our model, the intercepts for each species represent the species-level day of budburst realtive to the mean day of budburst when when all cue and site predictors are at their mean values\citep{GelmanROS}.\\
+We see the reviewers point and have revised this sentence starting on \lr{R2_intercept} of our methods to improve clarity. As we are using z-scored values in our model, the intercepts for each species represent the species-level day of budburst realtive to the mean day of budburst when when all cue and site predictors are at their mean values \citep{GelmanROS}.\\
 
 \emph{In addition, while the authors attribute the unexplained variation to shared evolutionary history, the intercept may potentially contain confounding effects from other factors beyond phylogeny. It would therefore be helpful to test whether phylogenetic distance is related to leaf-out timing (or to the residuals of the model based on chilling, forcing, and photoperiod), which would provide more direct support for the phylogenetic interpretation.}\\
 
-This is a good point, and we agree that the intercept could contain confounding effects from other factors besides phylogeny. We performed an additional analysis using a model in which the phylogenetic structure was placed on the residuals instead of the intercept. This revised model produced similar estimates  ($\lambda$: 0.49) of the phylogenetic structure as our main model ($\lambda$: 0.43), confirming that species-level variation not explained by the cues does seem attributable in part to evolutionary history. The discussion of this analysis can be found on \lr{R2_resid} of the methods and \lr{R2_residResult} of the results section, with an additional table in the supplementary material (Table S2). \\
-
-Species-level variation not explained by the cues does seem attributable in part (0.49) to evolutionary history.\\
-%include an estimate of Bloomberg's K on \lr{R2_BloomK}, which is an estimate of the phylogenetic signal and provides a metric of whether closely related species resemble each other more than species chosen at random from a phylogenetic tree based on the amount of the evolutionary history or branch length between two species on the phylogeny. \\
+This is a good point, and we agree that the intercept could contain additional effects from other factors besides phylogeny. To check this, we performed an additional analysis using a model in which the phylogenetic structure was placed on the residuals instead of the intercept. This revised model produced similar estimates  ($\lambda$: 0.49) of the phylogenetic structure as our main model ($\lambda$: 0.43), confirming that species-level variation not explained by the cues does seem attributable in part to evolutionary history. The discussion of this analysis can be found on \lr{R2_resid} of the methods and \lr{R2_residResult} of the results section, in additional to a new table in the supplementary material (Table S2). \\
 
 \emph{Furthermore, the Discussion focuses primarily on mechanistic explanations. It would be valuable to expand this section to address the broader implications of the findings and to more clearly emphasize the significance of the study’s contributions for phenological prediction and community-level responses to climate change.}\\
 
@@ -173,7 +170,7 @@ We appreciate the reviewer's suggestions to improve the interpretability of the 
 
 \emph{In Figs. 4 and 5, the font sizes of axis labels, legends, and species names are currently too small to read comfortably. The presentation of species names on the x-axis should be standardized and clearly positioned below the axis for readability.}\\
 
-We agree and have revised these two figures to now have larger axis labels, legends, and species names. Given that species are ordered on the x-axis based on their estimated day of budburst, their species names often overlap when positioned below the axis. We have now standardized the presentation of the species name so that tree species are labled above the axis and shrub species are labeled below and all labels are spaced to ensure their readability. We updated our captions to explain this.  \\ 
+We agree and have revised these two figures to now have larger axis labels, legends, and species names. Given that species are ordered on the x-axis based on their estimated day of budburst, the species names often overlap when positioned below the axis. We have now standardized the presentation of the name so that tree species are labelled above the axis and shrub species are labelled below and all labels are spaced to ensure their readability. We updated our captions to explain this.  \\ 
 
 \bibliographystyle{bibliography/bibstyles/ecology}% 
 \bibliography{bibliography/phenoBCBib.bib}

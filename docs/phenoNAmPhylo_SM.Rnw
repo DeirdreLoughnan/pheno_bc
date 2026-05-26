@@ -76,7 +76,7 @@
     
 \begin{figure}[ht]
 \centering
-  \includegraphics[width= \textwidth]{..//..//pheno_bc/figures/panelFig/rankstiBBTransect.pdf}%,
+  \includegraphics[width= \textwidth]{..//..//pheno_bc/figures/rankPlot.pdf}%,
      \caption{Comparisons of the estimated changes in species ranked budburst order, \textbf{a, d} between species-level effects (species intercept) and under high cues, species-level effects and under low cues, \textbf{b, e}, and under low versus high cues, \textbf{c, f}, for our eastern species (in red, \textbf{a-c}) and western species (in blue, \textbf{d-f}). For the three species that occur in both transect (shown in yellow), \emph{Alnus incana} exhibited the greatest rank change with a difference of three, while \emph{Betula papyrifera} had a rank difference of two and \emph{Populus tremuloides} a rank difference of one.}
     \label{fig:rank}
 \end{figure}
@@ -100,59 +100,59 @@
 \centering
 \caption{Mean day of budburst following the start of forcing treatments, estimated from raw observational data of 47 species at our two western sites, E.C. Manning park and Smithers B.C., Canada, and our two eastern sites, Harvard Forest, USA and St. Hippolyte, Canada.} 
 \label{tabPhenoSp}
-\begin{tabular}{lrrrr}
+\begin{tabular}{lrrrrr}
   \hline
-Species & Harvard forest & St. Hippoltye & Manning park & Smithers \\ 
+Species & Spp. abbreviation & Harvard forest & St. Hippoltye & Manning park & Smithers \\ 
   \hline
-\emph{Acer glabrum} &  &  & 36 & 39 \\ 
-  \emph{Acer pensylvanicum} & 16 & 18 &  &  \\ 
-  \emph{Acer rubrum} & 22 & 25 &  &  \\ 
-  \emph{Acer saccharum} & 45 & 36 &  &  \\ 
-  \emph{Alnus incana} &  &  & 28 & 30 \\ 
-  \emph{Alnus incana} & 33 & 25 &  &  \\ 
-  \emph{Alnus viridis} &  &  & 44 & 43 \\ 
-  \emph{Amelanchier alnifolia} &  &  & 19 & 18 \\ 
-  \emph{Aronia melanocarpa} & 14 &  &  &  \\ 
-  \emph{Betula alleghaniensis} & 20 & 21 &  &  \\ 
-  \emph{Betula lenta} & 30 &  &  &  \\ 
-  \emph{Betula papyrifera} &  &  &  & 31 \\ 
-  \emph{Betula papyrifera} & 17 & 18 &  &  \\ 
-  \emph{Corylus cornuta} & 25 & 19 &  &  \\ 
-  \emph{Cornus stolonifera} &  &  & 15 & 17 \\ 
-  \emph{Fagus grandifolia} & 42 & 43 &  &  \\ 
-  \emph{Fraxinus nigra} & 38 & 38 &  &  \\ 
-  \emph{Hamamelis virginiana} & 44 &  &  &  \\ 
-  \emph{Ilex mucronata} & 16 & 15 &  &  \\ 
-  \emph{Kalmia angustifolia} & 30 & 32 &  &  \\ 
-  \emph{Lonicera canadensis} & 17 & 16 &  &  \\ 
-  \emph{Lonicera involucrata} &  &  & 22 & 20 \\ 
-  \emph{Lyonia ligustrina} & 31 &  &  &  \\ 
-  \emph{Menziesia ferruginea} &  &  & 43 & 46 \\ 
-  \emph{Nyssa sylvatica} & 32 &  &  &  \\ 
-  \emph{Populus balsamifera} &  &  & 30 & 31 \\ 
-  \emph{Populus grandidentata} & 33 & 31 &  &  \\ 
-  \emph{Populus tremuloides} &  &  & 46 & 35 \\ 
-  \emph{Prunus pensylvanica} & 18 & 16 &  &  \\ 
-  \emph{Quercus alba} & 45 &  &  &  \\ 
-  \emph{Quercus rubra} & 36 & 34 &  &  \\ 
-  \emph{Quercus velutina} & 52 &  &  &  \\ 
-  \emph{Rhamnus frangula} & 32 &  &  &  \\ 
-  \emph{Rhododendron albiflorum} &  &  & 19 &  \\ 
-  \emph{Rhododendron prinophyllum} & 29 &  &  &  \\ 
-  \emph{Ribes lacustre} &  &  & 29 & 23 \\ 
-  \emph{Rubus parviflorus} &  &  & 28 & 30 \\ 
-  \emph{Sambucus racemosa} &  &  & 33 &  \\ 
-  \emph{Shepherdia canadensis} &  &  & 25 & 24 \\ 
-  \emph{Sorbus scopulina} &  &  & 21 & 19 \\ 
-  \emph{Spiraea alba} & 18 & 20 &  &  \\ 
-  \emph{Spiraea betulifolia} &  &  & 24 & 18 \\ 
-  \emph{Spiraea pyramidata} &  &  & 26 & 22 \\ 
-  \emph{Symphoricarpos albus} &  &  & 27 & 32 \\ 
-  \emph{Vaccinium membranaceum} &  &  & 22 & 23 \\ 
-  \emph{Vaccinium myrtilloides} & 13 & 17 &  &  \\ 
-  \emph{Viburnum cassinoides} & 15 & 18 &  &  \\ 
-  \emph{Viburnum edule} &  &  & 19 & 8 \\ 
-  \emph{Viburnum lantanoides} & 31 & 28 &  &  \\ 
+\emph{Acer glabrum} & acegla & &  & 36 & 39 \\ 
+  \emph{Acer pensylvanicum} & acepen & 16 & 18 &  &  \\ 
+  \emph{Acer rubrum} & acerub & 22 & 25 &  &  \\ 
+  \emph{Acer saccharum} & acesac & 45 & 36 &  &  \\ 
+  \emph{Alnus incana} & alninc & &  & 28 & 30 \\ 
+  \emph{Alnus incana} & alninc & 33 & 25 &  &  \\ 
+  \emph{Alnus viridis} & alnvir & &  & 44 & 43 \\ 
+  \emph{Amelanchier alnifolia} & amealn &  &  & 19 & 18 \\ 
+  \emph{Aronia melanocarpa} & aromel & 14 &  &  &  \\ 
+  \emph{Betula alleghaniensis} & betall & 20 & 21 &  &  \\ 
+  \emph{Betula lenta} & betlen & 30 &  &  &  \\ 
+  \emph{Betula papyrifera} & betpap & &  &  & 31 \\ 
+  \emph{Betula papyrifera} & betpap & 17 & 18 &  &  \\ 
+  \emph{Corylus cornuta} & corcor & 25 & 19 &  &  \\ 
+  \emph{Cornus stolonifera} & corsto & &  & 15 & 17 \\ 
+  \emph{Fagus grandifolia} & faggra & 42 & 43 &  &  \\ 
+  \emph{Fraxinus nigra} & franig & 38 & 38 &  &  \\ 
+  \emph{Hamamelis virginiana} & hamvir & 44 &  &  &  \\ 
+  \emph{Ilex mucronata} & ilemuc & 16 & 15 &  &  \\ 
+  \emph{Kalmia angustifolia} & kalang & 30 & 32 &  &  \\ 
+  \emph{Lonicera canadensis} & loncan & 17 & 16 &  &  \\ 
+  \emph{Lonicera involucrata} & loninv & &  & 22 & 20 \\ 
+  \emph{Lyonia ligustrina} & lyolig & 31 &  &  &  \\ 
+  \emph{Menziesia ferruginea} & menfer & &  & 43 & 46 \\ 
+  \emph{Nyssa sylvatica} & nyssyl & 32 &  &  &  \\ 
+  \emph{Populus balsamifera} & popbal & &  & 30 & 31 \\ 
+  \emph{Populus grandidentata} & popgra & 33 & 31 &  &  \\ 
+  \emph{Populus tremuloides} & poptre & &  & 46 & 35 \\ 
+  \emph{Prunus pensylvanica} & prupen & 18 & 16 &  &  \\ 
+  \emph{Quercus alba} & quealb & 45 &  &  &  \\ 
+  \emph{Quercus rubra} & querub & 36 & 34 &  &  \\ 
+  \emph{Quercus velutina} & quevel & 52 &  &  &  \\ 
+  \emph{Rhamnus frangula} & rhafran & 32 &  &  &  \\ 
+  \emph{Rhododendron albiflorum} & rhoalb &  &  & 19 &  \\ 
+  \emph{Rhododendron prinophyllum} & rhopri & 29 &  &  &  \\ 
+  \emph{Ribes lacustre} & riblac & &  & 29 & 23 \\ 
+  \emph{Rubus parviflorus} & rubpar & &  & 28 & 30 \\ 
+  \emph{Sambucus racemosa} & samrac & &  & 33 &  \\ 
+  \emph{Shepherdia canadensis} & shecan & &  & 25 & 24 \\ 
+  \emph{Sorbus scopulina} & sorsco & &  & 21 & 19 \\ 
+  \emph{Spiraea alba} & spialb & 18 & 20 &  &  \\ 
+  \emph{Spiraea betulifolia} & spibet & &  & 24 & 18 \\ 
+  \emph{Spiraea pyramidata} & spipyr & &  & 26 & 22 \\ 
+  \emph{Symphoricarpos albus} & symalb & &  & 27 & 32 \\ 
+  \emph{Vaccinium membranaceum} & vacmem & &  & 22 & 23 \\ 
+  \emph{Vaccinium myrtilloides} & vacmyr & 13 & 17 &  &  \\ 
+  \emph{Viburnum cassinoides} & vibcas & 15 & 18 &  &  \\ 
+  \emph{Viburnum edule} & vibedu & &  & 19 & 8 \\ 
+  \emph{Viburnum lantanoides} & viblan & 31 & 28 &  &  \\ 
   \end{tabular}
 \end{table}
 \newpage

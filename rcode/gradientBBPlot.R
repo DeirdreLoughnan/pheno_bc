@@ -217,23 +217,23 @@ names(data) <- c("species.name","valueLow", "valueHigh","species","type","transe
 
 #####################################################################
 ## Eastern spp only #################################################
-spInfo$species[spInfo$species.name== "Acer_glabrum"] <- "acegla*"
-spInfo$species[spInfo$species.name== "Acer_pensylvanicum"] <- "acepen*"
-spInfo$species[spInfo$species.name== "Acer_rubrum"] <- "acerub*"
-spInfo$species[spInfo$species.name== "Acer_saccharum"] <- "acesac*"
-spInfo$species[spInfo$species.name== "Betula_alleghaniensis"] <- "betall*"
-spInfo$species[spInfo$species.name== "Betula_lenta"] <- "betlen*"
-spInfo$species[spInfo$species.name== "Betula_papyrifera"] <- "betpap*"
-spInfo$species[spInfo$species.name== "Fagus_grandifolia"] <- "faggra*"
-spInfo$species[spInfo$species.name== "Fraxinus_nigra"] <- "franig*"
-spInfo$species[spInfo$species.name== "Nyssa_sylvatica"] <- "nyssyl*"
-spInfo$species[spInfo$species.name== "Populus_balsamifera"] <- "popbal*"
-spInfo$species[spInfo$species.name== "Populus_grandidentata"] <- "popgra*"
-spInfo$species[spInfo$species.name== "Populus_tremuloides"] <- "poptre*"
-spInfo$species[spInfo$species.name== "Prunus_pensylvanica"] <- "prupen*"
-spInfo$species[spInfo$species.name== "Quercus_alba"] <- "quealb*"
-spInfo$species[spInfo$species.name== "Quercus_rubra"] <- "querub*"
-spInfo$species[spInfo$species.name== "Quercus_velutina"] <- "quevel*"
+# spInfo$species[spInfo$species.name== "Acer_glabrum"] <- "acegla*"
+# spInfo$species[spInfo$species.name== "Acer_pensylvanicum"] <- "acepen*"
+# spInfo$species[spInfo$species.name== "Acer_rubrum"] <- "acerub*"
+# spInfo$species[spInfo$species.name== "Acer_saccharum"] <- "acesac*"
+# spInfo$species[spInfo$species.name== "Betula_alleghaniensis"] <- "betall*"
+# spInfo$species[spInfo$species.name== "Betula_lenta"] <- "betlen*"
+# spInfo$species[spInfo$species.name== "Betula_papyrifera"] <- "betpap*"
+# spInfo$species[spInfo$species.name== "Fagus_grandifolia"] <- "faggra*"
+# spInfo$species[spInfo$species.name== "Fraxinus_nigra"] <- "franig*"
+# spInfo$species[spInfo$species.name== "Nyssa_sylvatica"] <- "nyssyl*"
+# spInfo$species[spInfo$species.name== "Populus_balsamifera"] <- "popbal*"
+# spInfo$species[spInfo$species.name== "Populus_grandidentata"] <- "popgra*"
+# spInfo$species[spInfo$species.name== "Populus_tremuloides"] <- "poptre*"
+# spInfo$species[spInfo$species.name== "Prunus_pensylvanica"] <- "prupen*"
+# spInfo$species[spInfo$species.name== "Quercus_alba"] <- "quealb*"
+# spInfo$species[spInfo$species.name== "Quercus_rubra"] <- "querub*"
+# spInfo$species[spInfo$species.name== "Quercus_velutina"] <- "quevel*"
 
 
 east <- subset(spInfo, transect != "west")
@@ -260,54 +260,54 @@ spTopW <- west[west$species %in% overlappingW,]
 meanPtW <- aggregate(dataWest[c("meanBB", "meanBBHigh", "Int")], dataWest[c("species.name","type","transect")], FUN = mean)
 names(meanPtW) <- c("species.name","type","transect","Budburst","Buddy","Intercept")
 
-dotW <- ggplot(meanPtW) +
-  geom_point(aes(y= Budburst, x = Budburst, colour = "Budburst"), size = 5) +
-  geom_point(aes(y= Intercept, x = Budburst, colour = "Intercept"), size = 5) +
-  geom_segment(aes(x = Budburst, y = Intercept, xend = Budburst, yend = Budburst), data = meanPtW, col = "black") +
-  theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
-        panel.background = element_blank(), axis.line = element_line(colour = "black"),
-        legend.key=element_rect(fill="white")) + ylim(-1.5,65) +
-  theme(axis.text.x = element_text( size=15,angle = 78,  hjust=1),
-        axis.text.y=element_text(size = 15),
-        axis.title=element_text(size=20), legend.position = "none") + 
-  scale_x_continuous( breaks = spMiniW$meanBB, labels = spMiniW$species,limits = c(15,62)) +
-  labs( x = "Species ordered by mean predicted budburst date", y = "Estimated parameter (days/standardized units)", main = NA) +
-  theme(legend.title = element_blank(), legend.text = element_text(size =25), legend.position = "top") +  annotate("text", x = 18, y = 60, label = "b)      Western transect", cex =8) +
-  annotate("text", x = spTopW[1,5], y = -1, label = spTopW[1,2], cex = 5, angle = 78) +
-  annotate("text", x = spTopW[2,5], y = -1, label = spTopW[2,2], cex = 5, angle = 78) +
-  annotate("text", x = spTopW[3,5], y = -1, label = spTopW[3,2], cex = 5, angle = 78) +
-  annotate("text", x = spTopW[4,5], y = -1, label = spTopW[4,2], cex = 5, angle = 78) +
-  annotate("text", x = spTopW[5,5], y = -1, label = spTopW[5,2], cex = 5, angle = 78) +
-  scale_color_manual(values = c("cyan4", "firebrick4"))
+# dotW <- ggplot(meanPtW) +
+#   geom_point(aes(y= Budburst, x = Budburst, colour = "Budburst"), size = 5) +
+#   geom_point(aes(y= Intercept, x = Budburst, colour = "Intercept"), size = 5) +
+#   geom_segment(aes(x = Budburst, y = Intercept, xend = Budburst, yend = Budburst), data = meanPtW, col = "black") +
+#   theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
+#         panel.background = element_blank(), axis.line = element_line(colour = "black"),
+#         legend.key=element_rect(fill="white")) + ylim(-1.5,65) +
+#   theme(axis.text.x = element_text( size=15,angle = 78,  hjust=1),
+#         axis.text.y=element_text(size = 15),
+#         axis.title=element_text(size=20), legend.position = "none") + 
+#   scale_x_continuous( breaks = spMiniW$meanBB, labels = spMiniW$species,limits = c(15,62)) +
+#   labs( x = "Species ordered by mean predicted budburst date", y = "Estimated parameter (days/standardized units)", main = NA) +
+#   theme(legend.title = element_blank(), legend.text = element_text(size =25), legend.position = "top") +  annotate("text", x = 18, y = 60, label = "b)      Western transect", cex =8) +
+#   annotate("text", x = spTopW[1,5], y = -1, label = spTopW[1,2], cex = 5, angle = 78) +
+#   annotate("text", x = spTopW[2,5], y = -1, label = spTopW[2,2], cex = 5, angle = 78) +
+#   annotate("text", x = spTopW[3,5], y = -1, label = spTopW[3,2], cex = 5, angle = 78) +
+#   annotate("text", x = spTopW[4,5], y = -1, label = spTopW[4,2], cex = 5, angle = 78) +
+#   annotate("text", x = spTopW[5,5], y = -1, label = spTopW[5,2], cex = 5, angle = 78) +
+#   scale_color_manual(values = c("cyan4", "firebrick4"))
 
-dotWBw <- ggplot(meanPtW) +
-  geom_point(aes(y= Budburst, x = Budburst, shape = "Budburst"), size = 5) +
-  geom_point(aes(y= Buddy, x = Budburst, shape = "Buddy"), size = 5) +
-  geom_point(aes(y= Intercept, x = Budburst, shape = "Intercept"), size = 5) +
-  geom_segment(aes(x = Budburst, y = Intercept, xend = Budburst, yend = Budburst), data = meanPtW, col = "black") +
-  geom_segment(aes(x = Budburst, y = Intercept, xend = Budburst, yend = Buddy), data = meanPtW, col = "black") +
-  theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
-        panel.background = element_blank(), axis.line = element_line(colour = "black"),
-        legend.key=element_rect(fill="white")) + ylim(-1.5,65) +
-  theme(axis.text.x = element_text( size=15,angle = 78,  hjust=1),
-        axis.text.y=element_text(size = 15),
-        axis.title=element_text(size=20), legend.position = "none") + 
-  scale_x_continuous( breaks = spMiniW$meanBB, labels = spMiniW$species,limits = c(15,70)) +
-  labs( x = "Species ordered by predicted budburst date under low cues", y = "Day of budburst (days/standardized units)", main = NA) +
-  theme(legend.position = "none") +  annotate("text", x = 21.5, y = 60, label = "b     Western transect", cex =8) +
-  annotate("text", x = spTopW[1,5], y = -1, label = spTopW[1,2], cex = 5, angle = 78) +
-  annotate("text", x = spTopW[2,5], y = -1, label = spTopW[2,2], cex = 5, angle = 78) +
-  annotate("text", x = spTopW[3,5], y = -1, label = spTopW[3,2], cex = 5, angle = 78) +
-  annotate("text", x = spTopW[4,5], y = -1, label = spTopW[4,2], cex = 5, angle = 78) +
-  annotate("text", x = spTopW[5,5], y = -1, label = spTopW[5,2], cex = 5, angle = 78) +
-  annotate("text", x = 29, y = -1, label = spTopW[6,2], cex = 5, angle = 78) +
-  scale_shape_manual(values = c(1,2,16)) +
-  annotate("text", x = 68, y = 62.5, label = "Low cues", cex = 7) +  
-  annotate("text", x = 68, y = 46.5, label = "Intercept", cex = 7) +
-  annotate("text", x = 68, y = 29.5, label = "High cues", cex = 7) + 
-  geom_segment(aes(x = 63, y = 62.5, xend = 64.5 , yend = 62.5)) +
-  geom_segment(aes(x = 63, y = 46.5, xend = 64.5 , yend = 46.5)) +
-  geom_segment(aes(x = 63, y = 29.5, xend = 64.5 , yend = 29.5))
+# dotWBw <- ggplot(meanPtW) +
+#   geom_point(aes(y= Budburst, x = Budburst, shape = "Budburst"), size = 5) +
+#   geom_point(aes(y= Buddy, x = Budburst, shape = "Buddy"), size = 5) +
+#   geom_point(aes(y= Intercept, x = Budburst, shape = "Intercept"), size = 5) +
+#   geom_segment(aes(x = Budburst, y = Intercept, xend = Budburst, yend = Budburst), data = meanPtW, col = "black") +
+#   geom_segment(aes(x = Budburst, y = Intercept, xend = Budburst, yend = Buddy), data = meanPtW, col = "black") +
+#   theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
+#         panel.background = element_blank(), axis.line = element_line(colour = "black"),
+#         legend.key=element_rect(fill="white")) + ylim(-1.5,65) +
+#   theme(axis.text.x = element_text( size=15,angle = 78,  hjust=1),
+#         axis.text.y=element_text(size = 15),
+#         axis.title=element_text(size=20), legend.position = "none") + 
+#   scale_x_continuous( breaks = spMiniW$meanBB, labels = spMiniW$species,limits = c(15,70)) +
+#   labs( x = "Species ordered by predicted budburst date under low cues", y = "Day of budburst (days/standardized units)", main = NA) +
+#   theme(legend.position = "none") +  annotate("text", x = 21.5, y = 60, label = "b     Western transect", cex =8) +
+#   annotate("text", x = spTopW[1,5], y = -1, label = spTopW[1,2], cex = 5, angle = 78) +
+#   annotate("text", x = spTopW[2,5], y = -1, label = spTopW[2,2], cex = 5, angle = 78) +
+#   annotate("text", x = spTopW[3,5], y = -1, label = spTopW[3,2], cex = 5, angle = 78) +
+#   annotate("text", x = spTopW[4,5], y = -1, label = spTopW[4,2], cex = 5, angle = 78) +
+#   annotate("text", x = spTopW[5,5], y = -1, label = spTopW[5,2], cex = 5, angle = 78) +
+#   annotate("text", x = 29, y = -1, label = spTopW[6,2], cex = 5, angle = 78) +
+#   scale_shape_manual(values = c(1,2,16)) +
+#   annotate("text", x = 68, y = 62.5, label = "Low cues", cex = 7) +  
+#   annotate("text", x = 68, y = 46.5, label = "Intercept", cex = 7) +
+#   annotate("text", x = 68, y = 29.5, label = "High cues", cex = 7) + 
+#   geom_segment(aes(x = 63, y = 62.5, xend = 64.5 , yend = 62.5)) +
+#   geom_segment(aes(x = 63, y = 46.5, xend = 64.5 , yend = 46.5)) +
+#   geom_segment(aes(x = 63, y = 29.5, xend = 64.5 , yend = 29.5))
 
 # +  annotate("text", x = 62, y = 39, label = "Intercept", cex = 3) +
 #   geom_segment(aes(x = 62, y = 60, xend = 59 , yend = 60)) +
@@ -318,82 +318,82 @@ dotWBw
 meanPtE <- aggregate(dataEast[c("meanBB", "meanBBHigh","Int")], dataEast[c("species.name","type","transect")], FUN = mean)
 names(meanPtE) <- c("species.name","type","transect","Budburst", "Buddy","Intercept")
 
-dotE <- ggplot(meanPtE) +
-  geom_point(aes(y= Budburst, x = Budburst, colour = "Budburst"), size = 5) +
-  geom_point(aes(y= Intercept, x = Budburst, colour = "Intercept"), size = 5) +
-  geom_segment(aes(x = Budburst, y = Intercept, xend = Budburst, yend = Budburst), data = meanPtE, col = "black") +
-  theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
-        panel.background = element_blank(), axis.line = element_line(colour = "black"),
-        legend.key=element_rect(fill="white")) +
-  ylim(-1.5,65) + theme(axis.text.x = element_text( size=15, angle = 78,  hjust=1),
-        axis.text.y=element_text(size = 15),
-        axis.title=element_text(size=20)) +
-  scale_x_continuous( breaks = spMiniE$meanBB, labels = spMiniE$species,limits = c(24,64)) +
-  labs( x = "Species ordered by predicted budburst date under low cues", y = "Estimated parameter (days/standardized units)", main = NA) +
-  theme(legend.title = element_blank(), legend.text = element_text(size =25), legend.position = "top") +  annotate("text", x = 29, y = 60, label = "a      Eastern transect", cex =8) +
-  annotate("text", x = spTopE[1,5], y = -1, label = spTopE[1,2], cex = 5, angle = 78) +
-  annotate("text", x = spTopE[2,5], y = -1, label = spTopE[2,2], cex = 5, angle = 78) +
-  annotate("text", x = spTopE[3,5], y = -1, label = spTopE[3,2], cex = 5, angle = 78) +
-  annotate("text", x = spTopE[4,5], y = -1, label = spTopE[4,2], cex = 5, angle = 78) +
- # annotate("text", x = 38, y = 0, label = spTopE[4,2], cex = 5, angle = 78) +
-  annotate("text", x = spTopE[5,5], y = -1, label = spTopE[5,2], cex = 5, angle = 78) +
-  annotate("text", x = spTopE[6,5], y = -1, label = spTopE[6,2], cex = 5, angle = 78) +
-  annotate("text", x = spTopE[7,5], y = -1, label = spTopE[7,2], cex = 5, angle = 78) +
-  annotate("text", x = spTopE[8,5], y = -1, label = spTopE[8,2], cex = 5, angle = 78) +
-  scale_color_manual(values = c("forestgreen","orange3"))
+# dotE <- ggplot(meanPtE) +
+#   geom_point(aes(y= Budburst, x = Budburst, colour = "Budburst"), size = 5) +
+#   geom_point(aes(y= Intercept, x = Budburst, colour = "Intercept"), size = 5) +
+#   geom_segment(aes(x = Budburst, y = Intercept, xend = Budburst, yend = Budburst), data = meanPtE, col = "black") +
+#   theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
+#         panel.background = element_blank(), axis.line = element_line(colour = "black"),
+#         legend.key=element_rect(fill="white")) +
+#   ylim(-1.5,65) + theme(axis.text.x = element_text( size=15, angle = 78,  hjust=1),
+#         axis.text.y=element_text(size = 15),
+#         axis.title=element_text(size=20)) +
+#   scale_x_continuous( breaks = spMiniE$meanBB, labels = spMiniE$species,limits = c(24,64)) +
+#   labs( x = "Species ordered by predicted budburst date under low cues", y = "Estimated parameter (days/standardized units)", main = NA) +
+#   theme(legend.title = element_blank(), legend.text = element_text(size =25), legend.position = "top") +  annotate("text", x = 29, y = 60, label = "a      Eastern transect", cex =8) +
+#   annotate("text", x = spTopE[1,5], y = -1, label = spTopE[1,2], cex = 5, angle = 78) +
+#   annotate("text", x = spTopE[2,5], y = -1, label = spTopE[2,2], cex = 5, angle = 78) +
+#   annotate("text", x = spTopE[3,5], y = -1, label = spTopE[3,2], cex = 5, angle = 78) +
+#   annotate("text", x = spTopE[4,5], y = -1, label = spTopE[4,2], cex = 5, angle = 78) +
+#  # annotate("text", x = 38, y = 0, label = spTopE[4,2], cex = 5, angle = 78) +
+#   annotate("text", x = spTopE[5,5], y = -1, label = spTopE[5,2], cex = 5, angle = 78) +
+#   annotate("text", x = spTopE[6,5], y = -1, label = spTopE[6,2], cex = 5, angle = 78) +
+#   annotate("text", x = spTopE[7,5], y = -1, label = spTopE[7,2], cex = 5, angle = 78) +
+#   annotate("text", x = spTopE[8,5], y = -1, label = spTopE[8,2], cex = 5, angle = 78) +
+#   scale_color_manual(values = c("forestgreen","orange3"))
 
 
-dotEBw <- ggplot(meanPtE) +
-  geom_point(aes(y= Budburst, x = Budburst, shape = "Budburst"), size = 5) +
-  geom_point(aes(y= Buddy, x = Budburst, shape = "Buddy"), size = 5) +
-  geom_point(aes(y= Intercept, x = Budburst, shape = "Intercept"), size = 5) +
-  geom_segment(aes(x = Budburst, y = Intercept, xend = Budburst, yend = Budburst), data = meanPtE, col = "black") +
-  geom_segment(aes(x = Budburst, y = Intercept, xend = Budburst, yend = Buddy), data = meanPtE, col = "black") +
-  theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
-        panel.background = element_blank(), axis.line = element_line(colour = "black"),
-        legend.key=element_rect(fill="white")) +
-  ylim(-1.5,65) + theme(axis.text.x = element_text( size=15, angle = 78,  hjust=1),
-                        axis.text.y=element_text(size = 15),
-                        axis.title=element_text(size=20)) +
-  scale_x_continuous( breaks = spMiniE$meanBB, labels = spMiniE$species,limits = c(24,70)) +
-  labs( x = "", y = "Day of budburst (days/standardized units)", main = NA) +
-  theme(legend.position = "none") +  #annotate("text", x = 29, y = 60, label = "Eastern transect", cex =8) 
-  annotate("text", x = 29, y = 60, label = "a      Eastern transect", cex =8) +
-  annotate("text", x = spTopE[1,5], y = -1, label = spTopE[1,2], cex = 5, angle = 78) +
-  annotate("text", x = spTopE[2,5], y = -0.75, label = spTopE[2,2], cex = 5, angle = 78) +
-  annotate("text", x = spTopE[3,5], y = -1, label = spTopE[3,2], cex = 5, angle = 78) +
-  annotate("text", x = spTopE[4,5], y = -1, label = spTopE[4,2], cex = 5, angle = 78) +
-  # annotate("text", x = 38, y = 0, label = spTopE[4,2], cex = 5, angle = 78) +
-  annotate("text", x = spTopE[5,5], y = -1, label = spTopE[5,2], cex = 5, angle = 78) +
-  annotate("text", x = spTopE[6,5], y = -1, label = spTopE[6,2], cex = 5, angle = 78) +
-  annotate("text", x = spTopE[7,5], y = -1, label = spTopE[7,2], cex = 5, angle = 78) +
-  annotate("text", x = spTopE[8,5], y = -0.65, label = spTopE[8,2], cex = 5, angle = 78) +
-  annotate("text", x = spTopE[9,5], y = -1, label = spTopE[9,2], cex = 5, angle = 78) +
+# dotEBw <- ggplot(meanPtE) +
+  # geom_point(aes(y= Budburst, x = Budburst, shape = "Budburst"), size = 5) +
+  # geom_point(aes(y= Buddy, x = Budburst, shape = "Buddy"), size = 5) +
+  # geom_point(aes(y= Intercept, x = Budburst, shape = "Intercept"), size = 5) +
+  # geom_segment(aes(x = Budburst, y = Intercept, xend = Budburst, yend = Budburst), data = meanPtE, col = "black") +
+  # geom_segment(aes(x = Budburst, y = Intercept, xend = Budburst, yend = Buddy), data = meanPtE, col = "black") +
+  # theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
+  #       panel.background = element_blank(), axis.line = element_line(colour = "black"),
+  #       legend.key=element_rect(fill="white")) +
+  # ylim(-1.5,65) + theme(axis.text.x = element_text( size=15, angle = 78,  hjust=1),
+  #                       axis.text.y=element_text(size = 15),
+  #                       axis.title=element_text(size=20)) +
+  # scale_x_continuous( breaks = spMiniE$meanBB, labels = spMiniE$species,limits = c(24,70)) +
+  # labs( x = "", y = "Day of budburst (days/standardized units)", main = NA) +
+  # theme(legend.position = "none") +  #annotate("text", x = 29, y = 60, label = "Eastern transect", cex =8) 
+  # annotate("text", x = 29, y = 60, label = "a      Eastern transect", cex =8) +
+  # annotate("text", x = spTopE[1,5], y = -1, label = spTopE[1,2], cex = 5, angle = 78) +
+  # annotate("text", x = spTopE[2,5], y = -0.75, label = spTopE[2,2], cex = 5, angle = 78) +
+  # annotate("text", x = spTopE[3,5], y = -1, label = spTopE[3,2], cex = 5, angle = 78) +
+  # annotate("text", x = spTopE[4,5], y = -1, label = spTopE[4,2], cex = 5, angle = 78) +
+  # # annotate("text", x = 38, y = 0, label = spTopE[4,2], cex = 5, angle = 78) +
+  # annotate("text", x = spTopE[5,5], y = -1, label = spTopE[5,2], cex = 5, angle = 78) +
+  # annotate("text", x = spTopE[6,5], y = -1, label = spTopE[6,2], cex = 5, angle = 78) +
+  # annotate("text", x = spTopE[7,5], y = -1, label = spTopE[7,2], cex = 5, angle = 78) +
+  # annotate("text", x = spTopE[8,5], y = -0.65, label = spTopE[8,2], cex = 5, angle = 78) +
+  # annotate("text", x = spTopE[9,5], y = -1, label = spTopE[9,2], cex = 5, angle = 78) +
 
-  scale_shape_manual(values = c(1,2,16)) +       
-  annotate("text", x = 69, y = 65, label = "Low cues", cex = 7) +  
-  annotate("text", x = 69, y = 50, label = "Intercept", cex = 7) +
-  annotate("text", x = 69, y = 35, label = "High cues", cex = 7) + 
-  geom_segment(aes(x = 65, y = 65, xend = 66 , yend = 65)) +
-  geom_segment(aes(x = 65, y = 50, xend = 66.5 , yend = 50)) +
-  geom_segment(aes(x = 65, y = 35, xend = 66 , yend = 35))
-dotEBw
-
-
-# pdf("figures/dotBetaAlphaLongColor.pdf", width = 12, height = 16)
-# plot_grid(dotE, dotW, nrow = 2, ncol = 1, align = "v")
+#   scale_shape_manual(values = c(1,2,16)) +       
+#   annotate("text", x = 69, y = 65, label = "Low cues", cex = 7) +  
+#   annotate("text", x = 69, y = 50, label = "Intercept", cex = 7) +
+#   annotate("text", x = 69, y = 35, label = "High cues", cex = 7) + 
+#   geom_segment(aes(x = 65, y = 65, xend = 66 , yend = 65)) +
+#   geom_segment(aes(x = 65, y = 50, xend = 66.5 , yend = 50)) +
+#   geom_segment(aes(x = 65, y = 35, xend = 66 , yend = 35))
+# dotEBw
+# 
+# 
+# # pdf("figures/dotBetaAlphaLongColor.pdf", width = 12, height = 16)
+# # plot_grid(dotE, dotW, nrow = 2, ncol = 1, align = "v")
+# # dev.off()
+# pdf("figures/dotBetaAlphaLongBW_LHa.pdf", width = 12, height = 8)
+# dotEBw
 # dev.off()
-pdf("figures/dotBetaAlphaLongBW_LHa.pdf", width = 12, height = 8)
-dotEBw
-dev.off()
-
-pdf("figures/dotBetaAlphaLongBW_LHb.pdf", width = 12, height = 8)
-dotWBw
-dev.off()
-
-pdf("figures/dotBetaAlphaLongBW_LH_astrix.pdf", width = 12, height = 16)
-plot_grid(dotEBw, dotWBw, nrow = 2, ncol = 1, align = "v")
-dev.off()
+# 
+# pdf("figures/dotBetaAlphaLongBW_LHb.pdf", width = 12, height = 8)
+# dotWBw
+# dev.off()
+# 
+# pdf("figures/dotBetaAlphaLongBW_LH_astrix.pdf", width = 12, height = 16)
+# plot_grid(dotEBw, dotWBw, nrow = 2, ncol = 1, align = "v")
+# dev.off()
 #############################################
 # old plots
 ####### Old plot not spaced out ####################3
@@ -431,15 +431,15 @@ chilldotW <- ggplot(chillPtW, aes(y= chill, x = meanBB, color = transect), size 
   annotate("text", x = spTopW[5,5], y = -37, label = spTopW[5,2], cex = 6, angle = 78) +
   annotate("text", x = 29, y = -37, label = spTopW[6,2], cex = 6, angle = 78) +
   scale_fill_manual(values = c("darkred","#cc6a70ff","#cc6a70ff")) + 
-  scale_color_manual(values = c("darkred","#cc6a70ff","#cc6a70ff"))# + 
-  # geom_segment(aes(x = 15, y = 5, xend = 15 , yend = -2),
-  # arrow = arrow(length = unit(0.5, "cm")), col = "black") +
-  # annotate("text", x = 15, y = -3, label = "Earlier", cex =5) 
+  scale_color_manual(values = c("darkred","#cc6a70ff","#cc6a70ff")) + 
+  geom_segment(aes(x = 15, y = -10, xend = 15 , yend = -17),
+               arrow = arrow(length = unit(0.5, "cm")), col = "black", lwd =2) +
+  annotate("text", x = 15, y = -20, label = "Earlier", cex = 6) 
 chilldotW
 
-pdf("figures/dotCFPEWSizeColorUnitsShapeb.pdf", width = 10, height = 7)
-chilldotW
-dev.off()
+# pdf("figures/dotCFPEWSizeColorUnitsShapeb.pdf", width = 10, height = 7)
+# chilldotW
+# dev.off()
 
 forcedotW <- ggplot(chillPtW,aes(y= force, x = meanBB, color = transect), size = 7) +
   geom_point(size = 7, shape = 15) +
@@ -470,9 +470,9 @@ forcedotW <- ggplot(chillPtW,aes(y= force, x = meanBB, color = transect), size =
   # annotate("text", x = 15, y = 0, label = "Earlier", cex =5) 
 forcedotW
 
-pdf("figures/dotCFPEWSizeColorUnitsShaped.pdf", width = 10, height = 7)
-forcedotW
-dev.off()
+# pdf("figures/dotCFPEWSizeColorUnitsShaped.pdf", width = 10, height = 7)
+# forcedotW
+# dev.off()
 
 photodotW <- ggplot(chillPtW,aes(y= photo, x = meanBB, color = transect), size = 7) +
   geom_point(size = 7, shape =15) +
@@ -502,9 +502,9 @@ photodotW <- ggplot(chillPtW,aes(y= photo, x = meanBB, color = transect), size =
   # annotate("text", x = 15, y = -1, label = "Earlier", cex =5) 
 photodotW
 
-pdf("figures/dotCFPEWSizeColorUnitsShapef.pdf", width = 10, height = 7)
-photodotW
-dev.off()
+# pdf("figures/dotCFPEWSizeColorUnitsShapef.pdf", width = 10, height = 7)
+# photodotW
+# dev.off()
 
 chillPtE <- aggregate(dataEast[c("meanBB", "Int","chill","force","photo","chill5","chill95","chill25","chill75","force5","force95","force25","force75","photo5","photo95","photo25","photo75")], dataEast[c("species.name","type","transect")], FUN = mean)
 # names(chillPtE) <- c("species.name","type","transect","Budburst","Intercept","Chilling","Forcing","Photoperiod","chill5","chill95","chill25","chill75","force5","force95","force25","force75","photo5","photo95","photo25","photo75")
@@ -540,9 +540,9 @@ chilldotE <- ggplot(chillPtE,aes(y= chill, x = meanBB, color = transect), size =
   annotate("text", x = 23, y = -20, label = "Earlier", cex = 6) 
 chilldotE
 
-pdf("figures/dotCFPEWSizeColorUnitsShapea.pdf", width = 10, height = 7)
-chilldotE
-dev.off()
+# pdf("figures/dotCFPEWSizeColorUnitsShapea.pdf", width = 10, height = 7)
+# chilldotE
+# dev.off()
 
 forcedotE <- ggplot(chillPtE,aes(y= force, x = meanBB, colour = transect), size = 7) +
   geom_point(size = 7, shape  = 17) +
@@ -574,9 +574,9 @@ forcedotE <- ggplot(chillPtE,aes(y= force, x = meanBB, colour = transect), size 
   # annotate("text", x = 23, y = 0, label = "Earlier", cex =5) 
 forcedotE
 
-pdf("figures/dotCFPEWSizeColorUnitsShapec.pdf", width = 10, height = 7)
-forcedotE
-dev.off()
+# pdf("figures/dotCFPEWSizeColorUnitsShapec.pdf", width = 10, height = 7)
+# forcedotE
+# dev.off()
 
 photodotE <- ggplot(chillPtE,aes(y= photo, x = meanBB, colour = transect), size = 7) +
   geom_point(size = 7, shape  = 17) +
@@ -608,11 +608,11 @@ theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
   # annotate("text", x = 23, y = -1, label = "Earlier", cex =5) 
 photodotE
 
-pdf("figures/dotCFPEWSizeColorUnitsShapee.pdf", width = 10, height = 7)
-photodotE
-dev.off()
+# pdf("figures/dotCFPEWSizeColorUnitsShapee.pdf", width = 10, height = 7)
+# photodotE
+# dev.off()
 
-pdf("figures/dotCFPEWSizeColorUnitsShape_astrix.pdf", width = 20, height = 20)
+pdf("figures/dotCFPEWSizeColorUnitsShapeAug20.pdf", width = 20, height = 20)
 plot_grid(chilldotE, chilldotW, forcedotE, forcedotW, photodotE, photodotW, nrow = 3, ncol = 2, align = "v")
 dev.off()
 
@@ -713,71 +713,73 @@ par(mfrow = c(2,3), mar = c(5.1, 4.8, 4.1, 2.1))
 colTran <- c("maroon","goldenrod")
 #par(mfrow = c(1,1), mar = c(5.1, 4.8, 4.1, 2.1))
 plot(rankE$rankHighC~rankE$rankInt, 
-  col = colTran[factor(rankE$transect)], 
-  pch = 19,
-  xlab = "Intercept rank",
-  ylab = "High cue rank",
-  main = "",
-  cex.lab =1.5,
-  xlim = c(0,30),
-  ylim = c(0,30),
-  cex = 2, cex.lab = 2, cex.axis = 2,
-  axes = F)
+     col = colTran[factor(rankE$transect)], 
+     pch = 19,
+     xlab = "Intercept rank",
+     ylab = "High cue rank",
+     main = "",
+     cex.lab =2,
+     xlim = c(0,30),
+     ylim = c(0,30),
+   
+     cex = 2, cex.axis = 2, cex.main = 2,
+     axes = F)
 abline(0,1)
-axis(side=1, at=seq(-5,30,5), cex.axis = 1.75)
-axis(side=2,at=seq(-5,30,5), cex.axis = 1.75)
+axis(side=1, at=seq(-5,30,5), cex.axis = 2.5)
+axis(side=2,at=seq(-5,30,5), cex.axis = 2.5)
 title("Eastern Sites", adj = 0, cex.main = 2)
-text(0.8,29, label = "(a)", cex = 1.5,cex.main = 2,)
-text(26,18, label = expression(italic("Populus")), cex = 1.25)
-text(7,14, label = expression(italic("Betula")), cex = 1.25)
-text(10,5, label = expression(italic("Alnus")), cex = 1.25)
+text(0.8,29, label = "a", cex = 2.5,cex.main = 2,)
+text(26,18, label = expression(italic("Populus")), cex = 2)
+text(7,14, label = expression(italic("Betula")), cex = 2)
+text(10,5, label = expression(italic("Alnus")), cex = 2)
 #text(10,30, label = "Eastern Communities", cex = 1.75)
 legend("topleft",legend = c( expression("Eastern"),
-  expression("Both")),
-  col = c("maroon","goldenrod"),
-  #pt.bg = c("#042333ff","#cc6a70ff","#593d9cff","#f9b641ff","#13306dff","#efe350ff","#eb8055ff"),
-  pt.bg = c( "maroon","goldenrod"),
-  inset = 0.05, pch = c(21, 21), cex = 1.5, bty = "n")
+                             expression("Both")),
+       col = c("maroon","goldenrod"),
+       #pt.bg = c("#042333ff","#cc6a70ff","#593d9cff","#f9b641ff","#13306dff","#efe350ff","#eb8055ff"),
+       pt.bg = c( "maroon","goldenrod"),
+       inset = 0.05, pch = c(21, 21), cex = 2, bty = "n")
 #dev.off()
 
 #pdf("figures/rankstiBBTransectb.pdf", width = 6, height = 6)
 #par( mar = c(5.1, 4.8, 4.1, 2.1))
 plot(rankE$rankLowC~rankE$rankInt, 
-  col = colTran[factor(rankE$transect)], 
-  pch = 19,
-  xlab = "Intercept rank",
-  ylab = "Low cue rank",
-  cex.lab =1.5,
-  xlim = c(0,30),
-  ylim = c(0,30),
-  cex = 2, cex.lab = 2, cex.axis = 2,axes = F)
+     col = colTran[factor(rankE$transect)], 
+     pch = 19,
+     xlab = "Intercept rank",
+     ylab = "Low cue rank",
+     cex.lab =2.5,
+     xlim = c(0,30),
+     ylim = c(0,30),
+     cex = 2, cex.lab = 2, cex.axis = 2,axes = F)
 abline(0,1)
-axis(side=1, at=seq(-5,30,5), cex.axis = 1.75)
-axis(side=2,at=seq(-5,30,5), cex.axis = 1.75)
-text(0.8,29, label = "(b)", cex = 1.5)
-text(26,19, label = expression(italic("Populus")), cex = 1.25)
-text(7,13.5, label = expression(italic("Betula")), cex = 1.25)
-text(10,5.5, label = expression(italic("Alnus")), cex = 1.25)
+axis(side=1, at=seq(-5,30,5), cex.axis = 2.5)
+axis(side=2,at=seq(-5,30,5), cex.axis = 2.5)
+text(0.8,29, label = "b", cex = 2.5)
+text(26,19, label = expression(italic("Populus")), cex = 2)
+text(7,13.5, label = expression(italic("Betula")), cex = 2)
+text(10,5, label = expression(italic("Alnus")), cex = 2)
 #dev.off()
 
 #pdf("figures/rankstiBBTransectc.pdf", width = 6, height = 6)
 #par( mar = c(5.1, 4.8, 4.1, 2.1))
 plot(rankE$rankHighC~rankE$rankLowC, 
-  col = colTran[factor(rankE$transect)], 
-  pch = 19,
-  xlim = c(0,30),
-  ylim = c(0,30),
-  xlab = "Low cue rank",
-  ylab = "High cue rank",
-  cex.lab =1.5,
-  cex = 2, cex.lab = 2, cex.axis = 2, axes = F)
+     col = colTran[factor(rankE$transect)], 
+     pch = 19,
+     xlim = c(0,30),
+     ylim = c(0,30),
+     xlab = "Low cue rank",
+     ylab = "High cue rank",
+     cex.lab =2.5,
+     cex = 2, cex.lab = 2, cex.axis = 2, axes = F)
 abline(0,1)
-axis(side=1, at=seq(-5,30,5), cex.axis = 1.75)
-axis(side=2,at=seq(-5,30,5), cex.axis = 1.75)
-text(0.8,29, label = "(c)", cex = 1.5)
-text(26,18, label = expression(italic("Populus")), cex = 1.25)
-text(7,14, label = expression(italic("Betula")), cex = 1.25)
-text(10,5, label = expression(italic("Alnus")), cex = 1.25)
+axis(side=1, at=seq(-5,30,5), cex.axis = 2.5)
+axis(side=2,at=seq(-5,30,5), cex.axis = 2.5)
+text(0.8,29, label = "c", cex = 2.5)
+text(26,18, label = expression(italic("Populus")), cex = 2)
+text(7,14, label = expression(italic("Betula")), cex = 2)
+text(10,5, label = expression(italic("Alnus")), cex = 2)
+
 
 # legend("topleft",legend = c( expression("Eastern"),
 #   expression("Both")),
@@ -804,31 +806,31 @@ colTran <- c("goldenrod", "cyan4")
 #pdf("figures/rankstiBBTransectd.pdf", width = 6, height = 6)
 #par( mar = c(5.1, 4.8, 4.1, 2.1))
 plot(rankW$rankHighC~rankW$rankInt, 
-  col = colTran[factor(rankW$transect)], 
-  pch = 19,
-  xlab = "Intercept rank",
-  ylab = "High cue rank",
-  main = "",
-  cex.lab =2,
-  cex = 2, cex.axis = 2, cex.main = 2,
-  xlim = c(0,30),
-  ylim = c(0,30),axes = F)
+     col = colTran[factor(rankW$transect)], 
+     pch = 19,
+     xlab = "Intercept rank",
+     ylab = "High cue rank",
+     main = "",
+     cex.lab =2,
+     cex = 2, cex.axis = 2, cex.main = 2,
+     xlim = c(0,30),
+     ylim = c(0,30),axes = F)
 abline(0,1)
-axis(side=1, at=seq(-5,30,5), cex.axis = 1.75)
-axis(side=2,at=seq(-5,30,5), cex.axis = 1.75)
+axis(side=1, at=seq(-5,30,5), cex.axis = 2.5)
+axis(side=2,at=seq(-5,30,5), cex.axis = 2.5)
 title("Western Sites", adj = 0, cex.main = 2)
-text(0.8,29, label = "(d)", cex = 1.5)
-text(24,17.5, label = expression(italic("Populus")), cex = 1.25)
-text(12.2,20, label = expression(italic("Betula")), cex = 1.25)
-text(16.3,11.5, label = expression(italic("Alnus")), cex = 1.25)
+text(0.8,29, label = "d", cex = 2.5)
+text(24,17.5, label = expression(italic("Populus")), cex = 2)
+text(12.2,20, label = expression(italic("Betula")), cex = 2)
+text(16.3,10, label = expression(italic("Alnus")), cex = 2)
 #text(10,30, label = "Western Communities", cex = 1.75)
 
 legend("topleft",legend = c( expression("Western"),
-  expression("Both")),
-  col = c("cyan4","goldenrod"),
-  #pt.bg = c("#042333ff","#cc6a70ff","#593d9cff","#f9b641ff","#13306dff","#efe350ff","#eb8055ff"),
-  pt.bg = c( "cyan4","goldenrod"),
-  inset = 0.05, pch = c(21, 21), cex = 1.5, bty = "n")
+                             expression("Both")),
+       col = c("cyan4","goldenrod"),
+       #pt.bg = c("#042333ff","#cc6a70ff","#593d9cff","#f9b641ff","#13306dff","#efe350ff","#eb8055ff"),
+       pt.bg = c( "cyan4","goldenrod"),
+       inset = 0.05, pch = c(21, 21), cex = 2, bty = "n")
 
 
 #dev.off()
@@ -836,40 +838,270 @@ legend("topleft",legend = c( expression("Western"),
 #pdf("figures/rankstiBBTransecte.pdf", width = 6, height = 6)
 #par( mar = c(5.1, 4.8, 4.1, 2.1))
 plot(rankW$rankLowC~rankW$rankInt, 
-  col = colTran[factor(rankW$transect)], 
-  pch = 19,
-  xlab = "Intercept rank",
-  ylab = "Low cue rank",
-  cex.lab =1.5,
-  cex = 2, cex.lab = 2, cex.axis = 2,
-  xlim = c(0,30),
-  ylim = c(0,30),axes = F)
+     col = colTran[factor(rankW$transect)], 
+     pch = 19,
+     xlab = "Intercept rank",
+     ylab = "Low cue rank",
+     cex.lab =2.5,
+     cex = 2, cex.lab = 2, cex.axis = 2,
+     xlim = c(0,30),
+     ylim = c(0,30),axes = F)
 abline(0,1)
-axis(side=1, at=seq(-5,30,5), cex.axis = 1.75)
-axis(side=2,at=seq(-5,30,5), cex.axis = 1.75)
-text(0.8,29, label = "(e)", cex = 1.5)
-text(24,17.5, label = expression(italic("Populus")), cex = 1.25)
-text(19,11.5, label = expression(italic("Betula")), cex = 1.25)
-text(15,9, label = expression(italic("Alnus")), cex = 1.25)
+axis(side=1, at=seq(-5,30,5), cex.axis = 2.5)
+axis(side=2,at=seq(-5,30,5), cex.axis = 2.5)
+text(0.8,29, label = "e", cex = 2.5)
+text(24,17.5, label = expression(italic("Populus")), cex = 2)
+text(19,11.5, label = expression(italic("Betula")), cex = 2)
+text(15,9, label = expression(italic("Alnus")), cex = 2)
 #dev.off()
 
 #pdf("figures/rankstiBBTransectf.pdf", width = 6, height = 6)
 #par( mar = c(5.1, 4.8, 4.1, 2.1))
 plot(rankW$rankHighC~rankW$rankLowC, 
-  col = colTran[factor(rankW$transect)], 
-  pch = 19,
-  xlab = "Low cue rank",
-  ylab = "High cue rank",
-  cex.lab =1.5,
-  cex = 2, cex.lab = 2, cex.axis = 2,
-  xlim = c(0,30),
-  ylim = c(0,30),axes = F)
+     col = colTran[factor(rankW$transect)], 
+     pch = 19,
+     xlab = "Low cue rank",
+     ylab = "High cue rank",
+     cex.lab =2.5,
+     cex = 2, cex.lab = 2, cex.axis = 2,
+     xlim = c(0,30),
+     ylim = c(0,30),axes = F)
 abline(0,1)
-axis(side=1, at=seq(-5,30,5), cex.axis = 1.75)
-axis(side=2,at=seq(-5,30,5), cex.axis = 1.75)
-text(0.8,29, label = "(f)", cex = 1.5)
-text(24,17.5, label = expression(italic("Populus")), cex = 1.25)
-text(7,17.5, label = expression(italic("Betula")), cex = 1.25)
-text(10,13, label = expression(italic("Alnus")), cex = 1.25)
+axis(side=1, at=seq(-5,30,5), cex.axis = 2.5)
+axis(side=2,at=seq(-5,30,5), cex.axis = 2.5)
+text(0.8,29, label = "f", cex = 2.5)
+text(24,17.5, label = expression(italic("Populus")), cex = 2)
+text(7,17.5, label = expression(italic("Betula")), cex = 2)
+text(10,13, label = expression(italic("Alnus")), cex = 2)
+
 
 dev.off()
+
+###############################################
+overlapping <- c("aromel","prupen*","vacmyr","spialb","ilemuc", "vibcas","betpap*","betlen*","symalb",
+                 "acerub*","lyolig","rhopri","alnvir")
+spMini <- spInfo[!spInfo$species %in% overlapping,]
+spTop <- spInfo[spInfo$species %in% overlapping,]
+
+#########################################################
+###### Remake fig but with dots and bars ################
+overlappingW <- subset(west, type == "tree")$species
+spMiniW <- west[!west$species %in% overlappingW,]
+spTopW <- west[west$species %in% overlappingW,]
+
+chillPtW <- aggregate(dataWest[c("meanBB", "Int","chill","force","photo","chill5","chill95","chill25","chill75","force5","force95","force25","force75","photo5","photo95","photo25","photo75")], dataWest[c("species.name","type","transect")], FUN = mean)
+# names(chillPtW) <- c("species.name","type","transect","Budburst","Intercept","Int5", "Int95", "Int25", "Int75","chill5","chill95","chill25","chill75","force5","force95","force25","force75","photo5","photo95","photo25","photo75")
+
+
+chilldotW <- ggplot(chillPtW, aes(y= chill, x = meanBB, color = transect), size = 7) + geom_point(size =7, shape = 15) +
+  geom_errorbar(aes(ymin= chill5, ymax = chill95,xmin= meanBB, xmax = meanBB,color = transect), width= 0, size =0.5) +
+  geom_errorbar(aes(ymin= chill25, ymax = chill75,xmin= meanBB, xmax = meanBB,color = transect), width= 0, size =0.5) +
+  theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
+        panel.background = element_blank(), axis.line = element_line(colour = "black"), legend.position = "none") + ylim(-42,5) +
+  theme(axis.text.x = element_text( size = 24,angle = 78,  hjust=1),
+        axis.text.y=element_text(size = 20),
+        axis.title=element_text(size= 20),
+        legend.position = "none") + 
+  scale_x_continuous( breaks = spMiniW$meanBB, labels = spMiniW$species,limits = c(15,65)) +
+  labs( x = "", y = 
+          ""# "Days per standardized chill portion"
+        , main = NA) +
+  theme(legend.title = element_blank()) +  annotate("text", x = 15, y = 2, label = "b", cex =10) +
+  annotate("text", x = 38, y = 3, label = "Western transect", cex =10) +
+  annotate("text", x = spTopW[1,5], y = -37, label = spTopW[1,2], cex = 8.5, angle = 78) +
+  annotate("text", x = spTopW[2,5], y = -37, label = spTopW[2,2], cex = 8.5, angle = 78) +
+  annotate("text", x = spTopW[3,5], y = -37, label = spTopW[3,2], cex = 8.5, angle = 78) +
+  annotate("text", x = spTopW[4,5], y = -37, label = spTopW[4,2], cex = 8.5, angle = 78) +
+  annotate("text", x = spTopW[5,5], y = -37, label = spTopW[5,2], cex = 8.5, angle = 78) +
+  annotate("text", x = spTopW[6,5], y = -37, label = spTopW[6,2], cex = 8.5, angle = 78) +
+  annotate("text", x = 29, y = -37, label = spTopW[7,2], cex = 8.5, angle = 78) +
+  geom_segment(aes(x = 23, y = -10, xend = 23 , yend = -17),
+               arrow = arrow(length = unit(0.5, "cm")), col = "black", lwd =2) +
+  annotate("text", x = 23, y = -20, label = "Earlier", cex = 6) 
+chilldotW
+
+
+
+forcedotW <- ggplot(chillPtW,aes(y= force, x = meanBB, color = transect), size = 7) +
+  geom_point(size = 7, shape = 15) +
+  geom_errorbar(aes(ymin= force5, ymax = force95,xmin= meanBB, xmax = meanBB, color = transect), width= 0, size =0.5) +
+  geom_errorbar(aes(ymin= force25, ymax = force75,xmin= meanBB, xmax = meanBB, color = transect), width= 0, size =1.5) +
+  theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
+        panel.background = element_blank(), axis.line = element_line(colour = "black"), legend.position = "none") + ylim(-26,5) +
+  theme(axis.text.x = element_text( size = 24,angle = 78,  hjust=1),
+        axis.text.y=element_text(size = 20),
+        axis.title=element_text(size=20),
+        legend.position = "none") + 
+  scale_x_continuous( breaks = spMiniW$meanBB, labels = spMiniW$species,limits = c(15,65)) +
+  labs( x = "", 
+        y = ""# "Days per standardized forcing" )+ # expression("Forcing response (days/"*~degree*C*")")
+        , main = NA) +
+  theme(legend.title = element_blank()) +  annotate("text", x = 15, y = 2, label = "d", cex =10) +
+  # annotate("text", x = 38, y = 10, label = "Western transect", cex =5) +
+  annotate("text", x = spTopW[1,5], y = -23, label = spTopW[1,2], cex = 8.5, angle = 78) +
+  annotate("text", x = spTopW[2,5], y = -23, label = spTopW[2,2], cex = 8.5, angle = 78) +
+  annotate("text", x = spTopW[3,5], y = -23, label = spTopW[3,2], cex = 8.5, angle = 78) +
+  annotate("text", x = spTopW[4,5], y = -23, label = spTopW[4,2], cex = 8.5, angle = 78) +
+  annotate("text", x = spTopW[5,5], y = -23, label = spTopW[5,2], cex = 8.5, angle = 78) +
+  annotate("text", x = spTopW[6,5], y = -23, label = spTopW[6,2], cex = 8.5, angle = 78) +
+  annotate("text", x = 29, y = -23, label = spTopW[7,2], cex = 8.5, angle = 78) +
+  scale_fill_manual(values = c("tan4","#f9b641ff","#f9b641ff")) + 
+  scale_color_manual(values = c("tan4","#f9b641ff","#f9b641ff"))# + 
+# geom_segment(aes(x = 15, y = 5, xend = 15 , yend = 1),
+#   arrow = arrow(length = unit(0.5, "cm")), col = "black") #+
+# annotate("text", x = 15, y = 0, label = "Earlier", cex =5) 
+forcedotW
+
+
+
+photodotW <- ggplot(chillPtW,aes(y= photo, x = meanBB, color = transect), size = 7) +
+  geom_point(size = 7, shape =15) +
+  geom_errorbar(aes(ymin= photo5, ymax = photo95,xmin= meanBB, xmax = meanBB, color = transect), width= 0, size = 0.5) +
+  geom_errorbar(aes(ymin= photo25, ymax = photo75,xmin= meanBB, xmax = meanBB, color = transect), width= 0, size =1.5) +
+  theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
+        panel.background = element_blank(), axis.line = element_line(colour = "black"), legend.position = "none") + ylim(-10,1) +
+  theme(axis.text.x = element_text( size = 24,angle = 78,  hjust=1),
+        axis.text.y=element_text(size = 24),
+        axis.title=element_text(size= 24),
+        legend.position = "none") + 
+  scale_x_continuous( breaks = spMiniW$meanBB, labels = spMiniW$species,limits = c(15,65)) +
+  labs( x = "Species ordered by predicted budburst date", y = "",#"Days per standardized photoperiod",
+        main = NA) +
+  theme(legend.title = element_blank()) +  annotate("text", x = 15, y = 0, label = "f", cex =10) +
+  # annotate("text", x = 38, y = 10, label = "Western transect", cex =5) +
+  annotate("text", x = spTopW[1,5], y = -9, label = spTopW[1,2], cex = 8.5, angle = 78) +
+  annotate("text", x = spTopW[2,5], y = -9, label = spTopW[2,2], cex = 8.5, angle = 78) +
+  annotate("text", x = spTopW[3,5], y = -9, label = spTopW[3,2], cex = 8.5, angle = 78) +
+  annotate("text", x = spTopW[4,5], y = -9, label = spTopW[4,2], cex = 8.5, angle = 78) +
+  annotate("text", x = spTopW[5,5], y = -9, label = spTopW[5,2], cex = 8.5, angle = 78) +
+  annotate("text", x = spTopW[6,5], y = -9, label = spTopW[6,2], cex = 8.5, angle = 78) +
+  annotate("text", x = 29, y = -9.3, label = spTopW[7,2], cex = 8.5, angle = 78)+ 
+  scale_fill_manual(values = c("navy","cyan4", "cyan4")) + 
+  scale_color_manual(values = c("navy","cyan4", "cyan4")) #+ 
+# geom_segment(aes(x = 15, y = 0.5, xend =15 , yend = -0.7),
+#              arrow = arrow(length = unit(0.5, "cm")), col = "black") +
+# annotate("text", x = 15, y = -1, label = "Earlier", cex =5) 
+photodotW
+
+
+chillPtE <- aggregate(dataEast[c("meanBB", "Int","chill","force","photo","chill5","chill95","chill25","chill75","force5","force95","force25","force75","photo5","photo95","photo25","photo75")], dataEast[c("species.name","type","transect")], FUN = mean)
+# names(chillPtE) <- c("species.name","type","transect","Budburst","Intercept","Chilling","Forcing","Photoperiod","chill5","chill95","chill25","chill75","force5","force95","force25","force75","photo5","photo95","photo25","photo75")
+
+overlappingE <- subset(east, type == "tree")$species
+spMiniE <- east[!east$species %in% overlappingE,]
+spTopE <- east[east$species %in% overlappingE,]
+
+
+chilldotE <- ggplot(chillPtE,aes(y= chill, x = meanBB, color = transect), size = 7) +
+  geom_point(size = 7,  shape  = 17) +
+  geom_errorbar(aes(ymin= chill5, ymax = chill95,xmin= meanBB, xmax = meanBB, color = transect), width= 0, size = 0.5) + geom_errorbar(aes(ymin= chill25, ymax = chill75,xmin= meanBB, xmax = meanBB,color = transect), width= 0, size = 1.5) +
+  theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
+        panel.background = element_blank(), axis.line = element_line(colour = "black"), legend.position = "none") + ylim(-45,5) +
+  theme(axis.text.x = element_text( size = 24,angle = 78,  hjust=1),
+        axis.text.y=element_text(size = 20),
+        axis.title=element_text(size = 20),
+        legend.position = "none") + 
+  scale_x_continuous( breaks = spMiniE$meanBB, labels = spMiniE$species,limits = c(23,65)) +
+  labs( x = "", y = "Chill response (days/standardized unit)"#"Days per standardized chill portion"
+        , main = NA) +
+  theme(legend.title = element_blank()) +  annotate("text", x =23, y = 2, label = "a", cex =10) +
+  annotate("text", x = 45, y = 0, label = "Eastern transect", cex = 10) +
+  annotate("text", x = spTopE[1,5], y = -40, label = spTopE[1,2], cex = 8.5, angle = 78) +
+  annotate("text", x = spTopE[2,5], y = -40, label = spTopE[2,2], cex = 8.5, angle = 78) +
+  annotate("text", x = spTopE[3,5], y = -40, label = spTopE[3,2], cex = 8.5, angle = 78) +
+  annotate("text", x = spTopE[4,5], y = -40, label = spTopE[4,2], cex = 8.5, angle = 78) +
+  annotate("text", x = spTopE[5,5], y = -40, label = spTopE[5,2], cex = 8.5, angle = 78) +
+  annotate("text", x = spTopE[6,5], y = -40, label = spTopE[6,2], cex = 8.5, angle = 78) +
+  annotate("text", x = spTopE[7,5], y = -40, label = spTopE[7,2], cex = 8.5, angle = 78) +
+  annotate("text", x = spTopE[8,5], y = -40, label = spTopE[8,2], cex = 8.5, angle = 78) +
+  annotate("text", x = spTopE[9,5], y = -40, label = spTopE[9,2], cex = 8.5, angle = 78) +
+  annotate("text", x = spTopE[10,5], y = -40, label = spTopE[10,2], cex = 8.5, angle = 78) +
+  annotate("text", x = spTopE[11,5], y = -40, label = spTopE[11,2], cex = 8.5, angle = 78) +
+  annotate("text", x = spTopE[12,5], y = -40, label = spTopE[12,2], cex = 8.5, angle = 78) +
+  annotate("text", x = spTopE[13,5], y = -40, label = spTopE[13,2], cex = 8.5, angle = 78) +
+  annotate("text", x = spTopE[14,5], y = -40, label = spTopE[14,2], cex = 8.5, angle = 78) +
+  annotate("text", x = spTopE[15,5], y = -40, label = spTopE[15,2], cex = 8.5, angle = 78) +
+  scale_fill_manual(values = c("#cc6a70ff","darkred","#cc6a70ff")) + 
+  scale_color_manual(values = c("#cc6a70ff","darkred","#cc6a70ff")) + 
+  geom_segment(aes(x = 23, y = -10, xend = 23 , yend = -17),
+               arrow = arrow(length = unit(0.5, "cm")), col = "black", lwd =2) +
+  annotate("text", x = 23, y = -20, label = "Earlier", cex = 6) 
+chilldotE
+
+
+forcedotE <- ggplot(chillPtE,aes(y= force, x = meanBB, colour = transect), size = 7) +
+  geom_point(size = 7, shape  = 17) +
+  geom_errorbar(aes(ymin= force5, ymax = force95,xmin= meanBB, xmax = meanBB, colour = transect), width= 0, size = 0.5) +
+  geom_errorbar(aes(ymin= force25, ymax = force75,xmin= meanBB, xmax = meanBB, colour = transect), width= 0, size = 1.5) +
+  theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
+        panel.background = element_blank(), axis.line = element_line(colour = "black"), legend.position = "none") +  ylim(-25,5) +
+  theme(axis.text.x = element_text( size= 24,angle = 78,  hjust=1),
+        axis.text.y=element_text(size = 20),
+        axis.title=element_text(size= 20),
+        legend.position = "none") + 
+  scale_x_continuous( breaks = spMiniE$meanBB, labels = spMiniE$species,limits = c(23,65)) +
+  labs( x = "", y = "Forcing response (days/standardized unit)"#"Days per standardized forcing")+#expression("Forcing response (days/"*~degree*C*")")
+        , main = NA) +
+  theme(legend.title = element_blank()) +  annotate("text", x = 23, y = 2, label = "c", cex =10) +
+  annotate("text", x = spTopE[1,5], y = -22, label = spTopE[1,2], cex = 8.5, angle = 78) +
+  annotate("text", x = spTopE[2,5], y = -22, label = spTopE[2,2], cex = 8.5, angle = 78) +
+  annotate("text", x = spTopE[3,5], y = -22, label = spTopE[3,2], cex = 8.5, angle = 78) +
+  annotate("text", x =  spTopE[4,5], y = -22, label = spTopE[4,2], cex = 8.5, angle = 78) +
+  annotate("text", x = spTopE[5,5], y = -22, label = spTopE[5,2], cex = 8.5, angle = 78) +
+  annotate("text", x = spTopE[6,5], y = -22, label = spTopE[6,2], cex = 8.5, angle = 78) +
+  annotate("text", x = spTopE[7,5], y = -22, label = spTopE[7,2], cex = 8.5, angle = 78) +
+  annotate("text", x = spTopE[8,5], y = -22, label = spTopE[8,2], cex = 8.5, angle = 78) +
+  annotate("text", x = spTopE[9,5], y = -22, label = spTopE[9,2], cex = 8.5, angle = 78) +
+  annotate("text", x = spTopE[11,5], y = -22, label = spTopE[11,2], cex = 8.5, angle = 78) +
+  annotate("text", x = spTopE[12,5], y = -22, label = spTopE[12,2], cex = 8.5, angle = 78) +
+  annotate("text", x = spTopE[13,5], y = -22, label = spTopE[13,2], cex = 8.5, angle = 78) +
+  annotate("text", x =  spTopE[14,5], y = -22, label = spTopE[14,2], cex = 8.5, angle = 78) +
+  annotate("text", x = spTopE[15,5], y = -22, label = spTopE[15,2], cex = 8.5, angle = 78) +
+  scale_fill_manual(values = c("#f9b641ff","tan4","#f9b641ff")) + 
+  scale_color_manual(values = c("#f9b641ff","tan4","#f9b641ff")) #+ 
+# geom_segment(aes(x = 23, y = 5, xend =23 , yend = 1),
+#              arrow = arrow(length = unit(0.5, "cm")), col = "black") +
+# annotate("text", x = 23, y = 0, label = "Earlier", cex =5) 
+forcedotE
+
+
+photodotE <- ggplot(chillPtE,aes(y= photo, x = meanBB, colour = transect), size = 7) +
+  geom_point(size = 7, shape  = 17) +
+  geom_errorbar(aes(ymin= photo5, ymax = photo95,xmin= meanBB, xmax = meanBB, colour = transect), width= 0, size = 0.5) +
+  geom_errorbar(aes(ymin= photo25, ymax = photo75,xmin= meanBB, xmax = meanBB, colour = transect), width= 0, size = 1.5) +
+  theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
+        panel.background = element_blank(), axis.line = element_line(colour = "black"), legend.position = "none") +  ylim(-10,1) +
+  theme(axis.text.x = element_text( size= 24,angle = 78,  hjust=1),
+        axis.text.y=element_text(size = 24),
+        axis.title=element_text(size=  24),
+        legend.position = "none") + 
+  scale_x_continuous( breaks = spMiniE$meanBB, labels = spMiniE$species,limits = c(23,65)) +
+  labs( x = "Species ordered by predicted budburst date", y = "Photoperiod response (days/standardized unit)"#"Days per standardized photoperiod"
+        , main = NA) +
+  theme(legend.title = element_blank()) +  annotate("text", x = 23, y = 0, label = "e", cex =10) + 
+  annotate("text", x = spTopE[1,5], y = -9, label = spTopE[1,2], cex = 8.5, angle = 78) +
+  annotate("text", x = spTopE[2,5], y = -9, label = spTopE[2,2], cex = 8.5, angle = 78) +
+  annotate("text", x = spTopE[3,5], y = -9, label = spTopE[3,2], cex = 8.5, angle = 78) +
+  annotate("text", x =  spTopE[4,5], y = -9, label = spTopE[4,2], cex = 8.5, angle = 78) +
+  annotate("text", x = spTopE[5,5], y = -9, label = spTopE[5,2], cex = 8.5, angle = 78) +
+  annotate("text", x = spTopE[6,5], y = -9, label = spTopE[6,2], cex = 8.5, angle = 78) +
+  annotate("text", x = spTopE[7,5], y = -9, label = spTopE[7,2], cex = 8.5, angle = 78) +
+  annotate("text", x = spTopE[8,5], y = -9, label = spTopE[8,2], cex = 8.5, angle = 78) +
+  annotate("text", x = spTopE[9,5], y = -9, label = spTopE[9,2], cex = 8.5, angle = 78) +
+  annotate("text", x = spTopE[11,5], y = -9, label = spTopE[11,2], cex = 8.5, angle = 78) +
+  annotate("text", x = spTopE[12,5], y = -9, label = spTopE[12,2], cex = 8.5, angle = 78) +
+  annotate("text", x = spTopE[13,5], y = -9, label = spTopE[13,2], cex = 8.5, angle = 78) +
+  annotate("text", x =  spTopE[14,5], y = -9, label = spTopE[14,2], cex = 8.5, angle = 78) +
+  annotate("text", x = spTopE[15,5], y = -9, label = spTopE[15,2], cex = 8.5, angle = 78) +
+  scale_fill_manual(values = c("cyan4", "navy","cyan4")) + 
+  scale_color_manual(values = c("cyan4","navy", "cyan4"))# + 
+# geom_segment(aes(x = 23, y = 0.5, xend =23 , yend = -0.7),
+#   arrow = arrow(length = unit(0.5, "cm")), col = "black") +
+# annotate("text", x = 23, y = -1, label = "Earlier", cex =5) 
+photodotE
+
+
+pdf("figures/dotCFPEWSizeColorUnitsShape_astrixT.pdf", width = 25, height = 20)
+plot_grid(chilldotE, chilldotW, forcedotE, forcedotW, photodotE, photodotW, nrow = 3, ncol = 2, align = "v")
+dev.off()
+

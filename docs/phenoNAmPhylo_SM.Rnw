@@ -68,7 +68,7 @@
 
 \begin{figure}[ht]
 \centering
-    \includegraphics[width= 1 \textwidth]{..//..//pheno_bc/figures/panelFig/intSiteCueSite.pdf}%,
+    \includegraphics[width= 1 \textwidth]{..//..//pheno_bc/figures/intSiteCueSiteLegend.pdf}%,
      \caption{Estimated day of budburst in response to forcing (\textbf{a}) across sites under low chilling and short photoperiods, chilling across sites under low forcing and short photoperiods (\textbf{b}), and across photoperiods (\textbf{c}) under low forcing and chilling for species sampled from our four sites. The thin bars represent the 90\% uncertainty interval, while the thicker bars represent the 50\% uncertainty interval, and symbols the mean.} 
     \label{fig:intrxn3}
 \end{figure}
@@ -98,7 +98,7 @@
 
 \begin{table}[ht!]
 \centering
-\caption{Mean day of budburst following the start of forcing treatments, estimated from raw observational data of 47 species at our two western sites, E.C. Manning park and Smithers B.C., Canada, and our two eastern sites, Harvard Forest, MA, USA and St. Hippolyte, QC,Canada.} 
+\caption{Mean day of budburst following the start of forcing treatments, estimated from raw observational data of 47 species at our two western sites, E.C. Manning park and Smithers B.C., Canada, and our two eastern sites, Harvard Forest, MA, USA and St. Hippolyte, QC, Canada.} 
 \label{tabPhenoSp}
 \begin{tabular}{lrrrrr}
   \hline
@@ -159,7 +159,7 @@ Species & Spp. abbreviation & Harvard forest & St. Hippoltye & Manning park & Sm
 
 \begin{table}[ht!]
 \centering
-\caption{Approximate chill units from our two western sites, E.C. Manning park and Smithers B.C., Canada, and our two eastern sites, Harvard Forest, MA, USA and St. Hippolyte, QC, Canada. Weather data for the fall of 2019 and winter 2020 was obtained from the Hope Slide weather station for our E.C. Manning park sites and the Smithers airport weather station for our Smithers site \citep{canadaWeather}. For our eastern sites, weather data for the fall of 2014 and winter 2015 was obtained from weather stations at Harvard Forest \citep{hfWeather} and the St. Hippolyte weather station.\citep{canadaWeather}} 
+\caption{Approximate chill units from our two western sites, E.C. Manning park and Smithers B.C., Canada, and our two eastern sites, Harvard Forest, MA, USA and St. Hippolyte, QC, Canada. Weather data for the fall of 2019 and winter 2020 was obtained from the Hope Slide weather station for our E.C. Manning park sites and the Smithers airport weather station for our Smithers site \citep{canadaWeather}. For our eastern sites, weather data for the fall of 2014 and winter 2015 was obtained from weather stations at Harvard Forest \citep{hfWeather} and the St. Hippolyte weather station \citep{canadaWeather}.} 
 \label{tabChill}
 \begin{tabular}{llrrr}
   \hline

@@ -228,45 +228,45 @@ Figure 5: Comparisons of estimated day of budburst for tree (denoted by the aste
 
 
 
-\begin{figure}[ht]
-\centering
-    \includegraphics[width=\textwidth]{..//figures/Figure1_Loughnan_Wolkovich.pdf}%,
-     \caption{We combined data from two controlled environment studies of temperature and photoperiod cues for budburst in temperate woody species \textbf{a,} from two forest communities (sites) in eastern North America that span a 4$^{\circ}$ latitudinal gradient and \textbf{b,} two communities (sites) in western North America that span a 6$^{\circ}$ latitudinal gradient. Combined, our dataset includes 28 tree and shrub species from eastern sites and 21 species from western sites, with three species occurring across all four sites. Both studies used a full-factorial design with two levels each of chilling treatments (consisting of a combination of field and different durations of chamber chilling), forcing and photoperiod, for a total of eight unique treatments. Observations of budburst were made during the forcing treatment, using the BBCH scale to classify stages of bud development \citep[see][for guides we made for these species]{Savas2017, LoughnanInPrepc}.}
-    \label{fig:concept}
-\end{figure}
-\newpage
-
-\begin{figure}[h!]
-    \centering
-     \includegraphics[width=\textwidth]{..//figures/Figure2_Loughnan_Wolkovich.pdf}
-      \caption{Tree (denoted with an asterisk) and shrub species differences were accounted for by including phylogenetic effects on the intercept of a model estimating days to budburst after the start of forcing treatments (simplified to `days' here). This approach estimated a phylogenetic scaling parameter for the intercept of \Sexpr{lamT} (where values close to one indicate a phylogenetic effect consistent with Brownian motion and values close to zero the absence such an effect). Included for each tip of the phylogeny is the species-level intercept value in brackets, along with the names of major the clades represented in the tree. }
-    \label{fig:phylo}
-\end{figure}
-
-\newpage
-\begin{figure}[h!]
-    \centering
-     \includegraphics[width=\textwidth]{..//figures/Figure3_Loughnan_Wolkovich.pdf}
-      \caption{\textbf{a,} Posterior distributions of estimated changes in budburst per unit change in chilling, forcing, and photoperiod with individual site-level effects. Symbols denote the eastern (triangle) and western (square) sites and the darker point color our more northern sites. Points represent the mean, thicker lines the 50\% uncertainty interval, and the thin lines the 90\% uncertainty interval. \textbf{b,} Cues interacted to produce a subadditive effect, where delays in budburst under low chilling was offset by high forcing conditions, and vice versa. To make results comparable across cues we standardized chilling, forcing, and photoperiod via $z$-scores using two standard deviations, see methods for further details.}
-    \label{fig:siteCues}
-\end{figure}
-\newpage
-
-\begin{figure}[ht]
-\centering
-    \includegraphics[width=\textwidth]{..//figures/Figure4_Loughnan_Wolkovich.pdf}
-    \caption{Estimated change in species budburst day per unit of standardized chilling (\textbf{a,b}), forcing (\textbf{c,d}), and photoperiod (\textbf{e,f}), ordered by estimated budburst dates for both the eastern (\textbf{a,c,e}) and western sites (\textbf{b,d,f}) based on our model estimates. Cues are plotted on differing y-axis scales to better depict species differences across cues. For each species, the points represent the mean, thinner error bars represent the 90\% uncertainty interval, and thicker bars represent the 50\% uncertainty interval. Points for the three species that occur in both the eastern and western transects are depicted using darker colours. Tree species are labeled with an asterisk. % above the $x$-axis and shrub species below the $x$-axis. 
-    To make the results across cues directly comparable, we standardized predictors (here, chilling, forcing, and photoperiod) via $z$-scores using two standard deviations, see methods for further details. See Table \ref{tabPhenoSp} for full species names.}
-    \label{fig:cueGrad}
-\end{figure}
-\newpage
-
-\begin{figure}[ht]
-\centering
-    \includegraphics[width= 0.95 \textwidth]{..//figures/Figure5_Loughnan_Wolkovich.pdf}%,
-    \caption{Comparisons of estimated day of budburst for tree (denoted by the asterisk) and shrub species  based on the full model (intercept plus all cues), shown as white (open) symbols, versus the intercepts only (without effects of chilling, forcing, and photoperiod), shown as filled black symbols. Points are ordered according to differences in species estimated budburst dates for both the eastern (\textbf{a}), and western sites (\textbf{b}), with low cue conditions, depicted as circles, and high cue conditions, depicted as triangles. The full species names listed in Table \ref{tabPhenoSp}.}
-    \label{fig:betaAlphaGrad}
-\end{figure}
-\newpage
+% \begin{figure}[ht]
+% \centering
+%     \includegraphics[width=\textwidth]{..//figures/Figure1_Loughnan_Wolkovich.pdf}%,
+%      \caption{We combined data from two controlled environment studies of temperature and photoperiod cues for budburst in temperate woody species \textbf{a,} from two forest communities (sites) in eastern North America that span a 4$^{\circ}$ latitudinal gradient and \textbf{b,} two communities (sites) in western North America that span a 6$^{\circ}$ latitudinal gradient. Combined, our dataset includes 28 tree and shrub species from eastern sites and 21 species from western sites, with three species occurring across all four sites. Both studies used a full-factorial design with two levels each of chilling treatments (consisting of a combination of field and different durations of chamber chilling), forcing and photoperiod, for a total of eight unique treatments. Observations of budburst were made during the forcing treatment, using the BBCH scale to classify stages of bud development \citep[see][for guides we made for these species]{Savas2017, LoughnanInPrepc}.}
+%     \label{fig:concept}
+% \end{figure}
+% \newpage
+% 
+% \begin{figure}[h!]
+%     \centering
+%      \includegraphics[width=\textwidth]{..//figures/Figure2_Loughnan_Wolkovich.pdf}
+%       \caption{Tree (denoted with an asterisk) and shrub species differences were accounted for by including phylogenetic effects on the intercept of a model estimating days to budburst after the start of forcing treatments (simplified to `days' here). This approach estimated a phylogenetic scaling parameter for the intercept of \Sexpr{lamT} (where values close to one indicate a phylogenetic effect consistent with Brownian motion and values close to zero the absence such an effect). Included for each tip of the phylogeny is the species-level intercept value in brackets, along with the names of major the clades represented in the tree. }
+%     \label{fig:phylo}
+% \end{figure}
+% 
+% \newpage
+% \begin{figure}[h!]
+%     \centering
+%      \includegraphics[width=\textwidth]{..//figures/Figure3_Loughnan_Wolkovich.pdf}
+%       \caption{\textbf{a,} Posterior distributions of estimated changes in budburst per unit change in chilling, forcing, and photoperiod with individual site-level effects. Symbols denote the eastern (triangle) and western (square) sites and the darker point color our more northern sites. Points represent the mean, thicker lines the 50\% uncertainty interval, and the thin lines the 90\% uncertainty interval. \textbf{b,} Cues interacted to produce a subadditive effect, where delays in budburst under low chilling was offset by high forcing conditions, and vice versa. To make results comparable across cues we standardized chilling, forcing, and photoperiod via $z$-scores using two standard deviations, see methods for further details.}
+%     \label{fig:siteCues}
+% \end{figure}
+% \newpage
+% 
+% \begin{figure}[ht]
+% \centering
+%     \includegraphics[width=\textwidth]{..//figures/Figure4_Loughnan_Wolkovich.pdf}
+%     \caption{Estimated change in species budburst day per unit of standardized chilling (\textbf{a,b}), forcing (\textbf{c,d}), and photoperiod (\textbf{e,f}), ordered by estimated budburst dates for both the eastern (\textbf{a,c,e}) and western sites (\textbf{b,d,f}) based on our model estimates. Cues are plotted on differing y-axis scales to better depict species differences across cues. For each species, the points represent the mean, thinner error bars represent the 90\% uncertainty interval, and thicker bars represent the 50\% uncertainty interval. Points for the three species that occur in both the eastern and western transects are depicted using darker colours. Tree species are labeled with an asterisk. % above the $x$-axis and shrub species below the $x$-axis. 
+%     To make the results across cues directly comparable, we standardized predictors (here, chilling, forcing, and photoperiod) via $z$-scores using two standard deviations, see methods for further details. See Table \ref{tabPhenoSp} for full species names.}
+%     \label{fig:cueGrad}
+% \end{figure}
+% \newpage
+% 
+% \begin{figure}[ht]
+% \centering
+%     \includegraphics[width= 0.95 \textwidth]{..//figures/Figure5_Loughnan_Wolkovich.pdf}%,
+%     \caption{Comparisons of estimated day of budburst for tree (denoted by the asterisk) and shrub species  based on the full model (intercept plus all cues), shown as white (open) symbols, versus the intercepts only (without effects of chilling, forcing, and photoperiod), shown as filled black symbols. Points are ordered according to differences in species estimated budburst dates for both the eastern (\textbf{a}), and western sites (\textbf{b}), with low cue conditions, depicted as circles, and high cue conditions, depicted as triangles. The full species names listed in Table \ref{tabPhenoSp}.}
+%     \label{fig:betaAlphaGrad}
+% \end{figure}
+% \newpage
 
 \end{document}

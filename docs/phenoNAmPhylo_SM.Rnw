@@ -16,8 +16,8 @@
 \usepackage{xcolor}
 \usepackage{capt-of}%alows me to set a caption for code in appendix 
 \usepackage[export]{adjustbox} % adding a box around a map
-\usepackage{lineno}
-\linenumbers
+% \usepackage{lineno}
+% \linenumbers
 % recommended! Uncomment the below line and change the path for your computer!
 % \SweaveOpts{prefix.string=/Users/Lizzie/Documents/git/teaching/demoSweave/Fig.s/demoFig, eps=FALSE} 
 %put your Fig.s in one place! Also, note that here 'Fig.s' is the folder and 'demoFig' is what each 
@@ -54,12 +54,13 @@
 \begin{document}
 \SweaveOpts{concordance=TRUE}
 
+\pagenumbering{gobble}
 
-
-\title{Supplementary Information: How temperature, photoperiod, and evolutionary history shape forest leafout}
-\date{}
-% \author{Deirdre Loughnan$^{1,2,3}$ and E M Wolkovich$^1$}
+\title{Appendix S1: How temperature, photoperiod, and evolutionary history shape forest leafout}
+\date{Ecology}
+\author{Deirdre Loughnan and E M Wolkovich}
 \maketitle 
+
 
 \renewcommand{\thetable}{S\arabic{table}}
 \renewcommand{\thefigure}{S\arabic{figure}}
@@ -102,7 +103,7 @@
 \label{tabPhenoSp}
 \begin{tabular}{lrrrrr}
   \hline
-Species & Spp. abbreviation & Harvard forest & St. Hippoltye & Manning park & Smithers \\ 
+Species & Species abbreviations & Harvard forest & St. Hippoltye & Manning park & Smithers \\ 
   \hline
 \emph{Acer glabrum} & acegla & &  & 36 & 39 \\ 
   \emph{Acer pensylvanicum} & acepen & 16 & 18 &  &  \\ 
